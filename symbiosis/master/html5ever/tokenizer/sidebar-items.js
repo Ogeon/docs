@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["states","Tokenizer states."]],"struct":[["Doctype","A `DOCTYPE` token."],["Tag","A tag token."],["Tokenizer","The HTML tokenizer."],["TokenizerOpts","Tokenizer options, with an impl for `Default`."]],"enum":[["TagKind",""],["Token",""]],"trait":[["TokenSink","Types which can receive tokens from the tokenizer."]]});

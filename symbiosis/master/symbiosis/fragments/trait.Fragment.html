@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Fragment` trait in crate `symbiosis`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Fragment">
+
+    <title>symbiosis::fragments::Fragment - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>fragments</a></p><script>window.sidebarCurrent = {name: 'Fragment', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content trait">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>fragments</a>::<wbr><a class='trait' href=''>Fragment</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-690' href='../../src/symbiosis/fragments.rs.html#22-25'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Fragment {
+    fn <a href='#tymethod.identifier' class='fnname'>identifier</a>(&amp;self) -&gt; &amp;'static <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>;
+    fn <a href='#tymethod.process' class='fnname'>process</a>(&amp;self, args: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../symbiosis/fragments/enum.InputType.html' title='symbiosis::fragments::InputType'>InputType</a>&gt;) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../symbiosis/fragments/enum.ReturnType.html' title='symbiosis::fragments::ReturnType'>ReturnType</a>, <a class='enum' href='http://doc.rust-lang.org/nightly/collections/borrow/enum.Cow.html' title='collections::borrow::Cow'>Cow</a>&lt;'static, <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;&gt;;
+}</pre>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.identifier' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.identifier' class='fnname'>identifier</a>(&amp;self) -&gt; &amp;'static <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></h3><h3 id='tymethod.process' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.process' class='fnname'>process</a>(&amp;self, args: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../symbiosis/fragments/enum.InputType.html' title='symbiosis::fragments::InputType'>InputType</a>&gt;) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../symbiosis/fragments/enum.ReturnType.html' title='symbiosis::fragments::ReturnType'>ReturnType</a>, <a class='enum' href='http://doc.rust-lang.org/nightly/collections/borrow/enum.Cow.html' title='collections::borrow::Cow'>Cow</a>&lt;'static, <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;&gt;</code></h3></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    <li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(<a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../symbiosis/fragments/enum.InputType.html' title='symbiosis::fragments::InputType'>InputType</a>&gt;) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../symbiosis/fragments/enum.ReturnType.html' title='symbiosis::fragments::ReturnType'>ReturnType</a>, <a class='enum' href='http://doc.rust-lang.org/nightly/collections/borrow/enum.Cow.html' title='collections::borrow::Cow'>Cow</a>&lt;'static, <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;&gt;&gt; <a class='trait' href='../../symbiosis/fragments/trait.Fragment.html' title='symbiosis::fragments::Fragment'>Fragment</a> for <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(&amp;'static <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, F)</a></code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, F: <a class='trait' href='../../symbiosis/fragments/trait.Fragment.html' title='symbiosis::fragments::Fragment'>Fragment</a>&gt; <a class='trait' href='../../symbiosis/fragments/trait.Fragment.html' title='symbiosis::fragments::Fragment'>Fragment</a> for &amp;'a F</code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../symbiosis/fragments/trait.Fragment.html' title='symbiosis::fragments::Fragment'>Fragment</a> for <a class='struct' href='../../symbiosis/fragments/struct.If.html' title='symbiosis::fragments::If'>If</a></code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../symbiosis/fragments/trait.Fragment.html' title='symbiosis::fragments::Fragment'>Fragment</a> for <a class='struct' href='../../symbiosis/fragments/struct.And.html' title='symbiosis::fragments::And'>And</a></code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../symbiosis/fragments/trait.Fragment.html' title='symbiosis::fragments::Fragment'>Fragment</a> for <a class='struct' href='../../symbiosis/fragments/struct.Or.html' title='symbiosis::fragments::Or'>Or</a></code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../symbiosis/fragments/trait.Fragment.html' title='symbiosis::fragments::Fragment'>Fragment</a> for <a class='struct' href='../../symbiosis/fragments/struct.Not.html' title='symbiosis::fragments::Not'>Not</a></code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../symbiosis/fragments/trait.Fragment.html' title='symbiosis::fragments::Fragment'>Fragment</a> for <a class='struct' href='../../symbiosis/fragments/struct.Template.html' title='symbiosis::fragments::Template'>Template</a></code></li>
+</ul><script type="text/javascript" async
+                              src="../../implementors/symbiosis/fragments/trait.Fragment.js">
+                      </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "symbiosis";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script async src="../../search-index.js"></script>
+</body>
+</html>

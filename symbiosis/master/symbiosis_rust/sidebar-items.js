@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["Template","Common trait for Symbiosis templates."]]});

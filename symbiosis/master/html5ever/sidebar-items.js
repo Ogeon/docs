@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["driver","High-level interface to the parser."],["serialize",""],["sink","Consumers of the parser API."],["tokenizer","The HTML5 tokenizer."],["tree_builder","The HTML5 tree builder."]],"struct":[["Attribute","A tag attribute."]]});

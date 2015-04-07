@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Template` struct in crate `symbiosis`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Template">
+
+    <title>symbiosis::Template - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='index.html'>symbiosis</a></p><script>window.sidebarCurrent = {name: 'Template', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>symbiosis</a>::<wbr><a class='struct' href=''>Template</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-12597' href='../src/symbiosis/lib.rs.html#153-158'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Template&lt;'a&gt; {
+    // some fields omitted
+}</pre><div class='docblock'><p>A single template.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a&gt; <a class='struct' href='../symbiosis/struct.Template.html' title='symbiosis::Template'>Template</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../symbiosis/struct.Template.html' title='symbiosis::Template'>Template</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Create an empty template.</p>
+</div><h4 id='method.parse_string' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.parse_string' class='fnname'>parse_string</a>(&amp;mut self, source: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../symbiosis/enum.Error.html' title='symbiosis::Error'>Error</a>&gt;</code></h4>
+<div class='docblock'><p>Add content from a string to the template.</p>
+</div><h4 id='method.register_fragment' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.register_fragment' class='fnname'>register_fragment</a>&lt;F: <a class='trait' href='../symbiosis/fragments/trait.Fragment.html' title='symbiosis::fragments::Fragment'>Fragment</a> + 'a&gt;(&amp;mut self, fragment: F)</code></h4>
+<div class='docblock'><p>Register a custom fragment.</p>
+</div><h4 id='method.emit_code' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.emit_code' class='fnname'>emit_code</a>&lt;W: <a class='trait' href='http://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>, C: <a class='trait' href='../symbiosis/codegen/trait.Codegen.html' title='symbiosis::codegen::Codegen'>Codegen</a>&gt;(&amp;self, template_name: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, writer: &amp;mut W, codegen: &amp;C) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../symbiosis/enum.Error.html' title='symbiosis::Error'>Error</a>&gt;</code></h4>
+<div class='docblock'><p>Write template code.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "symbiosis";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>
