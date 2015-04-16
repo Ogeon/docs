@@ -43,22 +43,21 @@
     <section id='main' class="content enum">
 <h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>codegen</a>::<wbr><a class='enum' href=''>Token</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-114' href='../../src/symbiosis/codegen.rs.html#53-65'>[src]</a></span></h1>
+        </span><a id='src-116' href='../../src/symbiosis/codegen.rs.html#40-51'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Token {
+    SetDoctype(<a class='struct' href='../../html5ever/tokenizer/interface/struct.Doctype.html' title='html5ever::tokenizer::interface::Doctype'>Doctype</a>),
     BeginTag(<a class='struct' href='../../string_cache/atom/struct.Atom.html' title='string_cache::atom::Atom'>Atom</a>),
     EndTag(<a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>),
     CloseTag(<a class='struct' href='../../string_cache/atom/struct.Atom.html' title='string_cache::atom::Atom'>Atom</a>),
     BeginAttribute(<a class='struct' href='../../string_cache/atom/struct.Atom.html' title='string_cache::atom::Atom'>Atom</a>, <a class='enum' href='../../symbiosis/codegen/enum.Content.html' title='symbiosis::codegen::Content'>Content</a>),
     AppendToAttribute(<a class='enum' href='../../symbiosis/codegen/enum.Content.html' title='symbiosis::codegen::Content'>Content</a>),
     EndAttribute,
-    BeginText(<a class='enum' href='../../symbiosis/codegen/enum.Content.html' title='symbiosis::codegen::Content'>Content</a>),
-    AppendToText(<a class='enum' href='../../symbiosis/codegen/enum.Content.html' title='symbiosis::codegen::Content'>Content</a>),
-    EndText,
+    Text(<a class='enum' href='../../symbiosis/codegen/enum.Content.html' title='symbiosis::codegen::Content'>Content</a>),
     Scope(<a class='enum' href='../../symbiosis/codegen/enum.Scope.html' title='symbiosis::codegen::Scope'>Scope</a>),
     End,
 }</pre><div class='docblock'><p>Tokens representing different parts of a template document.</p>
 </div><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.BeginTag'><a class='stability Unmarked' title='No stability level'></a><code>BeginTag</code></td><td></td></tr><tr><td id='variant.EndTag'><a class='stability Unmarked' title='No stability level'></a><code>EndTag</code></td><td></td></tr><tr><td id='variant.CloseTag'><a class='stability Unmarked' title='No stability level'></a><code>CloseTag</code></td><td></td></tr><tr><td id='variant.BeginAttribute'><a class='stability Unmarked' title='No stability level'></a><code>BeginAttribute</code></td><td></td></tr><tr><td id='variant.AppendToAttribute'><a class='stability Unmarked' title='No stability level'></a><code>AppendToAttribute</code></td><td></td></tr><tr><td id='variant.EndAttribute'><a class='stability Unmarked' title='No stability level'></a><code>EndAttribute</code></td><td></td></tr><tr><td id='variant.BeginText'><a class='stability Unmarked' title='No stability level'></a><code>BeginText</code></td><td></td></tr><tr><td id='variant.AppendToText'><a class='stability Unmarked' title='No stability level'></a><code>AppendToText</code></td><td></td></tr><tr><td id='variant.EndText'><a class='stability Unmarked' title='No stability level'></a><code>EndText</code></td><td></td></tr><tr><td id='variant.Scope'><a class='stability Unmarked' title='No stability level'></a><code>Scope</code></td><td></td></tr><tr><td id='variant.End'><a class='stability Unmarked' title='No stability level'></a><code>End</code></td><td></td></tr></table></section>
+<table><tr><td id='variant.SetDoctype'><a class='stability Unmarked' title='No stability level'></a><code>SetDoctype</code></td><td></td></tr><tr><td id='variant.BeginTag'><a class='stability Unmarked' title='No stability level'></a><code>BeginTag</code></td><td></td></tr><tr><td id='variant.EndTag'><a class='stability Unmarked' title='No stability level'></a><code>EndTag</code></td><td></td></tr><tr><td id='variant.CloseTag'><a class='stability Unmarked' title='No stability level'></a><code>CloseTag</code></td><td></td></tr><tr><td id='variant.BeginAttribute'><a class='stability Unmarked' title='No stability level'></a><code>BeginAttribute</code></td><td></td></tr><tr><td id='variant.AppendToAttribute'><a class='stability Unmarked' title='No stability level'></a><code>AppendToAttribute</code></td><td></td></tr><tr><td id='variant.EndAttribute'><a class='stability Unmarked' title='No stability level'></a><code>EndAttribute</code></td><td></td></tr><tr><td id='variant.Text'><a class='stability Unmarked' title='No stability level'></a><code>Text</code></td><td></td></tr><tr><td id='variant.Scope'><a class='stability Unmarked' title='No stability level'></a><code>Scope</code></td><td></td></tr><tr><td id='variant.End'><a class='stability Unmarked' title='No stability level'></a><code>End</code></td><td></td></tr></table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

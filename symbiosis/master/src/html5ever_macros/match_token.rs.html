@@ -514,6 +514,8 @@
 <span id="472">472</span>
 <span id="473">473</span>
 <span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The html5ever Project Developers. See the</span>
 <span class='comment'>// COPYRIGHT file at the top-level directory of this distribution.</span>
@@ -617,6 +619,7 @@ matching, by enforcing the following restrictions on its input:
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::{<span class='ident'>HashSet</span>, <span class='ident'>HashMap</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>hash_map</span>::<span class='ident'>Entry</span>::{<span class='ident'>Occupied</span>, <span class='ident'>Vacant</span>};
 
+<span class='kw'>use</span> <span class='ident'>syntax</span>::<span class='ident'>diagnostic</span>::<span class='ident'>FatalError</span>;
 <span class='kw'>use</span> <span class='ident'>syntax</span>::<span class='ident'>ptr</span>::<span class='ident'>P</span>;
 <span class='kw'>use</span> <span class='ident'>syntax</span>::<span class='ident'>codemap</span>::{<span class='ident'>Span</span>, <span class='ident'>Spanned</span>, <span class='ident'>spanned</span>};
 <span class='kw'>use</span> <span class='ident'>syntax</span>::<span class='ident'>ast</span>;
@@ -688,46 +691,46 @@ matching, by enforcing the following restrictions on its input:
     <span class='ident'>lhs</span>.<span class='ident'>extend</span>(<span class='ident'>rhs</span>.<span class='ident'>into_iter</span>());
 }
 
-<span class='kw'>fn</span> <span class='ident'>parse_spanned_ident</span>(<span class='ident'>parser</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Parser</span>) <span class='op'>-&gt;</span> <span class='ident'>ast</span>::<span class='ident'>SpannedIdent</span> {
+<span class='kw'>fn</span> <span class='ident'>parse_spanned_ident</span>(<span class='ident'>parser</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Parser</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>ast</span>::<span class='ident'>SpannedIdent</span>, <span class='ident'>FatalError</span><span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>lo</span> <span class='op'>=</span> <span class='ident'>parser</span>.<span class='ident'>span</span>.<span class='ident'>lo</span>;
-    <span class='kw'>let</span> <span class='ident'>ident</span> <span class='op'>=</span> <span class='ident'>parser</span>.<span class='ident'>parse_ident</span>();
+    <span class='kw'>let</span> <span class='ident'>ident</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>parse_ident</span>());
     <span class='kw'>let</span> <span class='ident'>hi</span> <span class='op'>=</span> <span class='ident'>parser</span>.<span class='ident'>last_span</span>.<span class='ident'>hi</span>;
-    <span class='ident'>spanned</span>(<span class='ident'>lo</span>, <span class='ident'>hi</span>, <span class='ident'>ident</span>)
+    <span class='prelude-val'>Ok</span>(<span class='ident'>spanned</span>(<span class='ident'>lo</span>, <span class='ident'>hi</span>, <span class='ident'>ident</span>))
 }
 
-<span class='kw'>fn</span> <span class='ident'>parse_tag</span>(<span class='ident'>parser</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Parser</span>) <span class='op'>-&gt;</span> <span class='ident'>Spanned</span><span class='op'>&lt;</span><span class='ident'>Tag</span><span class='op'>&gt;</span> {
+<span class='kw'>fn</span> <span class='ident'>parse_tag</span>(<span class='ident'>parser</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Parser</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Spanned</span><span class='op'>&lt;</span><span class='ident'>Tag</span><span class='op'>&gt;</span>, <span class='ident'>FatalError</span><span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='ident'>lo</span> <span class='op'>=</span> <span class='ident'>parser</span>.<span class='ident'>span</span>.<span class='ident'>lo</span>;
-    <span class='ident'>parser</span>.<span class='ident'>expect</span>(<span class='kw-2'>&amp;</span><span class='ident'>token</span>::<span class='ident'>Lt</span>);
+    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>expect</span>(<span class='kw-2'>&amp;</span><span class='ident'>token</span>::<span class='ident'>Lt</span>));
 
-    <span class='kw'>let</span> <span class='ident'>kind</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>parser</span>.<span class='ident'>eat</span>(<span class='kw-2'>&amp;</span><span class='ident'>token</span>::<span class='ident'>BinOp</span>(<span class='ident'>token</span>::<span class='ident'>Slash</span>)) {
+    <span class='kw'>let</span> <span class='ident'>kind</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>eat</span>(<span class='kw-2'>&amp;</span><span class='ident'>token</span>::<span class='ident'>BinOp</span>(<span class='ident'>token</span>::<span class='ident'>Slash</span>))) {
         <span class='boolval'>true</span> <span class='op'>=&gt;</span> <span class='ident'>EndTag</span>,
         <span class='boolval'>false</span> <span class='op'>=&gt;</span> <span class='ident'>StartTag</span>,
     };
-    <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>parser</span>.<span class='ident'>eat</span>(<span class='kw-2'>&amp;</span><span class='ident'>token</span>::<span class='ident'>Underscore</span>) {
+    <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>eat</span>(<span class='kw-2'>&amp;</span><span class='ident'>token</span>::<span class='ident'>Underscore</span>)) {
         <span class='boolval'>true</span> <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
-        <span class='boolval'>false</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>parser</span>.<span class='ident'>parse_ident</span>()),
+        <span class='boolval'>false</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>parse_ident</span>())),
     };
 
-    <span class='ident'>parser</span>.<span class='ident'>expect</span>(<span class='kw-2'>&amp;</span><span class='ident'>token</span>::<span class='ident'>Gt</span>);
-    <span class='ident'>spanned</span>(<span class='ident'>lo</span>, <span class='ident'>parser</span>.<span class='ident'>last_span</span>.<span class='ident'>hi</span>, <span class='ident'>Tag</span> {
+    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>expect</span>(<span class='kw-2'>&amp;</span><span class='ident'>token</span>::<span class='ident'>Gt</span>));
+    <span class='prelude-val'>Ok</span>(<span class='ident'>spanned</span>(<span class='ident'>lo</span>, <span class='ident'>parser</span>.<span class='ident'>last_span</span>.<span class='ident'>hi</span>, <span class='ident'>Tag</span> {
         <span class='ident'>kind</span>: <span class='ident'>kind</span>,
         <span class='ident'>name</span>: <span class='ident'>name</span>,
-    })
+    }))
 }
 
 <span class='doccomment'>/// Parse a `match_token!` invocation into the little AST defined above.</span>
-<span class='kw'>fn</span> <span class='ident'>parse</span>(<span class='ident'>cx</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ExtCtxt</span>, <span class='ident'>toks</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>ast</span>::<span class='ident'>TokenTree</span>]) <span class='op'>-&gt;</span> <span class='ident'>Match</span> {
+<span class='kw'>fn</span> <span class='ident'>parse</span>(<span class='ident'>cx</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ExtCtxt</span>, <span class='ident'>toks</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>ast</span>::<span class='ident'>TokenTree</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Match</span>, <span class='ident'>FatalError</span><span class='op'>&gt;</span> {
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>parser</span> <span class='op'>=</span> <span class='ident'>parse</span>::<span class='ident'>new_parser_from_tts</span>(<span class='ident'>cx</span>.<span class='ident'>parse_sess</span>(), <span class='ident'>cx</span>.<span class='ident'>cfg</span>(), <span class='ident'>toks</span>.<span class='ident'>to_vec</span>());
 
-    <span class='kw'>let</span> <span class='ident'>discriminant</span> <span class='op'>=</span> <span class='ident'>parser</span>.<span class='ident'>parse_expr_res</span>(<span class='ident'>parser</span>::<span class='ident'>RESTRICTION_NO_STRUCT_LITERAL</span>);
-    <span class='ident'>parser</span>.<span class='ident'>commit_expr_expecting</span>(<span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>discriminant</span>, <span class='ident'>token</span>::<span class='ident'>OpenDelim</span>(<span class='ident'>token</span>::<span class='ident'>Brace</span>));
+    <span class='kw'>let</span> <span class='ident'>discriminant</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>parse_expr_res</span>(<span class='ident'>parser</span>::<span class='ident'>RESTRICTION_NO_STRUCT_LITERAL</span>));
+    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>commit_expr_expecting</span>(<span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>discriminant</span>, <span class='ident'>token</span>::<span class='ident'>OpenDelim</span>(<span class='ident'>token</span>::<span class='ident'>Brace</span>)));
 
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>arms</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Arm</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
     <span class='kw'>while</span> <span class='ident'>parser</span>.<span class='ident'>token</span> <span class='op'>!=</span> <span class='ident'>token</span>::<span class='ident'>CloseDelim</span>(<span class='ident'>token</span>::<span class='ident'>Brace</span>) {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>binding</span> <span class='op'>=</span> <span class='prelude-val'>None</span>;
         <span class='kw'>if</span> <span class='ident'>parser</span>.<span class='ident'>look_ahead</span>(<span class='number'>1</span>, <span class='op'>|</span><span class='ident'>t</span><span class='op'>|</span> <span class='op'>*</span><span class='ident'>t</span> <span class='op'>==</span> <span class='ident'>token</span>::<span class='ident'>At</span>) {
-            <span class='ident'>binding</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>parse_spanned_ident</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>parser</span>));
-            <span class='ident'>parser</span>.<span class='ident'>bump</span>(); <span class='comment'>// Consume the @</span>
+            <span class='ident'>binding</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parse_spanned_ident</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>parser</span>)));
+            <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>bump</span>()); <span class='comment'>// Consume the @</span>
         }
 
         <span class='kw'>let</span> <span class='ident'>lhs_lo</span> <span class='op'>=</span> <span class='ident'>parser</span>.<span class='ident'>span</span>.<span class='ident'>lo</span>;
@@ -736,23 +739,23 @@ matching, by enforcing the following restrictions on its input:
             <span class='ident'>token</span>::<span class='ident'>Lt</span> <span class='op'>=&gt;</span> {
                 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>tags</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
                 <span class='kw'>while</span> <span class='ident'>parser</span>.<span class='ident'>token</span> <span class='op'>!=</span> <span class='ident'>token</span>::<span class='ident'>FatArrow</span> {
-                    <span class='ident'>tags</span>.<span class='ident'>push</span>(<span class='ident'>parse_tag</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>parser</span>));
+                    <span class='ident'>tags</span>.<span class='ident'>push</span>(<span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parse_tag</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>parser</span>)));
                 }
                 <span class='ident'>Tags</span>(<span class='ident'>tags</span>)
             }
-            _ <span class='op'>=&gt;</span> <span class='ident'>parser</span>.<span class='ident'>fatal</span>(<span class='string'>&quot;unrecognized pattern&quot;</span>),
+            _ <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>parser</span>.<span class='ident'>fatal</span>(<span class='string'>&quot;unrecognized pattern&quot;</span>)),
         };
         <span class='kw'>let</span> <span class='ident'>lhs_hi</span> <span class='op'>=</span> <span class='ident'>parser</span>.<span class='ident'>last_span</span>.<span class='ident'>hi</span>;
 
-        <span class='ident'>parser</span>.<span class='ident'>expect</span>(<span class='kw-2'>&amp;</span><span class='ident'>token</span>::<span class='ident'>FatArrow</span>);
+        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>expect</span>(<span class='kw-2'>&amp;</span><span class='ident'>token</span>::<span class='ident'>FatArrow</span>));
 
         <span class='kw'>let</span> <span class='ident'>rhs_lo</span> <span class='op'>=</span> <span class='ident'>parser</span>.<span class='ident'>span</span>.<span class='ident'>lo</span>;
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>rhs_hi</span> <span class='op'>=</span> <span class='ident'>parser</span>.<span class='ident'>span</span>.<span class='ident'>hi</span>;
-        <span class='kw'>let</span> <span class='ident'>rhs</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>parser</span>.<span class='ident'>eat_keyword</span>(<span class='ident'>token</span>::<span class='ident'>keywords</span>::<span class='ident'>Else</span>) {
-            <span class='ident'>parser</span>.<span class='ident'>expect</span>(<span class='kw-2'>&amp;</span><span class='ident'>token</span>::<span class='ident'>Comma</span>);
+        <span class='kw'>let</span> <span class='ident'>rhs</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>eat_keyword</span>(<span class='ident'>token</span>::<span class='ident'>keywords</span>::<span class='ident'>Else</span>)) {
+            <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>expect</span>(<span class='kw-2'>&amp;</span><span class='ident'>token</span>::<span class='ident'>Comma</span>));
             <span class='ident'>Else</span>
         } <span class='kw'>else</span> {
-            <span class='kw'>let</span> <span class='ident'>expr</span> <span class='op'>=</span> <span class='ident'>parser</span>.<span class='ident'>parse_expr_res</span>(<span class='ident'>parser</span>::<span class='ident'>RESTRICTION_STMT_EXPR</span>);
+            <span class='kw'>let</span> <span class='ident'>expr</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>parse_expr_res</span>(<span class='ident'>parser</span>::<span class='ident'>RESTRICTION_STMT_EXPR</span>));
             <span class='ident'>rhs_hi</span> <span class='op'>=</span> <span class='ident'>parser</span>.<span class='ident'>last_span</span>.<span class='ident'>hi</span>;
 
             <span class='kw'>let</span> <span class='ident'>require_comma</span> <span class='op'>=</span>
@@ -760,9 +763,10 @@ matching, by enforcing the following restrictions on its input:
                 <span class='op'>&amp;&amp;</span> <span class='ident'>parser</span>.<span class='ident'>token</span> <span class='op'>!=</span> <span class='ident'>token</span>::<span class='ident'>CloseDelim</span>(<span class='ident'>token</span>::<span class='ident'>Brace</span>);
 
             <span class='kw'>if</span> <span class='ident'>require_comma</span> {
-                <span class='ident'>parser</span>.<span class='ident'>commit_expr</span>(<span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>expr</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>token</span>::<span class='ident'>Comma</span>], <span class='kw-2'>&amp;</span>[<span class='ident'>token</span>::<span class='ident'>CloseDelim</span>(<span class='ident'>token</span>::<span class='ident'>Brace</span>)]);
+                <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>commit_expr</span>(
+                    <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>expr</span>, <span class='kw-2'>&amp;</span>[<span class='ident'>token</span>::<span class='ident'>Comma</span>], <span class='kw-2'>&amp;</span>[<span class='ident'>token</span>::<span class='ident'>CloseDelim</span>(<span class='ident'>token</span>::<span class='ident'>Brace</span>)]));
             } <span class='kw'>else</span> {
-                <span class='ident'>parser</span>.<span class='ident'>eat</span>(<span class='kw-2'>&amp;</span><span class='ident'>token</span>::<span class='ident'>Comma</span>);
+                <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>eat</span>(<span class='kw-2'>&amp;</span><span class='ident'>token</span>::<span class='ident'>Comma</span>));
             }
 
             <span class='ident'>Expr</span>(<span class='ident'>expr</span>)
@@ -776,12 +780,12 @@ matching, by enforcing the following restrictions on its input:
     }
 
     <span class='comment'>// Consume the closing brace</span>
-    <span class='ident'>parser</span>.<span class='ident'>bump</span>();
+    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>.<span class='ident'>bump</span>());
 
-    <span class='ident'>Match</span> {
+    <span class='prelude-val'>Ok</span>(<span class='ident'>Match</span> {
         <span class='ident'>discriminant</span>: <span class='ident'>discriminant</span>,
         <span class='ident'>arms</span>: <span class='ident'>arms</span>,
-    }
+    })
 }
 
 <span class='doccomment'>/// Description of a wildcard match arm.</span>
@@ -809,7 +813,7 @@ matching, by enforcing the following restrictions on its input:
 
 <span class='doccomment'>/// Expand the `match_token!` macro.</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>expand</span>(<span class='ident'>cx</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>ExtCtxt</span>, <span class='ident'>span</span>: <span class='ident'>Span</span>, <span class='ident'>toks</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>ast</span>::<span class='ident'>TokenTree</span>]) <span class='op'>-&gt;</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>MacResult</span><span class='op'>+</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>Match</span> { <span class='ident'>discriminant</span>, <span class='kw-2'>mut</span> <span class='ident'>arms</span> } <span class='op'>=</span> <span class='ident'>parse</span>(<span class='ident'>cx</span>, <span class='ident'>toks</span>);
+    <span class='kw'>let</span> <span class='ident'>Match</span> { <span class='ident'>discriminant</span>, <span class='kw-2'>mut</span> <span class='ident'>arms</span> } <span class='op'>=</span> <span class='macro'>panictry</span><span class='macro'>!</span>(<span class='ident'>parse</span>(<span class='ident'>cx</span>, <span class='ident'>toks</span>));
 
     <span class='comment'>// Handle the last arm specially at the end.</span>
     <span class='kw'>let</span> <span class='ident'>last_arm</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>arms</span>.<span class='ident'>pop</span>() {

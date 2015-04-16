@@ -1,1 +1,1 @@
-initSidebarItems({"trait":[["Template","Common trait for Symbiosis templates."]]});
+initSidebarItems({"trait":[["Template","Common trait for Symbiosis templates."]],"enum":[["Collection","A generic collection type."],["Key","A generic collection key."],["KeyValues","A generic iterator for collection keys and values. List indices will start from `1`, for aesthetic reasons."],["Values","A generic iterator for collection values."]]});

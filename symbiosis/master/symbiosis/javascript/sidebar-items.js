@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["VarState","Represents the state of a JavaScript variable."]],"struct":[["JavaScript","Code generator for JavaScript templates."]]});
+initSidebarItems({"struct":[["JavaScript","Code generator for JavaScript templates."]],"enum":[["VarState","Represents the state of a JavaScript variable."]]});

@@ -1,1 +1,1 @@
-initSidebarItems({"macro":[["line!","Write an indented line of code."]],"mod":[["codegen",""],["fragments",""],["javascript",""],["rust",""]],"enum":[["Error",""]],"struct":[["Template","A single template."],["TemplateGroup","A collection of templates."]]});
+initSidebarItems({"struct":[["Template","A single template."],["TemplateGroup","A collection of templates."]],"enum":[["Error",""]],"mod":[["codegen",""],["fragments",""],["javascript",""],["rust",""]],"macro":[["line!","Write an indented line of code."]]});
