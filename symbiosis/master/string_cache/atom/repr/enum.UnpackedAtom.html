@@ -41,19 +41,19 @@
     </nav>
 
     <section id='main' class="content enum">
-<h1 class='fqn'><span class='in-band'>Enum <a href='../../index.html'>string_cache</a>::<wbr><a href='../index.html'>atom</a>::<wbr><a href='index.html'>repr</a>::<wbr><a class='enum' href=''>UnpackedAtom</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Enum <a href='../../index.html'>string_cache</a>::<wbr><a href='../index.html'>atom</a>::<wbr><a href='index.html'>repr</a>::<wbr><a class='enum' href=''>UnpackedAtom</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-59' href='../../../src/string_cache/atom/up/up/shared/repr.rs.html#31-40'>[src]</a></span></h1>
+        </span><a id='src-59' class='srclink' href='../../../src/string_cache/atom/up/up/shared/repr.rs.html#31-40'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum UnpackedAtom {
     Dynamic(<a href='http://doc.rust-lang.org/nightly/std/primitive.pointer.html'>*mut <a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a></a>),
     Inline(<a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>, <a href='http://doc.rust-lang.org/nightly/std/primitive.array.html'>[<a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>; 7]</a>),
     Static(<a href='http://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>),
 }</pre><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.Dynamic'><a class='stability Unmarked' title='No stability level'></a><code>Dynamic</code></td><td><div class='docblock'><p>Pointer to a dynamic table entry.  Must be 16-byte aligned!</p>
-</div></td></tr><tr><td id='variant.Inline'><a class='stability Unmarked' title='No stability level'></a><code>Inline</code></td><td><div class='docblock'><p>Length + bytes of string.</p>
-</div></td></tr><tr><td id='variant.Static'><a class='stability Unmarked' title='No stability level'></a><code>Static</code></td><td><div class='docblock'><p>Index in static interning table.</p>
-</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='enum' href='../../../string_cache/atom/repr/enum.UnpackedAtom.html' title='string_cache::atom::repr::UnpackedAtom'>UnpackedAtom</a></code></h3><div class='impl-items'><h4 id='method.pack' class='method'><a class='stability Unmarked' title='No stability level'></a><code>unsafe fn <a href='#method.pack' class='fnname'>pack</a>(self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></h4>
-<h4 id='method.from_packed' class='method'><a class='stability Unmarked' title='No stability level'></a><code>unsafe fn <a href='#method.from_packed' class='fnname'>from_packed</a>(data: <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; <a class='enum' href='../../../string_cache/atom/repr/enum.UnpackedAtom.html' title='string_cache::atom::repr::UnpackedAtom'>UnpackedAtom</a></code></h4>
+<table><tr><td id='variant.Dynamic'><code>Dynamic</code></td><td><div class='docblock'><p>Pointer to a dynamic table entry.  Must be 16-byte aligned!</p>
+</div></td></tr><tr><td id='variant.Inline'><code>Inline</code></td><td><div class='docblock'><p>Length + bytes of string.</p>
+</div></td></tr><tr><td id='variant.Static'><code>Static</code></td><td><div class='docblock'><p>Index in static interning table.</p>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='enum' href='../../../string_cache/atom/repr/enum.UnpackedAtom.html' title='string_cache::atom::repr::UnpackedAtom'>UnpackedAtom</a></code></h3><div class='impl-items'><h4 id='method.pack' class='method'><code>unsafe fn <a href='#method.pack' class='fnname'>pack</a>(self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code></h4>
+<h4 id='method.from_packed' class='method'><code>unsafe fn <a href='#method.from_packed' class='fnname'>from_packed</a>(data: <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; <a class='enum' href='../../../string_cache/atom/repr/enum.UnpackedAtom.html' title='string_cache::atom::repr::UnpackedAtom'>UnpackedAtom</a></code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 

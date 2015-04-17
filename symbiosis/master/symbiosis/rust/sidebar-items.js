@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Rust","Code generator for Rust templates."]],"enum":[["Visibility","Visibility of modules and structures in Rust."]]});
+initSidebarItems({"enum":[["Error",""],["Visibility","Visibility of modules and structures in Rust."]],"struct":[["Rust","Code generator for Rust templates."]]});

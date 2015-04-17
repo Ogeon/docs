@@ -41,9 +41,9 @@
     </nav>
 
     <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>html5ever</a>::<wbr><a href='index.html'>tokenizer</a>::<wbr><a class='trait' href=''>TokenSink</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>html5ever</a>::<wbr><a href='index.html'>tokenizer</a>::<wbr><a class='trait' href=''>TokenSink</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-12333' href='../../src/html5ever/tokenizer/interface.rs.html#106-116'>[src]</a></span></h1>
+        </span><a id='src-12333' class='srclink' href='../../src/html5ever/tokenizer/interface.rs.html#106-116'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait TokenSink {
     fn <a href='#tymethod.process_token' class='fnname'>process_token</a>(&amp;mut self, token: <a class='enum' href='../../html5ever/tokenizer/enum.Token.html' title='html5ever::tokenizer::Token'>Token</a>);
 
@@ -52,17 +52,17 @@
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.process_token' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.process_token' class='fnname'>process_token</a>(&amp;mut self, token: <a class='enum' href='../../html5ever/tokenizer/enum.Token.html' title='html5ever::tokenizer::Token'>Token</a>)</code></h3><div class='docblock'><p>Process a token.</p>
+        <h3 id='tymethod.process_token' class='method stab '><code>fn <a href='#tymethod.process_token' class='fnname'>process_token</a>(&amp;mut self, token: <a class='enum' href='../../html5ever/tokenizer/enum.Token.html' title='html5ever::tokenizer::Token'>Token</a>)</code></h3><div class='docblock'><p>Process a token.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.query_state_change' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.query_state_change' class='fnname'>query_state_change</a>(&amp;mut self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='../../html5ever/tokenizer/states/enum.State.html' title='html5ever::tokenizer::states::State'>State</a>&gt;</code></h3><div class='docblock'><p>The tokenizer will call this after emitting any start tag.
+        <h3 id='method.query_state_change' class='method stab '><code>fn <a href='#method.query_state_change' class='fnname'>query_state_change</a>(&amp;mut self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='../../html5ever/tokenizer/states/enum.State.html' title='html5ever::tokenizer::states::State'>State</a>&gt;</code></h3><div class='docblock'><p>The tokenizer will call this after emitting any start tag.
 This allows the tree builder to change the tokenizer&#39;s state.
 By default no state changes occur.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;Handle, Sink&gt; <a class='trait' href='../../html5ever/tokenizer/trait.TokenSink.html' title='html5ever::tokenizer::TokenSink'>TokenSink</a> for <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilder.html' title='html5ever::tree_builder::TreeBuilder'>TreeBuilder</a>&lt;Handle, Sink&gt; <span class='where'>where Handle: <a class='trait' href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>, Sink: <a class='trait' href='../../html5ever/tree_builder/interface/trait.TreeSink.html' title='html5ever::tree_builder::interface::TreeSink'>TreeSink</a>&lt;Handle=Handle&gt;</span></code></li>
+    <li><code>impl&lt;Handle, Sink&gt; <a class='trait' href='../../html5ever/tokenizer/trait.TokenSink.html' title='html5ever::tokenizer::TokenSink'>TokenSink</a> for <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilder.html' title='html5ever::tree_builder::TreeBuilder'>TreeBuilder</a>&lt;Handle, Sink&gt; <span class='where'>where Handle: <a class='trait' href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>, Sink: <a class='trait' href='../../html5ever/tree_builder/interface/trait.TreeSink.html' title='html5ever::tree_builder::interface::TreeSink'>TreeSink</a>&lt;Handle=Handle&gt;</span></code></li>
 </ul><script type="text/javascript" async
                               src="../../implementors/html5ever/tokenizer/trait.TokenSink.js">
                       </script></section>

@@ -41,9 +41,9 @@
     </nav>
 
     <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>html5ever</a>::<wbr><a href='index.html'>tokenizer</a>::<wbr><a class='struct' href=''>TokenizerOpts</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>html5ever</a>::<wbr><a href='index.html'>tokenizer</a>::<wbr><a class='struct' href=''>TokenizerOpts</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-69920' href='../../src/html5ever/tokenizer/mod.rs.html#69-89'>[src]</a></span></h1>
+        </span><a id='src-69920' class='srclink' href='../../src/html5ever/tokenizer/mod.rs.html#69-89'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct TokenizerOpts {
     pub exact_errors: <a href='http://doc.rust-lang.org/nightly/core/primitive.bool.html'>bool</a>,
     pub discard_bom: <a href='http://doc.rust-lang.org/nightly/core/primitive.bool.html'>bool</a>,
@@ -52,19 +52,24 @@
     pub last_start_tag_name: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
 }</pre><div class='docblock'><p>Tokenizer options, with an impl for <code>Default</code>.</p>
 </div><h2 class='fields'>Fields</h2>
-<table><tr><td id='structfield.exact_errors'><a class='stability Unmarked' title='No stability level'></a><code>exact_errors</code></td><td><div class='docblock'><p>Report all parse errors described in the spec, at some
+<table><tr class='stab '>
+                                  <td id='structfield.exact_errors'><code>exact_errors</code></td><td><div class='docblock'><p>Report all parse errors described in the spec, at some
 performance penalty?  Default: false</p>
-</div></td></tr><tr><td id='structfield.discard_bom'><a class='stability Unmarked' title='No stability level'></a><code>discard_bom</code></td><td><div class='docblock'><p>Discard a <code>U+FEFF BYTE ORDER MARK</code> if we see one at the beginning
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.discard_bom'><code>discard_bom</code></td><td><div class='docblock'><p>Discard a <code>U+FEFF BYTE ORDER MARK</code> if we see one at the beginning
 of the stream?  Default: true</p>
-</div></td></tr><tr><td id='structfield.profile'><a class='stability Unmarked' title='No stability level'></a><code>profile</code></td><td><div class='docblock'><p>Keep a record of how long we spent in each state?  Printed
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.profile'><code>profile</code></td><td><div class='docblock'><p>Keep a record of how long we spent in each state?  Printed
 when <code>end()</code> is called.  Default: false</p>
-</div></td></tr><tr><td id='structfield.initial_state'><a class='stability Unmarked' title='No stability level'></a><code>initial_state</code></td><td><div class='docblock'><p>Initial state override.  Only the test runner should use
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.initial_state'><code>initial_state</code></td><td><div class='docblock'><p>Initial state override.  Only the test runner should use
 a non-<code>None</code> value!</p>
-</div></td></tr><tr><td id='structfield.last_start_tag_name'><a class='stability Unmarked' title='No stability level'></a><code>last_start_tag_name</code></td><td><div class='docblock'><p>Last start tag.  Only the test runner should use a
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.last_start_tag_name'><code>last_start_tag_name</code></td><td><div class='docblock'><p>Last start tag.  Only the test runner should use a
 non-<code>None</code> value!</p>
-</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../html5ever/tokenizer/struct.TokenizerOpts.html' title='html5ever::tokenizer::TokenizerOpts'>TokenizerOpts</a></code></h3><div class='impl-items'><h4 id='method.default' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/default/trait.Default.html#method.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../../html5ever/tokenizer/struct.TokenizerOpts.html' title='html5ever::tokenizer::TokenizerOpts'>TokenizerOpts</a></code></h4>
-</div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../../html5ever/tokenizer/struct.TokenizerOpts.html' title='html5ever::tokenizer::TokenizerOpts'>TokenizerOpts</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../html5ever/tokenizer/struct.TokenizerOpts.html' title='html5ever::tokenizer::TokenizerOpts'>TokenizerOpts</a></code></h4>
-<h4 id='method.clone_from' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../html5ever/tokenizer/struct.TokenizerOpts.html' title='html5ever::tokenizer::TokenizerOpts'>TokenizerOpts</a></code></h3><div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/default/trait.Default.html#method.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../../html5ever/tokenizer/struct.TokenizerOpts.html' title='html5ever::tokenizer::TokenizerOpts'>TokenizerOpts</a></code></h4>
+</div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../../html5ever/tokenizer/struct.TokenizerOpts.html' title='html5ever::tokenizer::TokenizerOpts'>TokenizerOpts</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../html5ever/tokenizer/struct.TokenizerOpts.html' title='html5ever::tokenizer::TokenizerOpts'>TokenizerOpts</a></code></h4>
+<h4 id='method.clone_from' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 

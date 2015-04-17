@@ -1,1 +1,1 @@
-initSidebarItems({"macro":[["qualname!",""]],"mod":[["atom",""],["namespace",""]]});
+initSidebarItems({"mod":[["atom",""],["namespace",""]],"macro":[["qualname!",""]]});

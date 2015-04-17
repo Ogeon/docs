@@ -41,9 +41,9 @@
     </nav>
 
     <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>html5ever</a>::<wbr><a href='index.html'>tree_builder</a>::<wbr><a class='struct' href=''>TreeBuilderOpts</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>html5ever</a>::<wbr><a href='index.html'>tree_builder</a>::<wbr><a class='struct' href=''>TreeBuilderOpts</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-94655' href='../../src/html5ever/tree_builder/mod.rs.html#48-74'>[src]</a></span></h1>
+        </span><a id='src-94655' class='srclink' href='../../src/html5ever/tree_builder/mod.rs.html#48-74'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct TreeBuilderOpts {
     pub exact_errors: <a href='http://doc.rust-lang.org/nightly/core/primitive.bool.html'>bool</a>,
     pub scripting_enabled: <a href='http://doc.rust-lang.org/nightly/core/primitive.bool.html'>bool</a>,
@@ -53,12 +53,17 @@
     pub quirks_mode: <a class='enum' href='../../html5ever/tree_builder/interface/enum.QuirksMode.html' title='html5ever::tree_builder::interface::QuirksMode'>QuirksMode</a>,
 }</pre><div class='docblock'><p>Tree builder options, with an impl for Default.</p>
 </div><h2 class='fields'>Fields</h2>
-<table><tr><td id='structfield.exact_errors'><a class='stability Unmarked' title='No stability level'></a><code>exact_errors</code></td><td><div class='docblock'><p>Report all parse errors described in the spec, at some
+<table><tr class='stab '>
+                                  <td id='structfield.exact_errors'><code>exact_errors</code></td><td><div class='docblock'><p>Report all parse errors described in the spec, at some
 performance penalty?  Default: false</p>
-</div></td></tr><tr><td id='structfield.scripting_enabled'><a class='stability Unmarked' title='No stability level'></a><code>scripting_enabled</code></td><td><div class='docblock'><p>Is scripting enabled?</p>
-</div></td></tr><tr><td id='structfield.iframe_srcdoc'><a class='stability Unmarked' title='No stability level'></a><code>iframe_srcdoc</code></td><td><div class='docblock'><p>Is this an <code>iframe srcdoc</code> document?</p>
-</div></td></tr><tr><td id='structfield.drop_doctype'><a class='stability Unmarked' title='No stability level'></a><code>drop_doctype</code></td><td><div class='docblock'><p>Should we drop the DOCTYPE (if any) from the tree?</p>
-</div></td></tr><tr><td id='structfield.ignore_missing_rules'><a class='stability Unmarked' title='No stability level'></a><code>ignore_missing_rules</code></td><td><div class='docblock'><p>The <code>&lt;svg&gt;</code>, <code>&lt;math&gt;</code>, and <code>&lt;template&gt;</code> tags have special
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.scripting_enabled'><code>scripting_enabled</code></td><td><div class='docblock'><p>Is scripting enabled?</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.iframe_srcdoc'><code>iframe_srcdoc</code></td><td><div class='docblock'><p>Is this an <code>iframe srcdoc</code> document?</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.drop_doctype'><code>drop_doctype</code></td><td><div class='docblock'><p>Should we drop the DOCTYPE (if any) from the tree?</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.ignore_missing_rules'><code>ignore_missing_rules</code></td><td><div class='docblock'><p>The <code>&lt;svg&gt;</code>, <code>&lt;math&gt;</code>, and <code>&lt;template&gt;</code> tags have special
 parsing rules that are currently unimplemented.  By default
 we <code>panic!()</code> if any of these tags is encountered.  If this
 option is enabled, we will instead attempt to parse them
@@ -66,11 +71,12 @@ using the ordinary HTML parsing rules.</p>
 
 <p><strong>Warning</strong>: This may produce extremely incorrect results
 on some documents!</p>
-</div></td></tr><tr><td id='structfield.quirks_mode'><a class='stability Unmarked' title='No stability level'></a><code>quirks_mode</code></td><td><div class='docblock'><p>Initial TreeBuilder quirks mode. Default: NoQuirks</p>
-</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilderOpts.html' title='html5ever::tree_builder::TreeBuilderOpts'>TreeBuilderOpts</a></code></h3><div class='impl-items'><h4 id='method.default' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/default/trait.Default.html#method.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilderOpts.html' title='html5ever::tree_builder::TreeBuilderOpts'>TreeBuilderOpts</a></code></h4>
-</div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilderOpts.html' title='html5ever::tree_builder::TreeBuilderOpts'>TreeBuilderOpts</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilderOpts.html' title='html5ever::tree_builder::TreeBuilderOpts'>TreeBuilderOpts</a></code></h4>
-<h4 id='method.clone_from' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
-</div><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilderOpts.html' title='html5ever::tree_builder::TreeBuilderOpts'>TreeBuilderOpts</a></code></h3><div class='impl-items'></div></section>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.quirks_mode'><code>quirks_mode</code></td><td><div class='docblock'><p>Initial TreeBuilder quirks mode. Default: NoQuirks</p>
+</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilderOpts.html' title='html5ever::tree_builder::TreeBuilderOpts'>TreeBuilderOpts</a></code></h3><div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/default/trait.Default.html#method.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilderOpts.html' title='html5ever::tree_builder::TreeBuilderOpts'>TreeBuilderOpts</a></code></h4>
+</div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilderOpts.html' title='html5ever::tree_builder::TreeBuilderOpts'>TreeBuilderOpts</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilderOpts.html' title='html5ever::tree_builder::TreeBuilderOpts'>TreeBuilderOpts</a></code></h4>
+<h4 id='method.clone_from' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilderOpts.html' title='html5ever::tree_builder::TreeBuilderOpts'>TreeBuilderOpts</a></code></h3><div class='impl-items'></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
