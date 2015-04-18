@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["delay","This causes program execution to pause for at least the provided number of milliseconds."],["delay_microseconds","This causes program execution to pause for at least the provided number of microseconds."]]});
