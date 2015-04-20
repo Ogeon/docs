@@ -1406,24 +1406,6 @@
 <span id="1364">1364</span>
 <span id="1365">1365</span>
 <span id="1366">1366</span>
-<span id="1367">1367</span>
-<span id="1368">1368</span>
-<span id="1369">1369</span>
-<span id="1370">1370</span>
-<span id="1371">1371</span>
-<span id="1372">1372</span>
-<span id="1373">1373</span>
-<span id="1374">1374</span>
-<span id="1375">1375</span>
-<span id="1376">1376</span>
-<span id="1377">1377</span>
-<span id="1378">1378</span>
-<span id="1379">1379</span>
-<span id="1380">1380</span>
-<span id="1381">1381</span>
-<span id="1382">1382</span>
-<span id="1383">1383</span>
-<span id="1384">1384</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The html5ever Project Developers. See the</span>
 <span class='comment'>// COPYRIGHT file at the top-level directory of this distribution.</span>
@@ -1437,11 +1419,6 @@
 <span class='doccomment'>//! The HTML5 tokenizer.</span>
 
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>clone</span>::<span class='ident'>Clone</span>;
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>cmp</span>::<span class='ident'>Ord</span>;
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>iter</span>::<span class='ident'>Iterator</span>;
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>option</span>::<span class='prelude-ty'>Option</span>::{<span class='self'>self</span>, <span class='prelude-val'>Some</span>, <span class='prelude-val'>None</span>};
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>interface</span>::{<span class='ident'>Doctype</span>, <span class='ident'>Attribute</span>, <span class='ident'>TagKind</span>, <span class='ident'>StartTag</span>, <span class='ident'>EndTag</span>, <span class='ident'>Tag</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>interface</span>::{<span class='ident'>Token</span>, <span class='ident'>DoctypeToken</span>, <span class='ident'>TagToken</span>, <span class='ident'>CommentToken</span>};
@@ -1461,11 +1438,8 @@
 <span class='kw'>use</span> <span class='ident'>util</span>::<span class='ident'>str</span>::{<span class='ident'>lower_ascii</span>, <span class='ident'>lower_ascii_letter</span>, <span class='ident'>empty_str</span>};
 <span class='kw'>use</span> <span class='ident'>util</span>::<span class='ident'>smallcharset</span>::<span class='ident'>SmallCharSet</span>;
 
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>mem</span>::<span class='ident'>replace</span>;
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>default</span>::<span class='ident'>Default</span>;
-<span class='kw'>use</span> <span class='ident'>alloc</span>::<span class='ident'>boxed</span>::<span class='ident'>Box</span>;
-<span class='kw'>use</span> <span class='ident'>collections</span>::<span class='ident'>vec</span>::<span class='ident'>Vec</span>;
-<span class='kw'>use</span> <span class='ident'>collections</span>::<span class='ident'>string</span>::{<span class='ident'>String</span>, <span class='ident'>ToString</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>replace</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>default</span>::<span class='ident'>Default</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>::{<span class='self'>self</span>, <span class='ident'>Borrowed</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>BTreeMap</span>;
 
@@ -1603,10 +1577,6 @@
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>Sink</span>: <span class='ident'>TokenSink</span><span class='op'>&gt;</span> <span class='ident'>Tokenizer</span><span class='op'>&lt;</span><span class='ident'>Sink</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Create a new tokenizer which feeds tokens to a particular `TokenSink`.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>sink</span>: <span class='ident'>Sink</span>, <span class='kw-2'>mut</span> <span class='ident'>opts</span>: <span class='ident'>TokenizerOpts</span>) <span class='op'>-&gt;</span> <span class='ident'>Tokenizer</span><span class='op'>&lt;</span><span class='ident'>Sink</span><span class='op'>&gt;</span> {
-        <span class='kw'>if</span> <span class='ident'>opts</span>.<span class='ident'>profile</span> <span class='op'>&amp;&amp;</span> <span class='macro'>cfg</span><span class='macro'>!</span>(<span class='ident'>for_c</span>) {
-            <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;Can&#39;t profile tokenizer when built as a C library&quot;</span>);
-        }
-
         <span class='kw'>let</span> <span class='ident'>start_tag_name</span> <span class='op'>=</span> <span class='ident'>opts</span>.<span class='ident'>last_start_tag_name</span>.<span class='ident'>take</span>()
             .<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>s</span><span class='op'>|</span> <span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='kw-2'>&amp;</span><span class='ident'>s</span>));
         <span class='kw'>let</span> <span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>opts</span>.<span class='ident'>initial_state</span>.<span class='ident'>unwrap_or</span>(<span class='ident'>states</span>::<span class='ident'>Data</span>);
@@ -1696,13 +1666,11 @@
             <span class='ident'>n</span> <span class='kw'>if</span> (<span class='ident'>n</span> <span class='kw-2'>&amp;</span> <span class='number'>0xFFFE</span>) <span class='op'>==</span> <span class='number'>0xFFFE</span> <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
             _ <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
         } {
-            <span class='comment'>// format_if!(true) will still use the static error when built for C.</span>
-            <span class='kw'>let</span> <span class='ident'>msg</span> <span class='op'>=</span> <span class='macro'>format_if</span><span class='macro'>!</span>(<span class='boolval'>true</span>, <span class='string'>&quot;Bad character&quot;</span>,
-                <span class='string'>&quot;Bad character {}&quot;</span>, <span class='ident'>c</span>);
-            <span class='self'>self</span>.<span class='ident'>emit_error</span>(<span class='ident'>msg</span>);
+            <span class='kw'>let</span> <span class='ident'>msg</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Bad character {}&quot;</span>, <span class='ident'>c</span>);
+            <span class='self'>self</span>.<span class='ident'>emit_error</span>(<span class='ident'>Cow</span>::<span class='ident'>Owned</span>(<span class='ident'>msg</span>));
         }
 
-        <span class='macro'>h5e_debug</span><span class='macro'>!</span>(<span class='string'>&quot;got character {}&quot;</span>, <span class='ident'>c</span>);
+        <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;got character {}&quot;</span>, <span class='ident'>c</span>);
         <span class='self'>self</span>.<span class='ident'>current_char</span> <span class='op'>=</span> <span class='ident'>c</span>;
         <span class='prelude-val'>Some</span>(<span class='ident'>c</span>)
     }
@@ -1729,7 +1697,7 @@
         }
 
         <span class='kw'>let</span> <span class='ident'>d</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>input_buffers</span>.<span class='ident'>pop_except_from</span>(<span class='ident'>set</span>);
-        <span class='macro'>h5e_debug</span><span class='macro'>!</span>(<span class='string'>&quot;got characters {:?}&quot;</span>, <span class='ident'>d</span>);
+        <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;got characters {:?}&quot;</span>, <span class='ident'>d</span>);
         <span class='kw'>match</span> <span class='ident'>d</span> {
             <span class='prelude-val'>Some</span>(<span class='ident'>FromSet</span>(<span class='ident'>c</span>)) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>get_preprocessed_char</span>(<span class='ident'>c</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='ident'>FromSet</span>(<span class='ident'>x</span>)),
 
@@ -1752,8 +1720,8 @@
         }
     }
 
-    <span class='comment'>// Run the state machine for as long as we can.</span>
-    <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
+    <span class='doccomment'>/// Run the state machine for as long as we can.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>opts</span>.<span class='ident'>profile</span> {
             <span class='kw'>loop</span> {
                 <span class='kw'>let</span> <span class='ident'>state</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>state</span>;
@@ -1834,11 +1802,9 @@
         });
         <span class='self'>self</span>.<span class='ident'>process_token</span>(<span class='ident'>token</span>);
 
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>current_tag_kind</span> <span class='op'>==</span> <span class='ident'>StartTag</span> {
-            <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>query_state_change</span>() {
-                <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> (),
-                <span class='prelude-val'>Some</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>s</span>,
-            }
+        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>query_state_change</span>() {
+            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> (),
+            <span class='prelude-val'>Some</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>s</span>,
         }
     }
 
@@ -1874,7 +1840,7 @@
         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>last_start_tag_name</span>.<span class='ident'>as_ref</span>() {
             <span class='prelude-val'>Some</span>(<span class='ident'>last</span>) <span class='op'>=&gt;</span>
                 (<span class='self'>self</span>.<span class='ident'>current_tag_kind</span> <span class='op'>==</span> <span class='ident'>EndTag</span>)
-                <span class='op'>&amp;&amp;</span> (<span class='self'>self</span>.<span class='ident'>current_tag_name</span> <span class='op'>==</span> <span class='ident'>last</span>.<span class='ident'>as_slice</span>()),
+                <span class='op'>&amp;&amp;</span> (<span class='op'>*</span><span class='self'>self</span>.<span class='ident'>current_tag_name</span> <span class='op'>==</span> <span class='op'>*</span><span class='op'>*</span><span class='ident'>last</span>),
             <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
         }
     }
@@ -1895,7 +1861,7 @@
         <span class='comment'>// FIXME: linear time search, do we care?</span>
         <span class='kw'>let</span> <span class='ident'>dup</span> <span class='op'>=</span> {
             <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>current_attr_name</span>[..];
-            <span class='self'>self</span>.<span class='ident'>current_tag_attrs</span>.<span class='ident'>iter</span>().<span class='ident'>any</span>(<span class='op'>|</span><span class='ident'>a</span><span class='op'>|</span> <span class='ident'>a</span>.<span class='ident'>name</span>.<span class='ident'>local</span>.<span class='ident'>as_slice</span>() <span class='op'>==</span> <span class='ident'>name</span>)
+            <span class='self'>self</span>.<span class='ident'>current_tag_attrs</span>.<span class='ident'>iter</span>().<span class='ident'>any</span>(<span class='op'>|</span><span class='ident'>a</span><span class='op'>|</span> <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>a</span>.<span class='ident'>name</span>.<span class='ident'>local</span> <span class='op'>==</span> <span class='ident'>name</span>)
         };
 
         <span class='kw'>if</span> <span class='ident'>dup</span> {
@@ -1997,7 +1963,7 @@
 <span class='comment'>// so it&#39;s behind a cfg flag.</span>
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>trace_tokenizer</span>)]</span>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>sh_trace</span> ( ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cmds</span>:<span class='ident'>tt</span>)<span class='op'>*</span> ) <span class='op'>=&gt;</span> ({
-    <span class='macro'>h5e_debug</span><span class='macro'>!</span>(<span class='string'>&quot;  {:s}&quot;</span>, <span class='macro'>stringify</span><span class='macro'>!</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cmds</span>)<span class='op'>*</span>));
+    <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;  {:s}&quot;</span>, <span class='macro'>stringify</span><span class='macro'>!</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cmds</span>)<span class='op'>*</span>));
     <span class='macro'>shorthand</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>expr</span> : $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cmds</span>)<span class='op'>*</span>);
 }));
 
@@ -2073,8 +2039,15 @@
             <span class='kw'>return</span> <span class='self'>self</span>.<span class='ident'>step_char_ref_tokenizer</span>();
         }
 
-        <span class='macro'>h5e_debug</span><span class='macro'>!</span>(<span class='string'>&quot;processing in state {:?}&quot;</span>, <span class='self'>self</span>.<span class='ident'>state</span>);
+        <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;processing in state {:?}&quot;</span>, <span class='self'>self</span>.<span class='ident'>state</span>);
         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>state</span> {
+            <span class='comment'>// Reachable only through `query_state_change`. The tree builder wants</span>
+            <span class='comment'>// the tokenizer to suspend processing.</span>
+            <span class='ident'>states</span>::<span class='ident'>Quiescent</span> <span class='op'>=&gt;</span> {
+                <span class='self'>self</span>.<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>states</span>::<span class='ident'>Data</span>;
+                <span class='kw'>return</span> <span class='boolval'>false</span>;
+            }
+
             <span class='comment'>//§ data-state</span>
             <span class='ident'>states</span>::<span class='ident'>Data</span> <span class='op'>=&gt;</span> <span class='kw'>loop</span> {
                 <span class='kw'>match</span> <span class='macro'>pop_except_from</span><span class='macro'>!</span>(<span class='self'>self</span>, <span class='macro'>small_char_set</span><span class='macro'>!</span>(<span class='string'>&#39;\r&#39;</span> <span class='string'>&#39;\0&#39;</span> <span class='string'>&#39;&amp;&#39;</span> <span class='string'>&#39;&lt;&#39;</span>)) {
@@ -2667,12 +2640,6 @@
         }
     }
 
-    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>for_c</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>dump_profile</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='macro'>unreachable</span><span class='macro'>!</span>();
-    }
-
-    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>for_c</span>))]</span>
     <span class='kw'>fn</span> <span class='ident'>dump_profile</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>results</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>states</span>::<span class='ident'>State</span>, <span class='ident'>u64</span>)<span class='op'>&gt;</span>
             <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>state_profile</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span>(<span class='ident'>s</span>, <span class='ident'>t</span>)<span class='op'>|</span> (<span class='op'>*</span><span class='ident'>s</span>, <span class='op'>*</span><span class='ident'>t</span>)).<span class='ident'>collect</span>();
@@ -2690,10 +2657,10 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>eof_step</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='macro'>h5e_debug</span><span class='macro'>!</span>(<span class='string'>&quot;processing EOF in state {:?}&quot;</span>, <span class='self'>self</span>.<span class='ident'>state</span>);
+        <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;processing EOF in state {:?}&quot;</span>, <span class='self'>self</span>.<span class='ident'>state</span>);
         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>state</span> {
             <span class='ident'>states</span>::<span class='ident'>Data</span> <span class='op'>|</span> <span class='ident'>states</span>::<span class='ident'>RawData</span>(<span class='ident'>Rcdata</span>) <span class='op'>|</span> <span class='ident'>states</span>::<span class='ident'>RawData</span>(<span class='ident'>Rawtext</span>)
-            <span class='op'>|</span> <span class='ident'>states</span>::<span class='ident'>RawData</span>(<span class='ident'>ScriptData</span>) <span class='op'>|</span> <span class='ident'>states</span>::<span class='ident'>Plaintext</span>
+            <span class='op'>|</span> <span class='ident'>states</span>::<span class='ident'>RawData</span>(<span class='ident'>ScriptData</span>) <span class='op'>|</span> <span class='ident'>states</span>::<span class='ident'>Plaintext</span> <span class='op'>|</span> <span class='ident'>states</span>::<span class='ident'>Quiescent</span>
                 <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>eof</span>),
 
             <span class='ident'>states</span>::<span class='ident'>TagName</span> <span class='op'>|</span> <span class='ident'>states</span>::<span class='ident'>RawData</span>(<span class='ident'>ScriptDataEscaped</span>(_))
@@ -2763,9 +2730,6 @@
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>non_snake_case</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>test</span> {
-    <span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>prelude</span>::<span class='op'>*</span>;
-    <span class='kw'>use</span> <span class='ident'>collections</span>::<span class='ident'>vec</span>::<span class='ident'>Vec</span>;
-    <span class='kw'>use</span> <span class='ident'>collections</span>::<span class='ident'>string</span>::<span class='ident'>String</span>;
     <span class='kw'>use</span> <span class='ident'>super</span>::{<span class='ident'>option_push</span>, <span class='ident'>append_strings</span>}; <span class='comment'>// private items</span>
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>

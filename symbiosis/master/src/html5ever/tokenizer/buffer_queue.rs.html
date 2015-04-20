@@ -285,11 +285,6 @@
 <span id="243">243</span>
 <span id="244">244</span>
 <span id="245">245</span>
-<span id="246">246</span>
-<span id="247">247</span>
-<span id="248">248</span>
-<span id="249">249</span>
-<span id="250">250</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The html5ever Project Developers. See the</span>
 <span class='comment'>// COPYRIGHT file at the top-level directory of this distribution.</span>
@@ -300,14 +295,11 @@
 <span class='comment'>// option. This file may not be copied, modified, or distributed</span>
 <span class='comment'>// except according to those terms.</span>
 
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>prelude</span>::<span class='op'>*</span>;
-
 <span class='kw'>use</span> <span class='ident'>util</span>::<span class='ident'>str</span>::<span class='ident'>AsciiCast</span>;
 <span class='kw'>use</span> <span class='ident'>util</span>::<span class='ident'>smallcharset</span>::<span class='ident'>SmallCharSet</span>;
 
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>str</span>::<span class='ident'>CharRange</span>;
-<span class='kw'>use</span> <span class='ident'>collections</span>::<span class='ident'>string</span>::<span class='ident'>String</span>;
-<span class='kw'>use</span> <span class='ident'>collections</span>::<span class='ident'>VecDeque</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>CharRange</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>VecDeque</span>;
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>SetResult</span>::{<span class='ident'>FromSet</span>, <span class='ident'>NotFromSet</span>};
 
@@ -470,8 +462,6 @@
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>non_snake_case</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>test</span> {
-    <span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>prelude</span>::<span class='op'>*</span>;
-    <span class='kw'>use</span> <span class='ident'>collections</span>::<span class='ident'>string</span>::<span class='ident'>String</span>;
     <span class='kw'>use</span> <span class='ident'>super</span>::{<span class='ident'>BufferQueue</span>, <span class='ident'>FromSet</span>, <span class='ident'>NotFromSet</span>};
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>

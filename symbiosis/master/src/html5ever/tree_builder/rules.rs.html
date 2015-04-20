@@ -1427,7 +1427,6 @@
 <span id="1385">1385</span>
 <span id="1386">1386</span>
 <span id="1387">1387</span>
-<span id="1388">1388</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The html5ever Project Developers. See the</span>
 <span class='comment'>// COPYRIGHT file at the top-level directory of this distribution.</span>
@@ -1440,20 +1439,17 @@
 
 <span class='doccomment'>//! The tree builder rules, as a single, enormous nested match expression.</span>
 
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>prelude</span>::<span class='op'>*</span>;
-
 <span class='kw'>use</span> <span class='ident'>tree_builder</span>::<span class='ident'>types</span>::<span class='op'>*</span>;
 <span class='kw'>use</span> <span class='ident'>tree_builder</span>::<span class='ident'>tag_sets</span>::<span class='op'>*</span>;
 <span class='kw'>use</span> <span class='ident'>tree_builder</span>::<span class='ident'>actions</span>::<span class='ident'>TreeBuilderActions</span>;
-<span class='kw'>use</span> <span class='ident'>tree_builder</span>::<span class='ident'>interface</span>::{<span class='ident'>TreeSink</span>, <span class='ident'>Quirks</span>, <span class='ident'>AppendNode</span>};
+<span class='kw'>use</span> <span class='ident'>tree_builder</span>::<span class='ident'>interface</span>::{<span class='ident'>TreeSink</span>, <span class='ident'>Quirks</span>, <span class='ident'>AppendNode</span>, <span class='ident'>NextParserState</span>};
 
 <span class='kw'>use</span> <span class='ident'>tokenizer</span>::{<span class='ident'>Tag</span>, <span class='ident'>StartTag</span>, <span class='ident'>EndTag</span>};
-<span class='kw'>use</span> <span class='ident'>tokenizer</span>::<span class='ident'>states</span>::{<span class='ident'>Rcdata</span>, <span class='ident'>Rawtext</span>, <span class='ident'>ScriptData</span>, <span class='ident'>Plaintext</span>};
+<span class='kw'>use</span> <span class='ident'>tokenizer</span>::<span class='ident'>states</span>::{<span class='ident'>Rcdata</span>, <span class='ident'>Rawtext</span>, <span class='ident'>ScriptData</span>, <span class='ident'>Plaintext</span>, <span class='ident'>Quiescent</span>};
 
 <span class='kw'>use</span> <span class='ident'>util</span>::<span class='ident'>str</span>::{<span class='ident'>AsciiExt</span>, <span class='ident'>is_ascii_whitespace</span>};
 
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>mem</span>::<span class='ident'>replace</span>;
-<span class='kw'>use</span> <span class='ident'>collections</span>::<span class='ident'>string</span>::<span class='ident'>String</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>replace</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>::<span class='ident'>Borrowed</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>ToOwned</span>;
 
@@ -2156,8 +2152,10 @@
                 <span class='ident'>tag</span> <span class='kw-2'>@</span> <span class='op'>&lt;</span><span class='op'>/</span>_<span class='op'>&gt;</span> <span class='op'>=&gt;</span> {
                     <span class='kw'>let</span> <span class='ident'>node</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>pop</span>();
                     <span class='kw'>if</span> <span class='ident'>tag</span>.<span class='ident'>name</span> <span class='op'>==</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>script</span>) {
-                        <span class='macro'>h5e_warn</span><span class='macro'>!</span>(<span class='string'>&quot;FIXME: &lt;/script&gt; not fully implemented&quot;</span>);
-                        <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>complete_script</span>(<span class='ident'>node</span>);
+                        <span class='macro'>warn</span><span class='macro'>!</span>(<span class='string'>&quot;FIXME: &lt;/script&gt; not fully implemented&quot;</span>);
+                        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>complete_script</span>(<span class='ident'>node</span>) <span class='op'>==</span> <span class='ident'>NextParserState</span>::<span class='ident'>Suspend</span> {
+                            <span class='self'>self</span>.<span class='ident'>next_tokenizer_state</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>Quiescent</span>);
+                        }
                     }
                     <span class='self'>self</span>.<span class='ident'>mode</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>orig_mode</span>.<span class='ident'>take</span>().<span class='ident'>unwrap</span>();
                     <span class='ident'>Done</span>

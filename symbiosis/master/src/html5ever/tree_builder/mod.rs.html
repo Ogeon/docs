@@ -474,17 +474,6 @@
 <span id="432">432</span>
 <span id="433">433</span>
 <span id="434">434</span>
-<span id="435">435</span>
-<span id="436">436</span>
-<span id="437">437</span>
-<span id="438">438</span>
-<span id="439">439</span>
-<span id="440">440</span>
-<span id="441">441</span>
-<span id="442">442</span>
-<span id="443">443</span>
-<span id="444">444</span>
-<span id="445">445</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The html5ever Project Developers. See the</span>
 <span class='comment'>// COPYRIGHT file at the top-level directory of this distribution.</span>
@@ -497,11 +486,9 @@
 
 <span class='doccomment'>//! The HTML5 tree builder.</span>
 
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>prelude</span>::<span class='op'>*</span>;
-
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>interface</span>::{<span class='ident'>QuirksMode</span>, <span class='ident'>Quirks</span>, <span class='ident'>LimitedQuirks</span>, <span class='ident'>NoQuirks</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>interface</span>::{<span class='ident'>NodeOrText</span>, <span class='ident'>AppendNode</span>, <span class='ident'>AppendText</span>};
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>interface</span>::{<span class='ident'>TreeSink</span>, <span class='ident'>Tracer</span>};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>interface</span>::{<span class='ident'>TreeSink</span>, <span class='ident'>Tracer</span>, <span class='ident'>NextParserState</span>};
 
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>types</span>::<span class='op'>*</span>;
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>actions</span>::<span class='ident'>TreeBuilderActions</span>;
@@ -516,12 +503,10 @@
 
 <span class='kw'>use</span> <span class='ident'>util</span>::<span class='ident'>str</span>::{<span class='ident'>is_ascii_whitespace</span>, <span class='ident'>char_run</span>};
 
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>default</span>::<span class='ident'>Default</span>;
-<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>mem</span>::<span class='ident'>replace</span>;
-<span class='kw'>use</span> <span class='ident'>collections</span>::<span class='ident'>vec</span>::<span class='ident'>Vec</span>;
-<span class='kw'>use</span> <span class='ident'>collections</span>::<span class='ident'>string</span>::<span class='ident'>String</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>default</span>::<span class='ident'>Default</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>replace</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>::<span class='ident'>Borrowed</span>;
-<span class='kw'>use</span> <span class='ident'>collections</span>::<span class='ident'>VecDeque</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>VecDeque</span>;
 
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>mod</span> <span class='ident'>tag_sets</span>;
 <span class='comment'>// &quot;pub&quot; is a workaround for rust#18241 (?)</span>
@@ -767,8 +752,6 @@
         <span class='self'>self</span>.<span class='ident'>context_elem</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>h</span><span class='op'>|</span> <span class='ident'>tracer</span>.<span class='ident'>trace_handle</span>(<span class='ident'>h</span>.<span class='ident'>clone</span>()));
     }
 
-    <span class='comment'>// Debug helper</span>
-    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>for_c</span>))]</span>
     <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>dump_state</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>label</span>: <span class='ident'>String</span>) {
         <span class='kw'>use</span> <span class='ident'>string_cache</span>::<span class='ident'>QualName</span>;
@@ -799,14 +782,9 @@
         <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>);
     }
 
-    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>for_c</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>debug_step</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>_mode</span>: <span class='ident'>InsertionMode</span>, <span class='ident'>_token</span>: <span class='kw-2'>&amp;</span><span class='ident'>Token</span>) {
-    }
-
-    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>for_c</span>))]</span>
     <span class='kw'>fn</span> <span class='ident'>debug_step</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>mode</span>: <span class='ident'>InsertionMode</span>, <span class='ident'>token</span>: <span class='kw-2'>&amp;</span><span class='ident'>Token</span>) {
         <span class='kw'>use</span> <span class='ident'>util</span>::<span class='ident'>str</span>::<span class='ident'>to_escaped_string</span>;
-        <span class='macro'>h5e_debug</span><span class='macro'>!</span>(<span class='string'>&quot;processing {} in insertion mode {:?}&quot;</span>, <span class='ident'>to_escaped_string</span>(<span class='ident'>token</span>), <span class='ident'>mode</span>);
+        <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;processing {} in insertion mode {:?}&quot;</span>, <span class='ident'>to_escaped_string</span>(<span class='ident'>token</span>), <span class='ident'>mode</span>);
     }
 
     <span class='kw'>fn</span> <span class='ident'>process_to_completion</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>token</span>: <span class='ident'>Token</span>) {
