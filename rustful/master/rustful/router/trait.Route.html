@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Route` trait in crate `rustful`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Route">
+
+    <title>rustful::router::Route - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>router</a></p><script>window.sidebarCurrent = {name: 'Route', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content trait">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>router</a>::<wbr><a class='trait' href=''>Route</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-1320' href='../../src/rustful/router.rs.html#123-139'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Route&lt;'a&gt; {
+    type Segments: <a class='trait' href='http://doc.rust-lang.org/nightly/core/iter/trait.Iterator.html' title='core::iter::Iterator'>Iterator</a>&lt;Item=&amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;;
+
+    fn <a href='#tymethod.segments' class='fnname'>segments</a>(&amp;'a self) -&gt; Self::Segments;
+}</pre><div class='docblock'><p>A segmented route.</p>
+</div>
+            <h2 id='associated-types'>Associated Types</h2>
+            <div class='methods'>
+        <h3 id='associatedtype.Segments' class='method'><a class='stability Unmarked' title='No stability level'></a><code>type Segments: <a class='trait' href='http://doc.rust-lang.org/nightly/core/iter/trait.Iterator.html' title='core::iter::Iterator'>Iterator</a>&lt;Item=&amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></h3></div>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.segments' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.segments' class='fnname'>segments</a>(&amp;'a self) -&gt; Self::Segments</code></h3><div class='docblock'><p>Create a route segment iterator. The iterator is expected to return
+None for a root path (<code>/</code>).</p>
+<pre id='rust-example-rendered' class='rust '>
+<span class='kw'>let</span> <span class='ident'>root</span> <span class='op'>=</span> <span class='string'>&quot;/&quot;</span>;
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>root</span>.<span class='ident'>segments</span>().<span class='ident'>next</span>(), <span class='prelude-val'>None</span>);
+
+<span class='kw'>let</span> <span class='ident'>path</span> <span class='op'>=</span> [<span class='string'>&quot;/path&quot;</span>, <span class='string'>&quot;to/somewhere/&quot;</span>, <span class='string'>&quot;/&quot;</span>, <span class='string'>&quot;/else/&quot;</span>];
+<span class='kw'>let</span> <span class='ident'>segments</span> <span class='op'>=</span> <span class='ident'>path</span>.<span class='ident'>segments</span>().<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>();
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>segments</span>, <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;path&quot;</span>, <span class='string'>&quot;to&quot;</span>, <span class='string'>&quot;somewhere&quot;</span>, <span class='string'>&quot;else&quot;</span>]);
+</pre>
+</div></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    <li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a&gt; <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; for <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, R: <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt;&gt; <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; for <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[R]</a></code></li>
+<li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, 'b, T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a>&lt;Target=R&gt; + 'b, R: <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; + ?<a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + 'b&gt; <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; for T</code></li>
+</ul><script type="text/javascript" async
+                              src="../../implementors/rustful/router/trait.Route.js">
+                      </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "rustful";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script async src="../../search-index.js"></script>
+</body>
+</html>

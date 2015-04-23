@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Context` struct in crate `rustful`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Context">
+
+    <title>rustful::context::Context - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a></p><script>window.sidebarCurrent = {name: 'Context', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a>::<wbr><a class='struct' href=''>Context</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-2727' href='../../src/rustful/context.rs.html#23-53'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Context&lt;'a, 'b, 'l&gt; {
+    pub headers: <a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a>,
+    pub http_version: <a class='enum' href='../../rustful/enum.HttpVersion.html' title='rustful::HttpVersion'>HttpVersion</a>,
+    pub address: <a class='enum' href='http://doc.rust-lang.org/nightly/std/net/addr/enum.SocketAddr.html' title='std::net::addr::SocketAddr'>SocketAddr</a>,
+    pub method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>,
+    pub path: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
+    pub variables: <a class='struct' href='http://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html' title='std::collections::hash::map::HashMap'>HashMap</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub query: <a class='struct' href='http://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html' title='std::collections::hash::map::HashMap'>HashMap</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub fragment: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub log: &amp;'l <a class='trait' href='../../rustful/log/trait.Log.html' title='rustful::log::Log'>Log</a> + 'l,
+    pub body_reader: <a class='struct' href='../../rustful/context/struct.BodyReader.html' title='rustful::context::BodyReader'>BodyReader</a>&lt;'a, 'b&gt;,
+}</pre><div class='docblock'><p>A container for things like request data and cache.</p>
+
+<p>A <code>Context</code> can be dereferenced to a <code>BodyReader</code>, allowing direct access to
+the underlying read methods.</p>
+</div><h2 class='fields'>Fields</h2>
+<table><tr><td id='structfield.headers'><a class='stability Unmarked' title='No stability level'></a><code>headers</code></td><td><div class='docblock'><p>Headers from the HTTP request.</p>
+</div></td></tr><tr><td id='structfield.http_version'><a class='stability Unmarked' title='No stability level'></a><code>http_version</code></td><td><div class='docblock'><p>The HTTP version used in the request.</p>
+</div></td></tr><tr><td id='structfield.address'><a class='stability Unmarked' title='No stability level'></a><code>address</code></td><td><div class='docblock'><p>The client address</p>
+</div></td></tr><tr><td id='structfield.method'><a class='stability Unmarked' title='No stability level'></a><code>method</code></td><td><div class='docblock'><p>The HTTP method.</p>
+</div></td></tr><tr><td id='structfield.path'><a class='stability Unmarked' title='No stability level'></a><code>path</code></td><td><div class='docblock'><p>The requested path.</p>
+</div></td></tr><tr><td id='structfield.variables'><a class='stability Unmarked' title='No stability level'></a><code>variables</code></td><td><div class='docblock'><p>Route variables.</p>
+</div></td></tr><tr><td id='structfield.query'><a class='stability Unmarked' title='No stability level'></a><code>query</code></td><td><div class='docblock'><p>Query variables from the path.</p>
+</div></td></tr><tr><td id='structfield.fragment'><a class='stability Unmarked' title='No stability level'></a><code>fragment</code></td><td><div class='docblock'><p>The fragment part of the URL (after #), if provided.</p>
+</div></td></tr><tr><td id='structfield.log'><a class='stability Unmarked' title='No stability level'></a><code>log</code></td><td><div class='docblock'><p>Log for notes, errors and warnings.</p>
+</div></td></tr><tr><td id='structfield.body_reader'><a class='stability Unmarked' title='No stability level'></a><code>body_reader</code></td><td><div class='docblock'><p>A reader for the request body.</p>
+</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl&lt;'a, 'b, 'l&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a> for <a class='struct' href='../../rustful/context/struct.Context.html' title='rustful::context::Context'>Context</a>&lt;'a, 'b, 'l&gt;</code></h3><div class='impl-items'><h4 id='assoc_type.Target' class='type'><a class='stability Unmarked' title='No stability level'></a><code>type Target = <a class='struct' href='../../rustful/context/struct.BodyReader.html' title='rustful::context::BodyReader'>BodyReader</a>&lt;'a, 'b&gt;</code></h4>
+<h4 id='method.deref' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/ops/trait.Deref.html#method.deref' class='fnname'>deref</a>&lt;'r&gt;(&amp;'r self) -&gt; &amp;'r <a class='struct' href='../../rustful/context/struct.BodyReader.html' title='rustful::context::BodyReader'>BodyReader</a>&lt;'a, 'b&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl&lt;'a, 'b, 'l&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html' title='core::ops::DerefMut'>DerefMut</a> for <a class='struct' href='../../rustful/context/struct.Context.html' title='rustful::context::Context'>Context</a>&lt;'a, 'b, 'l&gt;</code></h3><div class='impl-items'><h4 id='method.deref_mut' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/ops/trait.DerefMut.html#method.deref_mut' class='fnname'>deref_mut</a>&lt;'r&gt;(&amp;'r mut self) -&gt; &amp;'r mut <a class='struct' href='../../rustful/context/struct.BodyReader.html' title='rustful::context::BodyReader'>BodyReader</a>&lt;'a, 'b&gt;</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "rustful";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script async src="../../search-index.js"></script>
+</body>
+</html>
