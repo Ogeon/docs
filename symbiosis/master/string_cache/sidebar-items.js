@@ -1,1 +1,1 @@
-initSidebarItems({"macro":[["qualname!",""]],"mod":[["atom",""],["namespace",""]]});
+initSidebarItems({"macro":[["qualname!",""]],"mod":[["atom",""],["namespace","**Note:** This may move as string-cache becomes less Web-specific."]]});

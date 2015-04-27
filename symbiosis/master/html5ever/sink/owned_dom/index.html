@@ -42,14 +42,18 @@
 
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Module <a href='../../index.html'>html5ever</a>::<wbr><a href='../index.html'>sink</a>::<wbr><a class='mod' href=''>owned_dom</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-99333' class='srclink' href='../../../src/html5ever/sink/owned_dom.rs.html#10-389'>[src]</a></span></h1>
+            <a id="toggle-all-docs" href="#" title="collapse all docs">[-]</a>
+        </span><a id='src-99333' class='srclink' href='../../../src/html5ever/sink/owned_dom.rs.html#10-388' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>A simple DOM where every node is owned by its parent.</p>
 
 <p>Since ownership is more complicated during parsing, we actually
 build a different type and then transmute to the public <code>Node</code>.
 This is believed to be memory safe, but if you want to be extra
 careful you can use <code>RcDom</code> instead.</p>
+
+<p><strong>Warning: Unstable.</strong> This module uses unsafe code, has not
+been thoroughly audited, and the performance gains vs. RcDom
+have not been demonstrated.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                     <tr class=' module-item'>

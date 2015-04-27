@@ -635,6 +635,15 @@
 <span id="593">593</span>
 <span id="594">594</span>
 <span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='self'>self</span>, <span class='ident'>Write</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
@@ -644,7 +653,7 @@
 
 <span class='kw'>use</span> <span class='ident'>string_cache</span>::<span class='ident'>atom</span>::<span class='ident'>Atom</span>;
 
-<span class='kw'>use</span> <span class='ident'>codegen</span>::{<span class='ident'>Codegen</span>, <span class='ident'>Logic</span>, <span class='ident'>Token</span>, <span class='ident'>Scope</span>, <span class='ident'>ContentType</span>, <span class='ident'>Content</span>, <span class='ident'>write_indent</span>};
+<span class='kw'>use</span> <span class='ident'>codegen</span>::{<span class='ident'>Codegen</span>, <span class='ident'>Writer</span>, <span class='ident'>Line</span>, <span class='ident'>Logic</span>, <span class='ident'>Token</span>, <span class='ident'>Scope</span>, <span class='ident'>ContentType</span>, <span class='ident'>Content</span>};
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Error</span> {
@@ -708,43 +717,43 @@
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>JavaScript</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>eval_logic</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>W</span>, <span class='ident'>first</span>: <span class='ident'>bool</span>, <span class='ident'>cond</span>: <span class='kw-2'>&amp;</span><span class='ident'>Logic</span>, <span class='ident'>params</span>: <span class='kw-2'>&amp;</span><span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>ContentType</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>eval_logic</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Line</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span>, <span class='ident'>first</span>: <span class='ident'>bool</span>, <span class='ident'>cond</span>: <span class='kw-2'>&amp;</span><span class='ident'>Logic</span>, <span class='ident'>params</span>: <span class='kw-2'>&amp;</span><span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>ContentType</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='kw'>match</span> <span class='ident'>cond</span> {
             <span class='kw-2'>&amp;</span><span class='ident'>Logic</span>::<span class='ident'>And</span>(<span class='kw-2'>ref</span> <span class='ident'>conds</span>) <span class='op'>=&gt;</span> {
                 <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>first</span> {
-                    <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;(&quot;</span>));
+                    <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;(&quot;</span>);
                 }
                 <span class='kw'>for</span> (<span class='ident'>i</span>, <span class='ident'>cond</span>) <span class='kw'>in</span> <span class='ident'>conds</span>.<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
                     <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot; &amp;&amp; &quot;</span>));
+                        <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot; &amp;&amp; &quot;</span>);
                     }
                     <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>eval_logic</span>(<span class='ident'>w</span>, <span class='boolval'>false</span>, <span class='ident'>cond</span>, <span class='ident'>params</span>));
                 }
                 <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>first</span> {
-                    <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;)&quot;</span>));
+                    <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;)&quot;</span>);
                 }
             },
             <span class='kw-2'>&amp;</span><span class='ident'>Logic</span>::<span class='ident'>Or</span>(<span class='kw-2'>ref</span> <span class='ident'>conds</span>) <span class='op'>=&gt;</span> {
                 <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>first</span> {
-                    <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;(&quot;</span>));
+                    <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;(&quot;</span>);
                 }
                 <span class='kw'>for</span> (<span class='ident'>i</span>, <span class='ident'>cond</span>) <span class='kw'>in</span> <span class='ident'>conds</span>.<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
                     <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot; || &quot;</span>));
+                        <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot; || &quot;</span>);
                     }
                     <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>eval_logic</span>(<span class='ident'>w</span>, <span class='boolval'>false</span>, <span class='ident'>cond</span>, <span class='ident'>params</span>));
                 }
                 <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>first</span> {
-                    <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;)&quot;</span>));
+                    <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;)&quot;</span>);
                 }
             },
             <span class='kw-2'>&amp;</span><span class='ident'>Logic</span>::<span class='ident'>Not</span>(<span class='kw-2'>ref</span> <span class='ident'>cond</span>) <span class='op'>=&gt;</span> {
-                <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;!(&quot;</span>));
+                <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;!(&quot;</span>);
                 <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>eval_logic</span>(<span class='ident'>w</span>, <span class='boolval'>false</span>, <span class='ident'>cond</span>, <span class='ident'>params</span>));
-                <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;)&quot;</span>));
+                <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;)&quot;</span>);
             },
             <span class='kw-2'>&amp;</span><span class='ident'>Logic</span>::<span class='ident'>Value</span>(<span class='kw-2'>ref</span> <span class='ident'>val</span>) <span class='op'>=&gt;</span> {
-                <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;this.{}&quot;</span>, <span class='ident'>val</span>));
+                <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;this.{}&quot;</span>, <span class='ident'>val</span>);
             }
         }
 
@@ -764,37 +773,42 @@
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Codegen</span> <span class='kw'>for</span> <span class='ident'>JavaScript</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='kw'>type</span> <span class='ident'>Error</span> <span class='op'>=</span> <span class='ident'>Error</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>build_template</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>W</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='kw-2'>mut</span> <span class='ident'>indent</span>: <span class='ident'>u8</span>, <span class='ident'>params</span>: <span class='kw-2'>&amp;</span><span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>ContentType</span><span class='op'>&gt;</span>, <span class='ident'>tokens</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>Token</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>init_writer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;w</span>, <span class='ident'>W</span>: <span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;w</span> <span class='kw-2'>mut</span> <span class='ident'>W</span>) <span class='op'>-&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;w</span>, <span class='ident'>W</span><span class='op'>&gt;</span> {
+        <span class='ident'>Writer</span>::<span class='ident'>new</span>(<span class='ident'>w</span>, <span class='string'>&quot;    &quot;</span>)
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>build_template</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>params</span>: <span class='kw-2'>&amp;</span><span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>ContentType</span><span class='op'>&gt;</span>, <span class='ident'>tokens</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>Token</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>namespace</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>namespace</span> {
-            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;{}.{} = function() {{&quot;</span>, <span class='ident'>namespace</span>, <span class='ident'>name</span>);
+            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;{}.{} = function() {{&quot;</span>, <span class='ident'>namespace</span>, <span class='ident'>name</span>);
         } <span class='kw'>else</span> {
             <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>variable_state</span> {
-                <span class='ident'>VarState</span>::<span class='ident'>New</span> <span class='op'>=&gt;</span> <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;var {} = function() {{&quot;</span>, <span class='ident'>name</span>),
-                <span class='ident'>VarState</span>::<span class='ident'>Inited</span> <span class='op'>|</span> <span class='ident'>VarState</span>::<span class='ident'>Uninited</span> <span class='op'>=&gt;</span> <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;{} = function() {{&quot;</span>, <span class='ident'>name</span>),
+                <span class='ident'>VarState</span>::<span class='ident'>New</span> <span class='op'>=&gt;</span> <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;var {} = function() {{&quot;</span>, <span class='ident'>name</span>),
+                <span class='ident'>VarState</span>::<span class='ident'>Inited</span> <span class='op'>|</span> <span class='ident'>VarState</span>::<span class='ident'>Uninited</span> <span class='op'>=&gt;</span> <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;{} = function() {{&quot;</span>, <span class='ident'>name</span>),
             }
         }
 
-        <span class='kw'>for</span> (<span class='ident'>parameter</span>, <span class='ident'>ty</span>) <span class='kw'>in</span> <span class='ident'>params</span> {
-            <span class='kw'>match</span> <span class='ident'>ty</span> {
-                <span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>String</span>(<span class='boolval'>false</span>) <span class='op'>=&gt;</span> <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='string'>&quot;this.{} = \&quot;\&quot;;&quot;</span>, <span class='ident'>parameter</span>),
-                <span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>String</span>(<span class='boolval'>true</span>) <span class='op'>=&gt;</span> <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='string'>&quot;this.{} = null;&quot;</span>, <span class='ident'>parameter</span>),
-                <span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>Bool</span> <span class='op'>=&gt;</span> <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='string'>&quot;this.{} = false;&quot;</span>, <span class='ident'>parameter</span>),
-                <span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>Template</span>(_) <span class='op'>=&gt;</span> <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='string'>&quot;this.{} = null;&quot;</span>, <span class='ident'>parameter</span>),
-                <span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>Collection</span>(_, <span class='boolval'>false</span>) <span class='op'>=&gt;</span> <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='string'>&quot;this.{} = [];&quot;</span>, <span class='ident'>parameter</span>),
-                <span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>Collection</span>(_, <span class='boolval'>true</span>) <span class='op'>=&gt;</span> <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='string'>&quot;this.{} = null;&quot;</span>, <span class='ident'>parameter</span>)
+        {
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>block</span> <span class='op'>=</span> <span class='ident'>w</span>.<span class='ident'>block</span>();
+            <span class='kw'>for</span> (<span class='ident'>parameter</span>, <span class='ident'>ty</span>) <span class='kw'>in</span> <span class='ident'>params</span> {
+                <span class='kw'>match</span> <span class='ident'>ty</span> {
+                    <span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>String</span>(<span class='boolval'>false</span>) <span class='op'>=&gt;</span> <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>block</span>, <span class='string'>&quot;this.{} = \&quot;\&quot;;&quot;</span>, <span class='ident'>parameter</span>),
+                    <span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>String</span>(<span class='boolval'>true</span>) <span class='op'>=&gt;</span> <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>block</span>, <span class='string'>&quot;this.{} = null;&quot;</span>, <span class='ident'>parameter</span>),
+                    <span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>Bool</span> <span class='op'>=&gt;</span> <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>block</span>, <span class='string'>&quot;this.{} = false;&quot;</span>, <span class='ident'>parameter</span>),
+                    <span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>Template</span>(_) <span class='op'>=&gt;</span> <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>block</span>, <span class='string'>&quot;this.{} = null;&quot;</span>, <span class='ident'>parameter</span>),
+                    <span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>Collection</span>(_, <span class='boolval'>false</span>) <span class='op'>=&gt;</span> <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>block</span>, <span class='string'>&quot;this.{} = [];&quot;</span>, <span class='ident'>parameter</span>),
+                    <span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>Collection</span>(_, <span class='boolval'>true</span>) <span class='op'>=&gt;</span> <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>block</span>, <span class='string'>&quot;this.{} = null;&quot;</span>, <span class='ident'>parameter</span>)
+                }
             }
         }
 
-        <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;}};&quot;</span>);
+        <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;}};&quot;</span>);
 
 
         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>namespace</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>namespace</span> {
-            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;{}.{}.prototype.render_to = function(root) {{&quot;</span>, <span class='ident'>namespace</span>, <span class='ident'>name</span>);
+            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;{}.{}.prototype.render_to = function(root) {{&quot;</span>, <span class='ident'>namespace</span>, <span class='ident'>name</span>);
         } <span class='kw'>else</span> {
-            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;{}.prototype.render_to = function(root) {{&quot;</span>, <span class='ident'>name</span>);
+            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;{}.prototype.render_to = function(root) {{&quot;</span>, <span class='ident'>name</span>);
         }
-
-        <span class='ident'>indent</span> <span class='op'>+=</span> <span class='number'>1</span>;
 
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>tree_stack</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>TokenTree</span> {
             <span class='ident'>inherit_text</span>: <span class='boolval'>false</span>,
@@ -853,6 +867,8 @@
         }
 
         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>tree</span>) <span class='op'>=</span> <span class='ident'>tree_stack</span>.<span class='ident'>pop</span>() {
+            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>func</span> <span class='op'>=</span> <span class='ident'>w</span>.<span class='ident'>block</span>();
+
             <span class='kw'>if</span> <span class='ident'>tree_stack</span>.<span class='ident'>len</span>() <span class='op'>&gt;</span> <span class='number'>0</span> {
                 <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>TooFewEnd</span>);
             }
@@ -866,7 +882,7 @@
             <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>tree</span>.<span class='ident'>traverse</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>|</span><span class='ident'>token</span>, <span class='ident'>inherit_text</span>, <span class='ident'>force_append</span><span class='op'>|</span> {
                 <span class='kw'>if</span> <span class='ident'>force_append</span> {
                     <span class='kw'>if</span> <span class='kw'>let</span> (<span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='prelude-val'>Some</span>((<span class='kw-2'>ref</span> <span class='ident'>text_var</span>, <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>state</span>))), <span class='prelude-val'>Some</span>(<span class='ident'>tag</span>)) <span class='op'>=</span> (<span class='ident'>text</span>.<span class='ident'>last_mut</span>(), <span class='ident'>tags</span>.<span class='ident'>last</span>()) {
-                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>append_text</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='ident'>text_var</span>, <span class='ident'>state</span>, <span class='ident'>tag</span>));
+                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>append_text</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>func</span>, <span class='ident'>text_var</span>, <span class='ident'>state</span>, <span class='ident'>tag</span>));
                     }
                 }
 
@@ -874,39 +890,39 @@
                     <span class='kw-2'>&amp;</span><span class='ident'>Token</span>::<span class='ident'>SetDoctype</span>(_) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>NotSupported</span>(<span class='string'>&quot;doctype declarations&quot;</span>)),
                     <span class='kw-2'>&amp;</span><span class='ident'>Token</span>::<span class='ident'>BeginTag</span>(<span class='kw-2'>ref</span> <span class='ident'>name</span>) <span class='op'>=&gt;</span> {
                         <span class='kw'>if</span> <span class='kw'>let</span> (<span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='prelude-val'>Some</span>((<span class='kw-2'>ref</span> <span class='ident'>text_var</span>, <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>state</span>))), <span class='prelude-val'>Some</span>(<span class='ident'>tag</span>)) <span class='op'>=</span> (<span class='ident'>text</span>.<span class='ident'>last_mut</span>(), <span class='ident'>tags</span>.<span class='ident'>last</span>()) {
-                            <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>append_text</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='ident'>text_var</span>, <span class='ident'>state</span>, <span class='ident'>tag</span>));
+                            <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>append_text</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>func</span>, <span class='ident'>text_var</span>, <span class='ident'>state</span>, <span class='ident'>tag</span>));
                         }
 
                         <span class='kw'>let</span> <span class='ident'>var</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;tag_{}_{}&quot;</span>, <span class='ident'>to_valid_ident</span>(<span class='ident'>name</span>.<span class='ident'>as_slice</span>()), <span class='ident'>var_counter</span>);
                         <span class='ident'>var_counter</span> <span class='op'>+=</span> <span class='number'>1</span>;
-                        <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;var {} = document.createElement(\&quot;{}\&quot;);&quot;</span>, <span class='ident'>var</span>, <span class='ident'>name</span>.<span class='ident'>as_slice</span>());
+                        <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;var {} = document.createElement(\&quot;{}\&quot;);&quot;</span>, <span class='ident'>var</span>, <span class='ident'>name</span>.<span class='ident'>as_slice</span>());
                         <span class='ident'>tags</span>.<span class='ident'>push</span>(<span class='ident'>var</span>);
                     },
                     <span class='kw-2'>&amp;</span><span class='ident'>Token</span>::<span class='ident'>EndTag</span>(<span class='ident'>self_closing</span>) <span class='op'>=&gt;</span> <span class='kw'>if</span> <span class='ident'>self_closing</span> {
                         <span class='kw'>if</span> <span class='kw'>let</span> (<span class='prelude-val'>Some</span>(<span class='ident'>child</span>), <span class='prelude-val'>Some</span>(<span class='ident'>parent</span>)) <span class='op'>=</span> (<span class='ident'>tags</span>.<span class='ident'>pop</span>(), <span class='ident'>tags</span>.<span class='ident'>last</span>()) {
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;{}.appendChild({});&quot;</span>, <span class='ident'>parent</span>, <span class='ident'>child</span>)
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;{}.appendChild({});&quot;</span>, <span class='ident'>parent</span>, <span class='ident'>child</span>)
                         }
                     },
                     <span class='kw-2'>&amp;</span><span class='ident'>Token</span>::<span class='ident'>CloseTag</span>(_) <span class='op'>=&gt;</span> {
                         <span class='kw'>if</span> <span class='kw'>let</span> (<span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='prelude-val'>Some</span>((<span class='kw-2'>ref</span> <span class='ident'>text_var</span>, <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>state</span>))), <span class='prelude-val'>Some</span>(<span class='ident'>tag</span>)) <span class='op'>=</span> (<span class='ident'>text</span>.<span class='ident'>last_mut</span>(), <span class='ident'>tags</span>.<span class='ident'>last</span>()) {
-                            <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>append_text</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='ident'>text_var</span>, <span class='ident'>state</span>, <span class='ident'>tag</span>));
+                            <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>append_text</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>func</span>, <span class='ident'>text_var</span>, <span class='ident'>state</span>, <span class='ident'>tag</span>));
                         }
 
                         <span class='kw'>if</span> <span class='kw'>let</span> (<span class='prelude-val'>Some</span>(<span class='ident'>child</span>), <span class='prelude-val'>Some</span>(<span class='ident'>parent</span>)) <span class='op'>=</span> (<span class='ident'>tags</span>.<span class='ident'>pop</span>(), <span class='ident'>tags</span>.<span class='ident'>last</span>()) {
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;{}.appendChild({});&quot;</span>, <span class='ident'>parent</span>, <span class='ident'>child</span>)
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;{}.appendChild({});&quot;</span>, <span class='ident'>parent</span>, <span class='ident'>child</span>)
                         }
                     },
                     <span class='kw-2'>&amp;</span><span class='ident'>Token</span>::<span class='ident'>BeginAttribute</span>(<span class='kw-2'>ref</span> <span class='ident'>name</span>, <span class='kw-2'>ref</span> <span class='ident'>content</span>) <span class='op'>=&gt;</span> {
                         <span class='ident'>attribute_var</span> <span class='op'>=</span> (<span class='ident'>name</span>.<span class='ident'>clone</span>(), <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;attr_{}_{}&quot;</span>, <span class='ident'>to_valid_ident</span>(<span class='ident'>name</span>.<span class='ident'>as_slice</span>()), <span class='ident'>var_counter</span>));
                         <span class='ident'>var_counter</span> <span class='op'>+=</span> <span class='number'>1</span>;
-                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>write_attribute</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='kw-2'>&amp;</span><span class='ident'>attribute_var</span>.<span class='number'>1</span>, <span class='ident'>content</span>, <span class='boolval'>true</span>, <span class='ident'>params</span>, <span class='kw-2'>&amp;</span><span class='ident'>scopes</span>));
+                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>write_attribute</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>func</span>, <span class='kw-2'>&amp;</span><span class='ident'>attribute_var</span>.<span class='number'>1</span>, <span class='ident'>content</span>, <span class='boolval'>true</span>, <span class='ident'>params</span>, <span class='kw-2'>&amp;</span><span class='ident'>scopes</span>));
                     },
                     <span class='kw-2'>&amp;</span><span class='ident'>Token</span>::<span class='ident'>AppendToAttribute</span>(<span class='kw-2'>ref</span> <span class='ident'>content</span>) <span class='op'>=&gt;</span> {
-                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>write_attribute</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='kw-2'>&amp;</span><span class='ident'>attribute_var</span>.<span class='number'>1</span>, <span class='ident'>content</span>, <span class='boolval'>false</span>, <span class='ident'>params</span>, <span class='kw-2'>&amp;</span><span class='ident'>scopes</span>));
+                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>write_attribute</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>func</span>, <span class='kw-2'>&amp;</span><span class='ident'>attribute_var</span>.<span class='number'>1</span>, <span class='ident'>content</span>, <span class='boolval'>false</span>, <span class='ident'>params</span>, <span class='kw-2'>&amp;</span><span class='ident'>scopes</span>));
                     },
                     <span class='kw-2'>&amp;</span><span class='ident'>Token</span>::<span class='ident'>EndAttribute</span> <span class='op'>=&gt;</span> {
                         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>tag</span>) <span class='op'>=</span> <span class='ident'>tags</span>.<span class='ident'>last</span>() {
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;{}.setAttribute(\&quot;{}\&quot;, {});&quot;</span>, <span class='ident'>tag</span>, <span class='ident'>attribute_var</span>.<span class='number'>0</span>.<span class='ident'>as_slice</span>(), <span class='ident'>attribute_var</span>.<span class='number'>1</span>);
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;{}.setAttribute(\&quot;{}\&quot;, {});&quot;</span>, <span class='ident'>tag</span>, <span class='ident'>attribute_var</span>.<span class='number'>0</span>.<span class='ident'>as_slice</span>(), <span class='ident'>attribute_var</span>.<span class='number'>1</span>);
                         }
                     },
                     <span class='kw-2'>&amp;</span><span class='ident'>Token</span>::<span class='ident'>Text</span>(<span class='kw-2'>ref</span> <span class='ident'>content</span>) <span class='op'>=&gt;</span> {
@@ -914,7 +930,7 @@
                             <span class='kw'>if</span> <span class='ident'>text</span>.<span class='ident'>is_none</span>() <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='ident'>inherit_text</span> {
                                 <span class='kw'>let</span> <span class='ident'>text_var</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;text_{}&quot;</span>, <span class='ident'>var_counter</span>);
                                 <span class='ident'>var_counter</span> <span class='op'>+=</span> <span class='number'>1</span>;
-                                <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;var {} = \&quot;\&quot;;&quot;</span>, <span class='ident'>text_var</span>);
+                                <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;var {} = \&quot;\&quot;;&quot;</span>, <span class='ident'>text_var</span>);
                                 <span class='op'>*</span><span class='ident'>text</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>((<span class='ident'>text_var</span>, <span class='ident'>TextState</span>::<span class='ident'>Cleared</span>));
                             }
                         }
@@ -923,9 +939,9 @@
                             <span class='kw'>if</span> <span class='kw'>let</span> (<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='prelude-val'>Some</span>((<span class='kw-2'>ref</span> <span class='ident'>text_var</span>, <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>state</span>)), <span class='prelude-val'>Some</span>(<span class='ident'>tag</span>)) <span class='op'>=</span> (<span class='ident'>text</span>, <span class='ident'>tags</span>.<span class='ident'>last</span>()) {
                                 <span class='kw'>if</span> <span class='ident'>state</span>.<span class='ident'>has_leftovers</span>() {
                                     <span class='op'>*</span><span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>TextState</span>::<span class='ident'>HasContent</span>;
-                                    <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;{} = \&quot;\&quot;;&quot;</span>, <span class='ident'>text_var</span>);
+                                    <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;{} = \&quot;\&quot;;&quot;</span>, <span class='ident'>text_var</span>);
                                 }
-                                <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>write_text</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='ident'>text_var</span>, <span class='ident'>state</span>, <span class='ident'>content</span>, <span class='ident'>tag</span>, <span class='ident'>params</span>, <span class='kw-2'>&amp;</span><span class='ident'>scopes</span>));
+                                <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>write_text</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>func</span>, <span class='ident'>text_var</span>, <span class='ident'>state</span>, <span class='ident'>content</span>, <span class='ident'>tag</span>, <span class='ident'>params</span>, <span class='kw-2'>&amp;</span><span class='ident'>scopes</span>));
                                 <span class='kw'>break</span>;
                             }
                         }
@@ -935,11 +951,11 @@
                             <span class='kw'>if</span> <span class='ident'>text</span>.<span class='ident'>is_none</span>() <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='ident'>inherit_text</span> {
                                 <span class='kw'>let</span> <span class='ident'>text_var</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;text_{}&quot;</span>, <span class='ident'>var_counter</span>);
                                 <span class='ident'>var_counter</span> <span class='op'>+=</span> <span class='number'>1</span>;
-                                <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;var {} = \&quot;\&quot;;&quot;</span>, <span class='ident'>text_var</span>);
+                                <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;var {} = \&quot;\&quot;;&quot;</span>, <span class='ident'>text_var</span>);
                                 <span class='op'>*</span><span class='ident'>text</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>((<span class='ident'>text_var</span>, <span class='ident'>TextState</span>::<span class='ident'>Cleared</span>));
                             } <span class='kw'>else</span> <span class='kw'>if</span> <span class='kw'>let</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='prelude-val'>Some</span>((<span class='kw-2'>ref</span> <span class='ident'>text_var</span>, <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>state</span>)) <span class='op'>=</span> <span class='ident'>text</span> {
                                 <span class='kw'>if</span> <span class='ident'>state</span>.<span class='ident'>has_leftovers</span>() {
-                                    <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;{} = \&quot;\&quot;&quot;</span>, <span class='ident'>text_var</span>);
+                                    <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;{} = \&quot;\&quot;&quot;</span>, <span class='ident'>text_var</span>);
                                     <span class='op'>*</span><span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>TextState</span>::<span class='ident'>Cleared</span>;
                                 }
                             }
@@ -947,17 +963,19 @@
 
                         <span class='ident'>text</span>.<span class='ident'>push</span>(<span class='prelude-val'>None</span>);
 
-                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>write_indent</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>));
-                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;if(&quot;</span>));
-                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>eval_logic</span>(<span class='ident'>w</span>, <span class='boolval'>true</span>, <span class='kw-2'>&amp;</span><span class='ident'>cond</span>.<span class='ident'>flattened</span>(), <span class='ident'>params</span>));
-                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;) {{\n&quot;</span>));
-                        <span class='ident'>indent</span> <span class='op'>+=</span> <span class='number'>1</span>;
+                        {
+                            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>line</span> <span class='op'>=</span> <span class='ident'>func</span>.<span class='ident'>begin_line</span>();
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>line</span>, <span class='string'>&quot;if(&quot;</span>);
+                            <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>eval_logic</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>line</span>, <span class='boolval'>true</span>, <span class='kw-2'>&amp;</span><span class='ident'>cond</span>.<span class='ident'>flattened</span>(), <span class='ident'>params</span>));
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>line</span>, <span class='string'>&quot;) {{&quot;</span>);
+                        }
+                        <span class='ident'>func</span>.<span class='ident'>indent</span>();
                         <span class='ident'>scopes</span>.<span class='ident'>push</span>(<span class='prelude-val'>None</span>);
                     },
                     <span class='kw-2'>&amp;</span><span class='ident'>Token</span>::<span class='ident'>Scope</span>(<span class='ident'>Scope</span>::<span class='ident'>ForEach</span>(<span class='kw-2'>ref</span> <span class='ident'>collection</span>, <span class='kw-2'>ref</span> <span class='ident'>element</span>, <span class='kw-2'>ref</span> <span class='ident'>opt_key</span>)) <span class='op'>=&gt;</span> {
                         <span class='kw'>if</span> <span class='kw'>let</span> (<span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='prelude-val'>Some</span>((<span class='kw-2'>ref</span> <span class='ident'>text_var</span>, <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>state</span>))), <span class='prelude-val'>Some</span>(<span class='ident'>tag</span>)) <span class='op'>=</span> (<span class='ident'>text</span>.<span class='ident'>last_mut</span>(), <span class='ident'>tags</span>.<span class='ident'>last</span>()) {
-                            <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>append_text</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='ident'>text_var</span>, <span class='ident'>state</span>, <span class='ident'>tag</span>));
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;{} = \&quot;\&quot;&quot;</span>, <span class='ident'>text_var</span>);
+                            <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>append_text</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>func</span>, <span class='ident'>text_var</span>, <span class='ident'>state</span>, <span class='ident'>tag</span>));
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;{} = \&quot;\&quot;&quot;</span>, <span class='ident'>text_var</span>);
                             <span class='op'>*</span><span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>TextState</span>::<span class='ident'>Cleared</span>;
                         }
 
@@ -965,7 +983,7 @@
                             <span class='kw'>if</span> <span class='ident'>text</span>.<span class='ident'>is_none</span>() <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='ident'>inherit_text</span> {
                                 <span class='kw'>let</span> <span class='ident'>text_var</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;text_{}&quot;</span>, <span class='ident'>var_counter</span>);
                                 <span class='ident'>var_counter</span> <span class='op'>+=</span> <span class='number'>1</span>;
-                                <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;var {} = \&quot;\&quot;;&quot;</span>, <span class='ident'>text_var</span>);
+                                <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;var {} = \&quot;\&quot;;&quot;</span>, <span class='ident'>text_var</span>);
                                 <span class='op'>*</span><span class='ident'>text</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>((<span class='ident'>text_var</span>, <span class='ident'>TextState</span>::<span class='ident'>Cleared</span>));
                             }
                         }
@@ -987,16 +1005,16 @@
 
                         <span class='ident'>var_counter</span> <span class='op'>+=</span> <span class='number'>1</span>;
 
-                        <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;var {}&quot;</span>, <span class='ident'>key</span>);
-                        <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;for({} in {}) {{&quot;</span>, <span class='ident'>key</span>, <span class='ident'>collection_name</span>);
-                        <span class='ident'>indent</span> <span class='op'>+=</span> <span class='number'>1</span>;
-                        <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;if({}.hasOwnProperty({})) {{&quot;</span>, <span class='ident'>collection_name</span>, <span class='ident'>key</span>);
-                        <span class='ident'>indent</span> <span class='op'>+=</span> <span class='number'>1</span>;
-                        <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;var {} = {}[{}];&quot;</span>, <span class='ident'>value</span>, <span class='ident'>collection_name</span>, <span class='ident'>key</span>);
+                        <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;var {}&quot;</span>, <span class='ident'>key</span>);
+                        <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;for({} in {}) {{&quot;</span>, <span class='ident'>key</span>, <span class='ident'>collection_name</span>);
+                        <span class='ident'>func</span>.<span class='ident'>indent</span>();
+                        <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;if({}.hasOwnProperty({})) {{&quot;</span>, <span class='ident'>collection_name</span>, <span class='ident'>key</span>);
+                        <span class='ident'>func</span>.<span class='ident'>indent</span>();
+                        <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;var {} = {}[{}];&quot;</span>, <span class='ident'>value</span>, <span class='ident'>collection_name</span>, <span class='ident'>key</span>);
                         <span class='kw'>if</span> <span class='ident'>opt_key</span>.<span class='ident'>is_some</span>() {
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;if(!isNaN({})) {{&quot;</span>, <span class='ident'>key</span>);
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='string'>&quot;{}++;&quot;</span>, <span class='ident'>key</span>);
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;}}&quot;</span>);
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;if(!isNaN({})) {{&quot;</span>, <span class='ident'>key</span>);
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>.<span class='ident'>indented_line</span>(), <span class='string'>&quot;{}++;&quot;</span>, <span class='ident'>key</span>);
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;}}&quot;</span>);
                         }
 
                         <span class='kw'>if</span> <span class='kw'>let</span> <span class='kw-2'>&amp;</span><span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>ty</span>) <span class='op'>=</span> <span class='ident'>ty</span> {
@@ -1007,13 +1025,13 @@
                     },
                     <span class='kw-2'>&amp;</span><span class='ident'>Token</span>::<span class='ident'>End</span> <span class='op'>=&gt;</span> {
                         <span class='kw'>if</span> <span class='kw'>let</span> (<span class='prelude-val'>Some</span>(<span class='prelude-val'>Some</span>((<span class='kw-2'>ref</span> <span class='ident'>text_var</span>, <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>state</span>))), <span class='prelude-val'>Some</span>(<span class='ident'>tag</span>)) <span class='op'>=</span> (<span class='ident'>text</span>.<span class='ident'>pop</span>(), <span class='ident'>tags</span>.<span class='ident'>last</span>()) {
-                            <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>append_text</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='ident'>text_var</span>, <span class='ident'>state</span>, <span class='ident'>tag</span>));
+                            <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>append_text</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>func</span>, <span class='ident'>text_var</span>, <span class='ident'>state</span>, <span class='ident'>tag</span>));
                         }
-                        <span class='ident'>indent</span> <span class='op'>-=</span> <span class='number'>1</span>;
-                        <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;}}&quot;</span>);
+                        <span class='ident'>func</span>.<span class='ident'>unindent</span>();
+                        <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;}}&quot;</span>);
                         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='prelude-val'>Some</span>(_)) <span class='op'>=</span> <span class='ident'>scopes</span>.<span class='ident'>pop</span>() {
-                            <span class='ident'>indent</span> <span class='op'>-=</span> <span class='number'>1</span>;
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;}}&quot;</span>);
+                            <span class='ident'>func</span>.<span class='ident'>unindent</span>();
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>func</span>, <span class='string'>&quot;}}&quot;</span>);
                         }
                     }
                 }
@@ -1024,25 +1042,23 @@
             <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>TooManyEnd</span>);
         }
 
-        <span class='ident'>indent</span> <span class='op'>-=</span> <span class='number'>1</span>;
-
-        <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;}};&quot;</span>);
+        <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;}};&quot;</span>);
         <span class='prelude-val'>Ok</span>(())
     }
 
-    <span class='kw'>fn</span> <span class='ident'>build_module</span><span class='op'>&lt;</span><span class='ident'>W</span>, <span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>W</span>, <span class='ident'>build_templates</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> <span class='kw'>where</span>
+    <span class='kw'>fn</span> <span class='ident'>build_module</span><span class='op'>&lt;</span><span class='ident'>W</span>, <span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span>, <span class='ident'>build_templates</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> <span class='kw'>where</span>
         <span class='ident'>W</span>: <span class='ident'>Write</span>,
-        <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>W</span>, <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span>
+        <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span>
     {
         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>namespace</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>namespace</span> {
             <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>variable_state</span> {
-                <span class='ident'>VarState</span>::<span class='ident'>New</span> <span class='op'>=&gt;</span> <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='number'>0</span>, <span class='string'>&quot;var {} = {{}};&quot;</span>, <span class='ident'>namespace</span>),
-                <span class='ident'>VarState</span>::<span class='ident'>Uninited</span> <span class='op'>=&gt;</span> <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='number'>0</span>, <span class='string'>&quot;{} = {{}};&quot;</span>, <span class='ident'>namespace</span>),
+                <span class='ident'>VarState</span>::<span class='ident'>New</span> <span class='op'>=&gt;</span> <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;var {} = {{}};&quot;</span>, <span class='ident'>namespace</span>),
+                <span class='ident'>VarState</span>::<span class='ident'>Uninited</span> <span class='op'>=&gt;</span> <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;{} = {{}};&quot;</span>, <span class='ident'>namespace</span>),
                 _ <span class='op'>=&gt;</span> {}
             }
         }
 
-        <span class='ident'>build_templates</span>(<span class='ident'>w</span>, <span class='number'>0</span>)
+        <span class='ident'>build_templates</span>(<span class='ident'>w</span>)
     }
 }
 
@@ -1110,9 +1126,9 @@
     <span class='ident'>params</span>.<span class='ident'>get</span>(<span class='ident'>param</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>t</span><span class='op'>|</span> (<span class='prelude-val'>None</span>, <span class='prelude-val'>Some</span>(<span class='ident'>t</span>)))
 }
 
-<span class='kw'>fn</span> <span class='ident'>append_text</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>W</span>, <span class='ident'>indent</span>: <span class='ident'>u8</span>, <span class='ident'>var</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>state</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>TextState</span>, <span class='ident'>tag</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
+<span class='kw'>fn</span> <span class='ident'>append_text</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span>, <span class='ident'>var</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>state</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>TextState</span>, <span class='ident'>tag</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
     <span class='kw'>if</span> <span class='ident'>state</span>.<span class='ident'>has_content</span>() {
-        <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;{}.appendChild(document.createTextNode({}));&quot;</span>, <span class='ident'>tag</span>, <span class='ident'>var</span>);
+        <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;{}.appendChild(document.createTextNode({}));&quot;</span>, <span class='ident'>tag</span>, <span class='ident'>var</span>);
         <span class='op'>*</span><span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>TextState</span>::<span class='ident'>Leftovers</span>;
     }
 
@@ -1120,8 +1136,7 @@
 }
 
 <span class='kw'>fn</span> <span class='ident'>write_attribute</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>W</span>: <span class='ident'>Write</span><span class='op'>&gt;</span>(
-    <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>W</span>,
-    <span class='ident'>indent</span>: <span class='ident'>u8</span>,
+    <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span>,
     <span class='ident'>var</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>,
     <span class='ident'>content</span>: <span class='kw-2'>&amp;</span><span class='ident'>Content</span>,
     <span class='ident'>new</span>: <span class='ident'>bool</span>,
@@ -1131,28 +1146,28 @@
     <span class='kw'>match</span> <span class='ident'>content</span> {
         <span class='kw-2'>&amp;</span><span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='kw-2'>ref</span> <span class='ident'>content</span>) <span class='op'>=&gt;</span> {
             <span class='kw'>if</span> <span class='ident'>new</span> {
-                <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;var {} = \&quot;{}\&quot;;&quot;</span>, <span class='ident'>var</span>, <span class='ident'>content</span>);
+                <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;var {} = \&quot;{}\&quot;;&quot;</span>, <span class='ident'>var</span>, <span class='ident'>content</span>);
             } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>content</span>.<span class='ident'>len</span>() <span class='op'>&gt;</span> <span class='number'>0</span> {
-                <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;{} += \&quot;{}\&quot;;&quot;</span>, <span class='ident'>var</span>, <span class='ident'>content</span>);
+                <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;{} += \&quot;{}\&quot;;&quot;</span>, <span class='ident'>var</span>, <span class='ident'>content</span>);
             }
         },
         <span class='kw-2'>&amp;</span><span class='ident'>Content</span>::<span class='ident'>Placeholder</span>(<span class='kw-2'>ref</span> <span class='ident'>placeholder</span>) <span class='op'>=&gt;</span> {
             <span class='kw'>match</span> <span class='ident'>find_param</span>(<span class='ident'>placeholder</span>, <span class='ident'>params</span>, <span class='kw-2'>&amp;</span><span class='ident'>scopes</span>) {
                 <span class='prelude-val'>Some</span>((<span class='ident'>alias</span>, <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>String</span>(_)))) <span class='op'>|</span> <span class='prelude-val'>Some</span>((<span class='ident'>alias</span>, <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>Bool</span>))) <span class='op'>|</span> <span class='prelude-val'>Some</span>((<span class='ident'>alias</span>, <span class='prelude-val'>None</span>)) <span class='op'>=&gt;</span> {
                     <span class='kw'>if</span> <span class='ident'>new</span> {
-                        <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;var {} = \&quot;\&quot;;&quot;</span>, <span class='ident'>var</span>);
+                        <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;var {} = \&quot;\&quot;;&quot;</span>, <span class='ident'>var</span>);
                     }
                     <span class='kw'>match</span> <span class='ident'>alias</span> {
                         <span class='prelude-val'>Some</span>(<span class='ident'>alias</span>) <span class='op'>=&gt;</span> {
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;if({} !== null) {{&quot;</span>, <span class='ident'>alias</span>);
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='string'>&quot;{} += {};&quot;</span>, <span class='ident'>var</span>, <span class='ident'>alias</span>);
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;if({} !== null) {{&quot;</span>, <span class='ident'>alias</span>);
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>.<span class='ident'>indented_line</span>(), <span class='string'>&quot;{} += {};&quot;</span>, <span class='ident'>var</span>, <span class='ident'>alias</span>);
                         },
                         <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;if(this.{} !== null) {{&quot;</span>, <span class='ident'>placeholder</span>);
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='string'>&quot;{} += this.{};&quot;</span>, <span class='ident'>var</span>, <span class='ident'>placeholder</span>);
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;if(this.{} !== null) {{&quot;</span>, <span class='ident'>placeholder</span>);
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>.<span class='ident'>indented_line</span>(), <span class='string'>&quot;{} += this.{};&quot;</span>, <span class='ident'>var</span>, <span class='ident'>placeholder</span>);
                         }
                     }
-                    <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;}}&quot;</span>);
+                    <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;}}&quot;</span>);
                 },
                 <span class='prelude-val'>Some</span>((_, <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>Template</span>(_)))) <span class='op'>|</span> <span class='prelude-val'>Some</span>((_, <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>Collection</span>(_, _)))) <span class='op'>=&gt;</span> {
                     <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>CannotBeAttribute</span>(<span class='ident'>placeholder</span>.<span class='ident'>clone</span>()));
@@ -1166,8 +1181,7 @@
 }
 
 <span class='kw'>fn</span> <span class='ident'>write_text</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>W</span>: <span class='ident'>Write</span><span class='op'>&gt;</span>(
-    <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>W</span>,
-    <span class='ident'>indent</span>: <span class='ident'>u8</span>,
+    <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span>,
     <span class='ident'>var</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>,
     <span class='ident'>state</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>TextState</span>,
     <span class='ident'>content</span>: <span class='kw-2'>&amp;</span><span class='ident'>Content</span>,
@@ -1177,7 +1191,7 @@
 ) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
     <span class='kw'>match</span> <span class='ident'>content</span> {
         <span class='kw-2'>&amp;</span><span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='kw-2'>ref</span> <span class='ident'>content</span>) <span class='op'>=&gt;</span> <span class='kw'>if</span> <span class='ident'>content</span>.<span class='ident'>len</span>() <span class='op'>&gt;</span> <span class='number'>0</span> {
-            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;{} += \&quot;{}\&quot;;&quot;</span>, <span class='ident'>var</span>, <span class='ident'>content</span>);
+            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;{} += \&quot;{}\&quot;;&quot;</span>, <span class='ident'>var</span>, <span class='ident'>content</span>);
             <span class='op'>*</span><span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>TextState</span>::<span class='ident'>HasContent</span>;
         },
         <span class='kw-2'>&amp;</span><span class='ident'>Content</span>::<span class='ident'>Placeholder</span>(<span class='kw-2'>ref</span> <span class='ident'>placeholder</span>) <span class='op'>=&gt;</span> {
@@ -1185,41 +1199,45 @@
                 <span class='prelude-val'>Some</span>((<span class='ident'>alias</span>, <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>String</span>(_)))) <span class='op'>|</span> <span class='prelude-val'>Some</span>((<span class='ident'>alias</span>, <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>Bool</span>))) <span class='op'>|</span> <span class='prelude-val'>Some</span>((<span class='ident'>alias</span>, <span class='prelude-val'>None</span>)) <span class='op'>=&gt;</span> {
                     <span class='kw'>match</span> <span class='ident'>alias</span> {
                         <span class='prelude-val'>Some</span>(<span class='ident'>alias</span>) <span class='op'>=&gt;</span> {
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;if({} !== null) {{&quot;</span>, <span class='ident'>alias</span>);
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='string'>&quot;{} += {};&quot;</span>, <span class='ident'>var</span>, <span class='ident'>alias</span>);
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;if({} !== null) {{&quot;</span>, <span class='ident'>alias</span>);
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>.<span class='ident'>indented_line</span>(), <span class='string'>&quot;{} += {};&quot;</span>, <span class='ident'>var</span>, <span class='ident'>alias</span>);
                         },
                         <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;if(this.{} !== null) {{&quot;</span>, <span class='ident'>placeholder</span>);
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='string'>&quot;{} += this.{};&quot;</span>, <span class='ident'>var</span>, <span class='ident'>placeholder</span>);
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;if(this.{} !== null) {{&quot;</span>, <span class='ident'>placeholder</span>);
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>.<span class='ident'>indented_line</span>(), <span class='string'>&quot;{} += this.{};&quot;</span>, <span class='ident'>var</span>, <span class='ident'>placeholder</span>);
                         }
                     }
-                    <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;}}&quot;</span>);
+                    <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;}}&quot;</span>);
                     <span class='op'>*</span><span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>TextState</span>::<span class='ident'>HasContent</span>;
                 },
                 <span class='prelude-val'>Some</span>((<span class='ident'>alias</span>, <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>Template</span>(_)))) <span class='op'>=&gt;</span> {
-                    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>append_text</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='ident'>var</span>, <span class='ident'>state</span>, <span class='ident'>parent</span>));
+                    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>append_text</span>(<span class='ident'>w</span>, <span class='ident'>var</span>, <span class='ident'>state</span>, <span class='ident'>parent</span>));
                     <span class='kw'>match</span> <span class='ident'>alias</span> {
                         <span class='prelude-val'>Some</span>(<span class='ident'>alias</span>) <span class='op'>=&gt;</span> {
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;if({} !== null) {{&quot;</span>, <span class='ident'>alias</span>);
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;if({} !== null) {{&quot;</span>, <span class='ident'>alias</span>);
                         },
                         <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;if(this.{} !== null) {{&quot;</span>, <span class='ident'>placeholder</span>);
+                            <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;if(this.{} !== null) {{&quot;</span>, <span class='ident'>placeholder</span>);
                         }
                     }
-                    <span class='kw'>match</span> <span class='ident'>alias</span> {
-                        <span class='prelude-val'>Some</span>(<span class='ident'>alias</span>) <span class='op'>=&gt;</span> {
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;if({} !== null) {{&quot;</span>, <span class='ident'>alias</span>);
-                            <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>write_indent</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>));
-                            <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;{}&quot;</span>, <span class='ident'>alias</span>));
-                        },
-                        <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
-                            <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;if(this.{} !== null) {{&quot;</span>, <span class='ident'>placeholder</span>);
-                            <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>write_indent</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>));
-                            <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;this.{}&quot;</span>, <span class='ident'>placeholder</span>));
-                        }
+                    {
+                        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>line</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>alias</span> {
+                            <span class='prelude-val'>Some</span>(<span class='ident'>alias</span>) <span class='op'>=&gt;</span> {
+                                <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;if({} !== null) {{&quot;</span>, <span class='ident'>alias</span>);
+                                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>line</span> <span class='op'>=</span> <span class='ident'>w</span>.<span class='ident'>begin_line</span>();
+                                <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>line</span>, <span class='string'>&quot;{}&quot;</span>, <span class='ident'>alias</span>);
+                                <span class='ident'>line</span>
+                            },
+                            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
+                                <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;if(this.{} !== null) {{&quot;</span>, <span class='ident'>placeholder</span>);
+                                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>line</span> <span class='op'>=</span> <span class='ident'>w</span>.<span class='ident'>begin_line</span>();
+                                <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>line</span>, <span class='string'>&quot;this.{}&quot;</span>, <span class='ident'>placeholder</span>);
+                                <span class='ident'>line</span>
+                            }
+                        };
+                        <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>line</span>, <span class='string'>&quot;.render_to({});&quot;</span>, <span class='ident'>parent</span>);
                     }
-                    <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;.render_to({});&quot;</span>, <span class='ident'>parent</span>));
-                    <span class='macro'>line</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='ident'>indent</span>, <span class='string'>&quot;}}&quot;</span>);
+                    <span class='macro'>try_w</span><span class='macro'>!</span>(<span class='ident'>w</span>, <span class='string'>&quot;}}&quot;</span>);
                 },
                 <span class='prelude-val'>Some</span>((_, <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>ContentType</span>::<span class='ident'>Collection</span>(_, _)))) <span class='op'>=&gt;</span> {
                     <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>CannotBeText</span>(<span class='ident'>placeholder</span>.<span class='ident'>clone</span>()));
