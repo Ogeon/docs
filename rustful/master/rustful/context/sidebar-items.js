@@ -1,1 +1,1 @@
-initSidebarItems({"trait":[["ExtQueryBody","`BodyReader` extension for reading and parsing a query string."]],"struct":[["BodyReader","A reader for a request body."],["Context","A container for things like request data and cache."]]});
+initSidebarItems({"struct":[["BodyReader","A reader for a request body."],["Context","A container for things like request data and cache."]],"trait":[["ExtQueryBody","`BodyReader` extension for reading and parsing a query string."]]});
