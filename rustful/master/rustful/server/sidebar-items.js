@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Listening","A listening server, which can later be closed."],["Server","Used to build and run a server."],["ServerInstance","A runnable instance of a server."]]});
+initSidebarItems({"struct":[["Listening","A listening server, which can later be closed."],["Server","Used to set up and run a server."],["ServerInstance","A runnable instance of a server."]]});

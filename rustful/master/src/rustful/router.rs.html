@@ -836,6 +836,12 @@
 <span id="794">794</span>
 <span id="795">795</span>
 <span id="796">796</span>
+<span id="797">797</span>
+<span id="798">798</span>
+<span id="799">799</span>
+<span id="800">800</span>
+<span id="801">801</span>
+<span id="802">802</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Routers stores request handlers, using an HTTP method and a path as keys.</span>
 <span class='doccomment'>//!</span>
@@ -1082,12 +1088,7 @@
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>TreeRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='doccomment'>///Creates an empty `TreeRouter`.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>TreeRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>TreeRouter</span> {
-            <span class='ident'>items</span>: <span class='ident'>HashMap</span>::<span class='ident'>new</span>(),
-            <span class='ident'>static_routes</span>: <span class='ident'>HashMap</span>::<span class='ident'>new</span>(),
-            <span class='ident'>variable_route</span>: <span class='prelude-val'>None</span>,
-            <span class='ident'>wildcard_route</span>: <span class='prelude-val'>None</span>
-        }
+        <span class='ident'>TreeRouter</span>::<span class='ident'>default</span>()
     }
 
     <span class='comment'>//Tries to find a router matching the key or inserts a new one if none exists.</span>
@@ -1304,6 +1305,17 @@
         }
 
         <span class='ident'>root</span>
+    }
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>TreeRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>TreeRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+        <span class='ident'>TreeRouter</span> {
+            <span class='ident'>items</span>: <span class='ident'>HashMap</span>::<span class='ident'>new</span>(),
+            <span class='ident'>static_routes</span>: <span class='ident'>HashMap</span>::<span class='ident'>new</span>(),
+            <span class='ident'>variable_route</span>: <span class='prelude-val'>None</span>,
+            <span class='ident'>wildcard_route</span>: <span class='prelude-val'>None</span>
+        }
     }
 }
 
