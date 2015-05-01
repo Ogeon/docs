@@ -185,6 +185,8 @@
 <span id="143">143</span>
 <span id="144">144</span>
 <span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_name</span> <span class='op'>=</span> <span class='string'>&quot;rustful&quot;</span>]</span>
 
@@ -230,11 +232,13 @@
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>server</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>router</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>handler</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>cache</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>context</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>response</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>plugin</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>filter</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>log</span>;
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>)]</span>
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>cache</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::{<span class='ident'>SocketAddr</span>, <span class='ident'>SocketAddrV4</span>, <span class='ident'>SocketAddrV6</span>, <span class='ident'>Ipv4Addr</span>};

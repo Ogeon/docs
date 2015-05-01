@@ -1,1 +1,0 @@
-initSidebarItems({"trait":[["CachedValue","This trait provides functions for handling cached resources."]]});

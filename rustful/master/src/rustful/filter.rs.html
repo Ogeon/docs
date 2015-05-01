@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `src/plugin.rs`.">
+    <meta name="description" content="Source to the Rust file `src/filter.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
-    <title>plugin.rs.html -- source</title>
+    <title>filter.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -132,7 +132,7 @@
 <span id="90">90</span>
 <span id="91">91</span>
 </pre><pre class='rust '>
-<span class='doccomment'>//!Request and context plugins.</span>
+<span class='doccomment'>//!Request and context filters.</span>
 
 <span class='kw'>use</span> <span class='ident'>anymap</span>::<span class='ident'>AnyMap</span>;
 
@@ -144,10 +144,10 @@
 
 <span class='kw'>use</span> <span class='ident'>response</span>::<span class='ident'>Data</span>;
 
-<span class='doccomment'>///Contextual tools for plugins.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>PluginContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>///Shared storage for plugins. It is local to the current request and</span>
-    <span class='doccomment'>///accessible from the handler and all of the plugins. It can be used to</span>
+<span class='doccomment'>///Contextual tools for filters.</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>FilterContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>///Shared storage for filters. It is local to the current request and</span>
+    <span class='doccomment'>///accessible from the handler and all of the filters. It can be used to</span>
     <span class='doccomment'>///send data between these units.</span>
     <span class='kw'>pub</span> <span class='ident'>storage</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>AnyMap</span>,
 
@@ -155,17 +155,17 @@
     <span class='kw'>pub</span> <span class='ident'>log</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Log</span>
 }
 
-<span class='doccomment'>///A trait for context plugins.</span>
+<span class='doccomment'>///A trait for context filters.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>///They are able to modify and react to a `Context` before it&#39;s sent to the handler.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ContextPlugin</span> {
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ContextFilter</span> {
     <span class='doccomment'>///Try to modify the handler `Context`.</span>
-    <span class='kw'>fn</span> <span class='ident'>modify</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>PluginContext</span>, <span class='ident'>request_context</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Context</span>) <span class='op'>-&gt;</span> <span class='ident'>ContextAction</span>;
+    <span class='kw'>fn</span> <span class='ident'>modify</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>FilterContext</span>, <span class='ident'>request_context</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Context</span>) <span class='op'>-&gt;</span> <span class='ident'>ContextAction</span>;
 }
 
-<span class='doccomment'>///The result from a context plugin.</span>
+<span class='doccomment'>///The result from a context filter.</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ContextAction</span> {
-    <span class='doccomment'>///Continue to the next plugin in the stack.</span>
+    <span class='doccomment'>///Continue to the next filter in the stack.</span>
     <span class='ident'>Next</span>,
 
     <span class='doccomment'>///Abort and send HTTP status.</span>
@@ -183,27 +183,27 @@
 }
 
 
-<span class='doccomment'>///A trait for response plugins.</span>
+<span class='doccomment'>///A trait for response filters.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>///They are able to modify headers and data before it gets written in the response.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ResponsePlugin</span> {
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ResponseFilter</span> {
     <span class='doccomment'>///Set or modify headers before they are sent to the client and maybe initiate the body.</span>
-    <span class='kw'>fn</span> <span class='ident'>begin</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>PluginContext</span>, <span class='ident'>status</span>: <span class='ident'>StatusCode</span>, <span class='ident'>headers</span>: <span class='ident'>Headers</span>) <span class='op'>-&gt;</span>
+    <span class='kw'>fn</span> <span class='ident'>begin</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>FilterContext</span>, <span class='ident'>status</span>: <span class='ident'>StatusCode</span>, <span class='ident'>headers</span>: <span class='ident'>Headers</span>) <span class='op'>-&gt;</span>
         (<span class='ident'>StatusCode</span>, <span class='ident'>Headers</span>, <span class='ident'>ResponseAction</span>);
 
     <span class='doccomment'>///Handle content before writing it to the body.</span>
-    <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>PluginContext</span>, <span class='ident'>content</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Data</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseAction</span>;
+    <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>FilterContext</span>, <span class='ident'>content</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Data</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseAction</span>;
 
     <span class='doccomment'>///End of body writing. Last chance to add content.</span>
-    <span class='kw'>fn</span> <span class='ident'>end</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>PluginContext</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseAction</span>;
+    <span class='kw'>fn</span> <span class='ident'>end</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>FilterContext</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseAction</span>;
 }
 
-<span class='doccomment'>///The result from a `ResponsePlugin`.</span>
+<span class='doccomment'>///The result from a response filter.</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ResponseAction</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>///Continue to the next plugin and maybe write data.</span>
+    <span class='doccomment'>///Continue to the next filter and maybe write data.</span>
     <span class='ident'>Next</span>(<span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Data</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>),
 
-    <span class='doccomment'>///Do not continue to the next plugin.</span>
+    <span class='doccomment'>///Do not continue to the next filter.</span>
     <span class='ident'>SilentAbort</span>,
 
     <span class='doccomment'>///Abort with an error.</span>

@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `PluginContext` struct in crate `rustful`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, PluginContext">
+    <meta name="description" content="API documentation for the Rust `FilterContext` struct in crate `rustful`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, FilterContext">
 
-    <title>rustful::plugin::PluginContext - Rust</title>
+    <title>rustful::filter::FilterContext - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>plugin</a></p><script>window.sidebarCurrent = {name: 'PluginContext', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>filter</a></p><script>window.sidebarCurrent = {name: 'FilterContext', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -41,16 +41,16 @@
     </nav>
 
     <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>plugin</a>::<wbr><a class='struct' href=''>PluginContext</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>filter</a>::<wbr><a class='struct' href=''>FilterContext</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-4370' href='../../src/rustful/plugin.rs.html#14-22'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct PluginContext&lt;'a&gt; {
+        </span><a id='src-4270' href='../../src/rustful/filter.rs.html#14-22'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct FilterContext&lt;'a&gt; {
     pub storage: &amp;'a mut AnyMap,
     pub log: &amp;'a <a class='trait' href='../../rustful/log/trait.Log.html' title='rustful::log::Log'>Log</a>,
-}</pre><div class='docblock'><p>Contextual tools for plugins.</p>
+}</pre><div class='docblock'><p>Contextual tools for filters.</p>
 </div><h2 class='fields'>Fields</h2>
-<table><tr><td id='structfield.storage'><a class='stability Unmarked' title='No stability level'></a><code>storage</code></td><td><div class='docblock'><p>Shared storage for plugins. It is local to the current request and
-accessible from the handler and all of the plugins. It can be used to
+<table><tr><td id='structfield.storage'><a class='stability Unmarked' title='No stability level'></a><code>storage</code></td><td><div class='docblock'><p>Shared storage for filters. It is local to the current request and
+accessible from the handler and all of the filters. It can be used to
 send data between these units.</p>
 </div></td></tr><tr><td id='structfield.log'><a class='stability Unmarked' title='No stability level'></a><code>log</code></td><td><div class='docblock'><p>Log for notes, errors and warnings.</p>
 </div></td></tr></table></section>
