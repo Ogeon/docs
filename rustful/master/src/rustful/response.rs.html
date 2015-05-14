@@ -487,6 +487,22 @@
 <span id="445">445</span>
 <span id="446">446</span>
 <span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Response writers.</span>
 
@@ -511,6 +527,8 @@
 <span class='kw'>use</span> <span class='ident'>filter</span>::{<span class='ident'>FilterContext</span>, <span class='ident'>ResponseFilter</span>};
 <span class='kw'>use</span> <span class='ident'>filter</span>::<span class='ident'>ResponseAction</span> <span class='kw'>as</span> <span class='ident'>Action</span>;
 <span class='kw'>use</span> <span class='ident'>log</span>::<span class='ident'>Log</span>;
+
+<span class='kw'>use</span> <span class='ident'>Global</span>;
 
 <span class='doccomment'>///The result of a response action.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
@@ -631,11 +649,17 @@
     <span class='ident'>writer</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>HttpWriter</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> (<span class='ident'>io</span>::<span class='ident'>Write</span> <span class='op'>+</span> <span class='lifetime'>&#39;a</span>)<span class='op'>&gt;&gt;</span>,
     <span class='ident'>filters</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponseFilter</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span>,
     <span class='ident'>log</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> (<span class='ident'>Log</span> <span class='op'>+</span> <span class='lifetime'>&#39;b</span>),
+    <span class='ident'>global</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='ident'>Global</span>,
     <span class='ident'>filter_storage</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>AnyMap</span><span class='op'>&gt;</span>
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>response</span>: <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>response</span>::<span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>, <span class='ident'>filters</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponseFilter</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span>, <span class='ident'>log</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='ident'>Log</span>) <span class='op'>-&gt;</span> <span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(
+        <span class='ident'>response</span>: <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>response</span>::<span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>,
+        <span class='ident'>filters</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponseFilter</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span>,
+        <span class='ident'>log</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='ident'>Log</span>,
+        <span class='ident'>global</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='ident'>Global</span>
+    ) <span class='op'>-&gt;</span> <span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> (<span class='ident'>version</span>, <span class='ident'>writer</span>, <span class='ident'>status</span>, <span class='ident'>headers</span>) <span class='op'>=</span> <span class='ident'>response</span>.<span class='ident'>deconstruct</span>();
         <span class='ident'>Response</span> {
             <span class='ident'>headers</span>: <span class='prelude-val'>Some</span>(<span class='ident'>headers</span>),
@@ -644,6 +668,7 @@
             <span class='ident'>writer</span>: <span class='prelude-val'>Some</span>(<span class='ident'>writer</span>),
             <span class='ident'>filters</span>: <span class='ident'>filters</span>,
             <span class='ident'>log</span>: <span class='ident'>log</span>,
+            <span class='ident'>global</span>: <span class='ident'>global</span>,
             <span class='ident'>filter_storage</span>: <span class='prelude-val'>Some</span>(<span class='ident'>AnyMap</span>::<span class='ident'>new</span>())
         }
     }
@@ -693,7 +718,8 @@
                     <span class='kw'>let</span> <span class='ident'>filter_res</span> <span class='op'>=</span> {
                         <span class='kw'>let</span> <span class='ident'>filter_context</span> <span class='op'>=</span> <span class='ident'>FilterContext</span> {
                             <span class='ident'>storage</span>: <span class='self'>self</span>.<span class='ident'>filter_storage</span>(),
-                            <span class='ident'>log</span>: <span class='self'>self</span>.<span class='ident'>log</span>
+                            <span class='ident'>log</span>: <span class='self'>self</span>.<span class='ident'>log</span>,
+                            <span class='ident'>global</span>: <span class='self'>self</span>.<span class='ident'>global</span>,
                         };
                         <span class='ident'>filter</span>.<span class='ident'>begin</span>(<span class='ident'>filter_context</span>, <span class='ident'>status</span>, <span class='ident'>headers</span>)
                     };
@@ -707,7 +733,8 @@
                                 <span class='ident'>Action</span>::<span class='ident'>Next</span>(<span class='ident'>content</span>) <span class='op'>=&gt;</span> {
                                     <span class='kw'>let</span> <span class='ident'>filter_context</span> <span class='op'>=</span> <span class='ident'>FilterContext</span> {
                                         <span class='ident'>storage</span>: <span class='self'>self</span>.<span class='ident'>filter_storage</span>(),
-                                        <span class='ident'>log</span>: <span class='self'>self</span>.<span class='ident'>log</span>
+                                        <span class='ident'>log</span>: <span class='self'>self</span>.<span class='ident'>log</span>,
+                                        <span class='ident'>global</span>: <span class='self'>self</span>.<span class='ident'>global</span>,
                                     };
                                     <span class='prelude-val'>Some</span>(<span class='ident'>filter</span>.<span class='ident'>write</span>(<span class='ident'>filter_context</span>, <span class='ident'>content</span>))
                                 },
@@ -760,6 +787,7 @@
             <span class='ident'>writer</span>: <span class='prelude-val'>Some</span>(<span class='ident'>writer</span>),
             <span class='ident'>filters</span>: <span class='self'>self</span>.<span class='ident'>filters</span>,
             <span class='ident'>log</span>: <span class='self'>self</span>.<span class='ident'>log</span>,
+            <span class='ident'>global</span>: <span class='self'>self</span>.<span class='ident'>global</span>,
             <span class='ident'>filter_storage</span>: <span class='self'>self</span>.<span class='ident'>filter_storage</span>.<span class='ident'>take</span>().<span class='ident'>expect</span>(<span class='string'>&quot;response used after drop&quot;</span>)
         }
     }
@@ -781,6 +809,7 @@
     <span class='ident'>writer</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>response</span>::<span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>hyper</span>::<span class='ident'>net</span>::<span class='ident'>Streaming</span><span class='op'>&gt;</span>, <span class='ident'>Error</span><span class='op'>&gt;&gt;</span>,
     <span class='ident'>filters</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponseFilter</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span>,
     <span class='ident'>log</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> (<span class='ident'>Log</span> <span class='op'>+</span> <span class='lifetime'>&#39;b</span>),
+    <span class='ident'>global</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='ident'>Global</span>,
     <span class='ident'>filter_storage</span>: <span class='ident'>AnyMap</span>
 }
 
@@ -809,7 +838,8 @@
                 <span class='ident'>Action</span>::<span class='ident'>Next</span>(<span class='ident'>content</span>) <span class='op'>=&gt;</span> {
                     <span class='kw'>let</span> <span class='ident'>filter_context</span> <span class='op'>=</span> <span class='ident'>FilterContext</span> {
                         <span class='ident'>storage</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>filter_storage</span>,
-                        <span class='ident'>log</span>: <span class='self'>self</span>.<span class='ident'>log</span>
+                        <span class='ident'>log</span>: <span class='self'>self</span>.<span class='ident'>log</span>,
+                        <span class='ident'>global</span>: <span class='self'>self</span>.<span class='ident'>global</span>,
                     };
                     <span class='ident'>filter</span>.<span class='ident'>write</span>(<span class='ident'>filter_context</span>, <span class='ident'>content</span>)
                 },
@@ -856,7 +886,8 @@
                 <span class='ident'>Action</span>::<span class='ident'>Next</span>(<span class='ident'>content</span>) <span class='op'>=&gt;</span> {
                     <span class='kw'>let</span> <span class='ident'>filter_context</span> <span class='op'>=</span> <span class='ident'>FilterContext</span> {
                         <span class='ident'>storage</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>filter_storage</span>,
-                        <span class='ident'>log</span>: <span class='self'>self</span>.<span class='ident'>log</span>
+                        <span class='ident'>log</span>: <span class='self'>self</span>.<span class='ident'>log</span>,
+                        <span class='ident'>global</span>: <span class='self'>self</span>.<span class='ident'>global</span>,
                     };
                     <span class='prelude-val'>Some</span>(<span class='ident'>filter</span>.<span class='ident'>write</span>(<span class='ident'>filter_context</span>, <span class='ident'>content</span>))
                 },
@@ -872,7 +903,8 @@
                 <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
                     <span class='kw'>let</span> <span class='ident'>filter_context</span> <span class='op'>=</span> <span class='ident'>FilterContext</span> {
                         <span class='ident'>storage</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>filter_storage</span>,
-                        <span class='ident'>log</span>: <span class='self'>self</span>.<span class='ident'>log</span>
+                        <span class='ident'>log</span>: <span class='self'>self</span>.<span class='ident'>log</span>,
+                        <span class='ident'>global</span>: <span class='self'>self</span>.<span class='ident'>global</span>,
                     };
                     <span class='ident'>write_queue</span>.<span class='ident'>push</span>(<span class='ident'>filter</span>.<span class='ident'>end</span>(<span class='ident'>filter_context</span>))
                 }

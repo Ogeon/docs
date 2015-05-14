@@ -413,6 +413,16 @@
 <span id="371">371</span>
 <span id="372">372</span>
 <span id="373">373</span>
+<span id="374">374</span>
+<span id="375">375</span>
+<span id="376">376</span>
+<span id="377">377</span>
+<span id="378">378</span>
+<span id="379">379</span>
+<span id="380">380</span>
+<span id="381">381</span>
+<span id="382">382</span>
+<span id="383">383</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Server configuration and instance.</span>
 
@@ -446,6 +456,7 @@
 
 <span class='kw'>use</span> <span class='ident'>Scheme</span>;
 <span class='kw'>use</span> <span class='ident'>Host</span>;
+<span class='kw'>use</span> <span class='ident'>Global</span>;
 
 <span class='kw'>use</span> <span class='ident'>utils</span>;
 
@@ -496,6 +507,9 @@
     <span class='doccomment'>///Tool for printing to a log. The default is to print to standard output.</span>
     <span class='kw'>pub</span> <span class='ident'>log</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Log</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span>,
 
+    <span class='doccomment'>///Globally accessible data.</span>
+    <span class='kw'>pub</span> <span class='ident'>global</span>: <span class='ident'>Global</span>,
+
     <span class='doccomment'>///The context filter stack.</span>
     <span class='kw'>pub</span> <span class='ident'>context_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ContextFilter</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span>,
 
@@ -536,8 +550,9 @@
                 <span class='macro'>vec</span><span class='macro'>!</span>[(<span class='ident'>hyper</span>::<span class='ident'>mime</span>::<span class='ident'>Attr</span>::<span class='ident'>Charset</span>, <span class='ident'>hyper</span>::<span class='ident'>mime</span>::<span class='ident'>Value</span>::<span class='ident'>Utf8</span>)]
             ),
             <span class='ident'>log</span>: <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>StdOut</span>),
+            <span class='ident'>global</span>: <span class='ident'>Global</span>::<span class='ident'>default</span>(),
             <span class='ident'>context_filters</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
-            <span class='ident'>response_filters</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>()
+            <span class='ident'>response_filters</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
         }
     }
 
@@ -567,6 +582,7 @@
             <span class='ident'>log</span>: <span class='self'>self</span>.<span class='ident'>log</span>,
             <span class='ident'>context_filters</span>: <span class='self'>self</span>.<span class='ident'>context_filters</span>,
             <span class='ident'>response_filters</span>: <span class='self'>self</span>.<span class='ident'>response_filters</span>,
+            <span class='ident'>global</span>: <span class='self'>self</span>.<span class='ident'>global</span>,
         },
         <span class='self'>self</span>.<span class='ident'>scheme</span>)
     }
@@ -611,7 +627,9 @@
     <span class='ident'>log</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Log</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span>,
 
     <span class='ident'>context_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ContextFilter</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>response_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponseFilter</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span>
+    <span class='ident'>response_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponseFilter</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span>,
+
+    <span class='ident'>global</span>: <span class='ident'>Global</span>
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
@@ -624,7 +642,8 @@
                 <span class='ident'>ContextAction</span>::<span class='ident'>Next</span> <span class='op'>=&gt;</span> {
                     <span class='kw'>let</span> <span class='ident'>filter_context</span> <span class='op'>=</span> <span class='ident'>FilterContext</span> {
                         <span class='ident'>storage</span>: <span class='ident'>filter_storage</span>,
-                        <span class='ident'>log</span>: <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>log</span>
+                        <span class='ident'>log</span>: <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>log</span>,
+                        <span class='ident'>global</span>: <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>global</span>,
                     };
                     <span class='ident'>filter</span>.<span class='ident'>modify</span>(<span class='ident'>filter_context</span>, <span class='ident'>context</span>)
                 },
@@ -652,7 +671,7 @@
             <span class='ident'>request_reader</span>
         ) <span class='op'>=</span> <span class='ident'>request</span>.<span class='ident'>deconstruct</span>();
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>response</span> <span class='op'>=</span> <span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>writer</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>response_filters</span>, <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>log</span>);
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>response</span> <span class='op'>=</span> <span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>writer</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>response_filters</span>, <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>log</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>global</span>);
         <span class='ident'>response</span>.<span class='ident'>set_header</span>(<span class='ident'>Date</span>(<span class='ident'>HttpDate</span>(<span class='ident'>time</span>::<span class='ident'>now_utc</span>())));
         <span class='ident'>response</span>.<span class='ident'>set_header</span>(<span class='ident'>ContentType</span>(<span class='self'>self</span>.<span class='ident'>content_type</span>.<span class='ident'>clone</span>()));
         <span class='ident'>response</span>.<span class='ident'>set_header</span>(<span class='ident'>hyper</span>::<span class='ident'>header</span>::<span class='ident'>Server</span>(<span class='self'>self</span>.<span class='ident'>server</span>.<span class='ident'>clone</span>()));
@@ -685,6 +704,7 @@
                     <span class='ident'>query</span>: <span class='ident'>query</span>,
                     <span class='ident'>fragment</span>: <span class='ident'>fragment</span>,
                     <span class='ident'>log</span>: <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>log</span>,
+                    <span class='ident'>global</span>: <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>global</span>,
                     <span class='ident'>body_reader</span>: <span class='ident'>context</span>::<span class='ident'>BodyReader</span>::<span class='ident'>from_reader</span>(<span class='ident'>request_reader</span>)
                 };
 

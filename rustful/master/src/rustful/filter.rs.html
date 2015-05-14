@@ -131,6 +131,11 @@
 <span id="89">89</span>
 <span id="90">90</span>
 <span id="91">91</span>
+<span id="92">92</span>
+<span id="93">93</span>
+<span id="94">94</span>
+<span id="95">95</span>
+<span id="96">96</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Request and context filters.</span>
 
@@ -144,6 +149,8 @@
 
 <span class='kw'>use</span> <span class='ident'>response</span>::<span class='ident'>Data</span>;
 
+<span class='kw'>use</span> <span class='ident'>Global</span>;
+
 <span class='doccomment'>///Contextual tools for filters.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>FilterContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='doccomment'>///Shared storage for filters. It is local to the current request and</span>
@@ -152,7 +159,10 @@
     <span class='kw'>pub</span> <span class='ident'>storage</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>AnyMap</span>,
 
     <span class='doccomment'>///Log for notes, errors and warnings.</span>
-    <span class='kw'>pub</span> <span class='ident'>log</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Log</span>
+    <span class='kw'>pub</span> <span class='ident'>log</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Log</span>,
+
+    <span class='doccomment'>///Globally accessible data.</span>
+    <span class='kw'>pub</span> <span class='ident'>global</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Global</span>,
 }
 
 <span class='doccomment'>///A trait for context filters.</span>
