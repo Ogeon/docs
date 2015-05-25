@@ -198,8 +198,8 @@
 <span class='doccomment'>///They are able to modify headers and data before it gets written in the response.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ResponseFilter</span> {
     <span class='doccomment'>///Set or modify headers before they are sent to the client and maybe initiate the body.</span>
-    <span class='kw'>fn</span> <span class='ident'>begin</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>FilterContext</span>, <span class='ident'>status</span>: <span class='ident'>StatusCode</span>, <span class='ident'>headers</span>: <span class='ident'>Headers</span>) <span class='op'>-&gt;</span>
-        (<span class='ident'>StatusCode</span>, <span class='ident'>Headers</span>, <span class='ident'>ResponseAction</span>);
+    <span class='kw'>fn</span> <span class='ident'>begin</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>FilterContext</span>, <span class='ident'>status</span>: <span class='ident'>StatusCode</span>, <span class='ident'>headers</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Headers</span>) <span class='op'>-&gt;</span>
+        (<span class='ident'>StatusCode</span>, <span class='ident'>ResponseAction</span>);
 
     <span class='doccomment'>///Handle content before writing it to the body.</span>
     <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>FilterContext</span>, <span class='ident'>content</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Data</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseAction</span>;

@@ -43,7 +43,7 @@
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>rustful</a>::<wbr><a class='mod' href=''>header</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-6373' href='https://hyperium.github.io/hyper/hyper/index.html/hyper/header/index.html?gotosrc=6373'>[src]</a></span></h1>
+        </span><a id='src-6701' href='https://hyperium.github.io/hyper/hyper/index.html/hyper/header/index.html?gotosrc=6701'>[src]</a></span></h1>
 <div class='docblock'><p>Headers container, and common header fields.</p>
 
 <p>hyper has the opinion that Headers should be strongly-typed, because that&#39;s
@@ -92,10 +92,18 @@ are already provided, such as <code>Host</code>, <code>ContentType</code>, <code
                     </tr>
                 
                     <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.AcceptRanges.html'
+                               title='rustful::header::AcceptRanges'>AcceptRanges</a></td>
+                        <td class='docblock short'><p><code>Accept-Ranges</code> header, defined in
+<a href="http://tools.ietf.org/html/rfc7233#section-2.3">RFC7233</a></p>
+</td>
+                    </tr>
+                
+                    <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.AccessControlAllowHeaders.html'
                                title='rustful::header::AccessControlAllowHeaders'>AccessControlAllowHeaders</a></td>
                         <td class='docblock short'><p><code>Access-Control-Allow-Headers</code> header, part of
-<a href="www.w3.org/TR/cors/#access-control-allow-headers-response-header">CORS</a></p>
+<a href="http://www.w3.org/TR/cors/#access-control-allow-headers-response-header">CORS</a></p>
 </td>
                     </tr>
                 
@@ -103,7 +111,7 @@ are already provided, such as <code>Host</code>, <code>ContentType</code>, <code
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.AccessControlAllowMethods.html'
                                title='rustful::header::AccessControlAllowMethods'>AccessControlAllowMethods</a></td>
                         <td class='docblock short'><p><code>Access-Control-Allow-Methods</code> header, part of
-<a href="www.w3.org/TR/cors/#access-control-allow-methods-response-header">CORS</a></p>
+<a href="http://www.w3.org/TR/cors/#access-control-allow-methods-response-header">CORS</a></p>
 </td>
                     </tr>
                 
@@ -111,7 +119,7 @@ are already provided, such as <code>Host</code>, <code>ContentType</code>, <code
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.AccessControlMaxAge.html'
                                title='rustful::header::AccessControlMaxAge'>AccessControlMaxAge</a></td>
                         <td class='docblock short'><p><code>Access-Control-Max-Age</code> header, part of
-<a href="www.w3.org/TR/cors/#access-control-max-age-response-header">CORS</a></p>
+<a href="http://www.w3.org/TR/cors/#access-control-max-age-response-header">CORS</a></p>
 </td>
                     </tr>
                 
@@ -119,7 +127,7 @@ are already provided, such as <code>Host</code>, <code>ContentType</code>, <code
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.AccessControlRequestHeaders.html'
                                title='rustful::header::AccessControlRequestHeaders'>AccessControlRequestHeaders</a></td>
                         <td class='docblock short'><p><code>Access-Control-Request-Headers</code> header, part of
-<a href="www.w3.org/TR/cors/#access-control-request-headers-request-header">CORS</a></p>
+<a href="http://www.w3.org/TR/cors/#access-control-request-headers-request-header">CORS</a></p>
 </td>
                     </tr>
                 
@@ -127,7 +135,7 @@ are already provided, such as <code>Host</code>, <code>ContentType</code>, <code
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.AccessControlRequestMethod.html'
                                title='rustful::header::AccessControlRequestMethod'>AccessControlRequestMethod</a></td>
                         <td class='docblock short'><p><code>Access-Control-Request-Method</code> header, part of
-<a href="www.w3.org/TR/cors/#access-control-request-method-request-header">CORS</a></p>
+<a href="http://www.w3.org/TR/cors/#access-control-request-method-request-header">CORS</a></p>
 </td>
                     </tr>
                 
@@ -141,7 +149,7 @@ are already provided, such as <code>Host</code>, <code>ContentType</code>, <code
                     <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Authorization.html'
                                title='rustful::header::Authorization'>Authorization</a></td>
-                        <td class='docblock short'><p>The <code>Authorization</code> header field.</p>
+                        <td class='docblock short'><p><code>Authorization</code> header, defined in <a href="https://tools.ietf.org/html/rfc7235#section-4.2">RFC7235</a></p>
 </td>
                     </tr>
                 
@@ -155,14 +163,15 @@ are already provided, such as <code>Host</code>, <code>ContentType</code>, <code
                     <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.CacheControl.html'
                                title='rustful::header::CacheControl'>CacheControl</a></td>
-                        <td class='docblock short'><p>The Cache-Control header.</p>
+                        <td class='docblock short'><p><code>Cache-Control</code> header, defined in <a href="https://tools.ietf.org/html/rfc7234#section-5.2">RFC7234</a></p>
 </td>
                     </tr>
                 
                     <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Connection.html'
                                title='rustful::header::Connection'>Connection</a></td>
-                        <td class='docblock short'><p>The <code>Connection</code> header.</p>
+                        <td class='docblock short'><p><code>Connection</code> header, defined in
+<a href="http://tools.ietf.org/html/rfc7230#section-6.1">RFC7230</a></p>
 </td>
                     </tr>
                 
@@ -201,7 +210,7 @@ are already provided, such as <code>Host</code>, <code>ContentType</code>, <code
                     <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Cookie.html'
                                title='rustful::header::Cookie'>Cookie</a></td>
-                        <td class='docblock short'><p>The <code>Cookie</code> header. Defined in <a href="tools.ietf.org/html/rfc6265#section-5.4">RFC6265</a>:</p>
+                        <td class='docblock short'><p><code>Cookie</code> header, defined in <a href="http://tools.ietf.org/html/rfc6265#section-5.4">RFC6265</a></p>
 </td>
                     </tr>
                 
@@ -230,6 +239,13 @@ are already provided, such as <code>Host</code>, <code>ContentType</code>, <code
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Expires.html'
                                title='rustful::header::Expires'>Expires</a></td>
                         <td class='docblock short'><p><code>Expires</code> header, defined in <a href="http://tools.ietf.org/html/rfc7234#section-5.3">RFC7234</a></p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.From.html'
+                               title='rustful::header::From'>From</a></td>
+                        <td class='docblock short'><p><code>From</code> header, defined in <a href="http://tools.ietf.org/html/rfc7231#section-5.5.1">RFC7231</a></p>
 </td>
                     </tr>
                 
@@ -302,7 +318,8 @@ See <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.10">http
                     <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.LastModified.html'
                                title='rustful::header::LastModified'>LastModified</a></td>
-                        <td class='docblock short'><p><code>Last-Modified</code> header, defined in <a href="http://tools.ietf.org/html/rfc7232#section-2.2">RFC7232</a></p>
+                        <td class='docblock short'><p><code>Last-Modified</code> header, defined in
+<a href="http://tools.ietf.org/html/rfc7232#section-2.2">RFC7232</a></p>
 </td>
                     </tr>
                 
@@ -311,6 +328,13 @@ See <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.10">http
                                title='rustful::header::Location'>Location</a></td>
                         <td class='docblock short'><p><code>Location</code> header, defined in
 <a href="http://tools.ietf.org/html/rfc7231#section-7.1.2">RFC7231</a></p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Protocol.html'
+                               title='rustful::header::Protocol'>Protocol</a></td>
+                        <td class='docblock short'><p>Protocols that appear in the <code>Upgrade</code> header field</p>
 </td>
                     </tr>
                 
@@ -347,7 +371,7 @@ See <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.10">http
                     <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.SetCookie.html'
                                title='rustful::header::SetCookie'>SetCookie</a></td>
-                        <td class='docblock short'><p>The <code>Set-Cookie</code> header</p>
+                        <td class='docblock short'><p><code>Set-Cookie</code> header, defined <a href="http://tools.ietf.org/html/rfc6265#section-4.1">RFC6265</a></p>
 </td>
                     </tr>
                 
@@ -379,7 +403,7 @@ See <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.10">http
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='enum' href='enum.AccessControlAllowOrigin.html'
                                title='rustful::header::AccessControlAllowOrigin'>AccessControlAllowOrigin</a></td>
                         <td class='docblock short'><p>The <code>Access-Control-Allow-Origin</code> response header,
-part of <a href="www.w3.org/TR/cors/#access-control-allow-origin-response-header">CORS</a></p>
+part of <a href="http://www.w3.org/TR/cors/#access-control-allow-origin-response-header">CORS</a></p>
 </td>
                     </tr>
                 
@@ -450,9 +474,10 @@ or <code>Accept-Encoding</code> header.</p>
                     </tr>
                 
                     <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='enum' href='enum.Protocol.html'
-                               title='rustful::header::Protocol'>Protocol</a></td>
-                        <td class='docblock short'><p>Protocol values that can appear in the Upgrade header.</p>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='enum' href='enum.ProtocolName.html'
+                               title='rustful::header::ProtocolName'>ProtocolName</a></td>
+                        <td class='docblock short'><p>A protocol name used to identify a spefic protocol. Names are case-sensitive
+except for the <code>WebSocket</code> value.</p>
 </td>
                     </tr>
                 

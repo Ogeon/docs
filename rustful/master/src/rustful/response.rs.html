@@ -641,7 +641,7 @@
 
 <span class='doccomment'>///An interface for setting HTTP status code and response headers, before data gets written to the client.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
-    <span class='ident'>headers</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Headers</span><span class='op'>&gt;</span>,
+    <span class='ident'>headers</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>Headers</span><span class='op'>&gt;</span>,
 
     <span class='ident'>status</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>StatusCode</span><span class='op'>&gt;</span>,
 
@@ -725,8 +725,8 @@
                     };
 
                     <span class='kw'>match</span> <span class='ident'>filter_res</span> {
-                        (<span class='ident'>status</span>, <span class='ident'>headers</span>, <span class='ident'>Action</span>::<span class='ident'>Abort</span>(<span class='ident'>e</span>)) <span class='op'>=&gt;</span> (<span class='ident'>status</span>, <span class='ident'>headers</span>, <span class='ident'>Action</span>::<span class='ident'>Abort</span>(<span class='ident'>e</span>)),
-                        (<span class='ident'>status</span>, <span class='ident'>headers</span>, <span class='ident'>result</span>) <span class='op'>=&gt;</span> {
+                        (<span class='ident'>status</span>, <span class='ident'>Action</span>::<span class='ident'>Abort</span>(<span class='ident'>e</span>)) <span class='op'>=&gt;</span> (<span class='ident'>status</span>, <span class='ident'>headers</span>, <span class='ident'>Action</span>::<span class='ident'>Abort</span>(<span class='ident'>e</span>)),
+                        (<span class='ident'>status</span>, <span class='ident'>result</span>) <span class='op'>=&gt;</span> {
                             <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>error</span> <span class='op'>=</span> <span class='prelude-val'>None</span>;
                             
                             <span class='ident'>write_queue</span> <span class='op'>=</span> <span class='ident'>write_queue</span>.<span class='ident'>into_iter</span>().<span class='ident'>filter_map</span>(<span class='op'>|</span><span class='ident'>action</span><span class='op'>|</span> <span class='kw'>match</span> <span class='ident'>action</span> {

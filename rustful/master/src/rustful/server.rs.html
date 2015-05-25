@@ -423,6 +423,7 @@
 <span id="381">381</span>
 <span id="382">382</span>
 <span id="383">383</span>
+<span id="384">384</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Server configuration and instance.</span>
 
@@ -457,6 +458,7 @@
 <span class='kw'>use</span> <span class='ident'>Scheme</span>;
 <span class='kw'>use</span> <span class='ident'>Host</span>;
 <span class='kw'>use</span> <span class='ident'>Global</span>;
+<span class='kw'>use</span> <span class='ident'>HttpResult</span>;
 
 <span class='kw'>use</span> <span class='ident'>utils</span>;
 
@@ -557,7 +559,7 @@
     }
 
     <span class='doccomment'>///Start the server.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>hyper</span>::<span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>threads</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>threads</span>;
         <span class='kw'>let</span> (<span class='ident'>server</span>, <span class='ident'>scheme</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>build</span>();
         <span class='kw'>let</span> <span class='ident'>host</span> <span class='op'>=</span> <span class='ident'>server</span>.<span class='ident'>host</span>;
