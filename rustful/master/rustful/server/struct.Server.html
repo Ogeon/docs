@@ -43,9 +43,10 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>server</a>::<wbr><a class='struct' href=''>Server</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-217' href='../../src/rustful/server.rs.html#60-93'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct Server&lt;'s, R&gt; {
+        </span><a id='src-220' href='../../src/rustful/server.rs.html#60-98'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Server&lt;'s, R: <a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a>&gt; {
     pub handlers: R,
+    pub fallback_handler: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;R&gt;,
     pub host: <a class='struct' href='../../rustful/struct.Host.html' title='rustful::Host'>Host</a>,
     pub scheme: <a class='enum' href='../../rustful/enum.Scheme.html' title='rustful::Scheme'>Scheme</a>&lt;'s&gt;,
     pub threads: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;,
@@ -70,6 +71,9 @@
 </pre>
 </div><h2 class='fields'>Fields</h2>
 <table><tr><td id='structfield.handlers'><a class='stability Unmarked' title='No stability level'></a><code>handlers</code></td><td><div class='docblock'><p>One or several response handlers.</p>
+</div></td></tr><tr><td id='structfield.fallback_handler'><a class='stability Unmarked' title='No stability level'></a><code>fallback_handler</code></td><td><div class='docblock'><p>A fallback handler for when none is found in <code>handlers</code>. Leaving this
+unspecified will cause an empty <code>404</code> response to be automatically sent
+instead.</p>
 </div></td></tr><tr><td id='structfield.host'><a class='stability Unmarked' title='No stability level'></a><code>host</code></td><td><div class='docblock'><p>The host address and port where the server will listen for requests.
 Default is <code>0.0.0.0:80</code>.</p>
 </div></td></tr><tr><td id='structfield.scheme'><a class='stability Unmarked' title='No stability level'></a><code>scheme</code></td><td><div class='docblock'><p>Use good old HTTP or the more secure HTTPS. Default is HTTP.</p>
@@ -86,9 +90,9 @@ from the system.</p>
 <div class='docblock'><p>Set up a new standard server. This can be useful when <code>handlers</code>
 doesn&#39;t implement <code>Default</code>:</p>
 <pre id='rust-example-rendered' class='rust '>
-<span class='kw'>fn</span> <span class='ident'>handler</span>(<span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span>) {
+<span class='kw'>let</span> <span class='ident'>handler</span> <span class='op'>=</span> <span class='op'>|</span><span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span><span class='op'>|</span> {
     <span class='comment'>//...</span>
-}
+};
 
 <span class='kw'>let</span> <span class='ident'>server_result</span> <span class='op'>=</span> <span class='ident'>Server</span> {
     <span class='ident'>host</span>: <span class='number'>8080</span>.<span class='ident'>into</span>(),

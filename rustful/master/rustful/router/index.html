@@ -43,7 +43,7 @@
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>rustful</a>::<wbr><a class='mod' href=''>router</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-946' href='../../src/rustful/router.rs.html#1-802'>[src]</a></span></h1>
+        </span><a id='src-977' href='../../src/rustful/router/mod.rs.html#1-224'>[src]</a></span></h1>
 <div class='docblock'><p>Routers stores request handlers, using an HTTP method and a path as keys.</p>
 
 <p>Rustful provides a tree structured all-round router called <code>TreeRouter</code>,
@@ -94,12 +94,14 @@ among other things.</p>
 <span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/*&quot;</span>, <span class='ident'>show_error</span>);
 <span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/&quot;</span>, <span class='ident'>show_welcome</span>);
 </pre>
-</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+<table><tr><td><code>pub use self::<a class='mod'
+                                            href='./tree_router/index.html'>tree_router</a>::<a class='struct' href='../../rustful/struct.TreeRouter.html' title='rustful::TreeRouter'>TreeRouter</a>;</code></td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                     <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.TreeRouter.html'
-                               title='rustful::router::TreeRouter'>TreeRouter</a></td>
-                        <td class='docblock short'><p>Stores items, such as request handlers, using an HTTP method and a path as keys.</p>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Endpoint.html'
+                               title='rustful::router::Endpoint'>Endpoint</a></td>
+                        <td class='docblock short'><p>API endpoint data.</p>
 </td>
                     </tr>
                 </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
@@ -124,13 +126,6 @@ among other things.</p>
                                title='rustful::router::Router'>Router</a></td>
                         <td class='docblock short'><p>A common trait for routers.</p>
 </td>
-                    </tr>
-                </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
-<table>
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.RouterResult.html'
-                               title='rustful::router::RouterResult'>RouterResult</a></td>
-                        <td class='docblock short'></td>
                     </tr>
                 </table></section>
     <section id='search' class="content hidden"></section>

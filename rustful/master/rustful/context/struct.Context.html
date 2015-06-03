@@ -43,13 +43,14 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a>::<wbr><a class='struct' href=''>Context</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-2413' href='../../src/rustful/context.rs.html#25-58'>[src]</a></span></h1>
+        </span><a id='src-2809' href='../../src/rustful/context.rs.html#25-61'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Context&lt;'a, 'b, 's&gt; {
     pub headers: <a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a>,
     pub http_version: <a class='enum' href='../../rustful/enum.HttpVersion.html' title='rustful::HttpVersion'>HttpVersion</a>,
     pub address: <a class='enum' href='http://doc.rust-lang.org/nightly/std/net/addr/enum.SocketAddr.html' title='std::net::addr::SocketAddr'>SocketAddr</a>,
     pub method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>,
     pub path: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
+    pub hypermedia: <a class='struct' href='../../rustful/context/struct.Hypermedia.html' title='rustful::context::Hypermedia'>Hypermedia</a>&lt;'s&gt;,
     pub variables: <a class='struct' href='http://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html' title='std::collections::hash::map::HashMap'>HashMap</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
     pub query: <a class='struct' href='http://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html' title='std::collections::hash::map::HashMap'>HashMap</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
     pub fragment: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
@@ -66,6 +67,7 @@ the underlying read methods.</p>
 </div></td></tr><tr><td id='structfield.address'><a class='stability Unmarked' title='No stability level'></a><code>address</code></td><td><div class='docblock'><p>The client address</p>
 </div></td></tr><tr><td id='structfield.method'><a class='stability Unmarked' title='No stability level'></a><code>method</code></td><td><div class='docblock'><p>The HTTP method.</p>
 </div></td></tr><tr><td id='structfield.path'><a class='stability Unmarked' title='No stability level'></a><code>path</code></td><td><div class='docblock'><p>The requested path.</p>
+</div></td></tr><tr><td id='structfield.hypermedia'><a class='stability Unmarked' title='No stability level'></a><code>hypermedia</code></td><td><div class='docblock'><p>Hypermedia from the current endpoint.</p>
 </div></td></tr><tr><td id='structfield.variables'><a class='stability Unmarked' title='No stability level'></a><code>variables</code></td><td><div class='docblock'><p>Route variables.</p>
 </div></td></tr><tr><td id='structfield.query'><a class='stability Unmarked' title='No stability level'></a><code>query</code></td><td><div class='docblock'><p>Query variables from the path.</p>
 </div></td></tr><tr><td id='structfield.fragment'><a class='stability Unmarked' title='No stability level'></a><code>fragment</code></td><td><div class='docblock'><p>The fragment part of the URL (after #), if provided.</p>

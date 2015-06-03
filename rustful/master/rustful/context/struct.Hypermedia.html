@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `RouterResult` type in crate `rustful`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, RouterResult">
+    <meta name="description" content="API documentation for the Rust `Hypermedia` struct in crate `rustful`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Hypermedia">
 
-    <title>rustful::router::RouterResult - Rust</title>
+    <title>rustful::context::Hypermedia - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>router</a></p><script>window.sidebarCurrent = {name: 'RouterResult', ty: 'type', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a></p><script>window.sidebarCurrent = {name: 'Hypermedia', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -40,11 +40,18 @@
         </form>
     </nav>
 
-    <section id='main' class="content type">
-<h1 class='fqn'><span class='in-band'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>router</a>::<wbr><a class='type' href=''>RouterResult</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a>::<wbr><a class='struct' href=''>Hypermedia</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-968' href='../../src/rustful/router.rs.html#96'>[src]</a></span></h1>
-<pre class='rust typedef'>type RouterResult&lt;'a, T&gt; = <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(&amp;'a T, <a class='struct' href='http://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html' title='std::collections::hash::map::HashMap'>HashMap</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;)</a>&gt;;</pre></section>
+        </span><a id='src-3031' href='../../src/rustful/context.rs.html#114-117'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Hypermedia&lt;'a&gt; {
+    pub links: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../rustful/context/struct.Link.html' title='rustful::context::Link'>Link</a>&lt;'a&gt;&gt;,
+}</pre><div class='docblock'><p>Hypermedia connected to an API endpoint.</p>
+</div><h2 class='fields'>Fields</h2>
+<table><tr><td id='structfield.links'><a class='stability Unmarked' title='No stability level'></a><code>links</code></td><td><div class='docblock'><p>Forward links from the current endpoint to other endpoints.</p>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a&gt; <a class='struct' href='../../rustful/context/struct.Hypermedia.html' title='rustful::context::Hypermedia'>Hypermedia</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../../rustful/context/struct.Hypermedia.html' title='rustful::context::Hypermedia'>Hypermedia</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Create an empty <code>Hypermedia</code> structure.</p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
