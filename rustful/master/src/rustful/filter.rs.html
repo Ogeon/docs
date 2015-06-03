@@ -168,7 +168,7 @@
 <span class='doccomment'>///A trait for context filters.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>///They are able to modify and react to a `Context` before it&#39;s sent to the handler.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ContextFilter</span> {
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ContextFilter</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> {
     <span class='doccomment'>///Try to modify the handler `Context`.</span>
     <span class='kw'>fn</span> <span class='ident'>modify</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>FilterContext</span>, <span class='ident'>request_context</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Context</span>) <span class='op'>-&gt;</span> <span class='ident'>ContextAction</span>;
 }
@@ -196,7 +196,7 @@
 <span class='doccomment'>///A trait for response filters.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>///They are able to modify headers and data before it gets written in the response.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ResponseFilter</span> {
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ResponseFilter</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> {
     <span class='doccomment'>///Set or modify headers before they are sent to the client and maybe initiate the body.</span>
     <span class='kw'>fn</span> <span class='ident'>begin</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>FilterContext</span>, <span class='ident'>status</span>: <span class='ident'>StatusCode</span>, <span class='ident'>headers</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Headers</span>) <span class='op'>-&gt;</span>
         (<span class='ident'>StatusCode</span>, <span class='ident'>ResponseAction</span>);

@@ -43,9 +43,9 @@
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>router</a>::<wbr><a class='trait' href=''>Router</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-2413' href='../../src/rustful/router/mod.rs.html#121-129'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Router {
-    type Handler;
+        </span><a id='src-2364' href='../../src/rustful/router/mod.rs.html#121-129'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Router: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> + 'static {
+    type Handler: <a class='trait' href='../../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a>;
 
     fn <a href='#tymethod.insert' class='fnname'>insert</a>&lt;'r, R: <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'r&gt; + ?<a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt;(&amp;mut self, method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>, route: &amp;'r R, handler: Self::<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Handler</a>);
     fn <a href='#tymethod.find' class='fnname'>find</a>&lt;'a, 'r, R: <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'r&gt; + ?<a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt;(&amp;'a self, method: &amp;<a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>, route: &amp;'r R) -&gt; <a class='struct' href='../../rustful/router/struct.Endpoint.html' title='rustful::router::Endpoint'>Endpoint</a>&lt;'a, Self::<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Handler</a>&gt;;
@@ -56,7 +56,7 @@ trait will also make the router compatible with the <code>insert_routes!</code> 
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Handler' class='method'><a class='stability Unmarked' title='No stability level'></a><code>type Handler</code></h3></div>
+        <h3 id='associatedtype.Handler' class='method'><a class='stability Unmarked' title='No stability level'></a><code>type Handler: <a class='trait' href='../../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a></code></h3></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
         <h3 id='tymethod.insert' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.insert' class='fnname'>insert</a>&lt;'r, R: <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'r&gt; + ?<a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt;(&amp;mut self, method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>, route: &amp;'r R, handler: Self::<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Handler</a>)</code></h3><div class='docblock'><p>Insert a new handler into the router.</p>
@@ -64,7 +64,7 @@ trait will also make the router compatible with the <code>insert_routes!</code> 
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;T&gt; <a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a> for <a class='struct' href='../../rustful/struct.TreeRouter.html' title='rustful::TreeRouter'>TreeRouter</a>&lt;T&gt;</code></li>
+    <li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;T: <a class='trait' href='../../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a>&gt; <a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a> for <a class='struct' href='../../rustful/struct.TreeRouter.html' title='rustful::TreeRouter'>TreeRouter</a>&lt;T&gt;</code></li>
 <li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;H: <a class='trait' href='../../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a>&gt; <a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a> for H</code></li>
 </ul><script type="text/javascript" async
                               src="../../implementors/rustful/router/trait.Router.js">

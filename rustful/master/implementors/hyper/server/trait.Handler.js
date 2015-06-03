@@ -1,5 +1,5 @@
 (function() {var implementors = {};
-implementors['rustful'] = ["<a class='stability Unmarked' title='No stability level'></a>impl&lt;R, H&gt; <a class='trait' href='https://hyperium.github.io/hyper/hyper/index.html/hyper/server/trait.Handler.html' title='hyper::server::Handler'>HyperHandler</a> for <a class='struct' href='rustful/server/struct.ServerInstance.html' title='rustful::server::ServerInstance'>ServerInstance</a>&lt;R&gt;",];
+implementors['hyper'] = [];implementors['rustful'] = ["<a class='stability Unmarked' title='No stability level'></a>impl&lt;R: <a class='trait' href='rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a>&gt; <a class='trait' href='hyper/server/trait.Handler.html' title='hyper::server::Handler'>HyperHandler</a> for <a class='struct' href='rustful/server/struct.ServerInstance.html' title='rustful::server::ServerInstance'>ServerInstance</a>&lt;R&gt;",];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

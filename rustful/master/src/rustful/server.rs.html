@@ -425,17 +425,6 @@
 <span id="383">383</span>
 <span id="384">384</span>
 <span id="385">385</span>
-<span id="386">386</span>
-<span id="387">387</span>
-<span id="388">388</span>
-<span id="389">389</span>
-<span id="390">390</span>
-<span id="391">391</span>
-<span id="392">392</span>
-<span id="393">393</span>
-<span id="394">394</span>
-<span id="395">395</span>
-<span id="396">396</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Server configuration and instance.</span>
 
@@ -524,23 +513,19 @@
     <span class='kw'>pub</span> <span class='ident'>content_type</span>: <span class='ident'>Mime</span>,
 
     <span class='doccomment'>///Tool for printing to a log. The default is to print to standard output.</span>
-    <span class='kw'>pub</span> <span class='ident'>log</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Log</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span>,
+    <span class='kw'>pub</span> <span class='ident'>log</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Log</span><span class='op'>&gt;</span>,
 
     <span class='doccomment'>///Globally accessible data.</span>
     <span class='kw'>pub</span> <span class='ident'>global</span>: <span class='ident'>Global</span>,
 
     <span class='doccomment'>///The context filter stack.</span>
-    <span class='kw'>pub</span> <span class='ident'>context_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ContextFilter</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span>,
+    <span class='kw'>pub</span> <span class='ident'>context_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ContextFilter</span><span class='op'>&gt;&gt;</span>,
 
     <span class='doccomment'>///The response filter stack.</span>
-    <span class='kw'>pub</span> <span class='ident'>response_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponseFilter</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span>
+    <span class='kw'>pub</span> <span class='ident'>response_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponseFilter</span><span class='op'>&gt;&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span>, <span class='ident'>R</span>, <span class='ident'>H</span><span class='op'>&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span>, <span class='ident'>R</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span>
-    <span class='ident'>R</span>: <span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>Handler</span><span class='op'>=</span><span class='ident'>H</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>,
-    <span class='ident'>H</span>: <span class='ident'>Handler</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>
-{
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span>, <span class='ident'>R</span>: <span class='ident'>Router</span><span class='op'>&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span>, <span class='ident'>R</span><span class='op'>&gt;</span> {
     <span class='doccomment'>///Set up a new standard server. This can be useful when `handlers`</span>
     <span class='doccomment'>///doesn&#39;t implement `Default`:</span>
     <span class='doccomment'>///</span>
@@ -609,10 +594,7 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span>, <span class='ident'>R</span>, <span class='ident'>H</span><span class='op'>&gt;</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span>, <span class='ident'>R</span><span class='op'>&gt;</span> <span class='kw'>where</span>
-    <span class='ident'>R</span>: <span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>Handler</span><span class='op'>=</span><span class='ident'>H</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Default</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>,
-    <span class='ident'>H</span>: <span class='ident'>Handler</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>
-{
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span>, <span class='ident'>R</span>: <span class='ident'>Router</span> <span class='op'>+</span> <span class='ident'>Default</span><span class='op'>&gt;</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span>, <span class='ident'>R</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span>, <span class='ident'>R</span><span class='op'>&gt;</span> {
         <span class='ident'>Server</span>::<span class='ident'>new</span>(<span class='ident'>R</span>::<span class='ident'>default</span>())
     }
@@ -646,10 +628,10 @@
     <span class='ident'>server</span>: <span class='ident'>String</span>,
     <span class='ident'>content_type</span>: <span class='ident'>Mime</span>,
 
-    <span class='ident'>log</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Log</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span>,
+    <span class='ident'>log</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Log</span><span class='op'>&gt;</span>,
 
-    <span class='ident'>context_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ContextFilter</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>response_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponseFilter</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;&gt;</span>,
+    <span class='ident'>context_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ContextFilter</span><span class='op'>&gt;&gt;</span>,
+    <span class='ident'>response_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponseFilter</span><span class='op'>&gt;&gt;</span>,
 
     <span class='ident'>global</span>: <span class='ident'>Global</span>
 }
@@ -678,11 +660,7 @@
 
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>H</span><span class='op'>&gt;</span> <span class='ident'>HyperHandler</span> <span class='kw'>for</span> <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span>
-    <span class='ident'>R</span>: <span class='ident'>Router</span><span class='op'>&lt;</span><span class='ident'>Handler</span><span class='op'>=</span><span class='ident'>H</span><span class='op'>&gt;</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>,
-    <span class='ident'>H</span>: <span class='ident'>Handler</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span>
-{
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>Router</span><span class='op'>&gt;</span> <span class='ident'>HyperHandler</span> <span class='kw'>for</span> <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>handle</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>request</span>: <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>request</span>::<span class='ident'>Request</span>, <span class='ident'>writer</span>: <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>response</span>::<span class='ident'>Response</span>) {
         <span class='kw'>let</span> (
             <span class='ident'>request_addr</span>,

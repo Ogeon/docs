@@ -385,8 +385,8 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>///A router must to implement this trait to be usable in a Rustful server. This</span>
 <span class='doccomment'>///trait will also make the router compatible with the `insert_routes!` macro.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Router</span> {
-    <span class='kw'>type</span> <span class='ident'>Handler</span>;
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Router</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
+    <span class='kw'>type</span> <span class='ident'>Handler</span>: <span class='ident'>Handler</span>;
 
     <span class='doccomment'>///Insert a new handler into the router.</span>
     <span class='kw'>fn</span> <span class='ident'>insert</span><span class='op'>&lt;</span><span class='lifetime'>&#39;r</span>, <span class='ident'>R</span>: <span class='ident'>Route</span><span class='op'>&lt;</span><span class='lifetime'>&#39;r</span><span class='op'>&gt;</span> <span class='op'>+</span> ?<span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>method</span>: <span class='ident'>Method</span>, <span class='ident'>route</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;r</span> <span class='ident'>R</span>, <span class='ident'>handler</span>: <span class='ident'>Self</span>::<span class='ident'>Handler</span>);
