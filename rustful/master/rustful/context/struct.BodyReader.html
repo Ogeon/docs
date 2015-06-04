@@ -43,7 +43,7 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a>::<wbr><a class='struct' href=''>BodyReader</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-2965' href='../../src/rustful/context.rs.html#63-65'>[src]</a></span></h1>
+        </span><a id='src-2970' href='../../src/rustful/context.rs.html#68-70'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct BodyReader&lt;'a, 'b&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>A reader for a request body.</p>
@@ -61,7 +61,9 @@
 </div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, 'b&gt; <a class='trait' href='../../rustful/context/trait.ExtQueryBody.html' title='rustful::context::ExtQueryBody'>ExtQueryBody</a> for <a class='struct' href='../../rustful/context/struct.BodyReader.html' title='rustful::context::BodyReader'>BodyReader</a>&lt;'a, 'b&gt;</code></h3><div class='impl-items'><h4 id='method.read_query_body' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='../../rustful/context/trait.ExtQueryBody.html#method.read_query_body' class='fnname'>read_query_body</a>(&amp;mut self) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html' title='std::collections::hash::map::HashMap'>HashMap</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;</code></h4>
 <div class='docblock'><p>Read and parse the request body as a query string.
 The body will be decoded as UTF-8 and plain &#39;+&#39; characters will be replaced with spaces.</p>
-</div></div></section>
+</div></div><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, 'b&gt; <a class='trait' href='../../rustful/context/trait.ExtJsonBody.html' title='rustful::context::ExtJsonBody'>ExtJsonBody</a> for <a class='struct' href='../../rustful/context/struct.BodyReader.html' title='rustful::context::BodyReader'>BodyReader</a>&lt;'a, 'b&gt;</code></h3><div class='impl-items'><h4 id='method.read_json_body' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='../../rustful/context/trait.ExtJsonBody.html#method.read_json_body' class='fnname'>read_json_body</a>(&amp;mut self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../rustc_serialize/json/enum.Json.html' title='rustc_serialize::json::Json'>Json</a>, <a class='type' href='../../rustc_serialize/json/type.BuilderError.html' title='rustc_serialize::json::BuilderError'>BuilderError</a>&gt;</code></h4>
+<h4 id='method.decode_json_body' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='../../rustful/context/trait.ExtJsonBody.html#method.decode_json_body' class='fnname'>decode_json_body</a>&lt;T: <a class='trait' href='../../rustc_serialize/serialize/trait.Decodable.html' title='rustc_serialize::serialize::Decodable'>Decodable</a>&gt;(&amp;mut self) -&gt; <a class='type' href='../../rustc_serialize/json/type.DecodeResult.html' title='rustc_serialize::json::DecodeResult'>DecodeResult</a>&lt;T&gt;</code></h4>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

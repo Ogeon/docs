@@ -172,12 +172,51 @@
 <span id="130">130</span>
 <span id="131">131</span>
 <span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Handler context and request body reading extensions.</span>
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='self'>self</span>, <span class='ident'>Read</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::<span class='ident'>SocketAddr</span>;
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc_json_body&quot;</span>)]</span>
+<span class='kw'>use</span> <span class='ident'>rustc_serialize</span>::<span class='ident'>json</span>;
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc_json_body&quot;</span>)]</span>
+<span class='kw'>use</span> <span class='ident'>rustc_serialize</span>::<span class='ident'>Decodable</span>;
 
 <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>http</span>::<span class='ident'>HttpReader</span>;
 <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>net</span>::<span class='ident'>NetworkStream</span>;
@@ -267,6 +306,35 @@
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>buf</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
         <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>read_to_end</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>buf</span>));
         <span class='prelude-val'>Ok</span>(<span class='ident'>utils</span>::<span class='ident'>parse_parameters</span>(<span class='kw-2'>&amp;</span><span class='ident'>buf</span>))
+    }
+}
+
+<span class='doccomment'>///`BodyReader` extension for reading and parsing a JSON body.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>///It is available by default and can be toggled using the `rustc_json_body`</span>
+<span class='doccomment'>///feature.</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc_json_body&quot;</span>)]</span>
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ExtJsonBody</span> {
+    <span class='doccomment'>///Read the body into a JSON structure.</span>
+    <span class='kw'>fn</span> <span class='ident'>read_json_body</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>json</span>::<span class='ident'>Json</span>, <span class='ident'>json</span>::<span class='ident'>BuilderError</span><span class='op'>&gt;</span>;
+
+    <span class='doccomment'>///Parse and decode the body as some type `T`.</span>
+    <span class='kw'>fn</span> <span class='ident'>decode_json_body</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Decodable</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>json</span>::<span class='ident'>DecodeResult</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>;
+}
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc_json_body&quot;</span>)]</span>
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>ExtJsonBody</span> <span class='kw'>for</span> <span class='ident'>BodyReader</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>read_json_body</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>json</span>::<span class='ident'>Json</span>, <span class='ident'>json</span>::<span class='ident'>BuilderError</span><span class='op'>&gt;</span> {
+        <span class='ident'>json</span>::<span class='ident'>Json</span>::<span class='ident'>from_reader</span>(<span class='self'>self</span>)
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>decode_json_body</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Decodable</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>json</span>::<span class='ident'>DecodeResult</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>buf</span> <span class='op'>=</span> <span class='ident'>String</span>::<span class='ident'>new</span>();
+        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>read_to_string</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>buf</span>).<span class='ident'>map_err</span>(<span class='op'>|</span><span class='ident'>e</span><span class='op'>|</span> {
+            <span class='kw'>let</span> <span class='ident'>parse_err</span> <span class='op'>=</span> <span class='ident'>json</span>::<span class='ident'>ParserError</span>::<span class='ident'>IoError</span>(<span class='ident'>e</span>);
+            <span class='ident'>json</span>::<span class='ident'>DecoderError</span>::<span class='ident'>ParseError</span>(<span class='ident'>parse_err</span>)
+        }));
+        <span class='ident'>json</span>::<span class='ident'>decode</span>(<span class='kw-2'>&amp;</span><span class='ident'>buf</span>)
     }
 }
 
