@@ -43,38 +43,64 @@
     <section id='main' class="content macro">
 <h1 class='fqn'><span class='in-band'><a href='index.html'>rustful</a>::<wbr><a class='macro' href=''>content_type!</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-6237' href='../src/rustful/macros.rs.html#181-197'>[src]</a></span></h1>
+        </span><a id='src-6390' href='../src/rustful/macros.rs.html#182-224'>[src]</a></span></h1>
 <pre class='rust macro'>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>content_type</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> ({
+    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>:<span class='ident'>tt</span> <span class='op'>/</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>:<span class='ident'>tt</span>) <span class='op'>=&gt;</span> ({
+        <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>macros</span>::<span class='ident'>MimeHelper</span>;
         <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>Mime</span> (
-            ::<span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>::<span class='ident'>from_str</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>).<span class='ident'>unwrap</span>(),
-            ::<span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>::<span class='ident'>from_str</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>).<span class='ident'>unwrap</span>(),
+            {
+                <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>TopLevel</span>::<span class='op'>*</span>;
+                <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>)).<span class='ident'>convert</span>()
+            },
+            {
+                <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>SubLevel</span>::<span class='op'>*</span>;
+                <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>)).<span class='ident'>convert</span>()
+            },
             <span class='ident'>Vec</span>::<span class='ident'>new</span>()
         )
     });
 
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>:<span class='ident'>expr</span>, $((<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>expr</span>)),<span class='op'>+</span>) <span class='op'>=&gt;</span> ({
+    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>:<span class='ident'>tt</span> <span class='op'>/</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>:<span class='ident'>tt</span>; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>:<span class='ident'>tt</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>tt</span>);<span class='op'>+</span>) <span class='op'>=&gt;</span> ({
+        <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>macros</span>::<span class='ident'>MimeHelper</span>;
         <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>Mime</span> (
-            ::<span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>::<span class='ident'>from_str</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>).<span class='ident'>unwrap</span>(),
-            ::<span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>::<span class='ident'>from_str</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>).<span class='ident'>unwrap</span>(),
-            <span class='macro'>vec</span><span class='macro'>!</span>( $( (::<span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>::<span class='ident'>from_str</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>).<span class='ident'>unwrap</span>(), ::<span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>::<span class='ident'>from_str</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>).<span class='ident'>unwrap</span>()) ),<span class='op'>+</span> )
+            {
+                <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>TopLevel</span>::<span class='op'>*</span>;
+                <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>)).<span class='ident'>convert</span>()
+            },
+            {
+                <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>SubLevel</span>::<span class='op'>*</span>;
+                <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>)).<span class='ident'>convert</span>()
+            },
+            <span class='macro'>vec</span><span class='macro'>!</span>[ $( ({
+                <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>Attr</span>::<span class='op'>*</span>;
+                <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>)).<span class='ident'>convert</span>()
+            }, {
+                <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>Value</span>::<span class='op'>*</span>;
+                <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>)).<span class='ident'>convert</span>()
+            })),<span class='op'>+</span> ]
         )
     });
 }
 </pre>
-<div class='docblock'><p>A macro for assigning content types.</p>
+<div class='docblock'><p>A macro for making content types.</p>
 
 <p>It takes a main type, a sub type and a parameter list. Instead of this:</p>
 <pre id='rust-example-rendered' class='rust '>
 <span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>header</span>::<span class='ident'>ContentType</span>;
-<span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>mime</span>::<span class='ident'>Mime</span>;
+<span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>mime</span>::{<span class='ident'>Mime</span>, <span class='ident'>TopLevel</span>, <span class='ident'>SubLevel</span>, <span class='ident'>Attr</span>, <span class='ident'>Value</span>};
 
 <span class='ident'>ContentType</span>(
     <span class='ident'>Mime</span> (
-        <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;text&quot;</span>).<span class='ident'>unwrap</span>(),
-        <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;html&quot;</span>).<span class='ident'>unwrap</span>(),
-        <span class='macro'>vec</span><span class='macro'>!</span>[(<span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;charset&quot;</span>).<span class='ident'>unwrap</span>(), <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;UTF-8&quot;</span>).<span class='ident'>unwrap</span>())]
+        <span class='ident'>TopLevel</span>::<span class='ident'>Text</span>,
+        <span class='ident'>SubLevel</span>::<span class='ident'>Html</span>,
+        <span class='macro'>vec</span><span class='macro'>!</span>[(<span class='ident'>Attr</span>::<span class='ident'>Charset</span>, <span class='ident'>Value</span>::<span class='ident'>Utf8</span>)]
     )
 );
 </pre>
@@ -85,24 +111,25 @@
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
 <span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>header</span>::<span class='ident'>ContentType</span>;
 
-<span class='ident'>ContentType</span>(<span class='macro'>content_type</span><span class='macro'>!</span>(<span class='string'>&quot;text&quot;</span>, <span class='string'>&quot;html&quot;</span>, (<span class='string'>&quot;charset&quot;</span>, <span class='string'>&quot;UTF-8&quot;</span>)));
+<span class='ident'>ContentType</span>(<span class='macro'>content_type</span><span class='macro'>!</span>(<span class='ident'>Text</span> <span class='op'>/</span> <span class='ident'>Html</span>; <span class='ident'>Charset</span> <span class='op'>=</span> <span class='ident'>Utf8</span>));
 </pre>
 
-<p>The <code>&quot;charset&quot;: &quot;UTF-8&quot;</code> part defines the parameter list for the content type.
-It may contain more than one parameter, or be omitted:</p>
+<p>The <code>Charset = Utf8</code> part defines the parameter list for the content type and
+may contain more than one parameter, or be omitted. Here are some more
+examples showing that and how strings can be used for more exotic values:</p>
 <pre id='rust-example-rendered' class='rust '>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
 <span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>header</span>::<span class='ident'>ContentType</span>;
 
-<span class='ident'>ContentType</span>(<span class='macro'>content_type</span><span class='macro'>!</span>(<span class='string'>&quot;application&quot;</span>, <span class='string'>&quot;octet-stream&quot;</span>, (<span class='string'>&quot;type&quot;</span>, <span class='string'>&quot;image/gif&quot;</span>), (<span class='string'>&quot;padding&quot;</span>, <span class='string'>&quot;4&quot;</span>)));
+<span class='ident'>ContentType</span>(<span class='macro'>content_type</span><span class='macro'>!</span>(<span class='ident'>Application</span> <span class='op'>/</span> <span class='string'>&quot;octet-stream&quot;</span>; <span class='string'>&quot;type&quot;</span> <span class='op'>=</span> <span class='string'>&quot;image/gif&quot;</span>; <span class='string'>&quot;padding&quot;</span> <span class='op'>=</span> <span class='string'>&quot;4&quot;</span>));
 </pre>
 <pre id='rust-example-rendered' class='rust '>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
 <span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>header</span>::<span class='ident'>ContentType</span>;
 
-<span class='ident'>ContentType</span>(<span class='macro'>content_type</span><span class='macro'>!</span>(<span class='string'>&quot;image&quot;</span>, <span class='string'>&quot;png&quot;</span>));
+<span class='ident'>ContentType</span>(<span class='macro'>content_type</span><span class='macro'>!</span>(<span class='ident'>Image</span> <span class='op'>/</span> <span class='ident'>Png</span>));
 </pre>
 </div></section>
     <section id='search' class="content hidden"></section>

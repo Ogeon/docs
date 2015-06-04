@@ -228,6 +228,8 @@
 <span id="186">186</span>
 <span id="187">187</span>
 <span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_name</span> <span class='op'>=</span> <span class='string'>&quot;rustful&quot;</span>]</span>
 
@@ -267,7 +269,9 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>router</span>::<span class='ident'>TreeRouter</span>;
 
 <span class='kw'>mod</span> <span class='ident'>utils</span>;
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>mod</span> <span class='ident'>macros</span>;
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
+<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>macros</span>;
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>server</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>router</span>;
