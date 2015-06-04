@@ -503,6 +503,17 @@
 <span id="461">461</span>
 <span id="462">462</span>
 <span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Response writers.</span>
 
@@ -821,8 +832,18 @@
         <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>filter_storage</span>
     }
 
-    <span class='doccomment'>///Writes response body data to the client.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>send</span><span class='op'>&lt;</span><span class='lifetime'>&#39;d</span>, <span class='ident'>Content</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Data</span><span class='op'>&lt;</span><span class='lifetime'>&#39;d</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='ident'>Content</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>Error</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>///Write response body data to the client.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>///Any errors that occures while writing the data will be ignored. Use</span>
+    <span class='doccomment'>///`try_send`, instead, to also get error information.</span>
+    <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_must_use</span>)]</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>send</span><span class='op'>&lt;</span><span class='lifetime'>&#39;d</span>, <span class='ident'>Content</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Data</span><span class='op'>&lt;</span><span class='lifetime'>&#39;d</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='ident'>Content</span>) {
+        <span class='self'>self</span>.<span class='ident'>try_send</span>(<span class='ident'>content</span>);
+    }
+
+    <span class='doccomment'>///Write response body data to the client and receive the number of</span>
+    <span class='doccomment'>///written bytes, or any error that occured.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>try_send</span><span class='op'>&lt;</span><span class='lifetime'>&#39;d</span>, <span class='ident'>Content</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Data</span><span class='op'>&lt;</span><span class='lifetime'>&#39;d</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='ident'>Content</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>usize</span>, <span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>writer</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>writer</span> {
             <span class='prelude-val'>Some</span>(<span class='prelude-val'>Ok</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>writer</span>)) <span class='op'>=&gt;</span> <span class='ident'>writer</span>,
             <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>Io</span>(<span class='ident'>io</span>::<span class='ident'>Error</span>::<span class='ident'>new</span>(<span class='ident'>io</span>::<span class='ident'>ErrorKind</span>::<span class='ident'>BrokenPipe</span>, <span class='string'>&quot;write after close&quot;</span>))),
@@ -871,7 +892,8 @@
 
     <span class='doccomment'>///Finish writing the response and collect eventual errors.</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>///This is optional and will happen when the writer drops out of scope.</span>
+    <span class='doccomment'>///This is optional and will happen silently when the writer drops out of</span>
+    <span class='doccomment'>///scope.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>end</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>finish</span>()
     }
@@ -937,7 +959,7 @@
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>Write</span> <span class='kw'>for</span> <span class='ident'>ResponseWriter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
-        <span class='ident'>response_to_io_result</span>(<span class='self'>self</span>.<span class='ident'>send</span>(<span class='ident'>content</span>))
+        <span class='ident'>response_to_io_result</span>(<span class='self'>self</span>.<span class='ident'>try_send</span>(<span class='ident'>content</span>))
     }
 
     <span class='kw'>fn</span> <span class='ident'>write_all</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>content</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span> {
