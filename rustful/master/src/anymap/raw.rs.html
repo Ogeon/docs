@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/anymap-0.10.3/src/raw.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/anymap-0.11.0/src/raw.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>raw.rs.html -- source</title>
@@ -401,47 +401,39 @@
 <span id="359">359</span>
 <span id="360">360</span>
 <span id="361">361</span>
-<span id="362">362</span>
-<span id="363">363</span>
-<span id="364">364</span>
-<span id="365">365</span>
-<span id="366">366</span>
 </pre><pre class='rust '>
-<span class='doccomment'>//! The raw form of an AnyMap, allowing untyped access.</span>
+<span class='doccomment'>//! The raw form of a `Map`, allowing untyped access.</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! All relevant details are in the `RawAnyMap` struct.</span>
+<span class='doccomment'>//! All relevant details are in the `RawMap` struct.</span>
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>TypeId</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Borrow</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>hash_map</span>::{<span class='self'>self</span>, <span class='ident'>HashMap</span>};
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>)]</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>)]</span>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>hash_state</span>::<span class='ident'>HashState</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>default</span>::<span class='ident'>Default</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>hash</span>::<span class='ident'>Hash</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>)]</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>)]</span>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>hash</span>::<span class='ident'>Hasher</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>::<span class='ident'>IntoIterator</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>)]</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>)]</span>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Index</span>, <span class='ident'>IndexMut</span>};
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>)]</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>)]</span>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ptr</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;clone&quot;</span>))]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>Any</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;clone&quot;</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>with_clone</span>::<span class='ident'>Any</span>;
+<span class='kw'>use</span> <span class='ident'>any</span>::{<span class='ident'>Any</span>, <span class='ident'>UncheckedAnyExt</span>};
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>)]</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>)]</span>
 <span class='kw'>struct</span> <span class='ident'>TypeIdHasher</span> {
     <span class='ident'>value</span>: <span class='ident'>u64</span>,
 }
 
-<span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;clone&quot;</span>, <span class='ident'>derive</span>(<span class='ident'>Clone</span>))]</span>
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>)]</span>
 <span class='kw'>struct</span> <span class='ident'>TypeIdState</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>)]</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>)]</span>
 <span class='kw'>impl</span> <span class='ident'>HashState</span> <span class='kw'>for</span> <span class='ident'>TypeIdState</span> {
     <span class='kw'>type</span> <span class='ident'>Hasher</span> <span class='op'>=</span> <span class='ident'>TypeIdHasher</span>;
 
@@ -450,7 +442,7 @@
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>)]</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>)]</span>
 <span class='kw'>impl</span> <span class='ident'>Hasher</span> <span class='kw'>for</span> <span class='ident'>TypeIdHasher</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>write</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>bytes</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) {
@@ -466,105 +458,113 @@
 }
 
 
-<span class='doccomment'>/// The raw, underlying form of an AnyMap.</span>
+<span class='doccomment'>/// The raw, underlying form of a `Map`.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// At its essence, this is a wrapper around `HashMap&lt;TypeId, Box&lt;Any&gt;&gt;`, with the portions that</span>
 <span class='doccomment'>/// would be memory-unsafe removed or marked unsafe. Normal people are expected to use the safe</span>
-<span class='doccomment'>/// `AnyMap` interface instead, but there is the occasional use for this such as iteration over the</span>
-<span class='doccomment'>/// contents of an `AnyMap`. However, because you will then be dealing with `Any` trait objects, it</span>
+<span class='doccomment'>/// `Map` interface instead, but there is the occasional use for this such as iteration over the</span>
+<span class='doccomment'>/// contents of an `Map`. However, because you will then be dealing with `Any` trait objects, it</span>
 <span class='doccomment'>/// doesn’t tend to be so very useful. Still, if you need it, it’s here.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;clone&quot;</span>, <span class='ident'>derive</span>(<span class='ident'>Clone</span>))]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RawAnyMap</span> {
-    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>)]</span>
-    <span class='ident'>inner</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;</span>, <span class='ident'>TypeIdState</span><span class='op'>&gt;</span>,
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RawMap</span><span class='op'>&lt;</span><span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span> <span class='op'>=</span> <span class='ident'>Any</span><span class='op'>&gt;</span> {
+    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>)]</span>
+    <span class='ident'>inner</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>, <span class='ident'>TypeIdState</span><span class='op'>&gt;</span>,
 
-    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>))]</span>
-    <span class='ident'>inner</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span>,
+    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>))]</span>
+    <span class='ident'>inner</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>RawAnyMap</span> {
-    <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>RawAnyMap</span> {
-        <span class='ident'>RawAnyMap</span>::<span class='ident'>new</span>()
+<span class='comment'>// #[derive(Clone)] would want A to implement Clone, but in reality it’s only Box&lt;A&gt; that can.</span>
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> <span class='ident'>Clone</span> <span class='kw'>for</span> <span class='ident'>RawMap</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>: <span class='ident'>Clone</span> {
+    <span class='kw'>fn</span> <span class='ident'>clone</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>RawMap</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> {
+        <span class='ident'>RawMap</span> {
+            <span class='ident'>inner</span>: <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>clone</span>(),
+        }
     }
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>)]</span>
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>RawMap</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>RawMap</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> {
+        <span class='ident'>RawMap</span>::<span class='ident'>new</span>()
+    }
+}
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>)]</span>
 <span class='macro'>impl_common_methods</span><span class='macro'>!</span> {
-    <span class='ident'>field</span>: <span class='ident'>RawAnyMap</span>.<span class='ident'>inner</span>;
+    <span class='ident'>field</span>: <span class='ident'>RawMap</span>.<span class='ident'>inner</span>;
     <span class='ident'>new</span>() <span class='op'>=&gt;</span> <span class='ident'>HashMap</span>::<span class='ident'>with_hash_state</span>(<span class='ident'>TypeIdState</span>);
     <span class='ident'>with_capacity</span>(<span class='ident'>capacity</span>) <span class='op'>=&gt;</span> <span class='ident'>HashMap</span>::<span class='ident'>with_capacity_and_hash_state</span>(<span class='ident'>capacity</span>, <span class='ident'>TypeIdState</span>);
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>))]</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>))]</span>
 <span class='macro'>impl_common_methods</span><span class='macro'>!</span> {
-    <span class='ident'>field</span>: <span class='ident'>RawAnyMap</span>.<span class='ident'>inner</span>;
+    <span class='ident'>field</span>: <span class='ident'>RawMap</span>.<span class='ident'>inner</span>;
     <span class='ident'>new</span>() <span class='op'>=&gt;</span> <span class='ident'>HashMap</span>::<span class='ident'>new</span>();
     <span class='ident'>with_capacity</span>(<span class='ident'>capacity</span>) <span class='op'>=&gt;</span> <span class='ident'>HashMap</span>::<span class='ident'>with_capacity</span>(<span class='ident'>capacity</span>);
 }
 
-<span class='doccomment'>/// RawAnyMap iterator.</span>
+<span class='doccomment'>/// RawMap iterator.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Iter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>inner</span>: <span class='ident'>hash_map</span>::<span class='ident'>Iter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span>,
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Iter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> {
+    <span class='ident'>inner</span>: <span class='ident'>hash_map</span>::<span class='ident'>Iter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span>,
 }
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>Iter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Any</span>;
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Any</span><span class='op'>&gt;</span> { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>next</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='op'>*</span><span class='ident'>x</span>.<span class='number'>1</span>) }
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>Iter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
+    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>A</span>;
+    <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>A</span><span class='op'>&gt;</span> { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>next</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='op'>*</span><span class='ident'>x</span>.<span class='number'>1</span>) }
     <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>size_hint</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> (<span class='ident'>usize</span>, <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>) { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>size_hint</span>() }
 }
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>ExactSizeIterator</span> <span class='kw'>for</span> <span class='ident'>Iter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> <span class='ident'>ExactSizeIterator</span> <span class='kw'>for</span> <span class='ident'>Iter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>len</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>len</span>() }
 }
 
-<span class='doccomment'>/// RawAnyMap mutable iterator.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>IterMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>inner</span>: <span class='ident'>hash_map</span>::<span class='ident'>IterMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span>,
+<span class='doccomment'>/// RawMap mutable iterator.</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>IterMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> {
+    <span class='ident'>inner</span>: <span class='ident'>hash_map</span>::<span class='ident'>IterMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span>,
 }
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>IterMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>Any</span>;
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>Any</span><span class='op'>&gt;</span> { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>next</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>*</span><span class='op'>*</span><span class='ident'>x</span>.<span class='number'>1</span>) }
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>IterMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
+    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>A</span>;
+    <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>A</span><span class='op'>&gt;</span> { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>next</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>*</span><span class='op'>*</span><span class='ident'>x</span>.<span class='number'>1</span>) }
     <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>size_hint</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> (<span class='ident'>usize</span>, <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>) { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>size_hint</span>() }
 }
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>ExactSizeIterator</span> <span class='kw'>for</span> <span class='ident'>IterMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> <span class='ident'>ExactSizeIterator</span> <span class='kw'>for</span> <span class='ident'>IterMut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>len</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>len</span>() }
 }
 
-<span class='doccomment'>/// RawAnyMap move iterator.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>IntoIter</span> {
-    <span class='ident'>inner</span>: <span class='ident'>hash_map</span>::<span class='ident'>IntoIter</span><span class='op'>&lt;</span><span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span>,
+<span class='doccomment'>/// RawMap move iterator.</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>IntoIter</span><span class='op'>&lt;</span><span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> {
+    <span class='ident'>inner</span>: <span class='ident'>hash_map</span>::<span class='ident'>IntoIter</span><span class='op'>&lt;</span><span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span>,
 }
-<span class='kw'>impl</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>IntoIter</span> {
-    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;</span>;
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span> { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>next</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='ident'>x</span>.<span class='number'>1</span>) }
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>IntoIter</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> {
+    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>;
+    <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span> { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>next</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='ident'>x</span>.<span class='number'>1</span>) }
     <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>size_hint</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> (<span class='ident'>usize</span>, <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>) { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>size_hint</span>() }
 }
-<span class='kw'>impl</span> <span class='ident'>ExactSizeIterator</span> <span class='kw'>for</span> <span class='ident'>IntoIter</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> <span class='ident'>ExactSizeIterator</span> <span class='kw'>for</span> <span class='ident'>IntoIter</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>len</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>len</span>() }
 }
 
-<span class='doccomment'>/// RawAnyMap drain iterator.</span>
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Drain</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>inner</span>: <span class='ident'>hash_map</span>::<span class='ident'>Drain</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span>,
+<span class='doccomment'>/// RawMap drain iterator.</span>
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>)]</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Drain</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> {
+    <span class='ident'>inner</span>: <span class='ident'>hash_map</span>::<span class='ident'>Drain</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span>,
 }
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>)]</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>Drain</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;</span>;
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span> { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>next</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='ident'>x</span>.<span class='number'>1</span>) }
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>)]</span>
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> <span class='ident'>Iterator</span> <span class='kw'>for</span> <span class='ident'>Drain</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
+    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>;
+    <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span> { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>next</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='ident'>x</span>.<span class='number'>1</span>) }
     <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>size_hint</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> (<span class='ident'>usize</span>, <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>) { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>size_hint</span>() }
 }
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>)]</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>ExactSizeIterator</span> <span class='kw'>for</span> <span class='ident'>Drain</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>)]</span>
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> <span class='ident'>ExactSizeIterator</span> <span class='kw'>for</span> <span class='ident'>Drain</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>]</span> <span class='kw'>fn</span> <span class='ident'>len</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> { <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>len</span>() }
 }
 
-<span class='kw'>impl</span> <span class='ident'>RawAnyMap</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> <span class='ident'>RawMap</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// An iterator visiting all entries in arbitrary order.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Iterator element type is `&amp;Any`.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>iter</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Iter</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>iter</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Iter</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> {
         <span class='ident'>Iter</span> {
             <span class='ident'>inner</span>: <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>iter</span>(),
         }
@@ -574,21 +574,9 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Iterator element type is `&amp;mut Any`.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>iter_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>IterMut</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>iter_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>IterMut</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> {
         <span class='ident'>IterMut</span> {
             <span class='ident'>inner</span>: <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>iter_mut</span>(),
-        }
-    }
-
-    <span class='doccomment'>/// Creates a consuming iterator, that is, one that moves each item</span>
-    <span class='doccomment'>/// out of the map in arbitrary order. The map cannot be used after</span>
-    <span class='doccomment'>/// calling this.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Iterator element type is `Box&lt;Any&gt;`.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>into_iter</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>IntoIter</span> {
-        <span class='ident'>IntoIter</span> {
-            <span class='ident'>inner</span>: <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>into_iter</span>(),
         }
     }
 
@@ -598,15 +586,15 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Keeps the allocated memory for reuse.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly&quot;</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>drain</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Drain</span> {
+    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>)]</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>drain</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Drain</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> {
         <span class='ident'>Drain</span> {
             <span class='ident'>inner</span>: <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>drain</span>(),
         }
     }
 
     <span class='doccomment'>/// Gets the entry for the given type in the collection for in-place manipulation.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>entry</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>key</span>: <span class='ident'>TypeId</span>) <span class='op'>-&gt;</span> <span class='ident'>Entry</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>entry</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>key</span>: <span class='ident'>TypeId</span>) <span class='op'>-&gt;</span> <span class='ident'>Entry</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> {
         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>entry</span>(<span class='ident'>key</span>) {
             <span class='ident'>hash_map</span>::<span class='ident'>Entry</span>::<span class='ident'>Occupied</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='ident'>Entry</span>::<span class='ident'>Occupied</span>(<span class='ident'>OccupiedEntry</span> {
                 <span class='ident'>inner</span>: <span class='ident'>e</span>,
@@ -621,7 +609,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// The key may be any borrowed form of the map&#39;s key type, but `Hash` and `Eq` on the borrowed</span>
     <span class='doccomment'>/// form *must* match those for the key type.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get</span><span class='op'>&lt;</span><span class='ident'>Q</span>: ?<span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>k</span>: <span class='kw-2'>&amp;</span><span class='ident'>Q</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>Any</span><span class='op'>&gt;</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get</span><span class='op'>&lt;</span><span class='ident'>Q</span>: ?<span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>k</span>: <span class='kw-2'>&amp;</span><span class='ident'>Q</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>A</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>TypeId</span>: <span class='ident'>Borrow</span><span class='op'>&lt;</span><span class='ident'>Q</span><span class='op'>&gt;</span>, <span class='ident'>Q</span>: <span class='ident'>Hash</span> <span class='op'>+</span> <span class='ident'>Eq</span> {
         <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>get</span>(<span class='ident'>k</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='op'>*</span><span class='ident'>x</span>)
     }
@@ -639,7 +627,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// The key may be any borrowed form of the map&#39;s key type, but `Hash` and `Eq` on the borrowed</span>
     <span class='doccomment'>/// form *must* match those for the key type.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get_mut</span><span class='op'>&lt;</span><span class='ident'>Q</span>: ?<span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>k</span>: <span class='kw-2'>&amp;</span><span class='ident'>Q</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Any</span><span class='op'>&gt;</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get_mut</span><span class='op'>&lt;</span><span class='ident'>Q</span>: ?<span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>k</span>: <span class='kw-2'>&amp;</span><span class='ident'>Q</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>A</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>TypeId</span>: <span class='ident'>Borrow</span><span class='op'>&lt;</span><span class='ident'>Q</span><span class='op'>&gt;</span>, <span class='ident'>Q</span>: <span class='ident'>Hash</span> <span class='op'>+</span> <span class='ident'>Eq</span> {
         <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>get_mut</span>(<span class='ident'>k</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>x</span><span class='op'>|</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>*</span><span class='op'>*</span><span class='ident'>x</span>)
     }
@@ -649,7 +637,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// It is the caller’s responsibility to ensure that the key corresponds with the type ID of</span>
     <span class='doccomment'>/// the value. If they do not, memory safety may be violated.</span>
-    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>insert</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>key</span>: <span class='ident'>TypeId</span>, <span class='ident'>value</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>insert</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>key</span>: <span class='ident'>TypeId</span>, <span class='ident'>value</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>insert</span>(<span class='ident'>key</span>, <span class='ident'>value</span>)
     }
 
@@ -658,61 +646,63 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// The key may be any borrowed form of the map&#39;s key type, but `Hash` and `Eq` on the borrowed</span>
     <span class='doccomment'>/// form *must* match those for the key type.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>remove</span><span class='op'>&lt;</span><span class='ident'>Q</span>: ?<span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>k</span>: <span class='kw-2'>&amp;</span><span class='ident'>Q</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>remove</span><span class='op'>&lt;</span><span class='ident'>Q</span>: ?<span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>k</span>: <span class='kw-2'>&amp;</span><span class='ident'>Q</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span>
     <span class='kw'>where</span> <span class='ident'>TypeId</span>: <span class='ident'>Borrow</span><span class='op'>&lt;</span><span class='ident'>Q</span><span class='op'>&gt;</span>, <span class='ident'>Q</span>: <span class='ident'>Hash</span> <span class='op'>+</span> <span class='ident'>Eq</span> {
         <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>remove</span>(<span class='ident'>k</span>)
     }
 
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>Q</span><span class='op'>&gt;</span> <span class='ident'>Index</span><span class='op'>&lt;</span><span class='ident'>Q</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RawAnyMap</span> <span class='kw'>where</span> <span class='ident'>TypeId</span>: <span class='ident'>Borrow</span><span class='op'>&lt;</span><span class='ident'>Q</span><span class='op'>&gt;</span>, <span class='ident'>Q</span>: <span class='ident'>Eq</span> <span class='op'>+</span> <span class='ident'>Hash</span> {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Any</span>;
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span>, <span class='ident'>Q</span><span class='op'>&gt;</span> <span class='ident'>Index</span><span class='op'>&lt;</span><span class='ident'>Q</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RawMap</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>TypeId</span>: <span class='ident'>Borrow</span><span class='op'>&lt;</span><span class='ident'>Q</span><span class='op'>&gt;</span>, <span class='ident'>Q</span>: <span class='ident'>Eq</span> <span class='op'>+</span> <span class='ident'>Hash</span> {
+    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>A</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>index</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>index</span>: <span class='ident'>Q</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Any</span> {
+    <span class='kw'>fn</span> <span class='ident'>index</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>index</span>: <span class='ident'>Q</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>A</span> {
         <span class='self'>self</span>.<span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='ident'>index</span>).<span class='ident'>expect</span>(<span class='string'>&quot;no entry found for key&quot;</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>Q</span><span class='op'>&gt;</span> <span class='ident'>IndexMut</span><span class='op'>&lt;</span><span class='ident'>Q</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RawAnyMap</span> <span class='kw'>where</span> <span class='ident'>TypeId</span>: <span class='ident'>Borrow</span><span class='op'>&lt;</span><span class='ident'>Q</span><span class='op'>&gt;</span>, <span class='ident'>Q</span>: <span class='ident'>Eq</span> <span class='op'>+</span> <span class='ident'>Hash</span> {
-    <span class='kw'>fn</span> <span class='ident'>index_mut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>index</span>: <span class='ident'>Q</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>Any</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span>, <span class='ident'>Q</span><span class='op'>&gt;</span> <span class='ident'>IndexMut</span><span class='op'>&lt;</span><span class='ident'>Q</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RawMap</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>TypeId</span>: <span class='ident'>Borrow</span><span class='op'>&lt;</span><span class='ident'>Q</span><span class='op'>&gt;</span>, <span class='ident'>Q</span>: <span class='ident'>Eq</span> <span class='op'>+</span> <span class='ident'>Hash</span> {
+    <span class='kw'>fn</span> <span class='ident'>index_mut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>index</span>: <span class='ident'>Q</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>A</span> {
         <span class='self'>self</span>.<span class='ident'>get_mut</span>(<span class='kw-2'>&amp;</span><span class='ident'>index</span>).<span class='ident'>expect</span>(<span class='string'>&quot;no entry found for key&quot;</span>)
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>IntoIterator</span> <span class='kw'>for</span> <span class='ident'>RawAnyMap</span> {
-    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;</span>;
-    <span class='kw'>type</span> <span class='ident'>IntoIter</span> <span class='op'>=</span> <span class='ident'>IntoIter</span>;
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> <span class='ident'>IntoIterator</span> <span class='kw'>for</span> <span class='ident'>RawMap</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> {
+    <span class='kw'>type</span> <span class='ident'>Item</span> <span class='op'>=</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>;
+    <span class='kw'>type</span> <span class='ident'>IntoIter</span> <span class='op'>=</span> <span class='ident'>IntoIter</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>into_iter</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>IntoIter</span> {
-        <span class='self'>self</span>.<span class='ident'>into_iter</span>()
+    <span class='kw'>fn</span> <span class='ident'>into_iter</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>IntoIter</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> {
+        <span class='ident'>IntoIter</span> {
+            <span class='ident'>inner</span>: <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>into_iter</span>(),
+        }
     }
 }
 
-<span class='doccomment'>/// A view into a single occupied location in a `RawAnyMap`.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>OccupiedEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>inner</span>: <span class='ident'>hash_map</span>::<span class='ident'>OccupiedEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span>,
+<span class='doccomment'>/// A view into a single occupied location in a `RawMap`.</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>OccupiedEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> {
+    <span class='ident'>inner</span>: <span class='ident'>hash_map</span>::<span class='ident'>OccupiedEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span>,
 }
 
-<span class='doccomment'>/// A view into a single empty location in a `RawAnyMap`.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>VacantEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>inner</span>: <span class='ident'>hash_map</span>::<span class='ident'>VacantEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span>,
+<span class='doccomment'>/// A view into a single empty location in a `RawMap`.</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>VacantEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> {
+    <span class='ident'>inner</span>: <span class='ident'>hash_map</span>::<span class='ident'>VacantEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span>,
 }
 
-<span class='doccomment'>/// A view into a single location in an AnyMap, which may be vacant or occupied.</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Entry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='doccomment'>/// A view into a single location in a `RawMap`, which may be vacant or occupied.</span>
+<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Entry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// An occupied Entry</span>
-    <span class='ident'>Occupied</span>(<span class='ident'>OccupiedEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>),
+    <span class='ident'>Occupied</span>(<span class='ident'>OccupiedEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span><span class='op'>&gt;</span>),
     <span class='doccomment'>/// A vacant Entry</span>
-    <span class='ident'>Vacant</span>(<span class='ident'>VacantEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>),
+    <span class='ident'>Vacant</span>(<span class='ident'>VacantEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span><span class='op'>&gt;</span>),
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Entry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> <span class='ident'>Entry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Ensures a value is in the entry by inserting the default if empty, and returns</span>
     <span class='doccomment'>/// a mutable reference to the value in the entry.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// It is the caller’s responsibility to ensure that the key of the entry corresponds with</span>
     <span class='doccomment'>/// the type ID of `value`. If they do not, memory safety may be violated.</span>
-    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>or_insert</span>(<span class='self'>self</span>, <span class='ident'>default</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>Any</span> {
+    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>or_insert</span>(<span class='self'>self</span>, <span class='ident'>default</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>A</span> {
         <span class='kw'>match</span> <span class='self'>self</span> {
             <span class='ident'>Entry</span>::<span class='ident'>Occupied</span>(<span class='ident'>inner</span>) <span class='op'>=&gt;</span> <span class='ident'>inner</span>.<span class='ident'>into_mut</span>(),
             <span class='ident'>Entry</span>::<span class='ident'>Vacant</span>(<span class='ident'>inner</span>) <span class='op'>=&gt;</span> <span class='ident'>inner</span>.<span class='ident'>insert</span>(<span class='ident'>default</span>),
@@ -724,7 +714,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// It is the caller’s responsibility to ensure that the key of the entry corresponds with</span>
     <span class='doccomment'>/// the type ID of `value`. If they do not, memory safety may be violated.</span>
-    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>or_insert_with</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnOnce</span>() <span class='op'>-&gt;</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;&gt;</span>(<span class='self'>self</span>, <span class='ident'>default</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>Any</span> {
+    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>or_insert_with</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnOnce</span>() <span class='op'>-&gt;</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;&gt;</span>(<span class='self'>self</span>, <span class='ident'>default</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>A</span> {
         <span class='kw'>match</span> <span class='self'>self</span> {
             <span class='ident'>Entry</span>::<span class='ident'>Occupied</span>(<span class='ident'>inner</span>) <span class='op'>=&gt;</span> <span class='ident'>inner</span>.<span class='ident'>into_mut</span>(),
             <span class='ident'>Entry</span>::<span class='ident'>Vacant</span>(<span class='ident'>inner</span>) <span class='op'>=&gt;</span> <span class='ident'>inner</span>.<span class='ident'>insert</span>(<span class='ident'>default</span>()),
@@ -732,20 +722,20 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>OccupiedEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> <span class='ident'>OccupiedEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Gets a reference to the value in the entry.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Any</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>A</span> {
         <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>get</span>() 
     }
 
     <span class='doccomment'>/// Gets a mutable reference to the value in the entry.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Any</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>A</span> {
         <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>*</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>get_mut</span>()
     }
 
     <span class='doccomment'>/// Converts the OccupiedEntry into a mutable reference to the value in the entry</span>
     <span class='doccomment'>/// with a lifetime bound to the collection itself.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>into_mut</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>Any</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>into_mut</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>A</span> {
         <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>*</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>into_mut</span>()
     }
 
@@ -753,23 +743,23 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// It is the caller’s responsibility to ensure that the key of the entry corresponds with</span>
     <span class='doccomment'>/// the type ID of `value`. If they do not, memory safety may be violated.</span>
-    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>insert</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>insert</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>insert</span>(<span class='ident'>value</span>)
     }
 
     <span class='doccomment'>/// Takes the value out of the entry, and returns it.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>remove</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>remove</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>remove</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>VacantEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>UncheckedAnyExt</span><span class='op'>&gt;</span> <span class='ident'>VacantEntry</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Sets the value of the entry with the VacantEntry&#39;s key,</span>
     <span class='doccomment'>/// and returns a mutable reference to it</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// It is the caller’s responsibility to ensure that the key of the entry corresponds with</span>
     <span class='doccomment'>/// the type ID of `value`. If they do not, memory safety may be violated.</span>
-    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>insert</span>(<span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>Any</span> {
+    <span class='kw'>pub</span> <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>insert</span>(<span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>A</span> {
         <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='op'>*</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>insert</span>(<span class='ident'>value</span>)
     }
 }

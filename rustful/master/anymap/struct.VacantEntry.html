@@ -43,11 +43,11 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>anymap</a>::<wbr><a class='struct' href=''>VacantEntry</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-1337' href='../src/anymap/lib.rs.html#205-208'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct VacantEntry&lt;'a, V: 'a&gt; {
+        </span><a id='src-2550' href='../src/anymap/lib.rs.html#224-227'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct VacantEntry&lt;'a, A: ?<a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='../anymap/any/trait.UncheckedAnyExt.html' title='anymap::any::UncheckedAnyExt'>UncheckedAnyExt</a>, V: 'a&gt; {
     // some fields omitted
-}</pre><div class='docblock'><p>A view into a single empty location in an <code>AnyMap</code>.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, V: <a class='trait' href='../anymap/raw/trait.Any.html' title='anymap::raw::Any'>Any</a>&gt; <a class='struct' href='../anymap/struct.VacantEntry.html' title='anymap::VacantEntry'>VacantEntry</a>&lt;'a, V&gt;</code></h3><div class='impl-items'><h4 id='method.insert' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.insert' class='fnname'>insert</a>(self, value: V) -&gt; &amp;'a mut V</code></h4>
+}</pre><div class='docblock'><p>A view into a single empty location in an <code>Map</code>.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, A: ?<a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='../anymap/any/trait.UncheckedAnyExt.html' title='anymap::any::UncheckedAnyExt'>UncheckedAnyExt</a>, V: IntoBox&lt;A&gt;&gt; <a class='struct' href='../anymap/struct.VacantEntry.html' title='anymap::VacantEntry'>VacantEntry</a>&lt;'a, A, V&gt;</code></h3><div class='impl-items'><h4 id='method.insert' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.insert' class='fnname'>insert</a>(self, value: V) -&gt; &amp;'a mut V</code></h4>
 <div class='docblock'><p>Sets the value of the entry with the VacantEntry&#39;s key,
 and returns a mutable reference to it</p>
 </div></div></section>
