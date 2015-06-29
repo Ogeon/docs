@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["unchecked",""]],"enum":[["RNGProperty",""]],"struct":[["BigNum",""]]});
+initSidebarItems({"enum":[["RNGProperty",""]],"mod":[["unchecked",""]],"struct":[["BigNum",""]]});

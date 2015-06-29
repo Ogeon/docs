@@ -1,1 +1,1 @@
-initSidebarItems({"trait":[["Route","A segmented route."],["Router","A common trait for routers."]],"struct":[["Endpoint","API endpoint data."]],"enum":[["RouteIter","Utility iterator for when a root path may be hard to represent."]]});
+initSidebarItems({"trait":[["Route","A segmented route."],["Router","A common trait for routers."]],"enum":[["RouteIter","Utility iterator for when a root path may be hard to represent."]],"struct":[["Endpoint","API endpoint data."]]});
