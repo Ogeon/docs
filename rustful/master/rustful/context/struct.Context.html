@@ -43,7 +43,7 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a>::<wbr><a class='struct' href=''>Context</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-2926' href='../../src/rustful/context.rs.html#29-65'>[src]</a></span></h1>
+        </span><a id='src-2926' href='../../src/rustful/context.rs.html#158-194'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Context&lt;'a, 'b, 's&gt; {
     pub headers: <a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a>,
     pub http_version: <a class='enum' href='../../rustful/enum.HttpVersion.html' title='rustful::HttpVersion'>HttpVersion</a>,
@@ -57,10 +57,7 @@
     pub log: &amp;'s <a class='trait' href='../../rustful/log/trait.Log.html' title='rustful::log::Log'>Log</a> + 's,
     pub global: &amp;'s <a class='struct' href='../../rustful/struct.Global.html' title='rustful::Global'>Global</a>,
     pub body: <a class='struct' href='../../rustful/context/struct.BodyReader.html' title='rustful::context::BodyReader'>BodyReader</a>&lt;'a, 'b&gt;,
-}</pre><div class='docblock'><p>A container for things like request data and cache.</p>
-
-<p>A <code>Context</code> can be dereferenced to a <code>BodyReader</code>, allowing direct access to
-the underlying read methods.</p>
+}</pre><div class='docblock'><p>A container for handler input, like request data and utilities.</p>
 </div><h2 class='fields'>Fields</h2>
 <table><tr><td id='structfield.headers'><a class='stability Unmarked' title='No stability level'></a><code>headers</code></td><td><div class='docblock'><p>Headers from the HTTP request.</p>
 </div></td></tr><tr><td id='structfield.http_version'><a class='stability Unmarked' title='No stability level'></a><code>http_version</code></td><td><div class='docblock'><p>The HTTP version used in the request.</p>
