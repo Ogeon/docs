@@ -264,18 +264,18 @@
 <span id="222">222</span>
 <span id="223">223</span>
 <span id="224">224</span>
+<span id="225">225</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Routers stores request handlers, using an HTTP method and a path as keys.</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//!Rustful provides a tree structured all-round router called `TreeRouter`,</span>
 <span class='doccomment'>//!but any other type of router can be used, as long as it implements the</span>
 <span class='doccomment'>//!`Router` trait. This will also make it possible to initialize it using the</span>
-<span class='doccomment'>//!`insert_routes!` macro:</span>
+<span class='doccomment'>//![`insert_routes!`][insert_routes] macro:</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//!```</span>
 <span class='doccomment'>//!#[macro_use]</span>
 <span class='doccomment'>//!extern crate rustful;</span>
-<span class='doccomment'>//!use rustful::Method::Get;</span>
 <span class='doccomment'>//!use rustful::TreeRouter;</span>
 <span class='doccomment'>//!# use rustful::{Handler, Context, Response};</span>
 <span class='doccomment'>//!</span>
@@ -291,19 +291,19 @@
 <span class='doccomment'>//!# let list_products = DummyHandler;</span>
 <span class='doccomment'>//!# let show_error = DummyHandler;</span>
 <span class='doccomment'>//!# let show_welcome = DummyHandler;</span>
-<span class='doccomment'>//!let router = insert_routes!{</span>
+<span class='doccomment'>//!let router = insert_routes! {</span>
 <span class='doccomment'>//!    TreeRouter::new() =&gt; {</span>
-<span class='doccomment'>//!        &quot;/about&quot; =&gt; Get: about_us,</span>
-<span class='doccomment'>//!        &quot;/users&quot; =&gt; {</span>
-<span class='doccomment'>//!            &quot;/&quot; =&gt; Get: list_users,</span>
+<span class='doccomment'>//!        Get: show_welcome,</span>
+<span class='doccomment'>//!        &quot;about&quot; =&gt; Get: about_us,</span>
+<span class='doccomment'>//!        &quot;users&quot; =&gt; {</span>
+<span class='doccomment'>//!            Get: list_users,</span>
 <span class='doccomment'>//!            &quot;:id&quot; =&gt; Get: show_user</span>
 <span class='doccomment'>//!        },</span>
-<span class='doccomment'>//!        &quot;/products&quot; =&gt; {</span>
-<span class='doccomment'>//!            &quot;/&quot; =&gt; Get: list_products,</span>
+<span class='doccomment'>//!        &quot;products&quot; =&gt; {</span>
+<span class='doccomment'>//!            Get: list_products,</span>
 <span class='doccomment'>//!            &quot;:id&quot; =&gt; Get: show_product</span>
 <span class='doccomment'>//!        },</span>
-<span class='doccomment'>//!        &quot;/*&quot; =&gt; Get: show_error,</span>
-<span class='doccomment'>//!        &quot;/&quot; =&gt; Get: show_welcome</span>
+<span class='doccomment'>//!        &quot;*&quot; =&gt; Get: show_error</span>
 <span class='doccomment'>//!    }</span>
 <span class='doccomment'>//!};</span>
 <span class='doccomment'>//!# }</span>
@@ -336,15 +336,17 @@
 <span class='doccomment'>//!# let show_welcome = DummyHandler;</span>
 <span class='doccomment'>//!let mut router = TreeRouter::new();</span>
 <span class='doccomment'>//!</span>
+<span class='doccomment'>//!router.insert(Get, &quot;/&quot;, show_welcome);</span>
 <span class='doccomment'>//!router.insert(Get, &quot;/about&quot;, about_us);</span>
 <span class='doccomment'>//!router.insert(Get, &quot;/users&quot;, list_users);</span>
 <span class='doccomment'>//!router.insert(Get, &quot;/users/:id&quot;, show_user);</span>
 <span class='doccomment'>//!router.insert(Get, &quot;/products&quot;, list_products);</span>
 <span class='doccomment'>//!router.insert(Get, &quot;/products/:id&quot;, show_product);</span>
 <span class='doccomment'>//!router.insert(Get, &quot;/*&quot;, show_error);</span>
-<span class='doccomment'>//!router.insert(Get, &quot;/&quot;, show_welcome);</span>
 <span class='doccomment'>//!# }</span>
 <span class='doccomment'>//!```</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//![insert_routes]: ../macro.insert_routes!.html</span>
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>::{<span class='ident'>Iterator</span>, <span class='ident'>FlatMap</span>};
