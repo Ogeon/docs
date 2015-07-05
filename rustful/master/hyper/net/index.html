@@ -43,7 +43,7 @@
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>hyper</a>::<wbr><a class='mod' href=''>net</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-31226' href='../../src/hyper/net.rs.html#1-388'>[src]</a></span></h1>
+        </span><a id='src-35832' href='../../src/hyper/net.rs.html#1-497'>[src]</a></span></h1>
 <div class='docblock'><p>A collection of traits abstracting over Listeners and Streams.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -55,9 +55,44 @@
                     </tr>
                 
                     <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.HttpListener.html'
+                               title='hyper::net::HttpListener'>HttpListener</a></td>
+                        <td class='docblock short'><p>A <code>NetworkListener</code> for <code>HttpStream</code>s.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.HttpStream.html'
+                               title='hyper::net::HttpStream'>HttpStream</a></td>
+                        <td class='docblock short'><p>A wrapper around a TcpStream.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.HttpsConnector.html'
+                               title='hyper::net::HttpsConnector'>HttpsConnector</a></td>
+                        <td class='docblock short'><p>A connector that can protect HTTP streams using SSL.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.HttpsListener.html'
+                               title='hyper::net::HttpsListener'>HttpsListener</a></td>
+                        <td class='docblock short'><p>A Http Listener over SSL.</p>
+</td>
+                    </tr>
+                
+                    <tr>
                         <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.NetworkConnections.html'
                                title='hyper::net::NetworkConnections'>NetworkConnections</a></td>
                         <td class='docblock short'><p>An iterator wrapper over a NetworkAcceptor.</p>
+</td>
+                    </tr>
+                
+                    <tr>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Openssl.html'
+                               title='hyper::net::Openssl'>Openssl</a></td>
+                        <td class='docblock short'><p>An implementation of <code>Ssl</code> for OpenSSL.</p>
 </td>
                     </tr>
                 </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
@@ -70,16 +105,9 @@
                     </tr>
                 
                     <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='enum' href='enum.HttpListener.html'
-                               title='hyper::net::HttpListener'>HttpListener</a></td>
-                        <td class='docblock short'><p>A <code>NetworkListener</code> for <code>HttpStream</code>s.</p>
-</td>
-                    </tr>
-                
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='enum' href='enum.HttpStream.html'
-                               title='hyper::net::HttpStream'>HttpStream</a></td>
-                        <td class='docblock short'><p>A wrapper around a TcpStream.</p>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='enum' href='enum.HttpsStream.html'
+                               title='hyper::net::HttpsStream'>HttpsStream</a></td>
+                        <td class='docblock short'><p>A stream over the HTTP protocol, possibly protected by SSL.</p>
 </td>
                     </tr>
                 
@@ -111,12 +139,11 @@
                         <td class='docblock short'><p>An abstraction over streams that a Server can utilize.</p>
 </td>
                     </tr>
-                </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
-<table>
+                
                     <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='type' href='type.ContextVerifier.html'
-                               title='hyper::net::ContextVerifier'>ContextVerifier</a></td>
-                        <td class='docblock short'><p>A method that can set verification methods on an SSL context</p>
+                        <td><a class='stability Unmarked' title='No stability level'></a><a class='trait' href='trait.Ssl.html'
+                               title='hyper::net::Ssl'>Ssl</a></td>
+                        <td class='docblock short'><p>An abstraction to allow any SSL implementation to be used with HttpsStreams.</p>
 </td>
                     </tr>
                 </table></section>

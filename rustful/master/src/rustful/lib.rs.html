@@ -401,7 +401,6 @@
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>log</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>file</span>;
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::{<span class='ident'>SocketAddr</span>, <span class='ident'>SocketAddrV4</span>, <span class='ident'>SocketAddrV6</span>, <span class='ident'>Ipv4Addr</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>TypeId</span>;
@@ -410,17 +409,18 @@
 <span class='kw'>use</span> <span class='ident'>anymap</span>::<span class='ident'>any</span>::{<span class='ident'>Any</span>, <span class='ident'>UncheckedAnyExt</span>};
 
 <span class='doccomment'>///HTTP or HTTPS.</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Scheme</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Scheme</span> {
     <span class='doccomment'>///Standard HTTP.</span>
     <span class='ident'>Http</span>,
 
     <span class='doccomment'>///HTTP with SSL encryption.</span>
+    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ssl&quot;</span>)]</span>
     <span class='ident'>Https</span> {
         <span class='doccomment'>///Path to SSL certificate.</span>
-        <span class='ident'>cert</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Path</span>,
+        <span class='ident'>cert</span>: <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>PathBuf</span>,
 
         <span class='doccomment'>///Path to key file.</span>
-        <span class='ident'>key</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Path</span>
+        <span class='ident'>key</span>: <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>PathBuf</span>
     }
 }
 
