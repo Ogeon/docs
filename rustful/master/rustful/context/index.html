@@ -43,7 +43,7 @@
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>rustful</a>::<wbr><a class='mod' href=''>context</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-2955' href='../../src/rustful/context.rs.html#1-369'>[src]</a></span></h1>
+        </span><a id='src-2939' href='../../src/rustful/context.rs.html#1-365'>[src]</a></span></h1>
 <div class='docblock'><p>Handler context and request body reading extensions.</p>
 
 <h1 id="context" class='section-header'><a
@@ -64,10 +64,9 @@ struct for more information about how to access them.</p>
 
 <span class='kw'>fn</span> <span class='ident'>my_handler</span>(<span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span>) {
     <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>UserAgent</span>(<span class='kw-2'>ref</span> <span class='ident'>user_agent</span>)) <span class='op'>=</span> <span class='ident'>context</span>.<span class='ident'>headers</span>.<span class='ident'>get</span>() {
-        <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;got user agent string \&quot;{}\&quot;&quot;</span>, <span class='ident'>user_agent</span>);
-        <span class='ident'>response</span>.<span class='ident'>into_writer</span>().<span class='ident'>send</span>(<span class='ident'>res</span>);
+        <span class='ident'>response</span>.<span class='ident'>send</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;got user agent string \&quot;{}\&quot;&quot;</span>, <span class='ident'>user_agent</span>));
     } <span class='kw'>else</span> {
-        <span class='ident'>response</span>.<span class='ident'>into_writer</span>().<span class='ident'>send</span>(<span class='string'>&quot;no user agent string provided&quot;</span>);
+        <span class='ident'>response</span>.<span class='ident'>send</span>(<span class='string'>&quot;no user agent string provided&quot;</span>);
     }
 }
 </pre>
@@ -82,12 +81,11 @@ the <code>variables</code> field.</p>
 
 <span class='kw'>fn</span> <span class='ident'>my_handler</span>(<span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span>) {
     <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>id</span>) <span class='op'>=</span> <span class='ident'>context</span>.<span class='ident'>variables</span>.<span class='ident'>get</span>(<span class='string'>&quot;id&quot;</span>) {
-        <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;asking for product with id \&quot;{}\&quot;&quot;</span>, <span class='ident'>id</span>);
-        <span class='ident'>response</span>.<span class='ident'>into_writer</span>().<span class='ident'>send</span>(<span class='ident'>res</span>);
+        <span class='ident'>response</span>.<span class='ident'>send</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;asking for product with id \&quot;{}\&quot;&quot;</span>, <span class='ident'>id</span>));
     } <span class='kw'>else</span> {
         <span class='comment'>//This will usually not happen, unless the handler is also</span>
         <span class='comment'>//assigned to a path without the `id` variable</span>
-        <span class='ident'>response</span>.<span class='ident'>into_writer</span>().<span class='ident'>send</span>(<span class='string'>&quot;no id provided&quot;</span>);
+        <span class='ident'>response</span>.<span class='ident'>send</span>(<span class='string'>&quot;no id provided&quot;</span>);
     }
 }
 </pre>
@@ -115,7 +113,7 @@ alternatives.</p>
 
 <span class='kw'>fn</span> <span class='ident'>my_handler</span>(<span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='kw-2'>mut</span> <span class='ident'>response</span>: <span class='ident'>Response</span>) {
     <span class='kw'>match</span> <span class='ident'>something_that_may_fail</span>() {
-        <span class='prelude-val'>Ok</span>(<span class='ident'>res</span>) <span class='op'>=&gt;</span> <span class='ident'>response</span>.<span class='ident'>into_writer</span>().<span class='ident'>send</span>(<span class='ident'>res</span>),
+        <span class='prelude-val'>Ok</span>(<span class='ident'>res</span>) <span class='op'>=&gt;</span> <span class='ident'>response</span>.<span class='ident'>send</span>(<span class='ident'>res</span>),
         <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> {
             <span class='ident'>context</span>.<span class='ident'>log</span>.<span class='ident'>error</span>(<span class='kw-2'>&amp;</span><span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;it failed! {}&quot;</span>, <span class='ident'>e</span>));
             <span class='ident'>response</span>.<span class='ident'>set_status</span>(<span class='ident'>InternalServerError</span>);
@@ -138,8 +136,7 @@ mutability.</p>
 
 <span class='kw'>fn</span> <span class='ident'>my_handler</span>(<span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='kw-2'>mut</span> <span class='ident'>response</span>: <span class='ident'>Response</span>) {
     <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>some_wise_words</span>) <span class='op'>=</span> <span class='ident'>context</span>.<span class='ident'>global</span>.<span class='ident'>get</span>::<span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span>() {
-        <span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;food for thought: {}&quot;</span>, <span class='ident'>some_wise_words</span>);
-        <span class='ident'>response</span>.<span class='ident'>into_writer</span>().<span class='ident'>send</span>(<span class='ident'>res</span>);
+        <span class='ident'>response</span>.<span class='ident'>send</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;food for thought: {}&quot;</span>, <span class='ident'>some_wise_words</span>));
     } <span class='kw'>else</span> {
         <span class='ident'>context</span>.<span class='ident'>log</span>.<span class='ident'>error</span>(<span class='string'>&quot;there should be a string literal in `global`&quot;</span>);
         <span class='ident'>response</span>.<span class='ident'>set_status</span>(<span class='ident'>InternalServerError</span>);
@@ -160,7 +157,7 @@ more examples.</p>
 
 <span class='kw'>fn</span> <span class='ident'>my_handler</span>(<span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span>) {
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>numbered_lines</span> <span class='op'>=</span> <span class='ident'>BufReader</span>::<span class='ident'>new</span>(<span class='ident'>context</span>.<span class='ident'>body</span>).<span class='ident'>lines</span>().<span class='ident'>enumerate</span>();
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>writer</span> <span class='op'>=</span> <span class='ident'>response</span>.<span class='ident'>into_writer</span>();
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>writer</span> <span class='op'>=</span> <span class='ident'>response</span>.<span class='ident'>into_chunked</span>();
 
     <span class='kw'>while</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>((<span class='ident'>line_no</span>, <span class='prelude-val'>Ok</span>(<span class='ident'>line</span>))) <span class='op'>=</span> <span class='ident'>numbered_lines</span>.<span class='ident'>next</span>() {
         <span class='ident'>writer</span>.<span class='ident'>send</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}: {}&quot;</span>, <span class='ident'>line_no</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='ident'>line</span>));

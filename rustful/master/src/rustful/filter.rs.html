@@ -136,6 +136,8 @@
 <span id="94">94</span>
 <span id="95">95</span>
 <span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Request and context filters.</span>
 
@@ -174,6 +176,7 @@
 }
 
 <span class='doccomment'>///The result from a context filter.</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ContextAction</span> {
     <span class='doccomment'>///Continue to the next filter in the stack.</span>
     <span class='ident'>Next</span>,
@@ -209,6 +212,7 @@
 }
 
 <span class='doccomment'>///The result from a response filter.</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ResponseAction</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='doccomment'>///Continue to the next filter and maybe write data.</span>
     <span class='ident'>Next</span>(<span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Data</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>),

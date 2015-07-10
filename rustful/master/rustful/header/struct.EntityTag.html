@@ -43,7 +43,7 @@
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>header</a>::<wbr><a class='struct' href=''>EntityTag</a><wbr></span><span class='out-of-band'><span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-24522' href='../../hyper/header/shared/entity/struct.EntityTag.html?gotosrc=24522'>[src]</a></span></h1>
+        </span><a id='src-25063' href='../../hyper/header/shared/entity/struct.EntityTag.html?gotosrc=25063'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct EntityTag {
     pub weak: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>,
     // some fields omitted
@@ -108,6 +108,18 @@ both the weak and strong comparison function results:</p>
 <table><tr><td id='structfield.weak'><a class='stability Unmarked' title='No stability level'></a><code>weak</code></td><td><div class='docblock'><p>Weakness indicator for the tag</p>
 </div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='struct' href='../../rustful/header/struct.EntityTag.html' title='rustful::header::EntityTag'>EntityTag</a></code></h3><div class='impl-items'><h4 id='method.new' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.new' class='fnname'>new</a>(weak: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>, tag: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>) -&gt; <a class='struct' href='../../rustful/header/struct.EntityTag.html' title='rustful::header::EntityTag'>EntityTag</a></code></h4>
 <div class='docblock'><p>Constructs a new EntityTag.</p>
+
+<h1 id="panics" class='section-header'><a
+                           href="#panics">Panics</a></h1>
+<p>If the tag contains invalid characters.</p>
+</div><h4 id='method.weak' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.weak' class='fnname'>weak</a>(tag: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>) -&gt; <a class='struct' href='../../rustful/header/struct.EntityTag.html' title='rustful::header::EntityTag'>EntityTag</a></code></h4>
+<div class='docblock'><p>Constructs a new weak EntityTag.</p>
+
+<h1 id="panics" class='section-header'><a
+                           href="#panics">Panics</a></h1>
+<p>If the tag contains invalid characters.</p>
+</div><h4 id='method.strong' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.strong' class='fnname'>strong</a>(tag: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>) -&gt; <a class='struct' href='../../rustful/header/struct.EntityTag.html' title='rustful::header::EntityTag'>EntityTag</a></code></h4>
+<div class='docblock'><p>Constructs a new strong EntityTag.</p>
 
 <h1 id="panics" class='section-header'><a
                            href="#panics">Panics</a></h1>

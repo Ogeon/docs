@@ -405,10 +405,6 @@
 <span id="363">363</span>
 <span id="364">364</span>
 <span id="365">365</span>
-<span id="366">366</span>
-<span id="367">367</span>
-<span id="368">368</span>
-<span id="369">369</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Handler context and request body reading extensions.</span>
 <span class='doccomment'>//!</span>
@@ -431,10 +427,9 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//!fn my_handler(context: Context, response: Response) {</span>
 <span class='doccomment'>//!    if let Some(&amp;UserAgent(ref user_agent)) = context.headers.get() {</span>
-<span class='doccomment'>//!        let res = format!(&quot;got user agent string \&quot;{}\&quot;&quot;, user_agent);</span>
-<span class='doccomment'>//!        response.into_writer().send(res);</span>
+<span class='doccomment'>//!        response.send(format!(&quot;got user agent string \&quot;{}\&quot;&quot;, user_agent));</span>
 <span class='doccomment'>//!    } else {</span>
-<span class='doccomment'>//!        response.into_writer().send(&quot;no user agent string provided&quot;);</span>
+<span class='doccomment'>//!        response.send(&quot;no user agent string provided&quot;);</span>
 <span class='doccomment'>//!    }</span>
 <span class='doccomment'>//!}</span>
 <span class='doccomment'>//!```</span>
@@ -450,12 +445,11 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//!fn my_handler(context: Context, response: Response) {</span>
 <span class='doccomment'>//!    if let Some(id) = context.variables.get(&quot;id&quot;) {</span>
-<span class='doccomment'>//!        let res = format!(&quot;asking for product with id \&quot;{}\&quot;&quot;, id);</span>
-<span class='doccomment'>//!        response.into_writer().send(res);</span>
+<span class='doccomment'>//!        response.send(format!(&quot;asking for product with id \&quot;{}\&quot;&quot;, id));</span>
 <span class='doccomment'>//!    } else {</span>
 <span class='doccomment'>//!        //This will usually not happen, unless the handler is also</span>
 <span class='doccomment'>//!        //assigned to a path without the `id` variable</span>
-<span class='doccomment'>//!        response.into_writer().send(&quot;no id provided&quot;);</span>
+<span class='doccomment'>//!        response.send(&quot;no id provided&quot;);</span>
 <span class='doccomment'>//!    }</span>
 <span class='doccomment'>//!}</span>
 <span class='doccomment'>//!```</span>
@@ -484,7 +478,7 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//!fn my_handler(context: Context, mut response: Response) {</span>
 <span class='doccomment'>//!    match something_that_may_fail() {</span>
-<span class='doccomment'>//!        Ok(res) =&gt; response.into_writer().send(res),</span>
+<span class='doccomment'>//!        Ok(res) =&gt; response.send(res),</span>
 <span class='doccomment'>//!        Err(e) =&gt; {</span>
 <span class='doccomment'>//!            context.log.error(&amp;format!(&quot;it failed! {}&quot;, e));</span>
 <span class='doccomment'>//!            response.set_status(InternalServerError);</span>
@@ -508,8 +502,7 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//!fn my_handler(context: Context, mut response: Response) {</span>
 <span class='doccomment'>//!    if let Some(some_wise_words) = context.global.get::&lt;&amp;str&gt;() {</span>
-<span class='doccomment'>//!        let res = format!(&quot;food for thought: {}&quot;, some_wise_words);</span>
-<span class='doccomment'>//!        response.into_writer().send(res);</span>
+<span class='doccomment'>//!        response.send(format!(&quot;food for thought: {}&quot;, some_wise_words));</span>
 <span class='doccomment'>//!    } else {</span>
 <span class='doccomment'>//!        context.log.error(&quot;there should be a string literal in `global`&quot;);</span>
 <span class='doccomment'>//!        response.set_status(InternalServerError);</span>
@@ -531,7 +524,7 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//!fn my_handler(context: Context, response: Response) {</span>
 <span class='doccomment'>//!    let mut numbered_lines = BufReader::new(context.body).lines().enumerate();</span>
-<span class='doccomment'>//!    let mut writer = response.into_writer();</span>
+<span class='doccomment'>//!    let mut writer = response.into_chunked();</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//!    while let Some((line_no, Ok(line))) = numbered_lines.next() {</span>
 <span class='doccomment'>//!        writer.send(format!(&quot;{}: {}&quot;, line_no + 1, line));</span>
@@ -646,7 +639,7 @@
     <span class='doccomment'>///    let a: f64 = query.get(&quot;a&quot;).and_then(|number| number.parse().ok()).unwrap();</span>
     <span class='doccomment'>///    let b: f64 = query.get(&quot;b&quot;).and_then(|number| number.parse().ok()).unwrap();</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>///    response.into_writer().send(format!(&quot;{} + {} = {}&quot;, a, b, a + b));</span>
+    <span class='doccomment'>///    response.send(format!(&quot;{} + {} = {}&quot;, a, b, a + b));</span>
     <span class='doccomment'>///}</span>
     <span class='doccomment'>///```</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
@@ -692,7 +685,7 @@
     <span class='doccomment'>///    let a = json.find(&quot;a&quot;).and_then(|number| number.as_f64()).unwrap();</span>
     <span class='doccomment'>///    let b = json.find(&quot;b&quot;).and_then(|number| number.as_f64()).unwrap();</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>///    response.into_writer().send(format!(&quot;{} + {} = {}&quot;, a, b, a + b));</span>
+    <span class='doccomment'>///    response.send(format!(&quot;{} + {} = {}&quot;, a, b, a + b));</span>
     <span class='doccomment'>///}</span>
     <span class='doccomment'>///```</span>
     <span class='kw'>fn</span> <span class='ident'>read_json_body</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>json</span>::<span class='ident'>Json</span>, <span class='ident'>json</span>::<span class='ident'>BuilderError</span><span class='op'>&gt;</span> {
@@ -721,8 +714,7 @@
     <span class='doccomment'>///    //Decode a JSON formatted request body into Foo</span>
     <span class='doccomment'>///    let foo: Foo = context.body.decode_json_body().unwrap();</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>///    let res = format!(&quot;{} + {} = {}&quot;, foo.a, foo.b, foo.a + foo.b);</span>
-    <span class='doccomment'>///    response.into_writer().send(res);</span>
+    <span class='doccomment'>///    response.send(format!(&quot;{} + {} = {}&quot;, foo.a, foo.b, foo.a + foo.b));</span>
     <span class='doccomment'>///}</span>
     <span class='doccomment'>///# fn main() {}</span>
     <span class='doccomment'>///```</span>
