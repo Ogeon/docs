@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Loader","A utility for loading files from the file system and sending them to the client."]],"fn":[["ext_to_mime","Returns the MIME type from a given file extension, if known."]],"enum":[["Error","Error types from `Loader`."]]});
+initSidebarItems({"struct":[["Loader","A utility for loading files from the file system and sending them to the client."]],"enum":[["Error","Error types from `Loader`."]],"fn":[["ext_to_mime","Returns the MIME type from a given file extension, if known."]]});
