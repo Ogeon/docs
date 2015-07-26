@@ -1,1 +1,1 @@
-initSidebarItems({"macro":[["mime!","Easily create a Mime without having to import so many enums."]],"type":[["Param",""]],"struct":[["Mime","Mime, or Media Type. Encapsulates common registers types."]],"enum":[["Attr",""],["SubLevel",""],["TopLevel",""],["Value",""]]});
+initSidebarItems({"struct":[["Mime","Mime, or Media Type. Encapsulates common registers types."]],"macro":[["mime!","Easily create a Mime without having to import so many enums."]],"enum":[["Attr",""],["SubLevel",""],["TopLevel",""],["Value",""]],"type":[["Param",""]]});

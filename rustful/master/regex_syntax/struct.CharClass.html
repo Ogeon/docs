@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `CharClass` struct in crate `regex_syntax`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, CharClass">
+
+    <title>regex_syntax::CharClass - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='index.html'>regex_syntax</a></p><script>window.sidebarCurrent = {name: 'CharClass', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>regex_syntax</a>::<wbr><a class='struct' href=''>CharClass</a><wbr></span><span class='out-of-band'><span id='render-detail'>
+            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
+        </span><a id='src-46797' href='../src/regex_syntax/lib.rs.html#201-203'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct CharClass {
+    // some fields omitted
+}</pre><div class='docblock'><p>A character class.</p>
+
+<p>A character class has a canonical format that the parser guarantees. Its
+canonical format is defined by the following invariants:</p>
+
+<ol>
+<li>Given any Unicode scalar value, it is matched by <em>at most</em> one character
+range in a canonical character class.</li>
+<li>Every adjacent character range is separated by at least one Unicode
+scalar value.</li>
+<li>Given any pair of character ranges <code>r1</code> and <code>r2</code>, if
+<code>r1.end &lt; r2.start</code>, then <code>r1</code> comes before <code>r2</code> in a canonical
+character class.</li>
+</ol>
+
+<p>In sum, any <code>CharClass</code> produced by this crate&#39;s parser is a sorted
+sequence of non-overlapping ranges. This makes it possible to test whether
+a character is matched by a class with a binary search.</p>
+
+<p>Additionally, a character class may be marked <em>case insensitive</em>. If it&#39;s
+case insensitive, then:</p>
+
+<ol>
+<li>Simple case folding has been applied to all ranges.</li>
+<li>Simple case folding must be applied to a character before testing
+whether it matches the character class.</li>
+</ol>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='struct' href='../regex_syntax/struct.CharClass.html' title='regex_syntax::CharClass'>CharClass</a></code></h3><div class='impl-items'><h4 id='method.new' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.new' class='fnname'>new</a>(ranges: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../regex_syntax/struct.ClassRange.html' title='regex_syntax::ClassRange'>ClassRange</a>&gt;) -&gt; <a class='struct' href='../regex_syntax/struct.CharClass.html' title='regex_syntax::CharClass'>CharClass</a></code></h4>
+<div class='docblock'><p>Create a new class from an existing set of ranges.</p>
+</div><h4 id='method.matches' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.matches' class='fnname'>matches</a>(&amp;self, c: <a href='http://doc.rust-lang.org/nightly/std/primitive.char.html'>char</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>Returns true if <code>c</code> is matched by this character class.</p>
+</div><h4 id='method.negate' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.negate' class='fnname'>negate</a>(self) -&gt; <a class='struct' href='../regex_syntax/struct.CharClass.html' title='regex_syntax::CharClass'>CharClass</a></code></h4>
+<div class='docblock'><p>Negates the character class.</p>
+
+<p>For all <code>c</code> where <code>c</code> is a Unicode scalar value, <code>c</code> matches <code>self</code>
+if and only if <code>c</code> does not match <code>self.negate()</code>.</p>
+</div><h4 id='method.case_fold' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.case_fold' class='fnname'>case_fold</a>(self) -&gt; <a class='struct' href='../regex_syntax/struct.CharClass.html' title='regex_syntax::CharClass'>CharClass</a></code></h4>
+<div class='docblock'><p>Apply case folding to this character class.</p>
+
+<p>N.B. Applying case folding to a negated character class probably
+won&#39;t produce the expected result. e.g., <code>(?i)[^x]</code> really should
+match any character sans <code>x</code> and <code>X</code>, but if <code>[^x]</code> is negated
+before being case folded, you&#39;ll end up matching any character.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a> for <a class='struct' href='../regex_syntax/struct.CharClass.html' title='regex_syntax::CharClass'>CharClass</a></code></h3><div class='impl-items'><h4 id='assoc_type.Target' class='type'><a class='stability Unmarked' title='No stability level'></a><code>type Target = <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../regex_syntax/struct.ClassRange.html' title='regex_syntax::ClassRange'>ClassRange</a>&gt;</code></h4>
+<h4 id='method.deref' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/ops/trait.Deref.html#method.deref' class='fnname'>deref</a>(&amp;self) -&gt; &amp;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../regex_syntax/struct.ClassRange.html' title='regex_syntax::ClassRange'>ClassRange</a>&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/iter/trait.IntoIterator.html' title='core::iter::IntoIterator'>IntoIterator</a> for <a class='struct' href='../regex_syntax/struct.CharClass.html' title='regex_syntax::CharClass'>CharClass</a></code></h3><div class='impl-items'><h4 id='assoc_type.Item' class='type'><a class='stability Unmarked' title='No stability level'></a><code>type Item = <a class='struct' href='../regex_syntax/struct.ClassRange.html' title='regex_syntax::ClassRange'>ClassRange</a></code></h4>
+<h4 id='assoc_type.IntoIter' class='type'><a class='stability Unmarked' title='No stability level'></a><code>type IntoIter = <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.IntoIter.html' title='collections::vec::IntoIter'>IntoIter</a>&lt;<a class='struct' href='../regex_syntax/struct.ClassRange.html' title='regex_syntax::ClassRange'>ClassRange</a>&gt;</code></h4>
+<h4 id='method.into_iter' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/iter/trait.IntoIterator.html#method.into_iter' class='fnname'>into_iter</a>(self) -&gt; <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.IntoIter.html' title='collections::vec::IntoIter'>IntoIter</a>&lt;<a class='struct' href='../regex_syntax/struct.ClassRange.html' title='regex_syntax::ClassRange'>ClassRange</a>&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl&lt;'a&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/iter/trait.IntoIterator.html' title='core::iter::IntoIterator'>IntoIterator</a> for &amp;'a <a class='struct' href='../regex_syntax/struct.CharClass.html' title='regex_syntax::CharClass'>CharClass</a></code></h3><div class='impl-items'><h4 id='assoc_type.Item' class='type'><a class='stability Unmarked' title='No stability level'></a><code>type Item = &amp;'a <a class='struct' href='../regex_syntax/struct.ClassRange.html' title='regex_syntax::ClassRange'>ClassRange</a></code></h4>
+<h4 id='assoc_type.IntoIter' class='type'><a class='stability Unmarked' title='No stability level'></a><code>type IntoIter = <a class='struct' href='http://doc.rust-lang.org/nightly/core/slice/struct.Iter.html' title='core::slice::Iter'>Iter</a>&lt;'a, <a class='struct' href='../regex_syntax/struct.ClassRange.html' title='regex_syntax::ClassRange'>ClassRange</a>&gt;</code></h4>
+<h4 id='method.into_iter' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/iter/trait.IntoIterator.html#method.into_iter' class='fnname'>into_iter</a>(self) -&gt; <a class='struct' href='http://doc.rust-lang.org/nightly/core/slice/struct.Iter.html' title='core::slice::Iter'>Iter</a>&lt;'a, <a class='struct' href='../regex_syntax/struct.ClassRange.html' title='regex_syntax::ClassRange'>ClassRange</a>&gt;</code></h4>
+</div><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/fmt/trait.Display.html' title='core::fmt::Display'>Display</a> for <a class='struct' href='../regex_syntax/struct.CharClass.html' title='regex_syntax::CharClass'>CharClass</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/fmt/trait.Display.html#method.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='http://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='struct' href='../regex_syntax/struct.CharClass.html' title='regex_syntax::CharClass'>CharClass</a></code></h3><div class='impl-items'></div><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='struct' href='../regex_syntax/struct.CharClass.html' title='regex_syntax::CharClass'>CharClass</a></code></h3><div class='impl-items'><h4 id='method.eq' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../regex_syntax/struct.CharClass.html' title='regex_syntax::CharClass'>CharClass</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.ne' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../regex_syntax/struct.CharClass.html' title='regex_syntax::CharClass'>CharClass</a>) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+</div><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../regex_syntax/struct.CharClass.html' title='regex_syntax::CharClass'>CharClass</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='http://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../regex_syntax/struct.CharClass.html' title='regex_syntax::CharClass'>CharClass</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../regex_syntax/struct.CharClass.html' title='regex_syntax::CharClass'>CharClass</a></code></h4>
+<h4 id='method.clone_from' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "regex_syntax";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>
