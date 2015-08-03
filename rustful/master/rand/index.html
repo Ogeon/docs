@@ -43,7 +43,7 @@
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>rand</a><wbr></span><span class='out-of-band'><a href='stability.html'>[stability]</a> <span id='render-detail'>
             <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-0' href='../src/rand/lib.rs.html#11-1177'>[src]</a></span></h1>
+        </span><a id='src-0' href='../src/rand/lib.rs.html#11-1141'>[src]</a></span></h1>
 <div class='docblock'><p>Utilities for random number generation</p>
 
 <p>The key functions are <code>random()</code> and <code>Rng::gen()</code>. These are polymorphic and
@@ -54,6 +54,20 @@ suffice, but sometimes an annotation is required, e.g.
 
 <p>See the <code>distributions</code> submodule for sampling random numbers from
 distributions like normal and exponential.</p>
+
+<h1 id="usage" class='section-header'><a
+                           href="#usage">Usage</a></h1>
+<p>This crate is <a href="https://crates.io/crates/rand">on crates.io</a> and can be
+used by adding <code>rand</code> to the dependencies in your project&#39;s <code>Cargo.toml</code>.</p>
+
+<pre><code class="language-toml">[dependencies]
+rand = &quot;0.3&quot;
+</code></pre>
+
+<p>and this to your crate root:</p>
+<pre id='rust-example-rendered' class='rust '>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rand</span>;
+</pre>
 
 <h1 id="thread-local-rng" class='section-header'><a
                            href="#thread-local-rng">Thread-local RNG</a></h1>

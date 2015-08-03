@@ -1,1 +1,1 @@
-initSidebarItems({"trait":[["Input","An abstraction over input used in the matching engines."]],"struct":[["CharInput","An input reader over characters."],["InputAt","Represents a location in the input."]]});
+initSidebarItems({"struct":[["CharInput","An input reader over characters."],["InputAt","Represents a location in the input."]],"trait":[["Input","An abstraction over input used in the matching engines."]]});
