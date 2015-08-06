@@ -265,6 +265,8 @@
 <span id="223">223</span>
 <span id="224">224</span>
 <span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Routers stores request handlers, using an HTTP method and a path as keys.</span>
 <span class='doccomment'>//!</span>
@@ -388,6 +390,7 @@
 <span class='doccomment'>///A router must to implement this trait to be usable in a Rustful server. This</span>
 <span class='doccomment'>///trait will also make the router compatible with the `insert_routes!` macro.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Router</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
+    <span class='doccomment'>///The request handler type that is stored within this router.</span>
     <span class='kw'>type</span> <span class='ident'>Handler</span>: <span class='ident'>Handler</span>;
 
     <span class='doccomment'>///Insert a new handler into the router.</span>
@@ -409,6 +412,7 @@
 
 <span class='doccomment'>///A segmented route.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Route</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>///An iterator over route segments.</span>
     <span class='kw'>type</span> <span class='ident'>Segments</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span><span class='op'>&gt;</span>;
 
     <span class='doccomment'>///Create a route segment iterator. The iterator is expected to return</span>
@@ -524,6 +528,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

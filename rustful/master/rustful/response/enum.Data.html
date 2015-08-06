@@ -41,26 +41,28 @@
     </nav>
 
     <section id='main' class="content enum">
-<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>response</a>::<wbr><a class='enum' href=''>Data</a><wbr></span><span class='out-of-band'><span id='render-detail'>
-            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-4107' href='../../src/rustful/response.rs.html#98-104'>[src]</a></span></h1>
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>response</a>::<wbr><a class='enum' href=''>Data</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-4107' class='srclink' href='../../src/rustful/response.rs.html#98-104' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Data&lt;'a&gt; {
     Bytes(<a class='enum' href='http://doc.rust-lang.org/nightly/collections/borrow/enum.Cow.html' title='collections::borrow::Cow'>Cow</a>&lt;'a, <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[<a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>]</a>&gt;),
     String(<a class='enum' href='http://doc.rust-lang.org/nightly/collections/borrow/enum.Cow.html' title='collections::borrow::Cow'>Cow</a>&lt;'a, <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;),
 }</pre><div class='docblock'><p>A unified representation of response data.</p>
 </div><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.Bytes'><a class='stability Unmarked' title='No stability level'></a><code>Bytes</code></td><td><div class='docblock'><p>Data in byte form.</p>
-</div></td></tr><tr><td id='variant.String'><a class='stability Unmarked' title='No stability level'></a><code>String</code></td><td><div class='docblock'><p>Data in string form.</p>
-</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a&gt; <a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.as_bytes' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.as_bytes' class='fnname'>as_bytes</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a></code></h4>
+<table><tr><td id='variant.Bytes'><code>Bytes</code></td><td><div class='docblock'><p>Data in byte form.</p>
+</div></td></tr><tr><td id='variant.String'><code>String</code></td><td><div class='docblock'><p>Data in string form.</p>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.as_bytes' class='method'><code>fn <a href='#method.as_bytes' class='fnname'>as_bytes</a>(&amp;self) -&gt; <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a></code></h4>
 <div class='docblock'><p>Borrow the content as a byte slice.</p>
-</div><h4 id='method.into_bytes' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.into_bytes' class='fnname'>into_bytes</a>(self) -&gt; <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;</code></h4>
+</div><h4 id='method.into_bytes' class='method'><code>fn <a href='#method.into_bytes' class='fnname'>into_bytes</a>(self) -&gt; <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;</code></h4>
 <div class='docblock'><p>Turns the content into a byte vector. Slices are copied.</p>
-</div><h4 id='method.as_string' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.as_string' class='fnname'>as_string</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;&amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/core/str/struct.Utf8Error.html' title='core::str::Utf8Error'>Utf8Error</a>&gt;</code></h4>
+</div><h4 id='method.as_string' class='method'><code>fn <a href='#method.as_string' class='fnname'>as_string</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;&amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/core/str/struct.Utf8Error.html' title='core::str::Utf8Error'>Utf8Error</a>&gt;</code></h4>
 <div class='docblock'><p>Borrow the content as a UTF-8 string slice, if possible.</p>
-</div><h4 id='method.into_string' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.into_string' class='fnname'>into_string</a>(self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.FromUtf8Error.html' title='collections::string::FromUtf8Error'>FromUtf8Error</a>&gt;</code></h4>
+</div><h4 id='method.into_string' class='method'><code>fn <a href='#method.into_string' class='fnname'>into_string</a>(self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.FromUtf8Error.html' title='collections::string::FromUtf8Error'>FromUtf8Error</a>&gt;</code></h4>
 <div class='docblock'><p>Turn the content into a UTF-8 string, if possible. Slices are copied.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl&lt;'a&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.clone' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'a&gt;</code></h4>
-<h4 id='method.clone_from' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'a&gt;</code></h4>
+<h4 id='method.clone_from' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -93,6 +95,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

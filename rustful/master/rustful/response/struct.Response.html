@@ -41,9 +41,11 @@
     </nav>
 
     <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>response</a>::<wbr><a class='struct' href=''>Response</a><wbr></span><span class='out-of-band'><span id='render-detail'>
-            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-4341' href='../../src/rustful/response.rs.html#170-176'>[src]</a></span></h1>
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>response</a>::<wbr><a class='struct' href=''>Response</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-4341' class='srclink' href='../../src/rustful/response.rs.html#170-176' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Response&lt;'a, 'b&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>An interface for sending data to the client.</p>
@@ -51,21 +53,20 @@
 <p>This is where the status code and response headers are set, as well as the
 response body. The body can be directly written through the <code>Response</code> if
 its size is known.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, 'b&gt; <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>&lt;'a, 'b&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.new' class='fnname'>new</a>(response: <a class='struct' href='../../hyper/server/response/struct.Response.html' title='hyper::server::response::Response'>Response</a>&lt;'a&gt;, filters: &amp;'b <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='trait' href='../../rustful/filter/trait.ResponseFilter.html' title='rustful::filter::ResponseFilter'>ResponseFilter</a>&gt;&gt;, log: &amp;'b <a class='trait' href='../../rustful/log/trait.Log.html' title='rustful::log::Log'>Log</a>, global: &amp;'b <a class='struct' href='../../rustful/struct.Global.html' title='rustful::Global'>Global</a>) -&gt; <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>&lt;'a, 'b&gt;</code></h4>
-<h4 id='method.status' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.status' class='fnname'>status</a>(&amp;self) -&gt; <a class='enum' href='../../rustful/enum.StatusCode.html' title='rustful::StatusCode'>StatusCode</a></code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a, 'b&gt; <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>&lt;'a, 'b&gt;</code></h3><div class='impl-items'><h4 id='method.status' class='method'><code>fn <a href='#method.status' class='fnname'>status</a>(&amp;self) -&gt; <a class='enum' href='../../rustful/enum.StatusCode.html' title='rustful::StatusCode'>StatusCode</a></code></h4>
 <div class='docblock'><p>Get the current status code.</p>
-</div><h4 id='method.set_status' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.set_status' class='fnname'>set_status</a>(&amp;mut self, status: <a class='enum' href='../../rustful/enum.StatusCode.html' title='rustful::StatusCode'>StatusCode</a>)</code></h4>
+</div><h4 id='method.set_status' class='method'><code>fn <a href='#method.set_status' class='fnname'>set_status</a>(&amp;mut self, status: <a class='enum' href='../../rustful/enum.StatusCode.html' title='rustful::StatusCode'>StatusCode</a>)</code></h4>
 <div class='docblock'><p>Change the status code. <code>Ok (200)</code> is the default.</p>
-</div><h4 id='method.headers' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.headers' class='fnname'>headers</a>(&amp;self) -&gt; &amp;<a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a></code></h4>
+</div><h4 id='method.headers' class='method'><code>fn <a href='#method.headers' class='fnname'>headers</a>(&amp;self) -&gt; &amp;<a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a></code></h4>
 <div class='docblock'><p>Get a reference to the headers.</p>
-</div><h4 id='method.headers_mut' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.headers_mut' class='fnname'>headers_mut</a>(&amp;mut self) -&gt; &amp;mut <a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a></code></h4>
+</div><h4 id='method.headers_mut' class='method'><code>fn <a href='#method.headers_mut' class='fnname'>headers_mut</a>(&amp;mut self) -&gt; &amp;mut <a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a></code></h4>
 <div class='docblock'><p>Get a mutable reference to the headers.</p>
-</div><h4 id='method.filter_storage' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.filter_storage' class='fnname'>filter_storage</a>(&amp;self) -&gt; &amp;<a class='type' href='../../anymap/type.AnyMap.html' title='anymap::AnyMap'>AnyMap</a></code></h4>
+</div><h4 id='method.filter_storage' class='method'><code>fn <a href='#method.filter_storage' class='fnname'>filter_storage</a>(&amp;self) -&gt; &amp;<a class='type' href='../../anymap/type.AnyMap.html' title='anymap::AnyMap'>AnyMap</a></code></h4>
 <div class='docblock'><p>Get a reference to the filter storage.</p>
-</div><h4 id='method.filter_storage_mut' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.filter_storage_mut' class='fnname'>filter_storage_mut</a>(&amp;mut self) -&gt; &amp;mut <a class='type' href='../../anymap/type.AnyMap.html' title='anymap::AnyMap'>AnyMap</a></code></h4>
+</div><h4 id='method.filter_storage_mut' class='method'><code>fn <a href='#method.filter_storage_mut' class='fnname'>filter_storage_mut</a>(&amp;mut self) -&gt; &amp;mut <a class='type' href='../../anymap/type.AnyMap.html' title='anymap::AnyMap'>AnyMap</a></code></h4>
 <div class='docblock'><p>Get a mutable reference to the filter storage. It can be used to
 communicate with the response filters.</p>
-</div><h4 id='method.send' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.send' class='fnname'>send</a>&lt;'d, Content: <a class='trait' href='http://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'d&gt;&gt;&gt;(self, content: Content)</code></h4>
+</div><h4 id='method.send' class='method'><code>fn <a href='#method.send' class='fnname'>send</a>&lt;'d, Content: <a class='trait' href='http://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'d&gt;&gt;&gt;(self, content: Content)</code></h4>
 <div class='docblock'><p>Send data to the client and finish the response, ignoring eventual
 errors. Use <code>try_send</code> to get error information.</p>
 <pre id='rust-example-rendered' class='rust '>
@@ -75,7 +76,7 @@ errors. Use <code>try_send</code> to get error information.</p>
     <span class='ident'>response</span>.<span class='ident'>send</span>(<span class='string'>&quot;hello&quot;</span>);
 }
 </pre>
-</div><h4 id='method.try_send' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.try_send' class='fnname'>try_send</a>&lt;'d, Content: <a class='trait' href='http://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'d&gt;&gt;&gt;(self, content: Content) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../../rustful/response/enum.Error.html' title='rustful::response::Error'>Error</a>&gt;</code></h4>
+</div><h4 id='method.try_send' class='method'><code>fn <a href='#method.try_send' class='fnname'>try_send</a>&lt;'d, Content: <a class='trait' href='http://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'d&gt;&gt;&gt;(self, content: Content) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../../rustful/response/enum.Error.html' title='rustful::response::Error'>Error</a>&gt;</code></h4>
 <div class='docblock'><p>Try to send data to the client and finish the response. This is the
 same as <code>send</code>, but errors are not ignored.</p>
 <pre id='rust-example-rendered' class='rust '>
@@ -88,19 +89,18 @@ same as <code>send</code>, but errors are not ignored.</p>
     }
 }
 </pre>
-</div><h4 id='method.into_chunked' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.into_chunked' class='fnname'>into_chunked</a>(self) -&gt; <a class='struct' href='../../rustful/response/struct.Chunked.html' title='rustful::response::Chunked'>Chunked</a>&lt;'a, 'b&gt;</code></h4>
+</div><h4 id='method.into_chunked' class='method'><code>fn <a href='#method.into_chunked' class='fnname'>into_chunked</a>(self) -&gt; <a class='struct' href='../../rustful/response/struct.Chunked.html' title='rustful::response::Chunked'>Chunked</a>&lt;'a, 'b&gt;</code></h4>
 <div class='docblock'><p>Write the status code and headers to the client and turn the <code>Response</code>
 into a <code>Chunked</code> response.</p>
-</div><h4 id='method.into_raw' class='method'><a class='stability Unmarked' title='No stability level'></a><code>unsafe fn <a href='#method.into_raw' class='fnname'>into_raw</a>(self, content_length: <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; <a class='struct' href='../../rustful/response/struct.Raw.html' title='rustful::response::Raw'>Raw</a>&lt;'a&gt;</code></h4>
+</div><h4 id='method.into_raw' class='method'><code>unsafe fn <a href='#method.into_raw' class='fnname'>into_raw</a>(self, content_length: <a href='http://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; <a class='struct' href='../../rustful/response/struct.Raw.html' title='rustful::response::Raw'>Raw</a>&lt;'a&gt;</code></h4>
 <div class='docblock'><p>Write the status code and headers to the client and turn the <code>Response</code>
 into a <code>Raw</code> response. Any eventual response filters are bypassed to
 make sure that the data is not modified.</p>
 
 <p><strong>Unsafety</strong>: The content length is set beforehand, which makes it
 possible to send responses that are too short.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl&lt;'a, 'b&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>&lt;'a, 'b&gt;</code></h3><div class='impl-items'><h4 id='method.drop' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#method.drop' class='fnname'>drop</a>(&amp;mut self)</code></h4>
-<div class='docblock'><p>Writes status code and headers and closes the connection.</p>
-</div></div></section>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a, 'b&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>&lt;'a, 'b&gt;</code></h3><div class='impl-items'><h4 id='method.drop' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#method.drop' class='fnname'>drop</a>(&amp;mut self)</code></h4>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -132,6 +132,10 @@ possible to send responses that are too short.</p>
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

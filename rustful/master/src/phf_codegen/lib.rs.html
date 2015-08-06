@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/phf_codegen-0.7.3/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/phf_codegen-0.7.4/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -324,6 +324,7 @@
 <span id="282">282</span>
 <span id="283">283</span>
 <span id="284">284</span>
+<span id="285">285</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A set of builders to generate Rust source for PHF data structures at</span>
 <span class='doccomment'>//! compile time.</span>
@@ -339,12 +340,13 @@
 <span class='doccomment'>//! ```rust,no_run</span>
 <span class='doccomment'>//! extern crate phf_codegen;</span>
 <span class='doccomment'>//!</span>
+<span class='doccomment'>//! use std::env;</span>
 <span class='doccomment'>//! use std::fs::File;</span>
 <span class='doccomment'>//! use std::io::{BufWriter, Write};</span>
 <span class='doccomment'>//! use std::path::Path;</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! fn main() {</span>
-<span class='doccomment'>//!     let path = Path::new(env!(&quot;OUT_DIR&quot;)).join(&quot;codegen.rs&quot;);</span>
+<span class='doccomment'>//!     let path = Path::new(&amp;env::var(&quot;OUT_DIR&quot;).unwrap()).join(&quot;codegen.rs&quot;);</span>
 <span class='doccomment'>//!     let mut file = BufWriter::new(File::create(&amp;path).unwrap());</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//!     write!(&amp;mut file, &quot;static KEYWORDS: phf::Map&lt;&amp;&#39;static str, Keyword&gt; = &quot;).unwrap();</span>
@@ -403,7 +405,7 @@
 <span class='doccomment'>//! builder.entry(&quot;world&quot;, &quot;2&quot;);</span>
 <span class='doccomment'>//! // ...</span>
 <span class='doccomment'>//! ```</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_root_url</span><span class='op'>=</span><span class='string'>&quot;http://sfackler.github.io/rust-phf/doc&quot;</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_root_url</span><span class='op'>=</span><span class='string'>&quot;http://sfackler.github.io/rust-phf/doc/v0.7.4&quot;</span>)]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>phf_shared</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>phf_generator</span>;
 
@@ -642,6 +644,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

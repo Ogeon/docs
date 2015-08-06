@@ -41,9 +41,11 @@
     </nav>
 
     <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>filter</a>::<wbr><a class='trait' href=''>ContextFilter</a><wbr></span><span class='out-of-band'><span id='render-detail'>
-            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-6476' href='../../src/rustful/filter.rs.html#32-35'>[src]</a></span></h1>
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>filter</a>::<wbr><a class='trait' href=''>ContextFilter</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-6476' class='srclink' href='../../src/rustful/filter.rs.html#32-35' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait ContextFilter: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> {
     fn <a href='#tymethod.modify' class='fnname'>modify</a>(&amp;self, context: <a class='struct' href='../../rustful/filter/struct.FilterContext.html' title='rustful::filter::FilterContext'>FilterContext</a>, request_context: &amp;mut <a class='struct' href='../../rustful/context/struct.Context.html' title='rustful::context::Context'>Context</a>) -&gt; <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a>;
 }</pre><div class='docblock'><p>A trait for context filters.</p>
@@ -52,7 +54,7 @@
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.modify' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.modify' class='fnname'>modify</a>(&amp;self, context: <a class='struct' href='../../rustful/filter/struct.FilterContext.html' title='rustful::filter::FilterContext'>FilterContext</a>, request_context: &amp;mut <a class='struct' href='../../rustful/context/struct.Context.html' title='rustful::context::Context'>Context</a>) -&gt; <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></h3><div class='docblock'><p>Try to modify the handler <code>Context</code>.</p>
+        <h3 id='tymethod.modify' class='method stab '><code>fn <a href='#tymethod.modify' class='fnname'>modify</a>(&amp;self, context: <a class='struct' href='../../rustful/filter/struct.FilterContext.html' title='rustful::filter::FilterContext'>FilterContext</a>, request_context: &amp;mut <a class='struct' href='../../rustful/context/struct.Context.html' title='rustful::context::Context'>Context</a>) -&gt; <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></h3><div class='docblock'><p>Try to modify the handler <code>Context</code>.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
@@ -90,6 +92,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

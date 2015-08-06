@@ -41,9 +41,11 @@
     </nav>
 
     <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a>::<wbr><a class='struct' href=''>Context</a><wbr></span><span class='out-of-band'><span id='render-detail'>
-            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-2965' href='../../src/rustful/context.rs.html#158-194'>[src]</a></span></h1>
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a>::<wbr><a class='struct' href=''>Context</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-2965' class='srclink' href='../../src/rustful/context.rs.html#158-194' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Context&lt;'a, 'b, 's&gt; {
     pub headers: <a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a>,
     pub http_version: <a class='enum' href='../../rustful/enum.HttpVersion.html' title='rustful::HttpVersion'>HttpVersion</a>,
@@ -59,18 +61,30 @@
     pub body: <a class='struct' href='../../rustful/context/struct.BodyReader.html' title='rustful::context::BodyReader'>BodyReader</a>&lt;'a, 'b&gt;,
 }</pre><div class='docblock'><p>A container for handler input, like request data and utilities.</p>
 </div><h2 class='fields'>Fields</h2>
-<table><tr><td id='structfield.headers'><a class='stability Unmarked' title='No stability level'></a><code>headers</code></td><td><div class='docblock'><p>Headers from the HTTP request.</p>
-</div></td></tr><tr><td id='structfield.http_version'><a class='stability Unmarked' title='No stability level'></a><code>http_version</code></td><td><div class='docblock'><p>The HTTP version used in the request.</p>
-</div></td></tr><tr><td id='structfield.address'><a class='stability Unmarked' title='No stability level'></a><code>address</code></td><td><div class='docblock'><p>The client address</p>
-</div></td></tr><tr><td id='structfield.method'><a class='stability Unmarked' title='No stability level'></a><code>method</code></td><td><div class='docblock'><p>The HTTP method.</p>
-</div></td></tr><tr><td id='structfield.path'><a class='stability Unmarked' title='No stability level'></a><code>path</code></td><td><div class='docblock'><p>The requested path.</p>
-</div></td></tr><tr><td id='structfield.hypermedia'><a class='stability Unmarked' title='No stability level'></a><code>hypermedia</code></td><td><div class='docblock'><p>Hypermedia from the current endpoint.</p>
-</div></td></tr><tr><td id='structfield.variables'><a class='stability Unmarked' title='No stability level'></a><code>variables</code></td><td><div class='docblock'><p>Route variables.</p>
-</div></td></tr><tr><td id='structfield.query'><a class='stability Unmarked' title='No stability level'></a><code>query</code></td><td><div class='docblock'><p>Query variables from the path.</p>
-</div></td></tr><tr><td id='structfield.fragment'><a class='stability Unmarked' title='No stability level'></a><code>fragment</code></td><td><div class='docblock'><p>The fragment part of the URL (after #), if provided.</p>
-</div></td></tr><tr><td id='structfield.log'><a class='stability Unmarked' title='No stability level'></a><code>log</code></td><td><div class='docblock'><p>Log for notes, errors and warnings.</p>
-</div></td></tr><tr><td id='structfield.global'><a class='stability Unmarked' title='No stability level'></a><code>global</code></td><td><div class='docblock'><p>Globally accessible data.</p>
-</div></td></tr><tr><td id='structfield.body'><a class='stability Unmarked' title='No stability level'></a><code>body</code></td><td><div class='docblock'><p>A reader for the request body.</p>
+<table><tr class='stab '>
+                                  <td id='structfield.headers'><code>headers</code></td><td><div class='docblock'><p>Headers from the HTTP request.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.http_version'><code>http_version</code></td><td><div class='docblock'><p>The HTTP version used in the request.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.address'><code>address</code></td><td><div class='docblock'><p>The client address</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.method'><code>method</code></td><td><div class='docblock'><p>The HTTP method.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.path'><code>path</code></td><td><div class='docblock'><p>The requested path.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.hypermedia'><code>hypermedia</code></td><td><div class='docblock'><p>Hypermedia from the current endpoint.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.variables'><code>variables</code></td><td><div class='docblock'><p>Route variables.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.query'><code>query</code></td><td><div class='docblock'><p>Query variables from the path.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.fragment'><code>fragment</code></td><td><div class='docblock'><p>The fragment part of the URL (after #), if provided.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.log'><code>log</code></td><td><div class='docblock'><p>Log for notes, errors and warnings.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.global'><code>global</code></td><td><div class='docblock'><p>Globally accessible data.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.body'><code>body</code></td><td><div class='docblock'><p>A reader for the request body.</p>
 </div></td></tr></table></section>
     <section id='search' class="content hidden"></section>
 
@@ -103,6 +117,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

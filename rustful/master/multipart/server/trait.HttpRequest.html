@@ -41,16 +41,18 @@
     </nav>
 
     <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>multipart</a>::<wbr><a href='index.html'>server</a>::<wbr><a class='trait' href=''>HttpRequest</a><wbr></span><span class='out-of-band'><span id='render-detail'>
-            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-2665' href='../../src/multipart/server/mod.rs.html#245-252'>[src]</a></span></h1>
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>multipart</a>::<wbr><a href='index.html'>server</a>::<wbr><a class='trait' href=''>HttpRequest</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-2665' class='srclink' href='../../src/multipart/server/mod.rs.html#245-252' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait HttpRequest: <a class='trait' href='http://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a> {
     fn <a href='#tymethod.multipart_boundary' class='fnname'>multipart_boundary</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;;
 }</pre><div class='docblock'><p>A server-side HTTP request that may or may not be multipart.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.multipart_boundary' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.multipart_boundary' class='fnname'>multipart_boundary</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></h3><div class='docblock'><p>Get the boundary string of this request if it is a POST request
+        <h3 id='tymethod.multipart_boundary' class='method stab '><code>fn <a href='#tymethod.multipart_boundary' class='fnname'>multipart_boundary</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></h3><div class='docblock'><p>Get the boundary string of this request if it is a POST request
 with the <code>Content-Type</code> header set to <code>multipart/form-data</code>.</p>
 
 <p>The boundary string should be supplied as an extra value of the <code>Content-Type</code> header, e.g.
@@ -92,6 +94,10 @@ with the <code>Content-Type</code> header set to <code>multipart/form-data</code
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

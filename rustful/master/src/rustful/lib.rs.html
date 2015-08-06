@@ -340,14 +340,132 @@
 <span id="298">298</span>
 <span id="299">299</span>
 <span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
 </pre><pre class='rust '>
+<span class='doccomment'>//!A light HTTP framework with REST-like features. The main purpose of Rustful</span>
+<span class='doccomment'>//!is to create a simple, modular and non-intrusive foundation for HTTP</span>
+<span class='doccomment'>//!applications. It has a mainly stateless structure, which naturally allows</span>
+<span class='doccomment'>//!it to run both as one single server and as multiple instances in a cluster.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!A new server is created using the [`Server`][server] type, which contains</span>
+<span class='doccomment'>//!all the necessary settings as fields:</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!```no_run</span>
+<span class='doccomment'>//!#[macro_use]</span>
+<span class='doccomment'>//!extern crate rustful;</span>
+<span class='doccomment'>//!use rustful::{Server, Handler, Context, Response, TreeRouter};</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!struct Greeting(&amp;&#39;static str);</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!impl Handler for Greeting {</span>
+<span class='doccomment'>//!    fn handle_request(&amp;self, context: Context, response: Response) {</span>
+<span class='doccomment'>//!        //Check if the client accessed /hello/:name or /good_bye/:name</span>
+<span class='doccomment'>//!        if let Some(name) = context.variables.get(&quot;name&quot;) {</span>
+<span class='doccomment'>//!            //Use the value of :name</span>
+<span class='doccomment'>//!            response.send(format!(&quot;{}, {}&quot;, self.0, name));</span>
+<span class='doccomment'>//!        } else {</span>
+<span class='doccomment'>//!            response.send(self.0)</span>
+<span class='doccomment'>//!        }</span>
+<span class='doccomment'>//!    }</span>
+<span class='doccomment'>//!}</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!# fn main() {</span>
+<span class='doccomment'>//!let my_router = insert_routes!{</span>
+<span class='doccomment'>//!    //Create a new TreeRouter</span>
+<span class='doccomment'>//!    TreeRouter::new() =&gt; {</span>
+<span class='doccomment'>//!        //Receive GET requests to /hello and /hello/:name</span>
+<span class='doccomment'>//!        &quot;hello&quot; =&gt; {</span>
+<span class='doccomment'>//!            Get: Greeting(&quot;hello&quot;),</span>
+<span class='doccomment'>//!            &quot;:name&quot; =&gt; Get: Greeting(&quot;hello&quot;)</span>
+<span class='doccomment'>//!        },</span>
+<span class='doccomment'>//!        //Receive GET requests to /good_bye and /good_bye/:name</span>
+<span class='doccomment'>//!        &quot;good_bye&quot; =&gt; {</span>
+<span class='doccomment'>//!            Get: Greeting(&quot;good bye&quot;),</span>
+<span class='doccomment'>//!            &quot;:name&quot; =&gt; Get: Greeting(&quot;good bye&quot;)</span>
+<span class='doccomment'>//!        }</span>
+<span class='doccomment'>//!    }</span>
+<span class='doccomment'>//!};</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!Server {</span>
+<span class='doccomment'>//!    //Use a closure to handle requests.</span>
+<span class='doccomment'>//!    handlers: my_router,</span>
+<span class='doccomment'>//!    //Set the listening port to `8080`.</span>
+<span class='doccomment'>//!    host: 8080.into(),</span>
+<span class='doccomment'>//!    //Fill out everything else with default values.</span>
+<span class='doccomment'>//!    ..Server::default()</span>
+<span class='doccomment'>//!}.run();</span>
+<span class='doccomment'>//!# }</span>
+<span class='doccomment'>//!```</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//![server]: server/struct.Server.html</span>
+
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_name</span> <span class='op'>=</span> <span class='string'>&quot;rustful&quot;</span>]</span>
 
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_type</span> <span class='op'>=</span> <span class='string'>&quot;rlib&quot;</span>]</span>
 
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_root_url</span> <span class='op'>=</span> <span class='string'>&quot;http://ogeon.github.io/docs/rustful/master/&quot;</span>)]</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>test</span>, <span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;benchmark&quot;</span>, <span class='ident'>feature</span>(<span class='ident'>test</span>)))]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>all</span>(<span class='ident'>test</span>, <span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;benchmark&quot;</span>), <span class='ident'>feature</span>(<span class='ident'>test</span>))]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;strict&quot;</span>, <span class='ident'>deny</span>(<span class='ident'>missing_docs</span>))]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;strict&quot;</span>, <span class='ident'>deny</span>(<span class='ident'>warnings</span>))]</span>
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;benchmark&quot;</span>)]</span>
@@ -674,6 +792,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

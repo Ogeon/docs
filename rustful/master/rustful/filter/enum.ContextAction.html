@@ -41,20 +41,24 @@
     </nav>
 
     <section id='main' class="content enum">
-<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>filter</a>::<wbr><a class='enum' href=''>ContextAction</a><wbr></span><span class='out-of-band'><span id='render-detail'>
-            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-6493' href='../../src/rustful/filter.rs.html#39-45'>[src]</a></span></h1>
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>filter</a>::<wbr><a class='enum' href=''>ContextAction</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-6493' class='srclink' href='../../src/rustful/filter.rs.html#39-45' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum ContextAction {
     Next,
     Abort(<a class='enum' href='../../rustful/enum.StatusCode.html' title='rustful::StatusCode'>StatusCode</a>),
 }</pre><div class='docblock'><p>The result from a context filter.</p>
 </div><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.Next'><a class='stability Unmarked' title='No stability level'></a><code>Next</code></td><td><div class='docblock'><p>Continue to the next filter in the stack.</p>
-</div></td></tr><tr><td id='variant.Abort'><a class='stability Unmarked' title='No stability level'></a><code>Abort</code></td><td><div class='docblock'><p>Abort and send HTTP status.</p>
-</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a&gt; <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></h3><div class='impl-items'><h4 id='method.next' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.next' class='fnname'>next</a>() -&gt; <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></h4>
-<h4 id='method.abort' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.abort' class='fnname'>abort</a>(status: <a class='enum' href='../../rustful/enum.StatusCode.html' title='rustful::StatusCode'>StatusCode</a>) -&gt; <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></h4>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><a class='stability Stable' title='Stable'></a><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></h4>
-<h4 id='method.clone_from' class='method'><a class='stability Stable' title='Stable'></a><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+<table><tr><td id='variant.Next'><code>Next</code></td><td><div class='docblock'><p>Continue to the next filter in the stack.</p>
+</div></td></tr><tr><td id='variant.Abort'><code>Abort</code></td><td><div class='docblock'><p>Abort and set HTTP status.</p>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></h3><div class='impl-items'><h4 id='method.next' class='method'><code>fn <a href='#method.next' class='fnname'>next</a>() -&gt; <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></h4>
+<div class='docblock'><p>Continue to the next filter in the stack.</p>
+</div><h4 id='method.abort' class='method'><code>fn <a href='#method.abort' class='fnname'>abort</a>(status: <a class='enum' href='../../rustful/enum.StatusCode.html' title='rustful::StatusCode'>StatusCode</a>) -&gt; <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></h4>
+<div class='docblock'><p>Abort and set HTTP status.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></h4>
+<h4 id='method.clone_from' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -87,6 +91,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

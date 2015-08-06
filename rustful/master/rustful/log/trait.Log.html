@@ -41,9 +41,11 @@
     </nav>
 
     <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>log</a>::<wbr><a class='trait' href=''>Log</a><wbr></span><span class='out-of-band'><span id='render-detail'>
-            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-6713' href='../../src/rustful/log.rs.html#10-36'>[src]</a></span></h1>
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>log</a>::<wbr><a class='trait' href=''>Log</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-6713' class='srclink' href='../../src/rustful/log.rs.html#11-37' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Log: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> {
     fn <a href='#tymethod.try_note' class='fnname'>try_note</a>(&amp;self, message: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../../rustful/log/type.Result.html' title='rustful::log::Result'>Result</a>;
     fn <a href='#tymethod.try_warning' class='fnname'>try_warning</a>(&amp;self, message: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../../rustful/log/type.Result.html' title='rustful::log::Result'>Result</a>;
@@ -56,21 +58,21 @@
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.try_note' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.try_note' class='fnname'>try_note</a>(&amp;self, message: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../../rustful/log/type.Result.html' title='rustful::log::Result'>Result</a></code></h3><div class='docblock'><p>Print a note to the log or return eventual errors.</p>
-</div><h3 id='tymethod.try_warning' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.try_warning' class='fnname'>try_warning</a>(&amp;self, message: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../../rustful/log/type.Result.html' title='rustful::log::Result'>Result</a></code></h3><div class='docblock'><p>Print a warning to the log or return eventual errors.</p>
-</div><h3 id='tymethod.try_error' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.try_error' class='fnname'>try_error</a>(&amp;self, message: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../../rustful/log/type.Result.html' title='rustful::log::Result'>Result</a></code></h3><div class='docblock'><p>Print an error to the log or return eventual errors.</p>
+        <h3 id='tymethod.try_note' class='method stab '><code>fn <a href='#tymethod.try_note' class='fnname'>try_note</a>(&amp;self, message: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../../rustful/log/type.Result.html' title='rustful::log::Result'>Result</a></code></h3><div class='docblock'><p>Print a note to the log or return eventual errors.</p>
+</div><h3 id='tymethod.try_warning' class='method stab '><code>fn <a href='#tymethod.try_warning' class='fnname'>try_warning</a>(&amp;self, message: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../../rustful/log/type.Result.html' title='rustful::log::Result'>Result</a></code></h3><div class='docblock'><p>Print a warning to the log or return eventual errors.</p>
+</div><h3 id='tymethod.try_error' class='method stab '><code>fn <a href='#tymethod.try_error' class='fnname'>try_error</a>(&amp;self, message: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../../rustful/log/type.Result.html' title='rustful::log::Result'>Result</a></code></h3><div class='docblock'><p>Print an error to the log or return eventual errors.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.note' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.note' class='fnname'>note</a>(&amp;self, message: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>)</code></h3><div class='docblock'><p>Print a note to the log and ignore any errors.</p>
-</div><h3 id='method.warning' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.warning' class='fnname'>warning</a>(&amp;self, message: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>)</code></h3><div class='docblock'><p>Print a warning to the log and ignore any errors.</p>
-</div><h3 id='method.error' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#method.error' class='fnname'>error</a>(&amp;self, message: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>)</code></h3><div class='docblock'><p>Print an error to the log and ignore any errors.</p>
+        <h3 id='method.note' class='method stab '><code>fn <a href='#method.note' class='fnname'>note</a>(&amp;self, message: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>)</code></h3><div class='docblock'><p>Print a note to the log and ignore any errors.</p>
+</div><h3 id='method.warning' class='method stab '><code>fn <a href='#method.warning' class='fnname'>warning</a>(&amp;self, message: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>)</code></h3><div class='docblock'><p>Print a warning to the log and ignore any errors.</p>
+</div><h3 id='method.error' class='method stab '><code>fn <a href='#method.error' class='fnname'>error</a>(&amp;self, message: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>)</code></h3><div class='docblock'><p>Print an error to the log and ignore any errors.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../rustful/log/trait.Log.html' title='rustful::log::Log'>Log</a> for <a class='struct' href='../../rustful/log/struct.Quiet.html' title='rustful::log::Quiet'>Quiet</a></code></li>
-<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../rustful/log/trait.Log.html' title='rustful::log::Log'>Log</a> for <a class='struct' href='../../rustful/log/struct.StdOut.html' title='rustful::log::StdOut'>StdOut</a></code></li>
-<li><a class='stability Unmarked' title='No stability level'></a><code>impl <a class='trait' href='../../rustful/log/trait.Log.html' title='rustful::log::Log'>Log</a> for <a class='struct' href='../../rustful/log/struct.File.html' title='rustful::log::File'>File</a></code></li>
+    <li><code>impl <a class='trait' href='../../rustful/log/trait.Log.html' title='rustful::log::Log'>Log</a> for <a class='struct' href='../../rustful/log/struct.Quiet.html' title='rustful::log::Quiet'>Quiet</a></code></li>
+<li><code>impl <a class='trait' href='../../rustful/log/trait.Log.html' title='rustful::log::Log'>Log</a> for <a class='struct' href='../../rustful/log/struct.StdOut.html' title='rustful::log::StdOut'>StdOut</a></code></li>
+<li><code>impl <a class='trait' href='../../rustful/log/trait.Log.html' title='rustful::log::Log'>Log</a> for <a class='struct' href='../../rustful/log/struct.File.html' title='rustful::log::File'>File</a></code></li>
 </ul><script type="text/javascript" async
                               src="../../implementors/rustful/log/trait.Log.js">
                       </script></section>
@@ -105,6 +107,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

@@ -41,26 +41,68 @@
     </nav>
 
     <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a>::<wbr><a class='trait' href=''>ExtJsonBody</a><wbr></span><span class='out-of-band'><span id='render-detail'>
-            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-3215' href='../../src/rustful/context.rs.html#336-342'>[src]</a></span></h1>
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a>::<wbr><a class='trait' href=''>ExtJsonBody</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-3215' class='srclink' href='../../src/rustful/context.rs.html#330-380' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait ExtJsonBody {
     fn <a href='#tymethod.read_json_body' class='fnname'>read_json_body</a>(&amp;mut self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../rustc_serialize/json/enum.Json.html' title='rustc_serialize::json::Json'>Json</a>, <a class='type' href='../../rustc_serialize/json/type.BuilderError.html' title='rustc_serialize::json::BuilderError'>BuilderError</a>&gt;;
     fn <a href='#tymethod.decode_json_body' class='fnname'>decode_json_body</a>&lt;T: <a class='trait' href='../../rustc_serialize/serialize/trait.Decodable.html' title='rustc_serialize::serialize::Decodable'>Decodable</a>&gt;(&amp;mut self) -&gt; <a class='type' href='../../rustc_serialize/json/type.DecodeResult.html' title='rustc_serialize::json::DecodeResult'>DecodeResult</a>&lt;T&gt;;
 }</pre><div class='docblock'><p><code>BodyReader</code> extension for reading and parsing a JSON body.</p>
 
 <p>It is available by default and can be toggled using the <code>rustc_json_body</code>
-feature. Examples and more information can be found in <a href="struct.BodyReader.html">the documentation
-for <code>BodyReader</code></a>.</p>
+feature.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.read_json_body' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.read_json_body' class='fnname'>read_json_body</a>(&amp;mut self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../rustc_serialize/json/enum.Json.html' title='rustc_serialize::json::Json'>Json</a>, <a class='type' href='../../rustc_serialize/json/type.BuilderError.html' title='rustc_serialize::json::BuilderError'>BuilderError</a>&gt;</code></h3><div class='docblock'><p>Read the request body into a JSON structure.</p>
-</div><h3 id='tymethod.decode_json_body' class='method'><a class='stability Unmarked' title='No stability level'></a><code>fn <a href='#tymethod.decode_json_body' class='fnname'>decode_json_body</a>&lt;T: <a class='trait' href='../../rustc_serialize/serialize/trait.Decodable.html' title='rustc_serialize::serialize::Decodable'>Decodable</a>&gt;(&amp;mut self) -&gt; <a class='type' href='../../rustc_serialize/json/type.DecodeResult.html' title='rustc_serialize::json::DecodeResult'>DecodeResult</a>&lt;T&gt;</code></h3><div class='docblock'><p>Parse and decode the request body as some type <code>T</code>.</p>
+        <h3 id='tymethod.read_json_body' class='method stab '><code>fn <a href='#tymethod.read_json_body' class='fnname'>read_json_body</a>(&amp;mut self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../rustc_serialize/json/enum.Json.html' title='rustc_serialize::json::Json'>Json</a>, <a class='type' href='../../rustc_serialize/json/type.BuilderError.html' title='rustc_serialize::json::BuilderError'>BuilderError</a>&gt;</code></h3><div class='docblock'><p>Read the request body into a generic JSON structure. This structure can
+then be navigated and parsed freely.</p>
+
+<p>A simplified example of how to parse <code>{ &quot;a&quot;: number, &quot;b&quot;: number }</code>:</p>
+<pre id='rust-example-rendered' class='rust '>
+<span class='kw'>use</span> <span class='ident'>rustful</span>::{<span class='ident'>Context</span>, <span class='ident'>Response</span>};
+<span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>context</span>::<span class='ident'>ExtJsonBody</span>;
+
+<span class='kw'>fn</span> <span class='ident'>my_handler</span>(<span class='kw-2'>mut</span> <span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span>) {
+    <span class='comment'>//Parse the request body as JSON</span>
+    <span class='kw'>let</span> <span class='ident'>json</span> <span class='op'>=</span> <span class='ident'>context</span>.<span class='ident'>body</span>.<span class='ident'>read_json_body</span>().<span class='ident'>unwrap</span>();
+
+    <span class='comment'>//Find &quot;a&quot; and &quot;b&quot; in the root object and assume that they are numbers</span>
+    <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>json</span>.<span class='ident'>find</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>number</span><span class='op'>|</span> <span class='ident'>number</span>.<span class='ident'>as_f64</span>()).<span class='ident'>unwrap</span>();
+    <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>json</span>.<span class='ident'>find</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>number</span><span class='op'>|</span> <span class='ident'>number</span>.<span class='ident'>as_f64</span>()).<span class='ident'>unwrap</span>();
+
+    <span class='ident'>response</span>.<span class='ident'>send</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{} + {} = {}&quot;</span>, <span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>a</span> <span class='op'>+</span> <span class='ident'>b</span>));
+}
+</pre>
+</div><h3 id='tymethod.decode_json_body' class='method stab '><code>fn <a href='#tymethod.decode_json_body' class='fnname'>decode_json_body</a>&lt;T: <a class='trait' href='../../rustc_serialize/serialize/trait.Decodable.html' title='rustc_serialize::serialize::Decodable'>Decodable</a>&gt;(&amp;mut self) -&gt; <a class='type' href='../../rustc_serialize/json/type.DecodeResult.html' title='rustc_serialize::json::DecodeResult'>DecodeResult</a>&lt;T&gt;</code></h3><div class='docblock'><p>Read and decode a request body as a type <code>T</code>. The target type must
+implement <code>rustc_serialize::Decodable</code>.</p>
+
+<p>A simplified example of how to parse <code>{ &quot;a&quot;: number, &quot;b&quot;: number }</code>:</p>
+<pre id='rust-example-rendered' class='rust '>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustc_serialize</span>;
+
+<span class='kw'>use</span> <span class='ident'>rustful</span>::{<span class='ident'>Context</span>, <span class='ident'>Response</span>};
+<span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>context</span>::<span class='ident'>ExtJsonBody</span>;
+
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>RustcDecodable</span>)]</span>
+<span class='kw'>struct</span> <span class='ident'>Foo</span> {
+    <span class='ident'>a</span>: <span class='ident'>f64</span>,
+    <span class='ident'>b</span>: <span class='ident'>f64</span>
+}
+
+<span class='kw'>fn</span> <span class='ident'>my_handler</span>(<span class='kw-2'>mut</span> <span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span>) {
+    <span class='comment'>//Decode a JSON formatted request body into Foo</span>
+    <span class='kw'>let</span> <span class='ident'>foo</span>: <span class='ident'>Foo</span> <span class='op'>=</span> <span class='ident'>context</span>.<span class='ident'>body</span>.<span class='ident'>decode_json_body</span>().<span class='ident'>unwrap</span>();
+
+    <span class='ident'>response</span>.<span class='ident'>send</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{} + {} = {}&quot;</span>, <span class='ident'>foo</span>.<span class='ident'>a</span>, <span class='ident'>foo</span>.<span class='ident'>b</span>, <span class='ident'>foo</span>.<span class='ident'>a</span> <span class='op'>+</span> <span class='ident'>foo</span>.<span class='ident'>b</span>));
+}
+</pre>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><a class='stability Unmarked' title='No stability level'></a><code>impl&lt;'a, 'b&gt; <a class='trait' href='../../rustful/context/trait.ExtJsonBody.html' title='rustful::context::ExtJsonBody'>ExtJsonBody</a> for <a class='struct' href='../../rustful/context/struct.BodyReader.html' title='rustful::context::BodyReader'>BodyReader</a>&lt;'a, 'b&gt;</code></li>
+    <li><code>impl&lt;'a, 'b&gt; <a class='trait' href='../../rustful/context/trait.ExtJsonBody.html' title='rustful::context::ExtJsonBody'>ExtJsonBody</a> for <a class='struct' href='../../rustful/context/struct.BodyReader.html' title='rustful::context::BodyReader'>BodyReader</a>&lt;'a, 'b&gt;</code></li>
 </ul><script type="text/javascript" async
                               src="../../implementors/rustful/context/trait.ExtJsonBody.js">
                       </script></section>
@@ -95,6 +137,10 @@ for <code>BodyReader</code></a>.</p>
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

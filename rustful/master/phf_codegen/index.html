@@ -41,9 +41,11 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>phf_codegen</a><wbr></span><span class='out-of-band'><a href='stability.html'>[stability]</a> <span id='render-detail'>
-            <a id="collapse-all" href="#">[-]</a>&nbsp;<a id="expand-all" href="#">[+]</a>
-        </span><a id='src-0' href='../src/phf_codegen/lib.rs.html#1-284'>[src]</a></span></h1>
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>phf_codegen</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-0' class='srclink' href='../src/phf_codegen/lib.rs.html#1-285' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>A set of builders to generate Rust source for PHF data structures at
 compile time.</p>
 
@@ -57,12 +59,13 @@ time.</p>
 <pre id='rust-example-rendered' class='rust '>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>phf_codegen</span>;
 
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>env</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fs</span>::<span class='ident'>File</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='ident'>BufWriter</span>, <span class='ident'>Write</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
 
 <span class='kw'>fn</span> <span class='ident'>main</span>() {
-    <span class='kw'>let</span> <span class='ident'>path</span> <span class='op'>=</span> <span class='ident'>Path</span>::<span class='ident'>new</span>(<span class='macro'>env</span><span class='macro'>!</span>(<span class='string'>&quot;OUT_DIR&quot;</span>)).<span class='ident'>join</span>(<span class='string'>&quot;codegen.rs&quot;</span>);
+    <span class='kw'>let</span> <span class='ident'>path</span> <span class='op'>=</span> <span class='ident'>Path</span>::<span class='ident'>new</span>(<span class='kw-2'>&amp;</span><span class='ident'>env</span>::<span class='ident'>var</span>(<span class='string'>&quot;OUT_DIR&quot;</span>).<span class='ident'>unwrap</span>()).<span class='ident'>join</span>(<span class='string'>&quot;codegen.rs&quot;</span>);
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>file</span> <span class='op'>=</span> <span class='ident'>BufWriter</span>::<span class='ident'>new</span>(<span class='ident'>File</span>::<span class='ident'>create</span>(<span class='kw-2'>&amp;</span><span class='ident'>path</span>).<span class='ident'>unwrap</span>());
 
     <span class='macro'>write</span><span class='macro'>!</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>file</span>, <span class='string'>&quot;static KEYWORDS: phf::Map&lt;&amp;&#39;static str, Keyword&gt; = &quot;</span>).<span class='ident'>unwrap</span>();
@@ -120,32 +123,40 @@ looping over the entries or making each call a separate statement:</p>
 </pre>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Map.html'
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Map.html'
                                title='phf_codegen::Map'>Map</a></td>
-                        <td class='docblock short'><p>A builder for the <code>phf::Map</code> type.</p>
-</td>
+                        <td class='docblock short'>
+                             <p>A builder for the <code>phf::Map</code> type.</p>
+
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.OrderedMap.html'
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.OrderedMap.html'
                                title='phf_codegen::OrderedMap'>OrderedMap</a></td>
-                        <td class='docblock short'><p>A builder for the <code>phf::OrderedMap</code> type.</p>
-</td>
+                        <td class='docblock short'>
+                             <p>A builder for the <code>phf::OrderedMap</code> type.</p>
+
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.OrderedSet.html'
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.OrderedSet.html'
                                title='phf_codegen::OrderedSet'>OrderedSet</a></td>
-                        <td class='docblock short'><p>A builder for the <code>phf::OrderedSet</code> type.</p>
-</td>
+                        <td class='docblock short'>
+                             <p>A builder for the <code>phf::OrderedSet</code> type.</p>
+
+                        </td>
                     </tr>
                 
-                    <tr>
-                        <td><a class='stability Unmarked' title='No stability level'></a><a class='struct' href='struct.Set.html'
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Set.html'
                                title='phf_codegen::Set'>Set</a></td>
-                        <td class='docblock short'><p>A builder for the <code>phf::Set</code> type.</p>
-</td>
+                        <td class='docblock short'>
+                             <p>A builder for the <code>phf::Set</code> type.</p>
+
+                        </td>
                     </tr>
                 </table></section>
     <section id='search' class="content hidden"></section>
@@ -179,6 +190,10 @@ looping over the entries or making each call a separate statement:</p>
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>
