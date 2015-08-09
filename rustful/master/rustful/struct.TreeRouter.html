@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1294' class='srclink' href='../src/rustful/router/tree_router.rs.html#49-57' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-1323' class='srclink' href='../src/rustful/router/tree_router.rs.html#49-57' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct TreeRouter&lt;T&gt; {
     pub find_hyperlinks: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>,
     // some fields omitted
@@ -56,14 +56,14 @@ and contain wildcards (<code>&quot;path/*/item/*&quot;</code>). Variables (start
 will match whatever word the request path contains at that point and it
 will be sent as a value to the item. Wildcards (a single <code>*</code>) will consume
 the segments until the rest of the path gives a match.</p>
-<pre id='rust-example-rendered' class='rust '>
+<pre class='rust rust-example-rendered'>
 <span class='ident'>pattern</span> <span class='op'>=</span> <span class='string'>&quot;a/*/b&quot;</span>
 <span class='string'>&quot;a/c/b&quot;</span> <span class='op'>-&gt;</span> <span class='kw'>match</span>
 <span class='string'>&quot;a/c/d/b&quot;</span> <span class='op'>-&gt;</span> <span class='kw'>match</span>
 <span class='string'>&quot;a/b&quot;</span> <span class='op'>-&gt;</span> <span class='ident'>no</span> <span class='kw'>match</span>
 <span class='string'>&quot;a/c/b/d&quot;</span> <span class='op'>-&gt;</span> <span class='ident'>no</span> <span class='kw'>match</span>
 </pre>
-<pre id='rust-example-rendered' class='rust '>
+<pre class='rust rust-example-rendered'>
 <span class='ident'>pattern</span> <span class='op'>=</span> <span class='string'>&quot;a/b/*&quot;</span>
 <span class='string'>&quot;a/b/c&quot;</span> <span class='op'>-&gt;</span> <span class='kw'>match</span>
 <span class='string'>&quot;a/b/c/d&quot;</span> <span class='op'>-&gt;</span> <span class='kw'>match</span>

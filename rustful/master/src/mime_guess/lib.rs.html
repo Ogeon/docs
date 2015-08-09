@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/mime_guess-1.1.1/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/mime_guess-1.1.1/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -206,7 +206,7 @@
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>test_are_extensions_sorted</span>() {
-        <span class='comment'>// To make binary search work, extensions need to be sorted in ascending order.</span>
+        <span class='comment'>// To make binary search work, extensions need to be sorted in ascending order.</span>
     	<span class='kw'>for</span> (<span class='ident'>curr</span>, <span class='ident'>next</span>) <span class='kw'>in</span> <span class='ident'>MIME_TYPES</span>.<span class='ident'>iter</span>().<span class='ident'>zip</span>(<span class='ident'>MIME_TYPES</span>.<span class='ident'>iter</span>().<span class='ident'>skip</span>(<span class='number'>1</span>)) {
     		<span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>curr</span> <span class='op'>&lt;=</span> <span class='ident'>next</span>, <span class='string'>&quot;MIME type mappings are not sorted! Failed assert: {:?} &lt;= {:?}&quot;</span>, <span class='ident'>curr</span>, <span class='ident'>next</span>);
     	}

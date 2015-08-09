@@ -634,7 +634,6 @@
 <span class='doccomment'>//![log]: ../log/index.html</span>
 <span class='doccomment'>//![body_reader]: struct.BodyReader.html</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='self'>self</span>, <span class='ident'>Read</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::<span class='ident'>SocketAddr</span>;
 
@@ -654,6 +653,7 @@
 
 <span class='kw'>use</span> <span class='ident'>HttpVersion</span>;
 <span class='kw'>use</span> <span class='ident'>Method</span>;
+<span class='kw'>use</span> <span class='ident'>Parameters</span>;
 <span class='kw'>use</span> <span class='ident'>header</span>::<span class='ident'>Headers</span>;
 <span class='kw'>use</span> <span class='ident'>log</span>::<span class='ident'>Log</span>;
 
@@ -680,10 +680,10 @@
     <span class='kw'>pub</span> <span class='ident'>hypermedia</span>: <span class='ident'>Hypermedia</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span><span class='op'>&gt;</span>,
 
     <span class='doccomment'>///Route variables.</span>
-    <span class='kw'>pub</span> <span class='ident'>variables</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>,
+    <span class='kw'>pub</span> <span class='ident'>variables</span>: <span class='ident'>Parameters</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>,
 
     <span class='doccomment'>///Query variables from the path.</span>
-    <span class='kw'>pub</span> <span class='ident'>query</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>,
+    <span class='kw'>pub</span> <span class='ident'>query</span>: <span class='ident'>Parameters</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;</span>,
 
     <span class='doccomment'>///The fragment part of the URL (after #), if provided.</span>
     <span class='kw'>pub</span> <span class='ident'>fragment</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
@@ -815,15 +815,15 @@
     <span class='doccomment'>///    response.send(format!(&quot;{} + {} = {}&quot;, a, b, a + b));</span>
     <span class='doccomment'>///}</span>
     <span class='doccomment'>///```</span>
-    <span class='kw'>fn</span> <span class='ident'>read_query_body</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;&gt;</span>;
+    <span class='kw'>fn</span> <span class='ident'>read_query_body</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Parameters</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;&gt;</span>;
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>ExtQueryBody</span> <span class='kw'>for</span> <span class='ident'>BodyReader</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>read_query_body</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>read_query_body</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Parameters</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>String</span><span class='op'>&gt;&gt;</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>buf</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
         <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>read_to_end</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>buf</span>));
-        <span class='prelude-val'>Ok</span>(<span class='ident'>utils</span>::<span class='ident'>parse_parameters</span>(<span class='kw-2'>&amp;</span><span class='ident'>buf</span>))
+        <span class='prelude-val'>Ok</span>(<span class='ident'>utils</span>::<span class='ident'>parse_parameters</span>(<span class='kw-2'>&amp;</span><span class='ident'>buf</span>).<span class='ident'>into</span>())
     }
 }
 

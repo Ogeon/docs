@@ -45,14 +45,14 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1118' class='srclink' href='../../src/rustful/router/mod.rs.html#1-227' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-1121' class='srclink' href='../../src/rustful/router/mod.rs.html#1-227' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Routers stores request handlers, using an HTTP method and a path as keys.</p>
 
 <p>Rustful provides a tree structured all-round router called <code>TreeRouter</code>,
 but any other type of router can be used, as long as it implements the
 <code>Router</code> trait. This will also make it possible to initialize it using the
 <a href="../macro.insert_routes!.html"><code>insert_routes!</code></a> macro:</p>
-<pre id='rust-example-rendered' class='rust '>
+<pre class='rust rust-example-rendered'>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
 <span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>TreeRouter</span>;
@@ -80,7 +80,7 @@ multiple times. This can be useful to lower the risk of typing errors,
 among other things.</p>
 
 <p>Routes may also be added using the insert method, like this:</p>
-<pre id='rust-example-rendered' class='rust '>
+<pre class='rust rust-example-rendered'>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
 <span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>Method</span>::<span class='ident'>Get</span>;
 <span class='kw'>use</span> <span class='ident'>rustful</span>::{<span class='ident'>Router</span>, <span class='ident'>TreeRouter</span>};

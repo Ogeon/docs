@@ -450,6 +450,7 @@
 <span id="408">408</span>
 <span id="409">409</span>
 <span id="410">410</span>
+<span id="411">411</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Server configuration and instance.</span>
 
@@ -487,6 +488,7 @@
 <span class='kw'>use</span> <span class='ident'>Host</span>;
 <span class='kw'>use</span> <span class='ident'>Global</span>;
 <span class='kw'>use</span> <span class='ident'>HttpResult</span>;
+<span class='kw'>use</span> <span class='ident'>Parameters</span>;
 
 <span class='kw'>use</span> <span class='ident'>utils</span>;
 
@@ -754,8 +756,8 @@
                     <span class='ident'>address</span>: <span class='ident'>request_addr</span>,
                     <span class='ident'>path</span>: <span class='ident'>lossy_utf8_percent_decode</span>(<span class='kw-2'>&amp;</span><span class='ident'>path</span>),
                     <span class='ident'>hypermedia</span>: <span class='ident'>Hypermedia</span>::<span class='ident'>new</span>(),
-                    <span class='ident'>variables</span>: <span class='ident'>HashMap</span>::<span class='ident'>new</span>(),
-                    <span class='ident'>query</span>: <span class='ident'>query</span>,
+                    <span class='ident'>variables</span>: <span class='ident'>Parameters</span>::<span class='ident'>new</span>(),
+                    <span class='ident'>query</span>: <span class='ident'>query</span>.<span class='ident'>into</span>(),
                     <span class='ident'>fragment</span>: <span class='ident'>fragment</span>,
                     <span class='ident'>log</span>: <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>log</span>,
                     <span class='ident'>global</span>: <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>global</span>,
@@ -774,7 +776,7 @@
                         } <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>handlers</span>.<span class='ident'>find</span>(<span class='kw-2'>&amp;</span><span class='ident'>context</span>.<span class='ident'>method</span>, <span class='kw-2'>&amp;</span><span class='ident'>context</span>.<span class='ident'>path</span>);
                         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>handler</span>) <span class='op'>=</span> <span class='ident'>handler</span>.<span class='ident'>or</span>(<span class='self'>self</span>.<span class='ident'>fallback_handler</span>.<span class='ident'>as_ref</span>()) {
                             <span class='ident'>context</span>.<span class='ident'>hypermedia</span> <span class='op'>=</span> <span class='ident'>hypermedia</span>;
-                            <span class='ident'>context</span>.<span class='ident'>variables</span> <span class='op'>=</span> <span class='ident'>variables</span>;
+                            <span class='ident'>context</span>.<span class='ident'>variables</span> <span class='op'>=</span> <span class='ident'>variables</span>.<span class='ident'>into</span>();
                             <span class='ident'>handler</span>.<span class='ident'>handle_request</span>(<span class='ident'>context</span>, <span class='ident'>response</span>);
                         } <span class='kw'>else</span> {
                             <span class='ident'>response</span>.<span class='ident'>set_status</span>(<span class='ident'>StatusCode</span>::<span class='ident'>NotFound</span>);

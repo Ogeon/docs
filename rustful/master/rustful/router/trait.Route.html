@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-2671' class='srclink' href='../../src/rustful/router/mod.rs.html#144-161' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-2700' class='srclink' href='../../src/rustful/router/mod.rs.html#144-161' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Route&lt;'a&gt; {
     type Segments: <a class='trait' href='http://doc.rust-lang.org/nightly/core/iter/trait.Iterator.html' title='core::iter::Iterator'>Iterator</a>&lt;Item=&amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;;
     fn <a href='#tymethod.segments' class='fnname'>segments</a>(&amp;'a self) -&gt; Self::Segments;
@@ -59,7 +59,7 @@
             <div class='methods'>
         <h3 id='tymethod.segments' class='method stab '><code>fn <a href='#tymethod.segments' class='fnname'>segments</a>(&amp;'a self) -&gt; Self::Segments</code></h3><div class='docblock'><p>Create a route segment iterator. The iterator is expected to return
 None for a root path (<code>/</code>).</p>
-<pre id='rust-example-rendered' class='rust '>
+<pre class='rust rust-example-rendered'>
 <span class='kw'>let</span> <span class='ident'>root</span> <span class='op'>=</span> <span class='string'>&quot;/&quot;</span>;
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>root</span>.<span class='ident'>segments</span>().<span class='ident'>next</span>(), <span class='prelude-val'>None</span>);
 
@@ -72,7 +72,6 @@ None for a root path (<code>/</code>).</p>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl&lt;'a&gt; <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; for <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></li>
 <li><code>impl&lt;'a, R: <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt;&gt; <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; for <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>[R]</a></code></li>
-<li><code>impl&lt;'a, 'b, T: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a>&lt;Target=R&gt; + 'b, R: <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; + ?<a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + 'b&gt; <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; for T</code></li>
 </ul><script type="text/javascript" async
                               src="../../implementors/rustful/router/trait.Route.js">
                       </script></section>
