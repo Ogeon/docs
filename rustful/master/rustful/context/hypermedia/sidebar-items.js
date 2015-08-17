@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["LinkSegment","A segment of a hyperlink path."]],"struct":[["Hypermedia","Hypermedia connected to an API endpoint."],["Link","A hyperlink."]]});

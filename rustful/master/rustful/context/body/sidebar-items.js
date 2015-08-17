@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["BodyReader","A reader for a request body."],["MultipartRequest","A specialized request representation for the multipart interface."]],"trait":[["ExtJsonBody","`BodyReader` extension for reading and parsing a JSON body."],["ExtQueryBody","`BodyReader` extension for reading and parsing a query string."]]});

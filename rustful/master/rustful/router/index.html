@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1121' class='srclink' href='../../src/rustful/router/mod.rs.html#1-227' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-1305' class='srclink' href='../../src/rustful/router/mod.rs.html#1-245' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Routers stores request handlers, using an HTTP method and a path as keys.</p>
 
 <p>Rustful provides a tree structured all-round router called <code>TreeRouter</code>,
@@ -87,13 +87,13 @@ among other things.</p>
 
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>router</span> <span class='op'>=</span> <span class='ident'>TreeRouter</span>::<span class='ident'>new</span>();
 
-<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/&quot;</span>, <span class='ident'>show_welcome</span>);
-<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/about&quot;</span>, <span class='ident'>about_us</span>);
-<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/users&quot;</span>, <span class='ident'>list_users</span>);
-<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/users/:id&quot;</span>, <span class='ident'>show_user</span>);
-<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/products&quot;</span>, <span class='ident'>list_products</span>);
-<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/products/:id&quot;</span>, <span class='ident'>show_product</span>);
-<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/*&quot;</span>, <span class='ident'>show_error</span>);
+<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/&quot;</span>, <span class='ident'>show_welcome</span>);
+<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/about&quot;</span>, <span class='ident'>about_us</span>);
+<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/users&quot;</span>, <span class='ident'>list_users</span>);
+<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/users/:id&quot;</span>, <span class='ident'>show_user</span>);
+<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/products&quot;</span>, <span class='ident'>list_products</span>);
+<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/products/:id&quot;</span>, <span class='ident'>show_product</span>);
+<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/*&quot;</span>, <span class='ident'>show_error</span>);
 </pre>
 </div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
 <table><tr><td><code>pub use self::<a class='mod'

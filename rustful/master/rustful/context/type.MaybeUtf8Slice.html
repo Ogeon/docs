@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `Hypermedia` struct in crate `rustful`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, Hypermedia">
+    <meta name="description" content="API documentation for the Rust `MaybeUtf8Slice` type in crate `rustful`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, MaybeUtf8Slice">
 
-    <title>rustful::context::Hypermedia - Rust</title>
+    <title>rustful::context::MaybeUtf8Slice - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a></p><script>window.sidebarCurrent = {name: 'Hypermedia', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a></p><script>window.sidebarCurrent = {name: 'MaybeUtf8Slice', ty: 'type', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -40,22 +40,14 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a>::<wbr><a class='struct' href=''>Hypermedia</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content type">
+<h1 class='fqn'><span class='in-band'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a>::<wbr><a class='type' href=''>MaybeUtf8Slice</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-3435' class='srclink' href='../../src/rustful/context.rs.html#428-432' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct Hypermedia&lt;'a&gt; {
-    pub links: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../rustful/context/struct.Link.html' title='rustful::context::Link'>Link</a>&lt;'a&gt;&gt;,
-}</pre><div class='docblock'><p>Hypermedia connected to an API endpoint.</p>
-</div><h2 class='fields'>Fields</h2>
-<table><tr class='stab '>
-                                  <td id='structfield.links'><code>links</code></td><td><div class='docblock'><p>Forward links from the current endpoint to other endpoints. These may
-include endpoints with the same path, but different method.</p>
-</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../../rustful/context/struct.Hypermedia.html' title='rustful::context::Hypermedia'>Hypermedia</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../../rustful/context/struct.Hypermedia.html' title='rustful::context::Hypermedia'>Hypermedia</a>&lt;'a&gt;</code></h4>
-<div class='docblock'><p>Create an empty <code>Hypermedia</code> structure.</p>
-</div></div></section>
+        </span><a id='src-4188' class='srclink' href='../../src/rustful/context/maybe_utf8.rs.html#8' title='goto source code'>[src]</a></span></h1>
+<pre class='rust typedef'>type MaybeUtf8Slice&lt;'a&gt; = <a class='enum' href='../../rustful/context/enum.MaybeUtf8.html' title='rustful::context::MaybeUtf8'>MaybeUtf8</a>&lt;&amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a><a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt;;</pre><div class='docblock'><p>A slice of a string that may be UTF-8 encoded.</p>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
