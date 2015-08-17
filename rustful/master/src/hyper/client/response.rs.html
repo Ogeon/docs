@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/hyper-0.6.8/src/client/response.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/hyper-0.6.9/src/client/response.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>response.rs.html -- source</title>
@@ -308,9 +308,9 @@
             <span class='ident'>version</span>: <span class='ident'>version</span>,
             <span class='ident'>headers</span>: <span class='ident'>headers</span>,
             <span class='ident'>url</span>: <span class='ident'>url</span>,
-            <span class='ident'>message</span>: <span class='ident'>message</span>,
             <span class='ident'>status_raw</span>: <span class='ident'>raw_status</span>,
-            <span class='ident'>is_drained</span>: <span class='boolval'>false</span>,
+            <span class='ident'>is_drained</span>: <span class='op'>!</span><span class='ident'>message</span>.<span class='ident'>has_body</span>(),
+            <span class='ident'>message</span>: <span class='ident'>message</span>,
         })
     }
 
