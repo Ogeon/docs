@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Handle` struct in crate `html5ever`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Handle">
+
+    <title>html5ever::rcdom::Handle - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='../index.html'>html5ever</a>::<wbr><a href='index.html'>rcdom</a></p><script>window.sidebarCurrent = {name: 'Handle', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>html5ever</a>::<wbr><a href='index.html'>rcdom</a>::<wbr><a class='struct' href=''>Handle</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-98263' class='srclink' href='../../src/html5ever/rcdom.rs.html#80' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Handle(_);</pre><div class='docblock'><p>Reference to a DOM node.</p>
+</div><h2 id='deref-methods'>Methods from <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a>&lt;Target=<a class='struct' href='../../rc/stable_rc/struct.Rc.html' title='rc::stable_rc::Rc'>Rc</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html' title='core::cell::RefCell'>RefCell</a>&lt;<a class='struct' href='../../html5ever/rcdom/struct.Node.html' title='html5ever::rcdom::Node'>Node</a>&gt;&gt;&gt;</h2><div class='impl-items'></div><div class='impl-items'><h4 id='method.downgrade' class='method'><code>fn <a href='#method.downgrade' class='fnname'>downgrade</a>(&amp;self) -&gt; <a class='struct' href='../../rc/stable_rc/struct.Weak.html' title='rc::stable_rc::Weak'>Weak</a>&lt;T&gt;</code></h4>
+<div class='docblock'><p>Downgrades the <code>Rc&lt;T&gt;</code> to a <code>Weak&lt;T&gt;</code> reference.</p>
+
+<h1 id="examples" class='section-header'><a
+                           href="#examples">Examples</a></h1><pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>rc</span>::<span class='ident'>Rc</span>;
+
+<span class='kw'>let</span> <span class='ident'>five</span> <span class='op'>=</span> <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='number'>5</span>);
+
+<span class='kw'>let</span> <span class='ident'>weak_five</span> <span class='op'>=</span> <span class='ident'>five</span>.<span class='ident'>downgrade</span>();
+</pre>
+</div></div><div class='impl-items'><h4 id='method.make_unique' class='method'><code>fn <a href='#method.make_unique' class='fnname'>make_unique</a>(&amp;mut self) -&gt; &amp;mut T</code></h4>
+<div class='docblock'><p>Make a mutable reference from the given <code>Rc&lt;T&gt;</code>.</p>
+
+<p>This is also referred to as a copy-on-write operation because the inner
+data is cloned if the reference count is greater than one.</p>
+
+<h1 id="examples" class='section-header'><a
+                           href="#examples">Examples</a></h1><pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>rc</span>::<span class='ident'>Rc</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>five</span> <span class='op'>=</span> <span class='ident'>Rc</span>::<span class='ident'>new</span>(<span class='number'>5</span>);
+
+<span class='kw'>let</span> <span class='ident'>mut_five</span> <span class='op'>=</span> <span class='ident'>five</span>.<span class='ident'>make_unique</span>();
+</pre>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a> for <a class='struct' href='../../html5ever/rcdom/struct.Handle.html' title='html5ever::rcdom::Handle'>Handle</a></code></h3><div class='impl-items'><h4 id='assoc_type.Target' class='type'><code>type Target = <a class='struct' href='../../rc/stable_rc/struct.Rc.html' title='rc::stable_rc::Rc'>Rc</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html' title='core::cell::RefCell'>RefCell</a>&lt;<a class='struct' href='../../html5ever/rcdom/struct.Node.html' title='html5ever::rcdom::Node'>Node</a>&gt;&gt;</code></h4>
+<h4 id='method.deref' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/ops/trait.Deref.html#method.deref' class='fnname'>deref</a>(&amp;self) -&gt; &amp;<a class='struct' href='../../rc/stable_rc/struct.Rc.html' title='rc::stable_rc::Rc'>Rc</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/core/cell/struct.RefCell.html' title='core::cell::RefCell'>RefCell</a>&lt;<a class='struct' href='../../html5ever/rcdom/struct.Node.html' title='html5ever::rcdom::Node'>Node</a>&gt;&gt;</code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='../../html5ever/serialize/trait.Serializable.html' title='html5ever::serialize::Serializable'>Serializable</a> for <a class='struct' href='../../html5ever/rcdom/struct.Handle.html' title='html5ever::rcdom::Handle'>Handle</a></code></h3><div class='impl-items'><h4 id='method.serialize' class='method'><code>fn <a href='../../html5ever/serialize/trait.Serializable.html#method.serialize' class='fnname'>serialize</a>&lt;'wr, Wr: <a class='trait' href='http://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self, serializer: &amp;mut <a class='struct' href='../../html5ever/serialize/struct.Serializer.html' title='html5ever::serialize::Serializer'>Serializer</a>&lt;'wr, Wr&gt;, traversal_scope: <a class='enum' href='../../html5ever/serialize/enum.TraversalScope.html' title='html5ever::serialize::TraversalScope'>TraversalScope</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+</div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../../html5ever/rcdom/struct.Handle.html' title='html5ever::rcdom::Handle'>Handle</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../html5ever/rcdom/struct.Handle.html' title='html5ever::rcdom::Handle'>Handle</a></code></h4>
+<h4 id='method.clone_from' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "html5ever";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script async src="../../search-index.js"></script>
+</body>
+</html>

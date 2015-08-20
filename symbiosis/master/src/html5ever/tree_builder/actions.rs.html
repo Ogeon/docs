@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/git/checkouts/html5ever-1ab8707684fb3258/master/src/tree_builder/actions.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/html5ever-0.2.1/src/tree_builder/actions.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>actions.rs.html -- source</title>
@@ -1126,6 +1126,8 @@
 <span id="1084">1084</span>
 <span id="1085">1085</span>
 <span id="1086">1086</span>
+<span id="1087">1087</span>
+<span id="1088">1088</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The html5ever Project Developers. See the</span>
 <span class='comment'>// COPYRIGHT file at the top-level directory of this distribution.</span>
@@ -1149,14 +1151,16 @@
 <span class='kw'>use</span> <span class='ident'>tokenizer</span>::{<span class='ident'>Attribute</span>, <span class='ident'>Tag</span>, <span class='ident'>StartTag</span>, <span class='ident'>EndTag</span>};
 <span class='kw'>use</span> <span class='ident'>tokenizer</span>::<span class='ident'>states</span>::{<span class='ident'>RawData</span>, <span class='ident'>RawKind</span>};
 
-<span class='kw'>use</span> <span class='ident'>util</span>::<span class='ident'>str</span>::{<span class='ident'>AsciiExt</span>, <span class='ident'>to_escaped_string</span>};
+<span class='kw'>use</span> <span class='ident'>util</span>::<span class='ident'>str</span>::<span class='ident'>to_escaped_string</span>;
 
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ascii</span>::<span class='ident'>AsciiExt</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>slice</span>, <span class='ident'>fmt</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>replace</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>::{<span class='ident'>Rev</span>, <span class='ident'>Enumerate</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>::<span class='ident'>Borrowed</span>;
 
 <span class='kw'>use</span> <span class='ident'>string_cache</span>::{<span class='ident'>Atom</span>, <span class='ident'>Namespace</span>, <span class='ident'>QualName</span>};
+<span class='kw'>use</span> <span class='ident'>tendril</span>::<span class='ident'>StrTendril</span>;
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>PushFlag</span>::<span class='op'>*</span>;
 
@@ -1190,10 +1194,10 @@
     <span class='kw'>fn</span> <span class='ident'>assert_named</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>node</span>: <span class='ident'>Handle</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>);
     <span class='kw'>fn</span> <span class='ident'>clear_active_formatting_to_marker</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>);
     <span class='kw'>fn</span> <span class='ident'>create_formatting_element_for</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>tag</span>: <span class='ident'>Tag</span>) <span class='op'>-&gt;</span> <span class='ident'>Handle</span>;
-    <span class='kw'>fn</span> <span class='ident'>append_text</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span>;
-    <span class='kw'>fn</span> <span class='ident'>append_comment</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span>;
-    <span class='kw'>fn</span> <span class='ident'>append_comment_to_doc</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span>;
-    <span class='kw'>fn</span> <span class='ident'>append_comment_to_html</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span>;
+    <span class='kw'>fn</span> <span class='ident'>append_text</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>StrTendril</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span>;
+    <span class='kw'>fn</span> <span class='ident'>append_comment</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>StrTendril</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span>;
+    <span class='kw'>fn</span> <span class='ident'>append_comment_to_doc</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>StrTendril</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span>;
+    <span class='kw'>fn</span> <span class='ident'>append_comment_to_html</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>StrTendril</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span>;
     <span class='kw'>fn</span> <span class='ident'>insert_appropriately</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>child</span>: <span class='ident'>NodeOrText</span><span class='op'>&lt;</span><span class='ident'>Handle</span><span class='op'>&gt;</span>, <span class='ident'>override_target</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Handle</span><span class='op'>&gt;</span>);
     <span class='kw'>fn</span> <span class='ident'>insert_phantom</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>) <span class='op'>-&gt;</span> <span class='ident'>Handle</span>;
     <span class='kw'>fn</span> <span class='ident'>insert_and_pop_element_for</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>tag</span>: <span class='ident'>Tag</span>) <span class='op'>-&gt;</span> <span class='ident'>Handle</span>;
@@ -1851,25 +1855,25 @@
         <span class='self'>self</span>.<span class='ident'>clear_active_formatting_to_marker</span>();
     }
 
-    <span class='kw'>fn</span> <span class='ident'>append_text</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span> {
+    <span class='kw'>fn</span> <span class='ident'>append_text</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>StrTendril</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span> {
         <span class='self'>self</span>.<span class='ident'>insert_appropriately</span>(<span class='ident'>AppendText</span>(<span class='ident'>text</span>), <span class='prelude-val'>None</span>);
         <span class='ident'>Done</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>append_comment</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span> {
+    <span class='kw'>fn</span> <span class='ident'>append_comment</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>StrTendril</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span> {
         <span class='kw'>let</span> <span class='ident'>comment</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>create_comment</span>(<span class='ident'>text</span>);
         <span class='self'>self</span>.<span class='ident'>insert_appropriately</span>(<span class='ident'>AppendNode</span>(<span class='ident'>comment</span>), <span class='prelude-val'>None</span>);
         <span class='ident'>Done</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>append_comment_to_doc</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span> {
+    <span class='kw'>fn</span> <span class='ident'>append_comment_to_doc</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>StrTendril</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span> {
         <span class='kw'>let</span> <span class='ident'>target</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>doc_handle</span>.<span class='ident'>clone</span>();
         <span class='kw'>let</span> <span class='ident'>comment</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>create_comment</span>(<span class='ident'>text</span>);
         <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>append</span>(<span class='ident'>target</span>, <span class='ident'>AppendNode</span>(<span class='ident'>comment</span>));
         <span class='ident'>Done</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>append_comment_to_html</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span> {
+    <span class='kw'>fn</span> <span class='ident'>append_comment_to_html</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>StrTendril</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span> {
         <span class='kw'>let</span> <span class='ident'>target</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>html_elem</span>();
         <span class='kw'>let</span> <span class='ident'>comment</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>create_comment</span>(<span class='ident'>text</span>);
         <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>append</span>(<span class='ident'>target</span>, <span class='ident'>AppendNode</span>(<span class='ident'>comment</span>));
@@ -2246,6 +2250,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

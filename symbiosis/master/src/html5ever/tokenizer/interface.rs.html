@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/git/checkouts/html5ever-1ab8707684fb3258/master/src/tokenizer/interface.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/html5ever-0.2.1/src/tokenizer/interface.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>interface.rs.html -- source</title>
@@ -150,6 +150,7 @@
 <span id="108">108</span>
 <span id="109">109</span>
 <span id="110">110</span>
+<span id="111">111</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The html5ever Project Developers. See the</span>
 <span class='comment'>// COPYRIGHT file at the top-level directory of this distribution.</span>
@@ -165,6 +166,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>;
 
 <span class='kw'>use</span> <span class='ident'>string_cache</span>::{<span class='ident'>Atom</span>, <span class='ident'>QualName</span>};
+<span class='kw'>use</span> <span class='ident'>tendril</span>::<span class='ident'>StrTendril</span>;
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>TagKind</span>::{<span class='ident'>StartTag</span>, <span class='ident'>EndTag</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>Token</span>::{<span class='ident'>DoctypeToken</span>, <span class='ident'>TagToken</span>, <span class='ident'>CommentToken</span>, <span class='ident'>CharacterTokens</span>};
@@ -174,9 +176,9 @@
 <span class='comment'>// FIXME: already exists in Servo DOM</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Clone</span>, <span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Doctype</span> {
-    <span class='kw'>pub</span> <span class='ident'>name</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
-    <span class='kw'>pub</span> <span class='ident'>public_id</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
-    <span class='kw'>pub</span> <span class='ident'>system_id</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
+    <span class='kw'>pub</span> <span class='ident'>name</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span>,
+    <span class='kw'>pub</span> <span class='ident'>public_id</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span>,
+    <span class='kw'>pub</span> <span class='ident'>system_id</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span>,
     <span class='kw'>pub</span> <span class='ident'>force_quirks</span>: <span class='ident'>bool</span>,
 }
 
@@ -200,7 +202,7 @@
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>, <span class='ident'>Clone</span>, <span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Attribute</span> {
     <span class='kw'>pub</span> <span class='ident'>name</span>: <span class='ident'>QualName</span>,
-    <span class='kw'>pub</span> <span class='ident'>value</span>: <span class='ident'>String</span>,
+    <span class='kw'>pub</span> <span class='ident'>value</span>: <span class='ident'>StrTendril</span>,
 }
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Hash</span>, <span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Debug</span>)]</span>
@@ -239,8 +241,8 @@
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Token</span> {
     <span class='ident'>DoctypeToken</span>(<span class='ident'>Doctype</span>),
     <span class='ident'>TagToken</span>(<span class='ident'>Tag</span>),
-    <span class='ident'>CommentToken</span>(<span class='ident'>String</span>),
-    <span class='ident'>CharacterTokens</span>(<span class='ident'>String</span>),
+    <span class='ident'>CommentToken</span>(<span class='ident'>StrTendril</span>),
+    <span class='ident'>CharacterTokens</span>(<span class='ident'>StrTendril</span>),
     <span class='ident'>NullCharacterToken</span>,
     <span class='ident'>EOFToken</span>,
     <span class='ident'>ParseError</span>(<span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>str</span><span class='op'>&gt;</span>),
@@ -294,6 +296,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

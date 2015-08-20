@@ -42,20 +42,22 @@
 
     <section id='main' class="content enum">
 <h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>codegen</a>::<wbr><a class='enum' href=''>Logic</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="#" title="collapse all docs">[-]</a>
-        </span><a id='src-174' class='srclink' href='../../src/symbiosis/codegen.rs.html#59-68' title='goto source code'>[src]</a></span></h1>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-175' class='srclink' href='../../src/symbiosis/codegen.rs.html#61-70' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Logic {
     And(<a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../symbiosis/codegen/enum.Logic.html' title='symbiosis::codegen::Logic'>Logic</a>&gt;),
     Or(<a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../symbiosis/codegen/enum.Logic.html' title='symbiosis::codegen::Logic'>Logic</a>&gt;),
     Not(<a class='struct' href='http://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='enum' href='../../symbiosis/codegen/enum.Logic.html' title='symbiosis::codegen::Logic'>Logic</a>&gt;),
-    Value(<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>),
+    Value(<a class='type' href='../../tendril/tendril/type.StrTendril.html' title='tendril::tendril::StrTendril'>StrTendril</a>),
 }</pre><div class='docblock'><p>Logic expressions.</p>
 </div><h2 class='variants'>Variants</h2>
 <table><tr><td id='variant.And'><code>And</code></td><td><div class='docblock'><p>a and b and ...</p>
 </div></td></tr><tr><td id='variant.Or'><code>Or</code></td><td><div class='docblock'><p>a or b or ...</p>
 </div></td></tr><tr><td id='variant.Not'><code>Not</code></td><td><div class='docblock'><p>The logical complement of an expression.</p>
 </div></td></tr><tr><td id='variant.Value'><code>Value</code></td><td><div class='docblock'><p>A value from a template parameter.</p>
-</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='enum' href='../../symbiosis/codegen/enum.Logic.html' title='symbiosis::codegen::Logic'>Logic</a></code></h3><div class='impl-items'><h4 id='method.placeholders' class='method'><code>fn <a href='#method.placeholders' class='fnname'>placeholders</a>(&amp;self) -&gt; <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;&amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></h4>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='enum' href='../../symbiosis/codegen/enum.Logic.html' title='symbiosis::codegen::Logic'>Logic</a></code></h3><div class='impl-items'><h4 id='method.placeholders' class='method'><code>fn <a href='#method.placeholders' class='fnname'>placeholders</a>(&amp;self) -&gt; <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;&amp;<a class='type' href='../../tendril/tendril/type.StrTendril.html' title='tendril::tendril::StrTendril'>StrTendril</a>&gt;</code></h4>
 <h4 id='method.flattened' class='method'><code>fn <a href='#method.flattened' class='fnname'>flattened</a>(&amp;self) -&gt; <a class='enum' href='../../symbiosis/codegen/enum.Logic.html' title='symbiosis::codegen::Logic'>Logic</a></code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
@@ -89,6 +91,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

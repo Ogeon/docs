@@ -42,13 +42,15 @@
 
     <section id='main' class="content enum">
 <h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>html5ever</a>::<wbr><a href='index.html'>tokenizer</a>::<wbr><a class='enum' href=''>Token</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="#" title="collapse all docs">[-]</a>
-        </span><a id='src-11904' class='srclink' href='../../src/html5ever/tokenizer/interface.rs.html#86-94' title='goto source code'>[src]</a></span></h1>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-11433' class='srclink' href='../../src/html5ever/tokenizer/interface.rs.html#87-95' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Token {
     DoctypeToken(<a class='struct' href='../../html5ever/tokenizer/struct.Doctype.html' title='html5ever::tokenizer::Doctype'>Doctype</a>),
     TagToken(<a class='struct' href='../../html5ever/tokenizer/struct.Tag.html' title='html5ever::tokenizer::Tag'>Tag</a>),
-    CommentToken(<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>),
-    CharacterTokens(<a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>),
+    CommentToken(<a class='type' href='../../tendril/tendril/type.StrTendril.html' title='tendril::tendril::StrTendril'>StrTendril</a>),
+    CharacterTokens(<a class='type' href='../../tendril/tendril/type.StrTendril.html' title='tendril::tendril::StrTendril'>StrTendril</a>),
     NullCharacterToken,
     EOFToken,
     ParseError(<a class='enum' href='http://doc.rust-lang.org/nightly/collections/borrow/enum.Cow.html' title='collections::borrow::Cow'>Cow</a>&lt;'static, <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;),
@@ -88,6 +90,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

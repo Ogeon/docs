@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/git/checkouts/html5ever-1ab8707684fb3258/master/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/html5ever-0.2.1/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -94,12 +94,6 @@
 <span id="52">52</span>
 <span id="53">53</span>
 <span id="54">54</span>
-<span id="55">55</span>
-<span id="56">56</span>
-<span id="57">57</span>
-<span id="58">58</span>
-<span id="59">59</span>
-<span id="60">60</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The html5ever Project Developers. See the</span>
 <span class='comment'>// COPYRIGHT file at the top-level directory of this distribution.</span>
@@ -113,19 +107,21 @@
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_name</span><span class='op'>=</span><span class='string'>&quot;html5ever&quot;</span>]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_type</span><span class='op'>=</span><span class='string'>&quot;dylib&quot;</span>]</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>feature</span>(<span class='ident'>plugin</span>, <span class='ident'>box_syntax</span>, <span class='ident'>core</span>, <span class='ident'>collections</span>, <span class='ident'>alloc</span>, <span class='ident'>str_char</span>, <span class='ident'>slice_patterns</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>deny</span>(<span class='ident'>warnings</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>, <span class='ident'>feature</span>(<span class='ident'>plugin</span>, <span class='ident'>rc_weak</span>))]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>test</span>, <span class='ident'>deny</span>(<span class='ident'>warnings</span>))]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>unused_parens</span>)]</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>plugin</span>(<span class='ident'>phf_macros</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>plugin</span>(<span class='ident'>string_cache_plugin</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>plugin</span>(<span class='ident'>html5ever_macros</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>, <span class='ident'>plugin</span>(<span class='ident'>string_cache_plugin</span>))]</span>
+
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rc</span>;
 
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>log</span>;
 
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>string_cache</span>;
+
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>tendril</span>;
 
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>mac</span>;
@@ -150,17 +146,9 @@
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>tokenizer</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>tree_builder</span>;
-
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>serialize</span>;
-
-<span class='doccomment'>/// Consumers of the parser API.</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>sink</span> {
-    <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>common</span>;
-    <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>rcdom</span>;
-    <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>owned_dom</span>;
-}
-
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>driver</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>rcdom</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
@@ -194,6 +182,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

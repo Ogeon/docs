@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/git/checkouts/html5ever-1ab8707684fb3258/master/src/driver.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/html5ever-0.2.1/src/driver.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>driver.rs.html -- source</title>
@@ -184,15 +184,6 @@
 <span id="142">142</span>
 <span id="143">143</span>
 <span id="144">144</span>
-<span id="145">145</span>
-<span id="146">146</span>
-<span id="147">147</span>
-<span id="148">148</span>
-<span id="149">149</span>
-<span id="150">150</span>
-<span id="151">151</span>
-<span id="152">152</span>
-<span id="153">153</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The html5ever Project Developers. See the</span>
 <span class='comment'>// COPYRIGHT file at the top-level directory of this distribution.</span>
@@ -212,9 +203,10 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>default</span>::<span class='ident'>Default</span>;
 
 <span class='kw'>use</span> <span class='ident'>string_cache</span>::{<span class='ident'>Atom</span>, <span class='ident'>QualName</span>};
+<span class='kw'>use</span> <span class='ident'>tendril</span>::<span class='ident'>StrTendril</span>;
 
-<span class='doccomment'>/// Convenience function to turn a single `String` into an iterator.</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>one_input</span>(<span class='ident'>x</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>option</span>::<span class='ident'>IntoIter</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
+<span class='doccomment'>/// Convenience function to turn a single value into an iterator.</span>
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>one_input</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='ident'>x</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>option</span>::<span class='ident'>IntoIter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='prelude-val'>Some</span>(<span class='ident'>x</span>).<span class='ident'>into_iter</span>()
 }
 
@@ -226,14 +218,10 @@
 <span class='doccomment'>/// let mut sink = MySink;</span>
 <span class='doccomment'>/// tokenize_to(&amp;mut sink, one_input(my_str), Default::default());</span>
 <span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>tokenize_to</span><span class='op'>&lt;</span>
-        <span class='ident'>Sink</span>: <span class='ident'>TokenSink</span>,
-        <span class='ident'>It</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='ident'>String</span><span class='op'>&gt;</span>
-    <span class='op'>&gt;</span>(
-        <span class='ident'>sink</span>: <span class='ident'>Sink</span>,
-        <span class='ident'>input</span>: <span class='ident'>It</span>,
-        <span class='ident'>opts</span>: <span class='ident'>TokenizerOpts</span>) <span class='op'>-&gt;</span> <span class='ident'>Sink</span> {
-
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>tokenize_to</span><span class='op'>&lt;</span><span class='ident'>Sink</span>, <span class='ident'>It</span><span class='op'>&gt;</span>(<span class='ident'>sink</span>: <span class='ident'>Sink</span>, <span class='ident'>input</span>: <span class='ident'>It</span>, <span class='ident'>opts</span>: <span class='ident'>TokenizerOpts</span>) <span class='op'>-&gt;</span> <span class='ident'>Sink</span>
+    <span class='kw'>where</span> <span class='ident'>Sink</span>: <span class='ident'>TokenSink</span>,
+          <span class='ident'>It</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span>,
+{
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>tok</span> <span class='op'>=</span> <span class='ident'>Tokenizer</span>::<span class='ident'>new</span>(<span class='ident'>sink</span>, <span class='ident'>opts</span>);
     <span class='kw'>for</span> <span class='ident'>s</span> <span class='kw'>in</span> <span class='ident'>input</span> {
         <span class='ident'>tok</span>.<span class='ident'>feed</span>(<span class='ident'>s</span>);
@@ -260,14 +248,10 @@
 <span class='doccomment'>/// let mut sink = MySink;</span>
 <span class='doccomment'>/// parse_to(&amp;mut sink, one_input(my_str), Default::default());</span>
 <span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>parse_to</span><span class='op'>&lt;</span>
-        <span class='ident'>Sink</span>: <span class='ident'>TreeSink</span>,
-        <span class='ident'>It</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='ident'>String</span><span class='op'>&gt;</span>
-    <span class='op'>&gt;</span>(
-        <span class='ident'>sink</span>: <span class='ident'>Sink</span>,
-        <span class='ident'>input</span>: <span class='ident'>It</span>,
-        <span class='ident'>opts</span>: <span class='ident'>ParseOpts</span>) <span class='op'>-&gt;</span> <span class='ident'>Sink</span> {
-
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>parse_to</span><span class='op'>&lt;</span><span class='ident'>Sink</span>, <span class='ident'>It</span><span class='op'>&gt;</span>(<span class='ident'>sink</span>: <span class='ident'>Sink</span>, <span class='ident'>input</span>: <span class='ident'>It</span>, <span class='ident'>opts</span>: <span class='ident'>ParseOpts</span>) <span class='op'>-&gt;</span> <span class='ident'>Sink</span>
+    <span class='kw'>where</span> <span class='ident'>Sink</span>: <span class='ident'>TreeSink</span>,
+          <span class='ident'>It</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span>,
+{
     <span class='kw'>let</span> <span class='ident'>tb</span> <span class='op'>=</span> <span class='ident'>TreeBuilder</span>::<span class='ident'>new</span>(<span class='ident'>sink</span>, <span class='ident'>opts</span>.<span class='ident'>tree_builder</span>);
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>tok</span> <span class='op'>=</span> <span class='ident'>Tokenizer</span>::<span class='ident'>new</span>(<span class='ident'>tb</span>, <span class='ident'>opts</span>.<span class='ident'>tokenizer</span>);
     <span class='kw'>for</span> <span class='ident'>s</span> <span class='kw'>in</span> <span class='ident'>input</span> {
@@ -285,15 +269,13 @@
 <span class='doccomment'>/// let mut sink = MySink;</span>
 <span class='doccomment'>/// parse_fragment_to(&amp;mut sink, one_input(my_str), context_token, Default::default());</span>
 <span class='doccomment'>/// ```</span>
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>parse_fragment_to</span><span class='op'>&lt;</span>
-        <span class='ident'>Sink</span>: <span class='ident'>TreeSink</span>,
-        <span class='ident'>It</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='ident'>String</span><span class='op'>&gt;</span>
-    <span class='op'>&gt;</span>(
-        <span class='ident'>sink</span>: <span class='ident'>Sink</span>,
-        <span class='ident'>input</span>: <span class='ident'>It</span>,
-        <span class='ident'>context</span>: <span class='ident'>Atom</span>,
-        <span class='ident'>opts</span>: <span class='ident'>ParseOpts</span>) <span class='op'>-&gt;</span> <span class='ident'>Sink</span> {
-
+<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>parse_fragment_to</span><span class='op'>&lt;</span><span class='ident'>Sink</span>, <span class='ident'>It</span><span class='op'>&gt;</span>(<span class='ident'>sink</span>: <span class='ident'>Sink</span>,
+                                   <span class='ident'>input</span>: <span class='ident'>It</span>,
+                                   <span class='ident'>context</span>: <span class='ident'>Atom</span>,
+                                   <span class='ident'>opts</span>: <span class='ident'>ParseOpts</span>) <span class='op'>-&gt;</span> <span class='ident'>Sink</span>
+    <span class='kw'>where</span> <span class='ident'>Sink</span>: <span class='ident'>TreeSink</span>,
+          <span class='ident'>It</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span>
+{
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>sink</span> <span class='op'>=</span> <span class='ident'>sink</span>;
     <span class='kw'>let</span> <span class='ident'>context_elem</span> <span class='op'>=</span> <span class='ident'>sink</span>.<span class='ident'>create_element</span>(<span class='ident'>QualName</span>::<span class='ident'>new</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>), <span class='ident'>context</span>), <span class='macro'>vec</span><span class='macro'>!</span>());
     <span class='kw'>let</span> <span class='ident'>tb</span> <span class='op'>=</span> <span class='ident'>TreeBuilder</span>::<span class='ident'>new_for_fragment</span>(<span class='ident'>sink</span>, <span class='ident'>context_elem</span>, <span class='prelude-val'>None</span>, <span class='ident'>opts</span>.<span class='ident'>tree_builder</span>);
@@ -327,7 +309,7 @@
 <span class='doccomment'>/// ```</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>parse</span><span class='op'>&lt;</span><span class='ident'>Output</span>, <span class='ident'>It</span><span class='op'>&gt;</span>(<span class='ident'>input</span>: <span class='ident'>It</span>, <span class='ident'>opts</span>: <span class='ident'>ParseOpts</span>) <span class='op'>-&gt;</span> <span class='ident'>Output</span>
     <span class='kw'>where</span> <span class='ident'>Output</span>: <span class='ident'>ParseResult</span>,
-          <span class='ident'>It</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='ident'>String</span><span class='op'>&gt;</span>,
+          <span class='ident'>It</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span>,
 {
     <span class='kw'>let</span> <span class='ident'>sink</span> <span class='op'>=</span> <span class='ident'>parse_to</span>(<span class='ident'>Default</span>::<span class='ident'>default</span>(), <span class='ident'>input</span>, <span class='ident'>opts</span>);
     <span class='ident'>ParseResult</span>::<span class='ident'>get_result</span>(<span class='ident'>sink</span>)
@@ -342,7 +324,7 @@
 <span class='doccomment'>/// ```</span>
 <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>parse_fragment</span><span class='op'>&lt;</span><span class='ident'>Output</span>, <span class='ident'>It</span><span class='op'>&gt;</span>(<span class='ident'>input</span>: <span class='ident'>It</span>, <span class='ident'>context</span>: <span class='ident'>Atom</span>, <span class='ident'>opts</span>: <span class='ident'>ParseOpts</span>) <span class='op'>-&gt;</span> <span class='ident'>Output</span>
     <span class='kw'>where</span> <span class='ident'>Output</span>: <span class='ident'>ParseResult</span>,
-          <span class='ident'>It</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='ident'>String</span><span class='op'>&gt;</span>,
+          <span class='ident'>It</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span>,
 {
     <span class='kw'>let</span> <span class='ident'>sink</span> <span class='op'>=</span> <span class='ident'>parse_fragment_to</span>(<span class='ident'>Default</span>::<span class='ident'>default</span>(), <span class='ident'>input</span>, <span class='ident'>context</span>, <span class='ident'>opts</span>);
     <span class='ident'>ParseResult</span>::<span class='ident'>get_result</span>(<span class='ident'>sink</span>)
@@ -380,6 +362,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

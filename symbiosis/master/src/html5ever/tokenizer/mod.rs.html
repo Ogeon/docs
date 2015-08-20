@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/git/checkouts/html5ever-1ab8707684fb3258/master/src/tokenizer/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/html5ever-0.2.1/src/tokenizer/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -1386,26 +1386,6 @@
 <span id="1344">1344</span>
 <span id="1345">1345</span>
 <span id="1346">1346</span>
-<span id="1347">1347</span>
-<span id="1348">1348</span>
-<span id="1349">1349</span>
-<span id="1350">1350</span>
-<span id="1351">1351</span>
-<span id="1352">1352</span>
-<span id="1353">1353</span>
-<span id="1354">1354</span>
-<span id="1355">1355</span>
-<span id="1356">1356</span>
-<span id="1357">1357</span>
-<span id="1358">1358</span>
-<span id="1359">1359</span>
-<span id="1360">1360</span>
-<span id="1361">1361</span>
-<span id="1362">1362</span>
-<span id="1363">1363</span>
-<span id="1364">1364</span>
-<span id="1365">1365</span>
-<span id="1366">1366</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The html5ever Project Developers. See the</span>
 <span class='comment'>// COPYRIGHT file at the top-level directory of this distribution.</span>
@@ -1435,33 +1415,27 @@
 
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>buffer_queue</span>::{<span class='ident'>BufferQueue</span>, <span class='ident'>SetResult</span>, <span class='ident'>FromSet</span>, <span class='ident'>NotFromSet</span>};
 
-<span class='kw'>use</span> <span class='ident'>util</span>::<span class='ident'>str</span>::{<span class='ident'>lower_ascii</span>, <span class='ident'>lower_ascii_letter</span>, <span class='ident'>empty_str</span>};
+<span class='kw'>use</span> <span class='ident'>util</span>::<span class='ident'>str</span>::<span class='ident'>lower_ascii_letter</span>;
 <span class='kw'>use</span> <span class='ident'>util</span>::<span class='ident'>smallcharset</span>::<span class='ident'>SmallCharSet</span>;
 
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ascii</span>::<span class='ident'>AsciiExt</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>replace</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>default</span>::<span class='ident'>Default</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>::{<span class='self'>self</span>, <span class='ident'>Borrowed</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>BTreeMap</span>;
 
 <span class='kw'>use</span> <span class='ident'>string_cache</span>::{<span class='ident'>Atom</span>, <span class='ident'>QualName</span>};
+<span class='kw'>use</span> <span class='ident'>tendril</span>::<span class='ident'>StrTendril</span>;
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>states</span>;
 <span class='kw'>mod</span> <span class='ident'>interface</span>;
 <span class='kw'>mod</span> <span class='ident'>char_ref</span>;
 <span class='kw'>mod</span> <span class='ident'>buffer_queue</span>;
 
-<span class='kw'>fn</span> <span class='ident'>option_push</span>(<span class='ident'>opt_str</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>c</span>: <span class='ident'>char</span>) {
+<span class='kw'>fn</span> <span class='ident'>option_push</span>(<span class='ident'>opt_str</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span>, <span class='ident'>c</span>: <span class='ident'>char</span>) {
     <span class='kw'>match</span> <span class='op'>*</span><span class='ident'>opt_str</span> {
-        <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>push</span>(<span class='ident'>c</span>),
-        <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>opt_str</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>c</span>.<span class='ident'>to_string</span>()),
-    }
-}
-
-<span class='kw'>fn</span> <span class='ident'>append_strings</span>(<span class='ident'>lhs</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>String</span>, <span class='ident'>rhs</span>: <span class='ident'>String</span>) {
-    <span class='kw'>if</span> <span class='ident'>lhs</span>.<span class='ident'>is_empty</span>() {
-        <span class='op'>*</span><span class='ident'>lhs</span> <span class='op'>=</span> <span class='ident'>rhs</span>;
-    } <span class='kw'>else</span> {
-        <span class='ident'>lhs</span>.<span class='ident'>push_str</span>(<span class='kw-2'>&amp;</span><span class='ident'>rhs</span>);
+        <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>push_char</span>(<span class='ident'>c</span>),
+        <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>opt_str</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>StrTendril</span>::<span class='ident'>from_char</span>(<span class='ident'>c</span>)),
     }
 }
 
@@ -1486,6 +1460,9 @@
 
     <span class='doccomment'>/// Last start tag.  Only the test runner should use a</span>
     <span class='doccomment'>/// non-`None` value!</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// FIXME: Can&#39;t use Tendril because we want TokenizerOpts</span>
+    <span class='doccomment'>/// to be Send.</span>
     <span class='kw'>pub</span> <span class='ident'>last_start_tag_name</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
 }
 
@@ -1541,7 +1518,7 @@
     <span class='ident'>current_tag_kind</span>: <span class='ident'>TagKind</span>,
 
     <span class='doccomment'>/// Current tag name.</span>
-    <span class='ident'>current_tag_name</span>: <span class='ident'>String</span>,
+    <span class='ident'>current_tag_name</span>: <span class='ident'>StrTendril</span>,
 
     <span class='doccomment'>/// Current tag is self-closing?</span>
     <span class='ident'>current_tag_self_closing</span>: <span class='ident'>bool</span>,
@@ -1550,13 +1527,13 @@
     <span class='ident'>current_tag_attrs</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Attribute</span><span class='op'>&gt;</span>,
 
     <span class='doccomment'>/// Current attribute name.</span>
-    <span class='ident'>current_attr_name</span>: <span class='ident'>String</span>,
+    <span class='ident'>current_attr_name</span>: <span class='ident'>StrTendril</span>,
 
     <span class='doccomment'>/// Current attribute value.</span>
-    <span class='ident'>current_attr_value</span>: <span class='ident'>String</span>,
+    <span class='ident'>current_attr_value</span>: <span class='ident'>StrTendril</span>,
 
     <span class='doccomment'>/// Current comment.</span>
-    <span class='ident'>current_comment</span>: <span class='ident'>String</span>,
+    <span class='ident'>current_comment</span>: <span class='ident'>StrTendril</span>,
 
     <span class='doccomment'>/// Current doctype token.</span>
     <span class='ident'>current_doctype</span>: <span class='ident'>Doctype</span>,
@@ -1565,7 +1542,7 @@
     <span class='ident'>last_start_tag_name</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Atom</span><span class='op'>&gt;</span>,
 
     <span class='doccomment'>/// The &quot;temporary buffer&quot; mentioned in the spec.</span>
-    <span class='ident'>temp_buf</span>: <span class='ident'>String</span>,
+    <span class='ident'>temp_buf</span>: <span class='ident'>StrTendril</span>,
 
     <span class='doccomment'>/// Record of how many ns we spent in each state, if profiling is enabled.</span>
     <span class='ident'>state_profile</span>: <span class='ident'>BTreeMap</span><span class='op'>&lt;</span><span class='ident'>states</span>::<span class='ident'>State</span>, <span class='ident'>u64</span><span class='op'>&gt;</span>,
@@ -1593,15 +1570,15 @@
             <span class='ident'>ignore_lf</span>: <span class='boolval'>false</span>,
             <span class='ident'>discard_bom</span>: <span class='ident'>discard_bom</span>,
             <span class='ident'>current_tag_kind</span>: <span class='ident'>StartTag</span>,
-            <span class='ident'>current_tag_name</span>: <span class='ident'>empty_str</span>(),
+            <span class='ident'>current_tag_name</span>: <span class='ident'>StrTendril</span>::<span class='ident'>new</span>(),
             <span class='ident'>current_tag_self_closing</span>: <span class='boolval'>false</span>,
             <span class='ident'>current_tag_attrs</span>: <span class='macro'>vec</span><span class='macro'>!</span>(),
-            <span class='ident'>current_attr_name</span>: <span class='ident'>empty_str</span>(),
-            <span class='ident'>current_attr_value</span>: <span class='ident'>empty_str</span>(),
-            <span class='ident'>current_comment</span>: <span class='ident'>empty_str</span>(),
+            <span class='ident'>current_attr_name</span>: <span class='ident'>StrTendril</span>::<span class='ident'>new</span>(),
+            <span class='ident'>current_attr_value</span>: <span class='ident'>StrTendril</span>::<span class='ident'>new</span>(),
+            <span class='ident'>current_comment</span>: <span class='ident'>StrTendril</span>::<span class='ident'>new</span>(),
             <span class='ident'>current_doctype</span>: <span class='ident'>Doctype</span>::<span class='ident'>new</span>(),
             <span class='ident'>last_start_tag_name</span>: <span class='ident'>start_tag_name</span>,
-            <span class='ident'>temp_buf</span>: <span class='ident'>empty_str</span>(),
+            <span class='ident'>temp_buf</span>: <span class='ident'>StrTendril</span>::<span class='ident'>new</span>(),
             <span class='ident'>state_profile</span>: <span class='ident'>BTreeMap</span>::<span class='ident'>new</span>(),
             <span class='ident'>time_in_sink</span>: <span class='number'>0</span>,
         }
@@ -1620,19 +1597,16 @@
     }
 
     <span class='doccomment'>/// Feed an input string into the tokenizer.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>feed</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>input</span>: <span class='ident'>String</span>) {
-        <span class='kw'>if</span> <span class='ident'>input</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>feed</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>input</span>: <span class='ident'>StrTendril</span>) {
+        <span class='kw'>if</span> <span class='ident'>input</span>.<span class='ident'>is_empty</span>() {
             <span class='kw'>return</span>;
         }
 
-        <span class='kw'>let</span> <span class='ident'>pos</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>discard_bom</span> <span class='op'>&amp;&amp;</span> <span class='ident'>input</span>.<span class='ident'>char_at</span>(<span class='number'>0</span>) <span class='op'>==</span> <span class='string'>&#39;\u{feff}&#39;</span> {
-            <span class='self'>self</span>.<span class='ident'>discard_bom</span> <span class='op'>=</span> <span class='boolval'>false</span>;
-            <span class='number'>3</span>  <span class='comment'>// length of BOM in UTF-8</span>
-        } <span class='kw'>else</span> {
-            <span class='number'>0</span>
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>discard_bom</span> <span class='op'>&amp;&amp;</span> <span class='ident'>input</span>.<span class='ident'>starts_with</span>(<span class='string'>&quot;\u{feff}&quot;</span>) {
+            <span class='ident'>input</span>.<span class='ident'>pop_front</span>(<span class='number'>3</span>);
         };
 
-        <span class='self'>self</span>.<span class='ident'>input_buffers</span>.<span class='ident'>push_back</span>(<span class='ident'>input</span>, <span class='ident'>pos</span>);
+        <span class='self'>self</span>.<span class='ident'>input_buffers</span>.<span class='ident'>push_back</span>(<span class='ident'>input</span>);
         <span class='self'>self</span>.<span class='ident'>run</span>();
     }
 
@@ -1766,20 +1740,20 @@
     <span class='kw'>fn</span> <span class='ident'>emit_char</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>c</span>: <span class='ident'>char</span>) {
         <span class='self'>self</span>.<span class='ident'>process_token</span>(<span class='kw'>match</span> <span class='ident'>c</span> {
             <span class='string'>&#39;\0&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>NullCharacterToken</span>,
-            _ <span class='op'>=&gt;</span> <span class='ident'>CharacterTokens</span>(<span class='ident'>c</span>.<span class='ident'>to_string</span>()),
+            _ <span class='op'>=&gt;</span> <span class='ident'>CharacterTokens</span>(<span class='ident'>StrTendril</span>::<span class='ident'>from_char</span>(<span class='ident'>c</span>)),
         });
     }
 
     <span class='comment'>// The string must not contain &#39;\0&#39;!</span>
-    <span class='kw'>fn</span> <span class='ident'>emit_chars</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>b</span>: <span class='ident'>String</span>) {
+    <span class='kw'>fn</span> <span class='ident'>emit_chars</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>b</span>: <span class='ident'>StrTendril</span>) {
         <span class='self'>self</span>.<span class='ident'>process_token</span>(<span class='ident'>CharacterTokens</span>(<span class='ident'>b</span>));
     }
 
     <span class='kw'>fn</span> <span class='ident'>emit_current_tag</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='self'>self</span>.<span class='ident'>finish_attribute</span>();
 
-        <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='ident'>replace</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>current_tag_name</span>, <span class='ident'>String</span>::<span class='ident'>new</span>());
-        <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='kw-2'>&amp;</span><span class='ident'>name</span>);
+        <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>current_tag_name</span>);
+        <span class='self'>self</span>.<span class='ident'>current_tag_name</span>.<span class='ident'>clear</span>();
 
         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>current_tag_kind</span> {
             <span class='ident'>StartTag</span> <span class='op'>=&gt;</span> {
@@ -1810,29 +1784,29 @@
 
     <span class='kw'>fn</span> <span class='ident'>emit_temp_buf</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='comment'>// FIXME: Make sure that clearing on emit is spec-compatible.</span>
-        <span class='kw'>let</span> <span class='ident'>buf</span> <span class='op'>=</span> <span class='ident'>replace</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>temp_buf</span>, <span class='ident'>empty_str</span>());
+        <span class='kw'>let</span> <span class='ident'>buf</span> <span class='op'>=</span> <span class='ident'>replace</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>temp_buf</span>, <span class='ident'>StrTendril</span>::<span class='ident'>new</span>());
         <span class='self'>self</span>.<span class='ident'>emit_chars</span>(<span class='ident'>buf</span>);
     }
 
     <span class='kw'>fn</span> <span class='ident'>clear_temp_buf</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='comment'>// Do this without a new allocation.</span>
-        <span class='self'>self</span>.<span class='ident'>temp_buf</span>.<span class='ident'>truncate</span>(<span class='number'>0</span>);
+        <span class='self'>self</span>.<span class='ident'>temp_buf</span>.<span class='ident'>clear</span>();
     }
 
     <span class='kw'>fn</span> <span class='ident'>emit_current_comment</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='kw'>let</span> <span class='ident'>comment</span> <span class='op'>=</span> <span class='ident'>replace</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>current_comment</span>, <span class='ident'>empty_str</span>());
+        <span class='kw'>let</span> <span class='ident'>comment</span> <span class='op'>=</span> <span class='ident'>replace</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>current_comment</span>, <span class='ident'>StrTendril</span>::<span class='ident'>new</span>());
         <span class='self'>self</span>.<span class='ident'>process_token</span>(<span class='ident'>CommentToken</span>(<span class='ident'>comment</span>));
     }
 
     <span class='kw'>fn</span> <span class='ident'>discard_tag</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>current_tag_name</span> <span class='op'>=</span> <span class='ident'>String</span>::<span class='ident'>new</span>();
+        <span class='self'>self</span>.<span class='ident'>current_tag_name</span>.<span class='ident'>clear</span>();
         <span class='self'>self</span>.<span class='ident'>current_tag_self_closing</span> <span class='op'>=</span> <span class='boolval'>false</span>;
         <span class='self'>self</span>.<span class='ident'>current_tag_attrs</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>();
     }
 
     <span class='kw'>fn</span> <span class='ident'>create_tag</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>kind</span>: <span class='ident'>TagKind</span>, <span class='ident'>c</span>: <span class='ident'>char</span>) {
         <span class='self'>self</span>.<span class='ident'>discard_tag</span>();
-        <span class='self'>self</span>.<span class='ident'>current_tag_name</span>.<span class='ident'>push</span>(<span class='ident'>c</span>);
+        <span class='self'>self</span>.<span class='ident'>current_tag_name</span>.<span class='ident'>push_char</span>(<span class='ident'>c</span>);
         <span class='self'>self</span>.<span class='ident'>current_tag_kind</span> <span class='op'>=</span> <span class='ident'>kind</span>;
     }
 
@@ -1848,7 +1822,7 @@
     <span class='kw'>fn</span> <span class='ident'>create_attribute</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>c</span>: <span class='ident'>char</span>) {
         <span class='self'>self</span>.<span class='ident'>finish_attribute</span>();
 
-        <span class='self'>self</span>.<span class='ident'>current_attr_name</span>.<span class='ident'>push</span>(<span class='ident'>c</span>);
+        <span class='self'>self</span>.<span class='ident'>current_attr_name</span>.<span class='ident'>push_char</span>(<span class='ident'>c</span>);
     }
 
     <span class='kw'>fn</span> <span class='ident'>finish_attribute</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
@@ -1860,21 +1834,22 @@
         <span class='comment'>// FIXME: the spec says we should error as soon as the name is finished.</span>
         <span class='comment'>// FIXME: linear time search, do we care?</span>
         <span class='kw'>let</span> <span class='ident'>dup</span> <span class='op'>=</span> {
-            <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>current_attr_name</span>[..];
+            <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>current_attr_name</span>;
             <span class='self'>self</span>.<span class='ident'>current_tag_attrs</span>.<span class='ident'>iter</span>().<span class='ident'>any</span>(<span class='op'>|</span><span class='ident'>a</span><span class='op'>|</span> <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>a</span>.<span class='ident'>name</span>.<span class='ident'>local</span> <span class='op'>==</span> <span class='ident'>name</span>)
         };
 
         <span class='kw'>if</span> <span class='ident'>dup</span> {
             <span class='self'>self</span>.<span class='ident'>emit_error</span>(<span class='ident'>Borrowed</span>(<span class='string'>&quot;Duplicate attribute&quot;</span>));
-            <span class='self'>self</span>.<span class='ident'>current_attr_name</span>.<span class='ident'>truncate</span>(<span class='number'>0</span>);
-            <span class='self'>self</span>.<span class='ident'>current_attr_value</span>.<span class='ident'>truncate</span>(<span class='number'>0</span>);
+            <span class='self'>self</span>.<span class='ident'>current_attr_name</span>.<span class='ident'>clear</span>();
+            <span class='self'>self</span>.<span class='ident'>current_attr_value</span>.<span class='ident'>clear</span>();
         } <span class='kw'>else</span> {
-            <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='ident'>replace</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>current_attr_name</span>, <span class='ident'>String</span>::<span class='ident'>new</span>());
+            <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>current_attr_name</span>);
+            <span class='self'>self</span>.<span class='ident'>current_attr_name</span>.<span class='ident'>clear</span>();
             <span class='self'>self</span>.<span class='ident'>current_tag_attrs</span>.<span class='ident'>push</span>(<span class='ident'>Attribute</span> {
                 <span class='comment'>// The tree builder will adjust the namespace if necessary.</span>
                 <span class='comment'>// This only happens in foreign elements.</span>
-                <span class='ident'>name</span>: <span class='ident'>QualName</span>::<span class='ident'>new</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>), <span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='kw-2'>&amp;</span><span class='ident'>name</span>)),
-                <span class='ident'>value</span>: <span class='ident'>replace</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>current_attr_value</span>, <span class='ident'>empty_str</span>()),
+                <span class='ident'>name</span>: <span class='ident'>QualName</span>::<span class='ident'>new</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>), <span class='ident'>name</span>),
+                <span class='ident'>value</span>: <span class='ident'>replace</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>current_attr_value</span>, <span class='ident'>StrTendril</span>::<span class='ident'>new</span>()),
             });
         }
     }
@@ -1884,7 +1859,7 @@
         <span class='self'>self</span>.<span class='ident'>process_token</span>(<span class='ident'>DoctypeToken</span>(<span class='ident'>doctype</span>));
     }
 
-    <span class='kw'>fn</span> <span class='ident'>doctype_id</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>kind</span>: <span class='ident'>DoctypeIdKind</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>doctype_id</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>kind</span>: <span class='ident'>DoctypeIdKind</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span> {
         <span class='kw'>match</span> <span class='ident'>kind</span> {
             <span class='ident'>Public</span> <span class='op'>=&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>current_doctype</span>.<span class='ident'>public_id</span>,
             <span class='ident'>System</span> <span class='op'>=&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>current_doctype</span>.<span class='ident'>system_id</span>,
@@ -1894,15 +1869,15 @@
     <span class='kw'>fn</span> <span class='ident'>clear_doctype_id</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>kind</span>: <span class='ident'>DoctypeIdKind</span>) {
         <span class='kw'>let</span> <span class='ident'>id</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>doctype_id</span>(<span class='ident'>kind</span>);
         <span class='kw'>match</span> <span class='op'>*</span><span class='ident'>id</span> {
-            <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>truncate</span>(<span class='number'>0</span>),
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>id</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>empty_str</span>()),
+            <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>clear</span>(),
+            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>id</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>StrTendril</span>::<span class='ident'>new</span>()),
         }
     }
 
     <span class='kw'>fn</span> <span class='ident'>consume_char_ref</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>addnl_allowed</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span>) {
         <span class='comment'>// NB: The char ref tokenizer assumes we have an additional allowed</span>
         <span class='comment'>// character iff we&#39;re tokenizing in an attribute value.</span>
-        <span class='self'>self</span>.<span class='ident'>char_ref_tokenizer</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='kw'>box</span> <span class='ident'>CharRefTokenizer</span>::<span class='ident'>new</span>(<span class='ident'>addnl_allowed</span>));
+        <span class='self'>self</span>.<span class='ident'>char_ref_tokenizer</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>CharRefTokenizer</span>::<span class='ident'>new</span>(<span class='ident'>addnl_allowed</span>)));
     }
 
     <span class='kw'>fn</span> <span class='ident'>emit_eof</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
@@ -1922,7 +1897,7 @@
         <span class='macro'>assert</span><span class='macro'>!</span>(<span class='ident'>c</span>.<span class='ident'>is_some</span>());
     }
 
-    <span class='kw'>fn</span> <span class='ident'>unconsume</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>buf</span>: <span class='ident'>String</span>) {
+    <span class='kw'>fn</span> <span class='ident'>unconsume</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>buf</span>: <span class='ident'>StrTendril</span>) {
         <span class='self'>self</span>.<span class='ident'>input_buffers</span>.<span class='ident'>push_front</span>(<span class='ident'>buf</span>);
     }
 
@@ -1936,19 +1911,20 @@
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>shorthand</span> (
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>emit</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>                     ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>emit_char</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                                   );
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>create_tag</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>kind</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>   ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>create_tag</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>kind</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                           );
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>push_tag</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>                 ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_tag_name</span>.<span class='ident'>push</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                       );
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>push_tag</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>                 ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_tag_name</span>.<span class='ident'>push_char</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                  );
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>discard_tag</span>                      ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>discard_tag</span>();                                   );
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>push_temp</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>                ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>temp_buf</span>.<span class='ident'>push</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                               );
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>discard_char</span>                     ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>discard_char</span>();                                  );
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>push_temp</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>                ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>temp_buf</span>.<span class='ident'>push_char</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                          );
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>emit_temp</span>                        ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>emit_temp_buf</span>();                                 );
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>clear_temp</span>                       ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>clear_temp_buf</span>();                                );
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>create_attr</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>              ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>create_attribute</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                            );
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>push_name</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>                ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_attr_name</span>.<span class='ident'>push</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                      );
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>push_value</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>               ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_attr_value</span>.<span class='ident'>push</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                     );
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>append_value</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>             ) <span class='op'>=&gt;</span> ( <span class='ident'>append_strings</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_attr_value</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);     );
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>push_comment</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>             ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_comment</span>.<span class='ident'>push</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                        );
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>append_comment</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>           ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_comment</span>.<span class='ident'>push_str</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                    );
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>push_name</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>                ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_attr_name</span>.<span class='ident'>push_char</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                 );
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>push_value</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>               ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_attr_value</span>.<span class='ident'>push_char</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                );
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>append_value</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>             ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_attr_value</span>.<span class='ident'>push_tendril</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);             );
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>push_comment</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>             ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_comment</span>.<span class='ident'>push_char</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                   );
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>append_comment</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>           ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_comment</span>.<span class='ident'>push_slice</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                  );
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>emit_comment</span>                     ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>emit_current_comment</span>();                          );
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>clear_comment</span>                    ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_comment</span>.<span class='ident'>truncate</span>(<span class='number'>0</span>);                     );
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>clear_comment</span>                    ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_comment</span>.<span class='ident'>clear</span>();                         );
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>create_doctype</span>                   ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_doctype</span> <span class='op'>=</span> <span class='ident'>Doctype</span>::<span class='ident'>new</span>();                );
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>push_doctype_name</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>        ) <span class='op'>=&gt;</span> ( <span class='ident'>option_push</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_doctype</span>.<span class='ident'>name</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);      );
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>push_doctype_id</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span> ) <span class='op'>=&gt;</span> ( <span class='ident'>option_push</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>doctype_id</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k</span>), <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                 );
@@ -2020,6 +1996,10 @@
 <span class='comment'>// from the function where it is used.</span>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>get_char</span> ( (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (
     <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>get_char</span>(), <span class='boolval'>false</span>)
+));
+
+<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>peek</span> ( (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (
+    <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>peek</span>(), <span class='boolval'>false</span>)
 ));
 
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>pop_except_from</span> ( (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>set</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (
@@ -2149,7 +2129,7 @@
                 <span class='string'>&#39;/&#39;</span>  <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>to</span> <span class='ident'>SelfClosingStartTag</span>),
                 <span class='string'>&#39;&gt;&#39;</span>  <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>emit_tag</span> <span class='ident'>Data</span>),
                 <span class='string'>&#39;\0&#39;</span> <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>error</span>; <span class='ident'>push_tag</span> <span class='string'>&#39;\u{fffd}&#39;</span>),
-                <span class='ident'>c</span>    <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>push_tag</span> (<span class='ident'>lower_ascii</span>(<span class='ident'>c</span>))),
+                <span class='ident'>c</span>    <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>push_tag</span> (<span class='ident'>c</span>.<span class='ident'>to_ascii_lowercase</span>())),
             }},
 
             <span class='comment'>//§ script-data-escaped-less-than-sign-state</span>
@@ -2209,7 +2189,7 @@
                 <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='macro'>get_char</span><span class='macro'>!</span>(<span class='self'>self</span>);
                 <span class='kw'>match</span> <span class='ident'>c</span> {
                     <span class='string'>&#39;\t&#39;</span> <span class='op'>|</span> <span class='string'>&#39;\n&#39;</span> <span class='op'>|</span> <span class='string'>&#39;\x0C&#39;</span> <span class='op'>|</span> <span class='string'>&#39; &#39;</span> <span class='op'>|</span> <span class='string'>&#39;/&#39;</span> <span class='op'>|</span> <span class='string'>&#39;&gt;&#39;</span> <span class='op'>=&gt;</span> {
-                        <span class='kw'>let</span> <span class='ident'>esc</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>temp_buf</span> <span class='op'>==</span> <span class='string'>&quot;script&quot;</span> { <span class='ident'>DoubleEscaped</span> } <span class='kw'>else</span> { <span class='ident'>Escaped</span> };
+                        <span class='kw'>let</span> <span class='ident'>esc</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>temp_buf</span> <span class='op'>==</span> <span class='string'>&quot;script&quot;</span> { <span class='ident'>DoubleEscaped</span> } <span class='kw'>else</span> { <span class='ident'>Escaped</span> };
                         <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>emit</span> <span class='ident'>c</span>; <span class='ident'>to</span> <span class='ident'>RawData</span> <span class='ident'>ScriptDataEscaped</span> <span class='ident'>esc</span>);
                     }
                     _ <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='ident'>lower_ascii_letter</span>(<span class='ident'>c</span>) {
@@ -2259,7 +2239,7 @@
                 <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='macro'>get_char</span><span class='macro'>!</span>(<span class='self'>self</span>);
                 <span class='kw'>match</span> <span class='ident'>c</span> {
                     <span class='string'>&#39;\t&#39;</span> <span class='op'>|</span> <span class='string'>&#39;\n&#39;</span> <span class='op'>|</span> <span class='string'>&#39;\x0C&#39;</span> <span class='op'>|</span> <span class='string'>&#39; &#39;</span> <span class='op'>|</span> <span class='string'>&#39;/&#39;</span> <span class='op'>|</span> <span class='string'>&#39;&gt;&#39;</span> <span class='op'>=&gt;</span> {
-                        <span class='kw'>let</span> <span class='ident'>esc</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>temp_buf</span> <span class='op'>==</span> <span class='string'>&quot;script&quot;</span> { <span class='ident'>Escaped</span> } <span class='kw'>else</span> { <span class='ident'>DoubleEscaped</span> };
+                        <span class='kw'>let</span> <span class='ident'>esc</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>temp_buf</span> <span class='op'>==</span> <span class='string'>&quot;script&quot;</span> { <span class='ident'>Escaped</span> } <span class='kw'>else</span> { <span class='ident'>DoubleEscaped</span> };
                         <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>emit</span> <span class='ident'>c</span>; <span class='ident'>to</span> <span class='ident'>RawData</span> <span class='ident'>ScriptDataEscaped</span> <span class='ident'>esc</span>);
                     }
                     _ <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='ident'>lower_ascii_letter</span>(<span class='ident'>c</span>) {
@@ -2321,18 +2301,16 @@
             }},
 
             <span class='comment'>//§ before-attribute-value-state</span>
-            <span class='ident'>states</span>::<span class='ident'>BeforeAttributeValue</span> <span class='op'>=&gt;</span> <span class='kw'>loop</span> { <span class='kw'>match</span> <span class='macro'>get_char</span><span class='macro'>!</span>(<span class='self'>self</span>) {
-                <span class='string'>&#39;\t&#39;</span> <span class='op'>|</span> <span class='string'>&#39;\n&#39;</span> <span class='op'>|</span> <span class='string'>&#39;\x0C&#39;</span> <span class='op'>|</span> <span class='string'>&#39; &#39;</span> <span class='op'>=&gt;</span> (),
-                <span class='string'>&#39;&quot;&#39;</span>  <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>to</span> <span class='ident'>AttributeValue</span> <span class='ident'>DoubleQuoted</span>),
-                <span class='string'>&#39;&amp;&#39;</span>  <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>reconsume</span> <span class='ident'>AttributeValue</span> <span class='ident'>Unquoted</span>),
-                <span class='string'>&#39;\&#39;&#39;</span> <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>to</span> <span class='ident'>AttributeValue</span> <span class='ident'>SingleQuoted</span>),
-                <span class='string'>&#39;\0&#39;</span> <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>error</span>; <span class='ident'>push_value</span> <span class='string'>&#39;\u{fffd}&#39;</span>; <span class='ident'>to</span> <span class='ident'>AttributeValue</span> <span class='ident'>Unquoted</span>),
-                <span class='string'>&#39;&gt;&#39;</span>  <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>error</span>; <span class='ident'>emit_tag</span> <span class='ident'>Data</span>),
-                <span class='ident'>c</span> <span class='op'>=&gt;</span> {
-                    <span class='macro'>go_match</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>c</span>,
-                        <span class='string'>&#39;&lt;&#39;</span> , <span class='string'>&#39;=&#39;</span> , <span class='string'>&#39;`&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>error</span>);
-                    <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>push_value</span> <span class='ident'>c</span>; <span class='ident'>to</span> <span class='ident'>AttributeValue</span> <span class='ident'>Unquoted</span>);
-                }
+            <span class='comment'>// Use peek so we can handle the first attr character along with the rest,</span>
+            <span class='comment'>// hopefully in the same zero-copy buffer.</span>
+            <span class='ident'>states</span>::<span class='ident'>BeforeAttributeValue</span> <span class='op'>=&gt;</span> <span class='kw'>loop</span> { <span class='kw'>match</span> <span class='macro'>peek</span><span class='macro'>!</span>(<span class='self'>self</span>) {
+                <span class='string'>&#39;\t&#39;</span> <span class='op'>|</span> <span class='string'>&#39;\n&#39;</span> <span class='op'>|</span> <span class='string'>&#39;\r&#39;</span> <span class='op'>|</span> <span class='string'>&#39;\x0C&#39;</span> <span class='op'>|</span> <span class='string'>&#39; &#39;</span> <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>discard_char</span>),
+                <span class='string'>&#39;&quot;&#39;</span>  <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>discard_char</span>; <span class='ident'>to</span> <span class='ident'>AttributeValue</span> <span class='ident'>DoubleQuoted</span>),
+                <span class='string'>&#39;&amp;&#39;</span>  <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>to</span> <span class='ident'>AttributeValue</span> <span class='ident'>Unquoted</span>),
+                <span class='string'>&#39;\&#39;&#39;</span> <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>discard_char</span>; <span class='ident'>to</span> <span class='ident'>AttributeValue</span> <span class='ident'>SingleQuoted</span>),
+                <span class='string'>&#39;\0&#39;</span> <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>discard_char</span>; <span class='ident'>error</span>; <span class='ident'>push_value</span> <span class='string'>&#39;\u{fffd}&#39;</span>; <span class='ident'>to</span> <span class='ident'>AttributeValue</span> <span class='ident'>Unquoted</span>),
+                <span class='string'>&#39;&gt;&#39;</span>  <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>discard_char</span>; <span class='ident'>error</span>; <span class='ident'>emit_tag</span> <span class='ident'>Data</span>),
+                _    <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>to</span> <span class='ident'>AttributeValue</span> <span class='ident'>Unquoted</span>),
             }},
 
             <span class='comment'>//§ attribute-value-(double-quoted)-state</span>
@@ -2342,7 +2320,7 @@
                     <span class='ident'>FromSet</span>(<span class='string'>&#39;&amp;&#39;</span>)  <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>consume_char_ref</span> <span class='string'>&#39;&quot;&#39;</span>),
                     <span class='ident'>FromSet</span>(<span class='string'>&#39;\0&#39;</span>) <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>error</span>; <span class='ident'>push_value</span> <span class='string'>&#39;\u{fffd}&#39;</span>),
                     <span class='ident'>FromSet</span>(<span class='ident'>c</span>)    <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>push_value</span> <span class='ident'>c</span>),
-                    <span class='ident'>NotFromSet</span>(<span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>append_value</span> <span class='ident'>b</span>),
+                    <span class='ident'>NotFromSet</span>(<span class='kw-2'>ref</span> <span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>append_value</span> <span class='ident'>b</span>),
                 }
             },
 
@@ -2353,7 +2331,7 @@
                     <span class='ident'>FromSet</span>(<span class='string'>&#39;&amp;&#39;</span>)  <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>consume_char_ref</span> <span class='string'>&#39;\&#39;&#39;</span>),
                     <span class='ident'>FromSet</span>(<span class='string'>&#39;\0&#39;</span>) <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>error</span>; <span class='ident'>push_value</span> <span class='string'>&#39;\u{fffd}&#39;</span>),
                     <span class='ident'>FromSet</span>(<span class='ident'>c</span>)    <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>push_value</span> <span class='ident'>c</span>),
-                    <span class='ident'>NotFromSet</span>(<span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>append_value</span> <span class='ident'>b</span>),
+                    <span class='ident'>NotFromSet</span>(<span class='kw-2'>ref</span> <span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>append_value</span> <span class='ident'>b</span>),
                 }
             },
 
@@ -2370,7 +2348,7 @@
                             <span class='string'>&#39;&quot;&#39;</span> , <span class='string'>&#39;\&#39;&#39;</span> , <span class='string'>&#39;&lt;&#39;</span> , <span class='string'>&#39;=&#39;</span> , <span class='string'>&#39;`&#39;</span> <span class='op'>=&gt;</span> <span class='ident'>error</span>);
                         <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>push_value</span> <span class='ident'>c</span>);
                     }
-                    <span class='ident'>NotFromSet</span>(<span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>append_value</span> <span class='ident'>b</span>),
+                    <span class='ident'>NotFromSet</span>(<span class='kw-2'>ref</span> <span class='ident'>b</span>) <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>append_value</span> <span class='ident'>b</span>),
                 }
             },
 
@@ -2451,7 +2429,8 @@
                 <span class='string'>&#39;\t&#39;</span> <span class='op'>|</span> <span class='string'>&#39;\n&#39;</span> <span class='op'>|</span> <span class='string'>&#39;\x0C&#39;</span> <span class='op'>|</span> <span class='string'>&#39; &#39;</span> <span class='op'>=&gt;</span> (),
                 <span class='string'>&#39;\0&#39;</span> <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>error</span>; <span class='ident'>create_doctype</span>; <span class='ident'>push_doctype_name</span> <span class='string'>&#39;\u{fffd}&#39;</span>; <span class='ident'>to</span> <span class='ident'>DoctypeName</span>),
                 <span class='string'>&#39;&gt;&#39;</span>  <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>error</span>; <span class='ident'>create_doctype</span>; <span class='ident'>force_quirks</span>; <span class='ident'>emit_doctype</span>; <span class='ident'>to</span> <span class='ident'>Data</span>),
-                <span class='ident'>c</span>    <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>create_doctype</span>; <span class='ident'>push_doctype_name</span> (<span class='ident'>lower_ascii</span>(<span class='ident'>c</span>)); <span class='ident'>to</span> <span class='ident'>DoctypeName</span>),
+                <span class='ident'>c</span>    <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>create_doctype</span>; <span class='ident'>push_doctype_name</span> (<span class='ident'>c</span>.<span class='ident'>to_ascii_lowercase</span>()); 
+                                  <span class='ident'>to</span> <span class='ident'>DoctypeName</span>),
             }},
 
             <span class='comment'>//§ doctype-name-state</span>
@@ -2460,7 +2439,7 @@
                      <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>to</span> <span class='ident'>AfterDoctypeName</span>),
                 <span class='string'>&#39;&gt;&#39;</span>  <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>emit_doctype</span>; <span class='ident'>to</span> <span class='ident'>Data</span>),
                 <span class='string'>&#39;\0&#39;</span> <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>error</span>; <span class='ident'>push_doctype_name</span> <span class='string'>&#39;\u{fffd}&#39;</span>),
-                <span class='ident'>c</span>    <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>push_doctype_name</span> (<span class='ident'>lower_ascii</span>(<span class='ident'>c</span>))),
+                <span class='ident'>c</span>    <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>push_doctype_name</span> (<span class='ident'>c</span>.<span class='ident'>to_ascii_lowercase</span>())),
             }},
 
             <span class='comment'>//§ after-doctype-name-state</span>
@@ -2645,7 +2624,7 @@
             <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>state_profile</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span>(<span class='ident'>s</span>, <span class='ident'>t</span>)<span class='op'>|</span> (<span class='op'>*</span><span class='ident'>s</span>, <span class='op'>*</span><span class='ident'>t</span>)).<span class='ident'>collect</span>();
         <span class='ident'>results</span>.<span class='ident'>sort_by</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span>(_, <span class='ident'>x</span>), <span class='kw-2'>&amp;</span>(_, <span class='ident'>y</span>)<span class='op'>|</span> <span class='ident'>y</span>.<span class='ident'>cmp</span>(<span class='kw-2'>&amp;</span><span class='ident'>x</span>));
 
-        <span class='kw'>let</span> <span class='ident'>total</span>: <span class='ident'>u64</span> <span class='op'>=</span> <span class='ident'>results</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span>(_, <span class='ident'>t</span>)<span class='op'>|</span> <span class='ident'>t</span>).<span class='ident'>sum</span>();
+        <span class='kw'>let</span> <span class='ident'>total</span>: <span class='ident'>u64</span> <span class='op'>=</span> <span class='ident'>results</span>.<span class='ident'>iter</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span>(_, <span class='ident'>t</span>)<span class='op'>|</span> <span class='ident'>t</span>).<span class='ident'>fold</span>(<span class='number'>0</span>, ::<span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>Add</span>::<span class='ident'>add</span>);
         <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;\nTokenizer profile, in nanoseconds&quot;</span>);
         <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;\n{:12}         total in token sink&quot;</span>, <span class='self'>self</span>.<span class='ident'>time_in_sink</span>);
         <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;\n{:12}         total in tokenizer&quot;</span>, <span class='ident'>total</span>);
@@ -2730,47 +2709,28 @@
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>non_snake_case</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>test</span> {
-    <span class='kw'>use</span> <span class='ident'>super</span>::{<span class='ident'>option_push</span>, <span class='ident'>append_strings</span>}; <span class='comment'>// private items</span>
+    <span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>option_push</span>; <span class='comment'>// private items</span>
+    <span class='kw'>use</span> <span class='ident'>tendril</span>::{<span class='ident'>StrTendril</span>, <span class='ident'>SliceExt</span>};
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>push_to_None_gives_singleton</span>() {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='prelude-val'>None</span>;
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='prelude-val'>None</span>;
         <span class='ident'>option_push</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>s</span>, <span class='string'>&#39;x&#39;</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>, <span class='prelude-val'>Some</span>(<span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;x&quot;</span>)));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>, <span class='prelude-val'>Some</span>(<span class='string'>&quot;x&quot;</span>.<span class='ident'>to_tendril</span>()));
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>push_to_empty_appends</span>() {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>String</span>::<span class='ident'>new</span>());
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>StrTendril</span>::<span class='ident'>new</span>());
         <span class='ident'>option_push</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>s</span>, <span class='string'>&#39;x&#39;</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>, <span class='prelude-val'>Some</span>(<span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;x&quot;</span>)));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>, <span class='prelude-val'>Some</span>(<span class='string'>&quot;x&quot;</span>.<span class='ident'>to_tendril</span>()));
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>push_to_nonempty_appends</span>() {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;y&quot;</span>));
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>StrTendril</span>::<span class='ident'>from_slice</span>(<span class='string'>&quot;y&quot;</span>));
         <span class='ident'>option_push</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>s</span>, <span class='string'>&#39;x&#39;</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>, <span class='prelude-val'>Some</span>(<span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;yx&quot;</span>)));
-    }
-
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>append_appends</span>() {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;foo&quot;</span>);
-        <span class='ident'>append_strings</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>s</span>, <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;bar&quot;</span>));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>, <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;foobar&quot;</span>));
-    }
-
-    <span class='attribute'>#[<span class='ident'>test</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>append_to_empty_does_not_copy</span>() {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>lhs</span>: <span class='ident'>String</span> <span class='op'>=</span> <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;&quot;</span>);
-        <span class='kw'>let</span> <span class='ident'>rhs</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>b&#39;f&#39;</span>, <span class='string'>b&#39;o&#39;</span>, <span class='string'>b&#39;o&#39;</span>];
-        <span class='kw'>let</span> <span class='ident'>ptr_old</span> <span class='op'>=</span> <span class='ident'>rhs</span>[<span class='number'>0</span>] <span class='kw'>as</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>u8</span>;
-
-        <span class='ident'>append_strings</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>lhs</span>, <span class='ident'>String</span>::<span class='ident'>from_utf8</span>(<span class='ident'>rhs</span>).<span class='ident'>unwrap</span>());
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>lhs</span>, <span class='ident'>String</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;foo&quot;</span>));
-
-        <span class='kw'>let</span> <span class='ident'>ptr_new</span> <span class='op'>=</span> <span class='ident'>lhs</span>.<span class='ident'>into_bytes</span>()[<span class='number'>0</span>] <span class='kw'>as</span> <span class='op'>*</span><span class='kw'>const</span> <span class='ident'>u8</span>;
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>ptr_old</span>, <span class='ident'>ptr_new</span>);
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>s</span>, <span class='prelude-val'>Some</span>(<span class='string'>&quot;yx&quot;</span>.<span class='ident'>to_tendril</span>()));
     }
 }
 </pre>
@@ -2806,6 +2766,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["plugin_registrar",""]],"mod":[["match_token","Implements the `match_token!()` macro for use by the HTML tree builder in `src/tree_builder/mod.rs`."],["named_entities",""]]});

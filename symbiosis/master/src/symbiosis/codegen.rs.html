@@ -333,10 +333,14 @@
 <span id="291">291</span>
 <span id="292">292</span>
 <span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='self'>self</span>, <span class='ident'>Write</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
+
+<span class='kw'>use</span> <span class='ident'>tendril</span>::<span class='ident'>StrTendril</span>;
 
 <span class='kw'>use</span> <span class='ident'>string_cache</span>::<span class='ident'>atom</span>::<span class='ident'>Atom</span>;
 <span class='kw'>use</span> <span class='ident'>html5ever</span>::<span class='ident'>tokenizer</span>::<span class='ident'>Doctype</span>;
@@ -356,7 +360,7 @@
     <span class='kw'>fn</span> <span class='ident'>init_writer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>W</span>: <span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>W</span>) <span class='op'>-&gt;</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>W</span><span class='op'>&gt;</span>;
 
     <span class='doccomment'>///Generate code for a single template.</span>
-    <span class='kw'>fn</span> <span class='ident'>build_template</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>params</span>: <span class='kw-2'>&amp;</span><span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>ContentType</span><span class='op'>&gt;</span>, <span class='ident'>tokens</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>Token</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>;
+    <span class='kw'>fn</span> <span class='ident'>build_template</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>params</span>: <span class='kw-2'>&amp;</span><span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>StrTendril</span>, <span class='ident'>ContentType</span><span class='op'>&gt;</span>, <span class='ident'>tokens</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>Token</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>;
 
     <span class='doccomment'>///Generate code for a module or a similar collection containing multiple templates.</span>
     <span class='kw'>fn</span> <span class='ident'>build_module</span><span class='op'>&lt;</span><span class='ident'>W</span>, <span class='ident'>F</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>w</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Writer</span><span class='op'>&lt;</span><span class='ident'>W</span><span class='op'>&gt;</span>, <span class='ident'>build_templates</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> <span class='kw'>where</span>
@@ -388,7 +392,7 @@
     <span class='ident'>If</span>(<span class='ident'>Logic</span>),
     <span class='doccomment'>///Repeat the content within the scope for each element in a collection.</span>
     <span class='doccomment'>///Args: collection, element, optional key</span>
-    <span class='ident'>ForEach</span>(<span class='ident'>String</span>, <span class='ident'>String</span>, <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>)
+    <span class='ident'>ForEach</span>(<span class='ident'>StrTendril</span>, <span class='ident'>StrTendril</span>, <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span>)
 }
 
 <span class='doccomment'>///Logic expressions.</span>
@@ -400,17 +404,17 @@
     <span class='doccomment'>///The logical complement of an expression.</span>
     <span class='ident'>Not</span>(<span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Logic</span><span class='op'>&gt;</span>),
     <span class='doccomment'>///A value from a template parameter.</span>
-    <span class='ident'>Value</span>(<span class='ident'>String</span>)
+    <span class='ident'>Value</span>(<span class='ident'>StrTendril</span>)
 }
 
 <span class='kw'>impl</span> <span class='ident'>Logic</span> {
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>placeholders</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>placeholders</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[];
         <span class='self'>self</span>.<span class='ident'>placeholders_r</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>res</span>);
         <span class='ident'>res</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>placeholders_r</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>res</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span><span class='op'>&gt;</span>) {
+    <span class='kw'>fn</span> <span class='ident'>placeholders_r</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>res</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>StrTendril</span><span class='op'>&gt;</span>) {
         <span class='kw'>match</span> <span class='self'>self</span> {
             <span class='kw-2'>&amp;</span><span class='ident'>Logic</span>::<span class='ident'>And</span>(<span class='kw-2'>ref</span> <span class='ident'>conds</span>) <span class='op'>=&gt;</span> <span class='kw'>for</span> <span class='ident'>cond</span> <span class='kw'>in</span> <span class='ident'>conds</span> {
                 <span class='ident'>cond</span>.<span class='ident'>placeholders_r</span>(<span class='ident'>res</span>);
@@ -441,10 +445,10 @@
 <span class='doccomment'>///Types of text content.</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Content</span> {
     <span class='doccomment'>///A plain string.</span>
-    <span class='ident'>String</span>(<span class='ident'>String</span>),
+    <span class='ident'>String</span>(<span class='ident'>StrTendril</span>),
 
     <span class='doccomment'>///Use content from a parameter in a placeholder.</span>
-    <span class='ident'>Placeholder</span>(<span class='ident'>String</span>)
+    <span class='ident'>Placeholder</span>(<span class='ident'>StrTendril</span>)
 }
 
 <span class='doccomment'>///Types of template parameter content.</span>
@@ -660,6 +664,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

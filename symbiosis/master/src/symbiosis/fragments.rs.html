@@ -262,8 +262,12 @@
 <span id="220">220</span>
 <span id="221">221</span>
 <span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>;
+
+<span class='kw'>use</span> <span class='ident'>tendril</span>::<span class='ident'>StrTendril</span>;
 
 <span class='kw'>use</span> <span class='ident'>codegen</span>::{<span class='ident'>Scope</span>, <span class='ident'>Logic</span>, <span class='ident'>ContentType</span>};
 
@@ -312,9 +316,9 @@
 <span class='doccomment'>///Things that can be returned from fragments.</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ReturnType</span> {
     <span class='doccomment'>///A plane text string.</span>
-    <span class='ident'>String</span>(<span class='ident'>String</span>),
+    <span class='ident'>String</span>(<span class='ident'>StrTendril</span>),
     <span class='doccomment'>///A placeholder parameter and its preferred content type.</span>
-    <span class='ident'>Placeholder</span>(<span class='ident'>String</span>, <span class='ident'>ContentType</span>),
+    <span class='ident'>Placeholder</span>(<span class='ident'>StrTendril</span>, <span class='ident'>ContentType</span>),
     <span class='doccomment'>///A logic expression.</span>
     <span class='ident'>Logic</span>(<span class='ident'>Logic</span>),
     <span class='doccomment'>///The beginning of a scope.</span>
@@ -326,7 +330,7 @@
 <span class='doccomment'>///Things that can be sent into fragments.</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>InputType</span> {
     <span class='doccomment'>///A placeholder parameter and its preferred content type.</span>
-    <span class='ident'>Placeholder</span>(<span class='ident'>String</span>, <span class='ident'>ContentType</span>),
+    <span class='ident'>Placeholder</span>(<span class='ident'>StrTendril</span>, <span class='ident'>ContentType</span>),
     <span class='doccomment'>///A logic expression.</span>
     <span class='ident'>Logic</span>(<span class='ident'>Logic</span>)
 }
@@ -518,6 +522,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>

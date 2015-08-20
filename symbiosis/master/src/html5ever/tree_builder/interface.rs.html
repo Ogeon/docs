@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/git/checkouts/html5ever-1ab8707684fb3258/master/src/tree_builder/interface.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/html5ever-0.2.1/src/tree_builder/interface.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>interface.rs.html -- source</title>
@@ -168,6 +168,10 @@
 <span id="126">126</span>
 <span id="127">127</span>
 <span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The html5ever Project Developers. See the</span>
 <span class='comment'>// COPYRIGHT file at the top-level directory of this distribution.</span>
@@ -186,6 +190,7 @@
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>;
 
 <span class='kw'>use</span> <span class='ident'>string_cache</span>::<span class='ident'>QualName</span>;
+<span class='kw'>use</span> <span class='ident'>tendril</span>::<span class='ident'>StrTendril</span>;
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>QuirksMode</span>::{<span class='ident'>Quirks</span>, <span class='ident'>LimitedQuirks</span>, <span class='ident'>NoQuirks</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>NodeOrText</span>::{<span class='ident'>AppendNode</span>, <span class='ident'>AppendText</span>};
@@ -204,7 +209,7 @@
 <span class='doccomment'>/// the sink may not want to allocate a `Handle` for each.</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>NodeOrText</span><span class='op'>&lt;</span><span class='ident'>Handle</span><span class='op'>&gt;</span> {
     <span class='ident'>AppendNode</span>(<span class='ident'>Handle</span>),
-    <span class='ident'>AppendText</span>(<span class='ident'>String</span>),
+    <span class='ident'>AppendText</span>(<span class='ident'>StrTendril</span>),
 }
 
 <span class='doccomment'>/// Whether to interrupt further parsing of the current input until</span>
@@ -245,7 +250,7 @@
     <span class='kw'>fn</span> <span class='ident'>create_element</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>QualName</span>, <span class='ident'>attrs</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Attribute</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>Handle</span>;
 
     <span class='doccomment'>/// Create a comment node.</span>
-    <span class='kw'>fn</span> <span class='ident'>create_comment</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>Handle</span>;
+    <span class='kw'>fn</span> <span class='ident'>create_comment</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>StrTendril</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>Handle</span>;
 
     <span class='doccomment'>/// Append a node as the last child of the given node.  If this would</span>
     <span class='doccomment'>/// produce adjacent sibling text nodes, it should concatenate the text</span>
@@ -268,7 +273,10 @@
         <span class='ident'>new_node</span>: <span class='ident'>NodeOrText</span><span class='op'>&lt;</span><span class='ident'>Self</span>::<span class='ident'>Handle</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>NodeOrText</span><span class='op'>&lt;</span><span class='ident'>Self</span>::<span class='ident'>Handle</span><span class='op'>&gt;&gt;</span>;
 
     <span class='doccomment'>/// Append a `DOCTYPE` element to the `Document` node.</span>
-    <span class='kw'>fn</span> <span class='ident'>append_doctype_to_document</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>String</span>, <span class='ident'>public_id</span>: <span class='ident'>String</span>, <span class='ident'>system_id</span>: <span class='ident'>String</span>);
+    <span class='kw'>fn</span> <span class='ident'>append_doctype_to_document</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
+                                  <span class='ident'>name</span>: <span class='ident'>StrTendril</span>,
+                                  <span class='ident'>public_id</span>: <span class='ident'>StrTendril</span>,
+                                  <span class='ident'>system_id</span>: <span class='ident'>StrTendril</span>);
 
     <span class='doccomment'>/// Add each attribute to the given element, if no attribute</span>
     <span class='doccomment'>/// with that name already exists.</span>
@@ -330,6 +338,10 @@
                 <code>struct</code>, <code>enum</code>,
                 <code>trait</code>, <code>typedef</code> (or
                 <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
             </p>
         </div>
     </div>
