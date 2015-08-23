@@ -7,7 +7,7 @@
     <meta name="description" content="API documentation for the Rust `Template` struct in crate `symbiosis`.">
     <meta name="keywords" content="rust, rustlang, rust-lang, Template">
 
-    <title>symbiosis::fragments::Template - Rust</title>
+    <title>symbiosis::fragment::Template - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>fragments</a></p><script>window.sidebarCurrent = {name: 'Template', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>fragment</a></p><script>window.sidebarCurrent = {name: 'Template', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -41,14 +41,15 @@
     </nav>
 
     <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>fragments</a>::<wbr><a class='struct' href=''>Template</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>fragment</a>::<wbr><a class='struct' href=''>Template</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1742' class='srclink' href='../../src/symbiosis/fragments.rs.html#10' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-3964' class='srclink' href='../../src/symbiosis/fragment/mod.rs.html#50' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Template;</pre><div class='docblock'><p><code>template(a)</code> tells the parser that the placeholder <code>a</code> is an other template.</p>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../symbiosis/fragments/trait.Fragment.html' title='symbiosis::fragments::Fragment'>Fragment</a> for <a class='struct' href='../../symbiosis/fragments/struct.Template.html' title='symbiosis::fragments::Template'>Template</a></code></h3><div class='impl-items'><h4 id='method.identifier' class='method'><code>fn <a href='../../symbiosis/fragments/trait.Fragment.html#method.identifier' class='fnname'>identifier</a>(&amp;self) -&gt; &amp;'static <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></h4>
-<h4 id='method.process' class='method'><code>fn <a href='../../symbiosis/fragments/trait.Fragment.html#method.process' class='fnname'>process</a>(&amp;self, args: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../symbiosis/fragments/enum.InputType.html' title='symbiosis::fragments::InputType'>InputType</a>&gt;) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../symbiosis/fragments/enum.ReturnType.html' title='symbiosis::fragments::ReturnType'>ReturnType</a>, <a class='enum' href='http://doc.rust-lang.org/nightly/collections/borrow/enum.Cow.html' title='collections::borrow::Cow'>Cow</a>&lt;'static, <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;&gt;</code></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../symbiosis/fragment/trait.Fragment.html' title='symbiosis::fragment::Fragment'>Fragment</a> for <a class='struct' href='../../symbiosis/fragment/struct.Template.html' title='symbiosis::fragment::Template'>Template</a></code></h3><div class='impl-items'><h4 id='method.identifier' class='method'><code>fn <a href='../../symbiosis/fragment/trait.Fragment.html#method.identifier' class='fnname'>identifier</a>(&amp;self) -&gt; &amp;'static <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></h4>
+<h4 id='method.pattern' class='method'><code>fn <a href='../../symbiosis/fragment/trait.Fragment.html#method.pattern' class='fnname'>pattern</a>(&amp;self) -&gt; <a class='struct' href='../../symbiosis/fragment/pattern/struct.Pattern.html' title='symbiosis::fragment::pattern::Pattern'>Pattern</a></code></h4>
+<h4 id='method.process' class='method'><code>fn <a href='../../symbiosis/fragment/trait.Fragment.html#method.process' class='fnname'>process</a>(&amp;self, args: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../symbiosis/fragment/pattern/enum.Argument.html' title='symbiosis::fragment::pattern::Argument'>Argument</a>&gt;) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../symbiosis/fragment/enum.ReturnType.html' title='symbiosis::fragment::ReturnType'>ReturnType</a>, <a class='struct' href='../../symbiosis/fragment/struct.Error.html' title='symbiosis::fragment::Error'>Error</a>&gt;</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 

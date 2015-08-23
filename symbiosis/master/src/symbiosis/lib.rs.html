@@ -486,15 +486,6 @@
 <span id="444">444</span>
 <span id="445">445</span>
 <span id="446">446</span>
-<span id="447">447</span>
-<span id="448">448</span>
-<span id="449">449</span>
-<span id="450">450</span>
-<span id="451">451</span>
-<span id="452">452</span>
-<span id="453">453</span>
-<span id="454">454</span>
-<span id="455">455</span>
 </pre><pre class='rust '>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>html5ever</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>string_cache</span>;
@@ -519,13 +510,13 @@
 <span class='kw'>use</span> <span class='ident'>tendril</span>::<span class='ident'>StrTendril</span>;
 
 <span class='kw'>use</span> <span class='ident'>codegen</span>::{<span class='ident'>Token</span>, <span class='ident'>Content</span>, <span class='ident'>Codegen</span>, <span class='ident'>ContentType</span>, <span class='ident'>Scope</span>};
-<span class='kw'>use</span> <span class='ident'>fragments</span>::{<span class='ident'>Fragment</span>, <span class='ident'>ReturnType</span>};
+<span class='kw'>use</span> <span class='ident'>fragment</span>::{<span class='ident'>Fragment</span>, <span class='ident'>ReturnType</span>};
 
 <span class='kw'>use</span> <span class='ident'>parser</span>::<span class='ident'>ExtensibleMap</span>;
 
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>codegen</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>fragments</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>fragment</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>javascript</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>rust</span>;
 <span class='kw'>mod</span> <span class='ident'>parser</span>;
@@ -534,7 +525,7 @@
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Error</span> {
     <span class='ident'>Io</span>(<span class='ident'>io</span>::<span class='ident'>Error</span>),
     <span class='ident'>Format</span>(<span class='ident'>fmt</span>::<span class='ident'>Error</span>),
-    <span class='ident'>Parse</span>(<span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>str</span><span class='op'>&gt;&gt;</span>)
+    <span class='ident'>Parse</span>(<span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>parser</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>)
 }
 
 <span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>io</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
@@ -555,13 +546,9 @@
             <span class='kw-2'>&amp;</span><span class='ident'>Error</span>::<span class='ident'>Io</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='ident'>e</span>.<span class='ident'>fmt</span>(<span class='ident'>f</span>),
             <span class='kw-2'>&amp;</span><span class='ident'>Error</span>::<span class='ident'>Format</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='ident'>e</span>.<span class='ident'>fmt</span>(<span class='ident'>f</span>),
             <span class='kw-2'>&amp;</span><span class='ident'>Error</span>::<span class='ident'>Parse</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> {
-                <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;parse errors: &quot;</span>));
-                <span class='kw'>for</span> (<span class='ident'>i</span>, <span class='ident'>error</span>) <span class='kw'>in</span> <span class='ident'>e</span>.<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
-                    <span class='kw'>if</span> <span class='ident'>i</span> <span class='op'>==</span> <span class='number'>0</span> {
-                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>error</span>.<span class='ident'>fmt</span>(<span class='ident'>f</span>));
-                    } <span class='kw'>else</span> {
-                        <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;, {}&quot;</span>, <span class='ident'>error</span>));
-                    }
+                <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;parse errors:\n&quot;</span>));
+                <span class='kw'>for</span> <span class='ident'>error</span> <span class='kw'>in</span> <span class='ident'>e</span>.<span class='ident'>iter</span>() {
+                    <span class='macro'>try</span><span class='macro'>!</span>(<span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot; - {}\n&quot;</span>, <span class='ident'>error</span>));
                 }
                 <span class='prelude-val'>Ok</span>(())
             }
@@ -657,7 +644,7 @@
     <span class='ident'>parameters</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>StrTendril</span>, <span class='ident'>ContentType</span><span class='op'>&gt;</span>,
     <span class='ident'>tokens</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>codegen</span>::<span class='ident'>Token</span><span class='op'>&gt;</span>,
     <span class='ident'>scopes</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>StrTendril</span>, <span class='ident'>StrTendril</span>, <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>ContentType</span><span class='op'>&gt;</span>, <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>StrTendril</span><span class='op'>&gt;</span>)<span class='op'>&gt;&gt;</span>,
-    <span class='ident'>errors</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>str</span><span class='op'>&gt;&gt;</span>
+    <span class='ident'>errors</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>parser</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Template</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
@@ -714,7 +701,7 @@
         <span class='self'>self</span>.<span class='ident'>tokens</span>.<span class='ident'>push</span>(<span class='ident'>Token</span>::<span class='ident'>SetDoctype</span>(<span class='ident'>doctype</span>));
     }
 
-    <span class='kw'>fn</span> <span class='ident'>open_tag</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>, <span class='ident'>attributes</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Attribute</span><span class='op'>&gt;</span>, <span class='ident'>self_closing</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>str</span><span class='op'>&gt;&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>open_tag</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>, <span class='ident'>attributes</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Attribute</span><span class='op'>&gt;</span>, <span class='ident'>self_closing</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>parser</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>void</span> <span class='op'>=</span> <span class='ident'>is_void</span>(<span class='ident'>name</span>.<span class='ident'>as_slice</span>());
         <span class='self'>self</span>.<span class='ident'>tokens</span>.<span class='ident'>push</span>(<span class='ident'>Token</span>::<span class='ident'>BeginTag</span>(<span class='ident'>name</span>));
 
@@ -726,7 +713,7 @@
                     <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>reg_placeholder</span>(<span class='ident'>name</span>.<span class='ident'>clone</span>(), <span class='ident'>ty</span>));
                     <span class='self'>self</span>.<span class='ident'>tokens</span>.<span class='ident'>push</span>(<span class='ident'>Token</span>::<span class='ident'>BeginAttribute</span>(<span class='ident'>attribute</span>.<span class='ident'>name</span>.<span class='ident'>local</span>, <span class='ident'>Content</span>::<span class='ident'>Placeholder</span>(<span class='ident'>name</span>)));
                 },
-                <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>Logic</span>(_)) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Cow</span>::<span class='ident'>Borrowed</span>(<span class='string'>&quot;logic can not be used as text&quot;</span>)),
+                <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>Logic</span>(_)) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;logic can not be used as text&quot;</span>.<span class='ident'>into</span>()),
                 <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>)) <span class='op'>=&gt;</span> {
                     <span class='self'>self</span>.<span class='ident'>tokens</span>.<span class='ident'>push</span>(<span class='ident'>Token</span>::<span class='ident'>BeginAttribute</span>(<span class='ident'>attribute</span>.<span class='ident'>name</span>.<span class='ident'>local</span>, <span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>StrTendril</span>::<span class='ident'>new</span>())));
                     <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>reg_scope_vars</span>(<span class='kw-2'>&amp;</span><span class='ident'>scope</span>));
@@ -747,7 +734,7 @@
                         <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>reg_placeholder</span>(<span class='ident'>name</span>.<span class='ident'>clone</span>(), <span class='ident'>ty</span>));
                         <span class='self'>self</span>.<span class='ident'>tokens</span>.<span class='ident'>push</span>(<span class='ident'>Token</span>::<span class='ident'>AppendToAttribute</span>(<span class='ident'>Content</span>::<span class='ident'>Placeholder</span>(<span class='ident'>name</span>)));
                     },
-                    <span class='ident'>ReturnType</span>::<span class='ident'>Logic</span>(_) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Cow</span>::<span class='ident'>Borrowed</span>(<span class='string'>&quot;logic can not be used as text&quot;</span>)),
+                    <span class='ident'>ReturnType</span>::<span class='ident'>Logic</span>(_) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;logic can not be used as text&quot;</span>.<span class='ident'>into</span>()),
                     <span class='ident'>ReturnType</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>) <span class='op'>=&gt;</span> {
                         <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>reg_scope_vars</span>(<span class='kw-2'>&amp;</span><span class='ident'>scope</span>));
                         <span class='self'>self</span>.<span class='ident'>tokens</span>.<span class='ident'>push</span>(<span class='ident'>Token</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>));
@@ -767,7 +754,7 @@
         <span class='prelude-val'>Ok</span>(())
     }
 
-    <span class='kw'>fn</span> <span class='ident'>add_text</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>StrTendril</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>str</span><span class='op'>&gt;&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>add_text</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>StrTendril</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>parser</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>content</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>::<span class='ident'>parse_content</span>(<span class='ident'>text</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>fragments</span>)).<span class='ident'>into_iter</span>();
         <span class='kw'>match</span> <span class='ident'>content</span>.<span class='ident'>next</span>() {
             <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>String</span>(<span class='ident'>text</span>)) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>tokens</span>.<span class='ident'>push</span>(<span class='ident'>Token</span>::<span class='ident'>Text</span>(<span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>text</span>))),
@@ -775,7 +762,7 @@
                 <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>reg_placeholder</span>(<span class='ident'>name</span>.<span class='ident'>clone</span>(), <span class='ident'>ty</span>));
                 <span class='self'>self</span>.<span class='ident'>tokens</span>.<span class='ident'>push</span>(<span class='ident'>Token</span>::<span class='ident'>Text</span>(<span class='ident'>Content</span>::<span class='ident'>Placeholder</span>(<span class='ident'>name</span>)));
             },
-            <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>Logic</span>(_)) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Cow</span>::<span class='ident'>Borrowed</span>(<span class='string'>&quot;logic can not be used as text&quot;</span>)),
+            <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>Logic</span>(_)) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;logic can not be used as text&quot;</span>.<span class='ident'>into</span>()),
             <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>)) <span class='op'>=&gt;</span> {
                 <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>reg_scope_vars</span>(<span class='kw-2'>&amp;</span><span class='ident'>scope</span>));
                 <span class='self'>self</span>.<span class='ident'>tokens</span>.<span class='ident'>push</span>(<span class='ident'>Token</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>));
@@ -794,7 +781,7 @@
                     <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>reg_placeholder</span>(<span class='ident'>name</span>.<span class='ident'>clone</span>(), <span class='ident'>ty</span>));
                     <span class='self'>self</span>.<span class='ident'>tokens</span>.<span class='ident'>push</span>(<span class='ident'>Token</span>::<span class='ident'>Text</span>(<span class='ident'>Content</span>::<span class='ident'>Placeholder</span>(<span class='ident'>name</span>)));
                 },
-                <span class='ident'>ReturnType</span>::<span class='ident'>Logic</span>(_) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Cow</span>::<span class='ident'>Borrowed</span>(<span class='string'>&quot;logic can not be used as text&quot;</span>)),
+                <span class='ident'>ReturnType</span>::<span class='ident'>Logic</span>(_) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;logic can not be used as text&quot;</span>.<span class='ident'>into</span>()),
                 <span class='ident'>ReturnType</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>) <span class='op'>=&gt;</span> {
                     <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>reg_scope_vars</span>(<span class='kw-2'>&amp;</span><span class='ident'>scope</span>));
                     <span class='self'>self</span>.<span class='ident'>tokens</span>.<span class='ident'>push</span>(<span class='ident'>Token</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>));
@@ -829,7 +816,6 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>reg_placeholder</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>param</span>: <span class='ident'>StrTendril</span>, <span class='ident'>pref_ty</span>: <span class='ident'>ContentType</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>str</span><span class='op'>&gt;&gt;</span> {
-        <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;registering placeholder &#39;{}&#39;, with {} scopes&quot;</span>, <span class='ident'>param</span>, <span class='self'>self</span>.<span class='ident'>scopes</span>.<span class='ident'>len</span>());
         <span class='kw'>for</span> <span class='ident'>scope</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>scopes</span>.<span class='ident'>iter_mut</span>().<span class='ident'>rev</span>() {
             <span class='kw'>if</span> <span class='kw'>let</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='prelude-val'>Some</span>((<span class='kw-2'>ref</span> <span class='ident'>_origin</span>, <span class='kw-2'>ref</span> <span class='ident'>element</span>, <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>ty</span>, <span class='kw-2'>ref</span> <span class='ident'>opt_key</span>)) <span class='op'>=</span> <span class='ident'>scope</span> {
                 <span class='kw'>if</span> <span class='ident'>element</span> <span class='op'>==</span> <span class='kw-2'>&amp;</span><span class='ident'>param</span> {
@@ -837,11 +823,7 @@
                         <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>ty</span>) <span class='op'>=&gt;</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>ty</span>.<span class='ident'>combine_with</span>(<span class='ident'>pref_ty</span>)),
                         <span class='ident'>ty</span> <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>ty</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>pref_ty</span>)
                     }
-
-                    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;type of &#39;{}&#39; seems to be {:?}&quot;</span>, <span class='ident'>element</span>, <span class='ident'>ty</span>);
                     <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(())
-                } <span class='kw'>else</span> {
-                    <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;&#39;{}&#39; did not match &#39;{}&#39;&quot;</span>, <span class='ident'>param</span>, <span class='ident'>element</span>);
                 }
 
                 <span class='kw'>if</span> <span class='kw'>let</span> <span class='kw-2'>&amp;</span><span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>key</span>) <span class='op'>=</span> <span class='ident'>opt_key</span> {
@@ -885,7 +867,7 @@
                 <span class='ident'>attrs</span>,
                 <span class='ident'>self_closing</span>
             }) <span class='op'>=&gt;</span> <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>open_tag</span>(<span class='ident'>name</span>, <span class='ident'>attrs</span>, <span class='ident'>self_closing</span>) {
-                <span class='self'>self</span>.<span class='ident'>errors</span>.<span class='ident'>push</span>(<span class='ident'>e</span>);
+                <span class='self'>self</span>.<span class='ident'>errors</span>.<span class='ident'>push</span>(<span class='ident'>e</span>.<span class='ident'>into</span>());
             },
             <span class='ident'>HtmlToken</span>::<span class='ident'>TagToken</span>(<span class='ident'>Tag</span> {
                 <span class='ident'>kind</span>: <span class='ident'>TagKind</span>::<span class='ident'>EndTag</span>,
@@ -893,7 +875,7 @@
                 ..
             }) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>close_tag</span>(<span class='ident'>name</span>),
             <span class='ident'>HtmlToken</span>::<span class='ident'>CharacterTokens</span>(<span class='ident'>text</span>) <span class='op'>=&gt;</span> <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>add_text</span>(<span class='ident'>text</span>) {
-                <span class='self'>self</span>.<span class='ident'>errors</span>.<span class='ident'>push</span>(<span class='ident'>e</span>);
+                <span class='self'>self</span>.<span class='ident'>errors</span>.<span class='ident'>push</span>(<span class='ident'>e</span>.<span class='ident'>into</span>());
             },
             <span class='ident'>HtmlToken</span>::<span class='ident'>DoctypeToken</span>(<span class='ident'>doctype</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>set_doctype</span>(<span class='ident'>doctype</span>),
 
@@ -901,7 +883,7 @@
             <span class='ident'>HtmlToken</span>::<span class='ident'>NullCharacterToken</span> <span class='op'>=&gt;</span> {},
             <span class='ident'>HtmlToken</span>::<span class='ident'>EOFToken</span> <span class='op'>=&gt;</span> {},
 
-            <span class='ident'>HtmlToken</span>::<span class='ident'>ParseError</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>errors</span>.<span class='ident'>push</span>(<span class='ident'>e</span>)
+            <span class='ident'>HtmlToken</span>::<span class='ident'>ParseError</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>errors</span>.<span class='ident'>push</span>(<span class='ident'>e</span>.<span class='ident'>into</span>())
         }
     }
 }
@@ -931,22 +913,22 @@
 <span class='kw'>fn</span> <span class='ident'>init_fragments</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>() <span class='op'>-&gt;</span> <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Fragment</span> <span class='op'>+</span> <span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> {
     <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>map</span> <span class='op'>=</span> <span class='ident'>HashMap</span>::<span class='ident'>new</span>();
 
-    <span class='kw'>let</span> <span class='ident'>f</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Fragment</span> <span class='op'>+</span> <span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>fragments</span>::<span class='ident'>If</span>);
+    <span class='kw'>let</span> <span class='ident'>f</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Fragment</span> <span class='op'>+</span> <span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>fragment</span>::<span class='ident'>If</span>);
     <span class='ident'>map</span>.<span class='ident'>insert</span>(<span class='ident'>f</span>.<span class='ident'>identifier</span>(), <span class='ident'>f</span>);
 
-    <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>fragments</span>::<span class='ident'>And</span>;
+    <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>fragment</span>::<span class='ident'>And</span>;
     <span class='ident'>map</span>.<span class='ident'>insert</span>(<span class='ident'>f</span>.<span class='ident'>identifier</span>(), <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>f</span>));
 
-    <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>fragments</span>::<span class='ident'>Or</span>;
+    <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>fragment</span>::<span class='ident'>Or</span>;
     <span class='ident'>map</span>.<span class='ident'>insert</span>(<span class='ident'>f</span>.<span class='ident'>identifier</span>(), <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>f</span>));
 
-    <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>fragments</span>::<span class='ident'>Not</span>;
+    <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>fragment</span>::<span class='ident'>Not</span>;
     <span class='ident'>map</span>.<span class='ident'>insert</span>(<span class='ident'>f</span>.<span class='ident'>identifier</span>(), <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>f</span>));
 
-    <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>fragments</span>::<span class='ident'>Template</span>;
+    <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>fragment</span>::<span class='ident'>Template</span>;
     <span class='ident'>map</span>.<span class='ident'>insert</span>(<span class='ident'>f</span>.<span class='ident'>identifier</span>(), <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>f</span>));
 
-    <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>fragments</span>::<span class='ident'>ForEach</span>;
+    <span class='kw'>let</span> <span class='ident'>f</span> <span class='op'>=</span> <span class='ident'>fragment</span>::<span class='ident'>ForEach</span>;
     <span class='ident'>map</span>.<span class='ident'>insert</span>(<span class='ident'>f</span>.<span class='ident'>identifier</span>(), <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>f</span>));
 
     <span class='ident'>map</span>

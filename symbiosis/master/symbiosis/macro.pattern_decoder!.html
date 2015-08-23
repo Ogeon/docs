@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `pattern_decoder!` macro in crate `symbiosis`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, pattern_decoder!">
+
+    <title>symbiosis::pattern_decoder! - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='index.html'>symbiosis</a></p><script>window.sidebarCurrent = {name: 'pattern_decoder!', ty: 'macro', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content macro">
+<h1 class='fqn'><span class='in-band'><a href='index.html'>symbiosis</a>::<wbr><a class='macro' href=''>pattern_decoder!</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-20669' class='srclink' href='../src/symbiosis/fragment/pattern.rs.html#209-214' title='goto source code'>[src]</a></span></h1>
+<pre class='rust macro'>
+<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>pattern_decoder</span> {
+    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span>: <span class='ident'>ident</span> { $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pattern</span>: <span class='ident'>tt</span>)<span class='op'>*</span> }) <span class='op'>=&gt;</span> (
+        <span class='macro'>__symbiosis_build_pattern_types_internal</span><span class='macro'>!</span>(<span class='ident'>input</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>name</span> {} {} [] $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pattern</span>)<span class='op'>*</span>);
+
+    )
+}
+</pre>
+<div class='docblock'><p>Decodes a pattern result vector into structs, using an annotated pattern.</p>
+
+<p>The annotation is very similar to struct definitions, where each pattern
+component, except arbitrary tokens, is preceded by a field name and the
+component itself works as a type. The structures are defined recursively
+and each substructure must have a unique name. This is a limitation in the
+macro system.</p>
+
+<p>The annotation syntax is:</p>
+
+<ul>
+<li><code>pattern_decoder!(MainType { ... })</code> - declares the name of our main result type, here called <code>MainType</code>.</li>
+<li><code>field_name: input</code> - expect an input and store it as <code>InputType</code> in <code>field_name</code>.</li>
+<li><code>field_name: (Inner { ... })?</code> - expect an optional pattern and store it in <code>field_name</code> as <code>Option&lt;Inner&gt;</code>.</li>
+<li><code>field_name: [Inner { ... }](delimiter, n)</code> - expect a repeated pattern and store it in <code>field_name</code> as <code>Vec&lt;Inner&gt;</code>.</li>
+<li><code>field_name: [Inner { ... }](delimiter)</code> - same as above, but with <code>n = 0</code>.</li>
+<li><code>{token}</code> - expect an arbitrary string <code>token</code>, that will be ignored when decoding.</li>
+</ul>
+<pre class='rust rust-example-rendered'>
+<span class='macro'>pattern_decoder</span><span class='macro'>!</span>(<span class='ident'>ForEach</span> {
+    <span class='ident'>key</span>: (<span class='ident'>Key</span> { <span class='ident'>key</span>: <span class='ident'>input</span> {<span class='string'>&quot;=&gt;&quot;</span>} })?
+    <span class='ident'>element</span>: <span class='ident'>input</span>
+    {<span class='string'>&quot;in&quot;</span>}
+     <span class='ident'>collection</span>: <span class='ident'>input</span>
+});
+
+<span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>ForEach</span>::<span class='ident'>decode</span>(<span class='ident'>args</span>));
+
+<span class='kw'>match</span> (<span class='ident'>res</span>.<span class='ident'>key</span>, <span class='ident'>res</span>.<span class='ident'>element</span>, <span class='ident'>res</span>.<span class='ident'>collection</span>) {
+    (<span class='prelude-val'>Some</span>(<span class='ident'>Key</span> { <span class='ident'>key</span> }), <span class='ident'>element</span>, <span class='ident'>collection</span>) <span class='op'>=&gt;</span> {
+        <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;key: {:?}, element: {:?}, collection: {:?}&quot;</span>, <span class='ident'>key</span>, <span class='ident'>element</span>, <span class='ident'>collection</span>);
+    },
+    (<span class='prelude-val'>None</span>, <span class='ident'>element</span>, <span class='ident'>collection</span>) <span class='op'>=&gt;</span> {
+        <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;element: {:?}, collection: {:?}&quot;</span>, <span class='ident'>element</span>, <span class='ident'>collection</span>);
+    }
+}
+</pre>
+<pre class='rust rust-example-rendered'>
+<span class='macro'>pattern_decoder</span><span class='macro'>!</span>(<span class='ident'>HeadTail</span> {
+    <span class='ident'>head</span>: <span class='ident'>input</span>
+    <span class='ident'>tail</span>: [<span class='ident'>Tail</span> { <span class='ident'>input</span>: <span class='ident'>input</span> }](<span class='string'>&quot;&quot;</span>)
+});
+
+<span class='kw'>let</span> <span class='ident'>res</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>HeadTail</span>::<span class='ident'>decode</span>(<span class='ident'>args</span>));
+
+<span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;head: {:?}, tail length: {}&quot;</span>, <span class='ident'>res</span>.<span class='ident'>head</span>, <span class='ident'>res</span>.<span class='ident'>tail</span>.<span class='ident'>len</span>());
+</pre>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "symbiosis";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>

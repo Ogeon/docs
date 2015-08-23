@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `Or` struct in crate `symbiosis`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, Or">
+    <meta name="description" content="API documentation for the Rust `InputType` enum in crate `symbiosis`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, InputType">
 
-    <title>symbiosis::fragments::Or - Rust</title>
+    <title>symbiosis::fragment::InputType - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>fragments</a></p><script>window.sidebarCurrent = {name: 'Or', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>fragment</a></p><script>window.sidebarCurrent = {name: 'InputType', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -40,18 +40,20 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>fragments</a>::<wbr><a class='struct' href=''>Or</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>fragment</a>::<wbr><a class='enum' href=''>InputType</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1570' class='srclink' href='../../src/symbiosis/fragments.rs.html#10' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct Or;</pre><div class='docblock'><p><code>or</code> logic fragment.</p>
-
-<p><code>or(a, b, ...)</code> will be true if one of the conditions
-<code>a, b, ...</code> is true.</p>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../symbiosis/fragments/trait.Fragment.html' title='symbiosis::fragments::Fragment'>Fragment</a> for <a class='struct' href='../../symbiosis/fragments/struct.Or.html' title='symbiosis::fragments::Or'>Or</a></code></h3><div class='impl-items'><h4 id='method.identifier' class='method'><code>fn <a href='../../symbiosis/fragments/trait.Fragment.html#method.identifier' class='fnname'>identifier</a>(&amp;self) -&gt; &amp;'static <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></h4>
-<h4 id='method.process' class='method'><code>fn <a href='../../symbiosis/fragments/trait.Fragment.html#method.process' class='fnname'>process</a>(&amp;self, args: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../symbiosis/fragments/enum.InputType.html' title='symbiosis::fragments::InputType'>InputType</a>&gt;) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../symbiosis/fragments/enum.ReturnType.html' title='symbiosis::fragments::ReturnType'>ReturnType</a>, <a class='enum' href='http://doc.rust-lang.org/nightly/collections/borrow/enum.Cow.html' title='collections::borrow::Cow'>Cow</a>&lt;'static, <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;&gt;</code></h4>
+        </span><a id='src-2870' class='srclink' href='../../src/symbiosis/fragment/mod.rs.html#243-248' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum InputType {
+    Placeholder(<a class='type' href='../../tendril/tendril/type.StrTendril.html' title='tendril::tendril::StrTendril'>StrTendril</a>, <a class='enum' href='../../symbiosis/codegen/enum.ContentType.html' title='symbiosis::codegen::ContentType'>ContentType</a>),
+    Logic(<a class='enum' href='../../symbiosis/codegen/enum.Logic.html' title='symbiosis::codegen::Logic'>Logic</a>),
+}</pre><div class='docblock'><p>Things that can be sent into fragments.</p>
+</div><h2 class='variants'>Variants</h2>
+<table><tr><td id='variant.Placeholder'><code>Placeholder</code></td><td><div class='docblock'><p>A placeholder parameter and its preferred content type.</p>
+</div></td></tr><tr><td id='variant.Logic'><code>Logic</code></td><td><div class='docblock'><p>A logic expression.</p>
+</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='http://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../symbiosis/fragment/enum.InputType.html' title='symbiosis::fragment::InputType'>InputType</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='http://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 

@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `fragments` mod in crate `symbiosis`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, fragments">
+    <meta name="description" content="API documentation for the Rust `fragment` mod in crate `symbiosis`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, fragment">
 
-    <title>symbiosis::fragments - Rust</title>
+    <title>symbiosis::fragment - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>symbiosis</a></p><script>window.sidebarCurrent = {name: 'fragments', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>symbiosis</a></p><script>window.sidebarCurrent = {name: 'fragment', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -41,16 +41,25 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>symbiosis</a>::<wbr><a class='mod' href=''>fragments</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>symbiosis</a>::<wbr><a class='mod' href=''>fragment</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1220' class='srclink' href='../../src/symbiosis/fragments.rs.html#1-224' title='goto source code'>[src]</a></span></h1>
-<h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+        </span><a id='src-1220' class='srclink' href='../../src/symbiosis/fragment/mod.rs.html#1-408' title='goto source code'>[src]</a></span></h1>
+<h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='mod' href='pattern/index.html'
+                               title='symbiosis::fragment::pattern'>pattern</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                </table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                     <tr class=' module-item'>
                         <td><a class='struct' href='struct.And.html'
-                               title='symbiosis::fragments::And'>And</a></td>
+                               title='symbiosis::fragment::And'>And</a></td>
                         <td class='docblock short'>
                              <p><code>and</code> logic fragment.</p>
 
@@ -58,8 +67,16 @@
                     </tr>
                 
                     <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Error.html'
+                               title='symbiosis::fragment::Error'>Error</a></td>
+                        <td class='docblock short'>
+                             
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
                         <td><a class='struct' href='struct.ForEach.html'
-                               title='symbiosis::fragments::ForEach'>ForEach</a></td>
+                               title='symbiosis::fragment::ForEach'>ForEach</a></td>
                         <td class='docblock short'>
                              <p>Start of a <code>foreach</code> scope.</p>
 
@@ -68,7 +85,7 @@
                 
                     <tr class=' module-item'>
                         <td><a class='struct' href='struct.If.html'
-                               title='symbiosis::fragments::If'>If</a></td>
+                               title='symbiosis::fragment::If'>If</a></td>
                         <td class='docblock short'>
                              <p>Start of an <code>if</code> scope.</p>
 
@@ -77,7 +94,7 @@
                 
                     <tr class=' module-item'>
                         <td><a class='struct' href='struct.Not.html'
-                               title='symbiosis::fragments::Not'>Not</a></td>
+                               title='symbiosis::fragment::Not'>Not</a></td>
                         <td class='docblock short'>
                              <p><code>not</code> logic fragment.</p>
 
@@ -86,7 +103,7 @@
                 
                     <tr class=' module-item'>
                         <td><a class='struct' href='struct.Or.html'
-                               title='symbiosis::fragments::Or'>Or</a></td>
+                               title='symbiosis::fragment::Or'>Or</a></td>
                         <td class='docblock short'>
                              <p><code>or</code> logic fragment.</p>
 
@@ -95,7 +112,7 @@
                 
                     <tr class=' module-item'>
                         <td><a class='struct' href='struct.Template.html'
-                               title='symbiosis::fragments::Template'>Template</a></td>
+                               title='symbiosis::fragment::Template'>Template</a></td>
                         <td class='docblock short'>
                              <p><code>template(a)</code> tells the parser that the placeholder <code>a</code> is an other template.</p>
 
@@ -105,7 +122,7 @@
 <table>
                     <tr class=' module-item'>
                         <td><a class='enum' href='enum.InputType.html'
-                               title='symbiosis::fragments::InputType'>InputType</a></td>
+                               title='symbiosis::fragment::InputType'>InputType</a></td>
                         <td class='docblock short'>
                              <p>Things that can be sent into fragments.</p>
 
@@ -114,7 +131,7 @@
                 
                     <tr class=' module-item'>
                         <td><a class='enum' href='enum.ReturnType.html'
-                               title='symbiosis::fragments::ReturnType'>ReturnType</a></td>
+                               title='symbiosis::fragment::ReturnType'>ReturnType</a></td>
                         <td class='docblock short'>
                              <p>Things that can be returned from fragments.</p>
 
@@ -124,7 +141,7 @@
 <table>
                     <tr class=' module-item'>
                         <td><a class='trait' href='trait.Fragment.html'
-                               title='symbiosis::fragments::Fragment'>Fragment</a></td>
+                               title='symbiosis::fragment::Fragment'>Fragment</a></td>
                         <td class='docblock short'>
                              
                         </td>

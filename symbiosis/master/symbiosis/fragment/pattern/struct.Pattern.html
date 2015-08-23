@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `InputType` enum in crate `symbiosis`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, InputType">
+    <meta name="description" content="API documentation for the Rust `Pattern` struct in crate `symbiosis`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Pattern">
 
-    <title>symbiosis::fragments::InputType - Rust</title>
+    <title>symbiosis::fragment::pattern::Pattern - Rust</title>
 
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
 
     
     
@@ -26,7 +26,7 @@
 
     <section class="sidebar">
         
-        <p class='location'><a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>fragments</a></p><script>window.sidebarCurrent = {name: 'InputType', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='../../index.html'>symbiosis</a>::<wbr><a href='../index.html'>fragment</a>::<wbr><a href='index.html'>pattern</a></p><script>window.sidebarCurrent = {name: 'Pattern', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </section>
 
     <nav class="sub">
@@ -40,20 +40,18 @@
         </form>
     </nav>
 
-    <section id='main' class="content enum">
-<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>fragments</a>::<wbr><a class='enum' href=''>InputType</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>symbiosis</a>::<wbr><a href='../index.html'>fragment</a>::<wbr><a href='index.html'>pattern</a>::<wbr><a class='struct' href=''>Pattern</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1358' class='srclink' href='../../src/symbiosis/fragments.rs.html#64-69' title='goto source code'>[src]</a></span></h1>
-<pre class='rust enum'>pub enum InputType {
-    Placeholder(<a class='type' href='../../tendril/tendril/type.StrTendril.html' title='tendril::tendril::StrTendril'>StrTendril</a>, <a class='enum' href='../../symbiosis/codegen/enum.ContentType.html' title='symbiosis::codegen::ContentType'>ContentType</a>),
-    Logic(<a class='enum' href='../../symbiosis/codegen/enum.Logic.html' title='symbiosis::codegen::Logic'>Logic</a>),
-}</pre><div class='docblock'><p>Things that can be sent into fragments.</p>
-</div><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.Placeholder'><code>Placeholder</code></td><td><div class='docblock'><p>A placeholder parameter and its preferred content type.</p>
-</div></td></tr><tr><td id='variant.Logic'><code>Logic</code></td><td><div class='docblock'><p>A logic expression.</p>
-</div></td></tr></table></section>
+        </span><a id='src-1239' class='srclink' href='../../../src/symbiosis/fragment/pattern.rs.html#309' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Pattern(_);</pre><div class='docblock'><p>An input pattern, represented as a sequence of components.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../../symbiosis/fragment/pattern/struct.Pattern.html' title='symbiosis::fragment::pattern::Pattern'>Pattern</a></code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../../../symbiosis/fragment/pattern/struct.Pattern.html' title='symbiosis::fragment::pattern::Pattern'>Pattern</a></code></h4>
+<div class='docblock'><p>Create an empty pattern.</p>
+</div><h4 id='method.push' class='method'><code>fn <a href='#method.push' class='fnname'>push</a>(&amp;mut self, component: <a class='enum' href='../../../symbiosis/fragment/pattern/enum.Component.html' title='symbiosis::fragment::pattern::Component'>Component</a>)</code></h4>
+<div class='docblock'><p>Add a new component to the pattern.</p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -96,13 +94,13 @@
     
 
     <script>
-        window.rootPath = "../../";
+        window.rootPath = "../../../";
         window.currentCrate = "symbiosis";
         window.playgroundUrl = "";
     </script>
-    <script src="../../jquery.js"></script>
-    <script src="../../main.js"></script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script async src="../../../search-index.js"></script>
 </body>
 </html>

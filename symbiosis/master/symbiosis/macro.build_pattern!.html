@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `build_pattern!` macro in crate `symbiosis`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, build_pattern!">
+
+    <title>symbiosis::build_pattern! - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <section class="sidebar">
+        
+        <p class='location'><a href='index.html'>symbiosis</a></p><script>window.sidebarCurrent = {name: 'build_pattern!', ty: 'macro', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </section>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content macro">
+<h1 class='fqn'><span class='in-band'><a href='index.html'>symbiosis</a>::<wbr><a class='macro' href=''>build_pattern!</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-20665' class='srclink' href='../src/symbiosis/fragment/pattern.rs.html#35-41' title='goto source code'>[src]</a></span></h1>
+<pre class='rust macro'>
+<span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>build_pattern</span> {
+    ($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pattern</span>: <span class='ident'>tt</span>)<span class='op'>*</span>) <span class='op'>=&gt;</span> ({
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>pattern</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>fragment</span>::<span class='ident'>pattern</span>::<span class='ident'>Pattern</span>::<span class='ident'>new</span>();
+        <span class='macro'>__symbiosis_build_pattern_internal</span><span class='macro'>!</span>(<span class='ident'>pattern</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pattern</span>)<span class='op'>*</span>);
+        <span class='ident'>pattern</span>
+    })
+}
+</pre>
+<div class='docblock'><p>Tool for building input patterns.</p>
+
+<h1 id="syntax" class='section-header'><a
+                           href="#syntax">Syntax</a></h1>
+<p>A pattern consists of four types of items with the following syntax:</p>
+
+<ul>
+<li><code>input</code> - expect an input parameter.</li>
+<li><code>(...)?</code> - an optional pattern. Ex: <code>(input)?</code> for an optional input.</li>
+<li><code>[...](delimiter)</code> - expect a repeated pattern of 0 or more repetitions, separated by <code>delimiter</code>. Ex: <code>[input](&quot;,&quot;)</code> for a comma separated input list.</li>
+<li><code>[...](delimiter, n)</code> - same as above, but with <code>n</code> or more repetitions.</li>
+<li><code>{token}</code> - expect an arbitrary string <code>token</code>. Ex: <code>input {&quot;or&quot;} input</code> matches the string <code>a or b</code>.</li>
+</ul>
+
+<p>These are combined to form input patterns, like in this example from
+<code>foreach</code>:</p>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>let</span> <span class='ident'>pattern</span> <span class='op'>=</span> <span class='macro'>build_pattern</span><span class='macro'>!</span>((<span class='ident'>input</span> {<span class='string'>&quot;=&gt;&quot;</span>})? <span class='ident'>input</span> {<span class='string'>&quot;in&quot;</span>} <span class='ident'>input</span>);
+</pre>
+
+<p>This results in the optional <code>key =&gt;</code> part, followed by a mandatory
+<code>element in collection</code> part.</p>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <div id="help" class="hidden">
+        <div class="shortcuts">
+            <h1>Keyboard shortcuts</h1>
+            <dl>
+                <dt>?</dt>
+                <dd>Show this help dialog</dd>
+                <dt>S</dt>
+                <dd>Focus the search field</dd>
+                <dt>&larrb;</dt>
+                <dd>Move up in search results</dd>
+                <dt>&rarrb;</dt>
+                <dd>Move down in search results</dd>
+                <dt>&#9166;</dt>
+                <dd>Go to active search result</dd>
+            </dl>
+        </div>
+        <div class="infos">
+            <h1>Search tricks</h1>
+            <p>
+                Prefix searches with a type followed by a colon (e.g.
+                <code>fn:</code>) to restrict the search to a given type.
+            </p>
+            <p>
+                Accepted types are: <code>fn</code>, <code>mod</code>,
+                <code>struct</code>, <code>enum</code>,
+                <code>trait</code>, <code>typedef</code> (or
+                <code>tdef</code>).
+            </p>
+            <p>
+                Search functions by type signature (e.g.
+                <code>vec -> usize</code>)
+            </p>
+        </div>
+    </div>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "symbiosis";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>
