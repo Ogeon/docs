@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Listening","A listening server, which can later be closed."],["Server","Used to set up and run a server."],["ServerInstance","A runnable instance of a server."]]});
+initSidebarItems({"enum":[["Scheme","HTTP or HTTPS."]],"struct":[["Global","A somewhat lazy container for globally accessible data."],["Host","A host address and a port."],["Listening","A listening server, which can later be closed."],["Server","Used to set up and run a server."],["ServerInstance","A runnable instance of a server."]]});
