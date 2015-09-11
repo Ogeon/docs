@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["TreeRouter","Stores items, such as request handlers, using an HTTP method and a path as keys."]]});
+initSidebarItems({"struct":[["TreeRouter","Stores handlers, using an HTTP method and a route as key."]]});

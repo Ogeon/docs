@@ -45,40 +45,64 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-3414' class='srclink' href='../src/rustful/router/tree_router.rs.html#51-59' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-3689' class='srclink' href='../src/rustful/router/tree_router.rs.html#128-136' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct TreeRouter&lt;T&gt; {
     pub find_hyperlinks: <a href='http://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>,
     // some fields omitted
-}</pre><div class='docblock'><p>Stores items, such as request handlers, using an HTTP method and a path as keys.</p>
+}</pre><div class='docblock'><p>Stores handlers, using an HTTP method and a route as key.</p>
 
-<p>Paths can be static (<code>&quot;path/to/item&quot;</code>) or variable (<code>&quot;users/:group/:user&quot;</code>)
-and contain wildcards (<code>&quot;path/*/item/*&quot;</code>). Variables (starting with <code>:</code>)
-will match whatever word the request path contains at that point and it
-will be sent as a value to the item. Wildcards (a single <code>*</code>) will consume
-the segments until the rest of the path gives a match.</p>
-<pre class='rust rust-example-rendered'>
-<span class='ident'>pattern</span> <span class='op'>=</span> <span class='string'>&quot;a/*/b&quot;</span>
-<span class='string'>&quot;a/c/b&quot;</span> <span class='op'>-&gt;</span> <span class='kw'>match</span>
-<span class='string'>&quot;a/c/d/b&quot;</span> <span class='op'>-&gt;</span> <span class='kw'>match</span>
-<span class='string'>&quot;a/b&quot;</span> <span class='op'>-&gt;</span> <span class='ident'>no</span> <span class='kw'>match</span>
-<span class='string'>&quot;a/c/b/d&quot;</span> <span class='op'>-&gt;</span> <span class='ident'>no</span> <span class='kw'>match</span>
-</pre>
-<pre class='rust rust-example-rendered'>
-<span class='ident'>pattern</span> <span class='op'>=</span> <span class='string'>&quot;a/b/*&quot;</span>
-<span class='string'>&quot;a/b/c&quot;</span> <span class='op'>-&gt;</span> <span class='kw'>match</span>
-<span class='string'>&quot;a/b/c/d&quot;</span> <span class='op'>-&gt;</span> <span class='kw'>match</span>
-<span class='string'>&quot;a/b&quot;</span> <span class='op'>-&gt;</span> <span class='ident'>no</span> <span class='kw'>match</span>
-</pre>
+<h1 id="variables" class='section-header'><a
+                           href="#variables">Variables</a></h1>
+<p>Routes may contain variables, that are useful for capturing parts of the
+requested path as input to the handler. The syntax for a variable is simply
+an indicator character (<code>:</code> or <code>*</code>) followed by a label. Variables without
+labels are also valid, but their values will be discarded.</p>
 
-<p><code>TreeRouter</code> has support for shallow hyperlinks to children, siblings,
-cousins, ans so forth. The use of wildcards complicates this process and
-may cause confusing results. The hyperlinks may or may not point to a
-handler. Hyperlinks has to be activated by setting <code>find_hyperlinks</code> to
-<code>true</code>.</p>
+<h2 id="variable-segments-(:label)" class='section-header'><a
+                           href="#variable-segments-(:label)">Variable Segments (:label)</a></h2>
+<p>A variable segment will match a single arbitrary segment. They are probably
+the most commonly used variables and may, for example, be used to select a
+blog post: <code>&quot;posts/:year/:month/:day/:title_slug&quot;</code>.</p>
+
+<pre><code class="language-text">pattern = &quot;a/:v/b&quot;
+&quot;a/c/b&quot; -&gt; v = &quot;c&quot;
+&quot;a/c/d/b&quot; -&gt; no match
+&quot;a/b&quot; -&gt; no match
+&quot;a/c/b/d&quot; -&gt; no match
+</code></pre>
+
+<h2 id="variable-sequences-(*label)" class='section-header'><a
+                           href="#variable-sequences-(*label)">Variable Sequences (*label)</a></h2>
+<p>A variable sequence is similar to a variable segment, but with the
+difference that it may consume multiple segments until the rest of the path
+gives a match. An example use case is a route for downloadable files that
+may be arranged in arbitrary directories: <code>&quot;downloads/*file_path&quot;</code>.</p>
+
+<pre><code class="language-text">pattern = &quot;a/*v/b&quot;
+&quot;a/c/b&quot; -&gt; v = &quot;c&quot;
+&quot;a/c/d/b&quot; -&gt; v = &quot;c/d&quot;
+&quot;a/b&quot; -&gt; no match
+&quot;a/c/b/d&quot; -&gt; no match
+</code></pre>
+
+<pre><code class="language-text">pattern = &quot;a/b/*v&quot;
+&quot;a/b/c&quot; -&gt; v = &quot;c&quot;
+&quot;a/b/c/d&quot; -&gt; v = &quot;c/d&quot;
+&quot;a/b&quot; -&gt; no match
+</code></pre>
+
+<h1 id="hyperlinks" class='section-header'><a
+                           href="#hyperlinks">Hyperlinks</a></h1>
+<p>The &#39;TreeRouter` has support for shallow hyperlinks to children, siblings,
+cousins, ans so forth. The use of variable sequences complicates this
+process and may cause confusing results in certain situations. The
+hyperlinks may or may not point to a handler.</p>
+
+<p>Hyperlinks has to be activated by setting <code>find_hyperlinks</code> to  <code>true</code>.</p>
 </div><h2 class='fields'>Fields</h2>
 <table><tr class='stab '>
                                   <td id='structfield.find_hyperlinks'><code>find_hyperlinks</code></td><td><div class='docblock'><p>Should the router search for hyperlinks? Setting this to <code>true</code> may
-slow down enpoint search, but enables hyperlinks.</p>
+slow down endpoint search, but enables hyperlinks.</p>
 </div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;T&gt; <a class='struct' href='../rustful/struct.TreeRouter.html' title='rustful::TreeRouter'>TreeRouter</a>&lt;T&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../rustful/struct.TreeRouter.html' title='rustful::TreeRouter'>TreeRouter</a>&lt;T&gt;</code></h4>
 <div class='docblock'><p>Creates an empty <code>TreeRouter</code>.</p>
 </div><h4 id='method.insert_router' class='method'><code>fn <a href='#method.insert_router' class='fnname'>insert_router</a>&lt;'r, R: <a class='trait' href='../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'r&gt; + ?<a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt;(&amp;mut self, route: &amp;'r R, router: <a class='struct' href='../rustful/struct.TreeRouter.html' title='rustful::TreeRouter'>TreeRouter</a>&lt;T&gt;)</code></h4>

@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["ext_to_mime","Returns the MIME type from a given file extension, if known."]]});
+initSidebarItems({"fn":[["check_path","Check if a path tries to escape its parent directory."],["ext_to_mime","Returns the MIME type from a given file extension, if known."]]});
