@@ -34,7 +34,7 @@
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-5707' class='srclink' href='../../../src/rustful/context/body.rs.html#154-204' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-5699' class='srclink' href='../../../src/rustful/context/body.rs.html#154-204' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait ExtJsonBody {
     fn <a href='#tymethod.read_json_body' class='fnname'>read_json_body</a>(&amp;mut self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../../rustc_serialize/json/enum.Json.html' title='rustc_serialize::json::Json'>Json</a>, <a class='type' href='../../../rustc_serialize/json/type.BuilderError.html' title='rustc_serialize::json::BuilderError'>BuilderError</a>&gt;;
     fn <a href='#tymethod.decode_json_body' class='fnname'>decode_json_body</a>&lt;T: <a class='trait' href='../../../rustc_serialize/serialize/trait.Decodable.html' title='rustc_serialize::serialize::Decodable'>Decodable</a>&gt;(&amp;mut self) -&gt; <a class='type' href='../../../rustc_serialize/json/type.DecodeResult.html' title='rustc_serialize::json::DecodeResult'>DecodeResult</a>&lt;T&gt;;
@@ -73,8 +73,7 @@ then be navigated and parsed freely.</p>
     <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>json</span>.<span class='ident'>find</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>number</span><span class='op'>|</span> <span class='ident'>number</span>.<span class='ident'>as_f64</span>()).<span class='ident'>unwrap</span>();
 
     <span class='ident'>response</span>.<span class='ident'>send</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{} + {} = {}&quot;</span>, <span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>a</span> <span class='op'>+</span> <span class='ident'>b</span>));
-}
-</pre>
+}</pre>
 </div><h3 id='tymethod.decode_json_body' class='method stab '><code>fn <a href='#tymethod.decode_json_body' class='fnname'>decode_json_body</a>&lt;T: <a class='trait' href='../../../rustc_serialize/serialize/trait.Decodable.html' title='rustc_serialize::serialize::Decodable'>Decodable</a>&gt;(&amp;mut self) -&gt; <a class='type' href='../../../rustc_serialize/json/type.DecodeResult.html' title='rustc_serialize::json::DecodeResult'>DecodeResult</a>&lt;T&gt;</code></h3><div class='docblock'><p>Read and decode a request body as a type <code>T</code>. The target type must
 implement <code>rustc_serialize::Decodable</code>.</p>
 
@@ -97,8 +96,7 @@ implement <code>rustc_serialize::Decodable</code>.</p>
     <span class='kw'>let</span> <span class='ident'>foo</span>: <span class='ident'>Foo</span> <span class='op'>=</span> <span class='ident'>context</span>.<span class='ident'>body</span>.<span class='ident'>decode_json_body</span>().<span class='ident'>unwrap</span>();
 
     <span class='ident'>response</span>.<span class='ident'>send</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{} + {} = {}&quot;</span>, <span class='ident'>foo</span>.<span class='ident'>a</span>, <span class='ident'>foo</span>.<span class='ident'>b</span>, <span class='ident'>foo</span>.<span class='ident'>a</span> <span class='op'>+</span> <span class='ident'>foo</span>.<span class='ident'>b</span>));
-}
-</pre>
+}</pre>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
@@ -111,37 +109,44 @@ implement <code>rustc_serialize::Decodable</code>.</p>
     <section class="footer"></section>
 
     <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
-        </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
+        <div>
+            <div class="shortcuts">
+                <h1>Keyboard Shortcuts</h1>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h1>Search Tricks</h1>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>typedef</code> (or
+                    <code>tdef</code>).
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
     </div>
 

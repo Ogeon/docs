@@ -34,7 +34,7 @@
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-48611' class='srclink' href='../../src/hyper/status.rs.html#562-580' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-48567' class='srclink' href='../../src/hyper/status.rs.html#562-580' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum StatusClass {
     Informational,
     Success,
@@ -95,8 +95,7 @@ to get the appropriate <em>category</em> of status.</p>
 <p>This produces the x00 status code; thus, for <code>ClientError</code> (4xx), for
 example, this will produce <code>BadRequest</code> (400):</p>
 <pre class='rust rust-example-rendered'>
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>ClientError</span>.<span class='ident'>default_code</span>(), <span class='ident'>BadRequest</span>);
-</pre>
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>ClientError</span>.<span class='ident'>default_code</span>(), <span class='ident'>BadRequest</span>);</pre>
 
 <p>The use for this is outlined in <a href="https://tools.ietf.org/html/rfc7231#section-6">RFC 7231, section 6 (Response Status
 Codes)</a>:</p>
@@ -129,8 +128,7 @@ representation that explains the status.</p>
 
 <span class='comment'>// And look! That is 400 Bad Request.</span>
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>status</span>, <span class='ident'>BadRequest</span>);
-<span class='comment'>// So now let’s treat it as that.</span>
-</pre>
+<span class='comment'>// So now let’s treat it as that.</span></pre>
 
 <p>All status codes that do not map to an existing status class are matched
 by a <code>NoClass</code>, variant that resolves to 200 (Ok) as default code.
@@ -152,37 +150,44 @@ This is a common handling for unknown status codes in major browsers.</p>
     <section class="footer"></section>
 
     <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
-        </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
+        <div>
+            <div class="shortcuts">
+                <h1>Keyboard Shortcuts</h1>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h1>Search Tricks</h1>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>typedef</code> (or
+                    <code>tdef</code>).
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
     </div>
 
