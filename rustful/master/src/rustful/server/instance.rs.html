@@ -464,11 +464,23 @@
 <span id="422">422</span>
 <span id="423">423</span>
 <span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::<span class='ident'>SocketAddr</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::{<span class='ident'>AtomicUsize</span>, <span class='ident'>Ordering</span>};
 
 <span class='kw'>use</span> <span class='ident'>time</span>;
+
+<span class='kw'>use</span> <span class='ident'>num_cpus</span>;
 
 <span class='kw'>use</span> <span class='ident'>url</span>::<span class='ident'>percent_encoding</span>::{<span class='ident'>percent_decode</span>, <span class='ident'>percent_decode_to</span>};
 <span class='kw'>use</span> <span class='ident'>url</span>::{<span class='ident'>Url</span>, <span class='ident'>SchemeData</span>};
@@ -530,6 +542,10 @@
     <span class='ident'>server</span>: <span class='ident'>String</span>,
     <span class='ident'>content_type</span>: <span class='ident'>Mime</span>,
 
+    <span class='ident'>threads</span>: <span class='ident'>usize</span>,
+    <span class='ident'>available_threads</span>: <span class='ident'>usize</span>,
+    <span class='ident'>threads_in_use</span>: <span class='ident'>AtomicUsize</span>,
+
     <span class='ident'>log</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Log</span><span class='op'>&gt;</span>,
 
     <span class='ident'>context_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ContextFilter</span><span class='op'>&gt;&gt;</span>,
@@ -548,6 +564,9 @@
             <span class='ident'>host</span>: <span class='ident'>config</span>.<span class='ident'>host</span>.<span class='ident'>into</span>(),
             <span class='ident'>server</span>: <span class='ident'>config</span>.<span class='ident'>server</span>,
             <span class='ident'>content_type</span>: <span class='ident'>config</span>.<span class='ident'>content_type</span>,
+            <span class='ident'>threads</span>: <span class='ident'>config</span>.<span class='ident'>threads</span>.<span class='ident'>unwrap_or_else</span>(<span class='op'>||</span> (<span class='ident'>num_cpus</span>::<span class='ident'>get</span>() <span class='op'>*</span> <span class='number'>5</span>) <span class='op'>/</span> <span class='number'>4</span>),
+            <span class='ident'>available_threads</span>: <span class='ident'>config</span>.<span class='ident'>available_threads</span>,
+            <span class='ident'>threads_in_use</span>: <span class='ident'>AtomicUsize</span>::<span class='ident'>new</span>(<span class='number'>0</span>),
             <span class='ident'>log</span>: <span class='ident'>config</span>.<span class='ident'>log</span>,
             <span class='ident'>context_filters</span>: <span class='ident'>config</span>.<span class='ident'>context_filters</span>,
             <span class='ident'>response_filters</span>: <span class='ident'>config</span>.<span class='ident'>response_filters</span>,
@@ -558,24 +577,17 @@
 
     <span class='doccomment'>///Start the server.</span>
     <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ssl&quot;</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>, <span class='ident'>threads</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>, <span class='ident'>scheme</span>: <span class='ident'>Scheme</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>, <span class='ident'>scheme</span>: <span class='ident'>Scheme</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>host</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>host</span>;
+        <span class='kw'>let</span> <span class='ident'>threads</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>threads</span>;
         <span class='kw'>match</span> <span class='ident'>scheme</span> {
             <span class='ident'>Scheme</span>::<span class='ident'>Http</span> <span class='op'>=&gt;</span> <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Server</span>::<span class='ident'>http</span>(<span class='ident'>host</span>).<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>http</span><span class='op'>|</span> {
-                <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>threads</span>) <span class='op'>=</span> <span class='ident'>threads</span> {
-                    <span class='ident'>http</span>.<span class='ident'>handle_threads</span>(<span class='self'>self</span>, <span class='ident'>threads</span>)
-                } <span class='kw'>else</span> {
-                    <span class='ident'>http</span>.<span class='ident'>handle</span>(<span class='self'>self</span>)
-                }
+                <span class='ident'>http</span>.<span class='ident'>handle_threads</span>(<span class='self'>self</span>, <span class='ident'>threads</span>)
             }),
             <span class='ident'>Scheme</span>::<span class='ident'>Https</span> {<span class='ident'>cert</span>, <span class='ident'>key</span>} <span class='op'>=&gt;</span> {
                 <span class='kw'>let</span> <span class='ident'>ssl</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Openssl</span>::<span class='ident'>with_cert_and_key</span>(<span class='ident'>cert</span>, <span class='ident'>key</span>));
                 <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Server</span>::<span class='ident'>https</span>(<span class='ident'>host</span>, <span class='ident'>ssl</span>).<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>https</span><span class='op'>|</span> {
-                    <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>threads</span>) <span class='op'>=</span> <span class='ident'>threads</span> {
-                        <span class='ident'>https</span>.<span class='ident'>handle_threads</span>(<span class='self'>self</span>, <span class='ident'>threads</span>)
-                    } <span class='kw'>else</span> {
-                        <span class='ident'>https</span>.<span class='ident'>handle</span>(<span class='self'>self</span>)
-                    }
+                    <span class='ident'>https</span>.<span class='ident'>handle_threads</span>(<span class='self'>self</span>, <span class='ident'>threads</span>)
                 })
             }
         }
@@ -583,14 +595,11 @@
 
     <span class='doccomment'>///Start the server.</span>
     <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ssl&quot;</span>))]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>, <span class='ident'>threads</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>, <span class='ident'>_scheme</span>: <span class='ident'>Scheme</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>, <span class='ident'>_scheme</span>: <span class='ident'>Scheme</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>host</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>host</span>;
+        <span class='kw'>let</span> <span class='ident'>threads</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>threads</span>;
         <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Server</span>::<span class='ident'>http</span>(<span class='ident'>host</span>).<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>http</span><span class='op'>|</span> {
-            <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>threads</span>) <span class='op'>=</span> <span class='ident'>threads</span> {
-                <span class='ident'>http</span>.<span class='ident'>handle_threads</span>(<span class='self'>self</span>, <span class='ident'>threads</span>)
-            } <span class='kw'>else</span> {
-                <span class='ident'>http</span>.<span class='ident'>handle</span>(<span class='self'>self</span>)
-            }
+            <span class='ident'>http</span>.<span class='ident'>handle_threads</span>(<span class='self'>self</span>, <span class='ident'>threads</span>)
         })
     }
 
@@ -634,7 +643,8 @@
             <span class='ident'>request_reader</span>
         ) <span class='op'>=</span> <span class='ident'>request</span>.<span class='ident'>deconstruct</span>();
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>response</span> <span class='op'>=</span> <span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>writer</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>response_filters</span>, <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>log</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>global</span>);
+        <span class='kw'>let</span> <span class='ident'>force_close</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>threads_in_use</span>.<span class='ident'>load</span>(<span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>available_threads</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>threads</span>;
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>response</span> <span class='op'>=</span> <span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>writer</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>response_filters</span>, <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='self'>self</span>.<span class='ident'>log</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>global</span>, <span class='ident'>force_close</span>);
         <span class='ident'>response</span>.<span class='ident'>headers_mut</span>().<span class='ident'>set</span>(<span class='ident'>Date</span>(<span class='ident'>HttpDate</span>(<span class='ident'>time</span>::<span class='ident'>now_utc</span>())));
         <span class='ident'>response</span>.<span class='ident'>headers_mut</span>().<span class='ident'>set</span>(<span class='ident'>ContentType</span>(<span class='self'>self</span>.<span class='ident'>content_type</span>.<span class='ident'>clone</span>()));
         <span class='ident'>response</span>.<span class='ident'>headers_mut</span>().<span class='ident'>set</span>(<span class='ident'>hyper</span>::<span class='ident'>header</span>::<span class='ident'>Server</span>(<span class='self'>self</span>.<span class='ident'>server</span>.<span class='ident'>clone</span>()));
@@ -717,6 +727,14 @@
                 <span class='ident'>response</span>.<span class='ident'>set_status</span>(<span class='ident'>StatusCode</span>::<span class='ident'>BadRequest</span>);
             }
         }
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>on_connection_start</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
+        <span class='self'>self</span>.<span class='ident'>threads_in_use</span>.<span class='ident'>fetch_add</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>);
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>on_connection_end</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
+        <span class='self'>self</span>.<span class='ident'>threads_in_use</span>.<span class='ident'>fetch_sub</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>);
     }
 }
 

@@ -45,13 +45,14 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-3077' class='srclink' href='../../src/rustful/server/mod.rs.html#45-83' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-3120' class='srclink' href='../../src/rustful/server/mod.rs.html#45-88' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Server&lt;R: <a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a>&gt; {
     pub handlers: R,
     pub fallback_handler: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;R::Handler&gt;,
     pub host: <a class='struct' href='../../rustful/server/struct.Host.html' title='rustful::server::Host'>Host</a>,
     pub scheme: <a class='enum' href='../../rustful/server/enum.Scheme.html' title='rustful::server::Scheme'>Scheme</a>,
     pub threads: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;,
+    pub available_threads: <a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>,
     pub server: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
     pub content_type: <a class='struct' href='../../rustful/mime/struct.Mime.html' title='rustful::mime::Mime'>Mime</a>,
     pub log: <a class='struct' href='http://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='trait' href='../../rustful/log/trait.Log.html' title='rustful::log::Log'>Log</a>&gt;,
@@ -84,8 +85,12 @@ Default is <code>0.0.0.0:80</code>.</p>
                                   <td id='structfield.scheme'><code>scheme</code></td><td><div class='docblock'><p>Use good old HTTP or the more secure HTTPS. Default is HTTP.</p>
 </div></td></tr><tr class='stab '>
                                   <td id='structfield.threads'><code>threads</code></td><td><div class='docblock'><p>The number of threads to be used in the server thread pool. The default
-(<code>None</code>) will cause the server to use a value based on recommendations
-from the system.</p>
+(<code>None</code>) will cause the server to optimistically use the formula
+<code>(num_cores * 5) / 4</code>.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.available_threads'><code>available_threads</code></td><td><div class='docblock'><p>The the minimal number of threads in the thread pool that are required
+to be available for new connections. This can be used to prevent hangs
+during high load. Default is <code>1</code>.</p>
 </div></td></tr><tr class='stab '>
                                   <td id='structfield.server'><code>server</code></td><td><div class='docblock'><p>The content of the server header. Default is <code>&quot;rustful&quot;</code>.</p>
 </div></td></tr><tr class='stab '>

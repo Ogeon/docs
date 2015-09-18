@@ -178,6 +178,11 @@
 <span id="136">136</span>
 <span id="137">137</span>
 <span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Server configuration and instance.</span>
 
@@ -240,9 +245,14 @@
     <span class='kw'>pub</span> <span class='ident'>scheme</span>: <span class='ident'>Scheme</span>,
 
     <span class='doccomment'>///The number of threads to be used in the server thread pool. The default</span>
-    <span class='doccomment'>///(`None`) will cause the server to use a value based on recommendations</span>
-    <span class='doccomment'>///from the system.</span>
+    <span class='doccomment'>///(`None`) will cause the server to optimistically use the formula</span>
+    <span class='doccomment'>///`(num_cores * 5) / 4`.</span>
     <span class='kw'>pub</span> <span class='ident'>threads</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>,
+
+    <span class='doccomment'>///The the minimal number of threads in the thread pool that are required</span>
+    <span class='doccomment'>///to be available for new connections. This can be used to prevent hangs</span>
+    <span class='doccomment'>///during high load. Default is `1`.</span>
+    <span class='kw'>pub</span> <span class='ident'>available_threads</span>: <span class='ident'>usize</span>,
 
     <span class='doccomment'>///The content of the server header. Default is `&quot;rustful&quot;`.</span>
     <span class='kw'>pub</span> <span class='ident'>server</span>: <span class='ident'>String</span>,
@@ -286,6 +296,7 @@
             <span class='ident'>host</span>: <span class='number'>80</span>.<span class='ident'>into</span>(),
             <span class='ident'>scheme</span>: <span class='ident'>Scheme</span>::<span class='ident'>Http</span>,
             <span class='ident'>threads</span>: <span class='prelude-val'>None</span>,
+            <span class='ident'>available_threads</span>: <span class='number'>1</span>,
             <span class='ident'>server</span>: <span class='string'>&quot;rustful&quot;</span>.<span class='ident'>to_owned</span>(),
             <span class='ident'>content_type</span>: <span class='ident'>Mime</span>(
                 <span class='ident'>hyper</span>::<span class='ident'>mime</span>::<span class='ident'>TopLevel</span>::<span class='ident'>Text</span>,
@@ -301,9 +312,8 @@
 
     <span class='doccomment'>///Start the server.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>threads</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>threads</span>;
         <span class='kw'>let</span> (<span class='ident'>server</span>, <span class='ident'>scheme</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>build</span>();
-        <span class='ident'>server</span>.<span class='ident'>run</span>(<span class='ident'>threads</span>, <span class='ident'>scheme</span>)
+        <span class='ident'>server</span>.<span class='ident'>run</span>(<span class='ident'>scheme</span>)
     }
 
     <span class='doccomment'>///Build a runnable instance of the server.</span>
