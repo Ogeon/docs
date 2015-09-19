@@ -931,7 +931,7 @@
 <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>method</span>::<span class='ident'>Method</span>;
 
 <span class='kw'>use</span> <span class='ident'>router</span>::{<span class='ident'>Router</span>, <span class='ident'>Route</span>, <span class='ident'>Endpoint</span>};
-<span class='kw'>use</span> <span class='ident'>context</span>::<span class='ident'>MaybeUtf8Owned</span>;
+<span class='kw'>use</span> <span class='ident'>context</span>::{<span class='ident'>MaybeUtf8Owned</span>, <span class='ident'>MaybeUtf8Slice</span>};
 <span class='kw'>use</span> <span class='ident'>context</span>::<span class='ident'>hypermedia</span>::{<span class='ident'>Link</span>, <span class='ident'>LinkSegment</span>, <span class='ident'>SegmentType</span>};
 <span class='kw'>use</span> <span class='ident'>handler</span>::<span class='ident'>Handler</span>;
 
@@ -1204,7 +1204,7 @@
                         <span class='ident'>result</span>.<span class='ident'>hypermedia</span>.<span class='ident'>links</span>.<span class='ident'>push</span>(<span class='ident'>Link</span> {
                             <span class='ident'>method</span>: <span class='prelude-val'>None</span>,
                             <span class='ident'>path</span>: <span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>LinkSegment</span> {
-                                <span class='ident'>label</span>: <span class='string'>&quot;&quot;</span>.<span class='ident'>into</span>(),
+                                <span class='ident'>label</span>: <span class='ident'>MaybeUtf8Slice</span>::<span class='ident'>new</span>(),
                                 <span class='ident'>ty</span>: <span class='ident'>SegmentType</span>::<span class='ident'>VariableSegment</span>
                             }]
                         });
@@ -1214,7 +1214,7 @@
                         <span class='ident'>result</span>.<span class='ident'>hypermedia</span>.<span class='ident'>links</span>.<span class='ident'>push</span>(<span class='ident'>Link</span> {
                             <span class='ident'>method</span>: <span class='prelude-val'>None</span>,
                             <span class='ident'>path</span>: <span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>LinkSegment</span> {
-                                <span class='ident'>label</span>: <span class='string'>&quot;&quot;</span>.<span class='ident'>into</span>(),
+                                <span class='ident'>label</span>: <span class='ident'>MaybeUtf8Slice</span>::<span class='ident'>new</span>(),
                                 <span class='ident'>ty</span>: <span class='ident'>SegmentType</span>::<span class='ident'>VariableSequence</span>
                             }]
                         });

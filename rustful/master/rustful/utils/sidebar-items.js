@@ -1,0 +1,1 @@
+initSidebarItems({"trait":[["BytesExt","Extension trait for byte vectors."]]});
