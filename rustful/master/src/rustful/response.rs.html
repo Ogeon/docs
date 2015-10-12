@@ -1047,6 +1047,23 @@
 <span id="1005">1005</span>
 <span id="1006">1006</span>
 <span id="1007">1007</span>
+<span id="1008">1008</span>
+<span id="1009">1009</span>
+<span id="1010">1010</span>
+<span id="1011">1011</span>
+<span id="1012">1012</span>
+<span id="1013">1013</span>
+<span id="1014">1014</span>
+<span id="1015">1015</span>
+<span id="1016">1016</span>
+<span id="1017">1017</span>
+<span id="1018">1018</span>
+<span id="1019">1019</span>
+<span id="1020">1020</span>
+<span id="1021">1021</span>
+<span id="1022">1022</span>
+<span id="1023">1023</span>
+<span id="1024">1024</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Response writers.</span>
 <span class='doccomment'>//!</span>
@@ -1473,24 +1490,33 @@
     <span class='doccomment'>///use std::path::Path;</span>
     <span class='doccomment'>///use rustful::{Context, Response};</span>
     <span class='doccomment'>///use rustful::StatusCode;</span>
+    <span class='doccomment'>///use rustful::file::check_path;</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>///fn my_handler(mut context: Context, mut response: Response) {</span>
     <span class='doccomment'>///    if let Some(file) = context.variables.get(&quot;file&quot;) {</span>
-    <span class='doccomment'>///        //Make a full path from the filename</span>
-    <span class='doccomment'>///        let path = Path::new(&quot;path/to/files&quot;).join(file.as_ref());</span>
+    <span class='doccomment'>///        let file_path = Path::new(file.as_ref());</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>///        //Send the file</span>
-    <span class='doccomment'>///        let res = response.send_file(&amp;path)</span>
-    <span class='doccomment'>///            .or_else(|e| e.send_not_found(&quot;the file was not found&quot;))</span>
-    <span class='doccomment'>///            .or_else(|e| e.ignore_send_error());</span>
+    <span class='doccomment'>///        //Check if the path is valid</span>
+    <span class='doccomment'>///        if check_path(file_path).is_ok() {</span>
+    <span class='doccomment'>///            //Make a full path from the filename</span>
+    <span class='doccomment'>///            let path = Path::new(&quot;path/to/files&quot;).join(file_path);</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>///        //Check if a more fatal file error than &quot;not found&quot; occurred</span>
-    <span class='doccomment'>///        if let Err((e, mut response)) = res {</span>
-    <span class='doccomment'>///            //Something went horribly wrong</span>
-    <span class='doccomment'>///            context.log.error(</span>
-    <span class='doccomment'>///                &amp;format!(&quot;failed to open &#39;{}&#39;: {}&quot;, file, e)</span>
-    <span class='doccomment'>///            );</span>
-    <span class='doccomment'>///            response.set_status(StatusCode::InternalServerError);</span>
+    <span class='doccomment'>///            //Send the file</span>
+    <span class='doccomment'>///            let res = response.send_file(&amp;path)</span>
+    <span class='doccomment'>///                .or_else(|e| e.send_not_found(&quot;the file was not found&quot;))</span>
+    <span class='doccomment'>///                .or_else(|e| e.ignore_send_error());</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>///            //Check if a more fatal file error than &quot;not found&quot; occurred</span>
+    <span class='doccomment'>///            if let Err((e, mut response)) = res {</span>
+    <span class='doccomment'>///                //Something went horribly wrong</span>
+    <span class='doccomment'>///                context.log.error(</span>
+    <span class='doccomment'>///                    &amp;format!(&quot;failed to open &#39;{}&#39;: {}&quot;, file, e)</span>
+    <span class='doccomment'>///                );</span>
+    <span class='doccomment'>///                response.set_status(StatusCode::InternalServerError);</span>
+    <span class='doccomment'>///            }</span>
+    <span class='doccomment'>///        } else {</span>
+    <span class='doccomment'>///            //Accessing parent directories is forbidden</span>
+    <span class='doccomment'>///            response.set_status(StatusCode::Forbidden);</span>
     <span class='doccomment'>///        }</span>
     <span class='doccomment'>///    } else {</span>
     <span class='doccomment'>///        //No filename was specified</span>
@@ -1522,26 +1548,34 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>///fn my_handler(mut context: Context, mut response: Response) {</span>
     <span class='doccomment'>///    if let Some(file) = context.variables.get(&quot;file&quot;) {</span>
-    <span class='doccomment'>///        //Make a full path from the filename</span>
-    <span class='doccomment'>///        let path = Path::new(&quot;path/to/files&quot;).join(file.as_ref());</span>
+    <span class='doccomment'>///        let file_path = Path::new(file.as_ref());</span>
     <span class='doccomment'>///</span>
-    <span class='doccomment'>///        //Send .rs files as Rust files and do the usual guessing for the rest</span>
-    <span class='doccomment'>///        let res = response.send_file_with_mime(&amp;path, |ext| {</span>
-    <span class='doccomment'>///            if ext == &quot;rs&quot; {</span>
-    <span class='doccomment'>///                Some(content_type!(Text / &quot;rust&quot;; Charset = Utf8))</span>
-    <span class='doccomment'>///            } else {</span>
-    <span class='doccomment'>///                file::ext_to_mime(ext)</span>
+    <span class='doccomment'>///        //Check if the path is valid</span>
+    <span class='doccomment'>///        if file::check_path(file_path).is_ok() {</span>
+    <span class='doccomment'>///            //Make a full path from the filename</span>
+    <span class='doccomment'>///            let path = Path::new(&quot;path/to/files&quot;).join(file_path);</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>///            //Send .rs files as Rust files and do the usual guessing for the rest</span>
+    <span class='doccomment'>///            let res = response.send_file_with_mime(&amp;path, |ext| {</span>
+    <span class='doccomment'>///                if ext == &quot;rs&quot; {</span>
+    <span class='doccomment'>///                    Some(content_type!(Text / &quot;rust&quot;; Charset = Utf8))</span>
+    <span class='doccomment'>///                } else {</span>
+    <span class='doccomment'>///                    file::ext_to_mime(ext)</span>
+    <span class='doccomment'>///                }</span>
+    <span class='doccomment'>///            }).or_else(|e| e.send_not_found(&quot;the file was not found&quot;))</span>
+    <span class='doccomment'>///                .or_else(|e| e.ignore_send_error());</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>///            //Check if a more fatal file error than &quot;not found&quot; occurred</span>
+    <span class='doccomment'>///            if let Err((e, mut response)) = res {</span>
+    <span class='doccomment'>///                //Something went horribly wrong</span>
+    <span class='doccomment'>///                context.log.error(</span>
+    <span class='doccomment'>///                    &amp;format!(&quot;failed to open &#39;{}&#39;: {}&quot;, file, e)</span>
+    <span class='doccomment'>///                );</span>
+    <span class='doccomment'>///                response.set_status(StatusCode::InternalServerError);</span>
     <span class='doccomment'>///            }</span>
-    <span class='doccomment'>///        }).or_else(|e| e.send_not_found(&quot;the file was not found&quot;))</span>
-    <span class='doccomment'>///            .or_else(|e| e.ignore_send_error());</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///        //Check if a more fatal file error than &quot;not found&quot; occurred</span>
-    <span class='doccomment'>///        if let Err((e, mut response)) = res {</span>
-    <span class='doccomment'>///            //Something went horribly wrong</span>
-    <span class='doccomment'>///            context.log.error(</span>
-    <span class='doccomment'>///                &amp;format!(&quot;failed to open &#39;{}&#39;: {}&quot;, file, e)</span>
-    <span class='doccomment'>///            );</span>
-    <span class='doccomment'>///            response.set_status(StatusCode::InternalServerError);</span>
+    <span class='doccomment'>///        } else {</span>
+    <span class='doccomment'>///            //Accessing parent directories is forbidden</span>
+    <span class='doccomment'>///            response.set_status(StatusCode::Forbidden);</span>
     <span class='doccomment'>///        }</span>
     <span class='doccomment'>///    } else {</span>
     <span class='doccomment'>///        //No filename was specified</span>
@@ -2054,7 +2088,8 @@
     }
 
     <span class='prelude-val'>Ok</span>(<span class='ident'>write_queue</span>)
-}</pre>
+}
+</pre>
 </section>
     <section id='search' class="content hidden"></section>
 

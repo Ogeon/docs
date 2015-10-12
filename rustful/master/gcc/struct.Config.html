@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-33' class='srclink' href='../src/gcc/lib.rs.html#61-79' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-59' class='srclink' href='../src/gcc/lib.rs.html#61-79' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Config {
     // some fields omitted
 }</pre><div class='docblock'><p>Extra configuration to pass to gcc.</p>
@@ -148,6 +148,21 @@ automatically link the binary. Defaults to <code>true</code>.</p>
 <div class='docblock'><p>Run the compiler, generating the file <code>output</code></p>
 
 <p>The name <code>output</code> must begin with <code>lib</code> and end with <code>.a</code></p>
+</div><h4 id='method.get_compiler' class='method'><code>fn <a href='#method.get_compiler' class='fnname'>get_compiler</a>(&amp;self) -&gt; <a class='struct' href='../gcc/struct.Tool.html' title='gcc::Tool'>Tool</a></code></h4>
+<div class='docblock'><p>Get the compiler that&#39;s in use for this configuration.</p>
+
+<p>This function will return a <code>Tool</code> which represents the culmination
+of this configuration at a snapshot in time. The returned compiler can
+be inspected (e.g. the path, arguments, environment) to forward along to
+other tools, or the <code>to_command</code> method can be used to invoke the
+compiler itself.</p>
+
+<p>This method will take into account all configuration such as debug
+information, optimization level, include directories, defines, etc.
+Additionally, the compiler binary in use follows the standard
+conventions for this path, e.g. looking at the explicitly set compiler,
+environment variables (a number of which are inspected here), and then
+falling back to the default configuration.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
