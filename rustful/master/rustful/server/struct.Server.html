@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-3154' class='srclink' href='../../src/rustful/server/mod.rs.html#45-88' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-3132' class='srclink' href='../../src/rustful/server/mod.rs.html#44-84' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Server&lt;R: <a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a>&gt; {
     pub handlers: R,
     pub fallback_handler: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;R::Handler&gt;,
@@ -55,7 +55,6 @@
     pub available_threads: <a href='http://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>,
     pub server: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
     pub content_type: <a class='struct' href='../../rustful/mime/struct.Mime.html' title='rustful::mime::Mime'>Mime</a>,
-    pub log: <a class='struct' href='http://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='trait' href='../../rustful/log/trait.Log.html' title='rustful::log::Log'>Log</a>&gt;,
     pub global: <a class='struct' href='../../rustful/server/struct.Global.html' title='rustful::server::Global'>Global</a>,
     pub context_filters: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='trait' href='../../rustful/filter/trait.ContextFilter.html' title='rustful::filter::ContextFilter'>ContextFilter</a>&gt;&gt;,
     pub response_filters: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='trait' href='../../rustful/filter/trait.ResponseFilter.html' title='rustful::filter::ResponseFilter'>ResponseFilter</a>&gt;&gt;,
@@ -95,8 +94,6 @@ during high load. Default is <code>1</code>.</p>
                                   <td id='structfield.server'><code>server</code></td><td><div class='docblock'><p>The content of the server header. Default is <code>&quot;rustful&quot;</code>.</p>
 </div></td></tr><tr class='stab '>
                                   <td id='structfield.content_type'><code>content_type</code></td><td><div class='docblock'><p>The default media type. Default is <code>text/plain, charset: UTF-8</code>.</p>
-</div></td></tr><tr class='stab '>
-                                  <td id='structfield.log'><code>log</code></td><td><div class='docblock'><p>Tool for printing to a log. The default is to print to standard output.</p>
 </div></td></tr><tr class='stab '>
                                   <td id='structfield.global'><code>global</code></td><td><div class='docblock'><p>Globally accessible data.</p>
 </div></td></tr><tr class='stab '>

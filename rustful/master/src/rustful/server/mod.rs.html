@@ -178,11 +178,6 @@
 <span id="136">136</span>
 <span id="137">137</span>
 <span id="138">138</span>
-<span id="139">139</span>
-<span id="140">140</span>
-<span id="141">141</span>
-<span id="142">142</span>
-<span id="143">143</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Server configuration and instance.</span>
 
@@ -196,7 +191,6 @@
 <span class='kw'>use</span> <span class='ident'>filter</span>::{<span class='ident'>ContextFilter</span>, <span class='ident'>ResponseFilter</span>};
 <span class='kw'>use</span> <span class='ident'>router</span>::<span class='ident'>Router</span>;
 <span class='kw'>use</span> <span class='ident'>handler</span>::<span class='ident'>Handler</span>;
-<span class='kw'>use</span> <span class='ident'>log</span>::{<span class='ident'>Log</span>, <span class='ident'>StdOut</span>};
 
 <span class='kw'>use</span> <span class='ident'>HttpResult</span>;
 
@@ -260,9 +254,6 @@
     <span class='doccomment'>///The default media type. Default is `text/plain, charset: UTF-8`.</span>
     <span class='kw'>pub</span> <span class='ident'>content_type</span>: <span class='ident'>Mime</span>,
 
-    <span class='doccomment'>///Tool for printing to a log. The default is to print to standard output.</span>
-    <span class='kw'>pub</span> <span class='ident'>log</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Log</span><span class='op'>&gt;</span>,
-
     <span class='doccomment'>///Globally accessible data.</span>
     <span class='kw'>pub</span> <span class='ident'>global</span>: <span class='ident'>Global</span>,
 
@@ -303,7 +294,6 @@
                 <span class='ident'>hyper</span>::<span class='ident'>mime</span>::<span class='ident'>SubLevel</span>::<span class='ident'>Plain</span>,
                 <span class='macro'>vec</span><span class='macro'>!</span>[(<span class='ident'>hyper</span>::<span class='ident'>mime</span>::<span class='ident'>Attr</span>::<span class='ident'>Charset</span>, <span class='ident'>hyper</span>::<span class='ident'>mime</span>::<span class='ident'>Value</span>::<span class='ident'>Utf8</span>)]
             ),
-            <span class='ident'>log</span>: <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>StdOut</span>),
             <span class='ident'>global</span>: <span class='ident'>Global</span>::<span class='ident'>default</span>(),
             <span class='ident'>context_filters</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
             <span class='ident'>response_filters</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),

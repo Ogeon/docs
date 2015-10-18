@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-9791' class='srclink' href='../../src/rustful/response.rs.html#262-269' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-9754' class='srclink' href='../../src/rustful/response.rs.html#261-267' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Response&lt;'a, 'b&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>An interface for sending data to the client.</p>
@@ -79,14 +79,16 @@ errors. Use <code>try_send</code> to get error information.</p>
 <div class='docblock'><p>Try to send data to the client and finish the response. This is the
 same as <code>send</code>, but errors are not ignored.</p>
 <pre class='rust rust-example-rendered'>
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>log</span>;
 <span class='kw'>use</span> <span class='ident'>rustful</span>::{<span class='ident'>Context</span>, <span class='ident'>Response</span>};
 <span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>response</span>::<span class='ident'>Error</span>;
 
 <span class='kw'>fn</span> <span class='ident'>my_handler</span>(<span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span>) {
     <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>Filter</span>(<span class='ident'>e</span>)) <span class='op'>=</span> <span class='ident'>response</span>.<span class='ident'>try_send</span>(<span class='string'>&quot;hello&quot;</span>) {
-        <span class='ident'>context</span>.<span class='ident'>log</span>.<span class='ident'>note</span>(<span class='kw-2'>&amp;</span><span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;a filter failed: {}&quot;</span>, <span class='ident'>e</span>));
+        <span class='macro'>error</span><span class='macro'>!</span>(<span class='string'>&quot;a filter failed: {}&quot;</span>, <span class='ident'>e</span>);
     }
-}</pre>
+}
+</pre>
 </div><h4 id='method.send_file' class='method'><code>fn <a href='#method.send_file' class='fnname'>send_file</a>&lt;P: <a class='trait' href='http://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(self, path: P) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../../rustful/response/enum.FileError.html' title='rustful::response::FileError'>FileError</a>&lt;'a, 'b&gt;&gt;</code></h4>
 <div class='docblock'><p>Send a static file to the client.</p>
 
@@ -99,6 +101,7 @@ information.</p>
 <p>An error is returned upon failure and the response may be recovered
 from there if the file could not be opened.</p>
 <pre class='rust rust-example-rendered'>
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>log</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
 <span class='kw'>use</span> <span class='ident'>rustful</span>::{<span class='ident'>Context</span>, <span class='ident'>Response</span>};
 <span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>StatusCode</span>;
@@ -121,9 +124,7 @@ from there if the file could not be opened.</p>
             <span class='comment'>//Check if a more fatal file error than &quot;not found&quot; occurred</span>
             <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Err</span>((<span class='ident'>e</span>, <span class='kw-2'>mut</span> <span class='ident'>response</span>)) <span class='op'>=</span> <span class='ident'>res</span> {
                 <span class='comment'>//Something went horribly wrong</span>
-                <span class='ident'>context</span>.<span class='ident'>log</span>.<span class='ident'>error</span>(
-                    <span class='kw-2'>&amp;</span><span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;failed to open &#39;{}&#39;: {}&quot;</span>, <span class='ident'>file</span>, <span class='ident'>e</span>)
-                );
+                <span class='macro'>error</span><span class='macro'>!</span>(<span class='string'>&quot;failed to open &#39;{}&#39;: {}&quot;</span>, <span class='ident'>file</span>, <span class='ident'>e</span>);
                 <span class='ident'>response</span>.<span class='ident'>set_status</span>(<span class='ident'>StatusCode</span>::<span class='ident'>InternalServerError</span>);
             }
         } <span class='kw'>else</span> {
@@ -145,6 +146,7 @@ happens to be wrong about some file extension.</p>
 <p>An error is returned upon failure and the response may be recovered
 from there if the file could not be opened.</p>
 <pre class='rust rust-example-rendered'>
+<span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>log</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>Path</span>;
 <span class='kw'>use</span> <span class='ident'>rustful</span>::{<span class='ident'>Context</span>, <span class='ident'>Response</span>};
 <span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>StatusCode</span>;
@@ -172,9 +174,7 @@ from there if the file could not be opened.</p>
             <span class='comment'>//Check if a more fatal file error than &quot;not found&quot; occurred</span>
             <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Err</span>((<span class='ident'>e</span>, <span class='kw-2'>mut</span> <span class='ident'>response</span>)) <span class='op'>=</span> <span class='ident'>res</span> {
                 <span class='comment'>//Something went horribly wrong</span>
-                <span class='ident'>context</span>.<span class='ident'>log</span>.<span class='ident'>error</span>(
-                    <span class='kw-2'>&amp;</span><span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;failed to open &#39;{}&#39;: {}&quot;</span>, <span class='ident'>file</span>, <span class='ident'>e</span>)
-                );
+                <span class='macro'>error</span><span class='macro'>!</span>(<span class='string'>&quot;failed to open &#39;{}&#39;: {}&quot;</span>, <span class='ident'>file</span>, <span class='ident'>e</span>);
                 <span class='ident'>response</span>.<span class='ident'>set_status</span>(<span class='ident'>StatusCode</span>::<span class='ident'>InternalServerError</span>);
             }
         } <span class='kw'>else</span> {
