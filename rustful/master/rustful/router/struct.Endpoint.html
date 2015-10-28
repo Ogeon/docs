@@ -45,11 +45,11 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-5017' class='srclink' href='../../src/rustful/router/mod.rs.html#98-106' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-5031' class='srclink' href='../../src/rustful/router/mod.rs.html#98-106' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Endpoint&lt;'a, T: 'a&gt; {
     pub handler: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;'a T&gt;,
     pub variables: <a class='struct' href='http://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html' title='std::collections::hash::map::HashMap'>HashMap</a>&lt;<a class='type' href='../../rustful/context/type.MaybeUtf8Owned.html' title='rustful::context::MaybeUtf8Owned'>MaybeUtf8Owned</a>, <a class='type' href='../../rustful/context/type.MaybeUtf8Owned.html' title='rustful::context::MaybeUtf8Owned'>MaybeUtf8Owned</a>&gt;,
-    pub hypermedia: <a class='struct' href='../../rustful/context/hypermedia/struct.Hypermedia.html' title='rustful::context::hypermedia::Hypermedia'>Hypermedia</a>&lt;'a&gt;,
+    pub hyperlinks: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../rustful/context/hypermedia/struct.Link.html' title='rustful::context::hypermedia::Link'>Link</a>&lt;'a&gt;&gt;,
 }</pre><div class='docblock'><p>API endpoint data.</p>
 </div><h2 class='fields'>Fields</h2>
 <table><tr class='stab '>
@@ -58,7 +58,7 @@
                                   <td id='structfield.variables'><code>variables</code></td><td><div class='docblock'><p>Path variables for the matching endpoint. May be empty, depending on
 the router implementation.</p>
 </div></td></tr><tr class='stab '>
-                                  <td id='structfield.hypermedia'><code>hypermedia</code></td><td><div class='docblock'><p>Any associated hypermedia, such as links.</p>
+                                  <td id='structfield.hyperlinks'><code>hyperlinks</code></td><td><div class='docblock'><p>Any associated hyperlinks.</p>
 </div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a, T&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;'a T&gt;&gt; for <a class='struct' href='../../rustful/router/struct.Endpoint.html' title='rustful::router::Endpoint'>Endpoint</a>&lt;'a, T&gt;</code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/convert/trait.From.html#method.from' class='fnname'>from</a>(handler: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;'a T&gt;) -&gt; <a class='struct' href='../../rustful/router/struct.Endpoint.html' title='rustful::router::Endpoint'>Endpoint</a>&lt;'a, T&gt;</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>

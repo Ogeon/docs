@@ -390,7 +390,7 @@
 <span class='kw'>use</span> <span class='ident'>server</span>::<span class='ident'>Global</span>;
 
 <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>body</span>::<span class='ident'>BodyReader</span>;
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>hypermedia</span>::<span class='ident'>Hypermedia</span>;
+<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>hypermedia</span>::<span class='ident'>Link</span>;
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>body</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>hypermedia</span>;
@@ -418,8 +418,8 @@
     <span class='doccomment'>///The requested URI.</span>
     <span class='kw'>pub</span> <span class='ident'>uri</span>: <span class='ident'>Uri</span>,
 
-    <span class='doccomment'>///Hypermedia from the current endpoint.</span>
-    <span class='kw'>pub</span> <span class='ident'>hypermedia</span>: <span class='ident'>Hypermedia</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span><span class='op'>&gt;</span>,
+    <span class='doccomment'>///Hyperlinks from the current endpoint.</span>
+    <span class='kw'>pub</span> <span class='ident'>hyperlinks</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Link</span><span class='op'>&lt;</span><span class='lifetime'>&#39;s</span><span class='op'>&gt;&gt;</span>,
 
     <span class='doccomment'>///Route variables.</span>
     <span class='kw'>pub</span> <span class='ident'>variables</span>: <span class='ident'>Parameters</span>,

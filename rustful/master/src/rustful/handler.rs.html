@@ -70,8 +70,15 @@
 <span id="28">28</span>
 <span id="29">29</span>
 <span id="30">30</span>
+<span id="31">31</span>
+<span id="32">32</span>
+<span id="33">33</span>
+<span id="34">34</span>
+<span id="35">35</span>
+<span id="36">36</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Request handlers.</span>
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>;
 
 <span class='kw'>use</span> <span class='ident'>context</span>::<span class='ident'>Context</span>;
 <span class='kw'>use</span> <span class='ident'>response</span>::<span class='ident'>Response</span>;
@@ -82,6 +89,11 @@
     <span class='doccomment'>///Handle a request from the client. Panicking within this method is</span>
     <span class='doccomment'>///discouraged, to allow the server to run smoothly.</span>
     <span class='kw'>fn</span> <span class='ident'>handle_request</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span>);
+
+    <span class='doccomment'>///Get a description for the handler.</span>
+    <span class='kw'>fn</span> <span class='ident'>description</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>str</span><span class='op'>&gt;&gt;</span> {
+        <span class='prelude-val'>None</span>
+    }
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='ident'>Context</span>, <span class='ident'>Response</span>) <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> <span class='ident'>Handler</span> <span class='kw'>for</span> <span class='ident'>F</span> {

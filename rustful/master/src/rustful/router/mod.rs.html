@@ -376,7 +376,7 @@
 
 <span class='kw'>use</span> <span class='ident'>handler</span>::<span class='ident'>Handler</span>;
 <span class='kw'>use</span> <span class='ident'>context</span>::<span class='ident'>MaybeUtf8Owned</span>;
-<span class='kw'>use</span> <span class='ident'>context</span>::<span class='ident'>hypermedia</span>::<span class='ident'>Hypermedia</span>;
+<span class='kw'>use</span> <span class='ident'>context</span>::<span class='ident'>hypermedia</span>::<span class='ident'>Link</span>;
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>tree_router</span>::<span class='ident'>TreeRouter</span>;
 
@@ -389,8 +389,8 @@
     <span class='doccomment'>///Path variables for the matching endpoint. May be empty, depending on</span>
     <span class='doccomment'>///the router implementation.</span>
     <span class='kw'>pub</span> <span class='ident'>variables</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8Owned</span>, <span class='ident'>MaybeUtf8Owned</span><span class='op'>&gt;</span>,
-    <span class='doccomment'>///Any associated hypermedia, such as links.</span>
-    <span class='kw'>pub</span> <span class='ident'>hypermedia</span>: <span class='ident'>Hypermedia</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>
+    <span class='doccomment'>///Any associated hyperlinks.</span>
+    <span class='kw'>pub</span> <span class='ident'>hyperlinks</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Link</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Endpoint</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
@@ -398,7 +398,7 @@
         <span class='ident'>Endpoint</span> {
             <span class='ident'>handler</span>: <span class='ident'>handler</span>,
             <span class='ident'>variables</span>: <span class='ident'>HashMap</span>::<span class='ident'>new</span>(),
-            <span class='ident'>hypermedia</span>: <span class='ident'>Hypermedia</span>::<span class='ident'>new</span>()
+            <span class='ident'>hyperlinks</span>: <span class='macro'>vec</span><span class='macro'>!</span>[]
         }
     }
 }

@@ -466,7 +466,6 @@
 <span id="424">424</span>
 <span id="425">425</span>
 <span id="426">426</span>
-<span id="427">427</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::<span class='ident'>SocketAddr</span>;
@@ -494,7 +493,6 @@
 <span class='kw'>use</span> <span class='ident'>StatusCode</span>;
 
 <span class='kw'>use</span> <span class='ident'>context</span>::{<span class='self'>self</span>, <span class='ident'>Context</span>, <span class='ident'>Uri</span>, <span class='ident'>MaybeUtf8Owned</span>, <span class='ident'>Parameters</span>};
-<span class='kw'>use</span> <span class='ident'>context</span>::<span class='ident'>hypermedia</span>::<span class='ident'>Hypermedia</span>;
 <span class='kw'>use</span> <span class='ident'>filter</span>::{<span class='ident'>FilterContext</span>, <span class='ident'>ContextFilter</span>, <span class='ident'>ContextAction</span>, <span class='ident'>ResponseFilter</span>};
 <span class='kw'>use</span> <span class='ident'>router</span>::{<span class='ident'>Router</span>, <span class='ident'>Endpoint</span>};
 <span class='kw'>use</span> <span class='ident'>handler</span>::<span class='ident'>Handler</span>;
@@ -669,7 +667,7 @@
                     <span class='ident'>method</span>: <span class='ident'>request_method</span>,
                     <span class='ident'>address</span>: <span class='ident'>request_addr</span>,
                     <span class='ident'>uri</span>: <span class='ident'>uri</span>,
-                    <span class='ident'>hypermedia</span>: <span class='ident'>Hypermedia</span>::<span class='ident'>new</span>(),
+                    <span class='ident'>hyperlinks</span>: <span class='macro'>vec</span><span class='macro'>!</span>[],
                     <span class='ident'>variables</span>: <span class='ident'>Parameters</span>::<span class='ident'>new</span>(),
                     <span class='ident'>query</span>: <span class='ident'>query</span>.<span class='ident'>into</span>(),
                     <span class='ident'>fragment</span>: <span class='ident'>fragment</span>,
@@ -687,18 +685,18 @@
                             <span class='ident'>Endpoint</span> {
                                 <span class='ident'>handler</span>: <span class='prelude-val'>None</span>,
                                 <span class='ident'>variables</span>: <span class='ident'>HashMap</span>::<span class='ident'>new</span>(),
-                                <span class='ident'>hypermedia</span>: <span class='ident'>Hypermedia</span>::<span class='ident'>new</span>()
+                                <span class='ident'>hyperlinks</span>: <span class='macro'>vec</span><span class='macro'>!</span>[]
                             }
                         });
 
                         <span class='kw'>let</span> <span class='ident'>Endpoint</span> {
                             <span class='ident'>handler</span>,
                             <span class='ident'>variables</span>,
-                            <span class='ident'>hypermedia</span>
+                            <span class='ident'>hyperlinks</span>
                         } <span class='op'>=</span> <span class='ident'>endpoint</span>;
 
                         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>handler</span>) <span class='op'>=</span> <span class='ident'>handler</span>.<span class='ident'>or</span>(<span class='self'>self</span>.<span class='ident'>fallback_handler</span>.<span class='ident'>as_ref</span>()) {
-                            <span class='ident'>context</span>.<span class='ident'>hypermedia</span> <span class='op'>=</span> <span class='ident'>hypermedia</span>;
+                            <span class='ident'>context</span>.<span class='ident'>hyperlinks</span> <span class='op'>=</span> <span class='ident'>hyperlinks</span>;
                             <span class='ident'>context</span>.<span class='ident'>variables</span> <span class='op'>=</span> <span class='ident'>variables</span>.<span class='ident'>into</span>();
                             <span class='ident'>handler</span>.<span class='ident'>handle_request</span>(<span class='ident'>context</span>, <span class='ident'>response</span>);
                         } <span class='kw'>else</span> {

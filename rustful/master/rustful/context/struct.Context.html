@@ -45,14 +45,14 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-8481' class='srclink' href='../../src/rustful/context/mod.rs.html#134-167' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-8402' class='srclink' href='../../src/rustful/context/mod.rs.html#134-167' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Context&lt;'a, 'b, 's&gt; {
     pub headers: <a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a>,
     pub http_version: <a class='enum' href='../../rustful/enum.HttpVersion.html' title='rustful::HttpVersion'>HttpVersion</a>,
     pub address: <a class='enum' href='http://doc.rust-lang.org/nightly/std/net/addr/enum.SocketAddr.html' title='std::net::addr::SocketAddr'>SocketAddr</a>,
     pub method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>,
     pub uri: <a class='enum' href='../../rustful/context/enum.Uri.html' title='rustful::context::Uri'>Uri</a>,
-    pub hypermedia: <a class='struct' href='../../rustful/context/hypermedia/struct.Hypermedia.html' title='rustful::context::hypermedia::Hypermedia'>Hypermedia</a>&lt;'s&gt;,
+    pub hyperlinks: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../rustful/context/hypermedia/struct.Link.html' title='rustful::context::hypermedia::Link'>Link</a>&lt;'s&gt;&gt;,
     pub variables: <a class='struct' href='../../rustful/context/struct.Parameters.html' title='rustful::context::Parameters'>Parameters</a>,
     pub query: <a class='struct' href='../../rustful/context/struct.Parameters.html' title='rustful::context::Parameters'>Parameters</a>,
     pub fragment: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='type' href='../../rustful/context/type.MaybeUtf8Owned.html' title='rustful::context::MaybeUtf8Owned'>MaybeUtf8Owned</a>&gt;,
@@ -71,7 +71,7 @@
 </div></td></tr><tr class='stab '>
                                   <td id='structfield.uri'><code>uri</code></td><td><div class='docblock'><p>The requested URI.</p>
 </div></td></tr><tr class='stab '>
-                                  <td id='structfield.hypermedia'><code>hypermedia</code></td><td><div class='docblock'><p>Hypermedia from the current endpoint.</p>
+                                  <td id='structfield.hyperlinks'><code>hyperlinks</code></td><td><div class='docblock'><p>Hyperlinks from the current endpoint.</p>
 </div></td></tr><tr class='stab '>
                                   <td id='structfield.variables'><code>variables</code></td><td><div class='docblock'><p>Route variables.</p>
 </div></td></tr><tr class='stab '>
