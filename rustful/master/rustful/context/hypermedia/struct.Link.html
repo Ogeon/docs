@@ -24,10 +24,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='../../index.html'>rustful</a>::<wbr><a href='../index.html'>context</a>::<wbr><a href='index.html'>hypermedia</a></p><script>window.sidebarCurrent = {name: 'Link', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -45,11 +45,11 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-6027' class='srclink' href='../../../src/rustful/context/hypermedia.rs.html#9-17' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-6179' class='srclink' href='../../../src/rustful/context/hypermedia.rs.html#9-17' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Link&lt;'a&gt; {
-    pub method: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='../../../rustful/enum.Method.html' title='rustful::Method'>Method</a>&gt;,
-    pub path: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;&gt;,
-    pub handler: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;'a <a class='trait' href='../../../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a>&gt;,
+    pub method: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='../../../rustful/enum.Method.html' title='rustful::Method'>Method</a>&gt;,
+    pub path: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;&gt;,
+    pub handler: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;'a <a class='trait' href='../../../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a>&gt;,
 }</pre><div class='docblock'><p>A hyperlink.</p>
 </div><h2 class='fields'>Fields</h2>
 <table><tr class='stab '>
@@ -59,16 +59,18 @@ unspecified if the method doesn&#39;t matter.</p>
                                   <td id='structfield.path'><code>path</code></td><td><div class='docblock'><p>A relative path from the current location.</p>
 </div></td></tr><tr class='stab '>
                                   <td id='structfield.handler'><code>handler</code></td><td><div class='docblock'><p>The handler that will answer at the endpoint.</p>
-</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../../rustful/context/hypermedia/struct.Link.html' title='rustful::context::hypermedia::Link'>Link</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='http://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='http://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../../rustful/context/hypermedia/struct.Link.html' title='rustful::context::hypermedia::Link'>Link</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -85,7 +87,7 @@ unspecified if the method doesn&#39;t matter.</p>
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -95,8 +97,8 @@ unspecified if the method doesn&#39;t matter.</p>
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>typedef</code> (or
-                    <code>tdef</code>).
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
                 </p>
 
                 <p>
@@ -105,7 +107,7 @@ unspecified if the method doesn&#39;t matter.</p>
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 

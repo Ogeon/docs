@@ -24,10 +24,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>router</a></p><script>window.sidebarCurrent = {name: 'Router', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -45,11 +45,11 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-5084' class='srclink' href='../../src/rustful/router/mod.rs.html#122-131' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Router: <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + <a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> + 'static {
+        </span><a id='src-5236' class='srclink' href='../../src/rustful/router/mod.rs.html#122-131' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Router: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> + 'static {
     type Handler: <a class='trait' href='../../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a>;
-    fn <a href='#tymethod.insert' class='fnname'>insert</a>&lt;'a, D: ?<a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a>&lt;Target=R&gt; + 'a, R: ?<a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; + 'a&gt;(&amp;mut self, method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>, route: &amp;'a D, handler: Self::<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Handler</a>);
-    fn <a href='#tymethod.find' class='fnname'>find</a>&lt;'a&gt;(&amp;'a self, method: &amp;<a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>, route: <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='struct' href='../../rustful/router/struct.Endpoint.html' title='rustful::router::Endpoint'>Endpoint</a>&lt;'a, Self::<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Handler</a>&gt;;
+    fn <a href='#tymethod.insert' class='fnname'>insert</a>&lt;'a, D: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a>&lt;Target=R&gt; + 'a, R: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; + 'a&gt;(&amp;mut self, method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>, route: &amp;'a D, handler: Self::<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Handler</a>);
+    fn <a href='#tymethod.find' class='fnname'>find</a>&lt;'a&gt;(&amp;'a self, method: &amp;<a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>, route: <a href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='struct' href='../../rustful/router/struct.Endpoint.html' title='rustful::router::Endpoint'>Endpoint</a>&lt;'a, Self::<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Handler</a>&gt;;
 }</pre><div class='docblock'><p>A common trait for routers.</p>
 
 <p>A router must to implement this trait to be usable in a Rustful server. This
@@ -61,8 +61,8 @@ trait will also make the router compatible with the <code>insert_routes!</code> 
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.insert' class='method stab '><code>fn <a href='#tymethod.insert' class='fnname'>insert</a>&lt;'a, D: ?<a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a>&lt;Target=R&gt; + 'a, R: ?<a class='trait' href='http://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; + 'a&gt;(&amp;mut self, method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>, route: &amp;'a D, handler: Self::<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Handler</a>)</code></h3><div class='docblock'><p>Insert a new handler into the router.</p>
-</div><h3 id='tymethod.find' class='method stab '><code>fn <a href='#tymethod.find' class='fnname'>find</a>&lt;'a&gt;(&amp;'a self, method: &amp;<a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>, route: <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a href='http://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='struct' href='../../rustful/router/struct.Endpoint.html' title='rustful::router::Endpoint'>Endpoint</a>&lt;'a, Self::<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Handler</a>&gt;</code></h3><div class='docblock'><p>Find and return the matching handler and variable values.</p>
+        <h3 id='tymethod.insert' class='method stab '><code>fn <a href='#tymethod.insert' class='fnname'>insert</a>&lt;'a, D: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a>&lt;Target=R&gt; + 'a, R: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; + 'a&gt;(&amp;mut self, method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>, route: &amp;'a D, handler: Self::<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Handler</a>)</code></h3><div class='docblock'><p>Insert a new handler into the router.</p>
+</div><h3 id='tymethod.find' class='method stab '><code>fn <a href='#tymethod.find' class='fnname'>find</a>&lt;'a&gt;(&amp;'a self, method: &amp;<a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>, route: <a href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='struct' href='../../rustful/router/struct.Endpoint.html' title='rustful::router::Endpoint'>Endpoint</a>&lt;'a, Self::<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Handler</a>&gt;</code></h3><div class='docblock'><p>Find and return the matching handler and variable values.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
@@ -74,10 +74,12 @@ trait will also make the router compatible with the <code>insert_routes!</code> 
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -94,7 +96,7 @@ trait will also make the router compatible with the <code>insert_routes!</code> 
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -104,8 +106,8 @@ trait will also make the router compatible with the <code>insert_routes!</code> 
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>typedef</code> (or
-                    <code>tdef</code>).
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
                 </p>
 
                 <p>
@@ -114,7 +116,7 @@ trait will also make the router compatible with the <code>insert_routes!</code> 
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 

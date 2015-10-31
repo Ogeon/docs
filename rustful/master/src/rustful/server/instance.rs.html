@@ -24,10 +24,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -466,10 +466,70 @@
 <span id="424">424</span>
 <span id="425">425</span>
 <span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::<span class='ident'>SocketAddr</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::{<span class='ident'>AtomicUsize</span>, <span class='ident'>Ordering</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>Duration</span>;
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ssl&quot;</span>)]</span>
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>PathBuf</span>;
 
 <span class='kw'>use</span> <span class='ident'>time</span>;
 
@@ -483,8 +543,9 @@
 <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>header</span>::{<span class='ident'>Date</span>, <span class='ident'>ContentType</span>};
 <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>mime</span>::<span class='ident'>Mime</span>;
 <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>uri</span>::<span class='ident'>RequestUri</span>;
+<span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>net</span>::<span class='ident'>HttpListener</span>;
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ssl&quot;</span>)]</span>
-<span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>net</span>::<span class='ident'>Openssl</span>;
+<span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>net</span>::{<span class='ident'>Openssl</span>, <span class='ident'>HttpsListener</span>};
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Listening</span>;
 
@@ -498,7 +559,7 @@
 <span class='kw'>use</span> <span class='ident'>handler</span>::<span class='ident'>Handler</span>;
 <span class='kw'>use</span> <span class='ident'>response</span>::<span class='ident'>Response</span>;
 <span class='kw'>use</span> <span class='ident'>header</span>::<span class='ident'>HttpDate</span>;
-<span class='kw'>use</span> <span class='ident'>server</span>::{<span class='ident'>Scheme</span>, <span class='ident'>Global</span>};
+<span class='kw'>use</span> <span class='ident'>server</span>::{<span class='ident'>Scheme</span>, <span class='ident'>Global</span>, <span class='ident'>KeepAlive</span>};
 
 <span class='kw'>use</span> <span class='ident'>HttpResult</span>;
 <span class='kw'>use</span> <span class='ident'>Server</span>;
@@ -534,7 +595,7 @@
     <span class='ident'>content_type</span>: <span class='ident'>Mime</span>,
 
     <span class='ident'>threads</span>: <span class='ident'>usize</span>,
-    <span class='ident'>available_threads</span>: <span class='ident'>usize</span>,
+    <span class='ident'>keep_alive</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>KeepAlive</span><span class='op'>&gt;</span>,
     <span class='ident'>threads_in_use</span>: <span class='ident'>AtomicUsize</span>,
 
     <span class='ident'>context_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ContextFilter</span><span class='op'>&gt;&gt;</span>,
@@ -554,7 +615,7 @@
             <span class='ident'>server</span>: <span class='ident'>config</span>.<span class='ident'>server</span>,
             <span class='ident'>content_type</span>: <span class='ident'>config</span>.<span class='ident'>content_type</span>,
             <span class='ident'>threads</span>: <span class='ident'>config</span>.<span class='ident'>threads</span>.<span class='ident'>unwrap_or_else</span>(<span class='op'>||</span> (<span class='ident'>num_cpus</span>::<span class='ident'>get</span>() <span class='op'>*</span> <span class='number'>5</span>) <span class='op'>/</span> <span class='number'>4</span>),
-            <span class='ident'>available_threads</span>: <span class='ident'>config</span>.<span class='ident'>available_threads</span>,
+            <span class='ident'>keep_alive</span>: <span class='ident'>config</span>.<span class='ident'>keep_alive</span>,
             <span class='ident'>threads_in_use</span>: <span class='ident'>AtomicUsize</span>::<span class='ident'>new</span>(<span class='number'>0</span>),
             <span class='ident'>context_filters</span>: <span class='ident'>config</span>.<span class='ident'>context_filters</span>,
             <span class='ident'>response_filters</span>: <span class='ident'>config</span>.<span class='ident'>response_filters</span>,
@@ -568,17 +629,14 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>, <span class='ident'>scheme</span>: <span class='ident'>Scheme</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>host</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>host</span>;
         <span class='kw'>let</span> <span class='ident'>threads</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>threads</span>;
-        <span class='kw'>match</span> <span class='ident'>scheme</span> {
-            <span class='ident'>Scheme</span>::<span class='ident'>Http</span> <span class='op'>=&gt;</span> <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Server</span>::<span class='ident'>http</span>(<span class='ident'>host</span>).<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>http</span><span class='op'>|</span> {
-                <span class='ident'>http</span>.<span class='ident'>handle_threads</span>(<span class='self'>self</span>, <span class='ident'>threads</span>)
-            }),
-            <span class='ident'>Scheme</span>::<span class='ident'>Https</span> {<span class='ident'>cert</span>, <span class='ident'>key</span>} <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>ssl</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Openssl</span>::<span class='ident'>with_cert_and_key</span>(<span class='ident'>cert</span>, <span class='ident'>key</span>));
-                <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Server</span>::<span class='ident'>https</span>(<span class='ident'>host</span>, <span class='ident'>ssl</span>).<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>https</span><span class='op'>|</span> {
-                    <span class='ident'>https</span>.<span class='ident'>handle_threads</span>(<span class='self'>self</span>, <span class='ident'>threads</span>)
-                })
-            }
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>server</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>scheme</span> {
+            <span class='ident'>Scheme</span>::<span class='ident'>Http</span> <span class='op'>=&gt;</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>HyperServer</span>::<span class='ident'>http</span>(<span class='ident'>host</span>)),
+            <span class='ident'>Scheme</span>::<span class='ident'>Https</span> {<span class='ident'>cert</span>, <span class='ident'>key</span>} <span class='op'>=&gt;</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>HyperServer</span>::<span class='ident'>https</span>(<span class='ident'>host</span>, <span class='ident'>cert</span>, <span class='ident'>key</span>)),
+        };
+        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>keep_alive</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>keep_alive</span> {
+            <span class='ident'>server</span>.<span class='ident'>keep_alive</span>(<span class='ident'>keep_alive</span>.<span class='ident'>timeout</span>);
         }
+        <span class='ident'>server</span>.<span class='ident'>run</span>(<span class='self'>self</span>, <span class='ident'>threads</span>)
     }
 
     <span class='doccomment'>///Start the server.</span>
@@ -586,9 +644,11 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>, <span class='ident'>_scheme</span>: <span class='ident'>Scheme</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>host</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>host</span>;
         <span class='kw'>let</span> <span class='ident'>threads</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>threads</span>;
-        <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Server</span>::<span class='ident'>http</span>(<span class='ident'>host</span>).<span class='ident'>and_then</span>(<span class='op'>|</span><span class='ident'>http</span><span class='op'>|</span> {
-            <span class='ident'>http</span>.<span class='ident'>handle_threads</span>(<span class='self'>self</span>, <span class='ident'>threads</span>)
-        })
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>server</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>HyperServer</span>::<span class='ident'>http</span>(<span class='ident'>host</span>));
+        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>keep_alive</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>keep_alive</span> {
+            <span class='ident'>server</span>.<span class='ident'>keep_alive</span>(<span class='ident'>keep_alive</span>.<span class='ident'>timeout</span>);
+        }
+        <span class='ident'>server</span>.<span class='ident'>run</span>(<span class='self'>self</span>, <span class='ident'>threads</span>)
     }
 
     <span class='kw'>fn</span> <span class='ident'>modify_context</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>filter_storage</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>AnyMap</span>, <span class='ident'>context</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Context</span>) <span class='op'>-&gt;</span> <span class='ident'>ContextAction</span> {
@@ -630,7 +690,12 @@
             <span class='ident'>request_reader</span>
         ) <span class='op'>=</span> <span class='ident'>request</span>.<span class='ident'>deconstruct</span>();
 
-        <span class='kw'>let</span> <span class='ident'>force_close</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>threads_in_use</span>.<span class='ident'>load</span>(<span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>available_threads</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>threads</span>;
+        <span class='kw'>let</span> <span class='ident'>force_close</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>keep_alive</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>keep_alive</span> {
+            <span class='self'>self</span>.<span class='ident'>threads_in_use</span>.<span class='ident'>load</span>(<span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='op'>+</span> <span class='ident'>keep_alive</span>.<span class='ident'>free_threads</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>threads</span>
+        } <span class='kw'>else</span> {
+            <span class='boolval'>false</span>
+        };
+
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>response</span> <span class='op'>=</span> <span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>writer</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>response_filters</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>global</span>, <span class='ident'>force_close</span>);
         <span class='ident'>response</span>.<span class='ident'>headers_mut</span>().<span class='ident'>set</span>(<span class='ident'>Date</span>(<span class='ident'>HttpDate</span>(<span class='ident'>time</span>::<span class='ident'>now_utc</span>())));
         <span class='ident'>response</span>.<span class='ident'>headers_mut</span>().<span class='ident'>set</span>(<span class='ident'>ContentType</span>(<span class='self'>self</span>.<span class='ident'>content_type</span>.<span class='ident'>clone</span>()));
@@ -795,6 +860,55 @@
     }
 }
 
+<span class='comment'>//Helper to handle multiple protocols.</span>
+<span class='kw'>enum</span> <span class='ident'>HyperServer</span> {
+    <span class='ident'>Http</span>(<span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>HttpListener</span><span class='op'>&gt;</span>),
+    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ssl&quot;</span>)]</span>
+    <span class='ident'>Https</span>(<span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>HttpsListener</span><span class='op'>&lt;</span><span class='ident'>Openssl</span><span class='op'>&gt;&gt;</span>),
+}
+
+<span class='kw'>impl</span> <span class='ident'>HyperServer</span> {
+    <span class='kw'>fn</span> <span class='ident'>http</span>(<span class='ident'>host</span>: <span class='ident'>SocketAddr</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>HyperServer</span><span class='op'>&gt;</span> {
+        <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Server</span>::<span class='ident'>http</span>(<span class='ident'>host</span>).<span class='ident'>map</span>(<span class='ident'>HyperServer</span>::<span class='ident'>Http</span>)
+    }
+
+    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ssl&quot;</span>)]</span>
+    <span class='kw'>fn</span> <span class='ident'>https</span>(<span class='ident'>host</span>: <span class='ident'>SocketAddr</span>, <span class='ident'>cert</span>: <span class='ident'>PathBuf</span>, <span class='ident'>key</span>: <span class='ident'>PathBuf</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>HyperServer</span><span class='op'>&gt;</span> {
+        <span class='kw'>let</span> <span class='ident'>ssl</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>Openssl</span>::<span class='ident'>with_cert_and_key</span>(<span class='ident'>cert</span>, <span class='ident'>key</span>));
+        <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Server</span>::<span class='ident'>https</span>(<span class='ident'>host</span>, <span class='ident'>ssl</span>).<span class='ident'>map</span>(<span class='ident'>HyperServer</span>::<span class='ident'>Https</span>)
+    }
+
+    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ssl&quot;</span>)]</span>
+    <span class='kw'>fn</span> <span class='ident'>keep_alive</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>timeout</span>: <span class='ident'>Duration</span>) {
+        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+            <span class='ident'>HyperServer</span>::<span class='ident'>Http</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>keep_alive</span>(<span class='ident'>timeout</span>),
+            <span class='ident'>HyperServer</span>::<span class='ident'>Https</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>keep_alive</span>(<span class='ident'>timeout</span>),
+        }
+    }
+
+    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ssl&quot;</span>))]</span>
+    <span class='kw'>fn</span> <span class='ident'>keep_alive</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>timeout</span>: <span class='ident'>Duration</span>) {
+        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+            <span class='ident'>HyperServer</span>::<span class='ident'>Http</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>keep_alive</span>(<span class='ident'>timeout</span>),
+        }
+    }
+
+    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ssl&quot;</span>)]</span>
+    <span class='kw'>fn</span> <span class='ident'>run</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>Router</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>server</span>: <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>, <span class='ident'>threads</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
+        <span class='kw'>match</span> <span class='self'>self</span> {
+            <span class='ident'>HyperServer</span>::<span class='ident'>Http</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>handle_threads</span>(<span class='ident'>server</span>, <span class='ident'>threads</span>),
+            <span class='ident'>HyperServer</span>::<span class='ident'>Https</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>handle_threads</span>(<span class='ident'>server</span>, <span class='ident'>threads</span>),
+        }
+    }
+
+    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ssl&quot;</span>))]</span>
+    <span class='kw'>fn</span> <span class='ident'>run</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>Router</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>server</span>: <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>, <span class='ident'>threads</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
+        <span class='kw'>match</span> <span class='self'>self</span> {
+            <span class='ident'>HyperServer</span>::<span class='ident'>Http</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>handle_threads</span>(<span class='ident'>server</span>, <span class='ident'>threads</span>),
+        }
+    }
+}
+
 
 <span class='attribute'>#[<span class='ident'>test</span>]</span>
 <span class='kw'>fn</span> <span class='ident'>parse_path_parts</span>() {
@@ -899,10 +1013,12 @@
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -919,7 +1035,7 @@
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -929,8 +1045,8 @@
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>typedef</code> (or
-                    <code>tdef</code>).
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
                 </p>
 
                 <p>
@@ -939,7 +1055,7 @@
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 

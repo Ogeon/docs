@@ -24,10 +24,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='../index.html'>rustful</a></p><script>window.sidebarCurrent = {name: 'response', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-8833' class='srclink' href='../../src/rustful/response.rs.html#1-1019' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-8985' class='srclink' href='../../src/rustful/response.rs.html#1-1019' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Response writers.</p>
 
 <p>The response writers are the output channel from the handlers to the
@@ -71,14 +71,17 @@ much as possible, since it has lower HTTP overhead than <code>Chunked</code> and
 builtin size check that guarantees that the <code>content-length</code> field is
 correct.</p>
 
-<table><thead>
+<table>
+<thead>
 <tr>
 <th></th>
 <th>No extra overhead</th>
 <th>Guaranteed correct <code>content-length</code></th>
 <th>Streaming</th>
 </tr>
-</thead><tbody>
+</thead>
+
+<tbody>
 <tr>
 <td><code>Response</code></td>
 <td>&check;</td>
@@ -97,7 +100,8 @@ correct.</p>
 <td>&check;</td>
 <td>&check;</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                     <tr class=' module-item'>
@@ -159,10 +163,12 @@ correct.</p>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -179,7 +185,7 @@ correct.</p>
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -189,8 +195,8 @@ correct.</p>
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>typedef</code> (or
-                    <code>tdef</code>).
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
                 </p>
 
                 <p>
@@ -199,7 +205,7 @@ correct.</p>
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 

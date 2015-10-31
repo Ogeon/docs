@@ -24,10 +24,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='../index.html'>multipart</a>::<wbr><a href='index.html'>server</a></p><script>window.sidebarCurrent = {name: 'HttpRequest', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -46,13 +46,13 @@
                 [<span class='inner'>&#x2212;</span>]
             </a>
         </span><a id='src-2428' class='srclink' href='../../src/multipart/server/mod.rs.html#245-252' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait HttpRequest: <a class='trait' href='http://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a> {
-    fn <a href='#tymethod.multipart_boundary' class='fnname'>multipart_boundary</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;;
+<pre class='rust trait'>pub trait HttpRequest: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a> {
+    fn <a href='#tymethod.multipart_boundary' class='fnname'>multipart_boundary</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;;
 }</pre><div class='docblock'><p>A server-side HTTP request that may or may not be multipart.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.multipart_boundary' class='method stab '><code>fn <a href='#tymethod.multipart_boundary' class='fnname'>multipart_boundary</a>(&amp;self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></h3><div class='docblock'><p>Get the boundary string of this request if it is a POST request
+        <h3 id='tymethod.multipart_boundary' class='method stab '><code>fn <a href='#tymethod.multipart_boundary' class='fnname'>multipart_boundary</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></h3><div class='docblock'><p>Get the boundary string of this request if it is a POST request
 with the <code>Content-Type</code> header set to <code>multipart/form-data</code>.</p>
 
 <p>The boundary string should be supplied as an extra value of the <code>Content-Type</code> header, e.g.
@@ -67,10 +67,12 @@ with the <code>Content-Type</code> header set to <code>multipart/form-data</code
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -87,7 +89,7 @@ with the <code>Content-Type</code> header set to <code>multipart/form-data</code
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -97,8 +99,8 @@ with the <code>Content-Type</code> header set to <code>multipart/form-data</code
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>typedef</code> (or
-                    <code>tdef</code>).
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
                 </p>
 
                 <p>
@@ -107,7 +109,7 @@ with the <code>Content-Type</code> header set to <code>multipart/form-data</code
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 

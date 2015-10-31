@@ -24,10 +24,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -283,11 +283,24 @@
 <span id="241">241</span>
 <span id="242">242</span>
 <span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::{<span class='ident'>SocketAddr</span>, <span class='ident'>SocketAddrV4</span>, <span class='ident'>SocketAddrV6</span>, <span class='ident'>Ipv4Addr</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>any</span>::<span class='ident'>TypeId</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>swap</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>time</span>::<span class='ident'>Duration</span>;
 
 <span class='kw'>use</span> <span class='ident'>anymap</span>::<span class='ident'>Map</span>;
 <span class='kw'>use</span> <span class='ident'>anymap</span>::<span class='ident'>any</span>::{<span class='ident'>Any</span>, <span class='ident'>UncheckedAnyExt</span>};
@@ -527,16 +540,29 @@
     <span class='ident'>One</span>(<span class='ident'>TypeId</span>, <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Any</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span>),
     <span class='ident'>Many</span>(<span class='ident'>Map</span><span class='op'>&lt;</span><span class='ident'>Any</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span><span class='op'>&gt;</span>),
 }
+
+<span class='doccomment'>///Settings for `keep-alive` connections to the server.</span>
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>KeepAlive</span> {
+    <span class='doccomment'>///How long a `keep-alive` connection may idle before it&#39;s forced close.</span>
+    <span class='kw'>pub</span> <span class='ident'>timeout</span>: <span class='ident'>Duration</span>,
+
+    <span class='doccomment'>///The number of threads in the thread pool that should be kept free from</span>
+    <span class='doccomment'>///idling threads. Connections will be closed if the number of idle</span>
+    <span class='doccomment'>///threads goes below this.</span>
+    <span class='kw'>pub</span> <span class='ident'>free_threads</span>: <span class='ident'>usize</span>,
+}
 </pre>
 </section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -553,7 +579,7 @@
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -563,8 +589,8 @@
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>typedef</code> (or
-                    <code>tdef</code>).
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
                 </p>
 
                 <p>
@@ -573,7 +599,7 @@
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 

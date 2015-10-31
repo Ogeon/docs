@@ -24,10 +24,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='../../index.html'>rustful</a>::<wbr><a href='../index.html'>context</a>::<wbr><a href='index.html'>body</a></p><script>window.sidebarCurrent = {name: 'ExtJsonBody', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -45,9 +45,9 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-5831' class='srclink' href='../../../src/rustful/context/body.rs.html#154-204' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-5983' class='srclink' href='../../../src/rustful/context/body.rs.html#154-204' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait ExtJsonBody {
-    fn <a href='#tymethod.read_json_body' class='fnname'>read_json_body</a>(&amp;mut self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../../rustc_serialize/json/enum.Json.html' title='rustc_serialize::json::Json'>Json</a>, <a class='type' href='../../../rustc_serialize/json/type.BuilderError.html' title='rustc_serialize::json::BuilderError'>BuilderError</a>&gt;;
+    fn <a href='#tymethod.read_json_body' class='fnname'>read_json_body</a>(&amp;mut self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../../rustc_serialize/json/enum.Json.html' title='rustc_serialize::json::Json'>Json</a>, <a class='type' href='../../../rustc_serialize/json/type.BuilderError.html' title='rustc_serialize::json::BuilderError'>BuilderError</a>&gt;;
     fn <a href='#tymethod.decode_json_body' class='fnname'>decode_json_body</a>&lt;T: <a class='trait' href='../../../rustc_serialize/serialize/trait.Decodable.html' title='rustc_serialize::serialize::Decodable'>Decodable</a>&gt;(&amp;mut self) -&gt; <a class='type' href='../../../rustc_serialize/json/type.DecodeResult.html' title='rustc_serialize::json::DecodeResult'>DecodeResult</a>&lt;T&gt;;
 }</pre><div class='docblock'><p><code>BodyReader</code> extension for reading and parsing a JSON body.</p>
 
@@ -56,7 +56,7 @@ feature.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.read_json_body' class='method stab '><code>fn <a href='#tymethod.read_json_body' class='fnname'>read_json_body</a>(&amp;mut self) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../../rustc_serialize/json/enum.Json.html' title='rustc_serialize::json::Json'>Json</a>, <a class='type' href='../../../rustc_serialize/json/type.BuilderError.html' title='rustc_serialize::json::BuilderError'>BuilderError</a>&gt;</code></h3><div class='docblock'><p>Read the request body into a generic JSON structure. This structure can
+        <h3 id='tymethod.read_json_body' class='method stab '><code>fn <a href='#tymethod.read_json_body' class='fnname'>read_json_body</a>(&amp;mut self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../../rustc_serialize/json/enum.Json.html' title='rustc_serialize::json::Json'>Json</a>, <a class='type' href='../../../rustc_serialize/json/type.BuilderError.html' title='rustc_serialize::json::BuilderError'>BuilderError</a>&gt;</code></h3><div class='docblock'><p>Read the request body into a generic JSON structure. This structure can
 then be navigated and parsed freely.</p>
 
 <p>A simplified example of how to parse <code>{ &quot;a&quot;: number, &quot;b&quot;: number }</code>:</p>
@@ -108,10 +108,12 @@ implement <code>rustc_serialize::Decodable</code>.</p>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -128,7 +130,7 @@ implement <code>rustc_serialize::Decodable</code>.</p>
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -138,8 +140,8 @@ implement <code>rustc_serialize::Decodable</code>.</p>
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>typedef</code> (or
-                    <code>tdef</code>).
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
                 </p>
 
                 <p>
@@ -148,7 +150,7 @@ implement <code>rustc_serialize::Decodable</code>.</p>
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 

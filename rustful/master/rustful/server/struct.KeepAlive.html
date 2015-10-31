@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `find_tool` fn in crate `gcc`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, find_tool">
+    <meta name="description" content="API documentation for the Rust `KeepAlive` struct in crate `rustful`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, KeepAlive">
 
-    <title>gcc::windows_registry::find_tool - Rust</title>
+    <title>rustful::server::KeepAlive - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
@@ -24,10 +24,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>gcc</a>::<wbr><a href='index.html'>windows_registry</a></p><script>window.sidebarCurrent = {name: 'find_tool', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+        <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>server</a></p><script>window.sidebarCurrent = {name: 'KeepAlive', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -40,24 +40,34 @@
         </form>
     </nav>
 
-    <section id='main' class="content fn">
-<h1 class='fqn'><span class='in-band'>Function <a href='../index.html'>gcc</a>::<wbr><a href='index.html'>windows_registry</a>::<wbr><a class='fn' href=''>find_tool</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>server</a>::<wbr><a class='struct' href=''>KeepAlive</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-45' class='srclink' href='../../src/gcc/windows_registry.rs.html#38-40' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn find_tool(_target: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, _tool: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../gcc/struct.Tool.html' title='gcc::Tool'>Tool</a>&gt;</pre><div class='docblock'><p>Similar to the <code>find</code> function above, this function will attempt the same
-operation (finding a MSVC tool in a local install) but instead returns a
-<code>Tool</code> which may be introspected.</p>
-</div></section>
+        </span><a id='src-3286' class='srclink' href='../../src/rustful/server/config.rs.html#247-255' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct KeepAlive {
+    pub timeout: <a class='struct' href='https://doc.rust-lang.org/nightly/std/time/duration/struct.Duration.html' title='std::time::duration::Duration'>Duration</a>,
+    pub free_threads: <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>,
+}</pre><div class='docblock'><p>Settings for <code>keep-alive</code> connections to the server.</p>
+</div><h2 class='fields'>Fields</h2>
+<table><tr class='stab '>
+                                  <td id='structfield.timeout'><code>timeout</code></td><td><div class='docblock'><p>How long a <code>keep-alive</code> connection may idle before it&#39;s forced close.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.free_threads'><code>free_threads</code></td><td><div class='docblock'><p>The number of threads in the thread pool that should be kept free from
+idling threads. Connections will be closed if the number of idle
+threads goes below this.</p>
+</div></td></tr></table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -74,7 +84,7 @@ operation (finding a MSVC tool in a local install) but instead returns a
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -84,8 +94,8 @@ operation (finding a MSVC tool in a local install) but instead returns a
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>typedef</code> (or
-                    <code>tdef</code>).
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
                 </p>
 
                 <p>
@@ -94,13 +104,13 @@ operation (finding a MSVC tool in a local install) but instead returns a
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 
     <script>
         window.rootPath = "../../";
-        window.currentCrate = "gcc";
+        window.currentCrate = "rustful";
         window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>

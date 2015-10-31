@@ -24,10 +24,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='index.html'>phf</a></p><script>window.sidebarCurrent = {name: 'PhfHash', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -47,9 +47,9 @@
             </a>
         </span><a id='src-165' class='srclink' href='../phf_shared/trait.PhfHash.html?gotosrc=165' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait PhfHash {
-    fn <a href='#tymethod.phf_hash' class='fnname'>phf_hash</a>&lt;H&gt;(&amp;self, state: &amp;mut H) <span class='where'>where H: <a class='trait' href='http://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a></span>;
+    fn <a href='#tymethod.phf_hash' class='fnname'>phf_hash</a>&lt;H&gt;(&amp;self, state: &amp;mut H) <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a></span>;
 
-    fn <a href='#method.phf_hash_slice' class='fnname'>phf_hash_slice</a>&lt;H&gt;(data: <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[Self]</a>, state: &amp;mut H) <span class='where'>where H: <a class='trait' href='http://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a></span> { ... }
+    fn <a href='#method.phf_hash_slice' class='fnname'>phf_hash_slice</a>&lt;H&gt;(data: <a href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[Self]</a>, state: &amp;mut H) <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a></span> { ... }
 }</pre><div class='docblock'><p>A trait implemented by types which can be used in PHF data structures.</p>
 
 <p>This differs from the standard library&#39;s <code>Hash</code> trait in that <code>PhfHash</code>&#39;s
@@ -58,11 +58,11 @@ between the host and target when cross compiling.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.phf_hash' class='method stab '><code>fn <a href='#tymethod.phf_hash' class='fnname'>phf_hash</a>&lt;H&gt;(&amp;self, state: &amp;mut H) <span class='where'>where H: <a class='trait' href='http://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a></span></code></h3><div class='docblock'><p>Feeds the value into the state given, updating the hasher as necessary.</p>
+        <h3 id='tymethod.phf_hash' class='method stab '><code>fn <a href='#tymethod.phf_hash' class='fnname'>phf_hash</a>&lt;H&gt;(&amp;self, state: &amp;mut H) <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a></span></code></h3><div class='docblock'><p>Feeds the value into the state given, updating the hasher as necessary.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.phf_hash_slice' class='method stab '><code>fn <a href='#method.phf_hash_slice' class='fnname'>phf_hash_slice</a>&lt;H&gt;(data: <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[Self]</a>, state: &amp;mut H) <span class='where'>where H: <a class='trait' href='http://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a></span></code></h3><div class='docblock'><p>Feeds a slice of this type into the state provided.</p>
+        <h3 id='method.phf_hash_slice' class='method stab '><code>fn <a href='#method.phf_hash_slice' class='fnname'>phf_hash_slice</a>&lt;H&gt;(data: <a href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[Self]</a>, state: &amp;mut H) <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a></span></code></h3><div class='docblock'><p>Feeds a slice of this type into the state provided.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
@@ -73,10 +73,12 @@ between the host and target when cross compiling.</p>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -93,7 +95,7 @@ between the host and target when cross compiling.</p>
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -103,8 +105,8 @@ between the host and target when cross compiling.</p>
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>typedef</code> (or
-                    <code>tdef</code>).
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
                 </p>
 
                 <p>
@@ -113,7 +115,7 @@ between the host and target when cross compiling.</p>
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 

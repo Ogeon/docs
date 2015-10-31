@@ -24,10 +24,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -195,7 +195,7 @@
 <span class='kw'>use</span> <span class='ident'>HttpResult</span>;
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>instance</span>::<span class='ident'>ServerInstance</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>config</span>::{<span class='ident'>Host</span>, <span class='ident'>Global</span>, <span class='ident'>Scheme</span>};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>config</span>::{<span class='ident'>Host</span>, <span class='ident'>Global</span>, <span class='ident'>Scheme</span>, <span class='ident'>KeepAlive</span>};
 
 <span class='kw'>mod</span> <span class='ident'>instance</span>;
 <span class='kw'>mod</span> <span class='ident'>config</span>;
@@ -243,10 +243,10 @@
     <span class='doccomment'>///`(num_cores * 5) / 4`.</span>
     <span class='kw'>pub</span> <span class='ident'>threads</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>,
 
-    <span class='doccomment'>///The the minimal number of threads in the thread pool that are required</span>
-    <span class='doccomment'>///to be available for new connections. This can be used to prevent hangs</span>
-    <span class='doccomment'>///during high load. Default is `1`.</span>
-    <span class='kw'>pub</span> <span class='ident'>available_threads</span>: <span class='ident'>usize</span>,
+    <span class='doccomment'>///The server&#39;s `keep-alive` policy. Setting this to `Some(...)` will</span>
+    <span class='doccomment'>///allow `keep-alive` connections with a timeout, and keeping it as `None`</span>
+    <span class='doccomment'>///will force connections to close after each request. Default is `None`.</span>
+    <span class='kw'>pub</span> <span class='ident'>keep_alive</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>KeepAlive</span><span class='op'>&gt;</span>,
 
     <span class='doccomment'>///The content of the server header. Default is `&quot;rustful&quot;`.</span>
     <span class='kw'>pub</span> <span class='ident'>server</span>: <span class='ident'>String</span>,
@@ -287,7 +287,7 @@
             <span class='ident'>host</span>: <span class='number'>80</span>.<span class='ident'>into</span>(),
             <span class='ident'>scheme</span>: <span class='ident'>Scheme</span>::<span class='ident'>Http</span>,
             <span class='ident'>threads</span>: <span class='prelude-val'>None</span>,
-            <span class='ident'>available_threads</span>: <span class='number'>1</span>,
+            <span class='ident'>keep_alive</span>: <span class='prelude-val'>None</span>,
             <span class='ident'>server</span>: <span class='string'>&quot;rustful&quot;</span>.<span class='ident'>to_owned</span>(),
             <span class='ident'>content_type</span>: <span class='ident'>Mime</span>(
                 <span class='ident'>hyper</span>::<span class='ident'>mime</span>::<span class='ident'>TopLevel</span>::<span class='ident'>Text</span>,
@@ -323,10 +323,12 @@
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -343,7 +345,7 @@
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -353,8 +355,8 @@
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>typedef</code> (or
-                    <code>tdef</code>).
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
                 </p>
 
                 <p>
@@ -363,7 +365,7 @@
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 

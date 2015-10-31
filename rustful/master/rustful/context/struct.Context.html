@@ -24,10 +24,10 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a></p><script>window.sidebarCurrent = {name: 'Context', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
@@ -45,17 +45,17 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-8402' class='srclink' href='../../src/rustful/context/mod.rs.html#134-167' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-8554' class='srclink' href='../../src/rustful/context/mod.rs.html#134-167' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Context&lt;'a, 'b, 's&gt; {
     pub headers: <a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a>,
     pub http_version: <a class='enum' href='../../rustful/enum.HttpVersion.html' title='rustful::HttpVersion'>HttpVersion</a>,
-    pub address: <a class='enum' href='http://doc.rust-lang.org/nightly/std/net/addr/enum.SocketAddr.html' title='std::net::addr::SocketAddr'>SocketAddr</a>,
+    pub address: <a class='enum' href='https://doc.rust-lang.org/nightly/std/net/addr/enum.SocketAddr.html' title='std::net::addr::SocketAddr'>SocketAddr</a>,
     pub method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>,
     pub uri: <a class='enum' href='../../rustful/context/enum.Uri.html' title='rustful::context::Uri'>Uri</a>,
-    pub hyperlinks: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../rustful/context/hypermedia/struct.Link.html' title='rustful::context::hypermedia::Link'>Link</a>&lt;'s&gt;&gt;,
+    pub hyperlinks: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../rustful/context/hypermedia/struct.Link.html' title='rustful::context::hypermedia::Link'>Link</a>&lt;'s&gt;&gt;,
     pub variables: <a class='struct' href='../../rustful/context/struct.Parameters.html' title='rustful::context::Parameters'>Parameters</a>,
     pub query: <a class='struct' href='../../rustful/context/struct.Parameters.html' title='rustful::context::Parameters'>Parameters</a>,
-    pub fragment: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='type' href='../../rustful/context/type.MaybeUtf8Owned.html' title='rustful::context::MaybeUtf8Owned'>MaybeUtf8Owned</a>&gt;,
+    pub fragment: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='type' href='../../rustful/context/type.MaybeUtf8Owned.html' title='rustful::context::MaybeUtf8Owned'>MaybeUtf8Owned</a>&gt;,
     pub global: &amp;'s <a class='struct' href='../../rustful/server/struct.Global.html' title='rustful::server::Global'>Global</a>,
     pub body: <a class='struct' href='../../rustful/context/body/struct.BodyReader.html' title='rustful::context::body::BodyReader'>BodyReader</a>&lt;'a, 'b&gt;,
 }</pre><div class='docblock'><p>A container for handler input, like request data and utilities.</p>
@@ -87,10 +87,12 @@
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
+    <aside id="help" class="hidden">
         <div>
+            <h1 class="hidden">Help</h1>
+
             <div class="shortcuts">
-                <h1>Keyboard Shortcuts</h1>
+                <h2>Keyboard Shortcuts</h2>
 
                 <dl>
                     <dt>?</dt>
@@ -107,7 +109,7 @@
             </div>
 
             <div class="infos">
-                <h1>Search Tricks</h1>
+                <h2>Search Tricks</h2>
 
                 <p>
                     Prefix searches with a type followed by a colon (e.g.
@@ -117,8 +119,8 @@
                 <p>
                     Accepted types are: <code>fn</code>, <code>mod</code>,
                     <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>typedef</code> (or
-                    <code>tdef</code>).
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
                 </p>
 
                 <p>
@@ -127,7 +129,7 @@
                 </p>
             </div>
         </div>
-    </div>
+    </aside>
 
     
 
