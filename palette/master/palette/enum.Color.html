@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Color` enum in crate `palette`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Color">
+
+    <title>palette::Color - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'Color', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='index.html'>palette</a>::<wbr><a class='enum' href=''>Color</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-7297' class='srclink' href='../src/palette/lib.rs.html#53-55' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum Color {
+    Luma(<a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a>),
+    Rgb(<a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a>),
+    Xyz(<a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>),
+    Lab(<a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a>),
+    Lch(<a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a>),
+    Hsv(<a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a>),
+    Hsl(<a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a>),
+}</pre><div class='docblock'><p>A generic color type.</p>
+
+<p>The <code>Color</code> may belong to any color space and it may change
+depending on which operation is performed.</p>
+</div><h2 class='variants'>Variants</h2>
+<table><tr><td id='variant.Luma'><code>Luma</code></td><td><div class='docblock'><p>Linear luminance.</p>
+</div></td></tr><tr><td id='variant.Rgb'><code>Rgb</code></td><td><div class='docblock'><p>Linear RGB.</p>
+</div></td></tr><tr><td id='variant.Xyz'><code>Xyz</code></td><td><div class='docblock'><p>CIE 1931 XYZ.</p>
+</div></td></tr><tr><td id='variant.Lab'><code>Lab</code></td><td><div class='docblock'><p>CIE L*a*b* (CIELAB).</p>
+</div></td></tr><tr><td id='variant.Lch'><code>Lch</code></td><td><div class='docblock'><p>CIE L*C*h°, a polar version of CIE L*a*b*.</p>
+</div></td></tr><tr><td id='variant.Hsv'><code>Hsv</code></td><td><div class='docblock'><p>Linear HSV, a cylindrical version of RGB.</p>
+</div></td></tr><tr><td id='variant.Hsl'><code>Hsl</code></td><td><div class='docblock'><p>Linear HSL, a cylindrical version of RGB.</p>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h3><div class='impl-items'><h4 id='method.y' class='method'><code>fn <a href='#method.y' class='fnname'>y</a>(luma: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear luminance.</p>
+</div><h4 id='method.ya' class='method'><code>fn <a href='#method.ya' class='fnname'>ya</a>(luma: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear luminance with transparency.</p>
+</div><h4 id='method.y8' class='method'><code>fn <a href='#method.y8' class='fnname'>y8</a>(luma: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear luminance from an 8 bit value.</p>
+</div><h4 id='method.ya8' class='method'><code>fn <a href='#method.ya8' class='fnname'>ya8</a>(luma: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear luminance and transparency from 8 bit values.</p>
+</div><h4 id='method.rgb' class='method'><code>fn <a href='#method.rgb' class='fnname'>rgb</a>(red: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, green: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, blue: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear RGB.</p>
+</div><h4 id='method.rgba' class='method'><code>fn <a href='#method.rgba' class='fnname'>rgba</a>(red: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, green: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, blue: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear RGB and transparency.</p>
+</div><h4 id='method.rgb8' class='method'><code>fn <a href='#method.rgb8' class='fnname'>rgb8</a>(red: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>, green: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>, blue: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear RGB from 8 bit values.</p>
+</div><h4 id='method.rgba8' class='method'><code>fn <a href='#method.rgba8' class='fnname'>rgba8</a>(red: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>, green: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>, blue: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear RGB and transparency from 8 bit values.</p>
+</div><h4 id='method.srgb' class='method'><code>fn <a href='#method.srgb' class='fnname'>srgb</a>(red: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, green: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, blue: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear RGB from sRGB.</p>
+</div><h4 id='method.srgba' class='method'><code>fn <a href='#method.srgba' class='fnname'>srgba</a>(red: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, green: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, blue: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear RGB from sRGB with transparency.</p>
+</div><h4 id='method.srgb8' class='method'><code>fn <a href='#method.srgb8' class='fnname'>srgb8</a>(red: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>, green: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>, blue: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear RGB from 8 bit sRGB.</p>
+</div><h4 id='method.srgba8' class='method'><code>fn <a href='#method.srgba8' class='fnname'>srgba8</a>(red: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>, green: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>, blue: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear RGB from 8 bit sRGB with transparency.</p>
+</div><h4 id='method.xyz' class='method'><code>fn <a href='#method.xyz' class='fnname'>xyz</a>(x: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, y: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, z: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>CIE XYZ.</p>
+</div><h4 id='method.xyza' class='method'><code>fn <a href='#method.xyza' class='fnname'>xyza</a>(x: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, y: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, z: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>CIE XYZ and transparency.</p>
+</div><h4 id='method.lab' class='method'><code>fn <a href='#method.lab' class='fnname'>lab</a>(l: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, a: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, b: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>CIE L*a*b*.</p>
+</div><h4 id='method.laba' class='method'><code>fn <a href='#method.laba' class='fnname'>laba</a>(l: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, a: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, b: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>CIE L*a*b* and transparency.</p>
+</div><h4 id='method.lch' class='method'><code>fn <a href='#method.lch' class='fnname'>lch</a>(l: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, chroma: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, hue: <a class='struct' href='../palette/struct.LabHue.html' title='palette::LabHue'>LabHue</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>CIE L*C*h°.</p>
+</div><h4 id='method.lcha' class='method'><code>fn <a href='#method.lcha' class='fnname'>lcha</a>(l: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, chroma: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, hue: <a class='struct' href='../palette/struct.LabHue.html' title='palette::LabHue'>LabHue</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>CIE L*C*h° and transparency.</p>
+</div><h4 id='method.hsv' class='method'><code>fn <a href='#method.hsv' class='fnname'>hsv</a>(hue: <a class='struct' href='../palette/struct.RgbHue.html' title='palette::RgbHue'>RgbHue</a>, saturation: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, value: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear HSV.</p>
+</div><h4 id='method.hsva' class='method'><code>fn <a href='#method.hsva' class='fnname'>hsva</a>(hue: <a class='struct' href='../palette/struct.RgbHue.html' title='palette::RgbHue'>RgbHue</a>, saturation: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, value: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear HSV and transparency.</p>
+</div><h4 id='method.hsl' class='method'><code>fn <a href='#method.hsl' class='fnname'>hsl</a>(hue: <a class='struct' href='../palette/struct.RgbHue.html' title='palette::RgbHue'>RgbHue</a>, saturation: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, lightness: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear HSL.</p>
+</div><h4 id='method.hsla' class='method'><code>fn <a href='#method.hsla' class='fnname'>hsla</a>(hue: <a class='struct' href='../palette/struct.RgbHue.html' title='palette::RgbHue'>RgbHue</a>, saturation: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, lightness: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<div class='docblock'><p>Linear HSL and transparency.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../palette/trait.Mix.html' title='palette::Mix'>Mix</a> for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h3><div class='impl-items'><h4 id='method.mix' class='method'><code>fn <a href='../palette/trait.Mix.html#method.mix' class='fnname'>mix</a>(&amp;self, other: &amp;<a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a>, factor: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a> for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h3><div class='impl-items'><h4 id='method.lighten' class='method'><code>fn <a href='../palette/trait.Shade.html#method.lighten' class='fnname'>lighten</a>(&amp;self, amount: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<h4 id='method.darken' class='method'><code>fn <a href='../palette/trait.Shade.html#method.darken' class='fnname'>darken</a>(&amp;self, amount: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; Self</code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='../palette/trait.GetHue.html' title='palette::GetHue'>GetHue</a> for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h3><div class='impl-items'><h4 id='assoc_type.Hue' class='type'><code>type Hue = <a class='struct' href='../palette/struct.LabHue.html' title='palette::LabHue'>LabHue</a></code></h4>
+<h4 id='method.get_hue' class='method'><code>fn <a href='../palette/trait.GetHue.html#method.get_hue' class='fnname'>get_hue</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../palette/struct.LabHue.html' title='palette::LabHue'>LabHue</a>&gt;</code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='../palette/trait.Hue.html' title='palette::Hue'>Hue</a> for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h3><div class='impl-items'><h4 id='method.with_hue' class='method'><code>fn <a href='../palette/trait.Hue.html#method.with_hue' class='fnname'>with_hue</a>(&amp;self, hue: <a class='struct' href='../palette/struct.LabHue.html' title='palette::LabHue'>LabHue</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<h4 id='method.shift_hue' class='method'><code>fn <a href='../palette/trait.Hue.html#method.shift_hue' class='fnname'>shift_hue</a>(&amp;self, amount: <a class='struct' href='../palette/struct.LabHue.html' title='palette::LabHue'>LabHue</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='../palette/trait.Saturate.html' title='palette::Saturate'>Saturate</a> for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h3><div class='impl-items'><h4 id='method.saturate' class='method'><code>fn <a href='../palette/trait.Saturate.html#method.saturate' class='fnname'>saturate</a>(&amp;self, factor: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<h4 id='method.desaturate' class='method'><code>fn <a href='../palette/trait.Saturate.html#method.desaturate' class='fnname'>desaturate</a>(&amp;self, factor: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; Self</code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a>&gt; for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#method.from' class='fnname'>from</a>(color: <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a>&gt; for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#method.from' class='fnname'>from</a>(color: <a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&gt; for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#method.from' class='fnname'>from</a>(color: <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a>&gt; for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#method.from' class='fnname'>from</a>(color: <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a>&gt; for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#method.from' class='fnname'>from</a>(color: <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a>&gt; for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#method.from' class='fnname'>from</a>(color: <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a>&gt; for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#method.from' class='fnname'>from</a>(color: <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a>) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+</div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></h4>
+<h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "palette";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script async src="../search-index.js"></script>
+</body>
+</html>

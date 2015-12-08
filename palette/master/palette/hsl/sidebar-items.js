@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Hsl","Linear HSL color space with an alpha component."]]});

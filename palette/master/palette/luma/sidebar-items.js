@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Luma","Linear luminance with an alpha component."]]});

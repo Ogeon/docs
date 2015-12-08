@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["LabHue","A hue type for the CIE L*a*b* family of color spaces."],["RgbHue","A hue type for the RGB family of color spaces."]]});

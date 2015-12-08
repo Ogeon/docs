@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Rgb","Linear RGB with an alpha component."]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Xyz","The CIE 1931 XYZ color space with an alpha component."]]});
