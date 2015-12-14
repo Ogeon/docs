@@ -390,7 +390,7 @@
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>approx</span>;
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>gradient</span>::<span class='ident'>Gradient</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>rgb</span>::<span class='ident'>Rgb</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>rgb</span>::{<span class='ident'>Rgb</span>, <span class='ident'>RgbPixel</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>luma</span>::<span class='ident'>Luma</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>xyz</span>::<span class='ident'>Xyz</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>lab</span>::<span class='ident'>Lab</span>;
@@ -459,16 +459,16 @@
             $(<span class='attribute'>#[<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>variant_comment</span>]</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>variant</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>variant</span>)),<span class='op'>+</span>
         }
 
-        <span class='kw'>impl</span> <span class='ident'>Color</span> {
-            $(
+        $(
+            <span class='kw'>impl</span> <span class='ident'>Color</span> {
                 $(
                     <span class='attribute'>#[<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ctor_comment</span>]</span>
                     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ctor_name</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ctor_field</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ctor_ty</span>),<span class='op'>*</span>) <span class='op'>-&gt;</span> <span class='ident'>Color</span> {
                         <span class='ident'>Color</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>variant</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>variant</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ctor_proxy</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ctor_field</span>),<span class='op'>*</span>))
                     }
                 )<span class='op'>+</span>
-            )<span class='op'>+</span>
-        }
+            }
+        )<span class='op'>+</span>
 
         <span class='kw'>impl</span> <span class='ident'>Mix</span> <span class='kw'>for</span> <span class='ident'>Color</span> {
             <span class='kw'>fn</span> <span class='ident'>mix</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>Color</span>, <span class='ident'>factor</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Color</span> {
