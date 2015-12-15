@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1161' class='srclink' href='../src/palette/lib.rs.html#71-73' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-1161' class='srclink' href='../src/palette/lib.rs.html#82-84' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Color {
     Luma(<a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a>),
     Rgb(<a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a>),
@@ -57,7 +57,20 @@
 }</pre><div class='docblock'><p>A generic color type.</p>
 
 <p>The <code>Color</code> may belong to any color space and it may change
-depending on which operation is performed.</p>
+depending on which operation is performed. That makes it immune to
+the &quot;without conversion&quot; rule of the operations it supports. The
+color spaces are selected as follows:</p>
+
+<ul>
+<li><code>Mix</code>: RGB for no particular reason, except that it&#39;s intuitive.</li>
+<li><code>Shade</code>: CIE L*a*b* for its luminance component.</li>
+<li><code>Hue</code> and <code>GetHue</code>: CIE L*C*h° for its hue component and how it preserves the apparent lightness.</li>
+<li><code>Saturate</code>: CIE L*C*h° for its chromaticity component and how it preserves the apparent lightness.</li>
+</ul>
+
+<p>It&#39;s not recommended to use <code>Color</code> when full control is necessary,
+but it can easily be converted to a fixed color space in those
+cases.</p>
 </div><h2 class='variants'>Variants</h2>
 <table><tr><td id='variant.Luma'><code>Luma</code></td><td><div class='docblock'><p>Linear luminance.</p>
 </div></td></tr><tr><td id='variant.Rgb'><code>Rgb</code></td><td><div class='docblock'><p>Linear RGB.</p>

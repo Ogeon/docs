@@ -396,6 +396,17 @@
 <span id="354">354</span>
 <span id="355">355</span>
 <span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
 </pre><pre class='rust '>
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
@@ -465,7 +476,18 @@
         <span class='doccomment'>///A generic color type.</span>
         <span class='doccomment'>///</span>
         <span class='doccomment'>///The `Color` may belong to any color space and it may change</span>
-        <span class='doccomment'>///depending on which operation is performed.</span>
+        <span class='doccomment'>///depending on which operation is performed. That makes it immune to</span>
+        <span class='doccomment'>///the &quot;without conversion&quot; rule of the operations it supports. The</span>
+        <span class='doccomment'>///color spaces are selected as follows:</span>
+        <span class='doccomment'>///</span>
+        <span class='doccomment'>/// * `Mix`: RGB for no particular reason, except that it&#39;s intuitive.</span>
+        <span class='doccomment'>/// * `Shade`: CIE L*a*b* for its luminance component.</span>
+        <span class='doccomment'>/// * `Hue` and `GetHue`: CIE L*C*h° for its hue component and how it preserves the apparent lightness.</span>
+        <span class='doccomment'>/// * `Saturate`: CIE L*C*h° for its chromaticity component and how it preserves the apparent lightness.</span>
+        <span class='doccomment'>///</span>
+        <span class='doccomment'>///It&#39;s not recommended to use `Color` when full control is necessary,</span>
+        <span class='doccomment'>///but it can easily be converted to a fixed color space in those</span>
+        <span class='doccomment'>///cases.</span>
         <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>)]</span>
         <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Color</span> {
             $(<span class='attribute'>#[<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>variant_comment</span>]</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>variant</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>variant</span>)),<span class='op'>+</span>

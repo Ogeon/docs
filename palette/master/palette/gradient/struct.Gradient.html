@@ -45,8 +45,15 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-17' class='srclink' href='../../src/palette/gradient.rs.html#9' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-17' class='srclink' href='../../src/palette/gradient.rs.html#16' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Gradient&lt;C: <a class='trait' href='../../palette/trait.Mix.html' title='palette::Mix'>Mix</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>&gt;(_);</pre><div class='docblock'><p>A linear interpolation between colors.</p>
+
+<p>It&#39;s used to smoothly transition between a series of colors, that can be
+either evenly spaced or have customized positions. The gradient is
+continuous between the control points, but it&#39;s possible to iterate over a
+number of evenly spaced points using the <code>take</code> method. Any point outside
+the domain of the gradient will have the same color as the closest control
+point.</p>
 </div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;C: <a class='trait' href='../../palette/trait.Mix.html' title='palette::Mix'>Mix</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>&gt; <a class='struct' href='../../palette/gradient/struct.Gradient.html' title='palette::gradient::Gradient'>Gradient</a>&lt;C&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>&lt;I: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/trait.IntoIterator.html' title='core::iter::IntoIterator'>IntoIterator</a>&lt;Item=C&gt;&gt;(colors: I) -&gt; <a class='struct' href='../../palette/gradient/struct.Gradient.html' title='palette::gradient::Gradient'>Gradient</a>&lt;C&gt;</code></h4>
 <div class='docblock'><p>Create a gradient of evenly spaced colors with the domain [0.0, 1.0].
 There must be at least one color.</p>
@@ -55,10 +62,10 @@ There must be at least one color.</p>
 at least one color and they are expected to be ordered by their
 position value.</p>
 </div><h4 id='method.get' class='method'><code>fn <a href='#method.get' class='fnname'>get</a>(&amp;self, i: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; C</code></h4>
-<div class='docblock'><p>Get a color from the gradient. The nearest color will be returned if <code>i</code>
-is outside the domain.</p>
+<div class='docblock'><p>Get a color from the gradient. The color of the closest control point
+will be returned if <code>i</code> is outside the domain.</p>
 </div><h4 id='method.take' class='method'><code>fn <a href='#method.take' class='fnname'>take</a>(&amp;self, n: <a href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='struct' href='../../palette/gradient/struct.Take.html' title='palette::gradient::Take'>Take</a>&lt;C&gt;</code></h4>
-<div class='docblock'><p>Take <code>n</code> evenly spaced colors from the gradient.</p>
+<div class='docblock'><p>Take <code>n</code> evenly spaced colors from the gradient, as an iterator.</p>
 </div></div><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl&lt;C: <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> + <a class='trait' href='../../palette/trait.Mix.html' title='palette::Mix'>Mix</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../../palette/gradient/struct.Gradient.html' title='palette::gradient::Gradient'>Gradient</a>&lt;C&gt;</code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../palette/gradient/struct.Gradient.html' title='palette::gradient::Gradient'>Gradient</a>&lt;C&gt;</code></h4>
 <h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
 </div></section>
