@@ -45,21 +45,39 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-530' class='srclink' href='../src/palette/lab.rs.html#7-12' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-530' class='srclink' href='../src/palette/lab.rs.html#17-31' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Lab {
     pub l: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
     pub a: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
     pub b: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
     pub alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
 }</pre><div class='docblock'><p>The CIE L*a*b* (CIELAB) color space with an alpha component.</p>
+
+<p>CIE L*a*b* is a device independent color space which includes all
+perceivable colors. It&#39;s sometimes used to convert between other color
+spaces, because of its ability to represent all of their colors, and
+sometimes in color manipulation, because of its perceptual uniformity. This
+means that the perceptual difference between two colors is equal to their
+numerical difference.</p>
+
+<p>The parameters of L*a*b* are quite different, compared to many other color
+spaces, so manipulating them manually can be unintuitive.</p>
 </div><h2 class='fields'>Fields</h2>
 <table><tr class='stab '>
-                                  <td id='structfield.l'><code>l</code></td><td></td></tr><tr class='stab '>
-                                  <td id='structfield.a'><code>a</code></td><td></td></tr><tr class='stab '>
-                                  <td id='structfield.b'><code>b</code></td><td></td></tr><tr class='stab '>
-                                  <td id='structfield.alpha'><code>alpha</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a></code></h3><div class='impl-items'><h4 id='method.lab' class='method'><code>fn <a href='#method.lab' class='fnname'>lab</a>(l: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, a: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, b: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a></code></h4>
-<h4 id='method.laba' class='method'><code>fn <a href='#method.laba' class='fnname'>laba</a>(l: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, a: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, b: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a></code></h4>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a></code></h3><div class='impl-items'><h4 id='method.is_valid' class='method'><code>fn <a href='../palette/trait.ColorSpace.html#method.is_valid' class='fnname'>is_valid</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+                                  <td id='structfield.l'><code>l</code></td><td><div class='docblock'><p>L* is the lightness of the color. 0.0 gives absolute black and 100.0
+give the brightest white.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.a'><code>a</code></td><td><div class='docblock'><p>a* goes from red at -127.0 to green at 128.0.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.b'><code>b</code></td><td><div class='docblock'><p>b* goes from yellow at -127.0 to blue at 128.0.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.alpha'><code>alpha</code></td><td><div class='docblock'><p>The transparency of the color. 0.0 is completely transparent and 1.0 is
+completely opaque.</p>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a></code></h3><div class='impl-items'><h4 id='method.lab' class='method'><code>fn <a href='#method.lab' class='fnname'>lab</a>(l: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, a: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, b: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a></code></h4>
+<div class='docblock'><p>CIE L*a*b*.</p>
+</div><h4 id='method.laba' class='method'><code>fn <a href='#method.laba' class='fnname'>laba</a>(l: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, a: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, b: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a></code></h4>
+<div class='docblock'><p>CIE L*a*b* and transparency.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a></code></h3><div class='impl-items'><h4 id='method.is_valid' class='method'><code>fn <a href='../palette/trait.ColorSpace.html#method.is_valid' class='fnname'>is_valid</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <h4 id='method.clamp' class='method'><code>fn <a href='../palette/trait.ColorSpace.html#method.clamp' class='fnname'>clamp</a>(&amp;self) -&gt; <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a></code></h4>
 <h4 id='method.clamp_self' class='method'><code>fn <a href='../palette/trait.ColorSpace.html#method.clamp_self' class='fnname'>clamp_self</a>(&amp;mut self)</code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='../palette/trait.Mix.html' title='palette::Mix'>Mix</a> for <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a></code></h3><div class='impl-items'><h4 id='method.mix' class='method'><code>fn <a href='../palette/trait.Mix.html#method.mix' class='fnname'>mix</a>(&amp;self, other: &amp;<a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a>, factor: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a></code></h4>

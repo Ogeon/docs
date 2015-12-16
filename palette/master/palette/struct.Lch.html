@@ -45,19 +45,35 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-642' class='srclink' href='../src/palette/lch.rs.html#5-10' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-642' class='srclink' href='../src/palette/lch.rs.html#11-29' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Lch {
     pub l: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
     pub chroma: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
     pub hue: <a class='struct' href='../palette/struct.LabHue.html' title='palette::LabHue'>LabHue</a>,
     pub alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
-}</pre><div class='docblock'><p>CIE L*C*h°, a polar version of CIE L*a*b*, with an alpha component.</p>
+}</pre><div class='docblock'><p>CIE L*C*h°, a polar version of <a href="struct.Lab.html">CIE L*a*b*</a>, with an alpha
+component.</p>
+
+<p>L*C*h° shares its range and perceptual uniformity with L*a*b*, but it&#39;s a
+cylindrical color space, like <a href="struct.Hsl.html">HSL</a> and
+<a href="struct.Hsv.html">HSV</a>. This gives it the same ability to directly change
+the hue and colorfulness of a color, while preserving other visual aspects.</p>
 </div><h2 class='fields'>Fields</h2>
 <table><tr class='stab '>
-                                  <td id='structfield.l'><code>l</code></td><td></td></tr><tr class='stab '>
-                                  <td id='structfield.chroma'><code>chroma</code></td><td></td></tr><tr class='stab '>
-                                  <td id='structfield.hue'><code>hue</code></td><td></td></tr><tr class='stab '>
-                                  <td id='structfield.alpha'><code>alpha</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a></code></h3><div class='impl-items'><h4 id='method.lch' class='method'><code>fn <a href='#method.lch' class='fnname'>lch</a>(l: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, chroma: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, hue: <a class='struct' href='../palette/struct.LabHue.html' title='palette::LabHue'>LabHue</a>) -&gt; <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a></code></h4>
+                                  <td id='structfield.l'><code>l</code></td><td><div class='docblock'><p>L* is the lightness of the color. 0.0 gives absolute black and 100.0
+give the brightest white.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.chroma'><code>chroma</code></td><td><div class='docblock'><p>C* is the colorfulness of the color. It&#39;s similar to saturation. 0.0
+gives gray scale colors, and numbers around 128.0-182.0 gives fully
+saturated colors. The upper limit of 182.0 should include the whole
+L*a*b* space and some more.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.hue'><code>hue</code></td><td><div class='docblock'><p>The hue of the color, in degrees. Decides if it&#39;s red, blue, purple,
+etc.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.alpha'><code>alpha</code></td><td><div class='docblock'><p>The transparency of the color. 0.0 is completely transparent and 1.0 is
+completely opaque.</p>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a></code></h3><div class='impl-items'><h4 id='method.lch' class='method'><code>fn <a href='#method.lch' class='fnname'>lch</a>(l: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, chroma: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, hue: <a class='struct' href='../palette/struct.LabHue.html' title='palette::LabHue'>LabHue</a>) -&gt; <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a></code></h4>
 <div class='docblock'><p>CIE L*C*h°.</p>
 </div><h4 id='method.lcha' class='method'><code>fn <a href='#method.lcha' class='fnname'>lcha</a>(l: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, chroma: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, hue: <a class='struct' href='../palette/struct.LabHue.html' title='palette::LabHue'>LabHue</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a></code></h4>
 <div class='docblock'><p>CIE L*C*h° and transparency.</p>

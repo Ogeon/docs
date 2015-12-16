@@ -45,19 +45,36 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-893' class='srclink' href='../src/palette/hsl.rs.html#5-10' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-893' class='srclink' href='../src/palette/hsl.rs.html#14-30' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Hsl {
     pub hue: <a class='struct' href='../palette/struct.RgbHue.html' title='palette::RgbHue'>RgbHue</a>,
     pub saturation: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
     pub lightness: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
     pub alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
 }</pre><div class='docblock'><p>Linear HSL color space with an alpha component.</p>
+
+<p>The HSL color space can be seen as a cylindrical version of
+<a href="struct.Rgb.html">RGB</a>, where the <code>hue</code> is the angle around the color
+cylinder, the <code>saturation</code> is the distance from the center, and the
+<code>lightness</code> is the height from the bottom. Its composition makes it
+especially good for operations like changing green to red, making a color
+more gray, or making it darker.</p>
+
+<p>See <a href="struct.Hsv.html">HSV</a> for a very similar color space, with brightness instead of lightness.</p>
 </div><h2 class='fields'>Fields</h2>
 <table><tr class='stab '>
-                                  <td id='structfield.hue'><code>hue</code></td><td></td></tr><tr class='stab '>
-                                  <td id='structfield.saturation'><code>saturation</code></td><td></td></tr><tr class='stab '>
-                                  <td id='structfield.lightness'><code>lightness</code></td><td></td></tr><tr class='stab '>
-                                  <td id='structfield.alpha'><code>alpha</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a></code></h3><div class='impl-items'><h4 id='method.hsl' class='method'><code>fn <a href='#method.hsl' class='fnname'>hsl</a>(hue: <a class='struct' href='../palette/struct.RgbHue.html' title='palette::RgbHue'>RgbHue</a>, saturation: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, lightness: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a></code></h4>
+                                  <td id='structfield.hue'><code>hue</code></td><td><div class='docblock'><p>The hue of the color, in degrees. Decides if it&#39;s red, blue, purple,
+etc.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.saturation'><code>saturation</code></td><td><div class='docblock'><p>The colorfulness of the color. 0.0 gives gray scale colors and 1.0 will
+give absolutely clear colors.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.lightness'><code>lightness</code></td><td><div class='docblock'><p>Decides how light the color will look. 0.0 will be black, 0.5 will give
+a clear color, and 1.0 will give white.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.alpha'><code>alpha</code></td><td><div class='docblock'><p>The transparency of the color. 0.0 is completely transparent and 1.0 is
+completely opaque.</p>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a></code></h3><div class='impl-items'><h4 id='method.hsl' class='method'><code>fn <a href='#method.hsl' class='fnname'>hsl</a>(hue: <a class='struct' href='../palette/struct.RgbHue.html' title='palette::RgbHue'>RgbHue</a>, saturation: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, lightness: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a></code></h4>
 <div class='docblock'><p>Linear HSL.</p>
 </div><h4 id='method.hsla' class='method'><code>fn <a href='#method.hsla' class='fnname'>hsla</a>(hue: <a class='struct' href='../palette/struct.RgbHue.html' title='palette::RgbHue'>RgbHue</a>, saturation: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, lightness: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a></code></h4>
 <div class='docblock'><p>Linear HSL and transparency.</p>

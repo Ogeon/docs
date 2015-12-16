@@ -166,17 +166,42 @@
 <span id="124">124</span>
 <span id="125">125</span>
 <span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> {<span class='ident'>Color</span>, <span class='ident'>Rgb</span>, <span class='ident'>Xyz</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hsl</span>, <span class='ident'>ColorSpace</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>clamp</span>};
 
 <span class='doccomment'>///Linear luminance with an alpha component.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>///Luma is a purely gray scale color space, which is included more for</span>
+<span class='doccomment'>///completeness than anything else, and represents how bright a color is</span>
+<span class='doccomment'>///perceived to be. It&#39;s basically the `Y` component of [CIE</span>
+<span class='doccomment'>///XYZ](struct.Xyz.html). The lack of any form of hue representation limits</span>
+<span class='doccomment'>///the set of operations that can be performed on it.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Luma</span> {
+    <span class='doccomment'>///The lightness of the color. 0.0 is black and 1.0 is white.</span>
     <span class='kw'>pub</span> <span class='ident'>luma</span>: <span class='ident'>f32</span>,
+
+    <span class='doccomment'>///The transparency of the color. 0.0 is completely transparent and 1.0 is</span>
+    <span class='doccomment'>///completely opaque.</span>
     <span class='kw'>pub</span> <span class='ident'>alpha</span>: <span class='ident'>f32</span>,
 }
 
 <span class='kw'>impl</span> <span class='ident'>Luma</span> {
+    <span class='doccomment'>///Linear luminance.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>y</span>(<span class='ident'>luma</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='ident'>luma</span>,
@@ -184,6 +209,7 @@
         }
     }
 
+    <span class='doccomment'>///Linear luminance with transparency.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ya</span>(<span class='ident'>luma</span>: <span class='ident'>f32</span>, <span class='ident'>alpha</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='ident'>luma</span>,
@@ -191,6 +217,7 @@
         }
     }
 
+    <span class='doccomment'>///Linear luminance from an 8 bit value.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>y8</span>(<span class='ident'>luma</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='ident'>luma</span> <span class='kw'>as</span> <span class='ident'>f32</span> <span class='op'>/</span> <span class='number'>255.0</span>,
@@ -198,6 +225,7 @@
         }
     }
 
+    <span class='doccomment'>///Linear luminance and transparency from 8 bit values.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ya8</span>(<span class='ident'>luma</span>: <span class='ident'>u8</span>, <span class='ident'>alpha</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='ident'>luma</span> <span class='kw'>as</span> <span class='ident'>f32</span> <span class='op'>/</span> <span class='number'>255.0</span>,

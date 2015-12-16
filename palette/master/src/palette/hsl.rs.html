@@ -314,15 +314,55 @@
 <span id="272">272</span>
 <span id="273">273</span>
 <span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
+<span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> {<span class='ident'>Color</span>, <span class='ident'>Rgb</span>, <span class='ident'>Luma</span>, <span class='ident'>Xyz</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>ColorSpace</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>GetHue</span>, <span class='ident'>Hue</span>, <span class='ident'>Saturate</span>, <span class='ident'>RgbHue</span>, <span class='ident'>clamp</span>};
 
 <span class='doccomment'>///Linear HSL color space with an alpha component.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>///The HSL color space can be seen as a cylindrical version of</span>
+<span class='doccomment'>///[RGB](struct.Rgb.html), where the `hue` is the angle around the color</span>
+<span class='doccomment'>///cylinder, the `saturation` is the distance from the center, and the</span>
+<span class='doccomment'>///`lightness` is the height from the bottom. Its composition makes it</span>
+<span class='doccomment'>///especially good for operations like changing green to red, making a color</span>
+<span class='doccomment'>///more gray, or making it darker.</span>
+<span class='doccomment'>///</span>
+<span class='doccomment'>///See [HSV](struct.Hsv.html) for a very similar color space, with brightness instead of lightness.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Hsl</span> {
+    <span class='doccomment'>///The hue of the color, in degrees. Decides if it&#39;s red, blue, purple,</span>
+    <span class='doccomment'>///etc.</span>
 	<span class='kw'>pub</span> <span class='ident'>hue</span>: <span class='ident'>RgbHue</span>,
+
+    <span class='doccomment'>///The colorfulness of the color. 0.0 gives gray scale colors and 1.0 will</span>
+    <span class='doccomment'>///give absolutely clear colors.</span>
 	<span class='kw'>pub</span> <span class='ident'>saturation</span>: <span class='ident'>f32</span>,
+
+    <span class='doccomment'>///Decides how light the color will look. 0.0 will be black, 0.5 will give</span>
+    <span class='doccomment'>///a clear color, and 1.0 will give white.</span>
 	<span class='kw'>pub</span> <span class='ident'>lightness</span>: <span class='ident'>f32</span>,
+
+    <span class='doccomment'>///The transparency of the color. 0.0 is completely transparent and 1.0 is</span>
+    <span class='doccomment'>///completely opaque.</span>
 	<span class='kw'>pub</span> <span class='ident'>alpha</span>: <span class='ident'>f32</span>,
 }
 

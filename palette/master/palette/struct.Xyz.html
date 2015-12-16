@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-422' class='srclink' href='../src/palette/xyz.rs.html#11-16' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-422' class='srclink' href='../src/palette/xyz.rs.html#16-31' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Xyz {
     pub x: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
     pub y: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
@@ -53,17 +53,31 @@
     pub alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
 }</pre><div class='docblock'><p>The CIE 1931 XYZ color space with an alpha component.</p>
 
+<p>XYZ links the perceived colors to their wavelengths and simply makes it
+possible to describe the way we see colors as numbers. It&#39;s often used when
+converting from one color space to an other, and requires a standard
+illuminant and a standard observer to be defined.</p>
+
 <p>Conversions and operations on this color space assumes the CIE Standard
 Illuminant D65 as the white point, and the 2° standard colorimetric
 observer.</p>
 </div><h2 class='fields'>Fields</h2>
 <table><tr class='stab '>
-                                  <td id='structfield.x'><code>x</code></td><td></td></tr><tr class='stab '>
-                                  <td id='structfield.y'><code>y</code></td><td></td></tr><tr class='stab '>
-                                  <td id='structfield.z'><code>z</code></td><td></td></tr><tr class='stab '>
-                                  <td id='structfield.alpha'><code>alpha</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a></code></h3><div class='impl-items'><h4 id='method.xyz' class='method'><code>fn <a href='#method.xyz' class='fnname'>xyz</a>(x: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, y: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, z: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a></code></h4>
-<h4 id='method.xyza' class='method'><code>fn <a href='#method.xyza' class='fnname'>xyza</a>(x: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, y: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, z: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a></code></h4>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a></code></h3><div class='impl-items'><h4 id='method.is_valid' class='method'><code>fn <a href='../palette/trait.ColorSpace.html#method.is_valid' class='fnname'>is_valid</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+                                  <td id='structfield.x'><code>x</code></td><td><div class='docblock'><p>X is the scale of what can be seen as a response curve for the cone
+cells in the human eye. It goes from 0.0 to 1.0.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.y'><code>y</code></td><td><div class='docblock'><p>Y is the luminance of the color, where 0.0 is black and 1.0 is white.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.z'><code>z</code></td><td><div class='docblock'><p>Z is the scale of what can be seen as the blue stimulation. It goes
+from 0.0 to 1.0.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.alpha'><code>alpha</code></td><td><div class='docblock'><p>The transparency of the color. 0.0 is completely transparent and 1.0 is
+completely opaque.</p>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a></code></h3><div class='impl-items'><h4 id='method.xyz' class='method'><code>fn <a href='#method.xyz' class='fnname'>xyz</a>(x: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, y: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, z: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a></code></h4>
+<div class='docblock'><p>CIE XYZ.</p>
+</div><h4 id='method.xyza' class='method'><code>fn <a href='#method.xyza' class='fnname'>xyza</a>(x: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, y: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, z: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a></code></h4>
+<div class='docblock'><p>CIE XYZ and transparency.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a></code></h3><div class='impl-items'><h4 id='method.is_valid' class='method'><code>fn <a href='../palette/trait.ColorSpace.html#method.is_valid' class='fnname'>is_valid</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <h4 id='method.clamp' class='method'><code>fn <a href='../palette/trait.ColorSpace.html#method.clamp' class='fnname'>clamp</a>(&amp;self) -&gt; <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a></code></h4>
 <h4 id='method.clamp_self' class='method'><code>fn <a href='../palette/trait.ColorSpace.html#method.clamp_self' class='fnname'>clamp_self</a>(&amp;mut self)</code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='../palette/trait.Mix.html' title='palette::Mix'>Mix</a> for <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a></code></h3><div class='impl-items'><h4 id='method.mix' class='method'><code>fn <a href='../palette/trait.Mix.html#method.mix' class='fnname'>mix</a>(&amp;self, other: &amp;<a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>, factor: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a></code></h4>

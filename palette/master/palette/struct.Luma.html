@@ -45,19 +45,32 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-330' class='srclink' href='../src/palette/luma.rs.html#5-8' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-330' class='srclink' href='../src/palette/luma.rs.html#11-18' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Luma {
     pub luma: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
     pub alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>,
 }</pre><div class='docblock'><p>Linear luminance with an alpha component.</p>
+
+<p>Luma is a purely gray scale color space, which is included more for
+completeness than anything else, and represents how bright a color is
+perceived to be. It&#39;s basically the <code>Y</code> component of <a href="struct.Xyz.html">CIE
+XYZ</a>. The lack of any form of hue representation limits
+the set of operations that can be performed on it.</p>
 </div><h2 class='fields'>Fields</h2>
 <table><tr class='stab '>
-                                  <td id='structfield.luma'><code>luma</code></td><td></td></tr><tr class='stab '>
-                                  <td id='structfield.alpha'><code>alpha</code></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></h3><div class='impl-items'><h4 id='method.y' class='method'><code>fn <a href='#method.y' class='fnname'>y</a>(luma: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></h4>
-<h4 id='method.ya' class='method'><code>fn <a href='#method.ya' class='fnname'>ya</a>(luma: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></h4>
-<h4 id='method.y8' class='method'><code>fn <a href='#method.y8' class='fnname'>y8</a>(luma: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></h4>
-<h4 id='method.ya8' class='method'><code>fn <a href='#method.ya8' class='fnname'>ya8</a>(luma: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></h4>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></h3><div class='impl-items'><h4 id='method.is_valid' class='method'><code>fn <a href='../palette/trait.ColorSpace.html#method.is_valid' class='fnname'>is_valid</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+                                  <td id='structfield.luma'><code>luma</code></td><td><div class='docblock'><p>The lightness of the color. 0.0 is black and 1.0 is white.</p>
+</div></td></tr><tr class='stab '>
+                                  <td id='structfield.alpha'><code>alpha</code></td><td><div class='docblock'><p>The transparency of the color. 0.0 is completely transparent and 1.0 is
+completely opaque.</p>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></h3><div class='impl-items'><h4 id='method.y' class='method'><code>fn <a href='#method.y' class='fnname'>y</a>(luma: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></h4>
+<div class='docblock'><p>Linear luminance.</p>
+</div><h4 id='method.ya' class='method'><code>fn <a href='#method.ya' class='fnname'>ya</a>(luma: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></h4>
+<div class='docblock'><p>Linear luminance with transparency.</p>
+</div><h4 id='method.y8' class='method'><code>fn <a href='#method.y8' class='fnname'>y8</a>(luma: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></h4>
+<div class='docblock'><p>Linear luminance from an 8 bit value.</p>
+</div><h4 id='method.ya8' class='method'><code>fn <a href='#method.ya8' class='fnname'>ya8</a>(luma: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>, alpha: <a href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>) -&gt; <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></h4>
+<div class='docblock'><p>Linear luminance and transparency from 8 bit values.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></h3><div class='impl-items'><h4 id='method.is_valid' class='method'><code>fn <a href='../palette/trait.ColorSpace.html#method.is_valid' class='fnname'>is_valid</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <h4 id='method.clamp' class='method'><code>fn <a href='../palette/trait.ColorSpace.html#method.clamp' class='fnname'>clamp</a>(&amp;self) -&gt; <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></h4>
 <h4 id='method.clamp_self' class='method'><code>fn <a href='../palette/trait.ColorSpace.html#method.clamp_self' class='fnname'>clamp_self</a>(&amp;mut self)</code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='../palette/trait.Mix.html' title='palette::Mix'>Mix</a> for <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></h3><div class='impl-items'><h4 id='method.mix' class='method'><code>fn <a href='../palette/trait.Mix.html#method.mix' class='fnname'>mix</a>(&amp;self, other: &amp;<a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a>, factor: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></h4>
