@@ -252,7 +252,7 @@
 <span class='doccomment'>///Conversions and operations on this color space assumes the CIE Standard</span>
 <span class='doccomment'>///Illuminant D65 as the white point, and the 2° standard colorimetric</span>
 <span class='doccomment'>///observer.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Xyz</span> {
     <span class='doccomment'>///X is the scale of what can be seen as a response curve for the cone</span>
     <span class='doccomment'>///cells in the human eye. It goes from 0.0 to 1.0.</span>
@@ -301,7 +301,7 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>clamp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Xyz</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>clone</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='op'>*</span><span class='self'>self</span>;
         <span class='ident'>c</span>.<span class='ident'>clamp_self</span>();
         <span class='ident'>c</span>
     }

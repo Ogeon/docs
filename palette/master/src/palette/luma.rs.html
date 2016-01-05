@@ -190,7 +190,7 @@
 <span class='doccomment'>///perceived to be. It&#39;s basically the `Y` component of [CIE</span>
 <span class='doccomment'>///XYZ](struct.Xyz.html). The lack of any form of hue representation limits</span>
 <span class='doccomment'>///the set of operations that can be performed on it.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Luma</span> {
     <span class='doccomment'>///The lightness of the color. 0.0 is black and 1.0 is white.</span>
     <span class='kw'>pub</span> <span class='ident'>luma</span>: <span class='ident'>f32</span>,
@@ -241,7 +241,7 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>clamp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>clone</span>();
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='op'>*</span><span class='self'>self</span>;
         <span class='ident'>c</span>.<span class='ident'>clamp_self</span>();
         <span class='ident'>c</span>
     }
