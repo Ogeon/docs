@@ -45,21 +45,19 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-3898' class='srclink' href='../src/rustful/router/tree_router.rs.html#128-136' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-711' class='srclink' href='../src/rustful/router/tree_router.rs.html#128-136' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct TreeRouter&lt;T&gt; {
     pub find_hyperlinks: <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>,
     // some fields omitted
 }</pre><div class='docblock'><p>Stores handlers, using an HTTP method and a route as key.</p>
 
-<h1 id="variables" class='section-header'><a
-                           href="#variables">Variables</a></h1>
+<h1 id='variables' class='section-header'><a href='#variables'>Variables</a></h1>
 <p>Routes may contain variables, that are useful for capturing parts of the
 requested path as input to the handler. The syntax for a variable is simply
 an indicator character (<code>:</code> or <code>*</code>) followed by a label. Variables without
 labels are also valid, but their values will be discarded.</p>
 
-<h2 id="variable-segments-(:label)" class='section-header'><a
-                           href="#variable-segments-(:label)">Variable Segments (:label)</a></h2>
+<h2 id='variable-segments-label' class='section-header'><a href='#variable-segments-label'>Variable Segments (:label)</a></h2>
 <p>A variable segment will match a single arbitrary segment. They are probably
 the most commonly used variables and may, for example, be used to select a
 blog post: <code>&quot;posts/:year/:month/:day/:title_slug&quot;</code>.</p>
@@ -71,8 +69,7 @@ blog post: <code>&quot;posts/:year/:month/:day/:title_slug&quot;</code>.</p>
 &quot;a/c/b/d&quot; -&gt; no match
 </code></pre>
 
-<h2 id="variable-sequences-(*label)" class='section-header'><a
-                           href="#variable-sequences-(*label)">Variable Sequences (*label)</a></h2>
+<h2 id='variable-sequences-label' class='section-header'><a href='#variable-sequences-label'>Variable Sequences (*label)</a></h2>
 <p>A variable sequence is similar to a variable segment, but with the
 difference that it may consume multiple segments until the rest of the path
 gives a match. An example use case is a route for downloadable files that
@@ -91,8 +88,7 @@ may be arranged in arbitrary directories: <code>&quot;downloads/*file_path&quot;
 &quot;a/b&quot; -&gt; no match
 </code></pre>
 
-<h1 id="hyperlinks" class='section-header'><a
-                           href="#hyperlinks">Hyperlinks</a></h1>
+<h1 id='hyperlinks' class='section-header'><a href='#hyperlinks'>Hyperlinks</a></h1>
 <p>The &#39;TreeRouter` has support for shallow hyperlinks to children, siblings,
 cousins, ans so forth. The use of variable sequences complicates this
 process and may cause confusing results in certain situations. The

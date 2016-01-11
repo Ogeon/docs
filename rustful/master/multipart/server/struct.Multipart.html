@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1416' class='srclink' href='../../src/multipart/server/mod.rs.html#40-47' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-187' class='srclink' href='../../src/multipart/server/mod.rs.html#40-47' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Multipart&lt;R&gt; {
     pub save_dir: <a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html' title='std::path::PathBuf'>PathBuf</a>,
     // some fields omitted
@@ -64,8 +64,7 @@ return the wrapped request as <code>Ok(Multipart&lt;R&gt;)</code>, otherwise <co
 <div class='docblock'><p>Read the next entry from this multipart request, returning a struct with the field&#39;s name and
 data. See <code>MultipartField</code> for more info.</p>
 
-<h2 id="warning:-risk-of-data-loss" class='section-header'><a
-                           href="#warning:-risk-of-data-loss">Warning: Risk of Data Loss</a></h2>
+<h2 id='warning-risk-of-data-loss' class='section-header'><a href='#warning-risk-of-data-loss'>Warning: Risk of Data Loss</a></h2>
 <p>If the previously returned entry had contents of type <code>MultipartField::File</code>,
 calling this again will discard any unread contents of that entry.</p>
 </div><h4 id='method.foreach_entry' class='method'><code>fn <a href='#method.foreach_entry' class='fnname'>foreach_entry</a>&lt;F&gt;(&amp;mut self, foreach: F) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt; <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnMut.html' title='core::ops::FnMut'>FnMut</a>(<a class='struct' href='../../multipart/server/struct.MultipartField.html' title='multipart::server::MultipartField'>MultipartField</a>&lt;R&gt;)</span></code></h4>

@@ -45,7 +45,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-3417' class='srclink' href='../../src/rustful/router/mod.rs.html#1-245' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-638' class='srclink' href='../../src/rustful/router/mod.rs.html#1-245' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Routers stores request handlers, using an HTTP method and a path as keys.</p>
 
 <p>Rustful provides a tree structured all-round router called <code>TreeRouter</code>,
@@ -93,15 +93,22 @@ among other things.</p>
 <span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/products&quot;</span>, <span class='ident'>list_products</span>);
 <span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/products/:id&quot;</span>, <span class='ident'>show_product</span>);
 <span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/*&quot;</span>, <span class='ident'>show_error</span>);</pre>
-</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
-<table><tr><td><code>pub use self::<a class='mod'
-                                            href='./tree_router/index.html'>tree_router</a>::<a class='struct' href='../../rustful/struct.TreeRouter.html' title='rustful::TreeRouter'>TreeRouter</a>;</code></td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                     <tr class=' module-item'>
                         <td><a class='struct' href='struct.Endpoint.html'
                                title='rustful::router::Endpoint'>Endpoint</a></td>
                         <td class='docblock short'>
                              <p>API endpoint data.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.TreeRouter.html'
+                               title='rustful::router::TreeRouter'>TreeRouter</a></td>
+                        <td class='docblock short'>
+                             <p>Stores handlers, using an HTTP method and a route as key.</p>
 
                         </td>
                     </tr>

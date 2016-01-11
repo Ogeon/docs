@@ -45,19 +45,17 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-5756' class='srclink' href='../../src/rustful/context/mod.rs.html#1-228' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-978' class='srclink' href='../../src/rustful/context/mod.rs.html#1-228' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Handler context and request body reading extensions.</p>
 
-<h1 id="context" class='section-header'><a
-                           href="#context">Context</a></h1>
+<h1 id='context' class='section-header'><a href='#context'>Context</a></h1>
 <p>The <a href="struct.Context.html"><code>Context</code></a> contains all the input data for the request
 handlers, as well as some utilities. This is where request data, like
 headers, client address and the request body can be retrieved from and it
 can safely be picked apart, since its ownership is transferred to the
 handler.</p>
 
-<h2 id="accessing-headers" class='section-header'><a
-                           href="#accessing-headers">Accessing Headers</a></h2>
+<h2 id='accessing-headers' class='section-header'><a href='#accessing-headers'>Accessing Headers</a></h2>
 <p>The headers are stored in the <code>headers</code> field. See the <a href="../header/struct.Headers.html"><code>Headers</code></a>
 struct for more information about how to access them.</p>
 <pre class='rust rust-example-rendered'>
@@ -72,8 +70,7 @@ struct for more information about how to access them.</p>
     }
 }</pre>
 
-<h2 id="path-variables" class='section-header'><a
-                           href="#path-variables">Path Variables</a></h2>
+<h2 id='path-variables' class='section-header'><a href='#path-variables'>Path Variables</a></h2>
 <p>A router may collect variable data from paths (for example <code>id</code> in
 <code>/products/:id</code>). The values from these variables can be accessed through
 the <code>variables</code> field.</p>
@@ -90,8 +87,7 @@ the <code>variables</code> field.</p>
     }
 }</pre>
 
-<h2 id="other-url-parts" class='section-header'><a
-                           href="#other-url-parts">Other URL Parts</a></h2>
+<h2 id='other-url-parts' class='section-header'><a href='#other-url-parts'>Other URL Parts</a></h2>
 <ul>
 <li><p>Query variables (<code>http://example.com?a=b&amp;c=d</code>) can be found in the
 <code>query</code> field and they are accessed in exactly the same fashion as path
@@ -100,8 +96,7 @@ variables are used.</p></li>
 accessed through <code>fragment</code> as an optional <code>String</code>.</p></li>
 </ul>
 
-<h2 id="global-data" class='section-header'><a
-                           href="#global-data">Global Data</a></h2>
+<h2 id='global-data' class='section-header'><a href='#global-data'>Global Data</a></h2>
 <p>There is also infrastructure for globally accessible data, that can be
 accessed through the <code>global</code> field. This is meant to provide a place for
 things like database connections or cached data that should be available to
@@ -123,8 +118,7 @@ mutability.</p>
 }
 </pre>
 
-<h2 id="request-body" class='section-header'><a
-                           href="#request-body">Request Body</a></h2>
+<h2 id='request-body' class='section-header'><a href='#request-body'>Request Body</a></h2>
 <p>The body will not be read in advance, unlike the other parts of the
 request. It is instead available as a <code>BodyReader</code> in the field <code>body</code>,
 through which it can be read and parsed as various data formats, like JSON
