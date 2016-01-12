@@ -239,14 +239,14 @@
 <span class='doccomment'>///the hue and colorfulness of a color, while preserving other visual aspects.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Lch</span> {
-    <span class='doccomment'>///L* is the lightness of the color. 0.0 gives absolute black and 100.0</span>
+    <span class='doccomment'>///L* is the lightness of the color. 0.0 gives absolute black and 1.0</span>
     <span class='doccomment'>///give the brightest white.</span>
     <span class='kw'>pub</span> <span class='ident'>l</span>: <span class='ident'>f32</span>,
 
     <span class='doccomment'>///C* is the colorfulness of the color. It&#39;s similar to saturation. 0.0</span>
-    <span class='doccomment'>///gives gray scale colors, and numbers around 128.0-182.0 gives fully</span>
-    <span class='doccomment'>///saturated colors. The upper limit of 182.0 should include the whole</span>
-    <span class='doccomment'>///L*a*b* space and some more.</span>
+    <span class='doccomment'>///gives gray scale colors, and numbers around 1.0-1.41421356 gives fully</span>
+    <span class='doccomment'>///saturated colors. The upper limit of 1.41421356 (or `sqrt(2.0)`) should</span>
+    <span class='doccomment'>///include the whole L*a*b* space and some more.</span>
     <span class='kw'>pub</span> <span class='ident'>chroma</span>: <span class='ident'>f32</span>,
 
     <span class='doccomment'>///The hue of the color, in degrees. Decides if it&#39;s red, blue, purple,</span>
@@ -282,8 +282,8 @@
 
 <span class='kw'>impl</span> <span class='ident'>ColorSpace</span> <span class='kw'>for</span> <span class='ident'>Lch</span> {
     <span class='kw'>fn</span> <span class='ident'>is_valid</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>&gt;=</span> <span class='number'>0.0</span> <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>&lt;=</span> <span class='number'>100.0</span> <span class='op'>&amp;&amp;</span>
-        <span class='self'>self</span>.<span class='ident'>chroma</span> <span class='op'>&gt;=</span> <span class='number'>0.0</span> <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>chroma</span> <span class='op'>&lt;=</span> <span class='number'>182.0</span> <span class='op'>&amp;&amp;</span> <span class='comment'>//should include all of L*a*b*, but will also overshoot...</span>
+        <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>&gt;=</span> <span class='number'>0.0</span> <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>&lt;=</span> <span class='number'>1.0</span> <span class='op'>&amp;&amp;</span>
+        <span class='self'>self</span>.<span class='ident'>chroma</span> <span class='op'>&gt;=</span> <span class='number'>0.0</span> <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>chroma</span> <span class='op'>&lt;=</span> <span class='number'>1.41421356</span> <span class='op'>&amp;&amp;</span> <span class='comment'>//should include all of L*a*b*, but will also overshoot...</span>
         <span class='self'>self</span>.<span class='ident'>alpha</span> <span class='op'>&gt;=</span> <span class='number'>0.0</span> <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>alpha</span> <span class='op'>&lt;=</span> <span class='number'>1.0</span>
     }
 
@@ -294,8 +294,8 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>clamp_self</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>=</span> <span class='ident'>clamp</span>(<span class='self'>self</span>.<span class='ident'>l</span>, <span class='number'>0.0</span>, <span class='number'>100.0</span>);
-        <span class='self'>self</span>.<span class='ident'>chroma</span> <span class='op'>=</span> <span class='ident'>clamp</span>(<span class='self'>self</span>.<span class='ident'>chroma</span>, <span class='number'>0.0</span>, <span class='number'>182.0</span>); <span class='comment'>//should include all of L*a*b*, but will also overshoot...</span>
+        <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>=</span> <span class='ident'>clamp</span>(<span class='self'>self</span>.<span class='ident'>l</span>, <span class='number'>0.0</span>, <span class='number'>1.0</span>);
+        <span class='self'>self</span>.<span class='ident'>chroma</span> <span class='op'>=</span> <span class='ident'>clamp</span>(<span class='self'>self</span>.<span class='ident'>chroma</span>, <span class='number'>0.0</span>, <span class='number'>1.41421356</span>); <span class='comment'>//should include all of L*a*b*, but will also overshoot...</span>
         <span class='self'>self</span>.<span class='ident'>alpha</span> <span class='op'>=</span> <span class='ident'>clamp</span>(<span class='self'>self</span>.<span class='ident'>alpha</span>, <span class='number'>0.0</span>, <span class='number'>1.0</span>);
     }
 }
@@ -316,7 +316,7 @@
 <span class='kw'>impl</span> <span class='ident'>Shade</span> <span class='kw'>for</span> <span class='ident'>Lch</span> {
     <span class='kw'>fn</span> <span class='ident'>lighten</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>amount</span>: <span class='ident'>f32</span>) <span class='op'>-&gt;</span> <span class='ident'>Lch</span> {
         <span class='ident'>Lch</span> {
-            <span class='ident'>l</span>: <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>+</span> <span class='ident'>amount</span> <span class='op'>*</span> <span class='number'>100.0</span>,
+            <span class='ident'>l</span>: <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>+</span> <span class='ident'>amount</span>,
             <span class='ident'>chroma</span>: <span class='self'>self</span>.<span class='ident'>chroma</span>,
             <span class='ident'>hue</span>: <span class='self'>self</span>.<span class='ident'>hue</span>,
             <span class='ident'>alpha</span>: <span class='self'>self</span>.<span class='ident'>alpha</span>,
