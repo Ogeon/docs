@@ -367,7 +367,7 @@
         <span class='ident'>T</span>: <span class='ident'>FromStr</span>
     {
         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>val</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>get</span>(<span class='ident'>key</span>.<span class='ident'>as_ref</span>()) {
-            <span class='ident'>val</span>.<span class='ident'>as_utf8_lossy</span>().<span class='ident'>parse</span>().<span class='ident'>map_err</span>(<span class='op'>|</span><span class='ident'>e</span><span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='ident'>e</span>))
+            <span class='ident'>val</span>.<span class='ident'>as_utf8_lossy</span>().<span class='ident'>parse</span>().<span class='ident'>map_err</span>(<span class='prelude-val'>Some</span>)
         } <span class='kw'>else</span> {
             <span class='prelude-val'>Err</span>(<span class='prelude-val'>None</span>)
         }
@@ -506,7 +506,8 @@
     <span class='kw'>fn</span> <span class='ident'>extend</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>IntoIterator</span><span class='op'>&lt;</span><span class='ident'>Item</span><span class='op'>=</span>(<span class='ident'>K</span>, <span class='ident'>V</span>)<span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>iter</span>: <span class='ident'>T</span>) {
         <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>extend</span>(<span class='ident'>iter</span>.<span class='ident'>into_iter</span>().<span class='ident'>map</span>(<span class='op'>|</span>(<span class='ident'>k</span>, <span class='ident'>v</span>)<span class='op'>|</span> (<span class='ident'>k</span>.<span class='ident'>into</span>(), <span class='ident'>v</span>.<span class='ident'>into</span>())))
     }
-}</pre>
+}
+</pre>
 </section>
     <section id='search' class="content hidden"></section>
 
