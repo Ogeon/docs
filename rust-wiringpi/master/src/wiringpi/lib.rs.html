@@ -660,7 +660,7 @@
     <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span><span class='op'>=</span><span class='string'>&quot;nightly&quot;</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>delay</span>(<span class='ident'>duration</span>: <span class='ident'>Duration</span>) {
         <span class='kw'>use</span> <span class='ident'>libc</span>;
-        
+
         <span class='kw'>let</span> <span class='ident'>duration</span> <span class='op'>=</span> (<span class='ident'>duration</span>.<span class='ident'>secs</span>() <span class='op'>*</span> <span class='number'>1000</span>) <span class='kw'>as</span> <span class='ident'>u32</span> <span class='op'>+</span> <span class='ident'>duration</span>.<span class='ident'>extra_nanos</span>() <span class='op'>/</span> <span class='number'>1_000_000</span>;
         <span class='kw'>if</span> <span class='ident'>duration</span> <span class='op'>&lt;=</span> <span class='number'>0</span> {
             <span class='kw'>return</span>;
@@ -774,7 +774,7 @@
 
     <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>RequiresRoot</span>: <span class='ident'>Pin</span> {}
 
-    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>)]</span>
+    <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>)]</span>
     <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Value</span> {
         <span class='ident'>Low</span> <span class='op'>=</span> <span class='number'>0</span>,
         <span class='ident'>High</span>
@@ -1138,7 +1138,8 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>clock_pin</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>pin</span>::<span class='ident'>ClockPin</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span> {
         <span class='ident'>GpioClock</span>::<span class='ident'>clock_pin</span>()
     }
-}</pre>
+}
+</pre>
 </section>
     <section id='search' class="content hidden"></section>
 
