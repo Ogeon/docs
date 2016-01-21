@@ -764,11 +764,11 @@
 
     <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Pin</span> {}
 
-    <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Pwm</span>: <span class='ident'>RequiresRoot</span> {
+    <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Pwm</span>: <span class='ident'>RequiresRoot</span> <span class='op'>+</span> <span class='ident'>Sized</span> {
         <span class='kw'>fn</span> <span class='ident'>pwm_pin</span>() <span class='op'>-&gt;</span> <span class='ident'>PwmPin</span><span class='op'>&lt;</span><span class='kw'>Self</span><span class='op'>&gt;</span>;
     }
 
-    <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>GpioClock</span>: <span class='ident'>RequiresRoot</span> {
+    <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>GpioClock</span>: <span class='ident'>RequiresRoot</span> <span class='op'>+</span> <span class='ident'>Sized</span> {
         <span class='kw'>fn</span> <span class='ident'>clock_pin</span>() <span class='op'>-&gt;</span> <span class='ident'>ClockPin</span><span class='op'>&lt;</span><span class='kw'>Self</span><span class='op'>&gt;</span>;
     }
 
