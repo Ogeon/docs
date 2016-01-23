@@ -9,6 +9,7 @@
 
     <title>palette::Shade - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
 
     
@@ -45,11 +46,11 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1812' class='srclink' href='../src/palette/lib.rs.html#329-337' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Shade: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
-    fn <a href='#tymethod.lighten' class='fnname'>lighten</a>(&amp;self, amount: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; Self;
+        </span><a id='src-2163' class='srclink' href='../src/palette/lib.rs.html#332-340' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Shade&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
+    fn <a href='#tymethod.lighten' class='fnname'>lighten</a>(&amp;self, amount: T) -&gt; Self;
 
-    fn <a href='#method.darken' class='fnname'>darken</a>(&amp;self, amount: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; Self { ... }
+    fn <a href='#method.darken' class='fnname'>darken</a>(&amp;self, amount: T) -&gt; Self { ... }
 }</pre><div class='docblock'><p>The <code>Shade</code> trait allows a color to be lightened or darkened.</p>
 <pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>palette</span>::{<span class='ident'>Rgb</span>, <span class='ident'>Shade</span>};
@@ -61,22 +62,22 @@
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.lighten' class='method stab '><code>fn <a href='#tymethod.lighten' class='fnname'>lighten</a>(&amp;self, amount: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; Self</code></h3><div class='docblock'><p>Lighten the color by <code>amount</code>.</p>
+        <h3 id='tymethod.lighten' class='method stab '><code>fn <a href='#tymethod.lighten' class='fnname'>lighten</a>(&amp;self, amount: T) -&gt; Self</code></h3><div class='docblock'><p>Lighten the color by <code>amount</code>.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.darken' class='method stab '><code>fn <a href='#method.darken' class='fnname'>darken</a>(&amp;self, amount: <a href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>) -&gt; Self</code></h3><div class='docblock'><p>Darken the color by <code>amount</code>.</p>
+        <h3 id='method.darken' class='method stab '><code>fn <a href='#method.darken' class='fnname'>darken</a>(&amp;self, amount: T) -&gt; Self</code></h3><div class='docblock'><p>Darken the color by <code>amount</code>.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a> for <a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a> for <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a> for <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a> for <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a> for <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a> for <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a> for <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a> for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></li>
+    <li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a>&lt;T&gt; for <a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a>&lt;T&gt; for <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a>&lt;T&gt; for <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a>&lt;T&gt; for <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a>&lt;T&gt; for <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a>&lt;T&gt; for <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a>&lt;T&gt; for <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a>&lt;T&gt; for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a>&lt;T&gt;</code></li>
 </ul><script type="text/javascript" async
                               src="../implementors/palette/trait.Shade.js">
                       </script></section>
@@ -138,6 +139,6 @@
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     
-    <script async src="../search-index.js"></script>
+    <script defer src="../search-index.js"></script>
 </body>
 </html>

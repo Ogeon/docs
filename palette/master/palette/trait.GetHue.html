@@ -9,6 +9,7 @@
 
     <title>palette::GetHue - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
 
     
@@ -45,7 +46,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1819' class='srclink' href='../src/palette/lib.rs.html#354-368' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-2171' class='srclink' href='../src/palette/lib.rs.html#357-371' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait GetHue {
     type Hue;
     fn <a href='#tymethod.get_hue' class='fnname'>get_hue</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;Self::<a class='trait' href='../palette/trait.GetHue.html' title='palette::GetHue'>Hue</a>&gt;;
@@ -53,10 +54,10 @@
 <pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>palette</span>::{<span class='ident'>Rgb</span>, <span class='ident'>GetHue</span>};
 
-<span class='kw'>let</span> <span class='ident'>red</span> <span class='op'>=</span> <span class='ident'>Rgb</span>::<span class='ident'>linear_rgb</span>(<span class='number'>1.0</span>, <span class='number'>0.0</span>, <span class='number'>0.0</span>);
-<span class='kw'>let</span> <span class='ident'>green</span> <span class='op'>=</span> <span class='ident'>Rgb</span>::<span class='ident'>linear_rgb</span>(<span class='number'>0.0</span>, <span class='number'>1.0</span>, <span class='number'>0.0</span>);
-<span class='kw'>let</span> <span class='ident'>blue</span> <span class='op'>=</span> <span class='ident'>Rgb</span>::<span class='ident'>linear_rgb</span>(<span class='number'>0.0</span>, <span class='number'>0.0</span>, <span class='number'>1.0</span>);
-<span class='kw'>let</span> <span class='ident'>gray</span> <span class='op'>=</span> <span class='ident'>Rgb</span>::<span class='ident'>linear_rgb</span>(<span class='number'>0.5</span>, <span class='number'>0.5</span>, <span class='number'>0.5</span>);
+<span class='kw'>let</span> <span class='ident'>red</span> <span class='op'>=</span> <span class='ident'>Rgb</span>::<span class='ident'>linear_rgb</span>(<span class='number'>1.0_f32</span>, <span class='number'>0.0</span>, <span class='number'>0.0</span>);
+<span class='kw'>let</span> <span class='ident'>green</span> <span class='op'>=</span> <span class='ident'>Rgb</span>::<span class='ident'>linear_rgb</span>(<span class='number'>0.0_f32</span>, <span class='number'>1.0</span>, <span class='number'>0.0</span>);
+<span class='kw'>let</span> <span class='ident'>blue</span> <span class='op'>=</span> <span class='ident'>Rgb</span>::<span class='ident'>linear_rgb</span>(<span class='number'>0.0_f32</span>, <span class='number'>0.0</span>, <span class='number'>1.0</span>);
+<span class='kw'>let</span> <span class='ident'>gray</span> <span class='op'>=</span> <span class='ident'>Rgb</span>::<span class='ident'>linear_rgb</span>(<span class='number'>0.5_f32</span>, <span class='number'>0.5</span>, <span class='number'>0.5</span>);
 
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>red</span>.<span class='ident'>get_hue</span>(), <span class='prelude-val'>Some</span>(<span class='number'>0.0</span>.<span class='ident'>into</span>()));
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>green</span>.<span class='ident'>get_hue</span>(), <span class='prelude-val'>Some</span>(<span class='number'>120.0</span>.<span class='ident'>into</span>()));
@@ -81,12 +82,12 @@ return <code>None</code>.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl <a class='trait' href='../palette/trait.GetHue.html' title='palette::GetHue'>GetHue</a> for <a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.GetHue.html' title='palette::GetHue'>GetHue</a> for <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.GetHue.html' title='palette::GetHue'>GetHue</a> for <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.GetHue.html' title='palette::GetHue'>GetHue</a> for <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.GetHue.html' title='palette::GetHue'>GetHue</a> for <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.GetHue.html' title='palette::GetHue'>GetHue</a> for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a></code></li>
+    <li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.GetHue.html' title='palette::GetHue'>GetHue</a> for <a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.GetHue.html' title='palette::GetHue'>GetHue</a> for <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.GetHue.html' title='palette::GetHue'>GetHue</a> for <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.GetHue.html' title='palette::GetHue'>GetHue</a> for <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.GetHue.html' title='palette::GetHue'>GetHue</a> for <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.GetHue.html' title='palette::GetHue'>GetHue</a> for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a>&lt;T&gt;</code></li>
 </ul><script type="text/javascript" async
                               src="../implementors/palette/trait.GetHue.js">
                       </script></section>
@@ -148,6 +149,6 @@ return <code>None</code>.</p>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     
-    <script async src="../search-index.js"></script>
+    <script defer src="../search-index.js"></script>
 </body>
 </html>

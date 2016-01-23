@@ -9,6 +9,7 @@
 
     <title>palette::ColorSpace - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
 
     
@@ -45,29 +46,29 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1800' class='srclink' href='../src/palette/lib.rs.html#286-296' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-2150' class='srclink' href='../src/palette/lib.rs.html#289-299' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait ColorSpace {
-    fn <a href='#tymethod.is_valid' class='fnname'>is_valid</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.is_valid' class='fnname'>is_valid</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
     fn <a href='#tymethod.clamp' class='fnname'>clamp</a>(&amp;self) -&gt; Self;
     fn <a href='#tymethod.clamp_self' class='fnname'>clamp_self</a>(&amp;mut self);
 }</pre><div class='docblock'><p>Common functionality for color spaces.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.is_valid' class='method stab '><code>fn <a href='#tymethod.is_valid' class='fnname'>is_valid</a>(&amp;self) -&gt; <a href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>Check if the color&#39;s components are within the expected ranges.</p>
+        <h3 id='tymethod.is_valid' class='method stab '><code>fn <a href='#tymethod.is_valid' class='fnname'>is_valid</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>Check if the color&#39;s components are within the expected ranges.</p>
 </div><h3 id='tymethod.clamp' class='method stab '><code>fn <a href='#tymethod.clamp' class='fnname'>clamp</a>(&amp;self) -&gt; Self</code></h3><div class='docblock'><p>Return a new color where the components has been clamped to the nearest
 valid values.</p>
 </div><h3 id='tymethod.clamp_self' class='method stab '><code>fn <a href='#tymethod.clamp_self' class='fnname'>clamp_self</a>(&amp;mut self)</code></h3><div class='docblock'><p>Clamp the color&#39;s components to the nearest valid values.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a></code></li>
-<li><code>impl <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a></code></li>
+    <li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a>&lt;T&gt;</code></li>
 </ul><script type="text/javascript" async
                               src="../implementors/palette/trait.ColorSpace.js">
                       </script></section>
@@ -129,6 +130,6 @@ valid values.</p>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     
-    <script async src="../search-index.js"></script>
+    <script defer src="../search-index.js"></script>
 </body>
 </html>
