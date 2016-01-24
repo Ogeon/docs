@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `gradient` mod in crate `palette`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, gradient">
+    <meta name="description" content="API documentation for the Rust `pixel` mod in crate `palette`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, pixel">
 
-    <title>palette::gradient - Rust</title>
+    <title>palette::pixel - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
@@ -27,7 +27,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'gradient', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'><a href='../index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'pixel', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -42,46 +42,38 @@
     </nav>
 
     <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>palette</a>::<wbr><a class='mod' href=''>gradient</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>palette</a>::<wbr><a class='mod' href=''>pixel</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-16' class='srclink' href='../../src/palette/gradient.rs.html#1-325' title='goto source code'>[src]</a></span></h1>
-<div class='docblock'><p>Types for interpolation between multiple colors.</p>
+        </span><a id='src-237' class='srclink' href='../../src/palette/pixel/mod.rs.html#1-187' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Pixel encodings and pixel format conversion.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                     <tr class=' module-item'>
-                        <td><a class='struct' href='struct.Gradient.html'
-                               title='palette::gradient::Gradient'>Gradient</a></td>
+                        <td><a class='struct' href='struct.GammaRgb.html'
+                               title='palette::pixel::GammaRgb'>GammaRgb</a></td>
                         <td class='docblock short'>
-                             <p>A linear interpolation between colors.</p>
+                             <p>A gamma encoded color.</p>
 
                         </td>
                     </tr>
                 
                     <tr class=' module-item'>
-                        <td><a class='struct' href='struct.Range.html'
-                               title='palette::gradient::Range'>Range</a></td>
+                        <td><a class='struct' href='struct.Srgb.html'
+                               title='palette::pixel::Srgb'>Srgb</a></td>
                         <td class='docblock short'>
-                             <p>A domain range for gradient slices.</p>
+                             <p>An sRGB encoded color.</p>
 
                         </td>
                     </tr>
-                
+                </table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
                     <tr class=' module-item'>
-                        <td><a class='struct' href='struct.Slice.html'
-                               title='palette::gradient::Slice'>Slice</a></td>
+                        <td><a class='trait' href='trait.RgbPixel.html'
+                               title='palette::pixel::RgbPixel'>RgbPixel</a></td>
                         <td class='docblock short'>
-                             <p>A slice of a Gradient that limits its domain.</p>
-
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.Take.html'
-                               title='palette::gradient::Take'>Take</a></td>
-                        <td class='docblock short'>
-                             <p>An iterator over interpolated colors.</p>
+                             <p>A conversion trait for RGB pixel formats.</p>
 
                         </td>
                     </tr>

@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Rgb","Linear RGB with an alpha component."]],"trait":[["RgbPixel","A conversion trait for RGB pixel types."]]});
+initSidebarItems({"struct":[["Rgb","Linear RGB with an alpha component."]]});

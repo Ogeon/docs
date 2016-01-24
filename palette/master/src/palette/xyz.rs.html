@@ -649,21 +649,21 @@
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>red</span>() {
-        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Xyz</span>::<span class='ident'>from</span>(<span class='ident'>Rgb</span>::<span class='ident'>linear_rgb</span>(<span class='number'>1.0</span>, <span class='number'>0.0</span>, <span class='number'>0.0</span>));
+        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Xyz</span>::<span class='ident'>from</span>(<span class='ident'>Rgb</span>::<span class='ident'>rgb</span>(<span class='number'>1.0</span>, <span class='number'>0.0</span>, <span class='number'>0.0</span>));
         <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Xyz</span>::<span class='ident'>xyz</span>(<span class='number'>0.41240</span>, <span class='number'>0.21260</span>, <span class='number'>0.01930</span>);
         <span class='macro'>assert_approx_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, [<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>z</span>]);
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>green</span>() {
-        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Xyz</span>::<span class='ident'>from</span>(<span class='ident'>Rgb</span>::<span class='ident'>linear_rgb</span>(<span class='number'>0.0</span>, <span class='number'>1.0</span>, <span class='number'>0.0</span>));
+        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Xyz</span>::<span class='ident'>from</span>(<span class='ident'>Rgb</span>::<span class='ident'>rgb</span>(<span class='number'>0.0</span>, <span class='number'>1.0</span>, <span class='number'>0.0</span>));
         <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Xyz</span>::<span class='ident'>xyz</span>(<span class='number'>0.35760</span>, <span class='number'>0.71520</span>, <span class='number'>0.11920</span>);
         <span class='macro'>assert_approx_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, [<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>z</span>]);
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>blue</span>() {
-        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Xyz</span>::<span class='ident'>from</span>(<span class='ident'>Rgb</span>::<span class='ident'>linear_rgb</span>(<span class='number'>0.0</span>, <span class='number'>0.0</span>, <span class='number'>1.0</span>));
+        <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Xyz</span>::<span class='ident'>from</span>(<span class='ident'>Rgb</span>::<span class='ident'>rgb</span>(<span class='number'>0.0</span>, <span class='number'>0.0</span>, <span class='number'>1.0</span>));
         <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Xyz</span>::<span class='ident'>xyz</span>(<span class='number'>0.18050</span>, <span class='number'>0.07220</span>, <span class='number'>0.95050</span>);
         <span class='macro'>assert_approx_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, [<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>z</span>]);
     }
