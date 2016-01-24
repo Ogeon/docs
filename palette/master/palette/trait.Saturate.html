@@ -46,11 +46,12 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-2182' class='srclink' href='../src/palette/lib.rs.html#393-401' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Saturate&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
-    fn <a href='#tymethod.saturate' class='fnname'>saturate</a>(&amp;self, factor: T) -&gt; Self;
+        </span><a id='src-2189' class='srclink' href='../src/palette/lib.rs.html#405-416' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Saturate: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
+    type Scalar: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>;
+    fn <a href='#tymethod.saturate' class='fnname'>saturate</a>(&amp;self, factor: Self::<a class='trait' href='../palette/trait.Saturate.html' title='palette::Saturate'>Scalar</a>) -&gt; Self;
 
-    fn <a href='#method.desaturate' class='fnname'>desaturate</a>(&amp;self, factor: T) -&gt; Self { ... }
+    fn <a href='#method.desaturate' class='fnname'>desaturate</a>(&amp;self, factor: Self::<a class='trait' href='../palette/trait.Saturate.html' title='palette::Saturate'>Scalar</a>) -&gt; Self { ... }
 }</pre><div class='docblock'><p>A trait for colors where the saturation (or chroma) can be manipulated
 without conversion.</p>
 <pre class='rust rust-example-rendered'>
@@ -61,20 +62,24 @@ without conversion.</p>
 
 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>.<span class='ident'>saturate</span>(<span class='number'>1.0</span>), <span class='ident'>b</span>.<span class='ident'>desaturate</span>(<span class='number'>0.5</span>));</pre>
 </div>
+            <h2 id='associated-types'>Associated Types</h2>
+            <div class='methods'>
+        <h3 id='associatedtype.Scalar' class='method stab '><code>type Scalar: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a></code></h3><div class='docblock'><p>The type of the (de)saturation factor.</p>
+</div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.saturate' class='method stab '><code>fn <a href='#tymethod.saturate' class='fnname'>saturate</a>(&amp;self, factor: T) -&gt; Self</code></h3><div class='docblock'><p>Increase the saturation by <code>factor</code>.</p>
+        <h3 id='tymethod.saturate' class='method stab '><code>fn <a href='#tymethod.saturate' class='fnname'>saturate</a>(&amp;self, factor: Self::<a class='trait' href='../palette/trait.Saturate.html' title='palette::Saturate'>Scalar</a>) -&gt; Self</code></h3><div class='docblock'><p>Increase the saturation by <code>factor</code>.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.desaturate' class='method stab '><code>fn <a href='#method.desaturate' class='fnname'>desaturate</a>(&amp;self, factor: T) -&gt; Self</code></h3><div class='docblock'><p>Decrease the saturation by <code>factor</code>.</p>
+        <h3 id='method.desaturate' class='method stab '><code>fn <a href='#method.desaturate' class='fnname'>desaturate</a>(&amp;self, factor: Self::<a class='trait' href='../palette/trait.Saturate.html' title='palette::Saturate'>Scalar</a>) -&gt; Self</code></h3><div class='docblock'><p>Decrease the saturation by <code>factor</code>.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Saturate.html' title='palette::Saturate'>Saturate</a>&lt;T&gt; for <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Saturate.html' title='palette::Saturate'>Saturate</a>&lt;T&gt; for <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Saturate.html' title='palette::Saturate'>Saturate</a>&lt;T&gt; for <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Saturate.html' title='palette::Saturate'>Saturate</a>&lt;T&gt; for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a>&lt;T&gt;</code></li>
+    <li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Saturate.html' title='palette::Saturate'>Saturate</a> for <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Saturate.html' title='palette::Saturate'>Saturate</a> for <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Saturate.html' title='palette::Saturate'>Saturate</a> for <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Saturate.html' title='palette::Saturate'>Saturate</a> for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a>&lt;T&gt;</code></li>
 </ul><script type="text/javascript" async
                               src="../implementors/palette/trait.Saturate.js">
                       </script></section>
