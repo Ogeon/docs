@@ -46,7 +46,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-0' class='srclink' href='../src/palette/lib.rs.html#1-397' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-0' class='srclink' href='../src/palette/lib.rs.html#1-445' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>A library that makes linear color calculations and conversion easy and
 accessible for anyone. It provides both precision tools that lets you work
 in exactly the color space you want to, as well as a general color type
@@ -61,6 +61,26 @@ represent the actual intensities, and the compression has to be reverted to
 make sure that any operations on the colors are accurate. This library uses
 a completely linear work flow, and comes with the tools for transitioning
 between linear and non-linear RGB.</p>
+
+<h1 id='transparency' class='section-header'><a href='#transparency'>Transparency</a></h1>
+<p>There are many cases where pixel transparency is important, but there are
+also many cases where it becomes a dead weight, if it&#39;s always stored
+together with the color, but not used. Palette has therefore adopted a
+structure where the transparency component (alpha) is attachable using the
+<a href="struct.Alpha.html"><code>Alpha</code></a> type, instead of having copies of each color
+space.</p>
+
+<p>This approach comes with the extra benefit of allowing operations to
+selectively affect the alpha component:</p>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>palette</span>::{<span class='ident'>Rgb</span>, <span class='ident'>Rgba</span>};
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>c1</span> <span class='op'>=</span> <span class='ident'>Rgba</span>::<span class='ident'>new</span>(<span class='number'>1.0</span>, <span class='number'>0.5</span>, <span class='number'>0.5</span>, <span class='number'>0.8</span>);
+<span class='kw'>let</span> <span class='ident'>c2</span> <span class='op'>=</span> <span class='ident'>Rgb</span>::<span class='ident'>new</span>(<span class='number'>0.5</span>, <span class='number'>1.0</span>, <span class='number'>1.0</span>);
+
+<span class='ident'>c1</span>.<span class='ident'>color</span> <span class='op'>=</span> <span class='ident'>c1</span>.<span class='ident'>color</span> <span class='op'>*</span> <span class='ident'>c2</span>; <span class='comment'>//Leave the alpha as it is</span>
+<span class='ident'>c1</span>.<span class='ident'>blue</span> <span class='op'>+=</span> <span class='number'>0.2</span>; <span class='comment'>//The color components can easily be accessed</span>
+<span class='ident'>c1</span> <span class='op'>=</span> <span class='ident'>c1</span> <span class='op'>*</span> <span class='number'>0.5</span>; <span class='comment'>//Scale both the color and the alpha</span></pre>
 </div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
 <table><tr><td><code>pub use gradient::<a class='struct' href='../palette/gradient/struct.Gradient.html' title='palette::gradient::Gradient'>Gradient</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
@@ -84,10 +104,19 @@ between linear and non-linear RGB.</p>
                 </table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                     <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Alpha.html'
+                               title='palette::Alpha'>Alpha</a></td>
+                        <td class='docblock short'>
+                             <p>An alpha component wrapper for colors.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
                         <td><a class='struct' href='struct.Hsl.html'
                                title='palette::Hsl'>Hsl</a></td>
                         <td class='docblock short'>
-                             <p>Linear HSL color space with an alpha component.</p>
+                             <p>Linear HSL color space.</p>
 
                         </td>
                     </tr>
@@ -96,7 +125,7 @@ between linear and non-linear RGB.</p>
                         <td><a class='struct' href='struct.Hsv.html'
                                title='palette::Hsv'>Hsv</a></td>
                         <td class='docblock short'>
-                             <p>Linear HSV color space with an alpha component.</p>
+                             <p>Linear HSV color space.</p>
 
                         </td>
                     </tr>
@@ -105,7 +134,7 @@ between linear and non-linear RGB.</p>
                         <td><a class='struct' href='struct.Lab.html'
                                title='palette::Lab'>Lab</a></td>
                         <td class='docblock short'>
-                             <p>The CIE L*a*b* (CIELAB) color space with an alpha component.</p>
+                             <p>The CIE L*a*b* (CIELAB) color space.</p>
 
                         </td>
                     </tr>
@@ -123,8 +152,7 @@ between linear and non-linear RGB.</p>
                         <td><a class='struct' href='struct.Lch.html'
                                title='palette::Lch'>Lch</a></td>
                         <td class='docblock short'>
-                             <p>CIE L*C*h°, a polar version of <a href="struct.Lab.html">CIE L*a*b*</a>, with an alpha
-component.</p>
+                             <p>CIE L*C*h°, a polar version of <a href="struct.Lab.html">CIE L*a*b*</a>.</p>
 
                         </td>
                     </tr>
@@ -133,7 +161,7 @@ component.</p>
                         <td><a class='struct' href='struct.Luma.html'
                                title='palette::Luma'>Luma</a></td>
                         <td class='docblock short'>
-                             <p>Linear luminance with an alpha component.</p>
+                             <p>Linear luminance.</p>
 
                         </td>
                     </tr>
@@ -142,7 +170,7 @@ component.</p>
                         <td><a class='struct' href='struct.Rgb.html'
                                title='palette::Rgb'>Rgb</a></td>
                         <td class='docblock short'>
-                             <p>Linear RGB with an alpha component.</p>
+                             <p>Linear RGB.</p>
 
                         </td>
                     </tr>
@@ -160,7 +188,7 @@ component.</p>
                         <td><a class='struct' href='struct.Xyz.html'
                                title='palette::Xyz'>Xyz</a></td>
                         <td class='docblock short'>
-                             <p>The CIE 1931 XYZ color space with an alpha component.</p>
+                             <p>The CIE 1931 XYZ color space.</p>
 
                         </td>
                     </tr>
@@ -227,6 +255,79 @@ without conversion.</p>
                                title='palette::Shade'>Shade</a></td>
                         <td class='docblock short'>
                              <p>The <code>Shade</code> trait allows a color to be lightened or darkened.</p>
+
+                        </td>
+                    </tr>
+                </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.Colora.html'
+                               title='palette::Colora'>Colora</a></td>
+                        <td class='docblock short'>
+                             <p>Generic color with an alpha component. See the <a href="struct.Alpha.html#Colora"><code>Colora</code> implementation in <code>Alpha</code></a>.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.Hsla.html'
+                               title='palette::Hsla'>Hsla</a></td>
+                        <td class='docblock short'>
+                             <p>Linear HSL with an alpha component. See the <a href="struct.Alpha.html#Hsla"><code>Hsla</code> implementation in <code>Alpha</code></a>.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.Hsva.html'
+                               title='palette::Hsva'>Hsva</a></td>
+                        <td class='docblock short'>
+                             <p>Linear HSV with an alpha component. See the <a href="struct.Alpha.html#Hsva"><code>Hsva</code> implementation in <code>Alpha</code></a>.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.Laba.html'
+                               title='palette::Laba'>Laba</a></td>
+                        <td class='docblock short'>
+                             <p>CIE L*a*b* (CIELAB) with an alpha component. See the <a href="struct.Alpha.html#Laba"><code>Laba</code> implementation in <code>Alpha</code></a>.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.Lcha.html'
+                               title='palette::Lcha'>Lcha</a></td>
+                        <td class='docblock short'>
+                             <p>CIE L*C*h° with an alpha component. See the <a href="struct.Alpha.html#Lcha"><code>Lcha</code> implementation in <code>Alpha</code></a>.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.Lumaa.html'
+                               title='palette::Lumaa'>Lumaa</a></td>
+                        <td class='docblock short'>
+                             <p>Linear luminance with an alpha component. See the <a href="struct.Alpha.html#Lumaa"><code>Lumaa</code> implementation in <code>Alpha</code></a>.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.Rgba.html'
+                               title='palette::Rgba'>Rgba</a></td>
+                        <td class='docblock short'>
+                             <p>Linear RGB with an alpha component. See the <a href="struct.Alpha.html#Rgba"><code>Rgba</code> implementation in <code>Alpha</code></a>.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='type' href='type.Xyza.html'
+                               title='palette::Xyza'>Xyza</a></td>
+                        <td class='docblock short'>
+                             <p>CIE 1931 XYZ with an alpha component. See the <a href="struct.Alpha.html#Xyza"><code>Xyza</code> implementation in <code>Alpha</code></a>.</p>
 
                         </td>
                     </tr>

@@ -265,26 +265,17 @@
 <span id="222">222</span>
 <span id="223">223</span>
 <span id="224">224</span>
-<span id="225">225</span>
-<span id="226">226</span>
-<span id="227">227</span>
-<span id="228">228</span>
-<span id="229">229</span>
-<span id="230">230</span>
-<span id="231">231</span>
-<span id="232">232</span>
-<span id="233">233</span>
-<span id="234">234</span>
-<span id="235">235</span>
-<span id="236">236</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>traits</span>::<span class='ident'>Float</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Sub</span>, <span class='ident'>Mul</span>, <span class='ident'>Div</span>};
 
-<span class='kw'>use</span> {<span class='ident'>Color</span>, <span class='ident'>Rgb</span>, <span class='ident'>Xyz</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hsl</span>, <span class='ident'>ColorSpace</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>clamp</span>};
+<span class='kw'>use</span> {<span class='ident'>Color</span>, <span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Xyz</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hsl</span>, <span class='ident'>ColorSpace</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>clamp</span>};
 
-<span class='doccomment'>///Linear luminance with an alpha component.</span>
+<span class='doccomment'>///Linear luminance with an alpha component. See the [`Lumaa` implementation in `Alpha`](struct.Alpha.html#Lumaa).</span>
+<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Lumaa</span><span class='op'>&lt;</span><span class='ident'>T</span> <span class='op'>=</span> <span class='ident'>f32</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Alpha</span><span class='op'>&lt;</span><span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>T</span><span class='op'>&gt;</span>;
+
+<span class='doccomment'>///Linear luminance.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>///Luma is a purely gray scale color space, which is included more for</span>
 <span class='doccomment'>///completeness than anything else, and represents how bright a color is</span>
@@ -295,41 +286,38 @@
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span> <span class='op'>=</span> <span class='ident'>f32</span><span class='op'>&gt;</span> {
     <span class='doccomment'>///The lightness of the color. 0.0 is black and 1.0 is white.</span>
     <span class='kw'>pub</span> <span class='ident'>luma</span>: <span class='ident'>T</span>,
-
-    <span class='doccomment'>///The transparency of the color. 0.0 is completely transparent and 1.0 is</span>
-    <span class='doccomment'>///completely opaque.</span>
-    <span class='kw'>pub</span> <span class='ident'>alpha</span>: <span class='ident'>T</span>,
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='doccomment'>///Linear luminance.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>y</span>(<span class='ident'>luma</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>luma</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='ident'>luma</span>,
-            <span class='ident'>alpha</span>: <span class='ident'>T</span>::<span class='ident'>zero</span>(),
-        }
-    }
-
-    <span class='doccomment'>///Linear luminance with transparency.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ya</span>(<span class='ident'>luma</span>: <span class='ident'>T</span>, <span class='ident'>alpha</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>Luma</span> {
-            <span class='ident'>luma</span>: <span class='ident'>luma</span>,
-            <span class='ident'>alpha</span>: <span class='ident'>alpha</span>,
         }
     }
 
     <span class='doccomment'>///Linear luminance from an 8 bit value.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>y8</span>(<span class='ident'>luma</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_u8</span>(<span class='ident'>luma</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='ident'>luma</span>).<span class='ident'>unwrap</span>() <span class='op'>/</span> <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='number'>255.0</span>).<span class='ident'>unwrap</span>(),
-            <span class='ident'>alpha</span>: <span class='ident'>T</span>::<span class='ident'>zero</span>(),
+        }
+    }
+}
+
+<span class='doccomment'>///&lt;span id=&quot;Lumaa&quot;&gt;&lt;/span&gt;[`Lumaa`](type.Lumaa.html) implementations.</span>
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>Alpha</span><span class='op'>&lt;</span><span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='doccomment'>///Linear luminance with transparency.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>luma</span>: <span class='ident'>T</span>, <span class='ident'>alpha</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Lumaa</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+        <span class='ident'>Alpha</span> {
+            <span class='ident'>color</span>: <span class='ident'>Luma</span>::<span class='ident'>new</span>(<span class='ident'>luma</span>),
+            <span class='ident'>alpha</span>: <span class='ident'>alpha</span>,
         }
     }
 
     <span class='doccomment'>///Linear luminance and transparency from 8 bit values.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>ya8</span>(<span class='ident'>luma</span>: <span class='ident'>u8</span>, <span class='ident'>alpha</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>Luma</span> {
-            <span class='ident'>luma</span>: <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='ident'>luma</span>).<span class='ident'>unwrap</span>() <span class='op'>/</span> <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='number'>255.0</span>).<span class='ident'>unwrap</span>(),
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_u8</span>(<span class='ident'>luma</span>: <span class='ident'>u8</span>, <span class='ident'>alpha</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>Lumaa</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+        <span class='ident'>Alpha</span> {
+            <span class='ident'>color</span>: <span class='ident'>Luma</span>::<span class='ident'>new_u8</span>(<span class='ident'>luma</span>),
             <span class='ident'>alpha</span>: <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='ident'>alpha</span>).<span class='ident'>unwrap</span>() <span class='op'>/</span> <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='number'>255.0</span>).<span class='ident'>unwrap</span>(),
         }
     }
@@ -337,8 +325,7 @@
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>ColorSpace</span> <span class='kw'>for</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>is_valid</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>&gt;=</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>&lt;=</span> <span class='ident'>T</span>::<span class='ident'>one</span>() <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>alpha</span> <span class='op'>&gt;=</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() <span class='op'>&amp;&amp;</span>
-        <span class='self'>self</span>.<span class='ident'>alpha</span> <span class='op'>&lt;=</span> <span class='ident'>T</span>::<span class='ident'>one</span>()
+        <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>&gt;=</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>&lt;=</span> <span class='ident'>T</span>::<span class='ident'>one</span>()
     }
 
     <span class='kw'>fn</span> <span class='ident'>clamp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
@@ -349,7 +336,6 @@
 
     <span class='kw'>fn</span> <span class='ident'>clamp_self</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>=</span> <span class='ident'>clamp</span>(<span class='self'>self</span>.<span class='ident'>luma</span>, <span class='ident'>T</span>::<span class='ident'>zero</span>(), <span class='ident'>T</span>::<span class='ident'>one</span>());
-        <span class='self'>self</span>.<span class='ident'>alpha</span> <span class='op'>=</span> <span class='ident'>clamp</span>(<span class='self'>self</span>.<span class='ident'>alpha</span>, <span class='ident'>T</span>::<span class='ident'>zero</span>(), <span class='ident'>T</span>::<span class='ident'>one</span>());
     }
 }
 
@@ -361,7 +347,6 @@
 
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>+</span> <span class='ident'>factor</span> <span class='op'>*</span> (<span class='ident'>other</span>.<span class='ident'>luma</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>luma</span>),
-            <span class='ident'>alpha</span>: <span class='self'>self</span>.<span class='ident'>alpha</span> <span class='op'>+</span> <span class='ident'>factor</span> <span class='op'>*</span> (<span class='ident'>other</span>.<span class='ident'>alpha</span> <span class='op'>-</span> <span class='self'>self</span>.<span class='ident'>alpha</span>),
         }
     }
 }
@@ -372,14 +357,13 @@
     <span class='kw'>fn</span> <span class='ident'>lighten</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>amount</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: (<span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>+</span> <span class='ident'>amount</span>).<span class='ident'>max</span>(<span class='ident'>T</span>::<span class='ident'>zero</span>()),
-            <span class='ident'>alpha</span>: <span class='self'>self</span>.<span class='ident'>alpha</span>,
         }
     }
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>Luma</span>::<span class='ident'>y</span>(<span class='ident'>T</span>::<span class='ident'>zero</span>())
+        <span class='ident'>Luma</span>::<span class='ident'>new</span>(<span class='ident'>T</span>::<span class='ident'>zero</span>())
     }
 }
 
@@ -389,7 +373,6 @@
     <span class='kw'>fn</span> <span class='ident'>add</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>+</span> <span class='ident'>other</span>.<span class='ident'>luma</span>,
-            <span class='ident'>alpha</span>: <span class='self'>self</span>.<span class='ident'>alpha</span> <span class='op'>+</span> <span class='ident'>other</span>.<span class='ident'>alpha</span>,
         }
     }
 }
@@ -400,7 +383,6 @@
     <span class='kw'>fn</span> <span class='ident'>add</span>(<span class='self'>self</span>, <span class='ident'>c</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>+</span> <span class='ident'>c</span>,
-            <span class='ident'>alpha</span>: <span class='self'>self</span>.<span class='ident'>alpha</span> <span class='op'>+</span> <span class='ident'>c</span>,
         }
     }
 }
@@ -411,7 +393,6 @@
     <span class='kw'>fn</span> <span class='ident'>sub</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>-</span> <span class='ident'>other</span>.<span class='ident'>luma</span>,
-            <span class='ident'>alpha</span>: <span class='self'>self</span>.<span class='ident'>alpha</span> <span class='op'>-</span> <span class='ident'>other</span>.<span class='ident'>alpha</span>,
         }
     }
 }
@@ -422,7 +403,6 @@
     <span class='kw'>fn</span> <span class='ident'>sub</span>(<span class='self'>self</span>, <span class='ident'>c</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>-</span> <span class='ident'>c</span>,
-            <span class='ident'>alpha</span>: <span class='self'>self</span>.<span class='ident'>alpha</span> <span class='op'>-</span> <span class='ident'>c</span>,
         }
     }
 }
@@ -433,7 +413,6 @@
     <span class='kw'>fn</span> <span class='ident'>mul</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>*</span> <span class='ident'>other</span>.<span class='ident'>luma</span>,
-            <span class='ident'>alpha</span>: <span class='self'>self</span>.<span class='ident'>alpha</span> <span class='op'>*</span> <span class='ident'>other</span>.<span class='ident'>alpha</span>,
         }
     }
 }
@@ -444,7 +423,6 @@
     <span class='kw'>fn</span> <span class='ident'>mul</span>(<span class='self'>self</span>, <span class='ident'>c</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>*</span> <span class='ident'>c</span>,
-            <span class='ident'>alpha</span>: <span class='self'>self</span>.<span class='ident'>alpha</span> <span class='op'>*</span> <span class='ident'>c</span>,
         }
     }
 }
@@ -455,7 +433,6 @@
     <span class='kw'>fn</span> <span class='ident'>div</span>(<span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>/</span> <span class='ident'>other</span>.<span class='ident'>luma</span>,
-            <span class='ident'>alpha</span>: <span class='self'>self</span>.<span class='ident'>alpha</span> <span class='op'>/</span> <span class='ident'>other</span>.<span class='ident'>alpha</span>,
         }
     }
 }
@@ -466,18 +443,18 @@
     <span class='kw'>fn</span> <span class='ident'>div</span>(<span class='self'>self</span>, <span class='ident'>c</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>/</span> <span class='ident'>c</span>,
-            <span class='ident'>alpha</span>: <span class='self'>self</span>.<span class='ident'>alpha</span> <span class='op'>/</span> <span class='ident'>c</span>,
         }
     }
 }
 
 <span class='macro'>from_color</span><span class='macro'>!</span>(<span class='ident'>to</span> <span class='ident'>Luma</span> <span class='ident'>from</span> <span class='ident'>Rgb</span>, <span class='ident'>Xyz</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hsl</span>);
 
+<span class='macro'>alpha_from</span><span class='macro'>!</span>(<span class='ident'>Luma</span> {<span class='ident'>Rgb</span>, <span class='ident'>Xyz</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hsl</span>, <span class='ident'>Color</span>});
+
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Rgb</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>rgb</span>: <span class='ident'>Rgb</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='ident'>rgb</span>.<span class='ident'>red</span> <span class='op'>*</span> <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='number'>0.2126</span>).<span class='ident'>unwrap</span>() <span class='op'>+</span> <span class='ident'>rgb</span>.<span class='ident'>green</span> <span class='op'>*</span> <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='number'>0.7152</span>).<span class='ident'>unwrap</span>() <span class='op'>+</span> <span class='ident'>rgb</span>.<span class='ident'>blue</span> <span class='op'>*</span> <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='number'>0.0722</span>).<span class='ident'>unwrap</span>(),
-            <span class='ident'>alpha</span>: <span class='ident'>rgb</span>.<span class='ident'>alpha</span>
         }
     }
 }
@@ -486,7 +463,6 @@
     <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>xyz</span>: <span class='ident'>Xyz</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Luma</span> {
             <span class='ident'>luma</span>: <span class='ident'>xyz</span>.<span class='ident'>y</span>,
-            <span class='ident'>alpha</span>: <span class='ident'>xyz</span>.<span class='ident'>alpha</span>,
         }
     }
 }

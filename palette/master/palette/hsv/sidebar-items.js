@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["Hsv","Linear HSV color space with an alpha component."]]});
+initSidebarItems({"struct":[["Hsv","Linear HSV color space."]],"type":[["Hsva","Linear HSV with an alpha component. See the `Hsva` implementation in `Alpha`."]]});
