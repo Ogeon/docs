@@ -46,7 +46,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1347' class='srclink' href='../src/palette/xyz.rs.html#23-34' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-1365' class='srclink' href='../src/palette/xyz.rs.html#23-34' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Xyz&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a> = <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>&gt; {
     pub x: T,
     pub y: T,
@@ -64,17 +64,17 @@ observer.</p>
 </div><h2 class='fields'>Fields</h2>
 <table><tr class='stab '>
                                   <td id='structfield.x'><code>x</code></td><td><div class='docblock'><p>X is the scale of what can be seen as a response curve for the cone
-cells in the human eye. It goes from 0.0 to 1.0.</p>
+cells in the human eye. It goes from 0.0 to 0.95047.</p>
 </div></td></tr><tr class='stab '>
                                   <td id='structfield.y'><code>y</code></td><td><div class='docblock'><p>Y is the luminance of the color, where 0.0 is black and 1.0 is white.</p>
 </div></td></tr><tr class='stab '>
                                   <td id='structfield.z'><code>z</code></td><td><div class='docblock'><p>Z is the scale of what can be seen as the blue stimulation. It goes
-from 0.0 to 1.0.</p>
+from 0.0 to 1.08883.</p>
 </div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;T&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(x: T, y: T, z: T) -&gt; <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;T&gt;</code></h4>
 <div class='docblock'><p>CIE XYZ.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;T&gt;</code></h3><div class='impl-items'><h4 id='method.is_valid' class='method'><code>fn <a href='../palette/trait.ColorSpace.html#method.is_valid' class='fnname'>is_valid</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
-<h4 id='method.clamp' class='method'><code>fn <a href='../palette/trait.ColorSpace.html#method.clamp' class='fnname'>clamp</a>(&amp;self) -&gt; <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;T&gt;</code></h4>
-<h4 id='method.clamp_self' class='method'><code>fn <a href='../palette/trait.ColorSpace.html#method.clamp_self' class='fnname'>clamp_self</a>(&amp;mut self)</code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Limited.html' title='palette::Limited'>Limited</a> for <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;T&gt;</code></h3><div class='impl-items'><h4 id='method.is_valid' class='method'><code>fn <a href='../palette/trait.Limited.html#method.is_valid' class='fnname'>is_valid</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<h4 id='method.clamp' class='method'><code>fn <a href='../palette/trait.Limited.html#method.clamp' class='fnname'>clamp</a>(&amp;self) -&gt; <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;T&gt;</code></h4>
+<h4 id='method.clamp_self' class='method'><code>fn <a href='../palette/trait.Limited.html#method.clamp_self' class='fnname'>clamp_self</a>(&amp;mut self)</code></h4>
 </div><h3 class='impl'><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Mix.html' title='palette::Mix'>Mix</a> for <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;T&gt;</code></h3><div class='impl-items'><h4 id='assoc_type.Scalar' class='type'><code>type Scalar = T</code></h4>
 <h4 id='method.mix' class='method'><code>fn <a href='../palette/trait.Mix.html#method.mix' class='fnname'>mix</a>(&amp;self, other: &amp;<a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;T&gt;, factor: T) -&gt; <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;T&gt;</code></h4>
 </div><h3 class='impl'><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a> for <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;T&gt;</code></h3><div class='impl-items'><h4 id='assoc_type.Scalar-1' class='type'><code>type Scalar = T</code></h4>

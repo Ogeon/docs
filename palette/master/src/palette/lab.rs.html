@@ -351,12 +351,26 @@
 <span id="308">308</span>
 <span id="309">309</span>
 <span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>traits</span>::<span class='ident'>Float</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Sub</span>, <span class='ident'>Mul</span>, <span class='ident'>Div</span>};
 
-<span class='kw'>use</span> {<span class='ident'>Color</span>, <span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Luma</span>, <span class='ident'>Xyz</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hsl</span>, <span class='ident'>ColorSpace</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>GetHue</span>, <span class='ident'>LabHue</span>, <span class='ident'>clamp</span>};
+<span class='kw'>use</span> {<span class='ident'>Color</span>, <span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Luma</span>, <span class='ident'>Xyz</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hsl</span>, <span class='ident'>Limited</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>GetHue</span>, <span class='ident'>LabHue</span>, <span class='ident'>clamp</span>};
 
 <span class='kw'>use</span> <span class='ident'>tristimulus</span>::{<span class='ident'>X_N</span>, <span class='ident'>Y_N</span>, <span class='ident'>Z_N</span>};
 
@@ -409,7 +423,7 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>ColorSpace</span> <span class='kw'>for</span> <span class='ident'>Lab</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>Limited</span> <span class='kw'>for</span> <span class='ident'>Lab</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>is_valid</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>&gt;=</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>&lt;=</span> <span class='ident'>T</span>::<span class='ident'>one</span>() <span class='op'>&amp;&amp;</span>
         <span class='self'>self</span>.<span class='ident'>a</span> <span class='op'>&gt;=</span> <span class='op'>-</span><span class='ident'>T</span>::<span class='ident'>one</span>() <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>a</span> <span class='op'>&lt;=</span> <span class='ident'>T</span>::<span class='ident'>one</span>() <span class='op'>&amp;&amp;</span>
@@ -660,6 +674,20 @@
         <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Lab</span>::<span class='ident'>from</span>(<span class='ident'>Rgb</span>::<span class='ident'>new</span>(<span class='number'>0.0</span>, <span class='number'>0.0</span>, <span class='number'>1.0</span>));
         <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Lab</span>::<span class='ident'>new</span>(<span class='number'>32.302586</span> <span class='op'>/</span> <span class='number'>100.0</span>, <span class='number'>79.19668</span> <span class='op'>/</span> <span class='number'>128.0</span>, <span class='op'>-</span><span class='number'>107.863686</span> <span class='op'>/</span> <span class='number'>128.0</span>);
         <span class='macro'>assert_approx_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, [<span class='ident'>l</span>, <span class='ident'>a</span>, <span class='ident'>b</span>]);
+    }
+
+    <span class='attribute'>#[<span class='ident'>test</span>]</span>
+    <span class='kw'>fn</span> <span class='ident'>ranges</span>() {
+        <span class='macro'>assert_ranges</span><span class='macro'>!</span>{
+            <span class='ident'>Lab</span>;
+            <span class='ident'>limited</span> {
+                <span class='ident'>l</span>: <span class='number'>0.0</span> <span class='op'>=&gt;</span> <span class='number'>1.0</span>,
+                <span class='ident'>a</span>: <span class='op'>-</span><span class='number'>1.0</span> <span class='op'>=&gt;</span> <span class='number'>1.0</span>,
+                <span class='ident'>b</span>: <span class='op'>-</span><span class='number'>1.0</span> <span class='op'>=&gt;</span> <span class='number'>1.0</span>
+            }
+            <span class='ident'>limited_min</span> {}
+            <span class='ident'>unlimited</span> {}
+        }
     }
 }
 </pre>

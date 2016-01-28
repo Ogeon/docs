@@ -4,10 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="API documentation for the Rust `ColorSpace` trait in crate `palette`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang, ColorSpace">
+    <meta name="description" content="API documentation for the Rust `Limited` trait in crate `palette`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Limited">
 
-    <title>palette::ColorSpace - Rust</title>
+    <title>palette::Limited - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
@@ -27,7 +27,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'ColorSpace', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'><a href='index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'Limited', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -42,16 +42,16 @@
     </nav>
 
     <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>palette</a>::<wbr><a class='trait' href=''>ColorSpace</a></span><span class='out-of-band'><span id='render-detail'>
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>palette</a>::<wbr><a class='trait' href=''>Limited</a></span><span class='out-of-band'><span id='render-detail'>
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-3127' class='srclink' href='../src/palette/lib.rs.html#324-334' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait ColorSpace {
+        </span><a id='src-3145' class='srclink' href='../src/palette/lib.rs.html#470-480' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Limited {
     fn <a href='#tymethod.is_valid' class='fnname'>is_valid</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
     fn <a href='#tymethod.clamp' class='fnname'>clamp</a>(&amp;self) -&gt; Self;
     fn <a href='#tymethod.clamp_self' class='fnname'>clamp_self</a>(&amp;mut self);
-}</pre><div class='docblock'><p>Common functionality for color spaces.</p>
+}</pre><div class='docblock'><p>A trait for clamping and checking if colors are within their ranges.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
@@ -62,15 +62,16 @@ valid values.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.ColorSpace.html' title='palette::ColorSpace'>ColorSpace</a> for <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a>&lt;T&gt;</code></li>
+    <li><code>impl&lt;C: <a class='trait' href='../palette/trait.Limited.html' title='palette::Limited'>Limited</a>, T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Limited.html' title='palette::Limited'>Limited</a> for <a class='struct' href='../palette/struct.Alpha.html' title='palette::Alpha'>Alpha</a>&lt;C, T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Limited.html' title='palette::Limited'>Limited</a> for <a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Limited.html' title='palette::Limited'>Limited</a> for <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Limited.html' title='palette::Limited'>Limited</a> for <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Limited.html' title='palette::Limited'>Limited</a> for <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Limited.html' title='palette::Limited'>Limited</a> for <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Limited.html' title='palette::Limited'>Limited</a> for <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../palette/trait.Limited.html' title='palette::Limited'>Limited</a> for <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a>&lt;T&gt;</code></li>
 </ul><script type="text/javascript" async
-                              src="../implementors/palette/trait.ColorSpace.js">
+                              src="../implementors/palette/trait.Limited.js">
                       </script></section>
     <section id='search' class="content hidden"></section>
 

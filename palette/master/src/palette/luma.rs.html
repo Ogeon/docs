@@ -265,12 +265,29 @@
 <span id="222">222</span>
 <span id="223">223</span>
 <span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>traits</span>::<span class='ident'>Float</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Sub</span>, <span class='ident'>Mul</span>, <span class='ident'>Div</span>};
 
-<span class='kw'>use</span> {<span class='ident'>Color</span>, <span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Xyz</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hsl</span>, <span class='ident'>ColorSpace</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>clamp</span>};
+<span class='kw'>use</span> {<span class='ident'>Color</span>, <span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Xyz</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hsl</span>, <span class='ident'>Limited</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>clamp</span>};
 
 <span class='doccomment'>///Linear luminance with an alpha component. See the [`Lumaa` implementation in `Alpha`](struct.Alpha.html#Lumaa).</span>
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Lumaa</span><span class='op'>&lt;</span><span class='ident'>T</span> <span class='op'>=</span> <span class='ident'>f32</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Alpha</span><span class='op'>&lt;</span><span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>T</span><span class='op'>&gt;</span>;
@@ -323,7 +340,7 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>ColorSpace</span> <span class='kw'>for</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>Limited</span> <span class='kw'>for</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>is_valid</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>&gt;=</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>luma</span> <span class='op'>&lt;=</span> <span class='ident'>T</span>::<span class='ident'>one</span>()
     }
@@ -488,6 +505,23 @@
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>hsl</span>: <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Rgb</span>::<span class='ident'>from</span>(<span class='ident'>hsl</span>).<span class='ident'>into</span>()
+    }
+}
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
+<span class='kw'>mod</span> <span class='ident'>test</span> {
+    <span class='kw'>use</span> <span class='ident'>Luma</span>;
+
+    <span class='attribute'>#[<span class='ident'>test</span>]</span>
+    <span class='kw'>fn</span> <span class='ident'>ranges</span>() {
+        <span class='macro'>assert_ranges</span><span class='macro'>!</span>{
+            <span class='ident'>Luma</span>;
+            <span class='ident'>limited</span> {
+                <span class='ident'>luma</span>: <span class='number'>0.0</span> <span class='op'>=&gt;</span> <span class='number'>1.0</span>
+            }
+            <span class='ident'>limited_min</span> {}
+            <span class='ident'>unlimited</span> {}
+        }
     }
 }
 </pre>
