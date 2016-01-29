@@ -46,23 +46,27 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-2770' class='srclink' href='../src/palette/hues.rs.html#17' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-2774' class='srclink' href='../src/palette/hues.rs.html#17' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct RgbHue&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a> = <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>&gt;(_);</pre><div class='docblock'><p>A hue type for the RGB family of color spaces.</p>
 
 <p>It&#39;s measured in degrees and uses the three additive primaries <em>red</em>,
 <em>green</em> and <em>blue</em>.</p>
 
 <p>The hue is a circular type, where <code>0</code> and <code>360</code> is the same, and
-it&#39;s normalized to <code>(-180, +180]</code> when it&#39;s converted to a linear
+it&#39;s normalized to <code>(-180, 180]</code> when it&#39;s converted to a linear
 number (like <code>f32</code>). This makes many calculations easier, but may
 also have some surprising effects if it&#39;s expected to act as a
 linear number.</p>
 </div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='struct' href='../palette/struct.RgbHue.html' title='palette::RgbHue'>RgbHue</a>&lt;T&gt;</code></h3><div class='impl-items'><h4 id='method.from_radians' class='method'><code>fn <a href='#method.from_radians' class='fnname'>from_radians</a>(radians: T) -&gt; <a class='struct' href='../palette/struct.RgbHue.html' title='palette::RgbHue'>RgbHue</a>&lt;T&gt;</code></h4>
 <div class='docblock'><p>Create a new hue from radians, instead of degrees.</p>
+</div><h4 id='method.to_degrees' class='method'><code>fn <a href='#method.to_degrees' class='fnname'>to_degrees</a>(self) -&gt; T</code></h4>
+<div class='docblock'><p>Get the hue as degrees, in the range <code>(-180, 180]</code>.</p>
 </div><h4 id='method.to_radians' class='method'><code>fn <a href='#method.to_radians' class='fnname'>to_radians</a>(self) -&gt; T</code></h4>
-<div class='docblock'><p>Convert the hue to radians.</p>
-</div><h4 id='method.to_float' class='method'><code>fn <a href='#method.to_float' class='fnname'>to_float</a>(self) -&gt; T</code></h4>
-<div class='docblock'><p>Returns the saved Hue value</p>
+<div class='docblock'><p>Convert the hue to radians, in the range <code>(-π, π]</code>.</p>
+</div><h4 id='method.to_positive_degrees' class='method'><code>fn <a href='#method.to_positive_degrees' class='fnname'>to_positive_degrees</a>(self) -&gt; T</code></h4>
+<div class='docblock'><p>Convert the hue to positive degrees, in the range <code>[0, 360)</code>.</p>
+</div><h4 id='method.to_positive_radians' class='method'><code>fn <a href='#method.to_positive_radians' class='fnname'>to_positive_radians</a>(self) -&gt; T</code></h4>
+<div class='docblock'><p>Convert the hue to positive radians, in the range <code>[0, 2π)</code>.</p>
 </div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;T: <a class='trait' href='../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;T&gt; for <a class='struct' href='../palette/struct.RgbHue.html' title='palette::RgbHue'>RgbHue</a>&lt;T&gt;</code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#method.from' class='fnname'>from</a>(degrees: T) -&gt; <a class='struct' href='../palette/struct.RgbHue.html' title='palette::RgbHue'>RgbHue</a>&lt;T&gt;</code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>&gt; for <a class='struct' href='../palette/struct.RgbHue.html' title='palette::RgbHue'>RgbHue</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>&gt;</code></h3><div class='impl-items'><h4 id='method.into' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#method.into' class='fnname'>into</a>(self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a></code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>&gt; for <a class='struct' href='../palette/struct.RgbHue.html' title='palette::RgbHue'>RgbHue</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>&gt;</code></h3><div class='impl-items'><h4 id='method.into-1' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#method.into' class='fnname'>into</a>(self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a></code></h4>
