@@ -366,6 +366,8 @@
 <span id="323">323</span>
 <span id="324">324</span>
 <span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Types for interpolation between multiple colors.</span>
 
@@ -480,6 +482,7 @@
 }
 
 <span class='doccomment'>///An iterator over interpolated colors.</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Take</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>C</span>: <span class='ident'>Mix</span> <span class='op'>+</span> <span class='ident'>Clone</span> <span class='op'>+</span> <span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='ident'>gradient</span>: <span class='ident'>MaybeSlice</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>C</span><span class='op'>&gt;</span>,
     <span class='ident'>from</span>: <span class='ident'>C</span>::<span class='ident'>Scalar</span>,
@@ -642,6 +645,7 @@
     }
 }
 
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
 <span class='kw'>enum</span> <span class='ident'>MaybeSlice</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>C</span>: <span class='ident'>Mix</span> <span class='op'>+</span> <span class='ident'>Clone</span> <span class='op'>+</span> <span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='ident'>NotSlice</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Gradient</span><span class='op'>&lt;</span><span class='ident'>C</span><span class='op'>&gt;</span>),
     <span class='ident'>Slice</span>(<span class='ident'>Slice</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>C</span><span class='op'>&gt;</span>),
