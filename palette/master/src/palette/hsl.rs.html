@@ -400,12 +400,18 @@
 <span id="357">357</span>
 <span id="358">358</span>
 <span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>traits</span>::<span class='ident'>Float</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Sub</span>};
 
-<span class='kw'>use</span> {<span class='ident'>Color</span>, <span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Luma</span>, <span class='ident'>Xyz</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Limited</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>GetHue</span>, <span class='ident'>Hue</span>, <span class='ident'>Saturate</span>, <span class='ident'>RgbHue</span>, <span class='ident'>clamp</span>};
+<span class='kw'>use</span> {<span class='ident'>Color</span>, <span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Luma</span>, <span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Limited</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>GetHue</span>, <span class='ident'>Hue</span>, <span class='ident'>Saturate</span>, <span class='ident'>RgbHue</span>, <span class='ident'>clamp</span>};
 
 <span class='doccomment'>///Linear HSL with an alpha component. See the [`Hsla` implementation in `Alpha`](struct.Alpha.html#Hsla).</span>
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Hsla</span><span class='op'>&lt;</span><span class='ident'>T</span> <span class='op'>=</span> <span class='ident'>f32</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Alpha</span><span class='op'>&lt;</span><span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>T</span><span class='op'>&gt;</span>;
@@ -598,9 +604,9 @@
     }
 }
 
-<span class='macro'>from_color</span><span class='macro'>!</span>(<span class='ident'>to</span> <span class='ident'>Hsl</span> <span class='ident'>from</span> <span class='ident'>Rgb</span>, <span class='ident'>Luma</span>, <span class='ident'>Xyz</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>);
+<span class='macro'>from_color</span><span class='macro'>!</span>(<span class='ident'>to</span> <span class='ident'>Hsl</span> <span class='ident'>from</span> <span class='ident'>Rgb</span>, <span class='ident'>Luma</span>, <span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>);
 
-<span class='macro'>alpha_from</span><span class='macro'>!</span>(<span class='ident'>Hsl</span> {<span class='ident'>Rgb</span>, <span class='ident'>Xyz</span>, <span class='ident'>Luma</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Color</span>});
+<span class='macro'>alpha_from</span><span class='macro'>!</span>(<span class='ident'>Hsl</span> {<span class='ident'>Rgb</span>, <span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Luma</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Color</span>});
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Rgb</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>rgb</span>: <span class='ident'>Rgb</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
@@ -656,6 +662,12 @@
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Xyz</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>xyz</span>: <span class='ident'>Xyz</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Rgb</span>::<span class='ident'>from</span>(<span class='ident'>xyz</span>).<span class='ident'>into</span>()
+    }
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Yxy</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>yxy</span>: <span class='ident'>Yxy</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+        <span class='ident'>Rgb</span>::<span class='ident'>from</span>(<span class='ident'>yxy</span>).<span class='ident'>into</span>()
     }
 }
 

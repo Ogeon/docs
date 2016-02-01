@@ -632,6 +632,14 @@
 <span id="589">589</span>
 <span id="590">590</span>
 <span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!A library that makes linear color calculations and conversion easy and</span>
 <span class='doccomment'>//!accessible for anyone. It provides both precision tools that lets you work</span>
@@ -696,6 +704,7 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>lch</span>::{<span class='ident'>Lch</span>, <span class='ident'>Lcha</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hsv</span>::{<span class='ident'>Hsv</span>, <span class='ident'>Hsva</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hsl</span>::{<span class='ident'>Hsl</span>, <span class='ident'>Hsla</span>};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>yxy</span>::{<span class='ident'>Yxy</span>, <span class='ident'>Yxya</span>};
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hues</span>::{<span class='ident'>LabHue</span>, <span class='ident'>RgbHue</span>};
 
@@ -913,6 +922,7 @@
 <span class='kw'>mod</span> <span class='ident'>alpha</span>;
 <span class='kw'>mod</span> <span class='ident'>rgb</span>;
 <span class='kw'>mod</span> <span class='ident'>luma</span>;
+<span class='kw'>mod</span> <span class='ident'>yxy</span>;
 <span class='kw'>mod</span> <span class='ident'>xyz</span>;
 <span class='kw'>mod</span> <span class='ident'>lab</span>;
 <span class='kw'>mod</span> <span class='ident'>lch</span>;
@@ -1074,6 +1084,12 @@
     <span class='ident'>Xyz</span> {
         <span class='doccomment'>///CIE XYZ.</span>
         <span class='ident'>xyz</span>(<span class='ident'>x</span>: <span class='ident'>T</span>, <span class='ident'>y</span>: <span class='ident'>T</span>, <span class='ident'>z</span>: <span class='ident'>T</span>)[<span class='ident'>alpha</span>: <span class='ident'>T</span>] <span class='op'>=&gt;</span> <span class='ident'>new</span>;
+    }
+
+    <span class='doccomment'>///CIE 1931 Yxy.</span>
+    <span class='ident'>Yxy</span> {
+        <span class='doccomment'>///CIE Yxy.</span>
+        <span class='ident'>yxy</span>(<span class='ident'>x</span>: <span class='ident'>T</span>, <span class='ident'>y</span>: <span class='ident'>T</span>, <span class='ident'>luma</span>: <span class='ident'>T</span>)[<span class='ident'>alpha</span>: <span class='ident'>T</span>] <span class='op'>=&gt;</span> <span class='ident'>new</span>;
     }
 
     <span class='doccomment'>///CIE L*a*b* (CIELAB).</span>
