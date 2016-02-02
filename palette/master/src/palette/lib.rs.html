@@ -640,6 +640,11 @@
 <span id="597">597</span>
 <span id="598">598</span>
 <span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!A library that makes linear color calculations and conversion easy and</span>
 <span class='doccomment'>//!accessible for anyone. It provides both precision tools that lets you work</span>
@@ -691,7 +696,7 @@
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>approx</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>num</span>;
 
-<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>traits</span>::<span class='ident'>Float</span>;
+<span class='kw'>use</span> <span class='ident'>num</span>::{<span class='ident'>Float</span>, <span class='ident'>ToPrimitive</span>, <span class='ident'>NumCast</span>};
 
 <span class='kw'>use</span> <span class='ident'>pixel</span>::{<span class='ident'>Srgb</span>, <span class='ident'>GammaRgb</span>};
 
@@ -1239,6 +1244,11 @@
     <span class='kw'>fn</span> <span class='ident'>desaturate</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>factor</span>: <span class='ident'>Self</span>::<span class='ident'>Scalar</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
         <span class='self'>self</span>.<span class='ident'>saturate</span>(<span class='op'>-</span><span class='ident'>factor</span>)
     }
+}
+
+<span class='doccomment'>///A convenience function to convert a constant number to Float Type</span>
+<span class='kw'>fn</span> <span class='ident'>flt</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>num</span>::<span class='ident'>Float</span>, <span class='ident'>P</span>: <span class='ident'>ToPrimitive</span><span class='op'>&gt;</span>(<span class='ident'>prim</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
+    <span class='ident'>NumCast</span>::<span class='ident'>from</span>(<span class='ident'>prim</span>).<span class='ident'>unwrap</span>()
 }
 </pre>
 </section>

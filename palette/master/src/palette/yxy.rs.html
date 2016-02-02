@@ -362,11 +362,11 @@
 <span id="319">319</span>
 <span id="320">320</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>traits</span>::<span class='ident'>Float</span>;
+<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Float</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Sub</span>, <span class='ident'>Mul</span>, <span class='ident'>Div</span>};
 
-<span class='kw'>use</span> {<span class='ident'>Color</span>, <span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Luma</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hsl</span>, <span class='ident'>Limited</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>clamp</span>, <span class='ident'>Xyz</span>};
+<span class='kw'>use</span> {<span class='ident'>Color</span>, <span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Luma</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hsl</span>, <span class='ident'>Limited</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>clamp</span>, <span class='ident'>flt</span>, <span class='ident'>Xyz</span>};
 
 <span class='kw'>const</span> <span class='ident'>D65_X</span>: <span class='ident'>f64</span> <span class='op'>=</span> <span class='number'>0.312727</span>;
 <span class='kw'>const</span> <span class='ident'>D65_Y</span>: <span class='ident'>f64</span> <span class='op'>=</span> <span class='number'>0.329023</span>;
@@ -474,7 +474,7 @@
         <span class='comment'>// Since Y (luma) is 0.0, this makes the default color black just like for other colors.</span>
         <span class='comment'>// The reason for not using 0 for x and y is that this outside the usual color gamut and might</span>
         <span class='comment'>// cause scaling issues.</span>
-        <span class='ident'>Yxy</span>::<span class='ident'>new</span>(<span class='ident'>T</span>::<span class='ident'>from</span>(<span class='ident'>D65_X</span>).<span class='ident'>unwrap</span>(), <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='ident'>D65_Y</span>).<span class='ident'>unwrap</span>(), <span class='ident'>T</span>::<span class='ident'>zero</span>())
+        <span class='ident'>Yxy</span>::<span class='ident'>new</span>(<span class='ident'>flt</span>(<span class='ident'>D65_X</span>), <span class='ident'>flt</span>(<span class='ident'>D65_Y</span>), <span class='ident'>T</span>::<span class='ident'>zero</span>())
     }
 }
 
@@ -595,8 +595,8 @@
     <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>luma</span>: <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Yxy</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='comment'>// Use the D65 white point Yxy values for x and y as D65 is used as the default</span>
         <span class='ident'>Yxy</span> {
-            <span class='ident'>x</span>: <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='ident'>D65_X</span>).<span class='ident'>unwrap</span>(),
-            <span class='ident'>y</span>: <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='ident'>D65_Y</span>).<span class='ident'>unwrap</span>(),
+            <span class='ident'>x</span>: <span class='ident'>flt</span>(<span class='ident'>D65_X</span>),
+            <span class='ident'>y</span>: <span class='ident'>flt</span>(<span class='ident'>D65_Y</span>),
             <span class='ident'>luma</span>: <span class='ident'>luma</span>.<span class='ident'>luma</span>,
         }
     }

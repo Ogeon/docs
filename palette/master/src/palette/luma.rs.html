@@ -291,11 +291,11 @@
 <span id="248">248</span>
 <span id="249">249</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>traits</span>::<span class='ident'>Float</span>;
+<span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Float</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Sub</span>, <span class='ident'>Mul</span>, <span class='ident'>Div</span>};
 
-<span class='kw'>use</span> {<span class='ident'>Color</span>, <span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hsl</span>, <span class='ident'>Limited</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>clamp</span>};
+<span class='kw'>use</span> {<span class='ident'>Color</span>, <span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hsl</span>, <span class='ident'>Limited</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>clamp</span>, <span class='ident'>flt</span>};
 
 <span class='doccomment'>///Linear luminance with an alpha component. See the [`Lumaa` implementation in `Alpha`](struct.Alpha.html#Lumaa).</span>
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Lumaa</span><span class='op'>&lt;</span><span class='ident'>T</span> <span class='op'>=</span> <span class='ident'>f32</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Alpha</span><span class='op'>&lt;</span><span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>T</span><span class='op'>&gt;</span>;
@@ -324,7 +324,7 @@
     <span class='doccomment'>///Linear luminance from an 8 bit value.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_u8</span>(<span class='ident'>luma</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Luma</span> {
-            <span class='ident'>luma</span>: <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='ident'>luma</span>).<span class='ident'>unwrap</span>() <span class='op'>/</span> <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='number'>255.0</span>).<span class='ident'>unwrap</span>(),
+            <span class='ident'>luma</span>: <span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='ident'>luma</span>) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>255.0</span>),
         }
     }
 }
@@ -343,7 +343,7 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new_u8</span>(<span class='ident'>luma</span>: <span class='ident'>u8</span>, <span class='ident'>alpha</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>Lumaa</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Alpha</span> {
             <span class='ident'>color</span>: <span class='ident'>Luma</span>::<span class='ident'>new_u8</span>(<span class='ident'>luma</span>),
-            <span class='ident'>alpha</span>: <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='ident'>alpha</span>).<span class='ident'>unwrap</span>() <span class='op'>/</span> <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='number'>255.0</span>).<span class='ident'>unwrap</span>(),
+            <span class='ident'>alpha</span>: <span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='ident'>alpha</span>) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>255.0</span>),
         }
     }
 }
@@ -479,7 +479,7 @@
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Rgb</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>rgb</span>: <span class='ident'>Rgb</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Luma</span> {
-            <span class='ident'>luma</span>: <span class='ident'>rgb</span>.<span class='ident'>red</span> <span class='op'>*</span> <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='number'>0.2126</span>).<span class='ident'>unwrap</span>() <span class='op'>+</span> <span class='ident'>rgb</span>.<span class='ident'>green</span> <span class='op'>*</span> <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='number'>0.7152</span>).<span class='ident'>unwrap</span>() <span class='op'>+</span> <span class='ident'>rgb</span>.<span class='ident'>blue</span> <span class='op'>*</span> <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='number'>0.0722</span>).<span class='ident'>unwrap</span>(),
+            <span class='ident'>luma</span>: <span class='ident'>rgb</span>.<span class='ident'>red</span> <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>0.2126</span>) <span class='op'>+</span> <span class='ident'>rgb</span>.<span class='ident'>green</span> <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>0.7152</span>) <span class='op'>+</span> <span class='ident'>rgb</span>.<span class='ident'>blue</span> <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>0.0722</span>),
         }
     }
 }

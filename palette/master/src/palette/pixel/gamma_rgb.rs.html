@@ -178,7 +178,7 @@
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Float</span>;
 
-<span class='kw'>use</span> {<span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Rgba</span>, <span class='ident'>clamp</span>};
+<span class='kw'>use</span> {<span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Rgba</span>, <span class='ident'>clamp</span>, <span class='ident'>flt</span>};
 
 <span class='kw'>use</span> <span class='ident'>pixel</span>::<span class='ident'>RgbPixel</span>;
 
@@ -249,10 +249,10 @@
     <span class='doccomment'>///Create a new gamma encoded color, with transparency, from `u8` values.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>with_alpha_u8</span>(<span class='ident'>red</span>: <span class='ident'>u8</span>, <span class='ident'>green</span>: <span class='ident'>u8</span>, <span class='ident'>blue</span>: <span class='ident'>u8</span>, <span class='ident'>alpha</span>: <span class='ident'>u8</span>, <span class='ident'>gamma</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>GammaRgb</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>GammaRgb</span> {
-            <span class='ident'>red</span>: <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='ident'>red</span>).<span class='ident'>unwrap</span>() <span class='op'>/</span> <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='number'>255.0</span>).<span class='ident'>unwrap</span>(),
-            <span class='ident'>green</span>: <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='ident'>green</span>).<span class='ident'>unwrap</span>() <span class='op'>/</span> <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='number'>255.0</span>).<span class='ident'>unwrap</span>(),
-            <span class='ident'>blue</span>: <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='ident'>blue</span>).<span class='ident'>unwrap</span>() <span class='op'>/</span> <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='number'>255.0</span>).<span class='ident'>unwrap</span>(),
-            <span class='ident'>alpha</span>: <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='ident'>alpha</span>).<span class='ident'>unwrap</span>() <span class='op'>/</span> <span class='ident'>T</span>::<span class='ident'>from</span>(<span class='number'>255.0</span>).<span class='ident'>unwrap</span>(),
+            <span class='ident'>red</span>: <span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='ident'>red</span>) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>255.0</span>),
+            <span class='ident'>green</span>: <span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='ident'>green</span>) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>255.0</span>),
+            <span class='ident'>blue</span>: <span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='ident'>blue</span>) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>255.0</span>),
+            <span class='ident'>alpha</span>: <span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='ident'>alpha</span>) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>255.0</span>),
             <span class='ident'>gamma</span>: <span class='ident'>gamma</span>,
         }
     }
