@@ -1,0 +1,1465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `named` mod in crate `palette`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, named">
+
+    <title>palette::named - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'named', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>palette</a>::<wbr><a class='mod' href=''>named</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-640' class='srclink' href='../../src/palette/named.rs.html#1-32' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>A collection of named color constants. Can be toggled with the <code>&quot;named&quot;</code>
+Cargo feature.</p>
+
+<p>They are taken from the <a href="https://www.w3.org/TR/SVG/types.html#ColorKeywords">SVG keyword
+colors</a> (same as in
+CSS3) and they can be used as if they were pixel values:</p>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>palette</span>::<span class='ident'>Rgb</span>;
+<span class='kw'>use</span> <span class='ident'>palette</span>::<span class='ident'>pixel</span>::<span class='ident'>Srgb</span>;
+<span class='kw'>use</span> <span class='ident'>palette</span>::<span class='ident'>named</span>;
+
+<span class='comment'>//From constant</span>
+<span class='kw'>let</span> <span class='ident'>from_const</span>: <span class='ident'>Rgb</span> <span class='op'>=</span> <span class='ident'>Srgb</span>::<span class='ident'>from_pixel</span>(<span class='kw-2'>&amp;</span><span class='ident'>named</span>::<span class='ident'>OLIVE</span>).<span class='ident'>into</span>();
+
+<span class='comment'>//From name string</span>
+<span class='kw'>let</span> <span class='ident'>olive</span> <span class='op'>=</span> <span class='ident'>named</span>::<span class='ident'>from_str</span>(<span class='string'>&quot;olive&quot;</span>).<span class='ident'>expect</span>(<span class='string'>&quot;unknown color&quot;</span>);
+<span class='kw'>let</span> <span class='ident'>from_str</span>: <span class='ident'>Rgb</span> <span class='op'>=</span> <span class='ident'>Srgb</span>::<span class='ident'>from_pixel</span>(<span class='kw-2'>&amp;</span><span class='ident'>olive</span>).<span class='ident'>into</span>();
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>from_const</span>, <span class='ident'>from_str</span>);</pre>
+</div><h2 id='constants' class='section-header'><a href="#constants">Constants</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.ALICEBLUE.html'
+                               title='palette::named::ALICEBLUE'>ALICEBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: aliceblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.ANTIQUEWHITE.html'
+                               title='palette::named::ANTIQUEWHITE'>ANTIQUEWHITE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: antiquewhite;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.AQUA.html'
+                               title='palette::named::AQUA'>AQUA</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: aqua;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.AQUAMARINE.html'
+                               title='palette::named::AQUAMARINE'>AQUAMARINE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: aquamarine;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.AZURE.html'
+                               title='palette::named::AZURE'>AZURE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: azure;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.BEIGE.html'
+                               title='palette::named::BEIGE'>BEIGE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: beige;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.BISQUE.html'
+                               title='palette::named::BISQUE'>BISQUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: bisque;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.BLACK.html'
+                               title='palette::named::BLACK'>BLACK</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: black;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.BLANCHEDALMOND.html'
+                               title='palette::named::BLANCHEDALMOND'>BLANCHEDALMOND</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: blanchedalmond;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.BLUE.html'
+                               title='palette::named::BLUE'>BLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: blue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.BLUEVIOLET.html'
+                               title='palette::named::BLUEVIOLET'>BLUEVIOLET</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: blueviolet;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.BROWN.html'
+                               title='palette::named::BROWN'>BROWN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: brown;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.BURLYWOOD.html'
+                               title='palette::named::BURLYWOOD'>BURLYWOOD</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: burlywood;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.CADETBLUE.html'
+                               title='palette::named::CADETBLUE'>CADETBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: cadetblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.CHARTREUSE.html'
+                               title='palette::named::CHARTREUSE'>CHARTREUSE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: chartreuse;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.CHOCOLATE.html'
+                               title='palette::named::CHOCOLATE'>CHOCOLATE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: chocolate;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.CORAL.html'
+                               title='palette::named::CORAL'>CORAL</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: coral;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.CORNFLOWERBLUE.html'
+                               title='palette::named::CORNFLOWERBLUE'>CORNFLOWERBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: cornflowerblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.CORNSILK.html'
+                               title='palette::named::CORNSILK'>CORNSILK</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: cornsilk;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.CRIMSON.html'
+                               title='palette::named::CRIMSON'>CRIMSON</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: crimson;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.CYAN.html'
+                               title='palette::named::CYAN'>CYAN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: cyan;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKBLUE.html'
+                               title='palette::named::DARKBLUE'>DARKBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKCYAN.html'
+                               title='palette::named::DARKCYAN'>DARKCYAN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkcyan;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKGOLDENROD.html'
+                               title='palette::named::DARKGOLDENROD'>DARKGOLDENROD</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkgoldenrod;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKGRAY.html'
+                               title='palette::named::DARKGRAY'>DARKGRAY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkgray;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKGREEN.html'
+                               title='palette::named::DARKGREEN'>DARKGREEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkgreen;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKGREY.html'
+                               title='palette::named::DARKGREY'>DARKGREY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkgrey;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKKHAKI.html'
+                               title='palette::named::DARKKHAKI'>DARKKHAKI</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkkhaki;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKMAGENTA.html'
+                               title='palette::named::DARKMAGENTA'>DARKMAGENTA</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkmagenta;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKOLIVEGREEN.html'
+                               title='palette::named::DARKOLIVEGREEN'>DARKOLIVEGREEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkolivegreen;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKORANGE.html'
+                               title='palette::named::DARKORANGE'>DARKORANGE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkorange;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKORCHID.html'
+                               title='palette::named::DARKORCHID'>DARKORCHID</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkorchid;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKRED.html'
+                               title='palette::named::DARKRED'>DARKRED</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkred;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKSALMON.html'
+                               title='palette::named::DARKSALMON'>DARKSALMON</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darksalmon;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKSEAGREEN.html'
+                               title='palette::named::DARKSEAGREEN'>DARKSEAGREEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkseagreen;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKSLATEBLUE.html'
+                               title='palette::named::DARKSLATEBLUE'>DARKSLATEBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkslateblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKSLATEGRAY.html'
+                               title='palette::named::DARKSLATEGRAY'>DARKSLATEGRAY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkslategray;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKSLATEGREY.html'
+                               title='palette::named::DARKSLATEGREY'>DARKSLATEGREY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkslategrey;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKTURQUOISE.html'
+                               title='palette::named::DARKTURQUOISE'>DARKTURQUOISE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkturquoise;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DARKVIOLET.html'
+                               title='palette::named::DARKVIOLET'>DARKVIOLET</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: darkviolet;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DEEPPINK.html'
+                               title='palette::named::DEEPPINK'>DEEPPINK</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: deeppink;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DEEPSKYBLUE.html'
+                               title='palette::named::DEEPSKYBLUE'>DEEPSKYBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: deepskyblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DIMGRAY.html'
+                               title='palette::named::DIMGRAY'>DIMGRAY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: dimgray;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DIMGREY.html'
+                               title='palette::named::DIMGREY'>DIMGREY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: dimgrey;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.DODGERBLUE.html'
+                               title='palette::named::DODGERBLUE'>DODGERBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: dodgerblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.FIREBRICK.html'
+                               title='palette::named::FIREBRICK'>FIREBRICK</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: firebrick;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.FLORALWHITE.html'
+                               title='palette::named::FLORALWHITE'>FLORALWHITE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: floralwhite;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.FORESTGREEN.html'
+                               title='palette::named::FORESTGREEN'>FORESTGREEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: forestgreen;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.FUCHSIA.html'
+                               title='palette::named::FUCHSIA'>FUCHSIA</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: fuchsia;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.GAINSBORO.html'
+                               title='palette::named::GAINSBORO'>GAINSBORO</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: gainsboro;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.GHOSTWHITE.html'
+                               title='palette::named::GHOSTWHITE'>GHOSTWHITE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: ghostwhite;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.GOLD.html'
+                               title='palette::named::GOLD'>GOLD</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: gold;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.GOLDENROD.html'
+                               title='palette::named::GOLDENROD'>GOLDENROD</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: goldenrod;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.GRAY.html'
+                               title='palette::named::GRAY'>GRAY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: gray;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.GREEN.html'
+                               title='palette::named::GREEN'>GREEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: green;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.GREENYELLOW.html'
+                               title='palette::named::GREENYELLOW'>GREENYELLOW</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: greenyellow;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.GREY.html'
+                               title='palette::named::GREY'>GREY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: grey;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.HONEYDEW.html'
+                               title='palette::named::HONEYDEW'>HONEYDEW</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: honeydew;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.HOTPINK.html'
+                               title='palette::named::HOTPINK'>HOTPINK</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: hotpink;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.INDIANRED.html'
+                               title='palette::named::INDIANRED'>INDIANRED</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: indianred;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.INDIGO.html'
+                               title='palette::named::INDIGO'>INDIGO</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: indigo;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.IVORY.html'
+                               title='palette::named::IVORY'>IVORY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: ivory;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.KHAKI.html'
+                               title='palette::named::KHAKI'>KHAKI</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: khaki;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LAVENDER.html'
+                               title='palette::named::LAVENDER'>LAVENDER</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lavender;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LAVENDERBLUSH.html'
+                               title='palette::named::LAVENDERBLUSH'>LAVENDERBLUSH</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lavenderblush;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LAWNGREEN.html'
+                               title='palette::named::LAWNGREEN'>LAWNGREEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lawngreen;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LEMONCHIFFON.html'
+                               title='palette::named::LEMONCHIFFON'>LEMONCHIFFON</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lemonchiffon;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIGHTBLUE.html'
+                               title='palette::named::LIGHTBLUE'>LIGHTBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lightblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIGHTCORAL.html'
+                               title='palette::named::LIGHTCORAL'>LIGHTCORAL</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lightcoral;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIGHTCYAN.html'
+                               title='palette::named::LIGHTCYAN'>LIGHTCYAN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lightcyan;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIGHTGOLDENRODYELLOW.html'
+                               title='palette::named::LIGHTGOLDENRODYELLOW'>LIGHTGOLDENRODYELLOW</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lightgoldenrodyellow;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIGHTGRAY.html'
+                               title='palette::named::LIGHTGRAY'>LIGHTGRAY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lightgray;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIGHTGREEN.html'
+                               title='palette::named::LIGHTGREEN'>LIGHTGREEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lightgreen;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIGHTGREY.html'
+                               title='palette::named::LIGHTGREY'>LIGHTGREY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lightgrey;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIGHTPINK.html'
+                               title='palette::named::LIGHTPINK'>LIGHTPINK</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lightpink;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIGHTSALMON.html'
+                               title='palette::named::LIGHTSALMON'>LIGHTSALMON</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lightsalmon;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIGHTSEAGREEN.html'
+                               title='palette::named::LIGHTSEAGREEN'>LIGHTSEAGREEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lightseagreen;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIGHTSKYBLUE.html'
+                               title='palette::named::LIGHTSKYBLUE'>LIGHTSKYBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lightskyblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIGHTSLATEGRAY.html'
+                               title='palette::named::LIGHTSLATEGRAY'>LIGHTSLATEGRAY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lightslategray;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIGHTSLATEGREY.html'
+                               title='palette::named::LIGHTSLATEGREY'>LIGHTSLATEGREY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lightslategrey;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIGHTSTEELBLUE.html'
+                               title='palette::named::LIGHTSTEELBLUE'>LIGHTSTEELBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lightsteelblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIGHTYELLOW.html'
+                               title='palette::named::LIGHTYELLOW'>LIGHTYELLOW</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lightyellow;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIME.html'
+                               title='palette::named::LIME'>LIME</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: lime;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LIMEGREEN.html'
+                               title='palette::named::LIMEGREEN'>LIMEGREEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: limegreen;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.LINEN.html'
+                               title='palette::named::LINEN'>LINEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: linen;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.MAGENTA.html'
+                               title='palette::named::MAGENTA'>MAGENTA</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: magenta;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.MAROON.html'
+                               title='palette::named::MAROON'>MAROON</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: maroon;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.MEDIUMAQUAMARINE.html'
+                               title='palette::named::MEDIUMAQUAMARINE'>MEDIUMAQUAMARINE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: mediumaquamarine;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.MEDIUMBLUE.html'
+                               title='palette::named::MEDIUMBLUE'>MEDIUMBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: mediumblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.MEDIUMORCHID.html'
+                               title='palette::named::MEDIUMORCHID'>MEDIUMORCHID</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: mediumorchid;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.MEDIUMPURPLE.html'
+                               title='palette::named::MEDIUMPURPLE'>MEDIUMPURPLE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: mediumpurple;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.MEDIUMSEAGREEN.html'
+                               title='palette::named::MEDIUMSEAGREEN'>MEDIUMSEAGREEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: mediumseagreen;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.MEDIUMSLATEBLUE.html'
+                               title='palette::named::MEDIUMSLATEBLUE'>MEDIUMSLATEBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: mediumslateblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.MEDIUMSPRINGGREEN.html'
+                               title='palette::named::MEDIUMSPRINGGREEN'>MEDIUMSPRINGGREEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: mediumspringgreen;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.MEDIUMTURQUOISE.html'
+                               title='palette::named::MEDIUMTURQUOISE'>MEDIUMTURQUOISE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: mediumturquoise;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.MEDIUMVIOLETRED.html'
+                               title='palette::named::MEDIUMVIOLETRED'>MEDIUMVIOLETRED</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: mediumvioletred;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.MIDNIGHTBLUE.html'
+                               title='palette::named::MIDNIGHTBLUE'>MIDNIGHTBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: midnightblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.MINTCREAM.html'
+                               title='palette::named::MINTCREAM'>MINTCREAM</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: mintcream;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.MISTYROSE.html'
+                               title='palette::named::MISTYROSE'>MISTYROSE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: mistyrose;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.MOCCASIN.html'
+                               title='palette::named::MOCCASIN'>MOCCASIN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: moccasin;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.NAVAJOWHITE.html'
+                               title='palette::named::NAVAJOWHITE'>NAVAJOWHITE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: navajowhite;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.NAVY.html'
+                               title='palette::named::NAVY'>NAVY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: navy;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.OLDLACE.html'
+                               title='palette::named::OLDLACE'>OLDLACE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: oldlace;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.OLIVE.html'
+                               title='palette::named::OLIVE'>OLIVE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: olive;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.OLIVEDRAB.html'
+                               title='palette::named::OLIVEDRAB'>OLIVEDRAB</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: olivedrab;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.ORANGE.html'
+                               title='palette::named::ORANGE'>ORANGE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: orange;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.ORANGERED.html'
+                               title='palette::named::ORANGERED'>ORANGERED</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: orangered;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.ORCHID.html'
+                               title='palette::named::ORCHID'>ORCHID</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: orchid;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.PALEGOLDENROD.html'
+                               title='palette::named::PALEGOLDENROD'>PALEGOLDENROD</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: palegoldenrod;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.PALEGREEN.html'
+                               title='palette::named::PALEGREEN'>PALEGREEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: palegreen;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.PALETURQUOISE.html'
+                               title='palette::named::PALETURQUOISE'>PALETURQUOISE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: paleturquoise;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.PALEVIOLETRED.html'
+                               title='palette::named::PALEVIOLETRED'>PALEVIOLETRED</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: palevioletred;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.PAPAYAWHIP.html'
+                               title='palette::named::PAPAYAWHIP'>PAPAYAWHIP</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: papayawhip;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.PEACHPUFF.html'
+                               title='palette::named::PEACHPUFF'>PEACHPUFF</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: peachpuff;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.PERU.html'
+                               title='palette::named::PERU'>PERU</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: peru;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.PINK.html'
+                               title='palette::named::PINK'>PINK</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: pink;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.PLUM.html'
+                               title='palette::named::PLUM'>PLUM</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: plum;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.POWDERBLUE.html'
+                               title='palette::named::POWDERBLUE'>POWDERBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: powderblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.PURPLE.html'
+                               title='palette::named::PURPLE'>PURPLE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: purple;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.RED.html'
+                               title='palette::named::RED'>RED</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: red;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.ROSYBROWN.html'
+                               title='palette::named::ROSYBROWN'>ROSYBROWN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: rosybrown;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.ROYALBLUE.html'
+                               title='palette::named::ROYALBLUE'>ROYALBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: royalblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.SADDLEBROWN.html'
+                               title='palette::named::SADDLEBROWN'>SADDLEBROWN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: saddlebrown;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.SALMON.html'
+                               title='palette::named::SALMON'>SALMON</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: salmon;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.SANDYBROWN.html'
+                               title='palette::named::SANDYBROWN'>SANDYBROWN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: sandybrown;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.SEAGREEN.html'
+                               title='palette::named::SEAGREEN'>SEAGREEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: seagreen;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.SEASHELL.html'
+                               title='palette::named::SEASHELL'>SEASHELL</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: seashell;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.SIENNA.html'
+                               title='palette::named::SIENNA'>SIENNA</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: sienna;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.SILVER.html'
+                               title='palette::named::SILVER'>SILVER</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: silver;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.SKYBLUE.html'
+                               title='palette::named::SKYBLUE'>SKYBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: skyblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.SLATEBLUE.html'
+                               title='palette::named::SLATEBLUE'>SLATEBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: slateblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.SLATEGRAY.html'
+                               title='palette::named::SLATEGRAY'>SLATEGRAY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: slategray;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.SLATEGREY.html'
+                               title='palette::named::SLATEGREY'>SLATEGREY</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: slategrey;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.SNOW.html'
+                               title='palette::named::SNOW'>SNOW</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: snow;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.SPRINGGREEN.html'
+                               title='palette::named::SPRINGGREEN'>SPRINGGREEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: springgreen;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.STEELBLUE.html'
+                               title='palette::named::STEELBLUE'>STEELBLUE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: steelblue;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.TAN.html'
+                               title='palette::named::TAN'>TAN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: tan;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.TEAL.html'
+                               title='palette::named::TEAL'>TEAL</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: teal;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.THISTLE.html'
+                               title='palette::named::THISTLE'>THISTLE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: thistle;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.TOMATO.html'
+                               title='palette::named::TOMATO'>TOMATO</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: tomato;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.TURQUOISE.html'
+                               title='palette::named::TURQUOISE'>TURQUOISE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: turquoise;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.VIOLET.html'
+                               title='palette::named::VIOLET'>VIOLET</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: violet;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.WHEAT.html'
+                               title='palette::named::WHEAT'>WHEAT</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: wheat;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.WHITE.html'
+                               title='palette::named::WHITE'>WHITE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: white;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.WHITESMOKE.html'
+                               title='palette::named::WHITESMOKE'>WHITESMOKE</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: whitesmoke;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.YELLOW.html'
+                               title='palette::named::YELLOW'>YELLOW</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: yellow;"></div>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='constant' href='constant.YELLOWGREEN.html'
+                               title='palette::named::YELLOWGREEN'>YELLOWGREEN</a></td>
+                        <td class='docblock short'>
+                             <div style="display: inline-block; width: 3em; height: 1em; border: 1px solid black; background: yellowgreen;"></div>
+
+                        </td>
+                    </tr>
+                </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                    <tr class=' module-item'>
+                        <td><a class='fn' href='fn.from_str.html'
+                               title='palette::named::from_str'>from_str</a></td>
+                        <td class='docblock short'>
+                             <p>Get a SVG/CSS3 color by name. Can be toggled with the <code>&quot;named_from_str&quot;</code>
+Cargo feature.</p>
+
+                        </td>
+                    </tr>
+                </table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "palette";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

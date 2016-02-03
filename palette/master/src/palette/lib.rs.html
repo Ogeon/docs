@@ -645,6 +645,13 @@
 <span id="602">602</span>
 <span id="603">603</span>
 <span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!A library that makes linear color calculations and conversion easy and</span>
 <span class='doccomment'>//!accessible for anyone. It provides both precision tools that lets you work</span>
@@ -694,7 +701,11 @@
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>approx</span>;
+
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>num</span>;
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;phf&quot;</span>)]</span>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>phf</span>;
 
 <span class='kw'>use</span> <span class='ident'>num</span>::{<span class='ident'>Float</span>, <span class='ident'>ToPrimitive</span>, <span class='ident'>NumCast</span>};
 
@@ -923,6 +934,9 @@
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>gradient</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>pixel</span>;
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;named&quot;</span>)]</span>
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>named</span>;
 
 <span class='kw'>mod</span> <span class='ident'>alpha</span>;
 <span class='kw'>mod</span> <span class='ident'>rgb</span>;
