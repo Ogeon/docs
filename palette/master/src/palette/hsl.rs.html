@@ -380,38 +380,12 @@
 <span id="337">337</span>
 <span id="338">338</span>
 <span id="339">339</span>
-<span id="340">340</span>
-<span id="341">341</span>
-<span id="342">342</span>
-<span id="343">343</span>
-<span id="344">344</span>
-<span id="345">345</span>
-<span id="346">346</span>
-<span id="347">347</span>
-<span id="348">348</span>
-<span id="349">349</span>
-<span id="350">350</span>
-<span id="351">351</span>
-<span id="352">352</span>
-<span id="353">353</span>
-<span id="354">354</span>
-<span id="355">355</span>
-<span id="356">356</span>
-<span id="357">357</span>
-<span id="358">358</span>
-<span id="359">359</span>
-<span id="360">360</span>
-<span id="361">361</span>
-<span id="362">362</span>
-<span id="363">363</span>
-<span id="364">364</span>
-<span id="365">365</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Float</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Add</span>, <span class='ident'>Sub</span>};
 
-<span class='kw'>use</span> {<span class='ident'>Color</span>, <span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Luma</span>, <span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Limited</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>GetHue</span>, <span class='ident'>Hue</span>, <span class='ident'>Saturate</span>, <span class='ident'>RgbHue</span>, <span class='ident'>clamp</span>, <span class='ident'>flt</span>};
+<span class='kw'>use</span> {<span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Xyz</span>, <span class='ident'>Hsv</span>, <span class='ident'>Limited</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>GetHue</span>, <span class='ident'>Hue</span>, <span class='ident'>Saturate</span>, <span class='ident'>RgbHue</span>, <span class='ident'>FromColor</span>, <span class='ident'>IntoColor</span>, <span class='ident'>clamp</span>, <span class='ident'>flt</span>};
 
 <span class='doccomment'>///Linear HSL with an alpha component. See the [`Hsla` implementation in `Alpha`](struct.Alpha.html#Hsla).</span>
 <span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Hsla</span><span class='op'>&lt;</span><span class='ident'>T</span> <span class='op'>=</span> <span class='ident'>f32</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>Alpha</span><span class='op'>&lt;</span><span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>T</span><span class='op'>&gt;</span>;
@@ -461,6 +435,78 @@
             <span class='ident'>alpha</span>: <span class='ident'>alpha</span>,
         }
     }
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>FromColor</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>from_xyz</span>(<span class='ident'>xyz</span>: <span class='ident'>Xyz</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
+        <span class='kw'>let</span> <span class='ident'>rgb</span>: <span class='ident'>Rgb</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>xyz</span>.<span class='ident'>into_rgb</span>();
+        <span class='ident'>Self</span>::<span class='ident'>from_rgb</span>(<span class='ident'>rgb</span>)
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>from_rgb</span>(<span class='ident'>rgb</span>: <span class='ident'>Rgb</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
+        <span class='kw'>enum</span> <span class='ident'>Channel</span> { <span class='ident'>Red</span>, <span class='ident'>Green</span>, <span class='ident'>Blue</span> };
+
+        <span class='kw'>let</span> <span class='ident'>val_min</span> <span class='op'>=</span> <span class='ident'>rgb</span>.<span class='ident'>red</span>.<span class='ident'>min</span>(<span class='ident'>rgb</span>.<span class='ident'>green</span>).<span class='ident'>min</span>(<span class='ident'>rgb</span>.<span class='ident'>blue</span>);
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>val_max</span> <span class='op'>=</span> <span class='ident'>rgb</span>.<span class='ident'>red</span>;
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>chan_max</span> <span class='op'>=</span> <span class='ident'>Channel</span>::<span class='ident'>Red</span>;
+
+        <span class='kw'>if</span> <span class='ident'>rgb</span>.<span class='ident'>green</span> <span class='op'>&gt;</span> <span class='ident'>val_max</span> {
+            <span class='ident'>chan_max</span> <span class='op'>=</span> <span class='ident'>Channel</span>::<span class='ident'>Green</span>;
+            <span class='ident'>val_max</span> <span class='op'>=</span> <span class='ident'>rgb</span>.<span class='ident'>green</span>;
+        }
+
+        <span class='kw'>if</span> <span class='ident'>rgb</span>.<span class='ident'>blue</span> <span class='op'>&gt;</span> <span class='ident'>val_max</span> {
+            <span class='ident'>chan_max</span> <span class='op'>=</span> <span class='ident'>Channel</span>::<span class='ident'>Blue</span>;
+            <span class='ident'>val_max</span> <span class='op'>=</span> <span class='ident'>rgb</span>.<span class='ident'>blue</span>;
+        }
+
+        <span class='kw'>let</span> <span class='ident'>diff</span> <span class='op'>=</span> <span class='ident'>val_max</span> <span class='op'>-</span> <span class='ident'>val_min</span>;
+        <span class='kw'>let</span> <span class='ident'>lightness</span> <span class='op'>=</span> (<span class='ident'>val_min</span> <span class='op'>+</span> <span class='ident'>val_max</span>) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>2.0</span>);
+
+        <span class='kw'>let</span> <span class='ident'>hue</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>diff</span> <span class='op'>==</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() {
+            <span class='ident'>T</span>::<span class='ident'>zero</span>()
+        } <span class='kw'>else</span> {
+            <span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='number'>60.0</span>) <span class='op'>*</span> <span class='kw'>match</span> <span class='ident'>chan_max</span> {
+                <span class='ident'>Channel</span>::<span class='ident'>Red</span> <span class='op'>=&gt;</span> ((<span class='ident'>rgb</span>.<span class='ident'>green</span> <span class='op'>-</span> <span class='ident'>rgb</span>.<span class='ident'>blue</span>) <span class='op'>/</span> <span class='ident'>diff</span>) <span class='op'>%</span> <span class='ident'>flt</span>(<span class='number'>6.0</span>),
+                <span class='ident'>Channel</span>::<span class='ident'>Green</span> <span class='op'>=&gt;</span> ((<span class='ident'>rgb</span>.<span class='ident'>blue</span> <span class='op'>-</span> <span class='ident'>rgb</span>.<span class='ident'>red</span>) <span class='op'>/</span> <span class='ident'>diff</span> <span class='op'>+</span> <span class='ident'>flt</span>(<span class='number'>2.0</span>)),
+                <span class='ident'>Channel</span>::<span class='ident'>Blue</span> <span class='op'>=&gt;</span> ((<span class='ident'>rgb</span>.<span class='ident'>red</span> <span class='op'>-</span> <span class='ident'>rgb</span>.<span class='ident'>green</span>) <span class='op'>/</span> <span class='ident'>diff</span> <span class='op'>+</span> <span class='ident'>flt</span>(<span class='number'>4.0</span>)),
+            }
+        };
+
+        <span class='kw'>let</span> <span class='ident'>saturation</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>diff</span> <span class='op'>==</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() {
+            <span class='ident'>T</span>::<span class='ident'>zero</span>()
+        } <span class='kw'>else</span> {
+            <span class='ident'>diff</span> <span class='op'>/</span> (<span class='ident'>T</span>::<span class='ident'>one</span>() <span class='op'>-</span> ( <span class='ident'>lightness</span> <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>2.0</span>) <span class='op'>-</span> <span class='ident'>T</span>::<span class='ident'>one</span>()).<span class='ident'>abs</span>())
+        };
+
+        <span class='ident'>Hsl</span> {
+            <span class='ident'>hue</span>: <span class='ident'>hue</span>.<span class='ident'>into</span>(),
+            <span class='ident'>saturation</span>: <span class='ident'>saturation</span>,
+            <span class='ident'>lightness</span>: <span class='ident'>lightness</span>,
+        }
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>from_hsl</span>(<span class='ident'>hsl</span>: <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
+        <span class='ident'>hsl</span>
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>from_hsv</span>(<span class='ident'>hsv</span>: <span class='ident'>Hsv</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
+        <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> (<span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='number'>2.0</span>) <span class='op'>-</span> <span class='ident'>hsv</span>.<span class='ident'>saturation</span>) <span class='op'>*</span> <span class='ident'>hsv</span>.<span class='ident'>value</span>;
+        <span class='kw'>let</span> <span class='ident'>saturation</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>hsv</span>.<span class='ident'>value</span> <span class='op'>==</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() {
+            <span class='ident'>T</span>::<span class='ident'>zero</span>()
+        } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>x</span> <span class='op'>&lt;</span> <span class='ident'>T</span>::<span class='ident'>one</span>() {
+            <span class='ident'>hsv</span>.<span class='ident'>saturation</span> <span class='op'>*</span> <span class='ident'>hsv</span>.<span class='ident'>value</span> <span class='op'>/</span> <span class='ident'>x</span>
+        } <span class='kw'>else</span> {
+            <span class='ident'>hsv</span>.<span class='ident'>saturation</span> <span class='op'>*</span> <span class='ident'>hsv</span>.<span class='ident'>value</span> <span class='op'>/</span> (<span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='number'>2.0</span>) <span class='op'>-</span> <span class='ident'>x</span>)
+        };
+
+        <span class='ident'>Hsl</span> {
+            <span class='ident'>hue</span>: <span class='ident'>hsv</span>.<span class='ident'>hue</span>,
+            <span class='ident'>saturation</span>: <span class='ident'>saturation</span>,
+            <span class='ident'>lightness</span>: <span class='ident'>x</span> <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>2.0</span>),
+        }
+    }
+
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>Limited</span> <span class='kw'>for</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
@@ -600,104 +646,6 @@
             <span class='ident'>hue</span>: <span class='self'>self</span>.<span class='ident'>hue</span> <span class='op'>-</span> <span class='ident'>c</span>,
             <span class='ident'>saturation</span>: <span class='self'>self</span>.<span class='ident'>saturation</span> <span class='op'>-</span> <span class='ident'>c</span>,
             <span class='ident'>lightness</span>: <span class='self'>self</span>.<span class='ident'>lightness</span> <span class='op'>-</span> <span class='ident'>c</span>,
-        }
-    }
-}
-
-<span class='macro'>from_color</span><span class='macro'>!</span>(<span class='ident'>to</span> <span class='ident'>Hsl</span> <span class='ident'>from</span> <span class='ident'>Rgb</span>, <span class='ident'>Luma</span>, <span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>);
-
-<span class='macro'>alpha_from</span><span class='macro'>!</span>(<span class='ident'>Hsl</span> {<span class='ident'>Rgb</span>, <span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Luma</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Color</span>});
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Rgb</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>rgb</span>: <span class='ident'>Rgb</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='kw'>enum</span> <span class='ident'>Channel</span> { <span class='ident'>Red</span>, <span class='ident'>Green</span>, <span class='ident'>Blue</span> };
-
-        <span class='kw'>let</span> <span class='ident'>val_min</span> <span class='op'>=</span> <span class='ident'>rgb</span>.<span class='ident'>red</span>.<span class='ident'>min</span>(<span class='ident'>rgb</span>.<span class='ident'>green</span>).<span class='ident'>min</span>(<span class='ident'>rgb</span>.<span class='ident'>blue</span>);
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>val_max</span> <span class='op'>=</span> <span class='ident'>rgb</span>.<span class='ident'>red</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>chan_max</span> <span class='op'>=</span> <span class='ident'>Channel</span>::<span class='ident'>Red</span>;
-
-        <span class='kw'>if</span> <span class='ident'>rgb</span>.<span class='ident'>green</span> <span class='op'>&gt;</span> <span class='ident'>val_max</span> {
-            <span class='ident'>chan_max</span> <span class='op'>=</span> <span class='ident'>Channel</span>::<span class='ident'>Green</span>;
-            <span class='ident'>val_max</span> <span class='op'>=</span> <span class='ident'>rgb</span>.<span class='ident'>green</span>;
-        }
-
-        <span class='kw'>if</span> <span class='ident'>rgb</span>.<span class='ident'>blue</span> <span class='op'>&gt;</span> <span class='ident'>val_max</span> {
-            <span class='ident'>chan_max</span> <span class='op'>=</span> <span class='ident'>Channel</span>::<span class='ident'>Blue</span>;
-            <span class='ident'>val_max</span> <span class='op'>=</span> <span class='ident'>rgb</span>.<span class='ident'>blue</span>;
-        }
-
-        <span class='kw'>let</span> <span class='ident'>diff</span> <span class='op'>=</span> <span class='ident'>val_max</span> <span class='op'>-</span> <span class='ident'>val_min</span>;
-        <span class='kw'>let</span> <span class='ident'>lightness</span> <span class='op'>=</span> (<span class='ident'>val_min</span> <span class='op'>+</span> <span class='ident'>val_max</span>) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>2.0</span>);
-
-        <span class='kw'>let</span> <span class='ident'>hue</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>diff</span> <span class='op'>==</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() {
-            <span class='ident'>T</span>::<span class='ident'>zero</span>()
-        } <span class='kw'>else</span> {
-            <span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='number'>60.0</span>) <span class='op'>*</span> <span class='kw'>match</span> <span class='ident'>chan_max</span> {
-                <span class='ident'>Channel</span>::<span class='ident'>Red</span> <span class='op'>=&gt;</span> ((<span class='ident'>rgb</span>.<span class='ident'>green</span> <span class='op'>-</span> <span class='ident'>rgb</span>.<span class='ident'>blue</span>) <span class='op'>/</span> <span class='ident'>diff</span>) <span class='op'>%</span> <span class='ident'>flt</span>(<span class='number'>6.0</span>),
-                <span class='ident'>Channel</span>::<span class='ident'>Green</span> <span class='op'>=&gt;</span> ((<span class='ident'>rgb</span>.<span class='ident'>blue</span> <span class='op'>-</span> <span class='ident'>rgb</span>.<span class='ident'>red</span>) <span class='op'>/</span> <span class='ident'>diff</span> <span class='op'>+</span> <span class='ident'>flt</span>(<span class='number'>2.0</span>)),
-                <span class='ident'>Channel</span>::<span class='ident'>Blue</span> <span class='op'>=&gt;</span> ((<span class='ident'>rgb</span>.<span class='ident'>red</span> <span class='op'>-</span> <span class='ident'>rgb</span>.<span class='ident'>green</span>) <span class='op'>/</span> <span class='ident'>diff</span> <span class='op'>+</span> <span class='ident'>flt</span>(<span class='number'>4.0</span>)),
-            }
-        };
-
-        <span class='kw'>let</span> <span class='ident'>saturation</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>diff</span> <span class='op'>==</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() {
-            <span class='ident'>T</span>::<span class='ident'>zero</span>()
-        } <span class='kw'>else</span> {
-            <span class='ident'>diff</span> <span class='op'>/</span> (<span class='ident'>T</span>::<span class='ident'>one</span>() <span class='op'>-</span> ( <span class='ident'>lightness</span> <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>2.0</span>) <span class='op'>-</span> <span class='ident'>T</span>::<span class='ident'>one</span>()).<span class='ident'>abs</span>())
-        };
-
-        <span class='ident'>Hsl</span> {
-            <span class='ident'>hue</span>: <span class='ident'>hue</span>.<span class='ident'>into</span>(),
-            <span class='ident'>saturation</span>: <span class='ident'>saturation</span>,
-            <span class='ident'>lightness</span>: <span class='ident'>lightness</span>,
-        }
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>luma</span>: <span class='ident'>Luma</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>Rgb</span>::<span class='ident'>from</span>(<span class='ident'>luma</span>).<span class='ident'>into</span>()
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Xyz</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>xyz</span>: <span class='ident'>Xyz</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>Rgb</span>::<span class='ident'>from</span>(<span class='ident'>xyz</span>).<span class='ident'>into</span>()
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Yxy</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>yxy</span>: <span class='ident'>Yxy</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>Rgb</span>::<span class='ident'>from</span>(<span class='ident'>yxy</span>).<span class='ident'>into</span>()
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Lab</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>lab</span>: <span class='ident'>Lab</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>Rgb</span>::<span class='ident'>from</span>(<span class='ident'>lab</span>).<span class='ident'>into</span>()
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Lch</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>lch</span>: <span class='ident'>Lch</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>Rgb</span>::<span class='ident'>from</span>(<span class='ident'>lch</span>).<span class='ident'>into</span>()
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Hsv</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>hsv</span>: <span class='ident'>Hsv</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Hsl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> (<span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='number'>2.0</span>) <span class='op'>-</span> <span class='ident'>hsv</span>.<span class='ident'>saturation</span>) <span class='op'>*</span> <span class='ident'>hsv</span>.<span class='ident'>value</span>;
-        <span class='kw'>let</span> <span class='ident'>saturation</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>hsv</span>.<span class='ident'>value</span> <span class='op'>==</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() {
-            <span class='ident'>T</span>::<span class='ident'>zero</span>()
-        } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>x</span> <span class='op'>&lt;</span> <span class='ident'>T</span>::<span class='ident'>one</span>() {
-            <span class='ident'>hsv</span>.<span class='ident'>saturation</span> <span class='op'>*</span> <span class='ident'>hsv</span>.<span class='ident'>value</span> <span class='op'>/</span> <span class='ident'>x</span>
-        } <span class='kw'>else</span> {
-            <span class='ident'>hsv</span>.<span class='ident'>saturation</span> <span class='op'>*</span> <span class='ident'>hsv</span>.<span class='ident'>value</span> <span class='op'>/</span> (<span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='number'>2.0</span>) <span class='op'>-</span> <span class='ident'>x</span>)
-        };
-
-        <span class='ident'>Hsl</span> {
-            <span class='ident'>hue</span>: <span class='ident'>hsv</span>.<span class='ident'>hue</span>,
-            <span class='ident'>saturation</span>: <span class='ident'>saturation</span>,
-            <span class='ident'>lightness</span>: <span class='ident'>x</span> <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>2.0</span>),
         }
     }
 }
