@@ -380,6 +380,7 @@
 <span id="337">337</span>
 <span id="338">338</span>
 <span id="339">339</span>
+<span id="340">340</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Float</span>;
 
@@ -492,12 +493,13 @@
 
     <span class='kw'>fn</span> <span class='ident'>from_hsv</span>(<span class='ident'>hsv</span>: <span class='ident'>Hsv</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
         <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> (<span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='number'>2.0</span>) <span class='op'>-</span> <span class='ident'>hsv</span>.<span class='ident'>saturation</span>) <span class='op'>*</span> <span class='ident'>hsv</span>.<span class='ident'>value</span>;
-        <span class='kw'>let</span> <span class='ident'>saturation</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>hsv</span>.<span class='ident'>value</span> <span class='op'>==</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() {
+        <span class='kw'>let</span> <span class='ident'>saturation</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>hsv</span>.<span class='ident'>value</span>.<span class='ident'>is_normal</span>() {
             <span class='ident'>T</span>::<span class='ident'>zero</span>()
         } <span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>x</span> <span class='op'>&lt;</span> <span class='ident'>T</span>::<span class='ident'>one</span>() {
-            <span class='ident'>hsv</span>.<span class='ident'>saturation</span> <span class='op'>*</span> <span class='ident'>hsv</span>.<span class='ident'>value</span> <span class='op'>/</span> <span class='ident'>x</span>
+            <span class='kw'>if</span> <span class='ident'>x</span>.<span class='ident'>is_normal</span>() { <span class='ident'>hsv</span>.<span class='ident'>saturation</span> <span class='op'>*</span> <span class='ident'>hsv</span>.<span class='ident'>value</span> <span class='op'>/</span> <span class='ident'>x</span> } <span class='kw'>else</span> { <span class='ident'>T</span>::<span class='ident'>zero</span>() }
         } <span class='kw'>else</span> {
-            <span class='ident'>hsv</span>.<span class='ident'>saturation</span> <span class='op'>*</span> <span class='ident'>hsv</span>.<span class='ident'>value</span> <span class='op'>/</span> (<span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='number'>2.0</span>) <span class='op'>-</span> <span class='ident'>x</span>)
+            <span class='kw'>let</span> <span class='ident'>denom</span> <span class='op'>=</span> <span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='number'>2.0</span>) <span class='op'>-</span> <span class='ident'>x</span>;
+            <span class='kw'>if</span> <span class='ident'>denom</span>.<span class='ident'>is_normal</span>() { <span class='ident'>hsv</span>.<span class='ident'>saturation</span> <span class='op'>*</span> <span class='ident'>hsv</span>.<span class='ident'>value</span> <span class='op'>/</span> <span class='ident'>denom</span> } <span class='kw'>else</span> { <span class='ident'>T</span>::<span class='ident'>zero</span>() }
         };
 
         <span class='ident'>Hsl</span> {

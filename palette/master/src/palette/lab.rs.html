@@ -334,6 +334,12 @@
 <span id="291">291</span>
 <span id="292">292</span>
 <span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Float</span>;
 
@@ -393,10 +399,29 @@
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span> <span class='ident'>FromColor</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Lab</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>from_xyz</span>(<span class='ident'>xyz</span>: <span class='ident'>Xyz</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>x</span>: <span class='ident'>T</span> <span class='op'>=</span> <span class='ident'>xyz</span>.<span class='ident'>x</span> <span class='op'>/</span> <span class='ident'>flt</span>(<span class='ident'>X_N</span>);
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>y</span>: <span class='ident'>T</span> <span class='op'>=</span> <span class='ident'>xyz</span>.<span class='ident'>y</span> <span class='op'>/</span> <span class='ident'>flt</span>(<span class='ident'>Y_N</span>);
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>z</span>: <span class='ident'>T</span> <span class='op'>=</span> <span class='ident'>xyz</span>.<span class='ident'>z</span> <span class='op'>/</span> <span class='ident'>flt</span>(<span class='ident'>Z_N</span>);
+
+        <span class='kw'>fn</span> <span class='ident'>convert</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span>(<span class='ident'>c</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
+            <span class='kw'>let</span> <span class='ident'>epsilon</span>: <span class='ident'>T</span> <span class='op'>=</span> (<span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='number'>6.0</span> <span class='op'>/</span> <span class='number'>29.0</span>)).<span class='ident'>powi</span>(<span class='number'>3</span>);
+            <span class='kw'>let</span> <span class='ident'>kappa</span>: <span class='ident'>T</span> <span class='op'>=</span> <span class='ident'>flt</span>(<span class='number'>841.0</span> <span class='op'>/</span> <span class='number'>108.0</span>);
+            <span class='kw'>let</span> <span class='ident'>delta</span>: <span class='ident'>T</span> <span class='op'>=</span> <span class='ident'>flt</span>(<span class='number'>4.0</span> <span class='op'>/</span> <span class='number'>29.0</span>);
+            <span class='kw'>if</span> <span class='ident'>c</span> <span class='op'>&gt;</span> <span class='ident'>epsilon</span> {
+                <span class='ident'>c</span>.<span class='ident'>powf</span>(<span class='ident'>T</span>::<span class='ident'>one</span>() <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>3.0</span>))
+            } <span class='kw'>else</span> {
+                (<span class='ident'>kappa</span> <span class='op'>*</span> <span class='ident'>c</span> ) <span class='op'>+</span> <span class='ident'>delta</span>
+            }
+        }
+
+        <span class='ident'>x</span> <span class='op'>=</span> <span class='ident'>convert</span>(<span class='ident'>x</span>);
+        <span class='ident'>y</span> <span class='op'>=</span> <span class='ident'>convert</span>(<span class='ident'>y</span>);
+        <span class='ident'>z</span> <span class='op'>=</span> <span class='ident'>convert</span>(<span class='ident'>z</span>);
+
         <span class='ident'>Lab</span> {
-            <span class='ident'>l</span>: (<span class='ident'>f</span>(<span class='ident'>xyz</span>.<span class='ident'>y</span> <span class='op'>/</span> <span class='ident'>flt</span>(<span class='ident'>Y_N</span>)) <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>116.0</span>) <span class='op'>-</span> <span class='ident'>flt</span>(<span class='number'>16.0</span>)) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>100.0</span>),
-            <span class='ident'>a</span>: (<span class='ident'>f</span>(<span class='ident'>xyz</span>.<span class='ident'>x</span> <span class='op'>/</span> <span class='ident'>flt</span>(<span class='ident'>X_N</span>)) <span class='op'>-</span> <span class='ident'>f</span>(<span class='ident'>xyz</span>.<span class='ident'>y</span> <span class='op'>/</span> <span class='ident'>flt</span>(<span class='ident'>Y_N</span>))) <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>500.0</span>) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>128.0</span>),
-            <span class='ident'>b</span>: (<span class='ident'>f</span>(<span class='ident'>xyz</span>.<span class='ident'>y</span> <span class='op'>/</span> <span class='ident'>flt</span>(<span class='ident'>Y_N</span>)) <span class='op'>-</span> <span class='ident'>f</span>(<span class='ident'>xyz</span>.<span class='ident'>z</span> <span class='op'>/</span> <span class='ident'>flt</span>(<span class='ident'>Z_N</span>))) <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>200.0</span>) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>128.0</span>),
+            <span class='ident'>l</span>: ( (<span class='ident'>y</span> <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>116.0</span>)) <span class='op'>-</span> <span class='ident'>flt</span>(<span class='number'>16.0</span>) ) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>100.0</span>),
+            <span class='ident'>a</span>: ( (<span class='ident'>x</span> <span class='op'>-</span> <span class='ident'>y</span>) <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>500.0</span>) ) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>128.0</span>),
+            <span class='ident'>b</span>: ( (<span class='ident'>y</span> <span class='op'>-</span> <span class='ident'>z</span>) <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>200.0</span>) ) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>128.0</span>),
         }
     }
 
@@ -575,19 +600,6 @@
     }
 }
 
-<span class='kw'>fn</span> <span class='ident'>f</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Float</span><span class='op'>&gt;</span>(<span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
-    <span class='comment'>//(6/29)^3</span>
-    <span class='kw'>let</span> <span class='ident'>c_6_o_29_p_3</span>: <span class='ident'>T</span> <span class='op'>=</span> <span class='ident'>flt</span>(<span class='number'>0.00885645167</span>);
-    <span class='comment'>//(29/6)^2</span>
-    <span class='kw'>let</span> <span class='ident'>c_29_o_6_p_2</span>: <span class='ident'>T</span> <span class='op'>=</span> <span class='ident'>flt</span>(<span class='number'>23.3611111111</span>);
-
-    <span class='kw'>if</span> <span class='ident'>t</span> <span class='op'>&gt;</span> <span class='ident'>c_6_o_29_p_3</span> {
-        <span class='ident'>t</span>.<span class='ident'>powf</span>(<span class='ident'>T</span>::<span class='ident'>one</span>() <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>3.0</span>))
-    } <span class='kw'>else</span> {
-        (<span class='ident'>T</span>::<span class='ident'>one</span>() <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>3.0</span>)) <span class='op'>*</span> <span class='ident'>c_29_o_6_p_2</span> <span class='op'>*</span> <span class='ident'>t</span> <span class='op'>+</span> (<span class='ident'>flt</span>::<span class='op'>&lt;</span><span class='ident'>T</span>,_<span class='op'>&gt;</span>(<span class='number'>4.0</span>) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>29.0</span>))
-    }
-}
-
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>test</span> {
     <span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>Lab</span>;
@@ -596,7 +608,7 @@
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>red</span>() {
         <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Lab</span>::<span class='ident'>from</span>(<span class='ident'>Rgb</span>::<span class='ident'>new</span>(<span class='number'>1.0</span>, <span class='number'>0.0</span>, <span class='number'>0.0</span>));
-        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Lab</span>::<span class='ident'>new</span>(<span class='number'>53.23288</span> <span class='op'>/</span> <span class='number'>100.0</span>, <span class='number'>80.10933</span> <span class='op'>/</span> <span class='number'>128.0</span>, <span class='number'>67.22006</span> <span class='op'>/</span> <span class='number'>128.0</span>);
+        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Lab</span>::<span class='ident'>new</span>(<span class='number'>53.23288</span> <span class='op'>/</span> <span class='number'>100.0</span>, <span class='number'>80.09246</span> <span class='op'>/</span> <span class='number'>128.0</span>, <span class='number'>67.2031</span> <span class='op'>/</span> <span class='number'>128.0</span>);
         <span class='macro'>assert_approx_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, [<span class='ident'>l</span>, <span class='ident'>a</span>, <span class='ident'>b</span>]);
     }
 

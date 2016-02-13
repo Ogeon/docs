@@ -375,6 +375,12 @@
 <span id="332">332</span>
 <span id="333">333</span>
 <span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Float</span>;
 
@@ -485,10 +491,16 @@
         } <span class='kw'>else</span> {
             <span class='ident'>T</span>::<span class='ident'>one</span>() <span class='op'>-</span> <span class='ident'>hsl</span>.<span class='ident'>lightness</span>
         };
-
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>T</span>::<span class='ident'>zero</span>();
+        
+        <span class='comment'>// avoid divide by zero</span>
+        <span class='kw'>let</span> <span class='ident'>denom</span> <span class='op'>=</span> <span class='ident'>hsl</span>.<span class='ident'>lightness</span> <span class='op'>+</span> <span class='ident'>x</span>;
+        <span class='kw'>if</span> <span class='ident'>denom</span>.<span class='ident'>is_normal</span>() {
+            <span class='ident'>s</span> <span class='op'>=</span> <span class='ident'>x</span> <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>2.0</span>) <span class='op'>/</span> <span class='ident'>denom</span>;
+        }
         <span class='ident'>Hsv</span> {
             <span class='ident'>hue</span>: <span class='ident'>hsl</span>.<span class='ident'>hue</span>,
-            <span class='ident'>saturation</span>: <span class='ident'>x</span> <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>2.0</span>) <span class='op'>/</span> (<span class='ident'>hsl</span>.<span class='ident'>lightness</span> <span class='op'>+</span> <span class='ident'>x</span>),
+            <span class='ident'>saturation</span>: <span class='ident'>s</span>,
             <span class='ident'>value</span>: <span class='ident'>hsl</span>.<span class='ident'>lightness</span> <span class='op'>+</span> <span class='ident'>x</span>,
         }
     }
