@@ -570,28 +570,28 @@
     <span class='kw'>fn</span> <span class='ident'>luma</span>() {
         <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Yxy</span>::<span class='ident'>from</span>(<span class='ident'>Luma</span>::<span class='ident'>new</span>(<span class='number'>0.5</span>));
         <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Yxy</span>::<span class='ident'>new</span>(<span class='number'>0.312727</span>, <span class='number'>0.329023</span>, <span class='number'>0.5</span>);
-        <span class='macro'>assert_approx_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, [<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>luma</span>]);
+        <span class='macro'>assert_relative_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>epsilon</span> <span class='op'>=</span> <span class='number'>0.000001</span>);
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>red</span>() {
         <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Yxy</span>::<span class='ident'>from</span>(<span class='ident'>Rgb</span>::<span class='ident'>new</span>(<span class='number'>1.0</span>, <span class='number'>0.0</span>, <span class='number'>0.0</span>));
         <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Yxy</span>::<span class='ident'>new</span>(<span class='number'>0.64</span>, <span class='number'>0.33</span>, <span class='number'>0.212673</span>);
-        <span class='macro'>assert_approx_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, [<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>luma</span>]);
+        <span class='macro'>assert_relative_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>epsilon</span> <span class='op'>=</span> <span class='number'>0.000001</span>);
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>green</span>() {
         <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Yxy</span>::<span class='ident'>from</span>(<span class='ident'>Rgb</span>::<span class='ident'>new</span>(<span class='number'>0.0</span>, <span class='number'>1.0</span>, <span class='number'>0.0</span>));
         <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Yxy</span>::<span class='ident'>new</span>(<span class='number'>0.3</span>, <span class='number'>0.6</span>, <span class='number'>0.715152</span>);
-        <span class='macro'>assert_approx_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, [<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>luma</span>]);
+        <span class='macro'>assert_relative_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>epsilon</span> <span class='op'>=</span> <span class='number'>0.000001</span>);
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>blue</span>() {
         <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Yxy</span>::<span class='ident'>from</span>(<span class='ident'>Rgb</span>::<span class='ident'>new</span>(<span class='number'>0.0</span>, <span class='number'>0.0</span>, <span class='number'>1.0</span>));
         <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Yxy</span>::<span class='ident'>new</span>(<span class='number'>0.15</span>, <span class='number'>0.06</span>, <span class='number'>0.072175</span>);
-        <span class='macro'>assert_approx_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, [<span class='ident'>x</span>, <span class='ident'>y</span>, <span class='ident'>luma</span>]);
+        <span class='macro'>assert_relative_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>epsilon</span> <span class='op'>=</span> <span class='number'>0.000001</span>);
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
