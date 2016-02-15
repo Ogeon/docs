@@ -136,11 +136,15 @@
 <span id="93">93</span>
 <span id="94">94</span>
 <span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Float</span>;
 <span class='kw'>use</span> <span class='ident'>approx</span>::<span class='ident'>ApproxEq</span>;
 
 <span class='kw'>use</span> {<span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsl</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hwb</span>, <span class='ident'>Luma</span>, <span class='ident'>LabHue</span>, <span class='ident'>RgbHue</span>, <span class='ident'>flt</span>};
+<span class='kw'>use</span> <span class='ident'>pixel</span>::{<span class='ident'>Srgb</span>, <span class='ident'>GammaRgb</span>};
 
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>impl_eq</span> {
     (  <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>self_ty</span>: <span class='ident'>ident</span> , [$(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>element</span>: <span class='ident'>ident</span>),<span class='op'>+</span>]) <span class='op'>=&gt;</span> {
@@ -180,10 +184,12 @@
 <span class='macro'>impl_eq</span><span class='macro'>!</span>( <span class='ident'>Lab</span>, [<span class='ident'>l</span>, <span class='ident'>a</span>, <span class='ident'>b</span>] );
 <span class='macro'>impl_eq</span><span class='macro'>!</span>( <span class='ident'>Rgb</span>, [<span class='ident'>red</span>, <span class='ident'>blue</span>, <span class='ident'>green</span>] );
 <span class='macro'>impl_eq</span><span class='macro'>!</span>( <span class='ident'>Luma</span>, [<span class='ident'>luma</span>] );
-<span class='macro'>impl_eq</span><span class='macro'>!</span>( <span class='ident'>Lch</span>, [<span class='ident'>l</span>, <span class='ident'>chroma</span>] );
+<span class='macro'>impl_eq</span><span class='macro'>!</span>( <span class='ident'>Lch</span>, [<span class='ident'>l</span>, <span class='ident'>chroma</span>, <span class='ident'>hue</span>] );
 <span class='macro'>impl_eq</span><span class='macro'>!</span>( <span class='ident'>Hsl</span>, [<span class='ident'>hue</span>, <span class='ident'>saturation</span>, <span class='ident'>lightness</span>] );
 <span class='macro'>impl_eq</span><span class='macro'>!</span>( <span class='ident'>Hsv</span>, [<span class='ident'>hue</span>, <span class='ident'>saturation</span>, <span class='ident'>value</span>] );
 <span class='macro'>impl_eq</span><span class='macro'>!</span>( <span class='ident'>Hwb</span>, [<span class='ident'>hue</span>, <span class='ident'>whiteness</span>, <span class='ident'>blackness</span>] );
+<span class='macro'>impl_eq</span><span class='macro'>!</span>( <span class='ident'>Srgb</span>, [<span class='ident'>red</span>, <span class='ident'>blue</span>, <span class='ident'>green</span>, <span class='ident'>alpha</span>] );
+<span class='macro'>impl_eq</span><span class='macro'>!</span>( <span class='ident'>GammaRgb</span>, [<span class='ident'>red</span>, <span class='ident'>blue</span>, <span class='ident'>green</span>, <span class='ident'>alpha</span>, <span class='ident'>gamma</span>] );
 
 <span class='comment'>// For hues diffence is calculated and compared to zero. However due to the way floating point&#39;s</span>
 <span class='comment'>// work this is not so simple</span>
