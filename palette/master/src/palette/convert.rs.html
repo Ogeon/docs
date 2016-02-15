@@ -272,10 +272,23 @@
 <span id="229">229</span>
 <span id="230">230</span>
 <span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Float</span>;
 
-<span class='kw'>use</span> {<span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Luma</span>, <span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hsl</span>, <span class='ident'>Color</span>};
+<span class='kw'>use</span> {<span class='ident'>Alpha</span>, <span class='ident'>Rgb</span>, <span class='ident'>Luma</span>, <span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hwb</span>, <span class='ident'>Hsl</span>, <span class='ident'>Color</span>};
 
 <span class='doccomment'>///FromColor provides conversion between the colors.</span>
 <span class='doccomment'>///</span>
@@ -319,6 +332,11 @@
     <span class='doccomment'>///Convert from HSV color space</span>
     <span class='kw'>fn</span> <span class='ident'>from_hsv</span>(<span class='ident'>inp</span>: <span class='ident'>Hsv</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
         <span class='ident'>Self</span>::<span class='ident'>from_rgb</span>(<span class='ident'>inp</span>.<span class='ident'>into_rgb</span>())
+    }
+
+    <span class='doccomment'>///Convert from HWB color space</span>
+    <span class='kw'>fn</span> <span class='ident'>from_hwb</span>(<span class='ident'>inp</span>: <span class='ident'>Hwb</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
+        <span class='ident'>Self</span>::<span class='ident'>from_hsv</span>(<span class='ident'>inp</span>.<span class='ident'>into_hsv</span>())
     }
 
     <span class='doccomment'>///Convert from Luma</span>
@@ -368,6 +386,11 @@
     <span class='doccomment'>///Convert into HSV color space</span>
     <span class='kw'>fn</span> <span class='ident'>into_hsv</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Hsv</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Hsv</span>::<span class='ident'>from_rgb</span>(<span class='self'>self</span>.<span class='ident'>into_rgb</span>())
+    }
+
+    <span class='doccomment'>///Convert into HWB color space</span>
+    <span class='kw'>fn</span> <span class='ident'>into_hwb</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Hwb</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+        <span class='ident'>Hwb</span>::<span class='ident'>from_hsv</span>(<span class='self'>self</span>.<span class='ident'>into_hsv</span>())
     }
 
     <span class='doccomment'>///Convert into Luma</span>
@@ -438,6 +461,7 @@
                     <span class='ident'>Color</span>::<span class='ident'>Lch</span>(<span class='ident'>c</span>) <span class='op'>=&gt;</span> <span class='ident'>c</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>into_fn</span>(),
                     <span class='ident'>Color</span>::<span class='ident'>Hsv</span>(<span class='ident'>c</span>) <span class='op'>=&gt;</span> <span class='ident'>c</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>into_fn</span>(),
                     <span class='ident'>Color</span>::<span class='ident'>Hsl</span>(<span class='ident'>c</span>) <span class='op'>=&gt;</span> <span class='ident'>c</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>into_fn</span>(),
+                    <span class='ident'>Color</span>::<span class='ident'>Hwb</span>(<span class='ident'>c</span>) <span class='op'>=&gt;</span> <span class='ident'>c</span>.<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>into_fn</span>(),
                 }
             }
         }
@@ -493,17 +517,19 @@
 <span class='macro'>impl_into_color</span><span class='macro'>!</span>(<span class='ident'>Rgb</span>,<span class='ident'>from_rgb</span>);
 <span class='macro'>impl_into_color</span><span class='macro'>!</span>(<span class='ident'>Hsl</span>,<span class='ident'>from_hsl</span>);
 <span class='macro'>impl_into_color</span><span class='macro'>!</span>(<span class='ident'>Hsv</span>,<span class='ident'>from_hsv</span>);
+<span class='macro'>impl_into_color</span><span class='macro'>!</span>(<span class='ident'>Hwb</span>,<span class='ident'>from_hwb</span>);
 <span class='macro'>impl_into_color</span><span class='macro'>!</span>(<span class='ident'>Luma</span>,<span class='ident'>from_luma</span>);
 
 
-<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Xyz</span>,<span class='ident'>into_xyz</span>) <span class='op'>=&gt;</span> {<span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsl</span>, <span class='ident'>Hsv</span>, <span class='ident'>Luma</span>});
-<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Yxy</span>,<span class='ident'>into_yxy</span>) <span class='op'>=&gt;</span> {<span class='ident'>Xyz</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsl</span>, <span class='ident'>Hsv</span>, <span class='ident'>Luma</span>});
-<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Lab</span>,<span class='ident'>into_lab</span>) <span class='op'>=&gt;</span> {<span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lch</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsl</span>, <span class='ident'>Hsv</span>, <span class='ident'>Luma</span>});
-<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Lch</span>,<span class='ident'>into_lch</span>) <span class='op'>=&gt;</span> {<span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsl</span>, <span class='ident'>Hsv</span>, <span class='ident'>Luma</span>});
-<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Rgb</span>,<span class='ident'>into_rgb</span>) <span class='op'>=&gt;</span> {<span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsl</span>, <span class='ident'>Hsv</span>, <span class='ident'>Luma</span>});
-<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Hsl</span>,<span class='ident'>into_hsl</span>) <span class='op'>=&gt;</span> {<span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsv</span>, <span class='ident'>Luma</span>});
-<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Hsv</span>,<span class='ident'>into_hsv</span>) <span class='op'>=&gt;</span> {<span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsl</span>, <span class='ident'>Luma</span>});
-<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Luma</span>,<span class='ident'>into_luma</span>) <span class='op'>=&gt;</span> {<span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsl</span>, <span class='ident'>Hsv</span>});
+<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Xyz</span>,<span class='ident'>into_xyz</span>) <span class='op'>=&gt;</span> {<span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsl</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hwb</span>, <span class='ident'>Luma</span>});
+<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Yxy</span>,<span class='ident'>into_yxy</span>) <span class='op'>=&gt;</span> {<span class='ident'>Xyz</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsl</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hwb</span>, <span class='ident'>Luma</span>});
+<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Lab</span>,<span class='ident'>into_lab</span>) <span class='op'>=&gt;</span> {<span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lch</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsl</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hwb</span>, <span class='ident'>Luma</span>});
+<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Lch</span>,<span class='ident'>into_lch</span>) <span class='op'>=&gt;</span> {<span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsl</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hwb</span>, <span class='ident'>Luma</span>});
+<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Rgb</span>,<span class='ident'>into_rgb</span>) <span class='op'>=&gt;</span> {<span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Hsl</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hwb</span>, <span class='ident'>Luma</span>});
+<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Hsl</span>,<span class='ident'>into_hsl</span>) <span class='op'>=&gt;</span> {<span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hwb</span>, <span class='ident'>Luma</span>});
+<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Hsv</span>,<span class='ident'>into_hsv</span>) <span class='op'>=&gt;</span> {<span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsl</span>, <span class='ident'>Hwb</span>, <span class='ident'>Luma</span>});
+<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Hwb</span>,<span class='ident'>into_hwb</span>) <span class='op'>=&gt;</span> {<span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsl</span>, <span class='ident'>Hsv</span>, <span class='ident'>Luma</span>});
+<span class='macro'>impl_from_trait</span><span class='macro'>!</span>((<span class='ident'>Luma</span>,<span class='ident'>into_luma</span>) <span class='op'>=&gt;</span> {<span class='ident'>Xyz</span>, <span class='ident'>Yxy</span>, <span class='ident'>Lab</span>, <span class='ident'>Lch</span>, <span class='ident'>Rgb</span>, <span class='ident'>Hsl</span>, <span class='ident'>Hsv</span>, <span class='ident'>Hwb</span>});
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

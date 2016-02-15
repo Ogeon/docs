@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Hwb","Linear HWB color space."]],"type":[["Hwba","Linear HWB with an alpha component. See the `Hwba` implementation in `Alpha`."]]});

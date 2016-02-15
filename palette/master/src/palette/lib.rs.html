@@ -604,6 +604,14 @@
 <span id="561">561</span>
 <span id="562">562</span>
 <span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!A library that makes linear color calculations and conversion easy and</span>
 <span class='doccomment'>//!accessible for anyone. It provides both precision tools that lets you work</span>
@@ -672,6 +680,7 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hsv</span>::{<span class='ident'>Hsv</span>, <span class='ident'>Hsva</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hsl</span>::{<span class='ident'>Hsl</span>, <span class='ident'>Hsla</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>yxy</span>::{<span class='ident'>Yxy</span>, <span class='ident'>Yxya</span>};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hwb</span>::{<span class='ident'>Hwb</span>, <span class='ident'>Hwba</span>};
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hues</span>::{<span class='ident'>LabHue</span>, <span class='ident'>RgbHue</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>convert</span>::{<span class='ident'>FromColor</span>, <span class='ident'>IntoColor</span>};
@@ -837,6 +846,7 @@
 <span class='kw'>mod</span> <span class='ident'>lch</span>;
 <span class='kw'>mod</span> <span class='ident'>hsv</span>;
 <span class='kw'>mod</span> <span class='ident'>hsl</span>;
+<span class='kw'>mod</span> <span class='ident'>hwb</span>;
 
 <span class='kw'>mod</span> <span class='ident'>hues</span>;
 
@@ -1037,6 +1047,12 @@
     <span class='ident'>Hsl</span> {
         <span class='doccomment'>///Linear HSL.</span>
         <span class='ident'>hsl</span>(<span class='ident'>hue</span>: <span class='ident'>RgbHue</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>saturation</span>: <span class='ident'>T</span>, <span class='ident'>lightness</span>: <span class='ident'>T</span>)[<span class='ident'>alpha</span>: <span class='ident'>T</span>] <span class='op'>=&gt;</span> <span class='ident'>new</span>;
+    }
+
+    <span class='doccomment'>///Linear HWB, an intuitive cylindrical version of RGB.</span>
+    <span class='ident'>Hwb</span> {
+        <span class='doccomment'>///Linear HWB.</span>
+        <span class='ident'>hwb</span>(<span class='ident'>hue</span>: <span class='ident'>RgbHue</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>, <span class='ident'>whiteness</span>: <span class='ident'>T</span>, <span class='ident'>balckness</span>: <span class='ident'>T</span>)[<span class='ident'>alpha</span>: <span class='ident'>T</span>] <span class='op'>=&gt;</span> <span class='ident'>new</span>;
     }
 }
 
