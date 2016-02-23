@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["PreAlpha","Premultiplied alpha wrapper."]]});

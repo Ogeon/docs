@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Blend` trait in crate `palette`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Blend">
+
+    <title>palette::blend::Blend - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>palette</a>::<wbr><a href='index.html'>blend</a></p><script>window.sidebarCurrent = {name: 'Blend', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content trait">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>palette</a>::<wbr><a href='index.html'>blend</a>::<wbr><a class='trait' href=''>Blend</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-1113' class='srclink' href='../../src/palette/blend/blend.rs.html#14-377' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Blend: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
+    type Color: <a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Blend</a>&lt;Color=Self::<a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Color</a>&gt; + <a class='trait' href='../../palette/trait.ComponentWise.html' title='palette::ComponentWise'>ComponentWise</a>;
+    fn <a href='#tymethod.into_premultiplied' class='fnname'>into_premultiplied</a>(self) -&gt; <a class='struct' href='../../palette/blend/struct.PreAlpha.html' title='palette::blend::PreAlpha'>PreAlpha</a>&lt;Self::<a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Color</a>, Self::<a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Color</a>::Scalar&gt;;
+    fn <a href='#tymethod.from_premultiplied' class='fnname'>from_premultiplied</a>(color: <a class='struct' href='../../palette/blend/struct.PreAlpha.html' title='palette::blend::PreAlpha'>PreAlpha</a>&lt;Self::<a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Color</a>, Self::<a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Color</a>::Scalar&gt;) -&gt; Self;
+
+    fn <a href='#method.blend' class='fnname'>blend</a>&lt;F&gt;(self, destination: Self, blend_function: F) -&gt; Self <span class='where'>where F: <a class='trait' href='../../palette/blend/trait.BlendFunction.html' title='palette::blend::BlendFunction'>BlendFunction</a>&lt;Self::<a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Color</a>&gt;</span> { ... }
+    fn <a href='#method.over' class='fnname'>over</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.inside' class='fnname'>inside</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.outside' class='fnname'>outside</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.atop' class='fnname'>atop</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.xor' class='fnname'>xor</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.plus' class='fnname'>plus</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.multiply' class='fnname'>multiply</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.screen' class='fnname'>screen</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.overlay' class='fnname'>overlay</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.darken' class='fnname'>darken</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.lighten' class='fnname'>lighten</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.dodge' class='fnname'>dodge</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.burn' class='fnname'>burn</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.hard_light' class='fnname'>hard_light</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.soft_light' class='fnname'>soft_light</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.difference' class='fnname'>difference</a>(self, other: Self) -&gt; Self { ... }
+    fn <a href='#method.exclusion' class='fnname'>exclusion</a>(self, other: Self) -&gt; Self { ... }
+}</pre><div class='docblock'><p>A trait for colors that can be blended together.</p>
+
+<p>Blending can either be performed through the predefined blend modes, or a
+custom blend functions.</p>
+
+<p><em>Note: The default implementations of the blend modes are meant for color
+components in the range [0.0, 1.0] and may otherwise produce strange
+results.</em></p>
+</div>
+            <h2 id='associated-types'>Associated Types</h2>
+            <div class='methods'>
+        <h3 id='associatedtype.Color' class='method stab '><code>type Color: <a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Blend</a>&lt;Color=Self::<a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Color</a>&gt; + <a class='trait' href='../../palette/trait.ComponentWise.html' title='palette::ComponentWise'>ComponentWise</a></code></h3><div class='docblock'><p>The core color type. Typically <code>Self</code> for color types without alpha.</p>
+</div></div>
+            <h2 id='required-methods'>Required Methods</h2>
+            <div class='methods'>
+        <h3 id='tymethod.into_premultiplied' class='method stab '><code>fn <a href='#tymethod.into_premultiplied' class='fnname'>into_premultiplied</a>(self) -&gt; <a class='struct' href='../../palette/blend/struct.PreAlpha.html' title='palette::blend::PreAlpha'>PreAlpha</a>&lt;Self::<a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Color</a>, Self::<a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Color</a>::Scalar&gt;</code></h3><div class='docblock'><p>Convert the color to premultiplied alpha.</p>
+</div><h3 id='tymethod.from_premultiplied' class='method stab '><code>fn <a href='#tymethod.from_premultiplied' class='fnname'>from_premultiplied</a>(color: <a class='struct' href='../../palette/blend/struct.PreAlpha.html' title='palette::blend::PreAlpha'>PreAlpha</a>&lt;Self::<a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Color</a>, Self::<a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Color</a>::Scalar&gt;) -&gt; Self</code></h3><div class='docblock'><p>Convert the color from premultiplied alpha.</p>
+</div></div>
+            <h2 id='provided-methods'>Provided Methods</h2>
+            <div class='methods'>
+        <h3 id='method.blend' class='method stab '><code>fn <a href='#method.blend' class='fnname'>blend</a>&lt;F&gt;(self, destination: Self, blend_function: F) -&gt; Self <span class='where'>where F: <a class='trait' href='../../palette/blend/trait.BlendFunction.html' title='palette::blend::BlendFunction'>BlendFunction</a>&lt;Self::<a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Color</a>&gt;</span></code></h3><div class='docblock'><p>Blend self, as the source color, with <code>destination</code>, using
+<code>blend_function</code>. Anything that implements <code>BlendFunction</code> is
+acceptable, including functions and closures.</p>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>palette</span>::{<span class='ident'>Rgb</span>, <span class='ident'>Rgba</span>, <span class='ident'>Blend</span>};
+<span class='kw'>use</span> <span class='ident'>palette</span>::<span class='ident'>blend</span>::<span class='ident'>PreAlpha</span>;
+
+<span class='kw'>type</span> <span class='ident'>PreRgba</span> <span class='op'>=</span> <span class='ident'>PreAlpha</span><span class='op'>&lt;</span><span class='ident'>Rgb</span><span class='op'>&lt;</span><span class='ident'>f32</span><span class='op'>&gt;</span>, <span class='ident'>f32</span><span class='op'>&gt;</span>;
+
+<span class='kw'>fn</span> <span class='ident'>blend_mode</span>(<span class='ident'>a</span>: <span class='ident'>PreRgba</span>, <span class='ident'>b</span>: <span class='ident'>PreRgba</span>) <span class='op'>-&gt;</span> <span class='ident'>PreRgba</span> {
+    <span class='ident'>PreAlpha</span> {
+        <span class='ident'>color</span>: <span class='ident'>Rgb</span>::<span class='ident'>new</span>(<span class='ident'>a</span>.<span class='ident'>red</span> <span class='op'>*</span> <span class='ident'>b</span>.<span class='ident'>green</span>, <span class='ident'>a</span>.<span class='ident'>green</span> <span class='op'>*</span> <span class='ident'>b</span>.<span class='ident'>blue</span>, <span class='ident'>a</span>.<span class='ident'>blue</span> <span class='op'>*</span> <span class='ident'>b</span>.<span class='ident'>red</span>),
+        <span class='ident'>alpha</span>: <span class='ident'>a</span>.<span class='ident'>alpha</span> <span class='op'>*</span> <span class='ident'>b</span>.<span class='ident'>alpha</span>,
+    }
+}
+
+<span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Rgba</span>::<span class='ident'>new</span>(<span class='number'>0.2</span>, <span class='number'>0.5</span>, <span class='number'>0.1</span>, <span class='number'>0.8</span>);
+<span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Rgba</span>::<span class='ident'>new</span>(<span class='number'>0.6</span>, <span class='number'>0.3</span>, <span class='number'>0.5</span>, <span class='number'>0.1</span>);
+<span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>a</span>.<span class='ident'>blend</span>(<span class='ident'>b</span>, <span class='ident'>blend_mode</span>);</pre>
+</div><h3 id='method.over' class='method stab '><code>fn <a href='#method.over' class='fnname'>over</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Place <code>self</code> over <code>other</code>. This is the good old common alpha
+composition equation.</p>
+</div><h3 id='method.inside' class='method stab '><code>fn <a href='#method.inside' class='fnname'>inside</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Results in the parts of <code>self</code> that overlaps the visible parts of
+<code>other</code>.</p>
+</div><h3 id='method.outside' class='method stab '><code>fn <a href='#method.outside' class='fnname'>outside</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Results in the parts of <code>self</code> that lies outside the visible parts of
+<code>other</code>.</p>
+</div><h3 id='method.atop' class='method stab '><code>fn <a href='#method.atop' class='fnname'>atop</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Place <code>self</code> over only the visible parts of <code>other</code>.</p>
+</div><h3 id='method.xor' class='method stab '><code>fn <a href='#method.xor' class='fnname'>xor</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Results in either <code>self</code> or <code>other</code>, where they do not overlap.</p>
+</div><h3 id='method.plus' class='method stab '><code>fn <a href='#method.plus' class='fnname'>plus</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Add <code>self</code> and <code>other</code>. This uses the alpha component to regulate the
+effect, so it&#39;s not just plain component wise addition.</p>
+</div><h3 id='method.multiply' class='method stab '><code>fn <a href='#method.multiply' class='fnname'>multiply</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Multiply <code>self</code> with <code>other</code>. This uses the alpha component to regulate
+the effect, so it&#39;s not just plain component wise multiplication.</p>
+</div><h3 id='method.screen' class='method stab '><code>fn <a href='#method.screen' class='fnname'>screen</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Make a color which is at least as light as <code>self</code> or <code>other</code>.</p>
+</div><h3 id='method.overlay' class='method stab '><code>fn <a href='#method.overlay' class='fnname'>overlay</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Multiply <code>self</code> or <code>other</code> if other is dark, or screen them if <code>other</code>
+is light. This results in an S curve.</p>
+</div><h3 id='method.darken' class='method stab '><code>fn <a href='#method.darken' class='fnname'>darken</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Return the darkest parts of <code>self</code> and <code>other</code>.</p>
+</div><h3 id='method.lighten' class='method stab '><code>fn <a href='#method.lighten' class='fnname'>lighten</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Return the lightest parts of <code>self</code> and <code>other</code>.</p>
+</div><h3 id='method.dodge' class='method stab '><code>fn <a href='#method.dodge' class='fnname'>dodge</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Lighten <code>other</code> to reflect <code>self</code>. Results in <code>other</code> if <code>self</code> is
+black.</p>
+</div><h3 id='method.burn' class='method stab '><code>fn <a href='#method.burn' class='fnname'>burn</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Darken <code>other</code> to reflect <code>self</code>. Results in <code>other</code> if <code>self</code> is
+white.</p>
+</div><h3 id='method.hard_light' class='method stab '><code>fn <a href='#method.hard_light' class='fnname'>hard_light</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Multiply <code>self</code> or <code>other</code> if other is dark, or screen them if <code>self</code>
+is light. This is similar to <code>overlay</code>, but depends on <code>self</code> instead
+of <code>other</code>.</p>
+</div><h3 id='method.soft_light' class='method stab '><code>fn <a href='#method.soft_light' class='fnname'>soft_light</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Lighten <code>other</code> if <code>self</code> is light, or darken <code>other</code> as if it&#39;s burned
+if <code>self</code> is dark. The effect is increased if the components of <code>self</code>
+is further from 0.5.</p>
+</div><h3 id='method.difference' class='method stab '><code>fn <a href='#method.difference' class='fnname'>difference</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Return the absolute difference between <code>self</code> and <code>other</code>. It&#39;s
+basically <code>abs(self - other)</code>, but regulated by the alpha component.</p>
+</div><h3 id='method.exclusion' class='method stab '><code>fn <a href='#method.exclusion' class='fnname'>exclusion</a>(self, other: Self) -&gt; Self</code></h3><div class='docblock'><p>Similar to <code>difference</code>, but appears to result in a lower contrast.
+<code>other</code> is inverted if <code>self</code> is white, and preserved if <code>self</code> is
+black.</p>
+</div></div>
+        <h2 id='implementors'>Implementors</h2>
+        <ul class='item-list' id='implementors-list'>
+    <li><code>impl&lt;C, T&gt; <a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Blend</a> for <a class='struct' href='../../palette/blend/struct.PreAlpha.html' title='palette::blend::PreAlpha'>PreAlpha</a>&lt;C, T&gt; <span class='where'>where C: <a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Blend</a>&lt;Color=C&gt; + <a class='trait' href='../../palette/trait.ComponentWise.html' title='palette::ComponentWise'>ComponentWise</a>&lt;Scalar=T&gt;, T: <a class='trait' href='../../num/traits/trait.Float.html' title='num::traits::Float'>Float</a></span></code></li>
+<li><code>impl&lt;C: <a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Blend</a>, T: <a class='trait' href='../../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Blend</a> for <a class='struct' href='../../palette/struct.Alpha.html' title='palette::Alpha'>Alpha</a>&lt;C, T&gt; <span class='where'>where C::Color: <a class='trait' href='../../palette/trait.ComponentWise.html' title='palette::ComponentWise'>ComponentWise</a>&lt;Scalar=T&gt;, <a class='struct' href='../../palette/struct.Alpha.html' title='palette::Alpha'>Alpha</a>&lt;C, T&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../palette/struct.Alpha.html' title='palette::Alpha'>Alpha</a>&lt;C::Color, T&gt;&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='struct' href='../../palette/struct.Alpha.html' title='palette::Alpha'>Alpha</a>&lt;C::Color, T&gt;&gt;</span></code></li>
+<li><code>impl&lt;T: <a class='trait' href='../../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Blend</a> for <a class='struct' href='../../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Blend</a> for <a class='struct' href='../../palette/struct.Luma.html' title='palette::Luma'>Luma</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;T: <a class='trait' href='../../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; <a class='trait' href='../../palette/blend/trait.Blend.html' title='palette::blend::Blend'>Blend</a> for <a class='enum' href='../../palette/enum.Color.html' title='palette::Color'>Color</a>&lt;T&gt;</code></li>
+</ul><script type="text/javascript" async
+                              src="../../implementors/palette/blend/trait.Blend.js">
+                      </script></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "palette";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>
