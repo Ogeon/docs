@@ -1,5 +1,5 @@
 (function() {var implementors = {};
-implementors['html5ever'] = [];
+implementors['html5ever'] = [];implementors['symbiosis_tokenizer'] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

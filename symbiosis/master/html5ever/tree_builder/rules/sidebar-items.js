@@ -1,1 +1,1 @@
-initSidebarItems({"trait":[["TreeBuilderStep",""]]});
+initSidebarItems({});

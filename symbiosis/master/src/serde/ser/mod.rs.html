@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/serde-0.5.2/src/ser/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/serde-0.6.15/src/ser/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
 
     
@@ -24,17 +25,17 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -331,6 +332,71 @@
 <span id="289">289</span>
 <span id="290">290</span>
 <span id="291">291</span>
+<span id="292">292</span>
+<span id="293">293</span>
+<span id="294">294</span>
+<span id="295">295</span>
+<span id="296">296</span>
+<span id="297">297</span>
+<span id="298">298</span>
+<span id="299">299</span>
+<span id="300">300</span>
+<span id="301">301</span>
+<span id="302">302</span>
+<span id="303">303</span>
+<span id="304">304</span>
+<span id="305">305</span>
+<span id="306">306</span>
+<span id="307">307</span>
+<span id="308">308</span>
+<span id="309">309</span>
+<span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
+<span id="323">323</span>
+<span id="324">324</span>
+<span id="325">325</span>
+<span id="326">326</span>
+<span id="327">327</span>
+<span id="328">328</span>
+<span id="329">329</span>
+<span id="330">330</span>
+<span id="331">331</span>
+<span id="332">332</span>
+<span id="333">333</span>
+<span id="334">334</span>
+<span id="335">335</span>
+<span id="336">336</span>
+<span id="337">337</span>
+<span id="338">338</span>
+<span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Generic serialization framework.</span>
 
@@ -338,14 +404,18 @@
 
 <span class='comment'>///////////////////////////////////////////////////////////////////////////////</span>
 
+<span class='doccomment'>/// A trait that describes a type that can be serialized by a `Serializer`.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Serialize</span> {
+    <span class='doccomment'>/// Serializes this value into this serializer.</span>
     <span class='kw'>fn</span> <span class='ident'>serialize</span><span class='op'>&lt;</span><span class='ident'>S</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>serializer</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>S</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>S</span>: <span class='ident'>Serializer</span>;
 }
 
 <span class='comment'>///////////////////////////////////////////////////////////////////////////////</span>
 
+<span class='doccomment'>/// A trait that describes a type that can serialize a stream of values into the underlying format.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Serializer</span> {
+    <span class='doccomment'>/// The error type that can be returned if some error occurs during serialization.</span>
     <span class='kw'>type</span> <span class='ident'>Error</span>;
 
     <span class='doccomment'>/// `visit_bool` serializes a `bool` value.</span>
@@ -444,13 +514,20 @@
         <span class='self'>self</span>.<span class='ident'>visit_seq</span>(<span class='ident'>impls</span>::<span class='ident'>SeqIteratorVisitor</span>::<span class='ident'>new</span>(<span class='ident'>value</span>.<span class='ident'>iter</span>(), <span class='prelude-val'>Some</span>(<span class='ident'>value</span>.<span class='ident'>len</span>())))
     }
 
+    <span class='doccomment'>/// Serializes a `()` value.</span>
     <span class='kw'>fn</span> <span class='ident'>visit_unit</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>;
 
+    <span class='doccomment'>/// Serializes a unit struct value.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// By default, unit structs are serialized as a `()`.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>visit_unit_struct</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>_name</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>visit_unit</span>()
     }
 
+    <span class='doccomment'>/// Serializes a unit variant, otherwise known as a variant with no arguments.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// By default, unit variants are serialized as a `()`.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>visit_unit_variant</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
                           <span class='ident'>_name</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>,
@@ -489,17 +566,27 @@
             <span class='prelude-val'>Some</span>(<span class='ident'>value</span>))
     }
 
+    <span class='doccomment'>/// Serializes a `None` value.</span>
     <span class='kw'>fn</span> <span class='ident'>visit_none</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>;
 
+    <span class='doccomment'>/// Serializes a `Some(...)` value.</span>
     <span class='kw'>fn</span> <span class='ident'>visit_some</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>V</span>: <span class='ident'>Serialize</span>;
 
+    <span class='doccomment'>/// Serializes a sequence.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Callees of this method need to construct a `SeqVisitor`, which iterates through each item</span>
+    <span class='doccomment'>/// in the sequence.</span>
     <span class='kw'>fn</span> <span class='ident'>visit_seq</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>visitor</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>V</span>: <span class='ident'>SeqVisitor</span>;
 
+    <span class='doccomment'>/// Serializes a sequence element.</span>
     <span class='kw'>fn</span> <span class='ident'>visit_seq_elt</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>Serialize</span>;
 
+    <span class='doccomment'>/// Serializes a tuple.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// By default this serializes a tuple as a sequence.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>visit_tuple</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>visitor</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>V</span>: <span class='ident'>SeqVisitor</span>,
@@ -507,6 +594,9 @@
         <span class='self'>self</span>.<span class='ident'>visit_seq</span>(<span class='ident'>visitor</span>)
     }
 
+    <span class='doccomment'>/// Serializes a tuple element.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// By default, tuples are serialized as a sequence.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>visit_tuple_elt</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>Serialize</span>
@@ -514,6 +604,9 @@
         <span class='self'>self</span>.<span class='ident'>visit_seq_elt</span>(<span class='ident'>value</span>)
     }
 
+    <span class='doccomment'>/// Serializes a tuple struct.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// By default, tuple structs are serialized as a tuple.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>visit_tuple_struct</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
                              <span class='ident'>_name</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>,
@@ -523,6 +616,9 @@
         <span class='self'>self</span>.<span class='ident'>visit_tuple</span>(<span class='ident'>visitor</span>)
     }
 
+    <span class='doccomment'>/// Serializes a tuple struct element.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// By default, tuple struct elements are serialized as a tuple element.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>visit_tuple_struct_elt</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>Serialize</span>
@@ -530,6 +626,9 @@
         <span class='self'>self</span>.<span class='ident'>visit_tuple_elt</span>(<span class='ident'>value</span>)
     }
 
+    <span class='doccomment'>/// Serializes a tuple variant.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// By default, tuple variants are serialized as a tuple struct.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>visit_tuple_variant</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
                               <span class='ident'>_name</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>,
@@ -541,6 +640,9 @@
         <span class='self'>self</span>.<span class='ident'>visit_tuple_struct</span>(<span class='ident'>variant</span>, <span class='ident'>visitor</span>)
     }
 
+    <span class='doccomment'>/// Serializes a tuple element.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// By default, tuples are serialized as a sequence.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>visit_tuple_variant_elt</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>value</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>Serialize</span>
@@ -548,13 +650,21 @@
         <span class='self'>self</span>.<span class='ident'>visit_tuple_struct_elt</span>(<span class='ident'>value</span>)
     }
 
+    <span class='doccomment'>/// Serializes a map.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Callees of this method need to construct a `MapVisitor`, which iterates through each item</span>
+    <span class='doccomment'>/// in the map.</span>
     <span class='kw'>fn</span> <span class='ident'>visit_map</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>visitor</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>V</span>: <span class='ident'>MapVisitor</span>;
 
+    <span class='doccomment'>/// Serializes a map element (key-value pair).</span>
     <span class='kw'>fn</span> <span class='ident'>visit_map_elt</span><span class='op'>&lt;</span><span class='ident'>K</span>, <span class='ident'>V</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>key</span>: <span class='ident'>K</span>, <span class='ident'>value</span>: <span class='ident'>V</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Self</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>K</span>: <span class='ident'>Serialize</span>,
               <span class='ident'>V</span>: <span class='ident'>Serialize</span>;
 
+    <span class='doccomment'>/// Serializes a struct.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// By default, structs are serialized as a map with the field name as the key.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>visit_struct</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
                        <span class='ident'>_name</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>,
@@ -564,6 +674,9 @@
         <span class='self'>self</span>.<span class='ident'>visit_map</span>(<span class='ident'>visitor</span>)
     }
 
+    <span class='doccomment'>/// Serializes an element of a struct.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// By default, struct elements are serialized as a map element with the field name as the key.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>visit_struct_elt</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
                            <span class='ident'>key</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>,
@@ -573,6 +686,9 @@
         <span class='self'>self</span>.<span class='ident'>visit_map_elt</span>(<span class='ident'>key</span>, <span class='ident'>value</span>)
     }
 
+    <span class='doccomment'>/// Serializes a struct variant.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// By default, struct variants are serialized as a struct.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>visit_struct_variant</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
                                <span class='ident'>_name</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>,
@@ -584,6 +700,9 @@
         <span class='self'>self</span>.<span class='ident'>visit_struct</span>(<span class='ident'>variant</span>, <span class='ident'>visitor</span>)
     }
 
+    <span class='doccomment'>/// Serializes an element of a struct variant.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// By default, struct variant elements are serialized as a struct element.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>visit_struct_variant_elt</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
                                    <span class='ident'>key</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>,
@@ -602,7 +721,13 @@
     }
 }
 
+<span class='doccomment'>/// A trait that is used by a `Serialize` to iterate through a sequence.</span>
+<span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly-testing&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>len_without_is_empty</span>))]</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>SeqVisitor</span> {
+    <span class='doccomment'>/// Serializes a sequence item in the serializer.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// This returns `Ok(Some(()))` when there are more items to serialize, or `Ok(None)` when</span>
+    <span class='doccomment'>/// complete.</span>
     <span class='kw'>fn</span> <span class='ident'>visit</span><span class='op'>&lt;</span><span class='ident'>S</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>serializer</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span>, <span class='ident'>S</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>S</span>: <span class='ident'>Serializer</span>;
 
@@ -613,7 +738,13 @@
     }
 }
 
+<span class='doccomment'>/// A trait that is used by a `Serialize` to iterate through a map.</span>
+<span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;nightly-testing&quot;</span>, <span class='ident'>allow</span>(<span class='ident'>len_without_is_empty</span>))]</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>MapVisitor</span> {
+    <span class='doccomment'>/// Serializes a map item in the serializer.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// This returns `Ok(Some(()))` when there are more items to serialize, or `Ok(None)` when</span>
+    <span class='doccomment'>/// complete.</span>
     <span class='kw'>fn</span> <span class='ident'>visit</span><span class='op'>&lt;</span><span class='ident'>S</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>serializer</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span>()<span class='op'>&gt;</span>, <span class='ident'>S</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>
         <span class='kw'>where</span> <span class='ident'>S</span>: <span class='ident'>Serializer</span>;
 
@@ -629,40 +760,49 @@
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
-        </div>
-    </div>
+    </aside>
 
     
 
@@ -674,6 +814,6 @@
     <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     
-    <script async src="../../../search-index.js"></script>
+    <script defer src="../../../search-index.js"></script>
 </body>
 </html>

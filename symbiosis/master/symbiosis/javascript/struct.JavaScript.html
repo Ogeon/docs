@@ -9,6 +9,7 @@
 
     <title>symbiosis::javascript::JavaScript - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -24,17 +25,17 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>javascript</a></p><script>window.sidebarCurrent = {name: 'JavaScript', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -45,10 +46,10 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-5201' class='srclink' href='../../src/symbiosis/javascript.rs.html#66-73' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-189' class='srclink' href='../../src/symbiosis/javascript.rs.html#64-71' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct JavaScript&lt;'a&gt; {
     pub variable_state: <a class='enum' href='../../symbiosis/javascript/enum.VarState.html' title='symbiosis::javascript::VarState'>VarState</a>,
-    pub namespace: <a class='enum' href='http://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;'a <a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;,
+    pub namespace: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;'a <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;,
 }</pre><div class='docblock'><p>Code generator for JavaScript templates.</p>
 </div><h2 class='fields'>Fields</h2>
 <table><tr class='stab '>
@@ -56,50 +57,59 @@
 </div></td></tr><tr class='stab '>
                                   <td id='structfield.namespace'><code>namespace</code></td><td><div class='docblock'><p>The name of the namespace in which the template should be created, if
 any. Defaults to none.</p>
-</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='http://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../symbiosis/javascript/struct.JavaScript.html' title='symbiosis::javascript::JavaScript'>JavaScript</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='http://doc.rust-lang.org/nightly/core/default/trait.Default.html#method.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../../symbiosis/javascript/struct.JavaScript.html' title='symbiosis::javascript::JavaScript'>JavaScript</a>&lt;'a&gt;</code></h4>
+</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../symbiosis/javascript/struct.JavaScript.html' title='symbiosis::javascript::JavaScript'>JavaScript</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#method.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../../symbiosis/javascript/struct.JavaScript.html' title='symbiosis::javascript::JavaScript'>JavaScript</a>&lt;'a&gt;</code></h4>
 </div><h3 class='impl'><code>impl&lt;'a&gt; <a class='trait' href='../../symbiosis/codegen/trait.Codegen.html' title='symbiosis::codegen::Codegen'>Codegen</a> for <a class='struct' href='../../symbiosis/javascript/struct.JavaScript.html' title='symbiosis::javascript::JavaScript'>JavaScript</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='assoc_type.Error' class='type'><code>type Error = <a class='enum' href='../../symbiosis/javascript/enum.Error.html' title='symbiosis::javascript::Error'>Error</a></code></h4>
-<h4 id='method.init_writer' class='method'><code>fn <a href='../../symbiosis/codegen/trait.Codegen.html#method.init_writer' class='fnname'>init_writer</a>&lt;'w, W: <a class='trait' href='http://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self, w: &amp;'w mut W) -&gt; <a class='struct' href='../../symbiosis/codegen/struct.Writer.html' title='symbiosis::codegen::Writer'>Writer</a>&lt;'w, W&gt;</code></h4>
-<h4 id='method.build_template' class='method'><code>fn <a href='../../symbiosis/codegen/trait.Codegen.html#method.build_template' class='fnname'>build_template</a>&lt;W: <a class='trait' href='http://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self, w: &amp;mut <a class='struct' href='../../symbiosis/codegen/struct.Writer.html' title='symbiosis::codegen::Writer'>Writer</a>&lt;W&gt;, name: &amp;<a href='http://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, params: &amp;<a class='struct' href='http://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html' title='std::collections::hash::map::HashMap'>HashMap</a>&lt;<a class='type' href='../../tendril/tendril/type.StrTendril.html' title='tendril::tendril::StrTendril'>StrTendril</a>, <a class='enum' href='../../symbiosis/codegen/enum.ContentType.html' title='symbiosis::codegen::ContentType'>ContentType</a>&gt;, tokens: <a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='enum' href='../../symbiosis/codegen/enum.Token.html' title='symbiosis::codegen::Token'>Token</a><a href='http://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../../symbiosis/javascript/enum.Error.html' title='symbiosis::javascript::Error'>Error</a>&gt;</code></h4>
-<h4 id='method.build_module' class='method'><code>fn <a href='../../symbiosis/codegen/trait.Codegen.html#method.build_module' class='fnname'>build_module</a>&lt;W, F&gt;(&amp;self, w: &amp;mut <a class='struct' href='../../symbiosis/codegen/struct.Writer.html' title='symbiosis::codegen::Writer'>Writer</a>&lt;W&gt;, build_templates: F) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../../symbiosis/javascript/enum.Error.html' title='symbiosis::javascript::Error'>Error</a>&gt; <span class='where'>where W: <a class='trait' href='http://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>, F: <a class='trait' href='http://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(&amp;mut <a class='struct' href='../../symbiosis/codegen/struct.Writer.html' title='symbiosis::codegen::Writer'>Writer</a>&lt;W&gt;) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../../symbiosis/javascript/enum.Error.html' title='symbiosis::javascript::Error'>Error</a>&gt;</span></code></h4>
+<h4 id='method.init_writer' class='method'><code>fn <a href='../../symbiosis/codegen/trait.Codegen.html#method.init_writer' class='fnname'>init_writer</a>&lt;'w, W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self, w: &amp;'w mut W) -&gt; <a class='struct' href='../../symbiosis/codegen/struct.Writer.html' title='symbiosis::codegen::Writer'>Writer</a>&lt;'w, W&gt;</code></h4>
+<h4 id='method.build_template' class='method'><code>fn <a href='../../symbiosis/codegen/trait.Codegen.html#method.build_template' class='fnname'>build_template</a>&lt;W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self, w: &amp;mut <a class='struct' href='../../symbiosis/codegen/struct.Writer.html' title='symbiosis::codegen::Writer'>Writer</a>&lt;W&gt;, name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, params: &amp;<a class='struct' href='../../symbiosis_core/content_type/struct.Params.html' title='symbiosis_core::content_type::Params'>Params</a>, tokens: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='enum' href='../../symbiosis_tokenizer/codegen/enum.Token.html' title='symbiosis_tokenizer::codegen::Token'>Token</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../../symbiosis/javascript/enum.Error.html' title='symbiosis::javascript::Error'>Error</a>&gt;</code></h4>
+<h4 id='method.build_module' class='method'><code>fn <a href='../../symbiosis/codegen/trait.Codegen.html#method.build_module' class='fnname'>build_module</a>&lt;W, F&gt;(&amp;self, w: &amp;mut <a class='struct' href='../../symbiosis/codegen/struct.Writer.html' title='symbiosis::codegen::Writer'>Writer</a>&lt;W&gt;, build_templates: F) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../../symbiosis/javascript/enum.Error.html' title='symbiosis::javascript::Error'>Error</a>&gt; <span class='where'>where W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>, F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(&amp;mut <a class='struct' href='../../symbiosis/codegen/struct.Writer.html' title='symbiosis::codegen::Writer'>Writer</a>&lt;W&gt;) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../../symbiosis/javascript/enum.Error.html' title='symbiosis::javascript::Error'>Error</a>&gt;</span></code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
-        </div>
-    </div>
+    </aside>
 
     
 
@@ -111,6 +121,6 @@ any. Defaults to none.</p>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

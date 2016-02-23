@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["fragment",""]],"struct":[["Parser",""],["Template",""]],"type":[["StrTendril",""]]});

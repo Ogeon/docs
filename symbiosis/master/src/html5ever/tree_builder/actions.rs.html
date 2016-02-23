@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/html5ever-0.2.3/src/tree_builder/actions.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/html5ever-0.5.3/src/tree_builder/actions.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>actions.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
 
     
@@ -24,17 +25,17 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -1128,6 +1129,39 @@
 <span id="1086">1086</span>
 <span id="1087">1087</span>
 <span id="1088">1088</span>
+<span id="1089">1089</span>
+<span id="1090">1090</span>
+<span id="1091">1091</span>
+<span id="1092">1092</span>
+<span id="1093">1093</span>
+<span id="1094">1094</span>
+<span id="1095">1095</span>
+<span id="1096">1096</span>
+<span id="1097">1097</span>
+<span id="1098">1098</span>
+<span id="1099">1099</span>
+<span id="1100">1100</span>
+<span id="1101">1101</span>
+<span id="1102">1102</span>
+<span id="1103">1103</span>
+<span id="1104">1104</span>
+<span id="1105">1105</span>
+<span id="1106">1106</span>
+<span id="1107">1107</span>
+<span id="1108">1108</span>
+<span id="1109">1109</span>
+<span id="1110">1110</span>
+<span id="1111">1111</span>
+<span id="1112">1112</span>
+<span id="1113">1113</span>
+<span id="1114">1114</span>
+<span id="1115">1115</span>
+<span id="1116">1116</span>
+<span id="1117">1117</span>
+<span id="1118">1118</span>
+<span id="1119">1119</span>
+<span id="1120">1120</span>
+<span id="1121">1121</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The html5ever Project Developers. See the</span>
 <span class='comment'>// COPYRIGHT file at the top-level directory of this distribution.</span>
@@ -1220,6 +1254,7 @@
     <span class='kw'>fn</span> <span class='ident'>in_scope_named</span><span class='op'>&lt;</span><span class='ident'>TagSet</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>scope</span>: <span class='ident'>TagSet</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> <span class='kw'>where</span> <span class='ident'>TagSet</span>: <span class='ident'>Fn</span>(<span class='ident'>QualName</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
     <span class='kw'>fn</span> <span class='ident'>current_node_named</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
     <span class='kw'>fn</span> <span class='ident'>html_elem_named</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>elem</span>: <span class='ident'>Handle</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
+    <span class='kw'>fn</span> <span class='ident'>in_html_elem_named</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
     <span class='kw'>fn</span> <span class='ident'>elem_in</span><span class='op'>&lt;</span><span class='ident'>TagSet</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>elem</span>: <span class='ident'>Handle</span>, <span class='ident'>set</span>: <span class='ident'>TagSet</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> <span class='kw'>where</span> <span class='ident'>TagSet</span>: <span class='ident'>Fn</span>(<span class='ident'>QualName</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
     <span class='kw'>fn</span> <span class='ident'>in_scope</span><span class='op'>&lt;</span><span class='ident'>TagSet</span>,<span class='ident'>Pred</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>scope</span>: <span class='ident'>TagSet</span>, <span class='ident'>pred</span>: <span class='ident'>Pred</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> <span class='kw'>where</span> <span class='ident'>TagSet</span>: <span class='ident'>Fn</span>(<span class='ident'>QualName</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>, <span class='ident'>Pred</span>: <span class='ident'>Fn</span>(<span class='ident'>Handle</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>;
     <span class='kw'>fn</span> <span class='ident'>check_body_end</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>);
@@ -1251,6 +1286,7 @@
     <span class='kw'>fn</span> <span class='ident'>adjust_mathml_attributes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>tag</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Tag</span>);
     <span class='kw'>fn</span> <span class='ident'>adjust_foreign_attributes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>tag</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Tag</span>);
     <span class='kw'>fn</span> <span class='ident'>foreign_start_tag</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>tag</span>: <span class='ident'>Tag</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span>;
+    <span class='kw'>fn</span> <span class='ident'>unexpected_start_tag_in_foreign_content</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>tag</span>: <span class='ident'>Tag</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span>;
 }
 
 <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
@@ -1332,7 +1368,7 @@
         <span class='self'>self</span>.<span class='ident'>current_node</span>()
     }
 
-    <span class='kw'>fn</span> <span class='ident'>current_node_in</span><span class='op'>&lt;</span><span class='ident'>TagSet</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>set</span>: <span class='ident'>TagSet</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> 
+    <span class='kw'>fn</span> <span class='ident'>current_node_in</span><span class='op'>&lt;</span><span class='ident'>TagSet</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>set</span>: <span class='ident'>TagSet</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
         <span class='kw'>where</span> <span class='ident'>TagSet</span>: <span class='ident'>Fn</span>(<span class='ident'>QualName</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
     {
         <span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>elem_name</span>(<span class='self'>self</span>.<span class='ident'>current_node</span>()))
@@ -1340,40 +1376,40 @@
 
     <span class='comment'>// Insert at the &quot;appropriate place for inserting a node&quot;.</span>
     <span class='kw'>fn</span> <span class='ident'>insert_appropriately</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>child</span>: <span class='ident'>NodeOrText</span><span class='op'>&lt;</span><span class='ident'>Handle</span><span class='op'>&gt;</span>, <span class='ident'>override_target</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Handle</span><span class='op'>&gt;</span>) {
-        <span class='macro'>declare_tag_set</span><span class='macro'>!</span>(<span class='ident'>foster_target</span> <span class='op'>=</span> <span class='ident'>table</span> <span class='ident'>tbody</span> <span class='ident'>tfoot</span> <span class='ident'>thead</span> <span class='ident'>tr</span>);
+        <span class='macro'>declare_tag_set</span><span class='macro'>!</span>(<span class='ident'>foster_target</span> <span class='op'>=</span> <span class='string'>&quot;table&quot;</span> <span class='string'>&quot;tbody&quot;</span> <span class='string'>&quot;tfoot&quot;</span> <span class='string'>&quot;thead&quot;</span> <span class='string'>&quot;tr&quot;</span>);
         <span class='kw'>let</span> <span class='ident'>target</span> <span class='op'>=</span> <span class='ident'>override_target</span>.<span class='ident'>unwrap_or_else</span>(<span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>current_node</span>());
         <span class='kw'>if</span> <span class='op'>!</span>(<span class='self'>self</span>.<span class='ident'>foster_parenting</span> <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>elem_in</span>(<span class='ident'>target</span>.<span class='ident'>clone</span>(), <span class='ident'>foster_target</span>)) {
-            <span class='comment'>// No foster parenting (the common case).</span>
-            <span class='kw'>return</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>append</span>(<span class='ident'>target</span>, <span class='ident'>child</span>);
+            <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>html_elem_named</span>(<span class='ident'>target</span>.<span class='ident'>clone</span>(), <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;template&quot;</span>)) {
+                <span class='comment'>// No foster parenting (inside template).</span>
+                <span class='kw'>let</span> <span class='ident'>contents</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>get_template_contents</span>(<span class='ident'>target</span>);
+                <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>append</span>(<span class='ident'>contents</span>, <span class='ident'>child</span>);
+            } <span class='kw'>else</span> {
+                <span class='comment'>// No foster parenting (the common case).</span>
+                <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>append</span>(<span class='ident'>target</span>, <span class='ident'>child</span>);
+            }
+            <span class='kw'>return</span>;
         }
 
         <span class='comment'>// Foster parenting</span>
-        <span class='comment'>// FIXME: &lt;template&gt;</span>
-        <span class='kw'>let</span> <span class='ident'>last_table</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>open_elems</span>.<span class='ident'>iter</span>()
-            .<span class='ident'>enumerate</span>()
-            .<span class='ident'>rev</span>()
-            .<span class='ident'>filter</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span>(_, <span class='ident'>e</span>)<span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>html_elem_named</span>(<span class='ident'>e</span>.<span class='ident'>clone</span>(), <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>table</span>)))
-            .<span class='ident'>next</span>();
-
-        <span class='kw'>match</span> <span class='ident'>last_table</span> {
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>html_elem</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>html_elem</span>();
-                <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>append</span>(<span class='ident'>html_elem</span>, <span class='ident'>child</span>);
-            }
-            <span class='prelude-val'>Some</span>((<span class='ident'>idx</span>, <span class='ident'>last_table</span>)) <span class='op'>=&gt;</span> {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>iter</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>open_elems</span>.<span class='ident'>iter</span>().<span class='ident'>rev</span>().<span class='ident'>peekable</span>();
+        <span class='kw'>while</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>elem</span>) <span class='op'>=</span> <span class='ident'>iter</span>.<span class='ident'>next</span>() {
+            <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>html_elem_named</span>(<span class='ident'>elem</span>.<span class='ident'>clone</span>(), <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;template&quot;</span>)) {
+                <span class='kw'>let</span> <span class='ident'>contents</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>get_template_contents</span>(<span class='ident'>elem</span>.<span class='ident'>clone</span>());
+                <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>append</span>(<span class='ident'>contents</span>, <span class='ident'>child</span>);
+                <span class='kw'>return</span>;
+            } <span class='kw'>else</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>html_elem_named</span>(<span class='ident'>elem</span>.<span class='ident'>clone</span>(), <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;table&quot;</span>)) {
                 <span class='comment'>// Try inserting &quot;inside last table&#39;s parent node, immediately before last table&quot;</span>
-                <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>append_before_sibling</span>(<span class='ident'>last_table</span>.<span class='ident'>clone</span>(), <span class='ident'>child</span>) {
-                    <span class='prelude-val'>Ok</span>(()) <span class='op'>=&gt;</span> (),
-
+                <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Err</span>(<span class='ident'>child</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>append_before_sibling</span>(<span class='ident'>elem</span>.<span class='ident'>clone</span>(), <span class='ident'>child</span>) {
                     <span class='comment'>// If last_table has no parent, we regain ownership of the child.</span>
                     <span class='comment'>// Insert &quot;inside previous element, after its last child (if any)&quot;</span>
-                    <span class='prelude-val'>Err</span>(<span class='ident'>child</span>) <span class='op'>=&gt;</span> {
-                        <span class='kw'>let</span> <span class='ident'>previous_element</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>open_elems</span>[<span class='ident'>idx</span><span class='op'>-</span><span class='number'>1</span>].<span class='ident'>clone</span>();
-                        <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>append</span>(<span class='ident'>previous_element</span>, <span class='ident'>child</span>);
-                    }
+                    <span class='kw'>let</span> <span class='ident'>previous_element</span> <span class='op'>=</span> (<span class='op'>*</span><span class='ident'>iter</span>.<span class='ident'>peek</span>().<span class='ident'>unwrap</span>()).<span class='ident'>clone</span>();
+                    <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>append</span>(<span class='ident'>previous_element</span>, <span class='ident'>child</span>);
                 }
+                <span class='kw'>return</span>;
             }
         }
+        <span class='kw'>let</span> <span class='ident'>html_elem</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>html_elem</span>();
+        <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>append</span>(<span class='ident'>html_elem</span>, <span class='ident'>child</span>);
     }
 
     <span class='kw'>fn</span> <span class='ident'>adoption_agency</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>subject</span>: <span class='ident'>Atom</span>) {
@@ -1497,7 +1533,7 @@
                 <span class='comment'>// FIXME: Is there a way to avoid cloning the attributes twice here (once on their</span>
                 <span class='comment'>// own, once as part of t.clone() above)?</span>
                 <span class='kw'>let</span> <span class='ident'>new_element</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>create_element</span>(
-                    <span class='ident'>QualName</span>::<span class='ident'>new</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>), <span class='ident'>tag</span>.<span class='ident'>name</span>.<span class='ident'>clone</span>()), <span class='ident'>tag</span>.<span class='ident'>attrs</span>.<span class='ident'>clone</span>());
+                    <span class='ident'>QualName</span>::<span class='ident'>new</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>), <span class='ident'>tag</span>.<span class='ident'>name</span>.<span class='ident'>clone</span>()), <span class='ident'>tag</span>.<span class='ident'>attrs</span>.<span class='ident'>clone</span>());
                 <span class='self'>self</span>.<span class='ident'>open_elems</span>[<span class='ident'>node_index</span>] <span class='op'>=</span> <span class='ident'>new_element</span>.<span class='ident'>clone</span>();
                 <span class='self'>self</span>.<span class='ident'>active_formatting</span>[<span class='ident'>node_formatting_index</span>] <span class='op'>=</span> <span class='ident'>Element</span>(<span class='ident'>new_element</span>.<span class='ident'>clone</span>(), <span class='ident'>tag</span>);
                 <span class='ident'>node</span> <span class='op'>=</span> <span class='ident'>new_element</span>;
@@ -1525,7 +1561,7 @@
             <span class='comment'>// FIXME: Is there a way to avoid cloning the attributes twice here (once on their own,</span>
             <span class='comment'>// once as part of t.clone() above)?</span>
             <span class='kw'>let</span> <span class='ident'>new_element</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>create_element</span>(
-                <span class='ident'>QualName</span>::<span class='ident'>new</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>), <span class='ident'>fmt_elem_tag</span>.<span class='ident'>name</span>.<span class='ident'>clone</span>()), <span class='ident'>fmt_elem_tag</span>.<span class='ident'>attrs</span>.<span class='ident'>clone</span>());
+                <span class='ident'>QualName</span>::<span class='ident'>new</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>), <span class='ident'>fmt_elem_tag</span>.<span class='ident'>name</span>.<span class='ident'>clone</span>()), <span class='ident'>fmt_elem_tag</span>.<span class='ident'>attrs</span>.<span class='ident'>clone</span>());
             <span class='kw'>let</span> <span class='ident'>new_entry</span> <span class='op'>=</span> <span class='ident'>Element</span>(<span class='ident'>new_element</span>.<span class='ident'>clone</span>(), <span class='ident'>fmt_elem_tag</span>);
 
             <span class='comment'>// 16.</span>
@@ -1618,7 +1654,7 @@
 
             <span class='comment'>// FIXME: Is there a way to avoid cloning the attributes twice here (once on their own,</span>
             <span class='comment'>// once as part of t.clone() above)?</span>
-            <span class='kw'>let</span> <span class='ident'>new_element</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>insert_element</span>(<span class='ident'>Push</span>, <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>), <span class='ident'>tag</span>.<span class='ident'>name</span>.<span class='ident'>clone</span>(),
+            <span class='kw'>let</span> <span class='ident'>new_element</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>insert_element</span>(<span class='ident'>Push</span>, <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>), <span class='ident'>tag</span>.<span class='ident'>name</span>.<span class='ident'>clone</span>(),
                                                   <span class='ident'>tag</span>.<span class='ident'>attrs</span>.<span class='ident'>clone</span>());
             <span class='self'>self</span>.<span class='ident'>active_formatting</span>[<span class='ident'>entry_index</span>] <span class='op'>=</span> <span class='ident'>Element</span>(<span class='ident'>new_element</span>, <span class='ident'>tag</span>);
             <span class='kw'>if</span> <span class='ident'>entry_index</span> <span class='op'>==</span> <span class='self'>self</span>.<span class='ident'>active_formatting</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='number'>1</span> {
@@ -1640,7 +1676,7 @@
         }
 
         <span class='kw'>let</span> <span class='ident'>node</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>open_elems</span>[<span class='number'>1</span>].<span class='ident'>clone</span>();
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>html_elem_named</span>(<span class='ident'>node</span>.<span class='ident'>clone</span>(), <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>body</span>)) {
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>html_elem_named</span>(<span class='ident'>node</span>.<span class='ident'>clone</span>(), <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;body&quot;</span>)) {
             <span class='prelude-val'>Some</span>(<span class='ident'>node</span>)
         } <span class='kw'>else</span> {
             <span class='prelude-val'>None</span>
@@ -1651,8 +1687,8 @@
     <span class='doccomment'>/// the end of the body.</span>
     <span class='kw'>fn</span> <span class='ident'>check_body_end</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='macro'>declare_tag_set</span><span class='macro'>!</span>(<span class='ident'>body_end_ok</span> <span class='op'>=</span>
-            <span class='ident'>dd</span> <span class='ident'>dt</span> <span class='ident'>li</span> <span class='ident'>optgroup</span> <span class='ident'>option</span> <span class='ident'>p</span> <span class='ident'>rp</span> <span class='ident'>rt</span> <span class='ident'>tbody</span> <span class='ident'>td</span> <span class='ident'>tfoot</span> <span class='ident'>th</span>
-            <span class='ident'>thead</span> <span class='ident'>tr</span> <span class='ident'>body</span> <span class='ident'>html</span>);
+            <span class='string'>&quot;dd&quot;</span> <span class='string'>&quot;dt&quot;</span> <span class='string'>&quot;li&quot;</span> <span class='string'>&quot;optgroup&quot;</span> <span class='string'>&quot;option&quot;</span> <span class='string'>&quot;p&quot;</span> <span class='string'>&quot;rp&quot;</span> <span class='string'>&quot;rt&quot;</span> <span class='string'>&quot;tbody&quot;</span> <span class='string'>&quot;td&quot;</span> <span class='string'>&quot;tfoot&quot;</span> <span class='string'>&quot;th&quot;</span>
+            <span class='string'>&quot;thead&quot;</span> <span class='string'>&quot;tr&quot;</span> <span class='string'>&quot;body&quot;</span> <span class='string'>&quot;html&quot;</span>);
 
         <span class='kw'>for</span> <span class='ident'>elem</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>open_elems</span>.<span class='ident'>iter</span>() {
             <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>elem_name</span>(<span class='ident'>elem</span>.<span class='ident'>clone</span>());
@@ -1667,7 +1703,7 @@
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>in_scope</span><span class='op'>&lt;</span><span class='ident'>TagSet</span>,<span class='ident'>Pred</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>scope</span>: <span class='ident'>TagSet</span>, <span class='ident'>pred</span>: <span class='ident'>Pred</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> 
+    <span class='kw'>fn</span> <span class='ident'>in_scope</span><span class='op'>&lt;</span><span class='ident'>TagSet</span>,<span class='ident'>Pred</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>scope</span>: <span class='ident'>TagSet</span>, <span class='ident'>pred</span>: <span class='ident'>Pred</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
         <span class='kw'>where</span> <span class='ident'>TagSet</span>: <span class='ident'>Fn</span>(<span class='ident'>QualName</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>, <span class='ident'>Pred</span>: <span class='ident'>Fn</span>(<span class='ident'>Handle</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
     {
         <span class='kw'>for</span> <span class='ident'>node</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>open_elems</span>.<span class='ident'>iter</span>().<span class='ident'>rev</span>() {
@@ -1684,21 +1720,25 @@
         <span class='boolval'>false</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>elem_in</span><span class='op'>&lt;</span><span class='ident'>TagSet</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>elem</span>: <span class='ident'>Handle</span>, <span class='ident'>set</span>: <span class='ident'>TagSet</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> 
+    <span class='kw'>fn</span> <span class='ident'>elem_in</span><span class='op'>&lt;</span><span class='ident'>TagSet</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>elem</span>: <span class='ident'>Handle</span>, <span class='ident'>set</span>: <span class='ident'>TagSet</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
         <span class='kw'>where</span> <span class='ident'>TagSet</span>: <span class='ident'>Fn</span>(<span class='ident'>QualName</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
     {
         <span class='ident'>set</span>(<span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>elem_name</span>(<span class='ident'>elem</span>))
     }
 
     <span class='kw'>fn</span> <span class='ident'>html_elem_named</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>elem</span>: <span class='ident'>Handle</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>elem_name</span>(<span class='ident'>elem</span>) <span class='op'>==</span> <span class='ident'>QualName</span>::<span class='ident'>new</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>), <span class='ident'>name</span>)
+        <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>elem_name</span>(<span class='ident'>elem</span>) <span class='op'>==</span> <span class='ident'>QualName</span>::<span class='ident'>new</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>), <span class='ident'>name</span>)
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>in_html_elem_named</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+        <span class='self'>self</span>.<span class='ident'>open_elems</span>.<span class='ident'>iter</span>().<span class='ident'>any</span>(<span class='op'>|</span><span class='ident'>elem</span><span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>html_elem_named</span>(<span class='ident'>elem</span>.<span class='ident'>clone</span>(), <span class='ident'>name</span>.<span class='ident'>clone</span>()))
     }
 
     <span class='kw'>fn</span> <span class='ident'>current_node_named</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='self'>self</span>.<span class='ident'>html_elem_named</span>(<span class='self'>self</span>.<span class='ident'>current_node</span>(), <span class='ident'>name</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>in_scope_named</span><span class='op'>&lt;</span><span class='ident'>TagSet</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>scope</span>: <span class='ident'>TagSet</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> 
+    <span class='kw'>fn</span> <span class='ident'>in_scope_named</span><span class='op'>&lt;</span><span class='ident'>TagSet</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>scope</span>: <span class='ident'>TagSet</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
         <span class='kw'>where</span> <span class='ident'>TagSet</span>: <span class='ident'>Fn</span>(<span class='ident'>QualName</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
     {
         <span class='self'>self</span>.<span class='ident'>in_scope</span>(<span class='ident'>scope</span>, <span class='op'>|</span><span class='ident'>elem</span><span class='op'>|</span>
@@ -1706,7 +1746,7 @@
     }
 
     <span class='comment'>//§ closing-elements-that-have-implied-end-tags</span>
-    <span class='kw'>fn</span> <span class='ident'>generate_implied_end</span><span class='op'>&lt;</span><span class='ident'>TagSet</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>set</span>: <span class='ident'>TagSet</span>) 
+    <span class='kw'>fn</span> <span class='ident'>generate_implied_end</span><span class='op'>&lt;</span><span class='ident'>TagSet</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>set</span>: <span class='ident'>TagSet</span>)
         <span class='kw'>where</span> <span class='ident'>TagSet</span>: <span class='ident'>Fn</span>(<span class='ident'>QualName</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
     {
         <span class='kw'>loop</span> {
@@ -1719,14 +1759,14 @@
 
     <span class='kw'>fn</span> <span class='ident'>generate_implied_end_except</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>except</span>: <span class='ident'>Atom</span>) {
         <span class='self'>self</span>.<span class='ident'>generate_implied_end</span>(<span class='op'>|</span><span class='ident'>p</span><span class='op'>|</span> <span class='kw'>match</span> <span class='ident'>p</span> {
-            <span class='ident'>QualName</span> { <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>), <span class='kw-2'>ref</span> <span class='ident'>local</span> } <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>local</span> <span class='op'>==</span> <span class='ident'>except</span> <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
+            <span class='ident'>QualName</span> { <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>), <span class='kw-2'>ref</span> <span class='ident'>local</span> } <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>local</span> <span class='op'>==</span> <span class='ident'>except</span> <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
             _ <span class='op'>=&gt;</span> <span class='ident'>cursory_implied_end</span>(<span class='ident'>p</span>),
         });
     }
     <span class='comment'>//§ END</span>
 
     <span class='comment'>// Pop elements until the current element is in the set.</span>
-    <span class='kw'>fn</span> <span class='ident'>pop_until_current</span><span class='op'>&lt;</span><span class='ident'>TagSet</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>pred</span>: <span class='ident'>TagSet</span>) 
+    <span class='kw'>fn</span> <span class='ident'>pop_until_current</span><span class='op'>&lt;</span><span class='ident'>TagSet</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>pred</span>: <span class='ident'>TagSet</span>)
         <span class='kw'>where</span> <span class='ident'>TagSet</span>: <span class='ident'>Fn</span>(<span class='ident'>QualName</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>
     {
         <span class='kw'>loop</span> {
@@ -1754,7 +1794,7 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>pop_until_named</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-        <span class='self'>self</span>.<span class='ident'>pop_until</span>(<span class='op'>|</span><span class='ident'>p</span><span class='op'>|</span> <span class='ident'>p</span> <span class='op'>==</span> <span class='ident'>QualName</span>::<span class='ident'>new</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>), <span class='ident'>name</span>.<span class='ident'>clone</span>()))
+        <span class='self'>self</span>.<span class='ident'>pop_until</span>(<span class='op'>|</span><span class='ident'>p</span><span class='op'>|</span> <span class='ident'>p</span> <span class='op'>==</span> <span class='ident'>QualName</span>::<span class='ident'>new</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>), <span class='ident'>name</span>.<span class='ident'>clone</span>()))
     }
 
     <span class='comment'>// Pop elements until one with the specified name has been popped.</span>
@@ -1768,13 +1808,13 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>close_p_element</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='macro'>declare_tag_set</span><span class='macro'>!</span>(<span class='ident'>implied</span> <span class='op'>=</span> <span class='ident'>cursory_implied_end</span> <span class='op'>-</span> <span class='ident'>p</span>);
+        <span class='macro'>declare_tag_set</span><span class='macro'>!</span>(<span class='ident'>implied</span> <span class='op'>=</span> [<span class='ident'>cursory_implied_end</span>] <span class='op'>-</span> <span class='string'>&quot;p&quot;</span>);
         <span class='self'>self</span>.<span class='ident'>generate_implied_end</span>(<span class='ident'>implied</span>);
-        <span class='self'>self</span>.<span class='ident'>expect_to_close</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>p</span>));
+        <span class='self'>self</span>.<span class='ident'>expect_to_close</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;p&quot;</span>));
     }
 
     <span class='kw'>fn</span> <span class='ident'>close_p_element_in_button_scope</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>in_scope_named</span>(<span class='ident'>button_scope</span>, <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>p</span>)) {
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>in_scope_named</span>(<span class='ident'>button_scope</span>, <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;p&quot;</span>)) {
             <span class='self'>self</span>.<span class='ident'>close_p_element</span>();
         }
     }
@@ -1797,7 +1837,7 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>process_chars_in_table</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>token</span>: <span class='ident'>Token</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span> {
-        <span class='macro'>declare_tag_set</span><span class='macro'>!</span>(<span class='ident'>table_outer</span> <span class='op'>=</span> <span class='ident'>table</span> <span class='ident'>tbody</span> <span class='ident'>tfoot</span> <span class='ident'>thead</span> <span class='ident'>tr</span>);
+        <span class='macro'>declare_tag_set</span><span class='macro'>!</span>(<span class='ident'>table_outer</span> <span class='op'>=</span> <span class='string'>&quot;table&quot;</span> <span class='string'>&quot;tbody&quot;</span> <span class='string'>&quot;tfoot&quot;</span> <span class='string'>&quot;thead&quot;</span> <span class='string'>&quot;tr&quot;</span>);
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>current_node_in</span>(<span class='ident'>table_outer</span>) {
             <span class='macro'>assert</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>pending_table_text</span>.<span class='ident'>is_empty</span>());
             <span class='self'>self</span>.<span class='ident'>orig_mode</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='self'>self</span>.<span class='ident'>mode</span>);
@@ -1818,28 +1858,34 @@
                 <span class='ident'>node</span> <span class='op'>=</span> <span class='ident'>ctx</span>;
             }
             <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>elem_name</span>(<span class='ident'>node</span>.<span class='ident'>clone</span>()) {
-                <span class='ident'>QualName</span> { <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>), <span class='ident'>local</span> } <span class='op'>=&gt;</span> <span class='ident'>local</span>,
+                <span class='ident'>QualName</span> { <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>), <span class='ident'>local</span> } <span class='op'>=&gt;</span> <span class='ident'>local</span>,
                 _ <span class='op'>=&gt;</span> <span class='kw'>continue</span>,
             };
             <span class='kw'>match</span> <span class='ident'>name</span> {
-                <span class='comment'>// FIXME: &lt;select&gt; sub-steps</span>
-                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>select</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>InSelect</span>,
-
-                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>td</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>th</span>) <span class='op'>=&gt;</span> <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>last</span> { <span class='kw'>return</span> <span class='ident'>InCell</span>; },
-                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>tr</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>InRow</span>,
-                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>tbody</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>thead</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>tfoot</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>InTableBody</span>,
-                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>caption</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>InCaption</span>,
-                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>colgroup</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>InColumnGroup</span>,
-                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>table</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>InTable</span>,
-                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>head</span>) <span class='op'>=&gt;</span> <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>last</span> { <span class='kw'>return</span> <span class='ident'>InHead</span> },
-                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>body</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>InBody</span>,
-                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>frameset</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>InFrameset</span>,
-                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>html</span>) <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>head_elem</span> {
+                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;select&quot;</span>) <span class='op'>=&gt;</span> {
+                    <span class='kw'>for</span> <span class='ident'>ancestor</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>open_elems</span>[<span class='number'>0</span>..<span class='ident'>i</span>].<span class='ident'>iter</span>().<span class='ident'>rev</span>() {
+                        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>html_elem_named</span>(<span class='ident'>ancestor</span>.<span class='ident'>clone</span>(), <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;template&quot;</span>)) {
+                            <span class='kw'>return</span> <span class='ident'>InSelect</span>;
+                        } <span class='kw'>else</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>html_elem_named</span>(<span class='ident'>ancestor</span>.<span class='ident'>clone</span>(), <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;table&quot;</span>)) {
+                            <span class='kw'>return</span> <span class='ident'>InSelectInTable</span>;
+                        }
+                    }
+                    <span class='kw'>return</span> <span class='ident'>InSelect</span>;
+                },
+                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;td&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;th&quot;</span>) <span class='op'>=&gt;</span> <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>last</span> { <span class='kw'>return</span> <span class='ident'>InCell</span>; },
+                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;tr&quot;</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>InRow</span>,
+                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;tbody&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;thead&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;tfoot&quot;</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>InTableBody</span>,
+                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;caption&quot;</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>InCaption</span>,
+                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;colgroup&quot;</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>InColumnGroup</span>,
+                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;table&quot;</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>InTable</span>,
+                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;template&quot;</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>template_modes</span>.<span class='ident'>last</span>().<span class='ident'>unwrap</span>(),
+                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;head&quot;</span>) <span class='op'>=&gt;</span> <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>last</span> { <span class='kw'>return</span> <span class='ident'>InHead</span> },
+                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;body&quot;</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>InBody</span>,
+                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;frameset&quot;</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>InFrameset</span>,
+                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;html&quot;</span>) <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>head_elem</span> {
                     <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>BeforeHead</span>,
                     <span class='prelude-val'>Some</span>(_) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>AfterHead</span>,
                 },
-
-                <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>template</span>) <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;FIXME: &lt;template&gt; not implemented&quot;</span>),
 
                 _ <span class='op'>=&gt;</span> (),
             }
@@ -1882,7 +1928,7 @@
 
     <span class='comment'>//§ creating-and-inserting-nodes</span>
     <span class='kw'>fn</span> <span class='ident'>create_root</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>attrs</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Attribute</span><span class='op'>&gt;</span>) {
-        <span class='kw'>let</span> <span class='ident'>elem</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>create_element</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>HTML</span>, <span class='ident'>html</span>), <span class='ident'>attrs</span>);
+        <span class='kw'>let</span> <span class='ident'>elem</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>create_element</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>html</span>, <span class='string'>&quot;html&quot;</span>), <span class='ident'>attrs</span>);
         <span class='self'>self</span>.<span class='ident'>push</span>(<span class='kw-2'>&amp;</span><span class='ident'>elem</span>);
         <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>append</span>(<span class='self'>self</span>.<span class='ident'>doc_handle</span>.<span class='ident'>clone</span>(), <span class='ident'>AppendNode</span>(<span class='ident'>elem</span>));
         <span class='comment'>// FIXME: application cache selection algorithm</span>
@@ -1901,15 +1947,15 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>insert_element_for</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>tag</span>: <span class='ident'>Tag</span>) <span class='op'>-&gt;</span> <span class='ident'>Handle</span> {
-        <span class='self'>self</span>.<span class='ident'>insert_element</span>(<span class='ident'>Push</span>, <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>), <span class='ident'>tag</span>.<span class='ident'>name</span>, <span class='ident'>tag</span>.<span class='ident'>attrs</span>)
+        <span class='self'>self</span>.<span class='ident'>insert_element</span>(<span class='ident'>Push</span>, <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>), <span class='ident'>tag</span>.<span class='ident'>name</span>, <span class='ident'>tag</span>.<span class='ident'>attrs</span>)
     }
 
     <span class='kw'>fn</span> <span class='ident'>insert_and_pop_element_for</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>tag</span>: <span class='ident'>Tag</span>) <span class='op'>-&gt;</span> <span class='ident'>Handle</span> {
-        <span class='self'>self</span>.<span class='ident'>insert_element</span>(<span class='ident'>NoPush</span>, <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>), <span class='ident'>tag</span>.<span class='ident'>name</span>, <span class='ident'>tag</span>.<span class='ident'>attrs</span>)
+        <span class='self'>self</span>.<span class='ident'>insert_element</span>(<span class='ident'>NoPush</span>, <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>), <span class='ident'>tag</span>.<span class='ident'>name</span>, <span class='ident'>tag</span>.<span class='ident'>attrs</span>)
     }
 
     <span class='kw'>fn</span> <span class='ident'>insert_phantom</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>) <span class='op'>-&gt;</span> <span class='ident'>Handle</span> {
-        <span class='self'>self</span>.<span class='ident'>insert_element</span>(<span class='ident'>Push</span>, <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>), <span class='ident'>name</span>, <span class='macro'>vec</span><span class='macro'>!</span>())
+        <span class='self'>self</span>.<span class='ident'>insert_element</span>(<span class='ident'>Push</span>, <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>), <span class='ident'>name</span>, <span class='macro'>vec</span><span class='macro'>!</span>())
     }
     <span class='comment'>//§ END</span>
 
@@ -1928,7 +1974,7 @@
             <span class='self'>self</span>.<span class='ident'>active_formatting</span>.<span class='ident'>remove</span>(<span class='ident'>first_match</span>.<span class='ident'>expect</span>(<span class='string'>&quot;matches with no index&quot;</span>));
         }
 
-        <span class='kw'>let</span> <span class='ident'>elem</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>insert_element</span>(<span class='ident'>Push</span>, <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>), <span class='ident'>tag</span>.<span class='ident'>name</span>.<span class='ident'>clone</span>(), <span class='ident'>tag</span>.<span class='ident'>attrs</span>.<span class='ident'>clone</span>());
+        <span class='kw'>let</span> <span class='ident'>elem</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>insert_element</span>(<span class='ident'>Push</span>, <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>), <span class='ident'>tag</span>.<span class='ident'>name</span>.<span class='ident'>clone</span>(), <span class='ident'>tag</span>.<span class='ident'>attrs</span>.<span class='ident'>clone</span>());
         <span class='self'>self</span>.<span class='ident'>active_formatting</span>.<span class='ident'>push</span>(<span class='ident'>Element</span>(<span class='ident'>elem</span>.<span class='ident'>clone</span>(), <span class='ident'>tag</span>));
         <span class='ident'>elem</span>
     }
@@ -1980,7 +2026,7 @@
     <span class='kw'>fn</span> <span class='ident'>handle_misnested_a_tags</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>tag</span>: <span class='kw-2'>&amp;</span><span class='ident'>Tag</span>) {
         <span class='kw'>let</span> <span class='ident'>node</span> <span class='op'>=</span> <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(
             <span class='self'>self</span>.<span class='ident'>active_formatting_end_to_marker</span>()
-                .<span class='ident'>filter</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span>(_, <span class='ident'>n</span>, _)<span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>html_elem_named</span>(<span class='ident'>n</span>.<span class='ident'>clone</span>(), <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>a</span>)))
+                .<span class='ident'>filter</span>(<span class='op'>|</span><span class='kw-2'>&amp;</span>(_, <span class='ident'>n</span>, _)<span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>html_elem_named</span>(<span class='ident'>n</span>.<span class='ident'>clone</span>(), <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;a&quot;</span>)))
                 .<span class='ident'>next</span>()
                 .<span class='ident'>map</span>(<span class='op'>|</span>(_, <span class='ident'>n</span>, _)<span class='op'>|</span> <span class='ident'>n</span>.<span class='ident'>clone</span>()),
 
@@ -1988,7 +2034,7 @@
         );
 
         <span class='self'>self</span>.<span class='ident'>unexpected</span>(<span class='ident'>tag</span>);
-        <span class='self'>self</span>.<span class='ident'>adoption_agency</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>a</span>));
+        <span class='self'>self</span>.<span class='ident'>adoption_agency</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;a&quot;</span>));
         <span class='self'>self</span>.<span class='ident'>position_in_active_formatting</span>(<span class='kw-2'>&amp;</span><span class='ident'>node</span>)
             .<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>index</span><span class='op'>|</span> <span class='self'>self</span>.<span class='ident'>active_formatting</span>.<span class='ident'>remove</span>(<span class='ident'>index</span>));
         <span class='self'>self</span>.<span class='ident'>remove_from_stack</span>(<span class='kw-2'>&amp;</span><span class='ident'>node</span>);
@@ -2005,31 +2051,36 @@
         }
 
         <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>elem_name</span>(<span class='self'>self</span>.<span class='ident'>adjusted_current_node</span>());
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>) <span class='op'>=</span> <span class='ident'>name</span>.<span class='ident'>ns</span> {
+        <span class='kw'>if</span> <span class='kw'>let</span> <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>) <span class='op'>=</span> <span class='ident'>name</span>.<span class='ident'>ns</span> {
             <span class='kw'>return</span> <span class='boolval'>false</span>;
         }
 
         <span class='kw'>if</span> <span class='ident'>mathml_text_integration_point</span>(<span class='ident'>name</span>.<span class='ident'>clone</span>()) {
             <span class='kw'>match</span> <span class='op'>*</span><span class='ident'>token</span> {
-                <span class='ident'>CharacterTokens</span>(..) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='boolval'>false</span>,
+                <span class='ident'>CharacterTokens</span>(..) <span class='op'>|</span> <span class='ident'>NullCharacterToken</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='boolval'>false</span>,
                 <span class='ident'>TagToken</span>(<span class='ident'>Tag</span> { <span class='ident'>kind</span>: <span class='ident'>StartTag</span>, <span class='kw-2'>ref</span> <span class='ident'>name</span>, .. })
-                    <span class='kw'>if</span> <span class='op'>!</span><span class='macro'>matches</span><span class='macro'>!</span>(<span class='op'>*</span><span class='ident'>name</span>, <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>mglyph</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>malignmark</span>)) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='boolval'>false</span>,
+                    <span class='kw'>if</span> <span class='op'>!</span><span class='macro'>matches</span><span class='macro'>!</span>(<span class='op'>*</span><span class='ident'>name</span>, <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;mglyph&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;malignmark&quot;</span>)) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='boolval'>false</span>,
                 _ <span class='op'>=&gt;</span> (),
             }
         }
 
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>MathML</span>, <span class='string'>&quot;annotation-xml&quot;</span>) <span class='op'>=</span> <span class='ident'>name</span> {
-            <span class='kw'>if</span> <span class='kw'>let</span> <span class='ident'>TagToken</span>(<span class='ident'>Tag</span> { <span class='ident'>kind</span>: <span class='ident'>StartTag</span>, <span class='ident'>name</span>: <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>svg</span>), .. }) <span class='op'>=</span> <span class='op'>*</span><span class='ident'>token</span> {
-                <span class='kw'>return</span> <span class='boolval'>false</span>;
-            }
-        }
-
-        <span class='kw'>if</span> <span class='ident'>html_integration_point</span>(<span class='ident'>name</span>.<span class='ident'>clone</span>()) {
+        <span class='kw'>if</span> <span class='ident'>svg_html_integration_point</span>(<span class='ident'>name</span>.<span class='ident'>clone</span>()) {
             <span class='kw'>match</span> <span class='op'>*</span><span class='ident'>token</span> {
-                <span class='ident'>CharacterTokens</span>(..) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='boolval'>false</span>,
+                <span class='ident'>CharacterTokens</span>(..) <span class='op'>|</span> <span class='ident'>NullCharacterToken</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='boolval'>false</span>,
                 <span class='ident'>TagToken</span>(<span class='ident'>Tag</span> { <span class='ident'>kind</span>: <span class='ident'>StartTag</span>, .. }) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='boolval'>false</span>,
                 _ <span class='op'>=&gt;</span> (),
             }
+        }
+
+        <span class='kw'>if</span> <span class='kw'>let</span> <span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>mathml</span>, <span class='string'>&quot;annotation-xml&quot;</span>) <span class='op'>=</span> <span class='ident'>name</span> {
+            <span class='kw'>match</span> <span class='op'>*</span><span class='ident'>token</span> {
+                <span class='ident'>TagToken</span>(<span class='ident'>Tag</span> { <span class='ident'>kind</span>: <span class='ident'>StartTag</span>, <span class='ident'>name</span>: <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;svg&quot;</span>), .. }) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='boolval'>false</span>,
+                <span class='ident'>CharacterTokens</span>(..) <span class='op'>|</span> <span class='ident'>NullCharacterToken</span> <span class='op'>|</span>
+                <span class='ident'>TagToken</span>(<span class='ident'>Tag</span> { <span class='ident'>kind</span>: <span class='ident'>StartTag</span>, .. }) <span class='op'>=&gt;</span> {
+                    <span class='kw'>return</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>is_mathml_annotation_xml_integration_point</span>(<span class='self'>self</span>.<span class='ident'>adjusted_current_node</span>())
+                }
+                _ <span class='op'>=&gt;</span> {}
+            };
         }
 
         <span class='boolval'>true</span>
@@ -2038,8 +2089,8 @@
 
     <span class='kw'>fn</span> <span class='ident'>enter_foreign</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>tag</span>: <span class='ident'>Tag</span>, <span class='ident'>ns</span>: <span class='ident'>Namespace</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span> {
         <span class='kw'>match</span> <span class='ident'>ns</span> {
-            <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>MathML</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>adjust_mathml_attributes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>tag</span>),
-            <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>SVG</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>adjust_svg_attributes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>tag</span>),
+            <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>mathml</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>adjust_mathml_attributes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>tag</span>),
+            <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>svg</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>adjust_svg_attributes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>tag</span>),
             _ <span class='op'>=&gt;</span> (),
         }
         <span class='self'>self</span>.<span class='ident'>adjust_foreign_attributes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>tag</span>);
@@ -2056,43 +2107,43 @@
     <span class='kw'>fn</span> <span class='ident'>adjust_svg_tag_name</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>tag</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Tag</span>) {
         <span class='kw'>let</span> <span class='ident'>Tag</span> { <span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>name</span>, .. } <span class='op'>=</span> <span class='op'>*</span><span class='ident'>tag</span>;
         <span class='kw'>match</span> <span class='op'>*</span><span class='ident'>name</span> {
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>altglyph</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>altGlyph</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>altglyphdef</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>altGlyphDef</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>altglyphitem</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>altGlyphItem</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>animatecolor</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>animateColor</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>animatemotion</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>animateMotion</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>animatetransform</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>animateTransform</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>clippath</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>clipPath</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feblend</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feBlend</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fecolormatrix</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feColorMatrix</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fecomponenttransfer</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feComponentTransfer</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fecomposite</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feComposite</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feconvolvematrix</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feConvolveMatrix</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fediffuselighting</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feDiffuseLighting</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fedisplacementmap</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feDisplacementMap</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fedistantlight</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feDistantLight</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fedropshadow</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feDropShadow</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feflood</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feFlood</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fefunca</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feFuncA</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fefuncb</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feFuncB</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fefuncg</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feFuncG</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fefuncr</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feFuncR</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fegaussianblur</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feGaussianBlur</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feimage</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feImage</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>femerge</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feMerge</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>femergenode</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feMergeNode</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>femorphology</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feMorphology</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feoffset</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feOffset</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fepointlight</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fePointLight</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fespecularlighting</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feSpecularLighting</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fespotlight</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feSpotLight</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>fetile</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feTile</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feturbulence</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>feTurbulence</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>foreignobject</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>foreignObject</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>glyphref</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>glyphRef</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>lineargradient</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>linearGradient</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>radialgradient</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>radialGradient</span>),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>textpath</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>textPath</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;altglyph&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;altGlyph&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;altglyphdef&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;altGlyphDef&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;altglyphitem&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;altGlyphItem&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;animatecolor&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;animateColor&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;animatemotion&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;animateMotion&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;animatetransform&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;animateTransform&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;clippath&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;clipPath&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feblend&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feBlend&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fecolormatrix&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feColorMatrix&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fecomponenttransfer&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feComponentTransfer&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fecomposite&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feComposite&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feconvolvematrix&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feConvolveMatrix&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fediffuselighting&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feDiffuseLighting&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fedisplacementmap&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feDisplacementMap&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fedistantlight&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feDistantLight&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fedropshadow&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feDropShadow&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feflood&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feFlood&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fefunca&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feFuncA&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fefuncb&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feFuncB&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fefuncg&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feFuncG&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fefuncr&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feFuncR&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fegaussianblur&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feGaussianBlur&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feimage&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feImage&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;femerge&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feMerge&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;femergenode&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feMergeNode&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;femorphology&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feMorphology&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feoffset&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feOffset&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fepointlight&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fePointLight&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fespecularlighting&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feSpecularLighting&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fespotlight&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feSpotLight&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;fetile&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feTile&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feturbulence&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;feTurbulence&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;foreignobject&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;foreignObject&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;glyphref&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;glyphRef&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;lineargradient&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;linearGradient&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;radialgradient&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;radialGradient&quot;</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;textpath&quot;</span>) <span class='op'>=&gt;</span> <span class='op'>*</span><span class='ident'>name</span> <span class='op'>=</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;textPath&quot;</span>),
             _ <span class='op'>=&gt;</span> (),
         }
     }
@@ -2109,89 +2160,89 @@
 
     <span class='kw'>fn</span> <span class='ident'>adjust_svg_attributes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>tag</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Tag</span>) {
         <span class='self'>self</span>.<span class='ident'>adjust_attributes</span>(<span class='ident'>tag</span>, <span class='op'>|</span><span class='ident'>k</span><span class='op'>|</span> <span class='kw'>match</span> <span class='ident'>k</span> {
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>attributename</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>attributeName</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>attributetype</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>attributeType</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>basefrequency</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>baseFrequency</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>baseprofile</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>baseProfile</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>calcmode</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>calcMode</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>clippathunits</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>clipPathUnits</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>diffuseconstant</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>diffuseConstant</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>edgemode</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>edgeMode</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>filterunits</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>filterUnits</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>glyphref</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>glyphRef</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>gradienttransform</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>gradientTransform</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>gradientunits</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>gradientUnits</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>kernelmatrix</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>kernelMatrix</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>kernelunitlength</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>kernelUnitLength</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>keypoints</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>keyPoints</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>keysplines</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>keySplines</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>keytimes</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>keyTimes</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>lengthadjust</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>lengthAdjust</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>limitingconeangle</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>limitingConeAngle</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>markerheight</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>markerHeight</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>markerunits</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>markerUnits</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>markerwidth</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>markerWidth</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>maskcontentunits</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>maskContentUnits</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>maskunits</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>maskUnits</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>numoctaves</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>numOctaves</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>pathlength</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>pathLength</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>patterncontentunits</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>patternContentUnits</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>patterntransform</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>patternTransform</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>patternunits</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>patternUnits</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>pointsatx</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>pointsAtX</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>pointsaty</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>pointsAtY</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>pointsatz</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>pointsAtZ</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>preservealpha</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>preserveAlpha</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>preserveaspectratio</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>preserveAspectRatio</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>primitiveunits</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>primitiveUnits</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>refx</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>refX</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>refy</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>refY</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>repeatcount</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>repeatCount</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>repeatdur</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>repeatDur</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>requiredextensions</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>requiredExtensions</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>requiredfeatures</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>requiredFeatures</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>specularconstant</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>specularConstant</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>specularexponent</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>specularExponent</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>spreadmethod</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>spreadMethod</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>startoffset</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>startOffset</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>stddeviation</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>stdDeviation</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>stitchtiles</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>stitchTiles</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>surfacescale</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>surfaceScale</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>systemlanguage</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>systemLanguage</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>tablevalues</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>tableValues</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>targetx</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>targetX</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>targety</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>targetY</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>textlength</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>textLength</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>viewbox</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>viewBox</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>viewtarget</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>viewTarget</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>xchannelselector</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>xChannelSelector</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>ychannelselector</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>yChannelSelector</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>zoomandpan</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>zoomAndPan</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;attributename&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;attributeName&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;attributetype&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;attributeType&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;basefrequency&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;baseFrequency&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;baseprofile&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;baseProfile&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;calcmode&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;calcMode&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;clippathunits&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;clipPathUnits&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;diffuseconstant&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;diffuseConstant&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;edgemode&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;edgeMode&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;filterunits&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;filterUnits&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;glyphref&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;glyphRef&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;gradienttransform&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;gradientTransform&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;gradientunits&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;gradientUnits&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;kernelmatrix&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;kernelMatrix&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;kernelunitlength&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;kernelUnitLength&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;keypoints&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;keyPoints&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;keysplines&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;keySplines&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;keytimes&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;keyTimes&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;lengthadjust&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;lengthAdjust&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;limitingconeangle&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;limitingConeAngle&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;markerheight&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;markerHeight&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;markerunits&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;markerUnits&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;markerwidth&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;markerWidth&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;maskcontentunits&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;maskContentUnits&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;maskunits&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;maskUnits&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;numoctaves&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;numOctaves&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;pathlength&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;pathLength&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;patterncontentunits&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;patternContentUnits&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;patterntransform&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;patternTransform&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;patternunits&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;patternUnits&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;pointsatx&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;pointsAtX&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;pointsaty&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;pointsAtY&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;pointsatz&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;pointsAtZ&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;preservealpha&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;preserveAlpha&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;preserveaspectratio&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;preserveAspectRatio&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;primitiveunits&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;primitiveUnits&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;refx&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;refX&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;refy&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;refY&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;repeatcount&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;repeatCount&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;repeatdur&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;repeatDur&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;requiredextensions&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;requiredExtensions&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;requiredfeatures&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;requiredFeatures&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;specularconstant&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;specularConstant&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;specularexponent&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;specularExponent&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;spreadmethod&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;spreadMethod&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;startoffset&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;startOffset&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;stddeviation&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;stdDeviation&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;stitchtiles&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;stitchTiles&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;surfacescale&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;surfaceScale&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;systemlanguage&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;systemLanguage&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;tablevalues&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;tableValues&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;targetx&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;targetX&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;targety&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;targetY&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;textlength&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;textLength&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;viewbox&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;viewBox&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;viewtarget&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;viewTarget&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xchannelselector&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;xChannelSelector&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;ychannelselector&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;yChannelSelector&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;zoomandpan&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;zoomAndPan&quot;</span>)),
             _ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
         });
     }
 
     <span class='kw'>fn</span> <span class='ident'>adjust_mathml_attributes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>tag</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Tag</span>) {
         <span class='self'>self</span>.<span class='ident'>adjust_attributes</span>(<span class='ident'>tag</span>, <span class='op'>|</span><span class='ident'>k</span><span class='op'>|</span> <span class='kw'>match</span> <span class='ident'>k</span> {
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>definitionurl</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='ident'>definitionURL</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;definitionurl&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;definitionURL&quot;</span>)),
             _ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
         });
     }
 
     <span class='kw'>fn</span> <span class='ident'>adjust_foreign_attributes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>tag</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Tag</span>) {
         <span class='self'>self</span>.<span class='ident'>adjust_attributes</span>(<span class='ident'>tag</span>, <span class='op'>|</span><span class='ident'>k</span><span class='op'>|</span> <span class='kw'>match</span> <span class='ident'>k</span> {
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xlink:actuate&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>XLink</span>, <span class='ident'>actuate</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xlink:arcrole&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>XLink</span>, <span class='ident'>arcrole</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xlink:href&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>XLink</span>, <span class='ident'>href</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xlink:role&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>XLink</span>, <span class='ident'>role</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xlink:show&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>XLink</span>, <span class='ident'>show</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xlink:title&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>XLink</span>, <span class='ident'>title</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xlink:type&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>XLink</span>, <span class='string'>&quot;type&quot;</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xml:base&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>XML</span>, <span class='ident'>base</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xml:lang&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>XML</span>, <span class='ident'>lang</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xml:space&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>XML</span>, <span class='ident'>space</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xmlns&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>XMLNS</span>, <span class='ident'>xmlns</span>)),
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xmlns:xlink&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>XMLNS</span>, <span class='ident'>xlink</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xlink:actuate&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>xlink</span>, <span class='string'>&quot;actuate&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xlink:arcrole&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>xlink</span>, <span class='string'>&quot;arcrole&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xlink:href&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>xlink</span>, <span class='string'>&quot;href&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xlink:role&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>xlink</span>, <span class='string'>&quot;role&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xlink:show&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>xlink</span>, <span class='string'>&quot;show&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xlink:title&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>xlink</span>, <span class='string'>&quot;title&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xlink:type&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>xlink</span>, <span class='string'>&quot;type&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xml:base&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>xml</span>, <span class='string'>&quot;base&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xml:lang&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>xml</span>, <span class='string'>&quot;lang&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xml:space&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>xml</span>, <span class='string'>&quot;space&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xmlns&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>xmlns</span>, <span class='string'>&quot;xmlns&quot;</span>)),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xmlns:xlink&quot;</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>xmlns</span>, <span class='string'>&quot;xlink&quot;</span>)),
             _ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
         });
     }
@@ -2199,8 +2250,8 @@
     <span class='kw'>fn</span> <span class='ident'>foreign_start_tag</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>tag</span>: <span class='ident'>Tag</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span> {
         <span class='kw'>let</span> <span class='ident'>cur</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>elem_name</span>(<span class='self'>self</span>.<span class='ident'>adjusted_current_node</span>());
         <span class='kw'>match</span> <span class='ident'>cur</span>.<span class='ident'>ns</span> {
-            <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>MathML</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>adjust_mathml_attributes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>tag</span>),
-            <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>SVG</span>) <span class='op'>=&gt;</span> {
+            <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>mathml</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>adjust_mathml_attributes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>tag</span>),
+            <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>svg</span>) <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>adjust_svg_tag_name</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>tag</span>);
                 <span class='self'>self</span>.<span class='ident'>adjust_svg_attributes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>tag</span>);
             }
@@ -2216,6 +2267,22 @@
             <span class='ident'>Done</span>
         }
     }
+
+    <span class='kw'>fn</span> <span class='ident'>unexpected_start_tag_in_foreign_content</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>tag</span>: <span class='ident'>Tag</span>) <span class='op'>-&gt;</span> <span class='ident'>ProcessResult</span> {
+        <span class='self'>self</span>.<span class='ident'>unexpected</span>(<span class='kw-2'>&amp;</span><span class='ident'>tag</span>);
+        <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>is_fragment</span>() {
+            <span class='self'>self</span>.<span class='ident'>foreign_start_tag</span>(<span class='ident'>tag</span>)
+        } <span class='kw'>else</span> {
+            <span class='self'>self</span>.<span class='ident'>pop</span>();
+            <span class='kw'>while</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>current_node_in</span>(<span class='op'>|</span><span class='ident'>n</span><span class='op'>|</span> {
+                <span class='ident'>n</span>.<span class='ident'>ns</span> <span class='op'>==</span> <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>) <span class='op'>||</span> <span class='ident'>mathml_text_integration_point</span>(<span class='ident'>n</span>.<span class='ident'>clone</span>())
+                    <span class='op'>||</span> <span class='ident'>svg_html_integration_point</span>(<span class='ident'>n</span>)
+            }) {
+                <span class='self'>self</span>.<span class='ident'>pop</span>();
+            }
+            <span class='ident'>ReprocessForeign</span>(<span class='ident'>TagToken</span>(<span class='ident'>tag</span>))
+        }
+    }
 }
 </pre>
 </section>
@@ -2223,40 +2290,49 @@
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
-        </div>
-    </div>
+    </aside>
 
     
 
@@ -2268,6 +2344,6 @@
     <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     
-    <script async src="../../../search-index.js"></script>
+    <script defer src="../../../search-index.js"></script>
 </body>
 </html>

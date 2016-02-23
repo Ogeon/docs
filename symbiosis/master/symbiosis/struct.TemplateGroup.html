@@ -9,6 +9,7 @@
 
     <title>symbiosis::TemplateGroup - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
 
     
@@ -24,17 +25,17 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='index.html'>symbiosis</a></p><script>window.sidebarCurrent = {name: 'TemplateGroup', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -45,60 +46,69 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-18727' class='srclink' href='../src/symbiosis/lib.rs.html#71-74' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct TemplateGroup&lt;'a&gt; {
+        </span><a id='src-1348' class='srclink' href='../src/symbiosis/lib.rs.html#26-29' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct TemplateGroup {
     // some fields omitted
 }</pre><div class='docblock'><p>A collection of templates.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../symbiosis/struct.TemplateGroup.html' title='symbiosis::TemplateGroup'>TemplateGroup</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../symbiosis/struct.TemplateGroup.html' title='symbiosis::TemplateGroup'>TemplateGroup</a>&lt;'a&gt;</code></h4>
-<h4 id='method.parse_string' class='method'><code>fn <a href='#method.parse_string' class='fnname'>parse_string</a>(&amp;mut self, name: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, source: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../symbiosis/enum.Error.html' title='symbiosis::Error'>Error</a>&gt;</code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../symbiosis/struct.TemplateGroup.html' title='symbiosis::TemplateGroup'>TemplateGroup</a></code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../symbiosis/struct.TemplateGroup.html' title='symbiosis::TemplateGroup'>TemplateGroup</a></code></h4>
+<h4 id='method.parse_string' class='method'><code>fn <a href='#method.parse_string' class='fnname'>parse_string</a>&lt;S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../symbiosis/type.StrTendril.html' title='symbiosis::StrTendril'>StrTendril</a>&gt;&gt;(&amp;mut self, name: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, source: S) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../symbiosis/enum.Error.html' title='symbiosis::Error'>Error</a>&gt;</code></h4>
 <div class='docblock'><p>Add a template from a string.</p>
-</div><h4 id='method.parse_directory' class='method'><code>fn <a href='#method.parse_directory' class='fnname'>parse_directory</a>&lt;P: <a class='trait' href='http://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='http://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(&amp;mut self, dir: P) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../symbiosis/enum.Error.html' title='symbiosis::Error'>Error</a>&gt;</code></h4>
+</div><h4 id='method.parse_directory' class='method'><code>fn <a href='#method.parse_directory' class='fnname'>parse_directory</a>&lt;P: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(&amp;mut self, dir: P) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../symbiosis/enum.Error.html' title='symbiosis::Error'>Error</a>&gt;</code></h4>
 <div class='docblock'><p>Add every <code>*.html</code> and <code>*.htm</code> file in a directory to the template group.</p>
-</div><h4 id='method.add_template' class='method'><code>fn <a href='#method.add_template' class='fnname'>add_template</a>(&amp;mut self, name: <a class='struct' href='http://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, template: <a class='struct' href='../symbiosis/struct.Template.html' title='symbiosis::Template'>Template</a>)</code></h4>
+</div><h4 id='method.add_template' class='method'><code>fn <a href='#method.add_template' class='fnname'>add_template</a>(&amp;mut self, name: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, template: <a class='struct' href='../symbiosis/struct.Template.html' title='symbiosis::Template'>Template</a>)</code></h4>
 <div class='docblock'><p>Add an already parsed template to the group.</p>
-</div><h4 id='method.register_fragment' class='method'><code>fn <a href='#method.register_fragment' class='fnname'>register_fragment</a>&lt;F: <a class='trait' href='../symbiosis/fragment/trait.Fragment.html' title='symbiosis::fragment::Fragment'>Fragment</a> + 'a&gt;(&amp;mut self, fragment: F)</code></h4>
+</div><h4 id='method.register_fragment' class='method'><code>fn <a href='#method.register_fragment' class='fnname'>register_fragment</a>&lt;F: <a class='trait' href='../symbiosis/fragment/trait.Fragment.html' title='symbiosis::fragment::Fragment'>Fragment</a> + 'static&gt;(&amp;mut self, fragment: F)</code></h4>
 <div class='docblock'><p>Register a custom fragment.</p>
-</div><h4 id='method.emit_code' class='method'><code>fn <a href='#method.emit_code' class='fnname'>emit_code</a>&lt;W: <a class='trait' href='http://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>, C: <a class='trait' href='../symbiosis/codegen/trait.Codegen.html' title='symbiosis::codegen::Codegen'>Codegen</a>&gt;(&amp;self, writer: &amp;mut W, codegen: &amp;C) -&gt; <a class='enum' href='http://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a href='http://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, C::Error&gt;</code></h4>
+</div><h4 id='method.emit_code' class='method'><code>fn <a href='#method.emit_code' class='fnname'>emit_code</a>&lt;W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>, C: <a class='trait' href='../symbiosis/codegen/trait.Codegen.html' title='symbiosis::codegen::Codegen'>Codegen</a>&gt;(&amp;self, writer: &amp;mut W, codegen: &amp;C) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, C::Error&gt;</code></h4>
 <div class='docblock'><p>Write template code.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
-        </div>
-    </div>
+    </aside>
 
     
 
@@ -110,6 +120,6 @@
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     
-    <script async src="../search-index.js"></script>
+    <script defer src="../search-index.js"></script>
 </body>
 </html>

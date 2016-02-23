@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["ContentType","Types of template parameter content."],["Logic","Logic expressions."]],"struct":[["Params",""]]});

@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/string_cache-0.1.11/src/namespace.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/string_cache-0.2.9/src/namespace.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>namespace.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -24,17 +25,17 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -109,11 +110,6 @@
 <span id="67">67</span>
 <span id="68">68</span>
 <span id="69">69</span>
-<span id="70">70</span>
-<span id="71">71</span>
-<span id="72">72</span>
-<span id="73">73</span>
-<span id="74">74</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The Servo Project Developers. See the COPYRIGHT</span>
 <span class='comment'>// file at the top-level directory of this distribution.</span>
@@ -132,10 +128,12 @@
 <span class='doccomment'>/// Whether a given string represents a namespace is contextual, so this is</span>
 <span class='doccomment'>/// a transparent wrapper that will not catch all mistakes.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>, <span class='ident'>Clone</span>)]</span>
+<span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;heap_size&quot;</span>, <span class='ident'>derive</span>(<span class='ident'>HeapSizeOf</span>))]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Namespace</span>(<span class='kw'>pub</span> <span class='ident'>Atom</span>);
 
 <span class='doccomment'>/// A name with a namespace.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>, <span class='ident'>Clone</span>)]</span>
+<span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;heap_size&quot;</span>, <span class='ident'>derive</span>(<span class='ident'>HeapSizeOf</span>))]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>QualName</span> {
     <span class='kw'>pub</span> <span class='ident'>ns</span>: <span class='ident'>Namespace</span>,
     <span class='kw'>pub</span> <span class='ident'>local</span>: <span class='ident'>Atom</span>,
@@ -158,35 +156,28 @@
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>ns_macro</span>() {
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>),     <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='string'>&quot;&quot;</span>)));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(),     <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from</span>(<span class='string'>&quot;&quot;</span>)));
 
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>),   <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='string'>&quot;http://www.w3.org/1999/xhtml&quot;</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>xml</span>),    <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='string'>&quot;http://www.w3.org/XML/1998/namespace&quot;</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>xmlns</span>),  <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='string'>&quot;http://www.w3.org/2000/xmlns/&quot;</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>xlink</span>),  <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='string'>&quot;http://www.w3.org/1999/xlink&quot;</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>svg</span>),    <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='string'>&quot;http://www.w3.org/2000/svg&quot;</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>mathml</span>), <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='string'>&quot;http://www.w3.org/1998/Math/MathML&quot;</span>)));
-
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HtMl</span>),   <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='string'>&quot;http://www.w3.org/1999/xhtml&quot;</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>xMl</span>),    <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='string'>&quot;http://www.w3.org/XML/1998/namespace&quot;</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>XmLnS</span>),  <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='string'>&quot;http://www.w3.org/2000/xmlns/&quot;</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>xLiNk</span>),  <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='string'>&quot;http://www.w3.org/1999/xlink&quot;</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>SvG</span>),    <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='string'>&quot;http://www.w3.org/2000/svg&quot;</span>)));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>mAtHmL</span>), <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='string'>&quot;http://www.w3.org/1998/Math/MathML&quot;</span>)));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>),   <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from</span>(<span class='string'>&quot;http://www.w3.org/1999/xhtml&quot;</span>)));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>xml</span>),    <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from</span>(<span class='string'>&quot;http://www.w3.org/XML/1998/namespace&quot;</span>)));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>xmlns</span>),  <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from</span>(<span class='string'>&quot;http://www.w3.org/2000/xmlns/&quot;</span>)));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>xlink</span>),  <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from</span>(<span class='string'>&quot;http://www.w3.org/1999/xlink&quot;</span>)));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>svg</span>),    <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from</span>(<span class='string'>&quot;http://www.w3.org/2000/svg&quot;</span>)));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>mathml</span>), <span class='ident'>Namespace</span>(<span class='ident'>Atom</span>::<span class='ident'>from</span>(<span class='string'>&quot;http://www.w3.org/1998/Math/MathML&quot;</span>)));
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>qualname</span>() {
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>QualName</span>::<span class='ident'>new</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>), <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>)),
-            <span class='ident'>QualName</span> { <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>), <span class='ident'>local</span>: <span class='ident'>Atom</span>::<span class='ident'>from_slice</span>(<span class='string'>&quot;&quot;</span>) });
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>QualName</span>::<span class='ident'>new</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>XML</span>), <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>base</span>)),
-            <span class='ident'>QualName</span> { <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>XML</span>), <span class='ident'>local</span>: <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>base</span>) });
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>QualName</span>::<span class='ident'>new</span>(<span class='macro'>ns</span><span class='macro'>!</span>(), <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>)),
+            <span class='ident'>QualName</span> { <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(), <span class='ident'>local</span>: <span class='ident'>Atom</span>::<span class='ident'>from</span>(<span class='string'>&quot;&quot;</span>) });
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>QualName</span>::<span class='ident'>new</span>(<span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>xml</span>), <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;base&quot;</span>)),
+            <span class='ident'>QualName</span> { <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>xml</span>), <span class='ident'>local</span>: <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;base&quot;</span>) });
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>qualname_macro</span>() {
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;&quot;</span>), <span class='ident'>QualName</span> { <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>), <span class='ident'>local</span>: <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>) });
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>XML</span>, <span class='ident'>base</span>), <span class='ident'>QualName</span> { <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>XML</span>), <span class='ident'>local</span>: <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>base</span>) });
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>, <span class='string'>&quot;&quot;</span>), <span class='ident'>QualName</span> { <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(), <span class='ident'>local</span>: <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>) });
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>xml</span>, <span class='string'>&quot;base&quot;</span>), <span class='ident'>QualName</span> { <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>xml</span>), <span class='ident'>local</span>: <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;base&quot;</span>) });
     }
 }
 </pre>
@@ -195,40 +186,49 @@
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
-        </div>
-    </div>
+    </aside>
 
     
 
@@ -240,6 +240,6 @@
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

@@ -9,6 +9,7 @@
 
     <title>symbiosis::fragment::ReturnType - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -24,17 +25,17 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         <p class='location'><a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>fragment</a></p><script>window.sidebarCurrent = {name: 'ReturnType', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -45,59 +46,77 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-2853' class='srclink' href='../../src/symbiosis/fragment/mod.rs.html#229-240' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-1565' class='srclink' href='../../symbiosis_tokenizer/fragment/enum.ReturnType.html?gotosrc=1565' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum ReturnType {
-    String(<a class='type' href='../../tendril/tendril/type.StrTendril.html' title='tendril::tendril::StrTendril'>StrTendril</a>),
-    Placeholder(<a class='type' href='../../tendril/tendril/type.StrTendril.html' title='tendril::tendril::StrTendril'>StrTendril</a>, <a class='enum' href='../../symbiosis/codegen/enum.ContentType.html' title='symbiosis::codegen::ContentType'>ContentType</a>),
-    Logic(<a class='enum' href='../../symbiosis/codegen/enum.Logic.html' title='symbiosis::codegen::Logic'>Logic</a>),
-    Scope(<a class='enum' href='../../symbiosis/codegen/enum.Scope.html' title='symbiosis::codegen::Scope'>Scope</a>),
+    String(<a class='struct' href='../../tendril/tendril/struct.Tendril.html' title='tendril::tendril::Tendril'>Tendril</a>&lt;<a class='struct' href='../../tendril/fmt/struct.UTF8.html' title='tendril::fmt::UTF8'>UTF8</a>, <a class='struct' href='../../tendril/tendril/struct.NonAtomic.html' title='tendril::tendril::NonAtomic'>NonAtomic</a>&gt;),
+    Placeholder(<a class='struct' href='../../symbiosis_core/struct.Path.html' title='symbiosis_core::Path'>Path</a>, <a class='enum' href='../../symbiosis_core/content_type/enum.ContentType.html' title='symbiosis_core::content_type::ContentType'>ContentType</a>),
+    Logic(<a class='enum' href='../../symbiosis_core/content_type/enum.Logic.html' title='symbiosis_core::content_type::Logic'>Logic</a>),
+    Scope(<a class='enum' href='../../symbiosis_tokenizer/codegen/enum.Scope.html' title='symbiosis_tokenizer::codegen::Scope'>Scope</a>),
     End,
+    pub Tag {
+        pub name: <a class='enum' href='../../symbiosis_tokenizer/codegen/enum.Name.html' title='symbiosis_tokenizer::codegen::Name'>Name</a>,
+        pub arguments: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(<a class='enum' href='../../symbiosis_tokenizer/codegen/enum.Name.html' title='symbiosis_tokenizer::codegen::Name'>Name</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../symbiosis/fragment/enum.ReturnType.html' title='symbiosis::fragment::ReturnType'>ReturnType</a>&gt;)</a>&gt;,
+        pub content: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../symbiosis/fragment/enum.ReturnType.html' title='symbiosis::fragment::ReturnType'>ReturnType</a>&gt;&gt;,
+    },
 }</pre><div class='docblock'><p>Things that can be returned from fragments.</p>
 </div><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.String'><code>String</code></td><td><div class='docblock'><p>A plane text string.</p>
+<table><tr><td id='variant.String'><code>String</code></td><td><div class='docblock'><p>A plain text string.</p>
 </div></td></tr><tr><td id='variant.Placeholder'><code>Placeholder</code></td><td><div class='docblock'><p>A placeholder parameter and its preferred content type.</p>
 </div></td></tr><tr><td id='variant.Logic'><code>Logic</code></td><td><div class='docblock'><p>A logic expression.</p>
 </div></td></tr><tr><td id='variant.Scope'><code>Scope</code></td><td><div class='docblock'><p>The beginning of a scope.</p>
 </div></td></tr><tr><td id='variant.End'><code>End</code></td><td><div class='docblock'><p>The end of a scope.</p>
-</div></td></tr></table></section>
+</div></td></tr><tr><td id='variant.Tag'><code>Tag</code></td><td><div class='docblock'><p>An HTML tag tree.</p>
+</div><h3 class='fields'>Fields</h3>
+
+                                              <table><tr><td id='variant.Tag.field.name'><code>name</code></td><td></td></tr><tr><td id='variant.Tag.field.arguments'><code>arguments</code></td><td></td></tr><tr><td id='variant.Tag.field.content'><code>content</code></td><td></td></tr></table></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../symbiosis/fragment/enum.ReturnType.html' title='symbiosis::fragment::ReturnType'>ReturnType</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Error.html' title='core::fmt::Error'>Error</a>&gt;</code></h4>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
-        </div>
-    </div>
+    </aside>
 
     
 
@@ -109,6 +128,6 @@
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

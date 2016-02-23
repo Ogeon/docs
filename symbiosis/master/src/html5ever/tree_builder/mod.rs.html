@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/html5ever-0.2.3/src/tree_builder/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/html5ever-0.5.3/src/tree_builder/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
 
     
@@ -24,17 +25,17 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -469,11 +470,6 @@
 <span id="427">427</span>
 <span id="428">428</span>
 <span id="429">429</span>
-<span id="430">430</span>
-<span id="431">431</span>
-<span id="432">432</span>
-<span id="433">433</span>
-<span id="434">434</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The html5ever Project Developers. See the</span>
 <span class='comment'>// COPYRIGHT file at the top-level directory of this distribution.</span>
@@ -500,8 +496,7 @@
 <span class='kw'>use</span> <span class='ident'>tendril</span>::<span class='ident'>StrTendril</span>;
 
 <span class='kw'>use</span> <span class='ident'>tokenizer</span>;
-<span class='kw'>use</span> <span class='ident'>tokenizer</span>::{<span class='ident'>Doctype</span>, <span class='ident'>Tag</span>};
-<span class='kw'>use</span> <span class='ident'>tokenizer</span>::<span class='ident'>TokenSink</span>;
+<span class='kw'>use</span> <span class='ident'>tokenizer</span>::{<span class='ident'>Doctype</span>, <span class='ident'>StartTag</span>, <span class='ident'>Tag</span>, <span class='ident'>TokenSink</span>};
 <span class='kw'>use</span> <span class='ident'>tokenizer</span>::<span class='ident'>states</span> <span class='kw'>as</span> <span class='ident'>tok_state</span>;
 
 <span class='kw'>use</span> <span class='ident'>util</span>::<span class='ident'>str</span>::<span class='ident'>is_ascii_whitespace</span>;
@@ -535,14 +530,7 @@
     <span class='doccomment'>/// Should we drop the DOCTYPE (if any) from the tree?</span>
     <span class='kw'>pub</span> <span class='ident'>drop_doctype</span>: <span class='ident'>bool</span>,
 
-    <span class='doccomment'>/// The `&lt;svg&gt;`, `&lt;math&gt;`, and `&lt;template&gt;` tags have special</span>
-    <span class='doccomment'>/// parsing rules that are currently unimplemented.  By default</span>
-    <span class='doccomment'>/// we `panic!()` if any of these tags is encountered.  If this</span>
-    <span class='doccomment'>/// option is enabled, we will instead attempt to parse them</span>
-    <span class='doccomment'>/// using the ordinary HTML parsing rules.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// **Warning**: This may produce extremely incorrect results</span>
-    <span class='doccomment'>/// on some documents!</span>
+    <span class='doccomment'>/// Obsolete, ignored.</span>
     <span class='kw'>pub</span> <span class='ident'>ignore_missing_rules</span>: <span class='ident'>bool</span>,
 
     <span class='doccomment'>/// Initial TreeBuilder quirks mode. Default: NoQuirks</span>
@@ -665,7 +653,7 @@
                             <span class='ident'>opts</span>: <span class='ident'>TreeBuilderOpts</span>) <span class='op'>-&gt;</span> <span class='ident'>TreeBuilder</span><span class='op'>&lt;</span><span class='ident'>Handle</span>, <span class='ident'>Sink</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>doc_handle</span> <span class='op'>=</span> <span class='ident'>sink</span>.<span class='ident'>get_document</span>();
         <span class='kw'>let</span> <span class='ident'>context_is_template</span> <span class='op'>=</span>
-            <span class='ident'>sink</span>.<span class='ident'>elem_name</span>(<span class='ident'>context_elem</span>.<span class='ident'>clone</span>()) <span class='op'>==</span> <span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>HTML</span>, <span class='ident'>template</span>);
+            <span class='ident'>sink</span>.<span class='ident'>elem_name</span>(<span class='ident'>context_elem</span>.<span class='ident'>clone</span>()) <span class='op'>==</span> <span class='macro'>qualname</span><span class='macro'>!</span>(<span class='ident'>html</span>, <span class='string'>&quot;template&quot;</span>);
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>tb</span> <span class='op'>=</span> <span class='ident'>TreeBuilder</span> {
             <span class='ident'>opts</span>: <span class='ident'>opts</span>,
             <span class='ident'>sink</span>: <span class='ident'>sink</span>,
@@ -702,24 +690,24 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>tokenizer_state_for_context_elem</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>tok_state</span>::<span class='ident'>State</span> {
         <span class='kw'>let</span> <span class='ident'>elem</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>context_elem</span>.<span class='ident'>clone</span>().<span class='ident'>expect</span>(<span class='string'>&quot;no context element&quot;</span>);
         <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>elem_name</span>(<span class='ident'>elem</span>) {
-            <span class='ident'>QualName</span> { <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>), <span class='ident'>local</span> } <span class='op'>=&gt;</span> <span class='ident'>local</span>,
+            <span class='ident'>QualName</span> { <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>), <span class='ident'>local</span> } <span class='op'>=&gt;</span> <span class='ident'>local</span>,
             _ <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>tok_state</span>::<span class='ident'>Data</span>
         };
         <span class='kw'>match</span> <span class='ident'>name</span> {
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>title</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>textarea</span>) <span class='op'>=&gt;</span> <span class='ident'>tok_state</span>::<span class='ident'>RawData</span>(<span class='ident'>tok_state</span>::<span class='ident'>Rcdata</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;title&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;textarea&quot;</span>) <span class='op'>=&gt;</span> <span class='ident'>tok_state</span>::<span class='ident'>RawData</span>(<span class='ident'>tok_state</span>::<span class='ident'>Rcdata</span>),
 
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>style</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>xmp</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>iframe</span>)
-                <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>noembed</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>noframes</span>) <span class='op'>=&gt;</span> <span class='ident'>tok_state</span>::<span class='ident'>RawData</span>(<span class='ident'>tok_state</span>::<span class='ident'>Rawtext</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;style&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xmp&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;iframe&quot;</span>)
+                <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;noembed&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;noframes&quot;</span>) <span class='op'>=&gt;</span> <span class='ident'>tok_state</span>::<span class='ident'>RawData</span>(<span class='ident'>tok_state</span>::<span class='ident'>Rawtext</span>),
 
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>script</span>) <span class='op'>=&gt;</span> <span class='ident'>tok_state</span>::<span class='ident'>RawData</span>(<span class='ident'>tok_state</span>::<span class='ident'>ScriptData</span>),
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;script&quot;</span>) <span class='op'>=&gt;</span> <span class='ident'>tok_state</span>::<span class='ident'>RawData</span>(<span class='ident'>tok_state</span>::<span class='ident'>ScriptData</span>),
 
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>noscript</span>) <span class='op'>=&gt;</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>opts</span>.<span class='ident'>scripting_enabled</span> {
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;noscript&quot;</span>) <span class='op'>=&gt;</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>opts</span>.<span class='ident'>scripting_enabled</span> {
                 <span class='ident'>tok_state</span>::<span class='ident'>RawData</span>(<span class='ident'>tok_state</span>::<span class='ident'>Rawtext</span>)
             } <span class='kw'>else</span> {
                 <span class='ident'>tok_state</span>::<span class='ident'>Data</span>
             },
 
-            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='ident'>plaintext</span>) <span class='op'>=&gt;</span> <span class='ident'>tok_state</span>::<span class='ident'>Plaintext</span>,
+            <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;plaintext&quot;</span>) <span class='op'>=&gt;</span> <span class='ident'>tok_state</span>::<span class='ident'>Plaintext</span>,
 
             _ <span class='op'>=&gt;</span> <span class='ident'>tok_state</span>::<span class='ident'>Data</span>
         }
@@ -740,19 +728,19 @@
     <span class='doccomment'>/// Call the `Tracer`&#39;s `trace_handle` method on every `Handle` in the tree builder&#39;s</span>
     <span class='doccomment'>/// internal state.  This is intended to support garbage-collected DOMs.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>trace_handles</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>tracer</span>: <span class='kw-2'>&amp;</span><span class='ident'>Tracer</span><span class='op'>&lt;</span><span class='ident'>Handle</span><span class='op'>=</span><span class='ident'>Handle</span><span class='op'>&gt;</span>) {
-        <span class='ident'>tracer</span>.<span class='ident'>trace_handle</span>(<span class='self'>self</span>.<span class='ident'>doc_handle</span>.<span class='ident'>clone</span>());
-        <span class='kw'>for</span> <span class='ident'>e</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>open_elems</span>.<span class='ident'>iter</span>() {
-            <span class='ident'>tracer</span>.<span class='ident'>trace_handle</span>(<span class='ident'>e</span>.<span class='ident'>clone</span>());
+        <span class='ident'>tracer</span>.<span class='ident'>trace_handle</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>doc_handle</span>);
+        <span class='kw'>for</span> <span class='ident'>e</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>open_elems</span> {
+            <span class='ident'>tracer</span>.<span class='ident'>trace_handle</span>(<span class='ident'>e</span>);
         }
-        <span class='kw'>for</span> <span class='ident'>e</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>active_formatting</span>.<span class='ident'>iter</span>() {
+        <span class='kw'>for</span> <span class='ident'>e</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>active_formatting</span> {
             <span class='kw'>match</span> <span class='ident'>e</span> {
-                <span class='kw-2'>&amp;</span><span class='ident'>Element</span>(<span class='kw-2'>ref</span> <span class='ident'>h</span>, _) <span class='op'>=&gt;</span> <span class='ident'>tracer</span>.<span class='ident'>trace_handle</span>(<span class='ident'>h</span>.<span class='ident'>clone</span>()),
+                <span class='kw-2'>&amp;</span><span class='ident'>Element</span>(<span class='kw-2'>ref</span> <span class='ident'>h</span>, _) <span class='op'>=&gt;</span> <span class='ident'>tracer</span>.<span class='ident'>trace_handle</span>(<span class='ident'>h</span>),
                 _ <span class='op'>=&gt;</span> (),
             }
         }
-        <span class='self'>self</span>.<span class='ident'>head_elem</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>h</span><span class='op'>|</span> <span class='ident'>tracer</span>.<span class='ident'>trace_handle</span>(<span class='ident'>h</span>.<span class='ident'>clone</span>()));
-        <span class='self'>self</span>.<span class='ident'>form_elem</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>h</span><span class='op'>|</span> <span class='ident'>tracer</span>.<span class='ident'>trace_handle</span>(<span class='ident'>h</span>.<span class='ident'>clone</span>()));
-        <span class='self'>self</span>.<span class='ident'>context_elem</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>h</span><span class='op'>|</span> <span class='ident'>tracer</span>.<span class='ident'>trace_handle</span>(<span class='ident'>h</span>.<span class='ident'>clone</span>()));
+        <span class='self'>self</span>.<span class='ident'>head_elem</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>h</span><span class='op'>|</span> <span class='ident'>tracer</span>.<span class='ident'>trace_handle</span>(<span class='ident'>h</span>));
+        <span class='self'>self</span>.<span class='ident'>form_elem</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>h</span><span class='op'>|</span> <span class='ident'>tracer</span>.<span class='ident'>trace_handle</span>(<span class='ident'>h</span>));
+        <span class='self'>self</span>.<span class='ident'>context_elem</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>h</span><span class='op'>|</span> <span class='ident'>tracer</span>.<span class='ident'>trace_handle</span>(<span class='ident'>h</span>));
     }
 
     <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
@@ -764,7 +752,7 @@
         <span class='kw'>for</span> <span class='ident'>node</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>open_elems</span>.<span class='ident'>iter</span>() {
             <span class='kw'>let</span> <span class='ident'>QualName</span> { <span class='ident'>ns</span>, <span class='ident'>local</span> } <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>elem_name</span>(<span class='ident'>node</span>.<span class='ident'>clone</span>());
             <span class='kw'>match</span> <span class='ident'>ns</span> {
-                <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>) <span class='op'>=&gt;</span> <span class='macro'>print</span><span class='macro'>!</span>(<span class='string'>&quot; {}&quot;</span>, <span class='kw-2'>&amp;</span><span class='ident'>local</span>[..]),
+                <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>) <span class='op'>=&gt;</span> <span class='macro'>print</span><span class='macro'>!</span>(<span class='string'>&quot; {}&quot;</span>, <span class='kw-2'>&amp;</span><span class='ident'>local</span>[..]),
                 _ <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(),
             }
         }
@@ -776,7 +764,7 @@
                 <span class='kw-2'>&amp;</span><span class='ident'>Element</span>(<span class='kw-2'>ref</span> <span class='ident'>h</span>, _) <span class='op'>=&gt;</span> {
                     <span class='kw'>let</span> <span class='ident'>QualName</span> { <span class='ident'>ns</span>, <span class='ident'>local</span> } <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>elem_name</span>(<span class='ident'>h</span>.<span class='ident'>clone</span>());
                     <span class='kw'>match</span> <span class='ident'>ns</span> {
-                        <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>HTML</span>) <span class='op'>=&gt;</span> <span class='macro'>print</span><span class='macro'>!</span>(<span class='string'>&quot; {}&quot;</span>, <span class='kw-2'>&amp;</span><span class='ident'>local</span>[..]),
+                        <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>) <span class='op'>=&gt;</span> <span class='macro'>print</span><span class='macro'>!</span>(<span class='string'>&quot; {}&quot;</span>, <span class='kw-2'>&amp;</span><span class='ident'>local</span>[..]),
                         _ <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(),
                     }
                 }
@@ -796,10 +784,8 @@
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>more_tokens</span> <span class='op'>=</span> <span class='ident'>VecDeque</span>::<span class='ident'>new</span>();
 
         <span class='kw'>loop</span> {
-            <span class='kw'>let</span> <span class='ident'>is_self_closing</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>token</span> {
-                <span class='ident'>TagToken</span>(<span class='ident'>Tag</span> { <span class='ident'>self_closing</span>: <span class='ident'>c</span>, .. }) <span class='op'>=&gt;</span> <span class='ident'>c</span>,
-                _ <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
-            };
+            <span class='kw'>let</span> <span class='ident'>should_have_acknowledged_self_closing_flag</span> <span class='op'>=</span>
+                <span class='macro'>matches</span><span class='macro'>!</span>(<span class='ident'>token</span>, <span class='ident'>TagToken</span>(<span class='ident'>Tag</span> { <span class='ident'>self_closing</span>: <span class='boolval'>true</span>, <span class='ident'>kind</span>: <span class='ident'>StartTag</span>, .. }));
             <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>is_foreign</span>(<span class='kw-2'>&amp;</span><span class='ident'>token</span>) {
                 <span class='self'>self</span>.<span class='ident'>step_foreign</span>(<span class='ident'>token</span>)
             } <span class='kw'>else</span> {
@@ -808,7 +794,7 @@
             };
             <span class='kw'>match</span> <span class='ident'>result</span> {
                 <span class='ident'>Done</span> <span class='op'>=&gt;</span> {
-                    <span class='kw'>if</span> <span class='ident'>is_self_closing</span> {
+                    <span class='kw'>if</span> <span class='ident'>should_have_acknowledged_self_closing_flag</span> {
                         <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>parse_error</span>(<span class='ident'>Borrowed</span>(<span class='string'>&quot;Unacknowledged self-closing tag&quot;</span>));
                     }
                     <span class='ident'>token</span> <span class='op'>=</span> <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='ident'>more_tokens</span>.<span class='ident'>pop_front</span>(), ());
@@ -905,6 +891,11 @@
         <span class='self'>self</span>.<span class='ident'>process_to_completion</span>(<span class='ident'>token</span>);
     }
 
+    <span class='kw'>fn</span> <span class='ident'>adjusted_current_node_present_but_not_in_html_namespace</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+        <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>open_elems</span>.<span class='ident'>is_empty</span>() <span class='op'>&amp;&amp;</span>
+        <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>elem_name</span>(<span class='self'>self</span>.<span class='ident'>adjusted_current_node</span>()).<span class='ident'>ns</span> <span class='op'>!=</span> <span class='macro'>ns</span><span class='macro'>!</span>(<span class='ident'>html</span>)
+    }
+
     <span class='kw'>fn</span> <span class='ident'>query_state_change</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>tokenizer</span>::<span class='ident'>states</span>::<span class='ident'>State</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>next_tokenizer_state</span>.<span class='ident'>take</span>()
     }
@@ -915,40 +906,49 @@
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
-        </div>
-    </div>
+    </aside>
 
     
 
@@ -960,6 +960,6 @@
     <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     
-    <script async src="../../../search-index.js"></script>
+    <script defer src="../../../search-index.js"></script>
 </body>
 </html>

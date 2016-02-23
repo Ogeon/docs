@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-0a35038f75765ae4/tendril-0.1.5/src/tendril.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/tendril-0.2.2/src/tendril.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>tendril.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -24,17 +25,17 @@
 
     
 
-    <section class="sidebar">
+    <nav class="sidebar">
         
         
-    </section>
+    </nav>
 
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
                 <input class="search-input" name="search"
                        autocomplete="off"
-                       placeholder="Click or press 'S' to search, '?' for more options..."
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
                        type="search">
             </div>
         </form>
@@ -2272,6 +2273,18 @@
 <span id="2230">2230</span>
 <span id="2231">2231</span>
 <span id="2232">2232</span>
+<span id="2233">2233</span>
+<span id="2234">2234</span>
+<span id="2235">2235</span>
+<span id="2236">2236</span>
+<span id="2237">2237</span>
+<span id="2238">2238</span>
+<span id="2239">2239</span>
+<span id="2240">2240</span>
+<span id="2241">2241</span>
+<span id="2242">2242</span>
+<span id="2243">2243</span>
+<span id="2244">2244</span>
 </pre><pre class='rust '>
 <span class='comment'>// Licensed under the Apache License, Version 2.0 &lt;LICENSE-APACHE or</span>
 <span class='comment'>// http://www.apache.org/licenses/LICENSE-2.0&gt; or the MIT license</span>
@@ -2279,7 +2292,7 @@
 <span class='comment'>// option. This file may not be copied, modified, or distributed</span>
 <span class='comment'>// except according to those terms.</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>ptr</span>, <span class='ident'>mem</span>, <span class='ident'>intrinsics</span>, <span class='ident'>hash</span>, <span class='ident'>str</span>, <span class='ident'>u32</span>, <span class='ident'>io</span>, <span class='ident'>slice</span>, <span class='ident'>cmp</span>};
+<span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>ptr</span>, <span class='ident'>mem</span>, <span class='ident'>hash</span>, <span class='ident'>str</span>, <span class='ident'>u32</span>, <span class='ident'>io</span>, <span class='ident'>slice</span>, <span class='ident'>cmp</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::{<span class='self'>self</span>, <span class='ident'>AtomicUsize</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::<span class='ident'>Ordering</span> <span class='kw'>as</span> <span class='ident'>AtomicOrdering</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::{<span class='ident'>Borrow</span>, <span class='ident'>Cow</span>};
@@ -2670,6 +2683,18 @@
     <span class='kw'>fn</span> <span class='ident'>deref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>F</span>::<span class='ident'>Slice</span> {
         <span class='kw'>unsafe</span> {
             <span class='ident'>F</span>::<span class='ident'>Slice</span>::<span class='ident'>from_bytes</span>(<span class='self'>self</span>.<span class='ident'>as_byte_slice</span>())
+        }
+    }
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>DerefMut</span> <span class='kw'>for</span> <span class='ident'>Tendril</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;</span>
+    <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>fmt</span>::<span class='ident'>SliceFormat</span>,
+          <span class='ident'>A</span>: <span class='ident'>Atomicity</span>,
+{
+    <span class='attribute'>#[<span class='ident'>inline</span>]</span>
+    <span class='kw'>fn</span> <span class='ident'>deref_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>F</span>::<span class='ident'>Slice</span> {
+        <span class='kw'>unsafe</span> {
+            <span class='ident'>F</span>::<span class='ident'>Slice</span>::<span class='ident'>from_mut_bytes</span>(<span class='self'>self</span>.<span class='ident'>as_mut_byte_slice</span>())
         }
     }
 }
@@ -3288,7 +3313,7 @@
             <span class='ident'>marker</span>: <span class='ident'>PhantomData</span>,
             <span class='ident'>refcount_marker</span>: <span class='ident'>PhantomData</span>,
         };
-        <span class='ident'>intrinsics</span>::<span class='ident'>copy_nonoverlapping</span>(<span class='ident'>x</span>.<span class='ident'>as_ptr</span>(), <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>t</span>.<span class='ident'>len</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>u32</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>u8</span>, <span class='ident'>len</span>);
+        <span class='ident'>ptr</span>::<span class='ident'>copy_nonoverlapping</span>(<span class='ident'>x</span>.<span class='ident'>as_ptr</span>(), <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>t</span>.<span class='ident'>len</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>u32</span> <span class='kw'>as</span> <span class='op'>*</span><span class='kw-2'>mut</span> <span class='ident'>u8</span>, <span class='ident'>len</span>);
         <span class='ident'>t</span>
     }
 
@@ -3307,7 +3332,7 @@
     <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>owned_copy</span>(<span class='ident'>x</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>Tendril</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> <span class='ident'>len32</span> <span class='op'>=</span> <span class='ident'>x</span>.<span class='ident'>len</span>() <span class='kw'>as</span> <span class='ident'>u32</span>;
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Buf32</span>::<span class='ident'>with_capacity</span>(<span class='ident'>len32</span>, <span class='ident'>Header</span>::<span class='ident'>new</span>());
-        <span class='ident'>intrinsics</span>::<span class='ident'>copy_nonoverlapping</span>(<span class='ident'>x</span>.<span class='ident'>as_ptr</span>(), <span class='ident'>b</span>.<span class='ident'>data_ptr</span>(), <span class='ident'>x</span>.<span class='ident'>len</span>());
+        <span class='ident'>ptr</span>::<span class='ident'>copy_nonoverlapping</span>(<span class='ident'>x</span>.<span class='ident'>as_ptr</span>(), <span class='ident'>b</span>.<span class='ident'>data_ptr</span>(), <span class='ident'>x</span>.<span class='ident'>len</span>());
         <span class='ident'>b</span>.<span class='ident'>len</span> <span class='op'>=</span> <span class='ident'>len32</span>;
         <span class='ident'>Tendril</span>::<span class='ident'>owned</span>(<span class='ident'>b</span>)
     }
@@ -3339,15 +3364,11 @@
             }
         }
     }
-}
 
-<span class='comment'>// There&#39;s no need to worry about locking on an atomic Tendril, because it makes it unique as</span>
-<span class='comment'>// soon as you do that.</span>
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>DerefMut</span> <span class='kw'>for</span> <span class='ident'>Tendril</span><span class='op'>&lt;</span><span class='ident'>fmt</span>::<span class='ident'>Bytes</span>, <span class='ident'>A</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='ident'>A</span>: <span class='ident'>Atomicity</span>,
-{
+    <span class='comment'>// There&#39;s no need to worry about locking on an atomic Tendril, because it makes it unique as</span>
+    <span class='comment'>// soon as you do that.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>deref_mut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> [<span class='ident'>u8</span>] {
+    <span class='kw'>fn</span> <span class='ident'>as_mut_byte_slice</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> [<span class='ident'>u8</span>] {
         <span class='kw'>unsafe</span> {
             <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>ptr</span>.<span class='ident'>get</span>() {
                 <span class='ident'>EMPTY_TAG</span> <span class='op'>=&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [],
@@ -3364,7 +3385,6 @@
         }
     }
 }
-
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>Tendril</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>fmt</span>::<span class='ident'>SliceFormat</span>,
@@ -3430,10 +3450,10 @@
 }
 
 <span class='doccomment'>/// `Tendril`-related methods for Rust slices.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>SliceExt</span>: <span class='ident'>fmt</span>::<span class='ident'>Slice</span> {
+<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>SliceExt</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span>: <span class='ident'>fmt</span>::<span class='ident'>Slice</span> <span class='kw'>where</span> <span class='ident'>F</span>: <span class='ident'>fmt</span>::<span class='ident'>SliceFormat</span><span class='op'>&lt;</span><span class='ident'>Slice</span><span class='op'>=</span><span class='kw'>Self</span><span class='op'>&gt;</span> {
     <span class='doccomment'>/// Make a `Tendril` from this slice.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>fn</span> <span class='ident'>to_tendril</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Tendril</span><span class='op'>&lt;</span><span class='ident'>Self</span>::<span class='ident'>Format</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>to_tendril</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Tendril</span><span class='op'>&lt;</span><span class='ident'>F</span><span class='op'>&gt;</span> {
     <span class='comment'>// It should be done thusly, but at the time of writing the defaults don&#39;t help inference:</span>
     <span class='comment'>//fn to_tendril&lt;A = NonAtomic&gt;(&amp;self) -&gt; Tendril&lt;Self::Format, A&gt;</span>
     <span class='comment'>//    where A: Atomicity,</span>
@@ -3442,8 +3462,8 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>SliceExt</span> <span class='kw'>for</span> <span class='ident'>str</span> { }
-<span class='kw'>impl</span> <span class='ident'>SliceExt</span> <span class='kw'>for</span> [<span class='ident'>u8</span>] { }
+<span class='kw'>impl</span> <span class='ident'>SliceExt</span><span class='op'>&lt;</span><span class='ident'>fmt</span>::<span class='ident'>UTF8</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>str</span> { }
+<span class='kw'>impl</span> <span class='ident'>SliceExt</span><span class='op'>&lt;</span><span class='ident'>fmt</span>::<span class='ident'>Bytes</span><span class='op'>&gt;</span> <span class='kw'>for</span> [<span class='ident'>u8</span>] { }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>Tendril</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>F</span>: <span class='kw'>for</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>fmt</span>::<span class='ident'>CharFormat</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>,
@@ -3553,6 +3573,10 @@
                 <span class='kw'>if</span> <span class='ident'>new_write_size</span> <span class='op'>&lt;</span> <span class='ident'>DEFAULT_BUF_SIZE</span> {
                     <span class='ident'>new_write_size</span> <span class='op'>*=</span> <span class='number'>2</span>;
                 }
+                <span class='comment'>// FIXME: this exposes uninitialized bytes to a generic R type</span>
+                <span class='comment'>// this is fine for R=File which never reads these bytes,</span>
+                <span class='comment'>// but user-defined types might.</span>
+                <span class='comment'>// The standard library pushes zeros to `Vec&lt;u8&gt;` for that reason.</span>
                 <span class='kw'>unsafe</span> {
                     <span class='ident'>buf</span>.<span class='ident'>push_uninitialized</span>(<span class='ident'>new_write_size</span>);
                 }
@@ -3618,8 +3642,9 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>Tendril</span><span class='op'>&lt;</span><span class='ident'>fmt</span>::<span class='ident'>Bytes</span>, <span class='ident'>A</span><span class='op'>&gt;</span>
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;</span> <span class='ident'>Tendril</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>A</span>: <span class='ident'>Atomicity</span>,
+          <span class='ident'>F</span>: <span class='ident'>fmt</span>::<span class='ident'>SliceFormat</span><span class='op'>&lt;</span><span class='ident'>Slice</span><span class='op'>=</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
 {
     <span class='doccomment'>/// Decode from some character encoding into UTF-8.</span>
     <span class='doccomment'>///</span>
@@ -4511,40 +4536,49 @@
 
     <section class="footer"></section>
 
-    <div id="help" class="hidden">
-        <div class="shortcuts">
-            <h1>Keyboard shortcuts</h1>
-            <dl>
-                <dt>?</dt>
-                <dd>Show this help dialog</dd>
-                <dt>S</dt>
-                <dd>Focus the search field</dd>
-                <dt>&larrb;</dt>
-                <dd>Move up in search results</dd>
-                <dt>&rarrb;</dt>
-                <dd>Move down in search results</dd>
-                <dt>&#9166;</dt>
-                <dd>Go to active search result</dd>
-            </dl>
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
         </div>
-        <div class="infos">
-            <h1>Search tricks</h1>
-            <p>
-                Prefix searches with a type followed by a colon (e.g.
-                <code>fn:</code>) to restrict the search to a given type.
-            </p>
-            <p>
-                Accepted types are: <code>fn</code>, <code>mod</code>,
-                <code>struct</code>, <code>enum</code>,
-                <code>trait</code>, <code>typedef</code> (or
-                <code>tdef</code>).
-            </p>
-            <p>
-                Search functions by type signature (e.g.
-                <code>vec -> usize</code>)
-            </p>
-        </div>
-    </div>
+    </aside>
 
     
 
@@ -4556,6 +4590,6 @@
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>
