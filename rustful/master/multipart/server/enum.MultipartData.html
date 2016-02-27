@@ -9,6 +9,7 @@
 
     <title>multipart::server::MultipartData - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
 
     
@@ -45,15 +46,15 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-353' class='srclink' href='../../src/multipart/server/mod.rs.html#304-311' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-355' class='srclink' href='../../src/multipart/server/mod.rs.html#304-311' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum MultipartData&lt;'a, R: 'a&gt; {
-    Text(&amp;'a <a href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>),
+    Text(&amp;'a <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>),
     File(<a class='struct' href='../../multipart/server/struct.MultipartFile.html' title='multipart::server::MultipartFile'>MultipartFile</a>&lt;'a, R&gt;),
 }</pre><div class='docblock'><p>The data of a field in a <code>multipart/form-data</code> request.</p>
 </div><h2 class='variants'>Variants</h2>
 <table><tr><td id='variant.Text'><code>Text</code></td><td><div class='docblock'><p>The field&#39;s payload is a text string.</p>
 </div></td></tr><tr><td id='variant.File'><code>File</code></td><td><div class='docblock'><p>The field&#39;s payload is a binary stream (file).</p>
-</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a, R&gt; <a class='enum' href='../../multipart/server/enum.MultipartData.html' title='multipart::server::MultipartData'>MultipartData</a>&lt;'a, R&gt;</code></h3><div class='impl-items'><h4 id='method.as_text' class='method'><code>fn <a href='#method.as_text' class='fnname'>as_text</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></h4>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a, R&gt; <a class='enum' href='../../multipart/server/enum.MultipartData.html' title='multipart::server::MultipartData'>MultipartData</a>&lt;'a, R&gt;</code></h3><div class='impl-items'><h4 id='method.as_text' class='method'><code>fn <a href='#method.as_text' class='fnname'>as_text</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></h4>
 <div class='docblock'><p>Borrow this payload as a text field, if possible.</p>
 </div><h4 id='method.as_file' class='method'><code>fn <a href='#method.as_file' class='fnname'>as_file</a>(&amp;mut self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut <a class='struct' href='../../multipart/server/struct.MultipartFile.html' title='multipart::server::MultipartFile'>MultipartFile</a>&lt;'a, R&gt;&gt;</code></h4>
 <div class='docblock'><p>Borrow this payload as a file field, if possible.
@@ -118,6 +119,6 @@ Mutably borrows so the contents can be read.</p>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     
-    <script async src="../../search-index.js"></script>
+    <script defer src="../../search-index.js"></script>
 </body>
 </html>

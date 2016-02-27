@@ -9,6 +9,7 @@
 
     <title>rustful::content_type! - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
 
     
@@ -45,50 +46,11 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-2166' class='srclink' href='../src/rustful/macros.rs.html#226-268' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-2177' class='srclink' href='../src/rustful/macros.rs.html#226-268' title='goto source code'>[src]</a></span></h1>
 <pre class='rust macro'>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>content_type</span> {
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>:<span class='ident'>tt</span> <span class='op'>/</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>:<span class='ident'>tt</span>) <span class='op'>=&gt;</span> ({
-        <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>macros</span>::<span class='ident'>MimeHelper</span>;
-        <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>Mime</span> (
-            {
-                <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>TopLevel</span>::<span class='op'>*</span>;
-                <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>)).<span class='ident'>convert</span>()
-            },
-            {
-                <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>SubLevel</span>::<span class='op'>*</span>;
-                <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>)).<span class='ident'>convert</span>()
-            },
-            <span class='ident'>Vec</span>::<span class='ident'>new</span>()
-        )
-    });
-
-    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>:<span class='ident'>tt</span> <span class='op'>/</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>:<span class='ident'>tt</span>; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>:<span class='ident'>tt</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>tt</span>);<span class='op'>+</span>) <span class='op'>=&gt;</span> ({
-        <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>macros</span>::<span class='ident'>MimeHelper</span>;
-        <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>Mime</span> (
-            {
-                <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>TopLevel</span>::<span class='op'>*</span>;
-                <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>)).<span class='ident'>convert</span>()
-            },
-            {
-                <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>SubLevel</span>::<span class='op'>*</span>;
-                <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>)).<span class='ident'>convert</span>()
-            },
-            <span class='macro'>vec</span><span class='macro'>!</span>[ $( ({
-                <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>Attr</span>::<span class='op'>*</span>;
-                <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>)).<span class='ident'>convert</span>()
-            }, {
-                <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>Value</span>::<span class='op'>*</span>;
-                <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>)).<span class='ident'>convert</span>()
-            })),<span class='op'>+</span> ]
-        )
-    });
+    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>:<span class='ident'>tt</span> <span class='op'>/</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>:<span class='ident'>tt</span>) <span class='op'>=&gt;</span> { ... };
+    (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>:<span class='ident'>tt</span> <span class='op'>/</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>:<span class='ident'>tt</span>; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>:<span class='ident'>tt</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>tt</span>);<span class='op'>+</span>) <span class='op'>=&gt;</span> { ... };
 }</pre>
 <div class='docblock'><p>A macro for making content types.</p>
 
@@ -187,6 +149,6 @@ examples showing that and how strings can be used for more exotic values:</p>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     
-    <script async src="../search-index.js"></script>
+    <script defer src="../search-index.js"></script>
 </body>
 </html>
