@@ -1,5 +1,5 @@
 (function() {var implementors = {};
-implementors['symbiosis_core'] = [];implementors['string_cache'] = [];implementors['symbiosis_tokenizer'] = [];
+implementors['symbiosis_core'] = [];implementors['symbiosis_tokenizer'] = [];implementors['symbiosis'] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

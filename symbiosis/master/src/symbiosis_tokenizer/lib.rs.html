@@ -351,6 +351,18 @@
 <span id="308">308</span>
 <span id="309">309</span>
 <span id="310">310</span>
+<span id="311">311</span>
+<span id="312">312</span>
+<span id="313">313</span>
+<span id="314">314</span>
+<span id="315">315</span>
+<span id="316">316</span>
+<span id="317">317</span>
+<span id="318">318</span>
+<span id="319">319</span>
+<span id="320">320</span>
+<span id="321">321</span>
+<span id="322">322</span>
 </pre><pre class='rust '>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>html5ever</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>string_cache</span>;
@@ -398,6 +410,12 @@
 <span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>fmt</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
     <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>e</span>: <span class='ident'>fmt</span>::<span class='ident'>Error</span>) <span class='op'>-&gt;</span> <span class='ident'>Error</span> {
         <span class='ident'>Error</span>::<span class='ident'>Format</span>(<span class='ident'>e</span>)
+    }
+}
+
+<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>parser</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>e</span>: <span class='ident'>parser</span>::<span class='ident'>Error</span>) <span class='op'>-&gt;</span> <span class='ident'>Error</span> {
+        <span class='ident'>Error</span>::<span class='ident'>Parse</span>(<span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>e</span>])
     }
 }
 
@@ -464,6 +482,7 @@
                 <span class='ident'>ReturnType</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>)),
                 <span class='ident'>ReturnType</span>::<span class='ident'>End</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>End</span>),
                 <span class='ident'>ReturnType</span>::<span class='ident'>Tag</span> { <span class='ident'>name</span>, <span class='ident'>arguments</span>, <span class='ident'>content</span> } <span class='op'>=&gt;</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>add_tag_tree</span>(<span class='ident'>name</span>, <span class='ident'>arguments</span>, <span class='ident'>content</span>)),
+                <span class='ident'>ReturnType</span>::<span class='ident'>TypeHint</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>TypeHint</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>)),
             };
         }
 
@@ -490,6 +509,7 @@
                     <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>BeginAttribute</span>(<span class='ident'>attribute</span>.<span class='ident'>name</span>.<span class='ident'>local</span>.<span class='ident'>into</span>(), <span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>empty</span>())));
                 },
                 <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>Tag</span> { .. }) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;HTML tags can not be used as pure text&quot;</span>.<span class='ident'>into</span>()),
+                <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>TypeHint</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>)) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>TypeHint</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>)),
                 <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>BeginAttribute</span>(<span class='ident'>attribute</span>.<span class='ident'>name</span>.<span class='ident'>local</span>.<span class='ident'>into</span>(), <span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>empty</span>())))
             }
 
@@ -501,6 +521,7 @@
                     <span class='ident'>ReturnType</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>)),
                     <span class='ident'>ReturnType</span>::<span class='ident'>End</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>End</span>),
                     <span class='ident'>ReturnType</span>::<span class='ident'>Tag</span> { .. } <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;HTML tags can not be used as pure text&quot;</span>.<span class='ident'>into</span>()),
+                    <span class='ident'>ReturnType</span>::<span class='ident'>TypeHint</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>TypeHint</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>)),
                 }
             }
 
@@ -551,6 +572,7 @@
                     <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>BeginAttribute</span>(<span class='ident'>attr</span>, <span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>empty</span>())));
                 },
                 <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>Tag</span> { .. }) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;HTML tags can not be used as pure text&quot;</span>.<span class='ident'>into</span>()),
+                <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>TypeHint</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>)) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>TypeHint</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>)),
                 <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>BeginAttribute</span>(<span class='ident'>attr</span>, <span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>empty</span>())))
             }
 
@@ -562,6 +584,7 @@
                     <span class='ident'>ReturnType</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>)),
                     <span class='ident'>ReturnType</span>::<span class='ident'>End</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>End</span>),
                     <span class='ident'>ReturnType</span>::<span class='ident'>Tag</span> { .. } <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;HTML tags can not be used as pure text&quot;</span>.<span class='ident'>into</span>()),
+                    <span class='ident'>ReturnType</span>::<span class='ident'>TypeHint</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>TypeHint</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>)),
                 }
             }
             <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>EndAttribute</span>);
@@ -591,6 +614,7 @@
                     <span class='ident'>ReturnType</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>)),
                     <span class='ident'>ReturnType</span>::<span class='ident'>End</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>End</span>),
                     <span class='ident'>ReturnType</span>::<span class='ident'>Tag</span> { <span class='ident'>name</span>, <span class='ident'>arguments</span>, <span class='ident'>content</span> } <span class='op'>=&gt;</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>add_tag_tree</span>(<span class='ident'>name</span>, <span class='ident'>arguments</span>, <span class='ident'>content</span>)),
+                    <span class='ident'>ReturnType</span>::<span class='ident'>TypeHint</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>TypeHint</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>)),
                 }
             }
 
