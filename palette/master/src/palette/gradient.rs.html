@@ -422,6 +422,7 @@
 <span id="379">379</span>
 <span id="380">380</span>
 <span id="381">381</span>
+<span id="382">382</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Types for interpolation between multiple colors.</span>
 
@@ -800,8 +801,9 @@
 
         <span class='kw'>let</span> <span class='ident'>v1</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>g1</span>.<span class='ident'>take</span>(<span class='number'>10</span>).<span class='ident'>take</span>(<span class='number'>5</span>).<span class='ident'>collect</span>();
         <span class='kw'>let</span> <span class='ident'>v2</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>g2</span>.<span class='ident'>take</span>(<span class='number'>5</span>).<span class='ident'>collect</span>();
-
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>v1</span>, <span class='ident'>v2</span>);
+        <span class='kw'>for</span> (<span class='ident'>t1</span>, <span class='ident'>t2</span>) <span class='kw'>in</span> <span class='ident'>v1</span>.<span class='ident'>iter</span>().<span class='ident'>zip</span>(<span class='ident'>v2</span>.<span class='ident'>iter</span>()){
+            <span class='macro'>assert_relative_eq</span><span class='macro'>!</span>(<span class='ident'>t1</span>, <span class='ident'>t2</span>);
+        }
     }
 }
 </pre>

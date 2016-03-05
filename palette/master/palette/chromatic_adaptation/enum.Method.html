@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Method` enum in crate `palette`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Method">
+
+    <title>palette::chromatic_adaptation::Method - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a></p><script>window.sidebarCurrent = {name: 'Method', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a>::<wbr><a class='enum' href=''>Method</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-6115' class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#33-40' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum Method {
+    Bradford,
+    VonKries,
+    XyzScaling,
+}</pre><div class='docblock'><p>Chromatic adaptation methods implemented in the library</p>
+</div><h2 class='variants'>Variants</h2>
+<table><tr><td id='variant.Bradford'><code>Bradford</code></td><td><div class='docblock'><p>Bradford chromatic adaptation method</p>
+</div></td></tr><tr><td id='variant.VonKries'><code>VonKries</code></td><td><div class='docblock'><p>VonKries chromatic adaptation method</p>
+</div></td></tr><tr><td id='variant.XyzScaling'><code>XyzScaling</code></td><td><div class='docblock'><p>XyzScaling chromatic adaptation method</p>
+</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;Swp, Dwp, T&gt; <a class='trait' href='../../palette/chromatic_adaptation/trait.TransformMatrix.html' title='palette::chromatic_adaptation::TransformMatrix'>TransformMatrix</a>&lt;Swp, Dwp, T&gt; for <a class='enum' href='../../palette/chromatic_adaptation/enum.Method.html' title='palette::chromatic_adaptation::Method'>Method</a> <span class='where'>where T: <a class='trait' href='../../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>, Swp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;, Dwp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></h3><div class='impl-items'><h4 id='method.get_cone_response' class='method'><code>fn <a href='../../palette/chromatic_adaptation/trait.TransformMatrix.html#method.get_cone_response' class='fnname'>get_cone_response</a>(&amp;self) -&gt; <a class='struct' href='../../palette/chromatic_adaptation/struct.ConeResponseMatrices.html' title='palette::chromatic_adaptation::ConeResponseMatrices'>ConeResponseMatrices</a>&lt;T&gt;</code></h4>
+<h4 id='method.generate_transform_matrix' class='method'><code>fn <a href='../../palette/chromatic_adaptation/trait.TransformMatrix.html#method.generate_transform_matrix' class='fnname'>generate_transform_matrix</a>(&amp;self) -&gt; <a class='type' href='../../palette/type.Mat3.html' title='palette::Mat3'>Mat3</a>&lt;T&gt;</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "palette";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>
