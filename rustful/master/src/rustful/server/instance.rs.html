@@ -520,10 +520,6 @@
 <span id="477">477</span>
 <span id="478">478</span>
 <span id="479">479</span>
-<span id="480">480</span>
-<span id="481">481</span>
-<span id="482">482</span>
-<span id="483">483</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::<span class='ident'>SocketAddr</span>;
@@ -634,9 +630,7 @@
             <span class='ident'>Scheme</span>::<span class='ident'>Http</span> <span class='op'>=&gt;</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>HyperServer</span>::<span class='ident'>http</span>(<span class='ident'>host</span>)),
             <span class='ident'>Scheme</span>::<span class='ident'>Https</span> {<span class='ident'>cert</span>, <span class='ident'>key</span>} <span class='op'>=&gt;</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>HyperServer</span>::<span class='ident'>https</span>(<span class='ident'>host</span>, <span class='ident'>cert</span>, <span class='ident'>key</span>)),
         };
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>keep_alive</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>keep_alive</span> {
-            <span class='ident'>server</span>.<span class='ident'>keep_alive</span>(<span class='ident'>keep_alive</span>.<span class='ident'>timeout</span>);
-        }
+        <span class='ident'>server</span>.<span class='ident'>keep_alive</span>(<span class='self'>self</span>.<span class='ident'>keep_alive</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>k</span><span class='op'>|</span> <span class='ident'>k</span>.<span class='ident'>timeout</span>));
         <span class='ident'>server</span>.<span class='ident'>run</span>(<span class='self'>self</span>, <span class='ident'>threads</span>)
     }
 
@@ -646,9 +640,7 @@
         <span class='kw'>let</span> <span class='ident'>host</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>host</span>;
         <span class='kw'>let</span> <span class='ident'>threads</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>threads</span>;
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>server</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>HyperServer</span>::<span class='ident'>http</span>(<span class='ident'>host</span>));
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>keep_alive</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>keep_alive</span> {
-            <span class='ident'>server</span>.<span class='ident'>keep_alive</span>(<span class='ident'>keep_alive</span>.<span class='ident'>timeout</span>);
-        }
+        <span class='ident'>server</span>.<span class='ident'>keep_alive</span>(<span class='self'>self</span>.<span class='ident'>keep_alive</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>k</span><span class='op'>|</span> <span class='ident'>k</span>.<span class='ident'>timeout</span>));
         <span class='ident'>server</span>.<span class='ident'>run</span>(<span class='self'>self</span>, <span class='ident'>threads</span>)
     }
 
@@ -880,7 +872,7 @@
     }
 
     <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ssl&quot;</span>)]</span>
-    <span class='kw'>fn</span> <span class='ident'>keep_alive</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>timeout</span>: <span class='ident'>Duration</span>) {
+    <span class='kw'>fn</span> <span class='ident'>keep_alive</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>timeout</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Duration</span><span class='op'>&gt;</span>) {
         <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
             <span class='ident'>HyperServer</span>::<span class='ident'>Http</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>keep_alive</span>(<span class='ident'>timeout</span>),
             <span class='ident'>HyperServer</span>::<span class='ident'>Https</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>keep_alive</span>(<span class='ident'>timeout</span>),
@@ -888,7 +880,7 @@
     }
 
     <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>not</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ssl&quot;</span>))]</span>
-    <span class='kw'>fn</span> <span class='ident'>keep_alive</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>timeout</span>: <span class='ident'>Duration</span>) {
+    <span class='kw'>fn</span> <span class='ident'>keep_alive</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>timeout</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Duration</span><span class='op'>&gt;</span>) {
         <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
             <span class='ident'>HyperServer</span>::<span class='ident'>Http</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>keep_alive</span>(<span class='ident'>timeout</span>),
         }

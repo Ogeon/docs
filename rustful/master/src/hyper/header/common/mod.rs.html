@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/hyper-0.6.16/src/header/common/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/hyper-0.7.2/src/header/common/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -440,6 +440,10 @@
 <span id="397">397</span>
 <span id="398">398</span>
 <span id="399">399</span>
+<span id="400">400</span>
+<span id="401">401</span>
+<span id="402">402</span>
+<span id="403">403</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! A Collection of Header implementations for common HTTP Headers.</span>
 <span class='doccomment'>//!</span>
@@ -450,6 +454,7 @@
 <span class='doccomment'>//! is used, such as `ContentType(pub Mime)`.</span>
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>accept</span>::<span class='ident'>Accept</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>access_control_allow_credentials</span>::<span class='ident'>AccessControlAllowCredentials</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>access_control_allow_headers</span>::<span class='ident'>AccessControlAllowHeaders</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>access_control_allow_methods</span>::<span class='ident'>AccessControlAllowMethods</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>access_control_allow_origin</span>::<span class='ident'>AccessControlAllowOrigin</span>;
@@ -465,6 +470,7 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>authorization</span>::{<span class='ident'>Authorization</span>, <span class='ident'>Scheme</span>, <span class='ident'>Basic</span>, <span class='ident'>Bearer</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>cache_control</span>::{<span class='ident'>CacheControl</span>, <span class='ident'>CacheDirective</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>connection</span>::{<span class='ident'>Connection</span>, <span class='ident'>ConnectionOption</span>};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>content_disposition</span>::{<span class='ident'>ContentDisposition</span>, <span class='ident'>DispositionType</span>, <span class='ident'>DispositionParam</span>};
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>content_length</span>::<span class='ident'>ContentLength</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>content_encoding</span>::<span class='ident'>ContentEncoding</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>content_language</span>::<span class='ident'>ContentLanguage</span>;
@@ -532,13 +538,13 @@
         <span class='kw'>impl</span> ::<span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>Deref</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>from</span> {
             <span class='kw'>type</span> <span class='ident'>Target</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>to</span>;
 
-            <span class='kw'>fn</span> <span class='ident'>deref</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>to</span> {
+            <span class='kw'>fn</span> <span class='ident'>deref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>to</span> {
                 <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='number'>0</span>
             }
         }
 
         <span class='kw'>impl</span> ::<span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>DerefMut</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>from</span> {
-            <span class='kw'>fn</span> <span class='ident'>deref_mut</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>to</span> {
+            <span class='kw'>fn</span> <span class='ident'>deref_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>to</span> {
                 <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='number'>0</span>
             }
         }
@@ -738,7 +744,7 @@
                         <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>id</span>::<span class='ident'>Any</span>)
                     }
                 }
-                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>header</span>::<span class='ident'>parsing</span>::<span class='ident'>from_comma_delimited</span>(<span class='ident'>raw</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>vec</span><span class='op'>|</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>id</span>::<span class='ident'>Items</span>(<span class='ident'>vec</span>))
+                <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>header</span>::<span class='ident'>parsing</span>::<span class='ident'>from_comma_delimited</span>(<span class='ident'>raw</span>).<span class='ident'>map</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>id</span>::<span class='ident'>Items</span>)
             }
         }
         <span class='kw'>impl</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>header</span>::<span class='ident'>HeaderFormat</span> <span class='kw'>for</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>id</span> {
@@ -796,6 +802,7 @@
 
 
 <span class='kw'>mod</span> <span class='ident'>accept</span>;
+<span class='kw'>mod</span> <span class='ident'>access_control_allow_credentials</span>;
 <span class='kw'>mod</span> <span class='ident'>access_control_allow_headers</span>;
 <span class='kw'>mod</span> <span class='ident'>access_control_allow_methods</span>;
 <span class='kw'>mod</span> <span class='ident'>access_control_allow_origin</span>;
@@ -812,6 +819,7 @@
 <span class='kw'>mod</span> <span class='ident'>cache_control</span>;
 <span class='kw'>mod</span> <span class='ident'>cookie</span>;
 <span class='kw'>mod</span> <span class='ident'>connection</span>;
+<span class='kw'>mod</span> <span class='ident'>content_disposition</span>;
 <span class='kw'>mod</span> <span class='ident'>content_encoding</span>;
 <span class='kw'>mod</span> <span class='ident'>content_language</span>;
 <span class='kw'>mod</span> <span class='ident'>content_length</span>;

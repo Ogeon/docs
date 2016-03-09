@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/multipart-0.3.1/src/server/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/multipart-0.4.1/src/server/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -522,6 +522,25 @@
 <span id="479">479</span>
 <span id="480">480</span>
 <span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! The server-side abstraction for multipart requests. Enabled with the `server` feature (on by</span>
 <span class='doccomment'>//! default).</span>
@@ -544,7 +563,6 @@
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>boundary</span>::<span class='ident'>BoundaryReader</span>;
 
-<span class='kw'>mod</span> <span class='ident'>buf_read</span>;
 <span class='kw'>mod</span> <span class='ident'>boundary</span>;
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;hyper&quot;</span>)]</span>
@@ -599,7 +617,10 @@
     <span class='doccomment'>/// If the previously returned entry had contents of type `MultipartField::File`,</span>
     <span class='doccomment'>/// calling this again will discard any unread contents of that entry.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>read_entry</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>MultipartField</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> {
-        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>source</span>.<span class='ident'>consume_boundary</span>());
+        <span class='kw'>if</span> <span class='op'>!</span><span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>consume_boundary</span>()) {
+            <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(<span class='prelude-val'>None</span>);
+        }
+
         <span class='ident'>MultipartField</span>::<span class='ident'>read_from</span>(<span class='self'>self</span>)
     }
 
@@ -670,6 +691,23 @@
         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>source</span>.<span class='ident'>read_to_string</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>line_buf</span>) {
             <span class='prelude-val'>Ok</span>(<span class='ident'>read</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>line_buf</span>[..<span class='ident'>read</span>]),
             <span class='prelude-val'>Err</span>(<span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>err</span>),
+        }
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>consume_boundary</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span> {
+        <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>source</span>.<span class='ident'>consume_boundary</span>());
+
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>out</span> <span class='op'>=</span> [<span class='number'>0</span>; <span class='number'>2</span>];
+        <span class='kw'>let</span> _ <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>source</span>.<span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>out</span>));
+
+        <span class='kw'>if</span> <span class='op'>*</span><span class='string'>b&quot;\r\n&quot;</span> <span class='op'>==</span> <span class='ident'>out</span> {
+            <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(<span class='boolval'>true</span>);
+        } <span class='kw'>else</span> {
+            <span class='kw'>if</span> <span class='op'>*</span><span class='string'>b&quot;--&quot;</span> <span class='op'>!=</span> <span class='ident'>out</span> {
+                <span class='macro'>warn</span><span class='macro'>!</span>(<span class='string'>&quot;Unexpected 2-bytes after boundary: {:?}&quot;</span>, <span class='ident'>out</span>);
+            }
+
+            <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(<span class='boolval'>false</span>);
         }
     }
 }
