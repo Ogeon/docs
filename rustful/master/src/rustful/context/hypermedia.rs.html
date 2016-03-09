@@ -87,6 +87,7 @@
 <span id="44">44</span>
 <span id="45">45</span>
 <span id="46">46</span>
+<span id="47">47</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Anything related to hypermedia and hyperlinks.</span>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
@@ -96,6 +97,7 @@
 <span class='kw'>use</span> <span class='ident'>context</span>::<span class='ident'>MaybeUtf8Slice</span>;
 
 <span class='doccomment'>///A hyperlink.</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Link</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='doccomment'>///The HTTP method for which an endpoint is available. It can be left</span>
     <span class='doccomment'>///unspecified if the method doesn&#39;t matter.</span>
@@ -113,7 +115,7 @@
 }
 
 <span class='doccomment'>///A segment of a hyperlink path.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Debug</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>LinkSegment</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='doccomment'>///The expected static segment or the name of a variable segment. Variable</span>
     <span class='doccomment'>///segments are allowed to have an empty string as label if it&#39;s unknown or</span>
@@ -124,7 +126,7 @@
 }
 
 <span class='doccomment'>///The type of a hyperlink segment.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Debug</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>SegmentType</span> {
     <span class='doccomment'>///A static part of a path.</span>
     <span class='ident'>Static</span>,

@@ -46,9 +46,10 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-636' class='srclink' href='../../src/rustful/router/mod.rs.html#1-245' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-636' class='srclink' href='../../src/rustful/router/mod.rs.html#1-611' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Routers stores request handlers, using an HTTP method and a path as keys.</p>
 
+<h1 id='building-routers' class='section-header'><a href='#building-routers'>Building Routers</a></h1>
 <p>Rustful provides a tree structured all-round router called <code>TreeRouter</code>,
 but any other type of router can be used, as long as it implements the
 <code>Router</code> trait. This will also make it possible to initialize it using the
@@ -87,13 +88,77 @@ among other things.</p>
 
 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>router</span> <span class='op'>=</span> <span class='ident'>TreeRouter</span>::<span class='ident'>new</span>();
 
-<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/&quot;</span>, <span class='ident'>show_welcome</span>);
-<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/about&quot;</span>, <span class='ident'>about_us</span>);
-<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/users&quot;</span>, <span class='ident'>list_users</span>);
-<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/users/:id&quot;</span>, <span class='ident'>show_user</span>);
-<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/products&quot;</span>, <span class='ident'>list_products</span>);
-<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/products/:id&quot;</span>, <span class='ident'>show_product</span>);
-<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='kw-2'>&amp;</span><span class='string'>&quot;/*&quot;</span>, <span class='ident'>show_error</span>);</pre>
+<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/&quot;</span>, <span class='ident'>show_welcome</span>);
+<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/about&quot;</span>, <span class='ident'>about_us</span>);
+<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/users&quot;</span>, <span class='ident'>list_users</span>);
+<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/users/:id&quot;</span>, <span class='ident'>show_user</span>);
+<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/products&quot;</span>, <span class='ident'>list_products</span>);
+<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/products/:id&quot;</span>, <span class='ident'>show_product</span>);
+<span class='ident'>router</span>.<span class='ident'>insert</span>(<span class='ident'>Get</span>, <span class='string'>&quot;/*&quot;</span>, <span class='ident'>show_error</span>);</pre>
+
+<h1 id='variables' class='section-header'><a href='#variables'>Variables</a></h1>
+<p>Routes may contain variables, that are useful for capturing parts of the
+requested path as input to the handler. The syntax for a variable is simply
+an indicator character (<code>:</code> or <code>*</code>) followed by a label. Variables without
+labels are also valid, but their values will be discarded.</p>
+
+<h2 id='variable-segments-label' class='section-header'><a href='#variable-segments-label'>Variable Segments (:label)</a></h2>
+<p>A variable segment will match a single arbitrary segment. They are probably
+the most commonly used variables and may, for example, be used to select a
+blog post: <code>&quot;posts/:year/:month/:day/:title_slug&quot;</code>.</p>
+
+<pre><code class="language-text">pattern = &quot;a/:v/b&quot;
+&quot;a/c/b&quot; -&gt; v = &quot;c&quot;
+&quot;a/c/d/b&quot; -&gt; no match
+&quot;a/b&quot; -&gt; no match
+&quot;a/c/b/d&quot; -&gt; no match
+</code></pre>
+
+<h2 id='variable-sequences-label' class='section-header'><a href='#variable-sequences-label'>Variable Sequences (*label)</a></h2>
+<p>A variable sequence is similar to a variable segment, but with the
+difference that it may consume multiple segments until the rest of the path
+gives a match. An example use case is a route for downloadable files that
+may be arranged in arbitrary directories: <code>&quot;downloads/*file_path&quot;</code>.</p>
+
+<pre><code class="language-text">pattern = &quot;a/*v/b&quot;
+&quot;a/c/b&quot; -&gt; v = &quot;c&quot;
+&quot;a/c/d/b&quot; -&gt; v = &quot;c/d&quot;
+&quot;a/b&quot; -&gt; no match
+&quot;a/c/b/d&quot; -&gt; no match
+</code></pre>
+
+<pre><code class="language-text">pattern = &quot;a/b/*v&quot;
+&quot;a/b/c&quot; -&gt; v = &quot;c&quot;
+&quot;a/b/c/d&quot; -&gt; v = &quot;c/d&quot;
+&quot;a/b&quot; -&gt; no match
+</code></pre>
+
+<h1 id='router-composition' class='section-header'><a href='#router-composition'>Router Composition</a></h1>
+<p>The default tree router is actually a composition of three routers:
+<a href="struct.TreeRouter.html"><code>TreeRouter</code></a>, <a href="struct.MethodRouter.html"><code>MethodRouter</code></a> and
+<a href="struct.Variables.html"><code>Variables</code></a>. They come together as the type
+<code>TreeRouter&lt;MethodRouter&lt;Variables&lt;_&gt;&gt;&gt;</code>, but the <code>TreeRouter</code> assumes that
+this is most probably what you want, so this is what <code>TreeRouter::new()</code>
+gives you. No need to write it all out in most of the cases.</p>
+
+<p>There may, however, be cases where you want something else. What if you
+don&#39;t care about the HTTP method? Maybe your handler takes care of that
+internally. Sure, no problem:</p>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>TreeRouter</span>;
+<span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>router</span>::<span class='ident'>Variables</span>;
+
+<span class='kw'>let</span> <span class='ident'>my_router</span> <span class='op'>=</span> <span class='ident'>TreeRouter</span>::<span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Variables</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>::<span class='ident'>default</span>();</pre>
+
+<p>And what about those route variables? Not using them at all? Well, just
+remove them too, if you don&#39;t want them:</p>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>TreeRouter</span>;
+
+<span class='kw'>let</span> <span class='ident'>my_router</span> <span class='op'>=</span> <span class='ident'>TreeRouter</span>::<span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>::<span class='ident'>default</span>();</pre>
+
+<p>You can simply recombine and reorder the router types however you want, or
+why not make your own router? Just implement the <code>Router</code> trait.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                     <tr class=' module-item'>
@@ -106,10 +171,46 @@ among other things.</p>
                     </tr>
                 
                     <tr class=' module-item'>
+                        <td><a class='struct' href='struct.InsertState.html'
+                               title='rustful::router::InsertState'>InsertState</a></td>
+                        <td class='docblock short'>
+                             <p>A state object for route insertion.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.MethodRouter.html'
+                               title='rustful::router::MethodRouter'>MethodRouter</a></td>
+                        <td class='docblock short'>
+                             <p>A router that selects an item from an HTTP method.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.RouteState.html'
+                               title='rustful::router::RouteState'>RouteState</a></td>
+                        <td class='docblock short'>
+                             <p>A state object for routing.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
                         <td><a class='struct' href='struct.TreeRouter.html'
                                title='rustful::router::TreeRouter'>TreeRouter</a></td>
                         <td class='docblock short'>
-                             <p>Stores handlers, using an HTTP method and a route as key.</p>
+                             <p>A tree shaped router that selects handlers using paths.</p>
+
+                        </td>
+                    </tr>
+                
+                    <tr class=' module-item'>
+                        <td><a class='struct' href='struct.Variables.html'
+                               title='rustful::router::Variables'>Variables</a></td>
+                        <td class='docblock short'>
+                             <p>A router endpoint that assigns names to route variables.</p>
 
                         </td>
                     </tr>
