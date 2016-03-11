@@ -388,7 +388,7 @@
 
 <span class='kw'>use</span> {<span class='ident'>Alpha</span>, <span class='ident'>Xyz</span>, <span class='ident'>Lab</span>, <span class='ident'>LabHue</span>, <span class='ident'>Hue</span>};
 <span class='kw'>use</span> {<span class='ident'>Limited</span>, <span class='ident'>Mix</span>, <span class='ident'>Shade</span>, <span class='ident'>GetHue</span>, <span class='ident'>FromColor</span>, <span class='ident'>IntoColor</span>, <span class='ident'>Saturate</span>};
-<span class='kw'>use</span> {<span class='ident'>clamp</span>};
+<span class='kw'>use</span> {<span class='ident'>clamp</span>, <span class='ident'>flt</span>};
 <span class='kw'>use</span> <span class='ident'>white_point</span>::{<span class='ident'>WhitePoint</span>, <span class='ident'>D65</span>};
 
 <span class='doccomment'>///CIE L*C*h° with an alpha component. See the [`Lcha` implementation in `Alpha`](struct.Alpha.html#Lcha).</span>
@@ -407,13 +407,13 @@
     <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>Float</span>,
         <span class='ident'>Wp</span>: <span class='ident'>WhitePoint</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>
 {
-    <span class='doccomment'>///L* is the lightness of the color. 0.0 gives absolute black and 1.0</span>
-    <span class='doccomment'>///give the brightest white.</span>
+    <span class='doccomment'>///L* is the lightness of the color. 0.0 gives absolute black and 100.0</span>
+    <span class='doccomment'>///gives the brightest white.</span>
     <span class='kw'>pub</span> <span class='ident'>l</span>: <span class='ident'>T</span>,
 
     <span class='doccomment'>///C* is the colorfulness of the color. It&#39;s similar to saturation. 0.0</span>
-    <span class='doccomment'>///gives gray scale colors, and numbers around 1.0-1.41421356 gives fully</span>
-    <span class='doccomment'>///saturated colors. The upper limit of 1.41421356 (or `sqrt(2.0)`) should</span>
+    <span class='doccomment'>///gives gray scale colors, and numbers around 128-181 gives fully</span>
+    <span class='doccomment'>///saturated colors. The upper limit of 128 should</span>
     <span class='doccomment'>///include the whole L*a*b* space and some more.</span>
     <span class='kw'>pub</span> <span class='ident'>chroma</span>: <span class='ident'>T</span>,
 
@@ -523,7 +523,7 @@
         <span class='ident'>Wp</span>: <span class='ident'>WhitePoint</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>
 {
     <span class='kw'>fn</span> <span class='ident'>is_valid</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>&gt;=</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>&lt;=</span> <span class='ident'>T</span>::<span class='ident'>one</span>() <span class='op'>&amp;&amp;</span>
+        <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>&gt;=</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>&lt;=</span> <span class='ident'>flt</span>(<span class='number'>100.0</span>) <span class='op'>&amp;&amp;</span>
         <span class='self'>self</span>.<span class='ident'>chroma</span> <span class='op'>&gt;=</span> <span class='ident'>T</span>::<span class='ident'>zero</span>()
     }
 
@@ -534,7 +534,7 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>clamp_self</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>=</span> <span class='ident'>clamp</span>(<span class='self'>self</span>.<span class='ident'>l</span>, <span class='ident'>T</span>::<span class='ident'>zero</span>(), <span class='ident'>T</span>::<span class='ident'>one</span>());
+        <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>=</span> <span class='ident'>clamp</span>(<span class='self'>self</span>.<span class='ident'>l</span>, <span class='ident'>T</span>::<span class='ident'>zero</span>(), <span class='ident'>flt</span>(<span class='number'>100.0</span>));
         <span class='self'>self</span>.<span class='ident'>chroma</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>chroma</span>.<span class='ident'>max</span>(<span class='ident'>T</span>::<span class='ident'>zero</span>())
     }
 }
@@ -565,7 +565,7 @@
 
     <span class='kw'>fn</span> <span class='ident'>lighten</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>amount</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Lch</span><span class='op'>&lt;</span><span class='ident'>Wp</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Lch</span> {
-            <span class='ident'>l</span>: <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>+</span> <span class='ident'>amount</span>,
+            <span class='ident'>l</span>: <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>+</span> <span class='ident'>amount</span> <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>100.0</span>),
             <span class='ident'>chroma</span>: <span class='self'>self</span>.<span class='ident'>chroma</span>,
             <span class='ident'>hue</span>: <span class='self'>self</span>.<span class='ident'>hue</span>,
             <span class='ident'>white_point</span>: <span class='ident'>PhantomData</span>,
@@ -709,10 +709,10 @@
         <span class='macro'>assert_ranges</span><span class='macro'>!</span>{
             <span class='ident'>Lch</span>;
             <span class='ident'>limited</span> {
-                <span class='ident'>l</span>: <span class='number'>0.0</span> <span class='op'>=&gt;</span> <span class='number'>1.0</span>
+                <span class='ident'>l</span>: <span class='number'>0.0</span> <span class='op'>=&gt;</span> <span class='number'>100.0</span>
             }
             <span class='ident'>limited_min</span> {
-                <span class='ident'>chroma</span>: <span class='number'>0.0</span> <span class='op'>=&gt;</span> <span class='number'>2.0</span>
+                <span class='ident'>chroma</span>: <span class='number'>0.0</span> <span class='op'>=&gt;</span> <span class='number'>200.0</span>
             }
             <span class='ident'>unlimited</span> {
                 <span class='ident'>hue</span>: <span class='op'>-</span><span class='number'>360.0</span> <span class='op'>=&gt;</span> <span class='number'>360.0</span>

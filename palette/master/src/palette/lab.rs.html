@@ -500,20 +500,20 @@
 <span class='doccomment'>///numerical difference.</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>///The parameters of L*a*b* are quite different, compared to many other color</span>
-<span class='doccomment'>///spaces, so manipulating them manually can be unintuitive.</span>
+<span class='doccomment'>///spaces, so manipulating them manually may be unintuitive.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>PartialEq</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Lab</span><span class='op'>&lt;</span><span class='ident'>Wp</span> <span class='op'>=</span> <span class='ident'>D65</span>, <span class='ident'>T</span> <span class='op'>=</span> <span class='ident'>f32</span><span class='op'>&gt;</span>
     <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>Float</span>,
         <span class='ident'>Wp</span>: <span class='ident'>WhitePoint</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>
 {
-    <span class='doccomment'>///L* is the lightness of the color. 0.0 gives absolute black and 1.0</span>
+    <span class='doccomment'>///L* is the lightness of the color. 0.0 gives absolute black and 100</span>
     <span class='doccomment'>///give the brightest white.</span>
     <span class='kw'>pub</span> <span class='ident'>l</span>: <span class='ident'>T</span>,
 
-    <span class='doccomment'>///a* goes from red at -1.0 to green at 1.0.</span>
+    <span class='doccomment'>///a* goes from red at -128 to green at 127.</span>
     <span class='kw'>pub</span> <span class='ident'>a</span>: <span class='ident'>T</span>,
 
-    <span class='doccomment'>///b* goes from yellow at -1.0 to blue at 1.0.</span>
+    <span class='doccomment'>///b* goes from yellow at -128 to blue at 127.</span>
     <span class='kw'>pub</span> <span class='ident'>b</span>: <span class='ident'>T</span>,
 
     <span class='doccomment'>///The white point associated with the color&#39;s illuminant and observer.</span>
@@ -615,9 +615,9 @@
         <span class='ident'>z</span> <span class='op'>=</span> <span class='ident'>convert</span>(<span class='ident'>z</span>);
 
         <span class='ident'>Lab</span> {
-            <span class='ident'>l</span>: ( (<span class='ident'>y</span> <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>116.0</span>)) <span class='op'>-</span> <span class='ident'>flt</span>(<span class='number'>16.0</span>) ) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>100.0</span>),
-            <span class='ident'>a</span>: ( (<span class='ident'>x</span> <span class='op'>-</span> <span class='ident'>y</span>) <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>500.0</span>) ) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>128.0</span>),
-            <span class='ident'>b</span>: ( (<span class='ident'>y</span> <span class='op'>-</span> <span class='ident'>z</span>) <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>200.0</span>) ) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>128.0</span>),
+            <span class='ident'>l</span>: ( (<span class='ident'>y</span> <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>116.0</span>)) <span class='op'>-</span> <span class='ident'>flt</span>(<span class='number'>16.0</span>) ),
+            <span class='ident'>a</span>: ( (<span class='ident'>x</span> <span class='op'>-</span> <span class='ident'>y</span>) <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>500.0</span>) ),
+            <span class='ident'>b</span>: ( (<span class='ident'>y</span> <span class='op'>-</span> <span class='ident'>z</span>) <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>200.0</span>) ),
             <span class='ident'>white_point</span>: <span class='ident'>PhantomData</span>,
         }
     }
@@ -643,9 +643,9 @@
         <span class='ident'>Wp</span>: <span class='ident'>WhitePoint</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>
 {
     <span class='kw'>fn</span> <span class='ident'>is_valid</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>&gt;=</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>&lt;=</span> <span class='ident'>T</span>::<span class='ident'>one</span>() <span class='op'>&amp;&amp;</span>
-        <span class='self'>self</span>.<span class='ident'>a</span> <span class='op'>&gt;=</span> <span class='op'>-</span><span class='ident'>T</span>::<span class='ident'>one</span>() <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>a</span> <span class='op'>&lt;=</span> <span class='ident'>T</span>::<span class='ident'>one</span>() <span class='op'>&amp;&amp;</span>
-        <span class='self'>self</span>.<span class='ident'>b</span> <span class='op'>&gt;=</span> <span class='op'>-</span><span class='ident'>T</span>::<span class='ident'>one</span>() <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>b</span> <span class='op'>&lt;=</span> <span class='ident'>T</span>::<span class='ident'>one</span>()
+        <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>&gt;=</span> <span class='ident'>T</span>::<span class='ident'>zero</span>() <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>&lt;=</span> <span class='ident'>flt</span>(<span class='number'>100.0</span>) <span class='op'>&amp;&amp;</span>
+        <span class='self'>self</span>.<span class='ident'>a</span> <span class='op'>&gt;=</span> <span class='ident'>flt</span>(<span class='op'>-</span><span class='number'>128</span>) <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>a</span> <span class='op'>&lt;=</span> <span class='ident'>flt</span>(<span class='number'>127.0</span>) <span class='op'>&amp;&amp;</span>
+        <span class='self'>self</span>.<span class='ident'>b</span> <span class='op'>&gt;=</span> <span class='ident'>flt</span>(<span class='op'>-</span><span class='number'>128</span>) <span class='op'>&amp;&amp;</span> <span class='self'>self</span>.<span class='ident'>b</span> <span class='op'>&lt;=</span> <span class='ident'>flt</span>(<span class='number'>127.0</span>)
     }
 
     <span class='kw'>fn</span> <span class='ident'>clamp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Lab</span><span class='op'>&lt;</span><span class='ident'>Wp</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
@@ -655,9 +655,9 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>clamp_self</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>=</span> <span class='ident'>clamp</span>(<span class='self'>self</span>.<span class='ident'>l</span>, <span class='ident'>T</span>::<span class='ident'>zero</span>(), <span class='ident'>T</span>::<span class='ident'>one</span>());
-        <span class='self'>self</span>.<span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>clamp</span>(<span class='self'>self</span>.<span class='ident'>a</span>, <span class='op'>-</span><span class='ident'>T</span>::<span class='ident'>one</span>(), <span class='ident'>T</span>::<span class='ident'>one</span>());
-        <span class='self'>self</span>.<span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>clamp</span>(<span class='self'>self</span>.<span class='ident'>b</span>, <span class='op'>-</span><span class='ident'>T</span>::<span class='ident'>one</span>(), <span class='ident'>T</span>::<span class='ident'>one</span>());
+        <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>=</span> <span class='ident'>clamp</span>(<span class='self'>self</span>.<span class='ident'>l</span>, <span class='ident'>T</span>::<span class='ident'>zero</span>(), <span class='ident'>flt</span>(<span class='number'>100.0</span>));
+        <span class='self'>self</span>.<span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>clamp</span>(<span class='self'>self</span>.<span class='ident'>a</span>, <span class='ident'>flt</span>(<span class='op'>-</span><span class='number'>128.0</span>), <span class='ident'>flt</span>(<span class='number'>127.0</span>));
+        <span class='self'>self</span>.<span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>clamp</span>(<span class='self'>self</span>.<span class='ident'>b</span>, <span class='ident'>flt</span>(<span class='op'>-</span><span class='number'>128.0</span>), <span class='ident'>flt</span>(<span class='number'>127.0</span>));
     }
 }
 
@@ -687,7 +687,7 @@
 
     <span class='kw'>fn</span> <span class='ident'>lighten</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>amount</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Lab</span><span class='op'>&lt;</span><span class='ident'>Wp</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Lab</span> {
-            <span class='ident'>l</span>: <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>+</span> <span class='ident'>amount</span>,
+            <span class='ident'>l</span>: <span class='self'>self</span>.<span class='ident'>l</span> <span class='op'>+</span> <span class='ident'>amount</span> <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>100.0</span>),
             <span class='ident'>a</span>: <span class='self'>self</span>.<span class='ident'>a</span>,
             <span class='ident'>b</span>: <span class='self'>self</span>.<span class='ident'>b</span>,
             <span class='ident'>white_point</span>: <span class='ident'>PhantomData</span>,
@@ -880,22 +880,22 @@
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>red</span>() {
         <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Lab</span>::<span class='ident'>from</span>(<span class='ident'>Rgb</span>::<span class='ident'>new</span>(<span class='number'>1.0</span>, <span class='number'>0.0</span>, <span class='number'>0.0</span>));
-        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Lab</span>::<span class='ident'>new</span>(<span class='number'>53.23288</span> <span class='op'>/</span> <span class='number'>100.0</span>, <span class='number'>80.09246</span> <span class='op'>/</span> <span class='number'>128.0</span>, <span class='number'>67.2031</span> <span class='op'>/</span> <span class='number'>128.0</span>);
-        <span class='macro'>assert_relative_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>epsilon</span> <span class='op'>=</span> <span class='number'>0.0001</span>);
+        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Lab</span>::<span class='ident'>new</span>(<span class='number'>53.23288</span>, <span class='number'>80.09246</span>, <span class='number'>67.2031</span>);
+        <span class='macro'>assert_relative_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>epsilon</span> <span class='op'>=</span> <span class='number'>0.01</span>);
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>green</span>() {
         <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Lab</span>::<span class='ident'>from</span>(<span class='ident'>Rgb</span>::<span class='ident'>new</span>(<span class='number'>0.0</span>, <span class='number'>1.0</span>, <span class='number'>0.0</span>));
-        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Lab</span>::<span class='ident'>new</span>(<span class='number'>87.73704</span> <span class='op'>/</span> <span class='number'>100.0</span>, <span class='op'>-</span><span class='number'>86.184654</span> <span class='op'>/</span> <span class='number'>128.0</span>, <span class='number'>83.18117</span> <span class='op'>/</span> <span class='number'>128.0</span>);
-        <span class='macro'>assert_relative_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>epsilon</span> <span class='op'>=</span> <span class='number'>0.0001</span>);
+        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Lab</span>::<span class='ident'>new</span>(<span class='number'>87.73704</span>, <span class='op'>-</span><span class='number'>86.184654</span>, <span class='number'>83.18117</span>);
+        <span class='macro'>assert_relative_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>epsilon</span> <span class='op'>=</span> <span class='number'>0.01</span>);
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>blue</span>() {
         <span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Lab</span>::<span class='ident'>from</span>(<span class='ident'>Rgb</span>::<span class='ident'>new</span>(<span class='number'>0.0</span>, <span class='number'>0.0</span>, <span class='number'>1.0</span>));
-        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Lab</span>::<span class='ident'>new</span>(<span class='number'>32.302586</span> <span class='op'>/</span> <span class='number'>100.0</span>, <span class='number'>79.19668</span> <span class='op'>/</span> <span class='number'>128.0</span>, <span class='op'>-</span><span class='number'>107.863686</span> <span class='op'>/</span> <span class='number'>128.0</span>);
-        <span class='macro'>assert_relative_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>epsilon</span> <span class='op'>=</span> <span class='number'>0.0001</span>);
+        <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Lab</span>::<span class='ident'>new</span>(<span class='number'>32.302586</span>, <span class='number'>79.19668</span>, <span class='op'>-</span><span class='number'>107.863686</span>);
+        <span class='macro'>assert_relative_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>, <span class='ident'>b</span>, <span class='ident'>epsilon</span> <span class='op'>=</span> <span class='number'>0.01</span>);
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -903,9 +903,9 @@
         <span class='macro'>assert_ranges</span><span class='macro'>!</span>{
             <span class='ident'>Lab</span>;
             <span class='ident'>limited</span> {
-                <span class='ident'>l</span>: <span class='number'>0.0</span> <span class='op'>=&gt;</span> <span class='number'>1.0</span>,
-                <span class='ident'>a</span>: <span class='op'>-</span><span class='number'>1.0</span> <span class='op'>=&gt;</span> <span class='number'>1.0</span>,
-                <span class='ident'>b</span>: <span class='op'>-</span><span class='number'>1.0</span> <span class='op'>=&gt;</span> <span class='number'>1.0</span>
+                <span class='ident'>l</span>: <span class='number'>0.0</span> <span class='op'>=&gt;</span> <span class='number'>100.0</span>,
+                <span class='ident'>a</span>: <span class='op'>-</span><span class='number'>128.0</span> <span class='op'>=&gt;</span> <span class='number'>127.0</span>,
+                <span class='ident'>b</span>: <span class='op'>-</span><span class='number'>128.0</span> <span class='op'>=&gt;</span> <span class='number'>127.0</span>
             }
             <span class='ident'>limited_min</span> {}
             <span class='ident'>unlimited</span> {}

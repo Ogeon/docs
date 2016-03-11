@@ -486,10 +486,6 @@
 <span id="443">443</span>
 <span id="444">444</span>
 <span id="445">445</span>
-<span id="446">446</span>
-<span id="447">447</span>
-<span id="448">448</span>
-<span id="449">449</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>num</span>::<span class='ident'>Float</span>;
 
@@ -627,11 +623,7 @@
         <span class='ident'>xyz</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>from_lab</span>(<span class='ident'>input_lab</span>: <span class='ident'>Lab</span><span class='op'>&lt;</span><span class='ident'>Wp</span>, <span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>lab</span> <span class='op'>=</span> <span class='ident'>input_lab</span>.<span class='ident'>clone</span>();
-        <span class='ident'>lab</span>.<span class='ident'>l</span> <span class='op'>=</span> <span class='ident'>lab</span>.<span class='ident'>l</span> <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>100.0</span>);
-        <span class='ident'>lab</span>.<span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>lab</span>.<span class='ident'>a</span> <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>128.0</span>);
-        <span class='ident'>lab</span>.<span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>lab</span>.<span class='ident'>b</span> <span class='op'>*</span> <span class='ident'>flt</span>(<span class='number'>128.0</span>);
+    <span class='kw'>fn</span> <span class='ident'>from_lab</span>(<span class='ident'>lab</span>: <span class='ident'>Lab</span><span class='op'>&lt;</span><span class='ident'>Wp</span>, <span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
         <span class='kw'>let</span> <span class='ident'>y</span> <span class='op'>=</span> (<span class='ident'>lab</span>.<span class='ident'>l</span> <span class='op'>+</span> <span class='ident'>flt</span>(<span class='number'>16.0</span>)) <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>116.0</span>);
         <span class='kw'>let</span> <span class='ident'>x</span> <span class='op'>=</span> <span class='ident'>y</span> <span class='op'>+</span> (<span class='ident'>lab</span>.<span class='ident'>a</span> <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>500.0</span>));
         <span class='kw'>let</span> <span class='ident'>z</span> <span class='op'>=</span> <span class='ident'>y</span> <span class='op'>-</span> (<span class='ident'>lab</span>.<span class='ident'>b</span> <span class='op'>/</span> <span class='ident'>flt</span>(<span class='number'>200.0</span>));
