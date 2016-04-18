@@ -54,7 +54,7 @@
 <h4 id='method.with_lifetime' class='method'><code>fn <a href='#method.with_lifetime' class='fnname'>with_lifetime</a>&lt;L&gt;(self, lifetime: L) -&gt; Self <span class='where'>where L: <a class='trait' href='../../aster/lifetime/trait.IntoLifetimeDef.html' title='aster::lifetime::IntoLifetimeDef'>IntoLifetimeDef</a></span></code></h4>
 <h4 id='method.lifetime' class='method'><code>fn <a href='#method.lifetime' class='fnname'>lifetime</a>&lt;N&gt;(self, name: N) -&gt; <a class='struct' href='../../aster/lifetime/struct.LifetimeDefBuilder.html' title='aster::lifetime::LifetimeDefBuilder'>LifetimeDefBuilder</a>&lt;Self&gt; <span class='where'>where N: <a class='trait' href='../../aster/name/trait.ToName.html' title='aster::name::ToName'>ToName</a></span></code></h4>
 <h4 id='method.build' class='method'><code>fn <a href='#method.build' class='fnname'>build</a>(self) -&gt; F::Result</code></h4>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;F&gt; <a class='trait' href='../../aster/invoke/trait.Invoke.html' title='aster::invoke::Invoke'>Invoke</a>&lt;<a class='struct' href='../../syntex_syntax/ast/struct.LifetimeDef.html' title='syntex_syntax::ast::LifetimeDef'>LifetimeDef</a>&gt; for <a class='struct' href='../../aster/ty_param/struct.PolyTraitRefBuilder.html' title='aster::ty_param::PolyTraitRefBuilder'>PolyTraitRefBuilder</a>&lt;F&gt; <span class='where'>where F: <a class='trait' href='../../aster/invoke/trait.Invoke.html' title='aster::invoke::Invoke'>Invoke</a>&lt;<a class='struct' href='../../syntex_syntax/ast/struct.PolyTraitRef.html' title='syntex_syntax::ast::PolyTraitRef'>PolyTraitRef</a>&gt;</span></code></h3><div class='impl-items'><h4 id='assoc_type.Result' class='type'><code>type Result = Self</code></h4>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;F&gt; <a class='trait' href='../../aster/invoke/trait.Invoke.html' title='aster::invoke::Invoke'>Invoke</a>&lt;<a class='struct' href='../../syntex_syntax/ast/struct.LifetimeDef.html' title='syntex_syntax::ast::LifetimeDef'>LifetimeDef</a>&gt; for <a class='struct' href='../../aster/ty_param/struct.PolyTraitRefBuilder.html' title='aster::ty_param::PolyTraitRefBuilder'>PolyTraitRefBuilder</a>&lt;F&gt; <span class='where'>where F: <a class='trait' href='../../aster/invoke/trait.Invoke.html' title='aster::invoke::Invoke'>Invoke</a>&lt;<a class='struct' href='../../syntex_syntax/ast/struct.PolyTraitRef.html' title='syntex_syntax::ast::PolyTraitRef'>PolyTraitRef</a>&gt;</span></code></h3><div class='impl-items'><h4 id='associatedtype.Result' class='type'><code>type Result = Self</code></h4>
 <h4 id='method.invoke' class='method'><code>fn <a href='../../aster/invoke/trait.Invoke.html#method.invoke' class='fnname'>invoke</a>(self, lifetime: <a class='struct' href='../../syntex_syntax/ast/struct.LifetimeDef.html' title='syntex_syntax::ast::LifetimeDef'>LifetimeDef</a>) -&gt; Self</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
@@ -99,7 +99,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

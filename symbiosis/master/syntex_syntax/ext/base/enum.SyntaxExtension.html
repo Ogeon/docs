@@ -26,7 +26,7 @@
     
 
     <nav class="sidebar">
-        <a href='../../../syntex_syntax/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='' width='100'></a>
+        <a href='../../../syntex_syntax/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
         <p class='location'><a href='../../index.html'>syntex_syntax</a>::<wbr><a href='../index.html'>ext</a>::<wbr><a href='index.html'>base</a></p><script>window.sidebarCurrent = {name: 'SyntaxExtension', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
@@ -55,22 +55,22 @@
     MacroRulesTT,
 }</pre><div class='docblock'><p>An enum representing the different kinds of syntax extensions.</p>
 </div><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.MultiDecorator'><code>MultiDecorator</code></td><td><div class='docblock'><p>A syntax extension that is attached to an item and creates new items
+<table class='variants_table'><tr><td id='variant.MultiDecorator'><code>MultiDecorator</code></td><td><div class='docblock'><p>A syntax extension that is attached to an item and creates new items
 based upon it.</p>
 
 <p><code>#[derive(...)]</code> is a <code>MultiItemDecorator</code>.</p>
-</div></td></tr><tr><td id='variant.MultiModifier'><code>MultiModifier</code></td><td><div class='docblock'><p>A syntax extension that is attached to an item and modifies it
+</div></td><td></td></tr><tr><td id='variant.MultiModifier'><code>MultiModifier</code></td><td><div class='docblock'><p>A syntax extension that is attached to an item and modifies it
 in-place. More flexible version than Modifier.</p>
-</div></td></tr><tr><td id='variant.NormalTT'><code>NormalTT</code></td><td><div class='docblock'><p>A normal, function-like syntax extension.</p>
+</div></td><td></td></tr><tr><td id='variant.NormalTT'><code>NormalTT</code></td><td><div class='docblock'><p>A normal, function-like syntax extension.</p>
 
 <p><code>bytes!</code> is a <code>NormalTT</code>.</p>
 
 <p>The <code>bool</code> dictates whether the contents of the macro can
 directly use <code>#[unstable]</code> things (true == yes).</p>
-</div></td></tr><tr><td id='variant.IdentTT'><code>IdentTT</code></td><td><div class='docblock'><p>A function-like syntax extension that has an extra ident before
+</div></td><td></td></tr><tr><td id='variant.IdentTT'><code>IdentTT</code></td><td><div class='docblock'><p>A function-like syntax extension that has an extra ident before
 the block.</p>
-</div></td></tr><tr><td id='variant.MacroRulesTT'><code>MacroRulesTT</code></td><td><div class='docblock'><p>Represents <code>macro_rules!</code> itself.</p>
-</div></td></tr></table></section>
+</div></td><td></td></tr><tr><td id='variant.MacroRulesTT'><code>MacroRulesTT</code></td><td><div class='docblock'><p>Represents <code>macro_rules!</code> itself.</p>
+</div></td><td></td></tr></table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -113,7 +113,7 @@ the block.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

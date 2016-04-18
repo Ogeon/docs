@@ -56,7 +56,8 @@ value.</p>
 
 <p>Can be used on <code>Result</code>s by first calling <code>.ok()</code> or <code>.err()</code> on them.</p>
 
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1><pre class='rust rust-example-rendered'>
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<pre class='rust rust-example-rendered'>
 <span class='kw'>fn</span> <span class='ident'>take_pair</span><span class='op'>&lt;</span><span class='ident'>I</span>:<span class='ident'>Iterator</span><span class='op'>&gt;</span>(<span class='ident'>iter</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='op'>&lt;</span><span class='ident'>I</span> <span class='kw'>as</span> <span class='ident'>Iterator</span><span class='op'>&gt;</span>::<span class='ident'>Item</span>, <span class='op'>&lt;</span><span class='ident'>I</span> <span class='kw'>as</span> <span class='ident'>Iterator</span><span class='op'>&gt;</span>::<span class='ident'>Item</span>)<span class='op'>&gt;</span> {
    <span class='kw'>let</span> <span class='ident'>first</span> <span class='op'>=</span> <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='ident'>iter</span>.<span class='ident'>next</span>(), <span class='prelude-val'>None</span>);
    <span class='prelude-val'>Some</span>((<span class='ident'>first</span>, <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='ident'>iter</span>.<span class='ident'>next</span>(), <span class='prelude-val'>None</span>)))
@@ -104,7 +105,7 @@ value.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

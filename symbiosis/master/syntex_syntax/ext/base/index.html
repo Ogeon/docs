@@ -26,7 +26,7 @@
     
 
     <nav class="sidebar">
-        <a href='../../../syntex_syntax/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='' width='100'></a>
+        <a href='../../../syntex_syntax/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
         <p class='location'><a href='../../index.html'>syntex_syntax</a>::<wbr><a href='../index.html'>ext</a></p><script>window.sidebarCurrent = {name: 'base', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
     </nav>
 
@@ -64,7 +64,6 @@
                         <td class='docblock short'>
                              <p>Fill-in macro expansion result, to allow compilation to continue
 after hitting errors.</p>
-
                         </td>
                     </tr>
                 
@@ -75,7 +74,6 @@ after hitting errors.</p>
                              <p>One of these is made during expansion and incrementally updated as we go;
 when a macro expansion occurs, the resulting nodes have the backtrace()
 -&gt; expn_info of their expansion context stored into their span.</p>
-
                         </td>
                     </tr>
                 
@@ -85,7 +83,6 @@ when a macro expansion occurs, the resulting nodes have the backtrace()
                         <td class='docblock short'>
                              <p><code>MacResult</code> implementation for the common case where you&#39;ve already
 built each form of AST that you might return.</p>
-
                         </td>
                     </tr>
                 
@@ -96,7 +93,6 @@ built each form of AST that you might return.</p>
                              <p>In order to have some notion of scoping for macros,
 we want to implement the notion of a transformation
 environment.</p>
-
                         </td>
                     </tr>
                 </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
@@ -114,7 +110,6 @@ environment.</p>
                                title='syntex_syntax::ext::base::SyntaxExtension'>SyntaxExtension</a></td>
                         <td class='docblock short'>
                              <p>An enum representing the different kinds of syntax extensions.</p>
-
                         </td>
                     </tr>
                 </table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
@@ -133,7 +128,6 @@ environment.</p>
                         <td class='docblock short'>
                              <p>The result of a macro expansion. The return values of the various
 methods are spliced into the AST at the callsite of the macro.</p>
-
                         </td>
                     </tr>
                 
@@ -158,7 +152,6 @@ methods are spliced into the AST at the callsite of the macro.</p>
                                title='syntex_syntax::ext::base::TTMacroExpander'>TTMacroExpander</a></td>
                         <td class='docblock short'>
                              <p>Represents a thing that maps token trees to Macro Results</p>
-
                         </td>
                     </tr>
                 </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
@@ -172,7 +165,6 @@ returns even when <code>tts</code> is non-empty, macros that <em>need</em> to st
 compilation should call
 <code>cx.parse_sess.span_diagnostic.abort_if_errors()</code> (this should be
 done as rarely as possible).</p>
-
                         </td>
                     </tr>
                 
@@ -183,7 +175,6 @@ done as rarely as possible).</p>
                              <p>Extract a string literal from the macro expanded version of <code>expr</code>,
 emitting <code>err_msg</code> if <code>expr</code> is not a string literal. This does not stop
 compilation on error, merely emits a non-fatal error and returns None.</p>
-
                         </td>
                     </tr>
                 
@@ -193,7 +184,6 @@ compilation on error, merely emits a non-fatal error and returns None.</p>
                         <td class='docblock short'>
                              <p>Extract comma-separated expressions from <code>tts</code>. If there is a
 parsing error, emit a non-fatal error and return None.</p>
-
                         </td>
                     </tr>
                 
@@ -203,7 +193,6 @@ parsing error, emit a non-fatal error and return None.</p>
                         <td class='docblock short'>
                              <p>Extract the string literal from the first token of <code>tts</code>. If this
 is not a string literal, emit an error and return None.</p>
-
                         </td>
                     </tr>
                 </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
@@ -274,7 +263,7 @@ is not a string literal, emit an error and return None.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

@@ -26,7 +26,7 @@
     
 
     <nav class="sidebar">
-        <a href='../../syntex_syntax/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='' width='100'></a>
+        <a href='../../syntex_syntax/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
         <p class='location'><a href='../index.html'>syntex_syntax</a></p><script>window.sidebarCurrent = {name: 'parse', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
     </nav>
 
@@ -63,7 +63,6 @@
                                title='syntex_syntax::parse::classify'>classify</a></td>
                         <td class='docblock short'>
                              <p>Routines the parser uses to classify AST nodes</p>
-
                         </td>
                     </tr>
                 
@@ -72,7 +71,6 @@
                                title='syntex_syntax::parse::common'>common</a></td>
                         <td class='docblock short'>
                              <p>Common routines shared by parser mods</p>
-
                         </td>
                     </tr>
                 
@@ -90,7 +88,6 @@
                         <td class='docblock short'>
                              <p>Support for parsing unsupported, old syntaxes, for the purpose of reporting errors. Parsing of
 these syntaxes is tested by compile-test/obsolete-syntax.rs.</p>
-
                         </td>
                     </tr>
                 
@@ -116,7 +113,6 @@ these syntaxes is tested by compile-test/obsolete-syntax.rs.</p>
                                title='syntex_syntax::parse::ParseSess'>ParseSess</a></td>
                         <td class='docblock short'>
                              <p>Info about a parsing session.</p>
-
                         </td>
                     </tr>
                 </table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
@@ -126,7 +122,6 @@ these syntaxes is tested by compile-test/obsolete-syntax.rs.</p>
                                title='syntex_syntax::parse::byte_lit'>byte_lit</a></td>
                         <td class='docblock short'>
                              <p>Parse a string representing a byte literal into its final form. Similar to <code>char_lit</code></p>
-
                         </td>
                     </tr>
                 
@@ -146,7 +141,6 @@ these syntaxes is tested by compile-test/obsolete-syntax.rs.</p>
 Rather than just accepting/rejecting a given literal, unescapes it as
 well. Can take any slice prefixed by a character escape. Returns the
 character and the number of characters consumed.</p>
-
                         </td>
                     </tr>
                 
@@ -155,7 +149,6 @@ character and the number of characters consumed.</p>
                                title='syntex_syntax::parse::filemap_to_parser'>filemap_to_parser</a></td>
                         <td class='docblock short'>
                              <p>Given a filemap and config, return a parser</p>
-
                         </td>
                     </tr>
                 
@@ -164,7 +157,6 @@ character and the number of characters consumed.</p>
                                title='syntex_syntax::parse::filemap_to_tts'>filemap_to_tts</a></td>
                         <td class='docblock short'>
                              <p>Given a filemap, produce a sequence of token-trees</p>
-
                         </td>
                     </tr>
                 
@@ -190,7 +182,6 @@ character and the number of characters consumed.</p>
                         <td class='docblock short'>
                              <p>Create a new parser, handling errors as appropriate
 if the file doesn&#39;t exist</p>
-
                         </td>
                     </tr>
                 
@@ -217,7 +208,6 @@ if the file doesn&#39;t exist</p>
                              <p>Given a session, a crate config, a path, and a span, add
 the file at the given path to the codemap, and return a parser.
 On an error, use the given span as the source of the problem.</p>
-
                         </td>
                     </tr>
                 
@@ -299,7 +289,6 @@ On an error, use the given span as the source of the problem.</p>
                         <td class='docblock short'>
                              <p>Parse a string representing a raw string literal into its final form. The
 only operation this does is convert embedded CRLF into a single LF.</p>
-
                         </td>
                     </tr>
                 
@@ -309,7 +298,6 @@ only operation this does is convert embedded CRLF into a single LF.</p>
                         <td class='docblock short'>
                              <p>Parse a string representing a string literal into its final form. Does
 unescaping.</p>
-
                         </td>
                     </tr>
                 
@@ -318,7 +306,6 @@ unescaping.</p>
                                title='syntex_syntax::parse::tts_to_parser'>tts_to_parser</a></td>
                         <td class='docblock short'>
                              <p>Given tts and cfg, produce a parser</p>
-
                         </td>
                     </tr>
                 </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
@@ -373,7 +360,7 @@ unescaping.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

@@ -26,7 +26,7 @@
     
 
     <nav class="sidebar">
-        <a href='../../../syntex_syntax/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='' width='100'></a>
+        <a href='../../../syntex_syntax/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
         <p class='location'><a href='../../index.html'>syntex_syntax</a>::<wbr><a href='../index.html'>parse</a>::<wbr><a href='index.html'>parser</a></p><script>window.sidebarCurrent = {name: 'PathParsingMode', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
@@ -54,15 +54,15 @@
 }</pre><div class='docblock'><p>How to parse a path. There are four different kinds of paths, all of which
 are parsed somewhat differently.</p>
 </div><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.NoTypesAllowed'><code>NoTypesAllowed</code></td><td><div class='docblock'><p>A path with no type parameters; e.g. <code>foo::bar::Baz</code></p>
-</div></td></tr><tr><td id='variant.LifetimeAndTypesWithoutColons'><code>LifetimeAndTypesWithoutColons</code></td><td><div class='docblock'><p>A path with a lifetime and type parameters, with no double colons
+<table class='variants_table'><tr><td id='variant.NoTypesAllowed'><code>NoTypesAllowed</code></td><td><div class='docblock'><p>A path with no type parameters; e.g. <code>foo::bar::Baz</code></p>
+</div></td><td></td></tr><tr><td id='variant.LifetimeAndTypesWithoutColons'><code>LifetimeAndTypesWithoutColons</code></td><td><div class='docblock'><p>A path with a lifetime and type parameters, with no double colons
 before the type parameters; e.g. <code>foo::bar&lt;&#39;a&gt;::Baz&lt;T&gt;</code></p>
-</div></td></tr><tr><td id='variant.LifetimeAndTypesWithColons'><code>LifetimeAndTypesWithColons</code></td><td><div class='docblock'><p>A path with a lifetime and type parameters with double colons before
+</div></td><td></td></tr><tr><td id='variant.LifetimeAndTypesWithColons'><code>LifetimeAndTypesWithColons</code></td><td><div class='docblock'><p>A path with a lifetime and type parameters with double colons before
 the type parameters; e.g. <code>foo::bar::&lt;&#39;a&gt;::Baz::&lt;T&gt;</code></p>
-</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../../../syntex_syntax/parse/parser/enum.PathParsingMode.html' title='syntex_syntax::parse::parser::PathParsingMode'>PathParsingMode</a></code></h3><div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../../syntex_syntax/parse/parser/enum.PathParsingMode.html' title='syntex_syntax::parse::parser::PathParsingMode'>PathParsingMode</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+</div></td><td></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../../../syntex_syntax/parse/parser/enum.PathParsingMode.html' title='syntex_syntax::parse::parser::PathParsingMode'>PathParsingMode</a></code></h3><div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../../syntex_syntax/parse/parser/enum.PathParsingMode.html' title='syntex_syntax::parse::parser::PathParsingMode'>PathParsingMode</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <h4 id='method.ne' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../../syntex_syntax/parse/parser/enum.PathParsingMode.html' title='syntex_syntax::parse::parser::PathParsingMode'>PathParsingMode</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../../../syntex_syntax/parse/parser/enum.PathParsingMode.html' title='syntex_syntax::parse::parser::PathParsingMode'>PathParsingMode</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../../../syntex_syntax/parse/parser/enum.PathParsingMode.html' title='syntex_syntax::parse::parser::PathParsingMode'>PathParsingMode</a></code></h4>
-<h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+<h4 id='method.clone_from' class='method'><span class="since">1.0.0</span><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='enum' href='../../../syntex_syntax/parse/parser/enum.PathParsingMode.html' title='syntex_syntax::parse::parser::PathParsingMode'>PathParsingMode</a></code></h3><div class='impl-items'></div></section>
     <section id='search' class="content hidden"></section>
 
@@ -106,7 +106,7 @@ the type parameters; e.g. <code>foo::bar::&lt;&#39;a&gt;::Baz::&lt;T&gt;</code><
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

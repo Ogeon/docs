@@ -58,30 +58,30 @@
 <p>Not all checking is performed eagerly. That is, a codepoint <code>Prefix</code> or
 <code>Suffix</code> may in reality have no valid completion.</p>
 </div><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.Whole'><code>Whole</code></td><td><div class='docblock'><p>We found a whole codepoint.</p>
-</div></td></tr><tr><td id='variant.LeadSurrogate'><code>LeadSurrogate</code></td><td><div class='docblock'><p>We found something that isn&#39;t a valid Unicode codepoint, but
+<table class='variants_table'><tr><td id='variant.Whole'><code>Whole</code></td><td><div class='docblock'><p>We found a whole codepoint.</p>
+</div></td><td></td></tr><tr><td id='variant.LeadSurrogate'><code>LeadSurrogate</code></td><td><div class='docblock'><p>We found something that isn&#39;t a valid Unicode codepoint, but
 it <em>would</em> correspond to a UTF-16 leading surrogate code unit,
 i.e. a value in the range <code>U+D800</code> - <code>U+DBFF</code>.</p>
 
 <p>The argument is the code unit&#39;s 10-bit index within that range.</p>
 
 <p>These are found in UTF-8 variants such as CESU-8 and WTF-8.</p>
-</div></td></tr><tr><td id='variant.TrailSurrogate'><code>TrailSurrogate</code></td><td><div class='docblock'><p>We found something that isn&#39;t a valid Unicode codepoint, but
+</div></td><td></td></tr><tr><td id='variant.TrailSurrogate'><code>TrailSurrogate</code></td><td><div class='docblock'><p>We found something that isn&#39;t a valid Unicode codepoint, but
 it <em>would</em> correspond to a UTF-16 trailing surrogate code unit,
 i.e. a value in the range <code>U+DC00</code> - <code>U+DFFF</code>.</p>
 
 <p>The argument is the code unit&#39;s 10-bit index within that range.</p>
 
 <p>These are found in UTF-8 variants such as CESU-8 and WTF-8.</p>
-</div></td></tr><tr><td id='variant.Prefix'><code>Prefix</code></td><td><div class='docblock'><p>We found only a prefix of a codepoint before the buffer ended.</p>
+</div></td><td></td></tr><tr><td id='variant.Prefix'><code>Prefix</code></td><td><div class='docblock'><p>We found only a prefix of a codepoint before the buffer ended.</p>
 
 <p>Includes the number of additional bytes needed.</p>
-</div></td></tr><tr><td id='variant.Suffix'><code>Suffix</code></td><td><div class='docblock'><p>We found only a suffix of a codepoint before running off the
+</div></td><td></td></tr><tr><td id='variant.Suffix'><code>Suffix</code></td><td><div class='docblock'><p>We found only a suffix of a codepoint before running off the
 start of the buffer.</p>
 
 <p>Up to 3 more bytes may be needed.</p>
-</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html' title='core::hash::Hash'>Hash</a> for <a class='enum' href='../futf/enum.Meaning.html' title='futf::Meaning'>Meaning</a></code></h3><div class='impl-items'><h4 id='method.hash' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash' class='fnname'>hash</a>&lt;__H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a>&gt;(&amp;self, __arg_0: &amp;mut __H)</code></h4>
-<h4 id='method.hash_slice' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash_slice' class='fnname'>hash_slice</a>&lt;H&gt;(data: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[Self]</a>, state: &amp;mut H) <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a></span></code></h4>
+</div></td><td></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html' title='core::hash::Hash'>Hash</a> for <a class='enum' href='../futf/enum.Meaning.html' title='futf::Meaning'>Meaning</a></code></h3><div class='impl-items'><h4 id='method.hash' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash' class='fnname'>hash</a>&lt;__H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a>&gt;(&amp;self, __arg_0: &amp;mut __H)</code></h4>
+<h4 id='method.hash_slice' class='method'><span class="since">1.3.0</span><code>fn <a href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html#method.hash_slice' class='fnname'>hash_slice</a>&lt;H&gt;(data: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[Self]</a>, state: &amp;mut H) <span class='where'>where H: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hasher.html' title='core::hash::Hasher'>Hasher</a></span></code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../futf/enum.Meaning.html' title='futf::Meaning'>Meaning</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html' title='core::cmp::Ord'>Ord</a> for <a class='enum' href='../futf/enum.Meaning.html' title='futf::Meaning'>Meaning</a></code></h3><div class='impl-items'><h4 id='method.cmp' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.Ord.html#method.cmp' class='fnname'>cmp</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../futf/enum.Meaning.html' title='futf::Meaning'>Meaning</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html' title='core::cmp::Ordering'>Ordering</a></code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html' title='core::cmp::PartialOrd'>PartialOrd</a> for <a class='enum' href='../futf/enum.Meaning.html' title='futf::Meaning'>Meaning</a></code></h3><div class='impl-items'><h4 id='method.partial_cmp' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialOrd.html#method.partial_cmp' class='fnname'>partial_cmp</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../futf/enum.Meaning.html' title='futf::Meaning'>Meaning</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='https://doc.rust-lang.org/nightly/core/cmp/enum.Ordering.html' title='core::cmp::Ordering'>Ordering</a>&gt;</code></h4>
@@ -92,7 +92,7 @@ start of the buffer.</p>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='enum' href='../futf/enum.Meaning.html' title='futf::Meaning'>Meaning</a></code></h3><div class='impl-items'></div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../futf/enum.Meaning.html' title='futf::Meaning'>Meaning</a></code></h3><div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../futf/enum.Meaning.html' title='futf::Meaning'>Meaning</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <h4 id='method.ne' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../futf/enum.Meaning.html' title='futf::Meaning'>Meaning</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../futf/enum.Meaning.html' title='futf::Meaning'>Meaning</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../futf/enum.Meaning.html' title='futf::Meaning'>Meaning</a></code></h4>
-<h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+<h4 id='method.clone_from' class='method'><span class="since">1.0.0</span><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='enum' href='../futf/enum.Meaning.html' title='futf::Meaning'>Meaning</a></code></h3><div class='impl-items'></div></section>
     <section id='search' class="content hidden"></section>
 
@@ -136,7 +136,7 @@ start of the buffer.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

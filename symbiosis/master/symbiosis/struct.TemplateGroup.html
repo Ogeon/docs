@@ -46,14 +46,15 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1574' class='srclink' href='../src/symbiosis/lib.rs.html#29-33' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-1581' class='srclink' href='../src/symbiosis/src/lib.rs.html#29-33' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct TemplateGroup {
     // some fields omitted
 }</pre><div class='docblock'><p>A collection of templates.</p>
 </div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../symbiosis/struct.TemplateGroup.html' title='symbiosis::TemplateGroup'>TemplateGroup</a></code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='struct' href='../symbiosis/struct.TemplateGroup.html' title='symbiosis::TemplateGroup'>TemplateGroup</a></code></h4>
 <h4 id='method.parse_string' class='method'><code>fn <a href='#method.parse_string' class='fnname'>parse_string</a>&lt;S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../symbiosis/type.StrTendril.html' title='symbiosis::StrTendril'>StrTendril</a>&gt;&gt;(&amp;mut self, name: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, source: S) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../symbiosis/enum.Error.html' title='symbiosis::Error'>Error</a>&gt;</code></h4>
 <div class='docblock'><p>Add a template from a string.</p>
-</div><h4 id='method.parse_directory' class='method'><code>fn <a href='#method.parse_directory' class='fnname'>parse_directory</a>&lt;P: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(&amp;mut self, dir: P) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../symbiosis/enum.Error.html' title='symbiosis::Error'>Error</a>&gt;</code></h4>
+</div><h4 id='method.parse_file' class='method'><code>fn <a href='#method.parse_file' class='fnname'>parse_file</a>&lt;P: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(&amp;mut self, name: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, file: P) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../symbiosis/enum.Error.html' title='symbiosis::Error'>Error</a>&gt;</code></h4>
+<h4 id='method.parse_directory' class='method'><code>fn <a href='#method.parse_directory' class='fnname'>parse_directory</a>&lt;P: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(&amp;mut self, dir: P) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../symbiosis/enum.Error.html' title='symbiosis::Error'>Error</a>&gt;</code></h4>
 <div class='docblock'><p>Add every <code>*.html</code> and <code>*.htm</code> file in a directory to the template group.</p>
 </div><h4 id='method.add_template' class='method'><code>fn <a href='#method.add_template' class='fnname'>add_template</a>(&amp;mut self, name: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>, template: <a class='struct' href='../symbiosis/struct.Template.html' title='symbiosis::Template'>Template</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../symbiosis/enum.Error.html' title='symbiosis::Error'>Error</a>&gt;</code></h4>
 <div class='docblock'><p>Add an already parsed template to the group.</p>
@@ -61,6 +62,8 @@
 <div class='docblock'><p>Register a custom fragment.</p>
 </div><h4 id='method.emit_code' class='method'><code>fn <a href='#method.emit_code' class='fnname'>emit_code</a>&lt;W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>, C: <a class='trait' href='../symbiosis/codegen/trait.Codegen.html' title='symbiosis::codegen::Codegen'>Codegen</a>&gt;(&amp;self, writer: &amp;mut W, codegen: &amp;C) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, C::Error&gt;</code></h4>
 <div class='docblock'><p>Write template code.</p>
+</div><h4 id='method.get_struct' class='method'><code>fn <a href='#method.get_struct' class='fnname'>get_struct</a>(&amp;self, name: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a class='struct' href='../symbiosis/codegen/struct.Struct.html' title='symbiosis::codegen::Struct'>Struct</a>&gt;</code></h4>
+<div class='docblock'><p>Get one of the generated structs.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
@@ -104,7 +107,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

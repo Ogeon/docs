@@ -26,7 +26,7 @@
     
 
     <nav class="sidebar">
-        <a href='../../syntex_syntax/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='' width='100'></a>
+        <a href='../../syntex_syntax/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
         <p class='location'><a href='../index.html'>syntex_syntax</a>::<wbr><a href='index.html'>errors</a></p><script>window.sidebarCurrent = {name: 'RenderSpan', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
@@ -53,22 +53,22 @@
     Suggestion(<a class='struct' href='../../syntex_syntax/errors/struct.CodeSuggestion.html' title='syntex_syntax::errors::CodeSuggestion'>CodeSuggestion</a>),
     FileLine(<a class='struct' href='../../syntex_syntax/codemap/struct.MultiSpan.html' title='syntex_syntax::codemap::MultiSpan'>MultiSpan</a>),
 }</pre><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.FullSpan'><code>FullSpan</code></td><td><div class='docblock'><p>A FullSpan renders with both with an initial line for the
+<table class='variants_table'><tr><td id='variant.FullSpan'><code>FullSpan</code></td><td><div class='docblock'><p>A FullSpan renders with both with an initial line for the
 message, prefixed by file:linenum, followed by a summary of
 the source code covered by the span.</p>
-</div></td></tr><tr><td id='variant.EndSpan'><code>EndSpan</code></td><td><div class='docblock'><p>Similar to a FullSpan, but the cited position is the end of
+</div></td><td></td></tr><tr><td id='variant.EndSpan'><code>EndSpan</code></td><td><div class='docblock'><p>Similar to a FullSpan, but the cited position is the end of
 the span, instead of the start. Used, at least, for telling
 compiletest/runtest to look at the last line of the span
 (since <code>end_highlight_lines</code> displays an arrow to the end
 of the span).</p>
-</div></td></tr><tr><td id='variant.Suggestion'><code>Suggestion</code></td><td><div class='docblock'><p>A suggestion renders with both with an initial line for the
+</div></td><td></td></tr><tr><td id='variant.Suggestion'><code>Suggestion</code></td><td><div class='docblock'><p>A suggestion renders with both with an initial line for the
 message, prefixed by file:linenum, followed by a summary
 of hypothetical source code, where each <code>String</code> is spliced
 into the lines in place of the code covered by each span.</p>
-</div></td></tr><tr><td id='variant.FileLine'><code>FileLine</code></td><td><div class='docblock'><p>A FileLine renders with just a line for the message prefixed
+</div></td><td></td></tr><tr><td id='variant.FileLine'><code>FileLine</code></td><td><div class='docblock'><p>A FileLine renders with just a line for the message prefixed
 by file:linenum.</p>
-</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../../syntex_syntax/errors/enum.RenderSpan.html' title='syntex_syntax::errors::RenderSpan'>RenderSpan</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../../syntex_syntax/errors/enum.RenderSpan.html' title='syntex_syntax::errors::RenderSpan'>RenderSpan</a></code></h4>
-<h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+</div></td><td></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../../syntex_syntax/errors/enum.RenderSpan.html' title='syntex_syntax::errors::RenderSpan'>RenderSpan</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../../syntex_syntax/errors/enum.RenderSpan.html' title='syntex_syntax::errors::RenderSpan'>RenderSpan</a></code></h4>
+<h4 id='method.clone_from' class='method'><span class="since">1.0.0</span><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -112,7 +112,7 @@ by file:linenum.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>
