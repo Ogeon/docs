@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["expression","Expression related builders."],["function","Function related builders."],["statement","Statement related builders."]],"struct":[["Script","Script builder."]],"trait":[["Build","The interface between builders."]]});

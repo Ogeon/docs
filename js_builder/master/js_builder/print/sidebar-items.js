@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Formatter","Code formatter."],["Indented","An indented formatter."]],"trait":[["Print","A trait for printing the AST to a writer."]]});

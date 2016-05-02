@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ExpressionBuilder` struct in crate `js_builder`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ExpressionBuilder">
+
+    <title>js_builder::builder::expression::ExpressionBuilder - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../../index.html'>js_builder</a>::<wbr><a href='../index.html'>builder</a>::<wbr><a href='index.html'>expression</a></p><script>window.sidebarCurrent = {name: 'ExpressionBuilder', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>js_builder</a>::<wbr><a href='../index.html'>builder</a>::<wbr><a href='index.html'>expression</a>::<wbr><a class='struct' href=''>ExpressionBuilder</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-1464' class='srclink' href='../../../src/js_builder/src/builder/expression/mod.rs.html#29' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>#[must_use = "builders are sometimes lazy and must be used to produce a result"]
+pub struct ExpressionBuilder&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;&gt;(_);</pre><div class='docblock'><p>A builder for expressions.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='method.this' class='method'><code>fn <a href='#method.this' class='fnname'>this</a>(self) -&gt; N::Next</code></h4>
+<div class='docblock'><p>Build a <code>this</code> expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>this</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;this&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.id' class='method'><code>fn <a href='#method.id' class='fnname'>id</a>&lt;S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../../js_builder/ast/type.Identifier.html' title='js_builder::ast::Identifier'>Identifier</a>&gt;&gt;(self, id: S) -&gt; N::Next</code></h4>
+<div class='docblock'><p>Build an identifier expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>id</span>(<span class='string'>&quot;foo&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;foo&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.ids' class='method'><code>fn <a href='#method.ids' class='fnname'>ids</a>&lt;I: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/trait.IntoIterator.html' title='core::iter::IntoIterator'>IntoIterator</a>&gt;(self, ids: I) -&gt; N::Next <span class='where'>where I::Item: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../../js_builder/ast/type.Identifier.html' title='js_builder::ast::Identifier'>Identifier</a>&gt;</span></code></h4>
+<div class='docblock'><p>Build a path expression, consisting of only identifiers.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>ids</span>(<span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;a&quot;</span>, <span class='string'>&quot;b&quot;</span>, <span class='string'>&quot;c&quot;</span>]).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a.b.c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.null' class='method'><code>fn <a href='#method.null' class='fnname'>null</a>(self) -&gt; N::Next</code></h4>
+<div class='docblock'><p>Build a <code>null</code> expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>null</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;null&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.bool' class='method'><code>fn <a href='#method.bool' class='fnname'>bool</a>(self, b: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; N::Next</code></h4>
+<div class='docblock'><p>Build a Boolean literal expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>bool</span>(<span class='boolval'>true</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;true&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.number' class='method'><code>fn <a href='#method.number' class='fnname'>number</a>&lt;Num: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>&gt;&gt;(self, number: Num) -&gt; N::Next</code></h4>
+<div class='docblock'><p>Build a number literal expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>number</span>(<span class='number'>3.14</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;3.14&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.hex_int' class='method'><code>fn <a href='#method.hex_int' class='fnname'>hex_int</a>&lt;I: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>&gt;&gt;(self, int: I) -&gt; N::Next</code></h4>
+<div class='docblock'><p>Build a hexadecimal integer expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>hex_int</span>(<span class='number'>0x1337beef_u64</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;0x1337beef&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.string' class='method'><code>fn <a href='#method.string' class='fnname'>string</a>&lt;S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.StringLiteral.html' title='js_builder::ast::StringLiteral'>StringLiteral</a>&gt;&gt;(self, string: S) -&gt; N::Next</code></h4>
+<div class='docblock'><p>Build a string literal expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>string</span>(<span class='string'>&quot;Hello, JavaScript!&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;&#39;Hello, JavaScript!&#39;&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.regex' class='method'><code>fn <a href='#method.regex' class='fnname'>regex</a>&lt;S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.RegularExpression.html' title='js_builder::ast::RegularExpression'>RegularExpression</a>&gt;&gt;(self, regex: S) -&gt; N::Next</code></h4>
+<div class='docblock'><p>Build a regular expression literal expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>regex</span>(<span class='string'>r&quot;\w+&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>r&quot;/\w+/&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.array' class='method'><code>fn <a href='#method.array' class='fnname'>array</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ArrayBuilder.html' title='js_builder::builder::expression::ArrayBuilder'>ArrayBuilder</a>&lt;Self&gt;</code></h4>
+<div class='docblock'><p>Build an array literal expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>array</span>()
+    .<span class='ident'>elem</span>().<span class='ident'>number</span>(<span class='number'>123</span>)
+    .<span class='ident'>elem</span>().<span class='ident'>string</span>(<span class='string'>&quot;abc&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;[123, &#39;abc&#39;]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.object' class='method'><code>fn <a href='#method.object' class='fnname'>object</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ObjectBuilder.html' title='js_builder::builder::expression::ObjectBuilder'>ObjectBuilder</a>&lt;Self&gt;</code></h4>
+<div class='docblock'><p>Build an object literal expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>object</span>()
+    .<span class='ident'>field</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>number</span>(<span class='number'>123</span>)
+    .<span class='ident'>field</span>().<span class='ident'>string</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>string</span>(<span class='string'>&quot;abc&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;{a: 123,&#39;b&#39;: &#39;abc&#39;}&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.paren' class='method'><code>fn <a href='#method.paren' class='fnname'>paren</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;Self&gt;</code></h4>
+<div class='docblock'><p>Put parenthesis around an expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>paren</span>().<span class='ident'>string</span>(<span class='string'>&quot;wow&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;(&#39;wow&#39;)&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.path' class='method'><code>fn <a href='#method.path' class='fnname'>path</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBaseBuilder.html' title='js_builder::builder::expression::PathBaseBuilder'>PathBaseBuilder</a>&lt;Self&gt;</code></h4>
+<div class='docblock'><p>Build a path expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>path</span>()
+    .<span class='ident'>string</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;z&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;&#39;x&#39;.y[z]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBaseBuilder.html' title='js_builder::builder::expression::PathBaseBuilder'>PathBaseBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.FnAccessAdapter.html' title='js_builder::builder::expression::adapter::FnAccessAdapter'>FnAccessAdapter</a>&lt;Self&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a constructor call expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>new</span>().<span class='ident'>id</span>(<span class='string'>&quot;Point&quot;</span>).<span class='ident'>build</span>()
+    .<span class='ident'>arg</span>().<span class='ident'>id</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>arg</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;new Point(x, y)&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.new_value' class='method'><code>fn <a href='#method.new_value' class='fnname'>new_value</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ValueExprBuilder.html' title='js_builder::builder::expression::ValueExprBuilder'>ValueExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/struct.ValueExprBuilder.html' title='js_builder::builder::expression::ValueExprBuilder'>ValueExprBuilder</a>&lt;Self&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a constructor call expression, without an argument list.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>new_value</span>().<span class='ident'>path</span>().<span class='ident'>id</span>(<span class='string'>&quot;Point&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;new Point&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.function' class='method'><code>fn <a href='#method.function' class='fnname'>function</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/function/struct.FnArgnamesBuilder.html' title='js_builder::builder::function::FnArgnamesBuilder'>FnArgnamesBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.FnExprAdapter.html' title='js_builder::builder::expression::adapter::FnExprAdapter'>FnExprAdapter</a>&lt;Self&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a function expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>function</span>()
+    .<span class='ident'>arg</span>(<span class='string'>&quot;a&quot;</span>)
+    .<span class='ident'>arg</span>(<span class='string'>&quot;b&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>stmt</span>().<span class='ident'>return_</span>().<span class='ident'>add</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>build</span>()
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;function(a, b) {return a + b;}&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.named_function' class='method'><code>fn <a href='#method.named_function' class='fnname'>named_function</a>&lt;S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../../js_builder/ast/type.Identifier.html' title='js_builder::ast::Identifier'>Identifier</a>&gt;&gt;(self, id: S) -&gt; <a class='struct' href='../../../js_builder/builder/function/struct.FnArgnamesBuilder.html' title='js_builder::builder::function::FnArgnamesBuilder'>FnArgnamesBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.FnExprAdapter.html' title='js_builder::builder::expression::adapter::FnExprAdapter'>FnExprAdapter</a>&lt;Self&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a named function expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>named_function</span>(<span class='string'>&quot;do_something&quot;</span>)
+    .<span class='ident'>arg</span>(<span class='string'>&quot;a&quot;</span>)
+    .<span class='ident'>arg</span>(<span class='string'>&quot;b&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>stmt</span>().<span class='ident'>return_</span>().<span class='ident'>add</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>build</span>()
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;function do_something(a, b) {return a + b;}&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.assign' class='method'><code>fn <a href='#method.assign' class='fnname'>assign</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.AssignAdapter.html' title='js_builder::builder::expression::adapter::AssignAdapter'>AssignAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build an assignment expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>assign</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a = b&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.add_assign' class='method'><code>fn <a href='#method.add_assign' class='fnname'>add_assign</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.AssignAdapter.html' title='js_builder::builder::expression::adapter::AssignAdapter'>AssignAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build an addition assignment expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>add_assign</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a += b&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.sub_assign' class='method'><code>fn <a href='#method.sub_assign' class='fnname'>sub_assign</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.AssignAdapter.html' title='js_builder::builder::expression::adapter::AssignAdapter'>AssignAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a subtraction assignment expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>sub_assign</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a -= b&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.mul_assign' class='method'><code>fn <a href='#method.mul_assign' class='fnname'>mul_assign</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.AssignAdapter.html' title='js_builder::builder::expression::adapter::AssignAdapter'>AssignAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a multiplication assignment expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>mul_assign</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a *= b&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.div_assign' class='method'><code>fn <a href='#method.div_assign' class='fnname'>div_assign</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.AssignAdapter.html' title='js_builder::builder::expression::adapter::AssignAdapter'>AssignAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a division assignment expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>div_assign</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a /= b&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.mod_assign' class='method'><code>fn <a href='#method.mod_assign' class='fnname'>mod_assign</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.AssignAdapter.html' title='js_builder::builder::expression::adapter::AssignAdapter'>AssignAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a modulo (remainder) assignment expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>mod_assign</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a %= b&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.lsh_assign' class='method'><code>fn <a href='#method.lsh_assign' class='fnname'>lsh_assign</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.AssignAdapter.html' title='js_builder::builder::expression::adapter::AssignAdapter'>AssignAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a left shift assignment expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>lsh_assign</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a &lt;&lt;= b&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.rsh_assign' class='method'><code>fn <a href='#method.rsh_assign' class='fnname'>rsh_assign</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.AssignAdapter.html' title='js_builder::builder::expression::adapter::AssignAdapter'>AssignAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a right shift assignment expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>rsh_assign</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a &gt;&gt;= b&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.ursh_assign' class='method'><code>fn <a href='#method.ursh_assign' class='fnname'>ursh_assign</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.AssignAdapter.html' title='js_builder::builder::expression::adapter::AssignAdapter'>AssignAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build an unsigned right shift assignment expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>ursh_assign</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a &gt;&gt;&gt;= b&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.and_assign' class='method'><code>fn <a href='#method.and_assign' class='fnname'>and_assign</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.AssignAdapter.html' title='js_builder::builder::expression::adapter::AssignAdapter'>AssignAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a bitwise <code>and</code> assignment expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>and_assign</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a &amp;= b&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.or_assign' class='method'><code>fn <a href='#method.or_assign' class='fnname'>or_assign</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.AssignAdapter.html' title='js_builder::builder::expression::adapter::AssignAdapter'>AssignAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a bitwise <code>or</code> assignment expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>or_assign</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a |= b&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.xor_assign' class='method'><code>fn <a href='#method.xor_assign' class='fnname'>xor_assign</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.AssignAdapter.html' title='js_builder::builder::expression::adapter::AssignAdapter'>AssignAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a bitwise <code>xor</code> assignment expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>xor_assign</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a ^= b&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.add' class='method'><code>fn <a href='#method.add' class='fnname'>add</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build an addition expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>add</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a + b + c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.sub' class='method'><code>fn <a href='#method.sub' class='fnname'>sub</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a subtraction expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>sub</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a - b - c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.mul' class='method'><code>fn <a href='#method.mul' class='fnname'>mul</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a multiplication expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>mul</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a * b * c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.div' class='method'><code>fn <a href='#method.div' class='fnname'>div</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a division expression. At least two sub-expressions are required,
+and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>div</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a / b / c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.mod_' class='method'><code>fn <a href='#method.mod_' class='fnname'>mod_</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a modulo (reminder) expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>mod_</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a % b % c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.lsh' class='method'><code>fn <a href='#method.lsh' class='fnname'>lsh</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a left shift expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>lsh</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a &lt;&lt; b &lt;&lt; c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.rsh' class='method'><code>fn <a href='#method.rsh' class='fnname'>rsh</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a right shift expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>rsh</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a &gt;&gt; b &gt;&gt; c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.ursh' class='method'><code>fn <a href='#method.ursh' class='fnname'>ursh</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build an unsigned right shift expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>ursh</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a &gt;&gt;&gt; b &gt;&gt;&gt; c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.lt' class='method'><code>fn <a href='#method.lt' class='fnname'>lt</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a less than expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>lt</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a &lt; b &lt; c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.gt' class='method'><code>fn <a href='#method.gt' class='fnname'>gt</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a greater than expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>gt</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a &gt; b &gt; c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.lt_eq' class='method'><code>fn <a href='#method.lt_eq' class='fnname'>lt_eq</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a less than or equal expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>lt_eq</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a &lt;= b &lt;= c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.gt_eq' class='method'><code>fn <a href='#method.gt_eq' class='fnname'>gt_eq</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a greater than or equal expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>gt_eq</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a &gt;= b &gt;= c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.eq' class='method'><code>fn <a href='#method.eq' class='fnname'>eq</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build an equality expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>eq</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a == b == c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.not_eq' class='method'><code>fn <a href='#method.not_eq' class='fnname'>not_eq</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build an inequality expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>not_eq</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a != b != c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.identical' class='method'><code>fn <a href='#method.identical' class='fnname'>identical</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build an identity expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>identical</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a === b === c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.not_identical' class='method'><code>fn <a href='#method.not_identical' class='fnname'>not_identical</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a nonidentity expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>not_identical</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a !== b !== c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.and' class='method'><code>fn <a href='#method.and' class='fnname'>and</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a logical <code>and</code> expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>and</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a &amp;&amp; b &amp;&amp; c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.or' class='method'><code>fn <a href='#method.or' class='fnname'>or</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a logical <code>or</code> expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>or</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a || b || c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.bit_and' class='method'><code>fn <a href='#method.bit_and' class='fnname'>bit_and</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a bitwise <code>and</code> expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>bit_and</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a &amp; b &amp; c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.bit_or' class='method'><code>fn <a href='#method.bit_or' class='fnname'>bit_or</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a bitwise <code>or</code> expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>bit_or</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a | b | c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.bit_xor' class='method'><code>fn <a href='#method.bit_xor' class='fnname'>bit_xor</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a bitwise <code>xor</code> expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>bit_xor</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a ^ b ^ c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.instanceof' class='method'><code>fn <a href='#method.instanceof' class='fnname'>instanceof</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build an <code>instanceof</code> expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>instanceof</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a instanceof b instanceof c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.in_' class='method'><code>fn <a href='#method.in_' class='fnname'>in_</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.BinaryLhsAdapter.html' title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build an <code>in</code> expression. At least two sub-expressions are
+required, and more can be added. See
+<a href="struct.BinaryExprBuilder.html"><code>BinaryExprBuilder</code></a> for more info.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>in_</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>build</span>().<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a in b in c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.pre_incr' class='method'><code>fn <a href='#method.pre_incr' class='fnname'>pre_incr</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.UnaryAdapter.html' title='js_builder::builder::expression::adapter::UnaryAdapter'>UnaryAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a prefix increment expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>pre_incr</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;++a&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.post_incr' class='method'><code>fn <a href='#method.post_incr' class='fnname'>post_incr</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.UnaryAdapter.html' title='js_builder::builder::expression::adapter::UnaryAdapter'>UnaryAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a postfix increment expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>post_incr</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a++&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.pre_decr' class='method'><code>fn <a href='#method.pre_decr' class='fnname'>pre_decr</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.UnaryAdapter.html' title='js_builder::builder::expression::adapter::UnaryAdapter'>UnaryAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a prefix decrement expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>pre_decr</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;--a&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.post_decr' class='method'><code>fn <a href='#method.post_decr' class='fnname'>post_decr</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.UnaryAdapter.html' title='js_builder::builder::expression::adapter::UnaryAdapter'>UnaryAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a postfix decrement expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>post_decr</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a--&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.delete' class='method'><code>fn <a href='#method.delete' class='fnname'>delete</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.UnaryAdapter.html' title='js_builder::builder::expression::adapter::UnaryAdapter'>UnaryAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a <code>delete</code> expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>delete</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;delete a&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.void' class='method'><code>fn <a href='#method.void' class='fnname'>void</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.UnaryAdapter.html' title='js_builder::builder::expression::adapter::UnaryAdapter'>UnaryAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a <code>void</code> expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>void</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;void a&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.typeof_' class='method'><code>fn <a href='#method.typeof_' class='fnname'>typeof_</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.UnaryAdapter.html' title='js_builder::builder::expression::adapter::UnaryAdapter'>UnaryAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a <code>typeof</code> expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>typeof_</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;typeof a&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.plus' class='method'><code>fn <a href='#method.plus' class='fnname'>plus</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.UnaryAdapter.html' title='js_builder::builder::expression::adapter::UnaryAdapter'>UnaryAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a unary plus expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>plus</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;+a&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.neg' class='method'><code>fn <a href='#method.neg' class='fnname'>neg</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.UnaryAdapter.html' title='js_builder::builder::expression::adapter::UnaryAdapter'>UnaryAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a negation expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>neg</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;-a&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.not' class='method'><code>fn <a href='#method.not' class='fnname'>not</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.UnaryAdapter.html' title='js_builder::builder::expression::adapter::UnaryAdapter'>UnaryAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a logical <code>not</code> expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>not</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;!a&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.bit_not' class='method'><code>fn <a href='#method.bit_not' class='fnname'>bit_not</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.LhsExprBuilder.html' title='js_builder::builder::expression::LhsExprBuilder'>LhsExprBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.UnaryAdapter.html' title='js_builder::builder::expression::adapter::UnaryAdapter'>UnaryAdapter</a>&lt;N&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a bitwise <code>not</code> expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>bit_not</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;~a&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.build_expr' class='method'><code>fn <a href='#method.build_expr' class='fnname'>build_expr</a>(self, expression: <a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>) -&gt; N::Next</code></h4>
+<div class='docblock'><p>Use a pre-built expression, instead.</p>
+</div></div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt; + <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>&gt;&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='method.comma' class='method'><code>fn <a href='#method.comma' class='fnname'>comma</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionsBuilder.html' title='js_builder::builder::expression::ExpressionsBuilder'>ExpressionsBuilder</a>&lt;N&gt;</code></h4>
+<div class='docblock'><p>Build a comma separated expression chain.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>Expression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>Expression</span>::<span class='ident'>build</span>().<span class='ident'>comma</span>()
+    .<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>)
+    .<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>)
+    .<span class='ident'>expr</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;a, b, c&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;N&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#method.from' class='fnname'>from</a>(next: N) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;N&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.PrimaryExpression.html' title='js_builder::ast::PrimaryExpression'>PrimaryExpression</a>&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next' class='type'><code>type Next = N::Next</code></h4>
+<h4 id='method.build_with' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='enum' href='../../../js_builder/ast/enum.PrimaryExpression.html' title='js_builder::ast::PrimaryExpression'>PrimaryExpression</a>) -&gt; N::Next</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.ValueExpression.html' title='js_builder::ast::ValueExpression'>ValueExpression</a>&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next-1' class='type'><code>type Next = N::Next</code></h4>
+<h4 id='method.build_with-1' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='enum' href='../../../js_builder/ast/enum.ValueExpression.html' title='js_builder::ast::ValueExpression'>ValueExpression</a>) -&gt; N::Next</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next-2' class='type'><code>type Next = N::Next</code></h4>
+<h4 id='method.build_with-2' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>) -&gt; N::Next</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.CallExpression.html' title='js_builder::ast::CallExpression'>CallExpression</a>&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next-3' class='type'><code>type Next = N::Next</code></h4>
+<h4 id='method.build_with-3' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='struct' href='../../../js_builder/ast/struct.CallExpression.html' title='js_builder::ast::CallExpression'>CallExpression</a>) -&gt; N::Next</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.FnExprDecl.html' title='js_builder::builder::expression::adapter::FnExprDecl'>FnExprDecl</a>&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next-4' class='type'><code>type Next = N::Next</code></h4>
+<h4 id='method.build_with-4' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='struct' href='../../../js_builder/builder/expression/adapter/struct.FnExprDecl.html' title='js_builder::builder::expression::adapter::FnExprDecl'>FnExprDecl</a>) -&gt; N::Next</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next-5' class='type'><code>type Next = N::Next</code></h4>
+<h4 id='method.build_with-5' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;) -&gt; N::Next</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.PropertyAssignment.html' title='js_builder::ast::PropertyAssignment'>PropertyAssignment</a>&gt;&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next-6' class='type'><code>type Next = N::Next</code></h4>
+<h4 id='method.build_with-6' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.PropertyAssignment.html' title='js_builder::ast::PropertyAssignment'>PropertyAssignment</a>&gt;) -&gt; N::Next</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next-7' class='type'><code>type Next = N::Next</code></h4>
+<h4 id='method.build_with-7' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>) -&gt; N::Next</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next-8' class='type'><code>type Next = N::Next</code></h4>
+<h4 id='method.build_with-8' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='struct' href='../../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>) -&gt; N::Next</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/builder/function/struct.FnCall.html' title='js_builder::builder::function::FnCall'>FnCall</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>&gt;&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next-9' class='type'><code>type Next = N::Next</code></h4>
+<h4 id='method.build_with-9' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='struct' href='../../../js_builder/builder/function/struct.FnCall.html' title='js_builder::builder::function::FnCall'>FnCall</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>&gt;) -&gt; N::Next</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "js_builder";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
+    
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

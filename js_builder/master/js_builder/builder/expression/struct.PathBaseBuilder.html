@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `PathBaseBuilder` struct in crate `js_builder`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, PathBaseBuilder">
+
+    <title>js_builder::builder::expression::PathBaseBuilder - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../../index.html'>js_builder</a>::<wbr><a href='../index.html'>builder</a>::<wbr><a href='index.html'>expression</a></p><script>window.sidebarCurrent = {name: 'PathBaseBuilder', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>js_builder</a>::<wbr><a href='../index.html'>builder</a>::<wbr><a href='index.html'>expression</a>::<wbr><a class='struct' href=''>PathBaseBuilder</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-1767' class='srclink' href='../../../src/js_builder/src/builder/expression/mod.rs.html#1511' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>#[must_use = "builders are sometimes lazy and must be used to produce a result"]
+pub struct PathBaseBuilder&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>&gt;&gt;(_);</pre><div class='docblock'><p>A builder for the first part of a path.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>&gt;&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBaseBuilder.html' title='js_builder::builder::expression::PathBaseBuilder'>PathBaseBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='method.this' class='method'><code>fn <a href='#method.this' class='fnname'>this</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+<div class='docblock'><p>Build a path that begins with <code>this</code>.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>PathExpression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>PathExpression</span>::<span class='ident'>build</span>().<span class='ident'>this</span>()
+    .<span class='ident'>id</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;this.x[y]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.id' class='method'><code>fn <a href='#method.id' class='fnname'>id</a>&lt;S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../../js_builder/ast/type.Identifier.html' title='js_builder::ast::Identifier'>Identifier</a>&gt;&gt;(self, id: S) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+<div class='docblock'><p>Build a path that begins with an identifier.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>PathExpression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>PathExpression</span>::<span class='ident'>build</span>().<span class='ident'>id</span>(<span class='string'>&quot;foo&quot;</span>)
+    .<span class='ident'>id</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;foo.x[y]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.null' class='method'><code>fn <a href='#method.null' class='fnname'>null</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+<div class='docblock'><p>Build a path that begins with <code>null</code>.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>PathExpression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>PathExpression</span>::<span class='ident'>build</span>().<span class='ident'>null</span>()
+    .<span class='ident'>id</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;null.x[y]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.bool' class='method'><code>fn <a href='#method.bool' class='fnname'>bool</a>(self, b: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+<div class='docblock'><p>Build a path that begins with a Boolean value.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>PathExpression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>PathExpression</span>::<span class='ident'>build</span>().<span class='ident'>bool</span>(<span class='boolval'>false</span>)
+    .<span class='ident'>id</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;false.x[y]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.number' class='method'><code>fn <a href='#method.number' class='fnname'>number</a>&lt;Num: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a>&gt;&gt;(self, number: Num) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+<div class='docblock'><p>Build a path that begins with a number. You may want to wrap the number
+in parenthesis first, to avoid ambiguities. See
+<a href="#method.paren"><code>paren</code></a>, below.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>PathExpression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>PathExpression</span>::<span class='ident'>build</span>().<span class='ident'>number</span>(<span class='number'>3.14</span>)
+    .<span class='ident'>id</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;3.14.x[y]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.hex_int' class='method'><code>fn <a href='#method.hex_int' class='fnname'>hex_int</a>&lt;I: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>&gt;&gt;(self, int: I) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+<div class='docblock'><p>Build a path that begins with a hexadecimal integer.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>PathExpression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>PathExpression</span>::<span class='ident'>build</span>().<span class='ident'>hex_int</span>(<span class='number'>0x1337beef_u64</span>)
+    .<span class='ident'>id</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;0x1337beef.x[y]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.string' class='method'><code>fn <a href='#method.string' class='fnname'>string</a>&lt;S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.StringLiteral.html' title='js_builder::ast::StringLiteral'>StringLiteral</a>&gt;&gt;(self, string: S) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+<div class='docblock'><p>Build a path that begins with a string.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>PathExpression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>PathExpression</span>::<span class='ident'>build</span>().<span class='ident'>string</span>(<span class='string'>&quot;hello&quot;</span>)
+    .<span class='ident'>id</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;&#39;hello&#39;.x[y]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.regex' class='method'><code>fn <a href='#method.regex' class='fnname'>regex</a>&lt;S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.RegularExpression.html' title='js_builder::ast::RegularExpression'>RegularExpression</a>&gt;&gt;(self, regex: S) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+<div class='docblock'><p>Build a path that begins with a regular expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>PathExpression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>PathExpression</span>::<span class='ident'>build</span>().<span class='ident'>regex</span>(<span class='string'>r&quot;\w+&quot;</span>)
+    .<span class='ident'>id</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>r&quot;/\w+/.x[y]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.array' class='method'><code>fn <a href='#method.array' class='fnname'>array</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ArrayBuilder.html' title='js_builder::builder::expression::ArrayBuilder'>ArrayBuilder</a>&lt;Self&gt;</code></h4>
+<div class='docblock'><p>Build a path that begins with an array.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>PathExpression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>PathExpression</span>::<span class='ident'>build</span>().<span class='ident'>array</span>()
+    .<span class='ident'>elem</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>)
+    .<span class='ident'>elem</span>().<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>)
+    .<span class='ident'>elem</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>id</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>r&quot;[a, b, c].x[y]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.object' class='method'><code>fn <a href='#method.object' class='fnname'>object</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ObjectBuilder.html' title='js_builder::builder::expression::ObjectBuilder'>ObjectBuilder</a>&lt;Self&gt;</code></h4>
+<div class='docblock'><p>Build a path that begins with an object.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>PathExpression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>PathExpression</span>::<span class='ident'>build</span>().<span class='ident'>object</span>()
+    .<span class='ident'>field</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>number</span>(<span class='number'>1</span>)
+    .<span class='ident'>field</span>().<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>number</span>(<span class='number'>2</span>)
+    .<span class='ident'>field</span>().<span class='ident'>id</span>(<span class='string'>&quot;c&quot;</span>).<span class='ident'>number</span>(<span class='number'>3</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>id</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>r&quot;{a: 1,b: 2,c: 3}.x[y]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.paren' class='method'><code>fn <a href='#method.paren' class='fnname'>paren</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;Self&gt;</code></h4>
+<div class='docblock'><p>Build a path that begins with an expression in parenthesis.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>PathExpression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>PathExpression</span>::<span class='ident'>build</span>().<span class='ident'>paren</span>().<span class='ident'>number</span>(<span class='number'>4</span>)
+    .<span class='ident'>id</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;(4).x[y]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.function' class='method'><code>fn <a href='#method.function' class='fnname'>function</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/function/struct.FnArgnamesBuilder.html' title='js_builder::builder::function::FnArgnamesBuilder'>FnArgnamesBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.FnExprAdapter.html' title='js_builder::builder::expression::adapter::FnExprAdapter'>FnExprAdapter</a>&lt;Self&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a path that begins with a function expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>PathExpression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>PathExpression</span>::<span class='ident'>build</span>().<span class='ident'>function</span>()
+    .<span class='ident'>arg</span>(<span class='string'>&quot;a&quot;</span>)
+    .<span class='ident'>arg</span>(<span class='string'>&quot;b&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>stmt</span>().<span class='ident'>return_</span>().<span class='ident'>add</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>build</span>()
+    .<span class='ident'>build</span>()
+    .<span class='ident'>id</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;(function(a, b) {return a + b;}).x[y]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.named_function' class='method'><code>fn <a href='#method.named_function' class='fnname'>named_function</a>&lt;S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../../js_builder/ast/type.Identifier.html' title='js_builder::ast::Identifier'>Identifier</a>&gt;&gt;(self, id: S) -&gt; <a class='struct' href='../../../js_builder/builder/function/struct.FnArgnamesBuilder.html' title='js_builder::builder::function::FnArgnamesBuilder'>FnArgnamesBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.FnExprAdapter.html' title='js_builder::builder::expression::adapter::FnExprAdapter'>FnExprAdapter</a>&lt;Self&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a path that begins with a function expression.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>PathExpression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>PathExpression</span>::<span class='ident'>build</span>().<span class='ident'>named_function</span>(<span class='string'>&quot;do_something&quot;</span>)
+    .<span class='ident'>arg</span>(<span class='string'>&quot;a&quot;</span>)
+    .<span class='ident'>arg</span>(<span class='string'>&quot;b&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>stmt</span>().<span class='ident'>return_</span>().<span class='ident'>add</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>).<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>).<span class='ident'>build</span>()
+    .<span class='ident'>build</span>()
+    .<span class='ident'>id</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;(function do_something(a, b) {return a + b;}).x[y]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(self) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBaseBuilder.html' title='js_builder::builder::expression::PathBaseBuilder'>PathBaseBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.FnAccessAdapter.html' title='js_builder::builder::expression::adapter::FnAccessAdapter'>FnAccessAdapter</a>&lt;Self&gt;&gt;</code></h4>
+<div class='docblock'><p>Build a path that begins with a constructor call.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>PathExpression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>PathExpression</span>::<span class='ident'>build</span>().<span class='ident'>new</span>().<span class='ident'>id</span>(<span class='string'>&quot;Foo&quot;</span>).<span class='ident'>build</span>()
+    .<span class='ident'>arg</span>().<span class='ident'>id</span>(<span class='string'>&quot;a&quot;</span>)
+    .<span class='ident'>arg</span>().<span class='ident'>id</span>(<span class='string'>&quot;b&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>id</span>(<span class='string'>&quot;x&quot;</span>)
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;new Foo(a, b).x[y]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div><h4 id='method.ids' class='method'><code>fn <a href='#method.ids' class='fnname'>ids</a>&lt;I: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/trait.IntoIterator.html' title='core::iter::IntoIterator'>IntoIterator</a>&gt;(self, ids: I) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt; <span class='where'>where I::Item: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../../js_builder/ast/type.Identifier.html' title='js_builder::ast::Identifier'>Identifier</a>&gt;</span></code></h4>
+<div class='docblock'><p>Build a path that begins with a sequence of identifiers.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>ast</span>::<span class='ident'>PathExpression</span>;
+<span class='kw'>use</span> <span class='ident'>js_builder</span>::<span class='ident'>Print</span>;
+
+<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>Vec</span>::<span class='ident'>new</span>();
+<span class='ident'>PathExpression</span>::<span class='ident'>build</span>().<span class='ident'>ids</span>(<span class='macro'>vec</span><span class='macro'>!</span>[<span class='string'>&quot;foo&quot;</span>, <span class='string'>&quot;x&quot;</span>])
+    .<span class='ident'>index</span>().<span class='ident'>id</span>(<span class='string'>&quot;y&quot;</span>)
+    .<span class='ident'>build</span>()
+    .<span class='ident'>compact_print</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>result</span>);
+
+<span class='macro'>assert_eq</span><span class='macro'>!</span>(
+    <span class='string'>&quot;foo.x[y]&quot;</span>,
+    <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>result</span>)
+);</pre>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>&gt;&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;N&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.PathBaseBuilder.html' title='js_builder::builder::expression::PathBaseBuilder'>PathBaseBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#method.from' class='fnname'>from</a>(next: N) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBaseBuilder.html' title='js_builder::builder::expression::PathBaseBuilder'>PathBaseBuilder</a>&lt;N&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.PathBaseBuilder.html' title='js_builder::builder::expression::PathBaseBuilder'>PathBaseBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next' class='type'><code>type Next = <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+<h4 id='method.build_with' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt;) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.PropertyAssignment.html' title='js_builder::ast::PropertyAssignment'>PropertyAssignment</a>&gt;&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.PathBaseBuilder.html' title='js_builder::builder::expression::PathBaseBuilder'>PathBaseBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next-1' class='type'><code>type Next = <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+<h4 id='method.build_with-1' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.PropertyAssignment.html' title='js_builder::ast::PropertyAssignment'>PropertyAssignment</a>&gt;) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.PathBaseBuilder.html' title='js_builder::builder::expression::PathBaseBuilder'>PathBaseBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next-2' class='type'><code>type Next = <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+<h4 id='method.build_with-2' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='enum' href='../../../js_builder/ast/enum.Expression.html' title='js_builder::ast::Expression'>Expression</a>) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.PathBaseBuilder.html' title='js_builder::builder::expression::PathBaseBuilder'>PathBaseBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next-3' class='type'><code>type Next = <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+<h4 id='method.build_with-3' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='struct' href='../../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/builder/expression/adapter/struct.FnExprDecl.html' title='js_builder::builder::expression::adapter::FnExprDecl'>FnExprDecl</a>&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.PathBaseBuilder.html' title='js_builder::builder::expression::PathBaseBuilder'>PathBaseBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next-4' class='type'><code>type Next = <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+<h4 id='method.build_with-4' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='struct' href='../../../js_builder/builder/expression/adapter/struct.FnExprDecl.html' title='js_builder::builder::expression::adapter::FnExprDecl'>FnExprDecl</a>) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/builder/function/struct.FnCall.html' title='js_builder::builder::function::FnCall'>FnCall</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>&gt;&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.PathBaseBuilder.html' title='js_builder::builder::expression::PathBaseBuilder'>PathBaseBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next-5' class='type'><code>type Next = <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+<h4 id='method.build_with-5' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='struct' href='../../../js_builder/builder/function/struct.FnCall.html' title='js_builder::builder::function::FnCall'>FnCall</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>&gt;) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+</div><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>&gt;&gt; <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='enum' href='../../../js_builder/ast/enum.PrimaryExpression.html' title='js_builder::ast::PrimaryExpression'>PrimaryExpression</a>&gt; for <a class='struct' href='../../../js_builder/builder/expression/struct.PathBaseBuilder.html' title='js_builder::builder::expression::PathBaseBuilder'>PathBaseBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='associatedtype.Next-6' class='type'><code>type Next = <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+<h4 id='method.build_with-6' class='method'><code>fn <a href='../../../js_builder/builder/trait.Build.html#method.build_with' class='fnname'>build_with</a>(self, result: <a class='enum' href='../../../js_builder/ast/enum.PrimaryExpression.html' title='js_builder::ast::PrimaryExpression'>PrimaryExpression</a>) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.PathBuilder.html' title='js_builder::builder::expression::PathBuilder'>PathBuilder</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a>, N&gt;</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "js_builder";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
+    
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

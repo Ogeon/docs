@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `PropertyName` enum in crate `js_builder`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, PropertyName">
+
+    <title>js_builder::ast::PropertyName - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>js_builder</a>::<wbr><a href='index.html'>ast</a></p><script>window.sidebarCurrent = {name: 'PropertyName', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>js_builder</a>::<wbr><a href='index.html'>ast</a>::<wbr><a class='enum' href=''>PropertyName</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-228' class='srclink' href='../../src/js_builder/src/ast.rs.html#291-300' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum PropertyName {
+    Identifier(<a class='type' href='../../js_builder/ast/type.Identifier.html' title='js_builder::ast::Identifier'>Identifier</a>),
+    StringLiteral(<a class='struct' href='../../js_builder/ast/struct.StringLiteral.html' title='js_builder::ast::StringLiteral'>StringLiteral</a>),
+    NumericLiteral(<a class='enum' href='../../js_builder/ast/enum.NumericLiteral.html' title='js_builder::ast::NumericLiteral'>NumericLiteral</a>),
+}</pre><div class='docblock'><p>An object field (property) name.</p>
+</div><h2 class='variants'>Variants</h2>
+<table class='variants_table'><tr><td id='variant.Identifier'><code>Identifier</code></td><td><div class='docblock'><p>An identifier.</p>
+</div></td><td></td></tr><tr><td id='variant.StringLiteral'><code>StringLiteral</code></td><td><div class='docblock'><p>A string.</p>
+</div></td><td></td></tr><tr><td id='variant.NumericLiteral'><code>NumericLiteral</code></td><td><div class='docblock'><p>A number.</p>
+</div></td><td></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../js_builder/print/trait.Print.html' title='js_builder::print::Print'>Print</a> for <a class='enum' href='../../js_builder/ast/enum.PropertyName.html' title='js_builder::ast::PropertyName'>PropertyName</a></code></h3><div class='impl-items'><h4 id='method.print_with' class='method'><code>fn <a href='../../js_builder/print/trait.Print.html#method.print_with' class='fnname'>print_with</a>&lt;W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self, f: &amp;mut <a class='struct' href='../../js_builder/print/struct.Formatter.html' title='js_builder::print::Formatter'>Formatter</a>&lt;W&gt;) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+<h4 id='method.pretty_print' class='method'><code>fn <a href='../../js_builder/print/trait.Print.html#method.pretty_print' class='fnname'>pretty_print</a>&lt;W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self, writer: W) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+<h4 id='method.compact_print' class='method'><code>fn <a href='../../js_builder/print/trait.Print.html#method.compact_print' class='fnname'>compact_print</a>&lt;W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self, writer: W) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "js_builder";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

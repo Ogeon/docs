@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["FnAdapter","An adapter that holds a function signature."],["FnArgnamesBuilder","A builder for function argument names."],["FnBodyBuilder","A builder for function bodies."],["FnCall","The parts of a function call."],["FnCallBuilder","A builder for function calls."]]});

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Statement` enum in crate `js_builder`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Statement">
+
+    <title>js_builder::ast::Statement - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>js_builder</a>::<wbr><a href='index.html'>ast</a></p><script>window.sidebarCurrent = {name: 'Statement', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>js_builder</a>::<wbr><a href='index.html'>ast</a>::<wbr><a class='enum' href=''>Statement</a></span><span class='out-of-band'><span id='render-detail'>
+            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                [<span class='inner'>&#x2212;</span>]
+            </a>
+        </span><a id='src-551' class='srclink' href='../../src/js_builder/src/ast.rs.html#824-884' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum Statement {
+    Block(<a class='struct' href='../../js_builder/ast/struct.Block.html' title='js_builder::ast::Block'>Block</a>),
+    Variable(<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../js_builder/ast/struct.VarDecl.html' title='js_builder::ast::VarDecl'>VarDecl</a>&gt;),
+    Empty,
+    Expression(<a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>),
+    If(<a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='enum' href='../../js_builder/ast/enum.Statement.html' title='js_builder::ast::Statement'>Statement</a>&gt;, <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='enum' href='../../js_builder/ast/enum.Statement.html' title='js_builder::ast::Statement'>Statement</a>&gt;&gt;),
+    Do(<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='enum' href='../../js_builder/ast/enum.Statement.html' title='js_builder::ast::Statement'>Statement</a>&gt;, <a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>),
+    While(<a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='enum' href='../../js_builder/ast/enum.Statement.html' title='js_builder::ast::Statement'>Statement</a>&gt;),
+    For(<a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>, <a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>, <a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='enum' href='../../js_builder/ast/enum.Statement.html' title='js_builder::ast::Statement'>Statement</a>&gt;),
+    ForVar(<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../js_builder/ast/struct.VarDecl.html' title='js_builder::ast::VarDecl'>VarDecl</a>&gt;, <a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>, <a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='enum' href='../../js_builder/ast/enum.Statement.html' title='js_builder::ast::Statement'>Statement</a>&gt;),
+    ForIn(<a class='enum' href='../../js_builder/ast/enum.LhsExpression.html' title='js_builder::ast::LhsExpression'>LhsExpression</a>, <a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='enum' href='../../js_builder/ast/enum.Statement.html' title='js_builder::ast::Statement'>Statement</a>&gt;),
+    ForInVar(<a class='type' href='../../js_builder/ast/type.Identifier.html' title='js_builder::ast::Identifier'>Identifier</a>, <a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='enum' href='../../js_builder/ast/enum.Statement.html' title='js_builder::ast::Statement'>Statement</a>&gt;),
+    Continue(<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='type' href='../../js_builder/ast/type.Identifier.html' title='js_builder::ast::Identifier'>Identifier</a>&gt;),
+    Break(<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='type' href='../../js_builder/ast/type.Identifier.html' title='js_builder::ast::Identifier'>Identifier</a>&gt;),
+    Return(<a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>),
+    With(<a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='enum' href='../../js_builder/ast/enum.Statement.html' title='js_builder::ast::Statement'>Statement</a>&gt;),
+    Labeled(<a class='type' href='../../js_builder/ast/type.Identifier.html' title='js_builder::ast::Identifier'>Identifier</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='enum' href='../../js_builder/ast/enum.Statement.html' title='js_builder::ast::Statement'>Statement</a>&gt;),
+    Switch(<a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../js_builder/ast/enum.CaseClause.html' title='js_builder::ast::CaseClause'>CaseClause</a>&gt;),
+    Throw(<a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>),
+    Try(<a class='struct' href='../../js_builder/ast/struct.Block.html' title='js_builder::ast::Block'>Block</a>, <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../js_builder/ast/struct.Catch.html' title='js_builder::ast::Catch'>Catch</a>&gt;, <a class='struct' href='../../js_builder/ast/struct.Block.html' title='js_builder::ast::Block'>Block</a>),
+    Debugger,
+}</pre><div class='docblock'><p>A statement.</p>
+</div><h2 class='variants'>Variants</h2>
+<table class='variants_table'><tr><td id='variant.Block'><code>Block</code></td><td><div class='docblock'><p>Code block.</p>
+</div></td><td></td></tr><tr><td id='variant.Variable'><code>Variable</code></td><td><div class='docblock'><p>Variable declaration.</p>
+</div></td><td></td></tr><tr><td id='variant.Empty'><code>Empty</code></td><td><div class='docblock'><p>An empty statement (just a <code>;</code>).</p>
+</div></td><td></td></tr><tr><td id='variant.Expression'><code>Expression</code></td><td><div class='docblock'><p>An expression.</p>
+</div></td><td></td></tr><tr><td id='variant.If'><code>If</code></td><td><div class='docblock'><p>An <code>if</code> statement.</p>
+</div></td><td></td></tr><tr><td id='variant.Do'><code>Do</code></td><td><div class='docblock'><p>A <code>do ... while(...)</code> statement.</p>
+</div></td><td></td></tr><tr><td id='variant.While'><code>While</code></td><td><div class='docblock'><p>A <code>while(...) ...</code> statement.</p>
+</div></td><td></td></tr><tr><td id='variant.For'><code>For</code></td><td><div class='docblock'><p>A <code>for(...; ...; ...) ...</code> statement.</p>
+</div></td><td></td></tr><tr><td id='variant.ForVar'><code>ForVar</code></td><td><div class='docblock'><p>A <code>for(var ...; ...; ...) ...</code> statement.</p>
+</div></td><td></td></tr><tr><td id='variant.ForIn'><code>ForIn</code></td><td><div class='docblock'><p>A <code>for(... in ...) ...</code> statement.</p>
+</div></td><td></td></tr><tr><td id='variant.ForInVar'><code>ForInVar</code></td><td><div class='docblock'><p>A <code>for(var ... in ...) ...</code> statement.</p>
+</div></td><td></td></tr><tr><td id='variant.Continue'><code>Continue</code></td><td><div class='docblock'><p>A <code>continue;</code> statement.</p>
+</div></td><td></td></tr><tr><td id='variant.Break'><code>Break</code></td><td><div class='docblock'><p>A <code>break ...;</code> statement.</p>
+</div></td><td></td></tr><tr><td id='variant.Return'><code>Return</code></td><td><div class='docblock'><p>A <code>return ...;</code> statement.</p>
+</div></td><td></td></tr><tr><td id='variant.With'><code>With</code></td><td><div class='docblock'><p>A <code>with(...) ...</code> statement.</p>
+</div></td><td></td></tr><tr><td id='variant.Labeled'><code>Labeled</code></td><td><div class='docblock'><p>A labeled statement.</p>
+</div></td><td></td></tr><tr><td id='variant.Switch'><code>Switch</code></td><td><div class='docblock'><p>A <code>switch(...) { ... }</code> statement.</p>
+</div></td><td></td></tr><tr><td id='variant.Throw'><code>Throw</code></td><td><div class='docblock'><p>A <code>throw ...;</code> statement.</p>
+</div></td><td></td></tr><tr><td id='variant.Try'><code>Try</code></td><td><div class='docblock'><p>A try-catch-finally statement.</p>
+</div></td><td></td></tr><tr><td id='variant.Debugger'><code>Debugger</code></td><td><div class='docblock'><p>A <code>debugger;</code> statement.</p>
+</div></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='enum' href='../../js_builder/ast/enum.Statement.html' title='js_builder::ast::Statement'>Statement</a></code></h3><div class='impl-items'><h4 id='method.build' class='method'><code>fn <a href='#method.build' class='fnname'>build</a>() -&gt; <a class='struct' href='../../js_builder/builder/statement/struct.StatementBuilder.html' title='js_builder::builder::statement::StatementBuilder'>StatementBuilder</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+<div class='docblock'><p>Build a new statement.</p>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../js_builder/print/trait.Print.html' title='js_builder::print::Print'>Print</a> for <a class='enum' href='../../js_builder/ast/enum.Statement.html' title='js_builder::ast::Statement'>Statement</a></code></h3><div class='impl-items'><h4 id='method.print_with' class='method'><code>fn <a href='../../js_builder/print/trait.Print.html#method.print_with' class='fnname'>print_with</a>&lt;W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self, f: &amp;mut <a class='struct' href='../../js_builder/print/struct.Formatter.html' title='js_builder::print::Formatter'>Formatter</a>&lt;W&gt;) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+<h4 id='method.pretty_print' class='method'><code>fn <a href='../../js_builder/print/trait.Print.html#method.pretty_print' class='fnname'>pretty_print</a>&lt;W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self, writer: W) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+<h4 id='method.compact_print' class='method'><code>fn <a href='../../js_builder/print/trait.Print.html#method.compact_print' class='fnname'>compact_print</a>&lt;W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self, writer: W) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "js_builder";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>
