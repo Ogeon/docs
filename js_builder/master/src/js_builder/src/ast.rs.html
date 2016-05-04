@@ -1271,13 +1271,15 @@
 <span id="1228">1228</span>
 <span id="1229">1229</span>
 <span id="1230">1230</span>
+<span id="1231">1231</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Abstract syntax tree components.</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='self'>self</span>, <span class='ident'>Write</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>::{<span class='self'>self</span>, <span class='ident'>Display</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>::<span class='ident'>Write</span> <span class='kw'>as</span> <span class='ident'>FmtWrite</span>;
+
+<span class='kw'>use</span> <span class='ident'>string_cache</span>::<span class='ident'>Atom</span>;
 
 <span class='kw'>use</span> <span class='ident'>builder</span>::<span class='ident'>expression</span>::{<span class='ident'>ExpressionBuilder</span>, <span class='ident'>PathBaseBuilder</span>, <span class='ident'>ValueExprBuilder</span>, <span class='ident'>LhsExprBuilder</span>};
 <span class='kw'>use</span> <span class='ident'>builder</span>::<span class='ident'>statement</span>::{<span class='ident'>BlockBuilder</span>, <span class='ident'>StatementBuilder</span>, <span class='ident'>SourceElementBuilder</span>};
@@ -1285,7 +1287,7 @@
 <span class='kw'>use</span> <span class='ident'>print</span>::{<span class='ident'>Print</span>, <span class='ident'>Formatter</span>};
 
 <span class='doccomment'>///An identifier.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Identifier</span> <span class='op'>=</span> <span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>str</span><span class='op'>&gt;</span>;
+<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>Identifier</span> <span class='op'>=</span> <span class='ident'>Atom</span>;
 
 <span class='doccomment'>///A chain of comma separated expressions.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Expressions</span> {
@@ -1323,10 +1325,10 @@
     <span class='kw'>pub</span> <span class='ident'>double_quote</span>: <span class='ident'>bool</span>,
 
     <span class='doccomment'>///The string.</span>
-    <span class='kw'>pub</span> <span class='ident'>string</span>: <span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>str</span><span class='op'>&gt;</span>,
+    <span class='kw'>pub</span> <span class='ident'>string</span>: <span class='ident'>Atom</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>str</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>S</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>StringLiteral</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Atom</span><span class='op'>&gt;&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>S</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>StringLiteral</span> {
     <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>string</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='ident'>StringLiteral</span> {
         <span class='ident'>StringLiteral</span> {
             <span class='ident'>double_quote</span>: <span class='boolval'>false</span>,
@@ -1389,7 +1391,7 @@
 <span class='doccomment'>///A regular expression literal.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RegularExpression</span> {
     <span class='doccomment'>///The expression body (the part between `/.../`).</span>
-    <span class='kw'>pub</span> <span class='ident'>body</span>: <span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>str</span><span class='op'>&gt;</span>,
+    <span class='kw'>pub</span> <span class='ident'>body</span>: <span class='ident'>Atom</span>,
 
     <span class='doccomment'>///The `g` flag.</span>
     <span class='kw'>pub</span> <span class='ident'>global</span>: <span class='ident'>bool</span>,
@@ -1407,7 +1409,7 @@
     <span class='kw'>pub</span> <span class='ident'>sticky</span>: <span class='ident'>bool</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>str</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>S</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RegularExpression</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Atom</span><span class='op'>&gt;&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>S</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>RegularExpression</span> {
     <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>body</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='ident'>RegularExpression</span> {
         <span class='ident'>RegularExpression</span> {
             <span class='ident'>body</span>: <span class='ident'>body</span>.<span class='ident'>into</span>(),
@@ -2205,7 +2207,7 @@
                 <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>f</span>.<span class='ident'>write</span>(<span class='string'>&quot;) &quot;</span>));
                 <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>if_true</span>.<span class='ident'>print_with</span>(<span class='ident'>f</span>));
                 <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>if_false</span>) <span class='op'>=</span> <span class='op'>*</span><span class='ident'>if_false</span> {
-                    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>f</span>.<span class='ident'>write</span>(<span class='string'>&quot; else &quot;</span>));
+                    <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>f</span>.<span class='ident'>write</span>(<span class='string'>&quot;else &quot;</span>));
                     <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>if_false</span>.<span class='ident'>print_with</span>(<span class='ident'>f</span>));
                 }
                 <span class='prelude-val'>Ok</span>(())

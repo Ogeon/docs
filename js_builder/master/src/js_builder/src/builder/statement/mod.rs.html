@@ -509,6 +509,11 @@
 <span id="466">466</span>
 <span id="467">467</span>
 <span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Statement related builders.</span>
 
@@ -783,6 +788,11 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>return_nothing</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span>::<span class='ident'>Next</span> {
         <span class='self'>self</span>.<span class='ident'>return_</span>().<span class='ident'>comma</span>().<span class='ident'>build</span>()
     }
+
+    <span class='doccomment'>///Use a pre-built statement, instead.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>build_stmt</span>(<span class='self'>self</span>, <span class='ident'>stmt</span>: <span class='ident'>ast</span>::<span class='ident'>Statement</span>) <span class='op'>-&gt;</span> <span class='ident'>N</span>::<span class='ident'>Next</span> {
+        <span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>build_with</span>(<span class='ident'>stmt</span>)
+    }
 }
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>N</span>: <span class='ident'>Build</span><span class='op'>&lt;</span><span class='ident'>ast</span>::<span class='ident'>Statement</span><span class='op'>&gt;&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>StatementBuilder</span><span class='op'>&lt;</span><span class='ident'>N</span><span class='op'>&gt;</span> {
@@ -904,7 +914,7 @@
     <span class='doccomment'>///    .compact_print(&amp;mut result);</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>///assert_eq!(</span>
-    <span class='doccomment'>///    &quot;if(a == b) a += b; else a -= b;&quot;,</span>
+    <span class='doccomment'>///    &quot;if(a == b) a += b;else a -= b;&quot;,</span>
     <span class='doccomment'>///    String::from_utf8_lossy(&amp;result)</span>
     <span class='doccomment'>///);</span>
     <span class='doccomment'>///```</span>
@@ -927,7 +937,7 @@
     <span class='doccomment'>///    .compact_print(&amp;mut result);</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>///assert_eq!(</span>
-    <span class='doccomment'>///    &quot;if(a == b) a += b; else if(a &gt; b) a -= b;&quot;,</span>
+    <span class='doccomment'>///    &quot;if(a == b) a += b;else if(a &gt; b) a -= b;&quot;,</span>
     <span class='doccomment'>///    String::from_utf8_lossy(&amp;result)</span>
     <span class='doccomment'>///);</span>
     <span class='doccomment'>///```</span>
