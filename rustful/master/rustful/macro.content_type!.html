@@ -46,7 +46,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-2546' class='srclink' href='../src/rustful/macros.rs.html#226-268' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-2546' class='srclink' href='../src/rustful/src/macros.rs.html#226-268' title='goto source code'>[src]</a></span></h1>
 <pre class='rust macro'>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>content_type</span> {
     (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>:<span class='ident'>tt</span> <span class='op'>/</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>:<span class='ident'>tt</span>) <span class='op'>=&gt;</span> { ... };
@@ -55,6 +55,7 @@
 <div class='docblock'><p>A macro for making content types.</p>
 
 <p>It takes a main type, a sub type and a parameter list. Instead of this:</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>header</span>::<span class='ident'>ContentType</span>;
 <span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>mime</span>::{<span class='ident'>Mime</span>, <span class='ident'>TopLevel</span>, <span class='ident'>SubLevel</span>, <span class='ident'>Attr</span>, <span class='ident'>Value</span>};
@@ -68,6 +69,7 @@
 );</pre>
 
 <p>it can be written like this:</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
@@ -78,12 +80,14 @@
 <p>The <code>Charset = Utf8</code> part defines the parameter list for the content type and
 may contain more than one parameter, or be omitted. Here are some more
 examples showing that and how strings can be used for more exotic values:</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
 <span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>header</span>::<span class='ident'>ContentType</span>;
 
 <span class='ident'>ContentType</span>(<span class='macro'>content_type</span><span class='macro'>!</span>(<span class='ident'>Application</span> <span class='op'>/</span> <span class='string'>&quot;octet-stream&quot;</span>; <span class='string'>&quot;type&quot;</span> <span class='op'>=</span> <span class='string'>&quot;image/gif&quot;</span>; <span class='string'>&quot;padding&quot;</span> <span class='op'>=</span> <span class='string'>&quot;4&quot;</span>));</pre>
+
 <pre class='rust rust-example-rendered'>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
@@ -133,7 +137,7 @@ examples showing that and how strings can be used for more exotic values:</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

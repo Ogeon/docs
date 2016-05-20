@@ -46,7 +46,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1210' class='srclink' href='../../src/rustful/router/mod.rs.html#479-484' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-1210' class='srclink' href='../../src/rustful/src/router/mod.rs.html#479-484' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct RouteState&lt;'a&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>A state object for routing.</p>
@@ -61,9 +61,9 @@
 save it as a new variable.</p>
 </div><h4 id='method.variables' class='method'><code>fn <a href='#method.variables' class='fnname'>variables</a>(&amp;self, names: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='type' href='../../rustful/context/type.MaybeUtf8Owned.html' title='rustful::context::MaybeUtf8Owned'>MaybeUtf8Owned</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/std/collections/hash/map/struct.HashMap.html' title='std::collections::hash::map::HashMap'>HashMap</a>&lt;<a class='type' href='../../rustful/context/type.MaybeUtf8Owned.html' title='rustful::context::MaybeUtf8Owned'>MaybeUtf8Owned</a>, <a class='type' href='../../rustful/context/type.MaybeUtf8Owned.html' title='rustful::context::MaybeUtf8Owned'>MaybeUtf8Owned</a>&gt;</code></h4>
 <div class='docblock'><p>Assign names to the saved variables and return them.</p>
-</div><h4 id='method.snapshot' class='method'><code>fn <a href='#method.snapshot' class='fnname'>snapshot</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</a></code></h4>
+</div><h4 id='method.snapshot' class='method'><code>fn <a href='#method.snapshot' class='fnname'>snapshot</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a></code></h4>
 <div class='docblock'><p>Get a snapshot of a part of the current state.</p>
-</div><h4 id='method.go_to' class='method'><code>fn <a href='#method.go_to' class='fnname'>go_to</a>(&amp;mut self, snapshot: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</a>)</code></h4>
+</div><h4 id='method.go_to' class='method'><code>fn <a href='#method.go_to' class='fnname'>go_to</a>(&amp;mut self, snapshot: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a>)</code></h4>
 <div class='docblock'><p>Go to a previously recorded state.</p>
 </div><h4 id='method.is_empty' class='method'><code>fn <a href='#method.is_empty' class='fnname'>is_empty</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <div class='docblock'><p>Check if there are no more segments.</p>
@@ -111,7 +111,7 @@ save it as a new variable.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

@@ -1,5 +1,5 @@
 (function() {var implementors = {};
-implementors['libc'] = [];implementors['bitflags'] = [];implementors['hyper'] = [];implementors['rustful'] = [];
+implementors['bitflags'] = [];implementors['libc'] = [];implementors['hyper'] = [];implementors['rustful'] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

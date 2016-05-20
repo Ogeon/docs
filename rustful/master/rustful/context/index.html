@@ -46,7 +46,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1328' class='srclink' href='../../src/rustful/context/mod.rs.html#1-228' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-1328' class='srclink' href='../../src/rustful/src/context/mod.rs.html#1-228' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Handler context and request body reading extensions.</p>
 
 <h1 id='context' class='section-header'><a href='#context'>Context</a></h1>
@@ -59,6 +59,7 @@ handler.</p>
 <h2 id='accessing-headers' class='section-header'><a href='#accessing-headers'>Accessing Headers</a></h2>
 <p>The headers are stored in the <code>headers</code> field. See the <a href="../header/struct.Headers.html"><code>Headers</code></a>
 struct for more information about how to access them.</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>rustful</span>::{<span class='ident'>Context</span>, <span class='ident'>Response</span>};
 <span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>header</span>::<span class='ident'>UserAgent</span>;
@@ -75,6 +76,7 @@ struct for more information about how to access them.</p>
 <p>A router may collect variable data from paths (for example <code>id</code> in
 <code>/products/:id</code>). The values from these variables can be accessed through
 the <code>variables</code> field.</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>rustful</span>::{<span class='ident'>Context</span>, <span class='ident'>Response</span>};
 
@@ -104,6 +106,7 @@ things like database connections or cached data that should be available to
 all handlers. The storage space itself is immutable when the server has
 started, so the only way to change it is through some kind of inner
 mutability.</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>log</span>;
 <span class='kw'>use</span> <span class='ident'>rustful</span>::{<span class='ident'>Context</span>, <span class='ident'>Response</span>};
@@ -125,6 +128,7 @@ request. It is instead available as a <code>BodyReader</code> in the field <code
 through which it can be read and parsed as various data formats, like JSON
 and query strings. The documentation for <a href="body/struct.BodyReader.html"><code>BodyReader</code></a> gives
 more examples.</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='ident'>BufReader</span>, <span class='ident'>BufRead</span>};
 <span class='kw'>use</span> <span class='ident'>rustful</span>::{<span class='ident'>Context</span>, <span class='ident'>Response</span>};
@@ -144,7 +148,6 @@ more examples.</p>
                                title='rustful::context::body'>body</a></td>
                         <td class='docblock short'>
                              <p>Anything related to reading the request body.</p>
-
                         </td>
                     </tr>
                 
@@ -153,7 +156,6 @@ more examples.</p>
                                title='rustful::context::hypermedia'>hypermedia</a></td>
                         <td class='docblock short'>
                              <p>Anything related to hypermedia and hyperlinks.</p>
-
                         </td>
                     </tr>
                 </table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
@@ -163,7 +165,6 @@ more examples.</p>
                                title='rustful::context::Buffer'>Buffer</a></td>
                         <td class='docblock short'>
                              <p>A byte buffer for more efficient <code>MaybeUtf8</code> manipulation.</p>
-
                         </td>
                     </tr>
                 
@@ -172,7 +173,6 @@ more examples.</p>
                                title='rustful::context::Context'>Context</a></td>
                         <td class='docblock short'>
                              <p>A container for handler input, like request data and utilities.</p>
-
                         </td>
                     </tr>
                 
@@ -181,7 +181,6 @@ more examples.</p>
                                title='rustful::context::Parameters'>Parameters</a></td>
                         <td class='docblock short'>
                              <p>An extended <code>HashMap</code> with extra functionality for value parsing.</p>
-
                         </td>
                     </tr>
                 </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
@@ -191,7 +190,6 @@ more examples.</p>
                                title='rustful::context::MaybeUtf8'>MaybeUtf8</a></td>
                         <td class='docblock short'>
                              <p>String data that may or may not be UTF-8 encoded.</p>
-
                         </td>
                     </tr>
                 
@@ -200,7 +198,6 @@ more examples.</p>
                                title='rustful::context::Uri'>Uri</a></td>
                         <td class='docblock short'>
                              <p>A URI that can be a path or an asterisk (<code>*</code>).</p>
-
                         </td>
                     </tr>
                 </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
@@ -210,7 +207,6 @@ more examples.</p>
                                title='rustful::context::MaybeUtf8Owned'>MaybeUtf8Owned</a></td>
                         <td class='docblock short'>
                              <p>An owned string that may be UTF-8 encoded.</p>
-
                         </td>
                     </tr>
                 
@@ -219,7 +215,6 @@ more examples.</p>
                                title='rustful::context::MaybeUtf8Slice'>MaybeUtf8Slice</a></td>
                         <td class='docblock short'>
                              <p>A slice of a string that may be UTF-8 encoded.</p>
-
                         </td>
                     </tr>
                 </table></section>
@@ -265,7 +260,7 @@ more examples.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

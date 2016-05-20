@@ -46,7 +46,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-0' class='srclink' href='../src/rustful/lib.rs.html#1-112' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-0' class='srclink' href='../src/rustful/src/lib.rs.html#1-112' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>A light HTTP framework with REST-like features. The main purpose of Rustful
 is to create a simple, modular and non-intrusive foundation for HTTP
 applications. It has a mainly stateless structure, which naturally allows
@@ -54,6 +54,7 @@ it to run both as one single server and as multiple instances in a cluster.</p>
 
 <p>A new server is created using the <a href="server/struct.Server.html"><code>Server</code></a> type, which contains
 all the necessary settings as fields:</p>
+
 <pre class='rust rust-example-rendered'>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
@@ -111,7 +112,6 @@ all the necessary settings as fields:</p>
                                title='rustful::context'>context</a></td>
                         <td class='docblock short'>
                              <p>Handler context and request body reading extensions.</p>
-
                         </td>
                     </tr>
                 
@@ -120,7 +120,6 @@ all the necessary settings as fields:</p>
                                title='rustful::file'>file</a></td>
                         <td class='docblock short'>
                              <p>File related utilities.</p>
-
                         </td>
                     </tr>
                 
@@ -129,7 +128,6 @@ all the necessary settings as fields:</p>
                                title='rustful::filter'>filter</a></td>
                         <td class='docblock short'>
                              <p>Request and context filters.</p>
-
                         </td>
                     </tr>
                 
@@ -138,7 +136,6 @@ all the necessary settings as fields:</p>
                                title='rustful::handler'>handler</a></td>
                         <td class='docblock short'>
                              <p>Request handlers.</p>
-
                         </td>
                     </tr>
                 
@@ -147,7 +144,6 @@ all the necessary settings as fields:</p>
                                title='rustful::header'>header</a></td>
                         <td class='docblock short'>
                              <p>Headers container, and common header fields.</p>
-
                         </td>
                     </tr>
                 
@@ -156,7 +152,6 @@ all the necessary settings as fields:</p>
                                title='rustful::mime'>mime</a></td>
                         <td class='docblock short'>
                              <p>Re-exporting the mime crate, for convenience.</p>
-
                         </td>
                     </tr>
                 
@@ -165,7 +160,6 @@ all the necessary settings as fields:</p>
                                title='rustful::response'>response</a></td>
                         <td class='docblock short'>
                              <p>Response writers.</p>
-
                         </td>
                     </tr>
                 
@@ -174,7 +168,6 @@ all the necessary settings as fields:</p>
                                title='rustful::router'>router</a></td>
                         <td class='docblock short'>
                              <p>Routers stores request handlers, using an HTTP method and a path as keys.</p>
-
                         </td>
                     </tr>
                 
@@ -183,7 +176,6 @@ all the necessary settings as fields:</p>
                                title='rustful::server'>server</a></td>
                         <td class='docblock short'>
                              <p>Server configuration and instance.</p>
-
                         </td>
                     </tr>
                 </table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
@@ -193,7 +185,6 @@ all the necessary settings as fields:</p>
                                title='rustful::content_type!'>content_type!</a></td>
                         <td class='docblock short'>
                              <p>A macro for making content types.</p>
-
                         </td>
                     </tr>
                 
@@ -203,7 +194,6 @@ all the necessary settings as fields:</p>
                         <td class='docblock short'>
                              <p>The <code>insert_routes!</code> macro generates routes from the provided handlers and routing tree and
 adds them to the provided router. The router is then returned.</p>
-
                         </td>
                     </tr>
                 </table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
@@ -213,7 +203,6 @@ adds them to the provided router. The router is then returned.</p>
                                title='rustful::TreeRouter'>TreeRouter</a></td>
                         <td class='docblock short'>
                              <p>A tree shaped router that selects handlers using paths.</p>
-
                         </td>
                     </tr>
                 </table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
@@ -223,7 +212,6 @@ adds them to the provided router. The router is then returned.</p>
                                title='rustful::HttpError'>HttpError</a></td>
                         <td class='docblock short'>
                              <p>A set of errors that can occur parsing HTTP streams.</p>
-
                         </td>
                     </tr>
                 
@@ -232,7 +220,6 @@ adds them to the provided router. The router is then returned.</p>
                                title='rustful::HttpVersion'>HttpVersion</a></td>
                         <td class='docblock short'>
                              <p>Represents a version of the HTTP spec.</p>
-
                         </td>
                     </tr>
                 
@@ -241,7 +228,6 @@ adds them to the provided router. The router is then returned.</p>
                                title='rustful::Method'>Method</a></td>
                         <td class='docblock short'>
                              <p>The Request Method (VERB)</p>
-
                         </td>
                     </tr>
                 
@@ -250,7 +236,6 @@ adds them to the provided router. The router is then returned.</p>
                                title='rustful::StatusCode'>StatusCode</a></td>
                         <td class='docblock short'>
                              <p>An HTTP status code (<code>status-code</code> in RFC 7230 et al.).</p>
-
                         </td>
                     </tr>
                 </table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
@@ -306,7 +291,7 @@ adds them to the provided router. The router is then returned.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

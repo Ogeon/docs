@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/openssl-0.7.8/src/crypto/hmac.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/openssl-0.7.12/src/crypto/hmac.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>hmac.rs.html -- source</title>
@@ -558,7 +558,6 @@
 <span id="515">515</span>
 <span id="516">516</span>
 <span id="517">517</span>
-<span id="518">518</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2013 Jack Lloyd</span>
 <span class='comment'>//</span>
@@ -949,8 +948,7 @@
         <span class='kw'>let</span> <span class='ident'>tests</span>: [(<span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span>); <span class='number'>6</span>] <span class='op'>=</span>
             [(<span class='ident'>repeat</span>(<span class='number'>0xb_u8</span>).<span class='ident'>take</span>(<span class='number'>20</span>).<span class='ident'>collect</span>(), <span class='string'>b&quot;Hi There&quot;</span>.<span class='ident'>to_vec</span>()),
              (<span class='string'>b&quot;Jefe&quot;</span>.<span class='ident'>to_vec</span>(), <span class='string'>b&quot;what do ya want for nothing?&quot;</span>.<span class='ident'>to_vec</span>()),
-             (<span class='ident'>repeat</span>(<span class='number'>0xaa_u8</span>).<span class='ident'>take</span>(<span class='number'>20</span>).<span class='ident'>collect</span>(),
-              <span class='ident'>repeat</span>(<span class='number'>0xdd_u8</span>).<span class='ident'>take</span>(<span class='number'>50</span>).<span class='ident'>collect</span>()),
+             (<span class='ident'>repeat</span>(<span class='number'>0xaa_u8</span>).<span class='ident'>take</span>(<span class='number'>20</span>).<span class='ident'>collect</span>(), <span class='ident'>repeat</span>(<span class='number'>0xdd_u8</span>).<span class='ident'>take</span>(<span class='number'>50</span>).<span class='ident'>collect</span>()),
              (<span class='string'>&quot;0102030405060708090a0b0c0d0e0f10111213141516171819&quot;</span>.<span class='ident'>from_hex</span>().<span class='ident'>unwrap</span>(),
               <span class='ident'>repeat</span>(<span class='number'>0xcd_u8</span>).<span class='ident'>take</span>(<span class='number'>50</span>).<span class='ident'>collect</span>()),
              (<span class='ident'>repeat</span>(<span class='number'>0xaa_u8</span>).<span class='ident'>take</span>(<span class='number'>131</span>).<span class='ident'>collect</span>(),
@@ -1122,7 +1120,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

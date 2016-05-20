@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/regex-0.1.62/src/prog.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/regex-0.1.71/src/prog.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>prog.rs.html -- source</title>
@@ -26,7 +26,7 @@
     
 
     <nav class="sidebar">
-        <a href='../../regex/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='' width='100'></a>
+        <a href='../../regex/index.html'><img src='https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png' alt='logo' width='100'></a>
         
     </nav>
 
@@ -462,6 +462,41 @@
 <span id="419">419</span>
 <span id="420">420</span>
 <span id="421">421</span>
+<span id="422">422</span>
+<span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>HashMap</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>Ordering</span>;
@@ -517,8 +552,26 @@
     <span class='kw'>pub</span> <span class='ident'>is_anchored_start</span>: <span class='ident'>bool</span>,
     <span class='doccomment'>/// Whether the regex must match at the end of the input.</span>
     <span class='kw'>pub</span> <span class='ident'>is_anchored_end</span>: <span class='ident'>bool</span>,
+    <span class='doccomment'>/// Whether this program contains a Unicode word boundary instruction.</span>
+    <span class='kw'>pub</span> <span class='ident'>has_unicode_word_boundary</span>: <span class='ident'>bool</span>,
     <span class='doccomment'>/// A possibly empty machine for very quickly matching prefix literals.</span>
     <span class='kw'>pub</span> <span class='ident'>prefixes</span>: <span class='ident'>LiteralSearcher</span>,
+    <span class='doccomment'>/// A limit on the size of the cache that the DFA is allowed to use while</span>
+    <span class='doccomment'>/// matching.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// The cache limit specifies approximately how much space we&#39;re willing to</span>
+    <span class='doccomment'>/// give to the state cache. Once the state cache exceeds the size, it is</span>
+    <span class='doccomment'>/// wiped and all states must be re-computed.</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Note that this value does not impact correctness. It can be set to 0</span>
+    <span class='doccomment'>/// and the DFA will run just fine. (It will only ever store exactly one</span>
+    <span class='doccomment'>/// state in the cache, and will likely run very slowly, but it will work.)</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// Also note that this limit is *per thread of execution*. That is,</span>
+    <span class='doccomment'>/// if the same regex is used to search text across multiple threads</span>
+    <span class='doccomment'>/// simultaneously, then the DFA cache is not shared. Instead, copies are</span>
+    <span class='doccomment'>/// made.</span>
+    <span class='kw'>pub</span> <span class='ident'>dfa_size_limit</span>: <span class='ident'>usize</span>,
 }
 
 <span class='kw'>impl</span> <span class='ident'>Program</span> {
@@ -531,14 +584,16 @@
             <span class='ident'>captures</span>: <span class='macro'>vec</span><span class='macro'>!</span>[],
             <span class='ident'>capture_name_idx</span>: <span class='ident'>Arc</span>::<span class='ident'>new</span>(<span class='ident'>HashMap</span>::<span class='ident'>new</span>()),
             <span class='ident'>start</span>: <span class='number'>0</span>,
-            <span class='ident'>byte_classes</span>: <span class='macro'>vec</span><span class='macro'>!</span>[],
+            <span class='ident'>byte_classes</span>: <span class='macro'>vec</span><span class='macro'>!</span>[<span class='number'>0</span>; <span class='number'>256</span>],
             <span class='ident'>only_utf8</span>: <span class='boolval'>true</span>,
             <span class='ident'>is_bytes</span>: <span class='boolval'>false</span>,
             <span class='ident'>is_dfa</span>: <span class='boolval'>false</span>,
             <span class='ident'>is_reverse</span>: <span class='boolval'>false</span>,
             <span class='ident'>is_anchored_start</span>: <span class='boolval'>false</span>,
             <span class='ident'>is_anchored_end</span>: <span class='boolval'>false</span>,
+            <span class='ident'>has_unicode_word_boundary</span>: <span class='boolval'>false</span>,
             <span class='ident'>prefixes</span>: <span class='ident'>LiteralSearcher</span>::<span class='ident'>empty</span>(),
+            <span class='ident'>dfa_size_limit</span>: <span class='number'>2</span> <span class='op'>*</span> (<span class='number'>1</span><span class='op'>&lt;&lt;</span><span class='number'>20</span>),
         }
     }
 
@@ -577,7 +632,7 @@
     <span class='doccomment'>/// Returns true if this program uses Byte instructions instead of</span>
     <span class='doccomment'>/// Char/Range instructions.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>uses_bytes</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>is_bytes</span> <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>is_dfa</span> <span class='op'>||</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>only_utf8</span>
+        <span class='self'>self</span>.<span class='ident'>is_bytes</span> <span class='op'>||</span> <span class='self'>self</span>.<span class='ident'>is_dfa</span>
     }
 
     <span class='doccomment'>/// Returns true if this program exclusively matches valid UTF-8 bytes.</span>
@@ -593,7 +648,13 @@
         <span class='comment'>// The only instruction that uses heap space is Ranges (for</span>
         <span class='comment'>// Unicode codepoint programs) to store non-overlapping codepoint</span>
         <span class='comment'>// ranges. To keep this operation constant time, we ignore them.</span>
-        <span class='self'>self</span>.<span class='ident'>len</span>() <span class='op'>*</span> <span class='ident'>mem</span>::<span class='ident'>size_of</span>::<span class='op'>&lt;</span><span class='ident'>Inst</span><span class='op'>&gt;</span>()
+        (<span class='self'>self</span>.<span class='ident'>len</span>() <span class='op'>*</span> <span class='ident'>mem</span>::<span class='ident'>size_of</span>::<span class='op'>&lt;</span><span class='ident'>Inst</span><span class='op'>&gt;</span>())
+        <span class='op'>+</span> (<span class='self'>self</span>.<span class='ident'>matches</span>.<span class='ident'>len</span>() <span class='op'>*</span> <span class='ident'>mem</span>::<span class='ident'>size_of</span>::<span class='op'>&lt;</span><span class='ident'>InstPtr</span><span class='op'>&gt;</span>())
+        <span class='op'>+</span> (<span class='self'>self</span>.<span class='ident'>captures</span>.<span class='ident'>len</span>() <span class='op'>*</span> <span class='ident'>mem</span>::<span class='ident'>size_of</span>::<span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;&gt;</span>())
+        <span class='op'>+</span> (<span class='self'>self</span>.<span class='ident'>capture_name_idx</span>.<span class='ident'>len</span>() <span class='op'>*</span>
+           (<span class='ident'>mem</span>::<span class='ident'>size_of</span>::<span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>() <span class='op'>+</span> <span class='ident'>mem</span>::<span class='ident'>size_of</span>::<span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>()))
+        <span class='op'>+</span> (<span class='self'>self</span>.<span class='ident'>byte_classes</span>.<span class='ident'>len</span>() <span class='op'>*</span> <span class='ident'>mem</span>::<span class='ident'>size_of</span>::<span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span>())
+        <span class='op'>+</span> <span class='self'>self</span>.<span class='ident'>prefixes</span>.<span class='ident'>approximate_size</span>()
     }
 }
 
@@ -728,6 +789,16 @@
     <span class='ident'>Bytes</span>(<span class='ident'>InstBytes</span>),
 }
 
+<span class='kw'>impl</span> <span class='ident'>Inst</span> {
+    <span class='doccomment'>/// Returns true if and only if this is a match instruction.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_match</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+        <span class='kw'>match</span> <span class='op'>*</span><span class='self'>self</span> {
+            <span class='ident'>Inst</span>::<span class='ident'>Match</span>(_) <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
+            _ <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
+        }
+    }
+}
+
 <span class='doccomment'>/// Representation of the Save instruction.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>InstSave</span> {
@@ -832,7 +903,6 @@
 
 <span class='kw'>impl</span> <span class='ident'>InstRanges</span> {
     <span class='doccomment'>/// Tests whether the given input character matches this instruction.</span>
-    <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='comment'>// About ~5-15% more throughput then `#[inline]`</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>matches</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>c</span>: <span class='ident'>Char</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='comment'>// This speeds up the `match_class_unicode` benchmark by checking</span>
         <span class='comment'>// some common cases quickly without binary search. e.g., Matching</span>
@@ -928,7 +998,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

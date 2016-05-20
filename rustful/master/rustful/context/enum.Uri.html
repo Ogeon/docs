@@ -46,7 +46,7 @@
             <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                 [<span class='inner'>&#x2212;</span>]
             </a>
-        </span><a id='src-1890' class='srclink' href='../../src/rustful/context/mod.rs.html#174-179' title='goto source code'>[src]</a></span></h1>
+        </span><a id='src-1890' class='srclink' href='../../src/rustful/src/context/mod.rs.html#174-179' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Uri {
     Path(<a class='type' href='../../rustful/context/type.MaybeUtf8Owned.html' title='rustful::context::MaybeUtf8Owned'>MaybeUtf8Owned</a>),
     Asterisk,
@@ -55,9 +55,9 @@
 <p>The URI may be an invalid UTF-8 path and it is therefore represented as a
 percent decoded byte vector, but can easily be parsed as a string.</p>
 </div><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.Path'><code>Path</code></td><td><div class='docblock'><p>A path URI.</p>
-</div></td></tr><tr><td id='variant.Asterisk'><code>Asterisk</code></td><td><div class='docblock'><p>An asterisk (<code>*</code>) URI.</p>
-</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='enum' href='../../rustful/context/enum.Uri.html' title='rustful::context::Uri'>Uri</a></code></h3><div class='impl-items'><h4 id='method.as_path' class='method'><code>fn <a href='#method.as_path' class='fnname'>as_path</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='type' href='../../rustful/context/type.MaybeUtf8Slice.html' title='rustful::context::MaybeUtf8Slice'>MaybeUtf8Slice</a>&gt;</code></h4>
+<table class='variants_table'><tr><td id='variant.Path'><code>Path</code></td><td><div class='docblock'><p>A path URI.</p>
+</div></td><td></td></tr><tr><td id='variant.Asterisk'><code>Asterisk</code></td><td><div class='docblock'><p>An asterisk (<code>*</code>) URI.</p>
+</div></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='enum' href='../../rustful/context/enum.Uri.html' title='rustful::context::Uri'>Uri</a></code></h3><div class='impl-items'><h4 id='method.as_path' class='method'><code>fn <a href='#method.as_path' class='fnname'>as_path</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='type' href='../../rustful/context/type.MaybeUtf8Slice.html' title='rustful::context::MaybeUtf8Slice'>MaybeUtf8Slice</a>&gt;</code></h4>
 <div class='docblock'><p>Borrow the URI as a raw path.</p>
 </div><h4 id='method.as_utf8_path' class='method'><code>fn <a href='#method.as_utf8_path' class='fnname'>as_utf8_path</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></h4>
 <div class='docblock'><p>Borrow the URI as a UTF-8 path, if valid.</p>
@@ -73,7 +73,7 @@ UTF-8 string.</p>
 <h4 id='method.ne' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../rustful/context/enum.Uri.html' title='rustful::context::Uri'>Uri</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../rustful/context/enum.Uri.html' title='rustful::context::Uri'>Uri</a></code></h3><div class='impl-items'><h4 id='method.fmt-1' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
 </div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../../rustful/context/enum.Uri.html' title='rustful::context::Uri'>Uri</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../../rustful/context/enum.Uri.html' title='rustful::context::Uri'>Uri</a></code></h4>
-<h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+<h4 id='method.clone_from' class='method'><span class="since">1.0.0</span><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
@@ -117,7 +117,7 @@ UTF-8 string.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>
