@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/regex-syntax-0.3.2/src/parser.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/regex-syntax-0.3.3/src/parser.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>parser.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -2760,6 +2761,22 @@
 <span id="2717">2717</span>
 <span id="2718">2718</span>
 <span id="2719">2719</span>
+<span id="2720">2720</span>
+<span id="2721">2721</span>
+<span id="2722">2722</span>
+<span id="2723">2723</span>
+<span id="2724">2724</span>
+<span id="2725">2725</span>
+<span id="2726">2726</span>
+<span id="2727">2727</span>
+<span id="2728">2728</span>
+<span id="2729">2729</span>
+<span id="2730">2730</span>
+<span id="2731">2731</span>
+<span id="2732">2732</span>
+<span id="2733">2733</span>
+<span id="2734">2734</span>
+<span id="2735">2735</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014-2015 The Rust Project Developers. See the COPYRIGHT</span>
 <span class='comment'>// file at the top-level directory of this distribution and at</span>
@@ -3838,6 +3855,8 @@
     <span class='comment'>//     expressions. This concatenation may be empty!</span>
     <span class='comment'>//  2. An alternation is found. Pop the alternation and push</span>
     <span class='comment'>//     a new arm. Return the alternation as the entire Regex.</span>
+    <span class='comment'>//     After this, the stack must be empty, or else there is</span>
+    <span class='comment'>//     an unclosed paren.</span>
     <span class='comment'>//</span>
     <span class='comment'>// If an opening parenthesis is popped, then an error is</span>
     <span class='comment'>// returned since it indicates an unclosed parenthesis.</span>
@@ -3856,7 +3875,16 @@
                         <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='self'>self</span>.<span class='ident'>err</span>(<span class='ident'>ErrorKind</span>::<span class='ident'>EmptyAlternate</span>));
                     }
                     <span class='ident'>es</span>.<span class='ident'>push</span>(<span class='ident'>rev_concat</span>(<span class='ident'>concat</span>));
-                    <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(<span class='ident'>Expr</span>::<span class='ident'>Alternate</span>(<span class='ident'>es</span>));
+                    <span class='comment'>// Make sure there are no opening parens remaining.</span>
+                    <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>stack</span>.<span class='ident'>pop</span>() {
+                        <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(<span class='ident'>Expr</span>::<span class='ident'>Alternate</span>(<span class='ident'>es</span>)),
+                        <span class='prelude-val'>Some</span>(<span class='ident'>Build</span>::<span class='ident'>LeftParen</span>{ <span class='ident'>chari</span>, ..}) <span class='op'>=&gt;</span> {
+                            <span class='comment'>// e.g., (a|b</span>
+                            <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='self'>self</span>.<span class='ident'>errat</span>(
+                                <span class='ident'>chari</span>, <span class='ident'>ErrorKind</span>::<span class='ident'>UnclosedParen</span>));
+                        }
+                        <span class='ident'>e</span> <span class='op'>=&gt;</span> <span class='macro'>unreachable</span><span class='macro'>!</span>(<span class='string'>&quot;{:?}&quot;</span>, <span class='ident'>e</span>),
+                    }
                 }
                 <span class='prelude-val'>Some</span>(<span class='ident'>Build</span>::<span class='ident'>Expr</span>(<span class='ident'>e</span>)) <span class='op'>=&gt;</span> { <span class='ident'>concat</span>.<span class='ident'>push</span>(<span class='ident'>e</span>); }
             }
@@ -5270,6 +5298,11 @@
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>error_close_paren_unopened_with_alt</span>() {
         <span class='macro'>test_err</span><span class='macro'>!</span>(<span class='string'>&quot;a|b)&quot;</span>, <span class='number'>3</span>, <span class='ident'>ErrorKind</span>::<span class='ident'>UnopenedParen</span>);
+    }
+
+    <span class='attribute'>#[<span class='ident'>test</span>]</span>
+    <span class='kw'>fn</span> <span class='ident'>error_close_paren_unclosed_with_alt</span>() {
+        <span class='macro'>test_err</span><span class='macro'>!</span>(<span class='string'>&quot;(a|b&quot;</span>, <span class='number'>0</span>, <span class='ident'>ErrorKind</span>::<span class='ident'>UnclosedParen</span>);
     }
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>

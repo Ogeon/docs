@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,12 +44,12 @@
 
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>router</a>::<wbr><a class='trait' href=''>Router</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-984' class='srclink' href='../../src/rustful/src/router/mod.rs.html#218-248' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-979' class='srclink' href='../../src/rustful/src/router/mod.rs.html#218-248' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Router: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> + 'static {
-    type Handler: <a class='trait' href='../../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a>;
+    type <a href='#associatedtype.Handler' class='type'>Handler</a>: <a class='trait' href='../../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a>;
     fn <a href='#tymethod.build' class='fnname'>build</a>&lt;'a, R: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../rustful/router/struct.InsertState.html' title='rustful::router::InsertState'>InsertState</a>&lt;'a, I&gt;&gt;, I: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/trait.Iterator.html' title='core::iter::Iterator'>Iterator</a>&lt;Item=<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt;&gt;(method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>, route: R, item: Self::<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Handler</a>) -&gt; Self;
     fn <a href='#tymethod.insert' class='fnname'>insert</a>&lt;'a, R: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../rustful/router/struct.InsertState.html' title='rustful::router::InsertState'>InsertState</a>&lt;'a, I&gt;&gt;, I: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/trait.Iterator.html' title='core::iter::Iterator'>Iterator</a>&lt;Item=<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt;&gt;(&amp;mut self, method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>, route: R, item: Self::<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Handler</a>);
     fn <a href='#tymethod.insert_router' class='fnname'>insert_router</a>&lt;'a, R: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../rustful/router/struct.InsertState.html' title='rustful::router::InsertState'>InsertState</a>&lt;'a, I&gt;&gt;, I: <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/trait.Iterator.html' title='core::iter::Iterator'>Iterator</a>&lt;Item=<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt;&gt;(&amp;mut self, route: R, router: Self);
@@ -64,7 +65,7 @@ trait will also make the router compatible with the <code>insert_routes!</code> 
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Handler' class='method stab '><code>type Handler: <a class='trait' href='../../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a></code></h3><div class='docblock'><p>The request handler type that is stored within this router.</p>
+        <h3 id='associatedtype.Handler' class='method stab '><code>type <a href='#associatedtype.Handler' class='type'>Handler</a>: <a class='trait' href='../../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a></code></h3><div class='docblock'><p>The request handler type that is stored within this router.</p>
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
@@ -90,8 +91,8 @@ link. It&#39;s up to the router implementation to decide how deep to go.</p>
 <li><code>impl&lt;H: <a class='trait' href='../../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a>&gt; <a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a> for <a class='struct' href='../../rustful/router/struct.Variables.html' title='rustful::router::Variables'>Variables</a>&lt;H&gt;</code></li>
 <li><code>impl&lt;T: <a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a>&gt; <a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a> for <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;T&gt;</code></li>
 </ul><script type="text/javascript" async
-                              src="../../implementors/rustful/router/trait.Router.js">
-                      </script></section>
+                         src="../../implementors/rustful/router/trait.Router.js">
+                 </script></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
