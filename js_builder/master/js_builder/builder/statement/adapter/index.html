@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    
 
     
     
@@ -43,69 +44,118 @@
 
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Module <a href='../../../index.html'>js_builder</a>::<wbr><a href='../../index.html'>builder</a>::<wbr><a href='../index.html'>statement</a>::<wbr><a class='mod' href=''>adapter</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-967' class='srclink' href='../../../../src/js_builder/src/builder/statement/adapter.rs.html#1-162' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-967' class='srclink' href='../../../../src/js_builder/src/builder/statement/adapter.rs.html#1-324' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Adapters for transitioning between builders.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.ForInLhsAdapter.html'
-                               title='js_builder::builder::statement::adapter::ForInLhsAdapter'>ForInLhsAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter for the left hand side of a <code>for(... in ...)</code> statement.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.ForInRhsAdapter.html'
-                               title='js_builder::builder::statement::adapter::ForInRhsAdapter'>ForInRhsAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter for the right hand side of a <code>for(... in ...)</code> statement.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.ForInStmtAdapter.html'
-                               title='js_builder::builder::statement::adapter::ForInStmtAdapter'>ForInStmtAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter for the loop body of <code>for(... in ...)</code> loops.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.IfAdapter.html'
-                               title='js_builder::builder::statement::adapter::IfAdapter'>IfAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter for the condition expression in an <code>if</code> statement.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.InitAdapter.html'
-                               title='js_builder::builder::statement::adapter::InitAdapter'>InitAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter that holds the name of a variable.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.ReturnAdapter.html'
-                               title='js_builder::builder::statement::adapter::ReturnAdapter'>ReturnAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An expression adapter for <code>return</code> statements.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.ThenAdapter.html'
-                               title='js_builder::builder::statement::adapter::ThenAdapter'>ThenAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter for holding the <code>if</code> condition while the first branch is built.</p>
-                        </td>
-                    </tr>
-                </table></section>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.DoAdapter.html'
+                                  title='js_builder::builder::statement::adapter::DoAdapter'>DoAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>Adapter for receiving the <code>do ...</code> statement in a <code>do ... while(...)</code> loop.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.DoWhileAdapter.html'
+                                  title='js_builder::builder::statement::adapter::DoWhileAdapter'>DoWhileAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>Adapter for receiving the <code>while(...)</code> condition in a <code>do ... while(...)</code> loop.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ForCondAdapter.html'
+                                  title='js_builder::builder::statement::adapter::ForCondAdapter'>ForCondAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>Adapter for receiving the condition expression of a <code>for</code> loop.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ForInLhsAdapter.html'
+                                  title='js_builder::builder::statement::adapter::ForInLhsAdapter'>ForInLhsAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter for the left hand side of a <code>for(... in ...)</code> statement.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ForInRhsAdapter.html'
+                                  title='js_builder::builder::statement::adapter::ForInRhsAdapter'>ForInRhsAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter for the right hand side of a <code>for(... in ...)</code> statement.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ForInStmtAdapter.html'
+                                  title='js_builder::builder::statement::adapter::ForInStmtAdapter'>ForInStmtAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter for the loop body of <code>for(... in ...)</code> loops.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ForIncrAdapter.html'
+                                  title='js_builder::builder::statement::adapter::ForIncrAdapter'>ForIncrAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>Adapter for receiving the incrementation expression of a <code>for</code> loop.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ForInitAdapter.html'
+                                  title='js_builder::builder::statement::adapter::ForInitAdapter'>ForInitAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>Adapter for receiving the initiation statement of a <code>for</code> loop.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ForStmtAdapter.html'
+                                  title='js_builder::builder::statement::adapter::ForStmtAdapter'>ForStmtAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>Adapter for receiving the body statement of a <code>for</code> loop.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.IfAdapter.html'
+                                  title='js_builder::builder::statement::adapter::IfAdapter'>IfAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter for the condition expression in an <code>if</code> statement.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.InitAdapter.html'
+                                  title='js_builder::builder::statement::adapter::InitAdapter'>InitAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter that holds the name of a variable.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ReturnAdapter.html'
+                                  title='js_builder::builder::statement::adapter::ReturnAdapter'>ReturnAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An expression adapter for <code>return</code> statements.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.ThenAdapter.html'
+                                  title='js_builder::builder::statement::adapter::ThenAdapter'>ThenAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter for holding the <code>if</code> condition while the first branch is built.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.WhileAdapter.html'
+                                  title='js_builder::builder::statement::adapter::WhileAdapter'>WhileAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>Adapter for receiving the <code>while(...)</code> condition in a <code>while(...) ...</code> loop.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.WhileDoAdapter.html'
+                                  title='js_builder::builder::statement::adapter::WhileDoAdapter'>WhileDoAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>Adapter for receiving the loop body in a <code>while(...) ...</code> loop.</p>
+                           </td>
+                       </tr></table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,27 +44,27 @@
 
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>js_builder</a>::<wbr><a href='index.html'>ast</a>::<wbr><a class='struct' href=''>PathExpression</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-415' class='srclink' href='../../src/js_builder/src/ast.rs.html#657-663' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-415' class='srclink' href='../../src/js_builder/src/ast.rs.html#657-663' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct PathExpression {
     pub base: <a class='enum' href='../../js_builder/ast/enum.PathBase.html' title='js_builder::ast::PathBase'>PathBase</a>,
     pub access: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../js_builder/ast/enum.Access.html' title='js_builder::ast::Access'>Access</a>&gt;,
 }</pre><div class='docblock'><p>A member access path expression.</p>
 </div><h2 class='fields'>Fields</h2>
 <table><tr class='stab '>
-                                  <td id='structfield.base'><code>base</code></td><td><div class='docblock'><p>The fist part of the path.</p>
+                             <td id='structfield.base'><code>base</code></td><td><div class='docblock'><p>The fist part of the path.</p>
 </div></td></tr><tr class='stab '>
-                                  <td id='structfield.access'><code>access</code></td><td><div class='docblock'><p>The following member access path.</p>
+                             <td id='structfield.access'><code>access</code></td><td><div class='docblock'><p>The following member access path.</p>
 </div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a></code></h3><div class='impl-items'><h4 id='method.build' class='method'><code>fn <a href='#method.build' class='fnname'>build</a>() -&gt; <a class='struct' href='../../js_builder/builder/expression/struct.PathBaseBuilder.html' title='js_builder::builder::expression::PathBaseBuilder'>PathBaseBuilder</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
 <div class='docblock'><p>Build a new path expression.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../js_builder/print/trait.Print.html' title='js_builder::print::Print'>Print</a> for <a class='struct' href='../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a></code></h3><div class='impl-items'><h4 id='method.print_with' class='method'><code>fn <a href='../../js_builder/print/trait.Print.html#method.print_with' class='fnname'>print_with</a>&lt;W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self, f: &amp;mut <a class='struct' href='../../js_builder/print/struct.Formatter.html' title='js_builder::print::Formatter'>Formatter</a>&lt;W&gt;) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='../../js_builder/print/trait.Print.html' title='js_builder::print::Print'>Print</a> for <a class='struct' href='../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a></code></h3><div class='impl-items'><h4 id='method.print_with' class='method'><code>fn <a href='../../js_builder/print/trait.Print.html#tymethod.print_with' class='fnname'>print_with</a>&lt;W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self, f: &amp;mut <a class='struct' href='../../js_builder/print/struct.Formatter.html' title='js_builder::print::Formatter'>Formatter</a>&lt;W&gt;) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
 <h4 id='method.pretty_print' class='method'><code>fn <a href='../../js_builder/print/trait.Print.html#method.pretty_print' class='fnname'>pretty_print</a>&lt;W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self, writer: W) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
 <h4 id='method.compact_print' class='method'><code>fn <a href='../../js_builder/print/trait.Print.html#method.compact_print' class='fnname'>compact_print</a>&lt;W: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;self, writer: W) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></h4>
-</div><h3 class='impl'><code>impl <a class='trait' href='../../js_builder/builder/expression/trait.PathType.html' title='js_builder::builder::expression::PathType'>PathType</a> for <a class='struct' href='../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a></code></h3><div class='impl-items'><h4 id='method.id' class='method'><code>fn <a href='../../js_builder/builder/expression/trait.PathType.html#method.id' class='fnname'>id</a>(&amp;mut self, id: <a class='type' href='../../js_builder/ast/type.Identifier.html' title='js_builder::ast::Identifier'>Identifier</a>)</code></h4>
-<h4 id='method.index' class='method'><code>fn <a href='../../js_builder/builder/expression/trait.PathType.html#method.index' class='fnname'>index</a>(&amp;mut self, exprs: <a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>)</code></h4>
-<h4 id='method.into_call_base' class='method'><code>fn <a href='../../js_builder/builder/expression/trait.PathType.html#method.into_call_base' class='fnname'>into_call_base</a>(self) -&gt; <a class='enum' href='../../js_builder/ast/enum.CallBase.html' title='js_builder::ast::CallBase'>CallBase</a></code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='../../js_builder/builder/expression/trait.PathType.html' title='js_builder::builder::expression::PathType'>PathType</a> for <a class='struct' href='../../js_builder/ast/struct.PathExpression.html' title='js_builder::ast::PathExpression'>PathExpression</a></code></h3><div class='impl-items'><h4 id='method.id' class='method'><code>fn <a href='../../js_builder/builder/expression/trait.PathType.html#tymethod.id' class='fnname'>id</a>(&amp;mut self, id: <a class='type' href='../../js_builder/ast/type.Identifier.html' title='js_builder::ast::Identifier'>Identifier</a>)</code></h4>
+<h4 id='method.index' class='method'><code>fn <a href='../../js_builder/builder/expression/trait.PathType.html#tymethod.index' class='fnname'>index</a>(&amp;mut self, exprs: <a class='struct' href='../../js_builder/ast/struct.Expressions.html' title='js_builder::ast::Expressions'>Expressions</a>)</code></h4>
+<h4 id='method.into_call_base' class='method'><code>fn <a href='../../js_builder/builder/expression/trait.PathType.html#tymethod.into_call_base' class='fnname'>into_call_base</a>(self) -&gt; <a class='enum' href='../../js_builder/ast/enum.CallBase.html' title='js_builder::ast::CallBase'>CallBase</a></code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 

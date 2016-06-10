@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../../main.css">
+    
 
     
     
@@ -43,125 +44,111 @@
 
     <section id='main' class="content mod">
 <h1 class='fqn'><span class='in-band'>Module <a href='../../../index.html'>js_builder</a>::<wbr><a href='../../index.html'>builder</a>::<wbr><a href='../index.html'>expression</a>::<wbr><a class='mod' href=''>adapter</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-1259' class='srclink' href='../../../../src/js_builder/src/builder/expression/adapter.rs.html#1-266' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-1410' class='srclink' href='../../../../src/js_builder/src/builder/expression/adapter.rs.html#1-266' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Adapters for transitioning between builders.</p>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.AssignAdapter.html'
-                               title='js_builder::builder::expression::adapter::AssignAdapter'>AssignAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter that holds the assignment expression type.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.AssignRhsAdapter.html'
-                               title='js_builder::builder::expression::adapter::AssignRhsAdapter'>AssignRhsAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter that holds the type and left hand side of an assignment expression.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.BinaryLhsAdapter.html'
-                               title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter that holds the type of a binary operator.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.CallAdapter.html'
-                               title='js_builder::builder::expression::adapter::CallAdapter'>CallAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter for function call expressions.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.FnAccessAdapter.html'
-                               title='js_builder::builder::expression::adapter::FnAccessAdapter'>FnAccessAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter that receives the path to a function.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.FnExprAdapter.html'
-                               title='js_builder::builder::expression::adapter::FnExprAdapter'>FnExprAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter that holds parts of a function expression.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.FnExprDecl.html'
-                               title='js_builder::builder::expression::adapter::FnExprDecl'>FnExprDecl</a></td>
-                        <td class='docblock short'>
-                             <p>The parts of a function expression.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.GetterAdapter.html'
-                               title='js_builder::builder::expression::adapter::GetterAdapter'>GetterAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter that receives the name of an object field getter.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.GetterBodyAdapter.html'
-                               title='js_builder::builder::expression::adapter::GetterBodyAdapter'>GetterBodyAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter that holds the name of an object field getter.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.PropAssignAdapter.html'
-                               title='js_builder::builder::expression::adapter::PropAssignAdapter'>PropAssignAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter that receives the name of an object field (property).</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.PropInitAdapter.html'
-                               title='js_builder::builder::expression::adapter::PropInitAdapter'>PropInitAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter that holds the name of an object field (property).</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.SetterAdapter.html'
-                               title='js_builder::builder::expression::adapter::SetterAdapter'>SetterAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter that holds the argument, and receives the name of an object field setter.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.SetterBodyAdapter.html'
-                               title='js_builder::builder::expression::adapter::SetterBodyAdapter'>SetterBodyAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter that holds the argument and the name of an object field setter.</p>
-                        </td>
-                    </tr>
-                
-                    <tr class=' module-item'>
-                        <td><a class='struct' href='struct.UnaryAdapter.html'
-                               title='js_builder::builder::expression::adapter::UnaryAdapter'>UnaryAdapter</a></td>
-                        <td class='docblock short'>
-                             <p>An adapter that holds the type of a unary operator.</p>
-                        </td>
-                    </tr>
-                </table></section>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.AssignAdapter.html'
+                                  title='js_builder::builder::expression::adapter::AssignAdapter'>AssignAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter that holds the assignment expression type.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.AssignRhsAdapter.html'
+                                  title='js_builder::builder::expression::adapter::AssignRhsAdapter'>AssignRhsAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter that holds the type and left hand side of an assignment expression.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.BinaryLhsAdapter.html'
+                                  title='js_builder::builder::expression::adapter::BinaryLhsAdapter'>BinaryLhsAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter that holds the type of a binary operator.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.CallAdapter.html'
+                                  title='js_builder::builder::expression::adapter::CallAdapter'>CallAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter for function call expressions.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.FnAccessAdapter.html'
+                                  title='js_builder::builder::expression::adapter::FnAccessAdapter'>FnAccessAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter that receives the path to a function.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.FnExprAdapter.html'
+                                  title='js_builder::builder::expression::adapter::FnExprAdapter'>FnExprAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter that holds parts of a function expression.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.FnExprDecl.html'
+                                  title='js_builder::builder::expression::adapter::FnExprDecl'>FnExprDecl</a></td>
+                           <td class='docblock short'>
+                                <p>The parts of a function expression.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.GetterAdapter.html'
+                                  title='js_builder::builder::expression::adapter::GetterAdapter'>GetterAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter that receives the name of an object field getter.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.GetterBodyAdapter.html'
+                                  title='js_builder::builder::expression::adapter::GetterBodyAdapter'>GetterBodyAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter that holds the name of an object field getter.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.PropAssignAdapter.html'
+                                  title='js_builder::builder::expression::adapter::PropAssignAdapter'>PropAssignAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter that receives the name of an object field (property).</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.PropInitAdapter.html'
+                                  title='js_builder::builder::expression::adapter::PropInitAdapter'>PropInitAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter that holds the name of an object field (property).</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.SetterAdapter.html'
+                                  title='js_builder::builder::expression::adapter::SetterAdapter'>SetterAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter that holds the argument, and receives the name of an object field setter.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.SetterBodyAdapter.html'
+                                  title='js_builder::builder::expression::adapter::SetterBodyAdapter'>SetterBodyAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter that holds the argument and the name of an object field setter.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.UnaryAdapter.html'
+                                  title='js_builder::builder::expression::adapter::UnaryAdapter'>UnaryAdapter</a></td>
+                           <td class='docblock short'>
+                                <p>An adapter that holds the type of a unary operator.</p>
+                           </td>
+                       </tr></table></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

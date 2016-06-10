@@ -1,5 +1,5 @@
 (function() {var implementors = {};
-implementors['string_cache'] = [];
+implementors['void'] = [];implementors['serde'] = [];implementors['string_cache'] = [];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
 
     
     
@@ -43,10 +44,10 @@
 
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>js_builder</a>::<wbr><a href='../index.html'>builder</a>::<wbr><a href='index.html'>statement</a>::<wbr><a class='struct' href=''>VarsBuilder</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-1191' class='srclink' href='../../../src/js_builder/src/builder/statement/mod.rs.html#317' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-1342' class='srclink' href='../../../src/js_builder/src/builder/statement/mod.rs.html#409' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>#[must_use = "builders are sometimes lazy and must be used to produce a result"]
 pub struct VarsBuilder&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.VarDecl.html' title='js_builder::ast::VarDecl'>VarDecl</a>&gt;&gt;&gt;(_, _);</pre><div class='docblock'><p>A builder for variable declaration statements.</p>
 </div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.VarDecl.html' title='js_builder::ast::VarDecl'>VarDecl</a>&gt;&gt;&gt; <a class='struct' href='../../../js_builder/builder/statement/struct.VarsBuilder.html' title='js_builder::builder::statement::VarsBuilder'>VarsBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='method.inited' class='method'><code>fn <a href='#method.inited' class='fnname'>inited</a>&lt;S: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='type' href='../../../js_builder/ast/type.Identifier.html' title='js_builder::ast::Identifier'>Identifier</a>&gt;&gt;(self, id: S) -&gt; <a class='struct' href='../../../js_builder/builder/expression/struct.ExpressionBuilder.html' title='js_builder::builder::expression::ExpressionBuilder'>ExpressionBuilder</a>&lt;<a class='struct' href='../../../js_builder/builder/statement/adapter/struct.InitAdapter.html' title='js_builder::builder::statement::adapter::InitAdapter'>InitAdapter</a>&lt;N&gt;&gt;</code></h4>
@@ -85,7 +86,7 @@ pub struct VarsBuilder&lt;N: <a class='trait' href='../../../js_builder/builder/
 );</pre>
 </div><h4 id='method.build' class='method'><code>fn <a href='#method.build' class='fnname'>build</a>(self) -&gt; N::Next</code></h4>
 <div class='docblock'><p>Finish declaring variables.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.VarDecl.html' title='js_builder::ast::VarDecl'>VarDecl</a>&gt;&gt;&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;N&gt; for <a class='struct' href='../../../js_builder/builder/statement/struct.VarsBuilder.html' title='js_builder::builder::statement::VarsBuilder'>VarsBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#method.from' class='fnname'>from</a>(next: N) -&gt; <a class='struct' href='../../../js_builder/builder/statement/struct.VarsBuilder.html' title='js_builder::builder::statement::VarsBuilder'>VarsBuilder</a>&lt;N&gt;</code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;N: <a class='trait' href='../../../js_builder/builder/trait.Build.html' title='js_builder::builder::Build'>Build</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../../js_builder/ast/struct.VarDecl.html' title='js_builder::ast::VarDecl'>VarDecl</a>&gt;&gt;&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;N&gt; for <a class='struct' href='../../../js_builder/builder/statement/struct.VarsBuilder.html' title='js_builder::builder::statement::VarsBuilder'>VarsBuilder</a>&lt;N&gt;</code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(next: N) -&gt; <a class='struct' href='../../../js_builder/builder/statement/struct.VarsBuilder.html' title='js_builder::builder::statement::VarsBuilder'>VarsBuilder</a>&lt;N&gt;</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>
 
