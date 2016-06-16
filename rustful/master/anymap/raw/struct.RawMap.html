@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-225' class='srclink' href='../../src/anymap/raw.rs.html#63-69' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-239' class='srclink' href='../../src/anymap/raw.rs.html#43-45' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct RawMap&lt;A: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='../../anymap/any/trait.UncheckedAnyExt.html' title='anymap::any::UncheckedAnyExt'>UncheckedAnyExt</a> = <a class='trait' href='../../anymap/any/trait.Any.html' title='anymap::any::Any'>Any</a>&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>The raw, underlying form of a <code>Map</code>.</p>
@@ -88,6 +88,12 @@ and possibly leaving some space in accordance with the resize policy.</p>
 <div class='docblock'><p>An iterator visiting all entries in arbitrary order.</p>
 
 <p>Iterator element type is <code>&amp;mut Any</code>.</p>
+</div><h4 id='method.drain' class='method'><code>fn <a href='#method.drain' class='fnname'>drain</a>(&amp;mut self) -&gt; <a class='struct' href='../../anymap/raw/struct.Drain.html' title='anymap::raw::Drain'>Drain</a>&lt;A&gt;</code></h4>
+<div class='docblock'><p>Clears the map, returning all items as an iterator.</p>
+
+<p>Iterator element type is <code>Box&lt;Any&gt;</code>.</p>
+
+<p>Keeps the allocated memory for reuse.</p>
 </div><h4 id='method.entry' class='method'><code>fn <a href='#method.entry' class='fnname'>entry</a>(&amp;mut self, key: <a class='struct' href='https://doc.rust-lang.org/nightly/core/any/struct.TypeId.html' title='core::any::TypeId'>TypeId</a>) -&gt; <a class='enum' href='../../anymap/raw/enum.Entry.html' title='anymap::raw::Entry'>Entry</a>&lt;A&gt;</code></h4>
 <div class='docblock'><p>Gets the entry for the given type in the collection for in-place manipulation.</p>
 </div><h4 id='method.get' class='method'><code>fn <a href='#method.get' class='fnname'>get</a>&lt;Q: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt;(&amp;self, k: &amp;Q) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;A&gt; <span class='where'>where <a class='struct' href='https://doc.rust-lang.org/nightly/core/any/struct.TypeId.html' title='core::any::TypeId'>TypeId</a>: <a class='trait' href='https://doc.rust-lang.org/nightly/core/borrow/trait.Borrow.html' title='core::borrow::Borrow'>Borrow</a>&lt;Q&gt;, Q: <a class='trait' href='https://doc.rust-lang.org/nightly/core/hash/trait.Hash.html' title='core::hash::Hash'>Hash</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a></span></code></h4>

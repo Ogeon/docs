@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/hyper-0.8.1/src/header/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/hyper-0.9.8/src/header/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
@@ -984,7 +984,7 @@
 
 <span class='doccomment'>/// A trait for any object that will represent a header field and value.</span>
 <span class='doccomment'>///</span>
-<span class='doccomment'>/// This trait represents the formatting of a Header for output to a TcpStream.</span>
+<span class='doccomment'>/// This trait represents the formatting of a `Header` for output to a TcpStream.</span>
 <span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>HeaderFormat</span>: <span class='ident'>fmt</span>::<span class='ident'>Debug</span> <span class='op'>+</span> <span class='ident'>HeaderClone</span> <span class='op'>+</span> <span class='ident'>Any</span> <span class='op'>+</span> <span class='ident'>Typeable</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> {
     <span class='doccomment'>/// Format a header to be output into a TcpStream.</span>
     <span class='doccomment'>///</span>
@@ -1313,7 +1313,7 @@
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// This can be used like so: `format!(&quot;{}&quot;, HeaderFormatter(&amp;header))` to</span>
 <span class='doccomment'>/// get the representation of a Header which will be written to an</span>
-<span class='doccomment'>/// outgoing TcpStream.</span>
+<span class='doccomment'>/// outgoing `TcpStream`.</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>HeaderFormatter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>H</span>: <span class='ident'>HeaderFormat</span><span class='op'>&gt;</span>(<span class='kw'>pub</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>H</span>);
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>H</span>: <span class='ident'>HeaderFormat</span><span class='op'>&gt;</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>HeaderFormatter</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>H</span><span class='op'>&gt;</span> {
