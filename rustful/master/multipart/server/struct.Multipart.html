@@ -86,6 +86,22 @@ directory under <code>dir</code>. </p>
 
 <p>If there is an error in reading the request, returns the partial result along with the
 error. See <a href="enum.saveresult.html"><code>SaveResult</code></a> for more information.</p>
+</div><h4 id='method.save_all_limited' class='method'><code>fn <a href='#method.save_all_limited' class='fnname'>save_all_limited</a>(&amp;mut self, limit: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; <a class='enum' href='../../multipart/server/enum.SaveResult.html' title='multipart::server::SaveResult'>SaveResult</a></code></h4>
+<div class='docblock'><p>Read the request fully, parsing all fields and saving all fields in a new temporary
+directory under the OS temporary directory.</p>
+
+<p>Files larger than <code>limit</code> will be truncated to <code>limit</code>.</p>
+
+<p>If there is an error in reading the request, returns the partial result along with the
+error. See <a href="enum.saveresult.html"><code>SaveResult</code></a> for more information.</p>
+</div><h4 id='method.save_all_under_limited' class='method'><code>fn <a href='#method.save_all_under_limited' class='fnname'>save_all_under_limited</a>&lt;P: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(&amp;mut self, dir: P, limit: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; <a class='enum' href='../../multipart/server/enum.SaveResult.html' title='multipart::server::SaveResult'>SaveResult</a></code></h4>
+<div class='docblock'><p>Read the request fully, parsing all fields and saving all files in a new temporary
+directory under <code>dir</code>. </p>
+
+<p>Files larger than <code>limit</code> will be truncated to <code>limit</code>.</p>
+
+<p>If there is an error in reading the request, returns the partial result along with the
+error. See <a href="enum.saveresult.html"><code>SaveResult</code></a> for more information.</p>
 </div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;B&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/borrow/trait.Borrow.html' title='core::borrow::Borrow'>Borrow</a>&lt;B&gt; for <a class='struct' href='../../multipart/server/struct.Multipart.html' title='multipart::server::Multipart'>Multipart</a>&lt;B&gt;</code></h3><div class='impl-items'><h4 id='method.borrow' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/borrow/trait.Borrow.html#tymethod.borrow' class='fnname'>borrow</a>(&amp;self) -&gt; &amp;B</code></h4>
 </div></section>
     <section id='search' class="content hidden"></section>

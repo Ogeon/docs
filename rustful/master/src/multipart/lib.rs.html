@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/multipart-0.5.1/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/multipart-0.7.0/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -137,6 +137,10 @@
 <span id="93">93</span>
 <span id="94">94</span>
 <span id="95">95</span>
+<span id="96">96</span>
+<span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2016 `multipart` Crate Developers</span>
 <span class='comment'>//</span>
@@ -154,7 +158,7 @@
 <span class='doccomment'>//! * `server` (default): Enable the server-side abstractions for multipart requests. If the</span>
 <span class='doccomment'>//! `hyper` feature is also set, enables integration with the Hyper HTTP server API.</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//! * `hyper` (default): Enable integration with the [Hyper](https:://github.com/hyperium/hyper) HTTP library </span>
+<span class='doccomment'>//! * `hyper` (default): Enable integration with the [Hyper](https://github.com/hyperium/hyper) HTTP library </span>
 <span class='doccomment'>//! for client and/or server depending on which other feature flags are set.</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! * `iron`: Enable integration with the [Iron](http://ironframework.io) web application</span>
@@ -162,6 +166,10 @@
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//! * `tiny_http`: Enable integration with the [`tiny_http`](https://github.com/frewsxcv/tiny-http)</span>
 <span class='doccomment'>//! crate. See the [`server::tiny_http`](server/tiny_http/index.html) module for more information.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! * `nickel_`: Enable integration with the [Nickel](http://nickel.rs) web application framework.</span>
+<span class='doccomment'>//! See the [`server::nickel`](server/nickel/index.html) module for more information. Enables the `hyper`</span>
+<span class='doccomment'>//! feature.</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>warn</span>(<span class='ident'>missing_docs</span>)]</span>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>log</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>env_logger</span>;
