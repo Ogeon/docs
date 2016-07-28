@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-549' class='srclink' href='../../src/multipart/server/mod.rs.html#662-668' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-548' class='srclink' href='../../src/multipart/server/mod.rs.html#662-668' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum SaveDir {
     Temp(<a class='struct' href='../../tempdir/struct.TempDir.html' title='tempdir::TempDir'>TempDir</a>),
     Perm(<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html' title='std::path::PathBuf'>PathBuf</a>),
@@ -56,7 +56,8 @@
 <table class='variants_table'><tr><td id='variant.Temp'><code>Temp</code></td><td><div class='docblock'><p>This directory is temporary and will be deleted, along with its contents, when this wrapper
 is dropped.</p>
 </div></td><td></td></tr><tr><td id='variant.Perm'><code>Perm</code></td><td><div class='docblock'><p>This directory is permanent and will be left on the filesystem when this wrapper is dropped.</p>
-</div></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='enum' href='../../multipart/server/enum.SaveDir.html' title='multipart::server::SaveDir'>SaveDir</a></code></h3><div class='impl-items'><h4 id='method.as_path' class='method'><code>fn <a href='#method.as_path' class='fnname'>as_path</a>(&amp;self) -&gt; &amp;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a></code></h4>
+</div></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='enum' href='../../multipart/server/enum.SaveDir.html' title='multipart::server::SaveDir'>SaveDir</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-553' class='srclink' href='../../src/multipart/server/mod.rs.html#670-733' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.as_path' class='method'><code>fn <a href='#method.as_path' class='fnname'>as_path</a>(&amp;self) -&gt; &amp;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a></code></h4>
 <div class='docblock'><p>Get the path of this directory, either temporary or permanent.</p>
 </div><h4 id='method.is_temporary' class='method'><code>fn <a href='#method.is_temporary' class='fnname'>is_temporary</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <div class='docblock'><p>Returns <code>true</code> if this is a temporary directory which will be deleted on-drop.</p>
@@ -83,9 +84,13 @@ permanent folder on the filesystem.</p>
 <p>Files deleted programmatically are deleted directly from disk, as compared to most file
 manager applications which use a staging area from which deleted files can be safely
 recovered (i.e. Windows&#39; Recycle Bin, OS X&#39;s Trash Can, etc.).</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt; for <a class='enum' href='../../multipart/server/enum.SaveDir.html' title='multipart::server::SaveDir'>SaveDir</a></code></h3><div class='impl-items'><h4 id='method.as_ref' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref' class='fnname'>as_ref</a>(&amp;self) -&gt; &amp;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a></code></h4>
-</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../multipart/server/enum.SaveDir.html' title='multipart::server::SaveDir'>SaveDir</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
-</div></section>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt; for <a class='enum' href='../../multipart/server/enum.SaveDir.html' title='multipart::server::SaveDir'>SaveDir</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-577' class='srclink' href='../../src/multipart/server/mod.rs.html#735-739' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.as_ref' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html#tymethod.as_ref' class='fnname'>as_ref</a>(&amp;self) -&gt; &amp;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a></code></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../multipart/server/enum.SaveDir.html' title='multipart::server::SaveDir'>SaveDir</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-580' class='srclink' href='../../src/multipart/server/mod.rs.html#743-752' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, f: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -108,6 +113,8 @@ recovered (i.e. Windows&#39; Recycle Bin, OS X&#39;s Trash Can, etc.).</p>
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

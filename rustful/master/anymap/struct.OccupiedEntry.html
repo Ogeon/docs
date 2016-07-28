@@ -51,7 +51,8 @@
 <pre class='rust struct'>pub struct OccupiedEntry&lt;'a, A: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='../anymap/any/trait.UncheckedAnyExt.html' title='anymap::any::UncheckedAnyExt'>UncheckedAnyExt</a>, V: 'a&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>A view into a single occupied location in an <code>Map</code>.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a, A: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='../anymap/any/trait.UncheckedAnyExt.html' title='anymap::any::UncheckedAnyExt'>UncheckedAnyExt</a>, V: IntoBox&lt;A&gt;&gt; <a class='struct' href='../anymap/struct.OccupiedEntry.html' title='anymap::OccupiedEntry'>OccupiedEntry</a>&lt;'a, A, V&gt;</code></h3><div class='impl-items'><h4 id='method.get' class='method'><code>fn <a href='#method.get' class='fnname'>get</a>(&amp;self) -&gt; &amp;V</code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, A: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='../anymap/any/trait.UncheckedAnyExt.html' title='anymap::any::UncheckedAnyExt'>UncheckedAnyExt</a>, V: IntoBox&lt;A&gt;&gt; <a class='struct' href='../anymap/struct.OccupiedEntry.html' title='anymap::OccupiedEntry'>OccupiedEntry</a>&lt;'a, A, V&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-571' class='srclink' href='../src/anymap/lib.rs.html#256-282' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.get' class='method'><code>fn <a href='#method.get' class='fnname'>get</a>(&amp;self) -&gt; &amp;V</code></h4>
 <div class='docblock'><p>Gets a reference to the value in the entry</p>
 </div><h4 id='method.get_mut' class='method'><code>fn <a href='#method.get_mut' class='fnname'>get_mut</a>(&amp;mut self) -&gt; &amp;mut V</code></h4>
 <div class='docblock'><p>Gets a mutable reference to the value in the entry</p>
@@ -85,6 +86,8 @@ with a lifetime bound to the collection itself</p>
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

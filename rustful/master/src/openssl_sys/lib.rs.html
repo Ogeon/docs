@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/openssl-sys-0.7.13/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/openssl-sys-0.7.14/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -892,10 +892,12 @@
 <span id="848">848</span>
 <span id="849">849</span>
 <span id="850">850</span>
+<span id="851">851</span>
+<span id="852">852</span>
 </pre><pre class='rust '>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>non_camel_case_types</span>, <span class='ident'>non_upper_case_globals</span>, <span class='ident'>non_snake_case</span>)]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>allow</span>(<span class='ident'>dead_code</span>)]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_root_url</span><span class='op'>=</span><span class='string'>&quot;https://sfackler.github.io/rust-openssl/doc/v0.7.13&quot;</span>)]</span>
+<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_root_url</span><span class='op'>=</span><span class='string'>&quot;https://sfackler.github.io/rust-openssl/doc/v0.7.14&quot;</span>)]</span>
 
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>libc</span>;
 
@@ -1165,8 +1167,10 @@
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SSL_CTRL_SET_TLSEXT_SERVERNAME_ARG</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>54</span>;
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SSL_CTRL_SET_TLSEXT_HOSTNAME</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>55</span>;
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SSL_CTRL_EXTRA_CHAIN_CERT</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>14</span>;
-
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SSL_CTRL_SET_READ_AHEAD</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>41</span>;
+
+<span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SSL_MODE_AUTO_RETRY</span>: <span class='ident'>c_long</span> <span class='op'>=</span> <span class='number'>4</span>;
+
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SSL_ERROR_NONE</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>0</span>;
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SSL_ERROR_SSL</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>1</span>;
 <span class='kw'>pub</span> <span class='kw'>const</span> <span class='ident'>SSL_ERROR_SYSCALL</span>: <span class='ident'>c_int</span> <span class='op'>=</span> <span class='number'>5</span>;
@@ -1767,6 +1771,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

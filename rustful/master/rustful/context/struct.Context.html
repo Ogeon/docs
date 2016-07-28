@@ -47,13 +47,13 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1866' class='srclink' href='../../src/rustful/src/context/mod.rs.html#134-167' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct Context&lt;'a, 'b, 's&gt; {
+               </span><a id='src-1842' class='srclink' href='../../src/rustful/src/context/mod.rs.html#134-167' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Context&lt;'a, 'b: 'a, 's&gt; {
     pub headers: <a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a>,
     pub http_version: <a class='enum' href='../../rustful/enum.HttpVersion.html' title='rustful::HttpVersion'>HttpVersion</a>,
     pub address: <a class='enum' href='https://doc.rust-lang.org/nightly/std/net/addr/enum.SocketAddr.html' title='std::net::addr::SocketAddr'>SocketAddr</a>,
     pub method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>,
-    pub uri: <a class='enum' href='../../rustful/context/enum.Uri.html' title='rustful::context::Uri'>Uri</a>,
+    pub uri_path: <a class='enum' href='../../rustful/context/enum.UriPath.html' title='rustful::context::UriPath'>UriPath</a>,
     pub hyperlinks: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../rustful/context/hypermedia/struct.Link.html' title='rustful::context::hypermedia::Link'>Link</a>&lt;'s&gt;&gt;,
     pub variables: <a class='struct' href='../../rustful/context/struct.Parameters.html' title='rustful::context::Parameters'>Parameters</a>,
     pub query: <a class='struct' href='../../rustful/context/struct.Parameters.html' title='rustful::context::Parameters'>Parameters</a>,
@@ -71,7 +71,7 @@
 </div></td></tr><tr class='stab '>
                              <td id='structfield.method'><code>method</code></td><td><div class='docblock'><p>The HTTP method.</p>
 </div></td></tr><tr class='stab '>
-                             <td id='structfield.uri'><code>uri</code></td><td><div class='docblock'><p>The requested URI.</p>
+                             <td id='structfield.uri_path'><code>uri_path</code></td><td><div class='docblock'><p>The requested path.</p>
 </div></td></tr><tr class='stab '>
                              <td id='structfield.hyperlinks'><code>hyperlinks</code></td><td><div class='docblock'><p>Hyperlinks from the current endpoint.</p>
 </div></td></tr><tr class='stab '>
@@ -107,6 +107,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

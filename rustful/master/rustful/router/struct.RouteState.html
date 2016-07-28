@@ -47,11 +47,12 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1206' class='srclink' href='../../src/rustful/src/router/mod.rs.html#479-484' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-1186' class='srclink' href='../../src/rustful/src/router/mod.rs.html#479-484' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct RouteState&lt;'a&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>A state object for routing.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;'a&gt; <a class='struct' href='../../rustful/router/struct.RouteState.html' title='rustful::router::RouteState'>RouteState</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.get' class='method'><code>fn <a href='#method.get' class='fnname'>get</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt;</code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../../rustful/router/struct.RouteState.html' title='rustful::router::RouteState'>RouteState</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1192' class='srclink' href='../../src/rustful/src/router/mod.rs.html#486-548' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.get' class='method'><code>fn <a href='#method.get' class='fnname'>get</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt;</code></h4>
 <div class='docblock'><p>Get the current path segment.</p>
 </div><h4 id='method.skip' class='method'><code>fn <a href='#method.skip' class='fnname'>skip</a>(&amp;mut self)</code></h4>
 <div class='docblock'><p>Don&#39;t include this path segment in a variable.</p>
@@ -68,8 +69,10 @@ save it as a new variable.</p>
 <div class='docblock'><p>Go to a previously recorded state.</p>
 </div><h4 id='method.is_empty' class='method'><code>fn <a href='#method.is_empty' class='fnname'>is_empty</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <div class='docblock'><p>Check if there are no more segments.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a, R: <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; + ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;&amp;'a R&gt; for <a class='struct' href='../../rustful/router/struct.RouteState.html' title='rustful::router::RouteState'>RouteState</a>&lt;'a&gt;</code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(route: &amp;'a R) -&gt; <a class='struct' href='../../rustful/router/struct.RouteState.html' title='rustful::router::RouteState'>RouteState</a>&lt;'a&gt;</code></h4>
-</div></section>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, R: <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; + ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;&amp;'a R&gt; for <a class='struct' href='../../rustful/router/struct.RouteState.html' title='rustful::router::RouteState'>RouteState</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1230' class='srclink' href='../../src/rustful/src/router/mod.rs.html#550-560' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(route: &amp;'a R) -&gt; <a class='struct' href='../../rustful/router/struct.RouteState.html' title='rustful::router::RouteState'>RouteState</a>&lt;'a&gt;</code></h4>
+<div class='docblock'><p>Performs the conversion.</p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -92,6 +95,8 @@ save it as a new variable.</p>
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

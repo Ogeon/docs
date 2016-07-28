@@ -463,7 +463,7 @@
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>insert_routes</span> {
     (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>router</span>:<span class='ident'>expr</span> <span class='op'>=&gt;</span> {$(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>paths</span>:<span class='ident'>tt</span>)<span class='op'>+</span>}) <span class='op'>=&gt;</span> {
         {
-            <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>router</span>::<span class='ident'>Router</span>;
+            <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>router</span>::<span class='ident'>Router</span>;
             <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>router</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>router</span>;
             <span class='macro'>__rustful_insert_internal</span><span class='macro'>!</span>(<span class='ident'>router</span>, [], $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>paths</span>)<span class='op'>+</span>);
             <span class='ident'>router</span>
@@ -491,7 +491,7 @@
         {
             <span class='kw'>let</span> <span class='ident'>method</span> <span class='op'>=</span> {
                 <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>Method</span>::<span class='op'>*</span>;
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>Method</span>::<span class='op'>*</span>;
                 <span class='macro'>__rustful_to_path</span><span class='macro'>!</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>method</span>)::<span class='op'>+</span>)
             };
             <span class='kw'>let</span> <span class='ident'>path</span> <span class='op'>=</span> <span class='macro'>__rustful_route_expr</span><span class='macro'>!</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>steps</span>),<span class='op'>*</span>);
@@ -503,7 +503,7 @@
         {
             <span class='kw'>let</span> <span class='ident'>method</span> <span class='op'>=</span> {
                 <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>Method</span>::<span class='op'>*</span>;
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>Method</span>::<span class='op'>*</span>;
                 <span class='macro'>__rustful_to_path</span><span class='macro'>!</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>method</span>)::<span class='op'>+</span>)
             };
             <span class='kw'>let</span> <span class='ident'>path</span> <span class='op'>=</span> <span class='macro'>__rustful_route_expr</span><span class='macro'>!</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>steps</span>,)<span class='op'>*</span> <span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>path</span>));
@@ -515,7 +515,7 @@
         {
             <span class='kw'>let</span> <span class='ident'>method</span> <span class='op'>=</span> {
                 <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>Method</span>::<span class='op'>*</span>;
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>Method</span>::<span class='op'>*</span>;
                 <span class='macro'>__rustful_to_path</span><span class='macro'>!</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>method</span>)::<span class='op'>+</span>)
             };
             <span class='kw'>let</span> <span class='ident'>path</span> <span class='op'>=</span> <span class='macro'>__rustful_route_expr</span><span class='macro'>!</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>steps</span>),<span class='op'>*</span>);
@@ -526,7 +526,7 @@
         {
             <span class='kw'>let</span> <span class='ident'>method</span> <span class='op'>=</span> {
                 <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>Method</span>::<span class='op'>*</span>;
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>Method</span>::<span class='op'>*</span>;
                 <span class='macro'>__rustful_to_path</span><span class='macro'>!</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>method</span>)::<span class='op'>+</span>)
             };
             <span class='kw'>let</span> <span class='ident'>path</span> <span class='op'>=</span> <span class='macro'>__rustful_route_expr</span><span class='macro'>!</span>($(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>steps</span>,)<span class='op'>*</span> <span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>path</span>));
@@ -599,16 +599,16 @@ ContentType(content_type!(Image / Png));
 <span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>content_type</span> {
     (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>:<span class='ident'>tt</span> <span class='op'>/</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>:<span class='ident'>tt</span>) <span class='op'>=&gt;</span> ({
-        <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>macros</span>::<span class='ident'>MimeHelper</span>;
-        <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>Mime</span> (
+        <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>macros</span>::<span class='ident'>MimeHelper</span>;
+        <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>mime</span>::<span class='ident'>Mime</span> (
             {
                 <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>TopLevel</span>::<span class='op'>*</span>;
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>mime</span>::<span class='ident'>TopLevel</span>::<span class='op'>*</span>;
                 <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>)).<span class='ident'>convert</span>()
             },
             {
                 <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>SubLevel</span>::<span class='op'>*</span>;
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>mime</span>::<span class='ident'>SubLevel</span>::<span class='op'>*</span>;
                 <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>)).<span class='ident'>convert</span>()
             },
             <span class='ident'>Vec</span>::<span class='ident'>new</span>()
@@ -616,25 +616,25 @@ ContentType(content_type!(Image / Png));
     });
 
     (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>:<span class='ident'>tt</span> <span class='op'>/</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>:<span class='ident'>tt</span>; $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>:<span class='ident'>tt</span> <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>:<span class='ident'>tt</span>);<span class='op'>+</span>) <span class='op'>=&gt;</span> ({
-        <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>macros</span>::<span class='ident'>MimeHelper</span>;
-        <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>Mime</span> (
+        <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>macros</span>::<span class='ident'>MimeHelper</span>;
+        <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>mime</span>::<span class='ident'>Mime</span> (
             {
                 <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>TopLevel</span>::<span class='op'>*</span>;
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>mime</span>::<span class='ident'>TopLevel</span>::<span class='op'>*</span>;
                 <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>main_type</span>)).<span class='ident'>convert</span>()
             },
             {
                 <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>SubLevel</span>::<span class='op'>*</span>;
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>mime</span>::<span class='ident'>SubLevel</span>::<span class='op'>*</span>;
                 <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>sub_type</span>)).<span class='ident'>convert</span>()
             },
             <span class='macro'>vec</span><span class='macro'>!</span>[ $( ({
                 <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>Attr</span>::<span class='op'>*</span>;
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>mime</span>::<span class='ident'>Attr</span>::<span class='op'>*</span>;
                 <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>)).<span class='ident'>convert</span>()
             }, {
                 <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>unused_imports</span>)]</span>
-                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>mime</span>::<span class='ident'>Value</span>::<span class='op'>*</span>;
+                <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>mime</span>::<span class='ident'>Value</span>::<span class='op'>*</span>;
                 <span class='ident'>MimeHelper</span>::<span class='ident'>from</span>(<span class='macro'>__rustful_to_expr</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>value</span>)).<span class='ident'>convert</span>()
             })),<span class='op'>+</span> ]
         )
@@ -725,6 +725,8 @@ ContentType(content_type!(Image / Png));
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

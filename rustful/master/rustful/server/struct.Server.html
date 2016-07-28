@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-611' class='srclink' href='../../src/rustful/src/server/mod.rs.html#43-83' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-607' class='srclink' href='../../src/rustful/src/server/mod.rs.html#43-83' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Server&lt;R: <a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a>&gt; {
     pub handlers: R,
     pub fallback_handler: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;R::Handler&gt;,
@@ -103,7 +103,8 @@ will force connections to close after each request. Default is <code>None</code>
                              <td id='structfield.context_filters'><code>context_filters</code></td><td><div class='docblock'><p>The context filter stack.</p>
 </div></td></tr><tr class='stab '>
                              <td id='structfield.response_filters'><code>response_filters</code></td><td><div class='docblock'><p>The response filter stack.</p>
-</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;R: <a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a>&gt; <a class='struct' href='../../rustful/server/struct.Server.html' title='rustful::server::Server'>Server</a>&lt;R&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(handlers: R) -&gt; <a class='struct' href='../../rustful/server/struct.Server.html' title='rustful::server::Server'>Server</a>&lt;R&gt;</code></h4>
+</div></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;R: <a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a>&gt; <a class='struct' href='../../rustful/server/struct.Server.html' title='rustful::server::Server'>Server</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-620' class='srclink' href='../../src/rustful/src/server/mod.rs.html#85-131' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(handlers: R) -&gt; <a class='struct' href='../../rustful/server/struct.Server.html' title='rustful::server::Server'>Server</a>&lt;R&gt;</code></h4>
 <div class='docblock'><p>Set up a new standard server. This can be useful when <code>handlers</code>
 doesn&#39;t implement <code>Default</code>:</p>
 
@@ -120,8 +121,10 @@ doesn&#39;t implement <code>Default</code>:</p>
 <div class='docblock'><p>Start the server.</p>
 </div><h4 id='method.build' class='method'><code>fn <a href='#method.build' class='fnname'>build</a>(self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='struct' href='../../rustful/server/struct.ServerInstance.html' title='rustful::server::ServerInstance'>ServerInstance</a>&lt;R&gt;, <a class='enum' href='../../rustful/server/enum.Scheme.html' title='rustful::server::Scheme'>Scheme</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a></code></h4>
 <div class='docblock'><p>Build a runnable instance of the server.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;R: <a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../rustful/server/struct.Server.html' title='rustful::server::Server'>Server</a>&lt;R&gt;</code></h3><div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../../rustful/server/struct.Server.html' title='rustful::server::Server'>Server</a>&lt;R&gt;</code></h4>
-</div></section>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;R: <a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../rustful/server/struct.Server.html' title='rustful::server::Server'>Server</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-630' class='srclink' href='../../src/rustful/src/server/mod.rs.html#133-137' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../../rustful/server/struct.Server.html' title='rustful::server::Server'>Server</a>&lt;R&gt;</code></h4>
+<div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -144,6 +147,8 @@ doesn&#39;t implement <code>Default</code>:</p>
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
