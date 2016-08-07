@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/html5ever-0.5.4/src/serialize/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/html5ever-0.5.4/src/serialize/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
 
     
     
@@ -323,7 +324,7 @@
 <span class='kw'>impl</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>SerializeOpts</span> {
     <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>SerializeOpts</span> {
         <span class='ident'>SerializeOpts</span> {
-            <span class='ident'>scripting_enabled</span>: <span class='boolval'>true</span>,
+            <span class='ident'>scripting_enabled</span>: <span class='boolvalue'>true</span>,
             <span class='ident'>traversal_scope</span>: <span class='ident'>TraversalScope</span>::<span class='ident'>ChildrenOnly</span>,
         }
     }
@@ -362,8 +363,8 @@
             <span class='ident'>opts</span>: <span class='ident'>opts</span>,
             <span class='ident'>stack</span>: <span class='macro'>vec</span><span class='macro'>!</span>(<span class='ident'>ElemInfo</span> {
                 <span class='ident'>html_name</span>: <span class='prelude-val'>None</span>,
-                <span class='ident'>ignore_children</span>: <span class='boolval'>false</span>,
-                <span class='ident'>processed_first_child</span>: <span class='boolval'>false</span>,
+                <span class='ident'>ignore_children</span>: <span class='boolvalue'>false</span>,
+                <span class='ident'>processed_first_child</span>: <span class='boolvalue'>false</span>,
             }),
         }
     }
@@ -399,8 +400,8 @@
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>parent</span>().<span class='ident'>ignore_children</span> {
             <span class='self'>self</span>.<span class='ident'>stack</span>.<span class='ident'>push</span>(<span class='ident'>ElemInfo</span> {
                 <span class='ident'>html_name</span>: <span class='ident'>html_name</span>,
-                <span class='ident'>ignore_children</span>: <span class='boolval'>true</span>,
-                <span class='ident'>processed_first_child</span>: <span class='boolval'>false</span>,
+                <span class='ident'>ignore_children</span>: <span class='boolvalue'>true</span>,
+                <span class='ident'>processed_first_child</span>: <span class='boolvalue'>false</span>,
             });
             <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(());
         }
@@ -428,7 +429,7 @@
 
             <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>write_all</span>(<span class='ident'>name</span>.<span class='ident'>local</span>.<span class='ident'>as_bytes</span>()));
             <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>write_all</span>(<span class='string'>b&quot;=\&quot;&quot;</span>));
-            <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>write_escaped</span>(<span class='ident'>value</span>, <span class='boolval'>true</span>));
+            <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>write_escaped</span>(<span class='ident'>value</span>, <span class='boolvalue'>true</span>));
             <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>write_all</span>(<span class='string'>b&quot;\&quot;&quot;</span>));
         }
         <span class='macro'>try</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>write_all</span>(<span class='string'>b&quot;&gt;&quot;</span>));
@@ -438,16 +439,16 @@
             <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;col&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;embed&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;frame&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;hr&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;img&quot;</span>)
             <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;input&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;keygen&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;link&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;menuitem&quot;</span>)
             <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;meta&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;param&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;source&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;track&quot;</span>) <span class='op'>|</span> <span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;wbr&quot;</span>)
-                <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
-            _ <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
+                <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>,
+            _ <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>,
         };
 
-        <span class='self'>self</span>.<span class='ident'>parent</span>().<span class='ident'>processed_first_child</span> <span class='op'>=</span> <span class='boolval'>true</span>;
+        <span class='self'>self</span>.<span class='ident'>parent</span>().<span class='ident'>processed_first_child</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
 
         <span class='self'>self</span>.<span class='ident'>stack</span>.<span class='ident'>push</span>(<span class='ident'>ElemInfo</span> {
             <span class='ident'>html_name</span>: <span class='ident'>html_name</span>,
             <span class='ident'>ignore_children</span>: <span class='ident'>ignore_children</span>,
-            <span class='ident'>processed_first_child</span>: <span class='boolval'>false</span>,
+            <span class='ident'>processed_first_child</span>: <span class='boolvalue'>false</span>,
         });
 
         <span class='prelude-val'>Ok</span>(())
@@ -468,8 +469,8 @@
         <span class='kw'>let</span> <span class='ident'>prepend_lf</span> <span class='op'>=</span> <span class='ident'>text</span>.<span class='ident'>starts_with</span>(<span class='string'>&quot;\n&quot;</span>) <span class='op'>&amp;&amp;</span> {
             <span class='kw'>let</span> <span class='ident'>parent</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>parent</span>();
             <span class='op'>!</span><span class='ident'>parent</span>.<span class='ident'>processed_first_child</span> <span class='op'>&amp;&amp;</span> <span class='kw'>match</span> <span class='ident'>parent</span>.<span class='ident'>html_name</span> {
-                <span class='prelude-val'>Some</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;pre&quot;</span>)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;textarea&quot;</span>)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;listing&quot;</span>)) <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
-                _ <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
+                <span class='prelude-val'>Some</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;pre&quot;</span>)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;textarea&quot;</span>)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;listing&quot;</span>)) <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>,
+                _ <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>,
             }
         };
 
@@ -480,15 +481,15 @@
         <span class='kw'>let</span> <span class='ident'>escape</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>parent</span>().<span class='ident'>html_name</span> {
             <span class='prelude-val'>Some</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;style&quot;</span>)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;script&quot;</span>)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;xmp&quot;</span>))
             <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;iframe&quot;</span>)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;noembed&quot;</span>)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;noframes&quot;</span>))
-            <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;plaintext&quot;</span>)) <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
+            <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;plaintext&quot;</span>)) <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>,
 
             <span class='prelude-val'>Some</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;noscript&quot;</span>)) <span class='op'>=&gt;</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>opts</span>.<span class='ident'>scripting_enabled</span>,
 
-            _ <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
+            _ <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>,
         };
 
         <span class='kw'>if</span> <span class='ident'>escape</span> {
-            <span class='self'>self</span>.<span class='ident'>write_escaped</span>(<span class='ident'>text</span>, <span class='boolval'>false</span>)
+            <span class='self'>self</span>.<span class='ident'>write_escaped</span>(<span class='ident'>text</span>, <span class='boolvalue'>false</span>)
         } <span class='kw'>else</span> {
             <span class='self'>self</span>.<span class='ident'>writer</span>.<span class='ident'>write_all</span>(<span class='ident'>text</span>.<span class='ident'>as_bytes</span>())
         }
@@ -538,6 +539,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,14 +44,15 @@
 
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>html5ever</a>::<wbr><a href='index.html'>tokenizer</a>::<wbr><a class='struct' href=''>Tokenizer</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-1422' class='srclink' href='../../src/html5ever/tokenizer/mod.rs.html#93-163' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-1338' class='srclink' href='../../src/html5ever/tokenizer/mod.rs.html#93-163' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Tokenizer&lt;Sink&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>The HTML tokenizer.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;Sink: <a class='trait' href='../../html5ever/tokenizer/trait.TokenSink.html' title='html5ever::tokenizer::TokenSink'>TokenSink</a>&gt; <a class='struct' href='../../html5ever/tokenizer/struct.Tokenizer.html' title='html5ever::tokenizer::Tokenizer'>Tokenizer</a>&lt;Sink&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(sink: Sink, opts: <a class='struct' href='../../html5ever/tokenizer/struct.TokenizerOpts.html' title='html5ever::tokenizer::TokenizerOpts'>TokenizerOpts</a>) -&gt; <a class='struct' href='../../html5ever/tokenizer/struct.Tokenizer.html' title='html5ever::tokenizer::Tokenizer'>Tokenizer</a>&lt;Sink&gt;</code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;Sink: <a class='trait' href='../../html5ever/tokenizer/trait.TokenSink.html' title='html5ever::tokenizer::TokenSink'>TokenSink</a>&gt; <a class='struct' href='../../html5ever/tokenizer/struct.Tokenizer.html' title='html5ever::tokenizer::Tokenizer'>Tokenizer</a>&lt;Sink&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1362' class='srclink' href='../../src/html5ever/tokenizer/mod.rs.html#165-522' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(sink: Sink, opts: <a class='struct' href='../../html5ever/tokenizer/struct.TokenizerOpts.html' title='html5ever::tokenizer::TokenizerOpts'>TokenizerOpts</a>) -&gt; <a class='struct' href='../../html5ever/tokenizer/struct.Tokenizer.html' title='html5ever::tokenizer::Tokenizer'>Tokenizer</a>&lt;Sink&gt;</code></h4>
 <div class='docblock'><p>Create a new tokenizer which feeds tokens to a particular <code>TokenSink</code>.</p>
 </div><h4 id='method.unwrap' class='method'><code>fn <a href='#method.unwrap' class='fnname'>unwrap</a>(self) -&gt; Sink</code></h4>
 <h4 id='method.sink' class='method'><code>fn <a href='#method.sink' class='fnname'>sink</a>&lt;'a&gt;(&amp;'a self) -&gt; &amp;'a Sink</code></h4>
@@ -60,7 +62,8 @@
 </div><h4 id='method.set_plaintext_state' class='method'><code>fn <a href='#method.set_plaintext_state' class='fnname'>set_plaintext_state</a>(&amp;mut self)</code></h4>
 <h4 id='method.run' class='method'><code>fn <a href='#method.run' class='fnname'>run</a>(&amp;mut self)</code></h4>
 <div class='docblock'><p>Run the state machine for as long as we can.</p>
-</div></div><h3 class='impl'><code>impl&lt;Sink: <a class='trait' href='../../html5ever/tokenizer/trait.TokenSink.html' title='html5ever::tokenizer::TokenSink'>TokenSink</a>&gt; <a class='struct' href='../../html5ever/tokenizer/struct.Tokenizer.html' title='html5ever::tokenizer::Tokenizer'>Tokenizer</a>&lt;Sink&gt;</code></h3><div class='impl-items'><h4 id='method.end' class='method'><code>fn <a href='#method.end' class='fnname'>end</a>(&amp;mut self)</code></h4>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;Sink: <a class='trait' href='../../html5ever/tokenizer/trait.TokenSink.html' title='html5ever::tokenizer::TokenSink'>TokenSink</a>&gt; <a class='struct' href='../../html5ever/tokenizer/struct.Tokenizer.html' title='html5ever::tokenizer::Tokenizer'>Tokenizer</a>&lt;Sink&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1527' class='srclink' href='../../src/html5ever/tokenizer/mod.rs.html#632-1337' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.end' class='method'><code>fn <a href='#method.end' class='fnname'>end</a>(&amp;mut self)</code></h4>
 <div class='docblock'><p>Indicate that we have reached the end of the input.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -85,6 +88,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

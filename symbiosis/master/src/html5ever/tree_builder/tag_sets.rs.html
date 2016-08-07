@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/html5ever-0.5.4/src/tree_builder/tag_sets.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/html5ever-0.5.4/src/tree_builder/tag_sets.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>tag_sets.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
 
     
     
@@ -159,13 +160,13 @@
 
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>declare_tag_set_body</span> (
     (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>:<span class='ident'>ident</span> <span class='op'>=</span> [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>supr</span>:<span class='ident'>ident</span>] <span class='op'>-</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tag</span>:<span class='ident'>tt</span>)<span class='op'>+</span>)
-        <span class='op'>=&gt;</span> ( <span class='macro'>declare_tag_set_impl</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>, <span class='boolval'>false</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>supr</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tag</span>)<span class='op'>+</span>) );
+        <span class='op'>=&gt;</span> ( <span class='macro'>declare_tag_set_impl</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>, <span class='boolvalue'>false</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>supr</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tag</span>)<span class='op'>+</span>) );
 
     (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>:<span class='ident'>ident</span> <span class='op'>=</span> [<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>supr</span>:<span class='ident'>ident</span>] <span class='op'>+</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tag</span>:<span class='ident'>tt</span>)<span class='op'>+</span>)
-        <span class='op'>=&gt;</span> ( <span class='macro'>declare_tag_set_impl</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>, <span class='boolval'>true</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>supr</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tag</span>)<span class='op'>+</span>) );
+        <span class='op'>=&gt;</span> ( <span class='macro'>declare_tag_set_impl</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>, <span class='boolvalue'>true</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>supr</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tag</span>)<span class='op'>+</span>) );
 
     (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>:<span class='ident'>ident</span> <span class='op'>=</span> $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tag</span>:<span class='ident'>tt</span>)<span class='op'>+</span>)
-        <span class='op'>=&gt;</span> ( <span class='macro'>declare_tag_set_impl</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>, <span class='boolval'>true</span>, <span class='ident'>empty_set</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tag</span>)<span class='op'>+</span>) );
+        <span class='op'>=&gt;</span> ( <span class='macro'>declare_tag_set_impl</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>param</span>, <span class='boolvalue'>true</span>, <span class='ident'>empty_set</span>, $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>tag</span>)<span class='op'>+</span>) );
 );
 
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>declare_tag_set</span> (
@@ -182,8 +183,8 @@
     );
 );
 
-<span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>empty_set</span>(_: <span class='ident'>QualName</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { <span class='boolval'>false</span> }
-<span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>full_set</span>(_: <span class='ident'>QualName</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { <span class='boolval'>true</span> }
+<span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>empty_set</span>(_: <span class='ident'>QualName</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { <span class='boolvalue'>false</span> }
+<span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span> <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>full_set</span>(_: <span class='ident'>QualName</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> { <span class='boolvalue'>true</span> }
 
 <span class='macro'>declare_tag_set</span><span class='macro'>!</span>(<span class='kw'>pub</span> <span class='ident'>html_default_scope</span> <span class='op'>=</span>
     <span class='string'>&quot;applet&quot;</span> <span class='string'>&quot;caption&quot;</span> <span class='string'>&quot;html&quot;</span> <span class='string'>&quot;table&quot;</span> <span class='string'>&quot;td&quot;</span> <span class='string'>&quot;th&quot;</span> <span class='string'>&quot;marquee&quot;</span> <span class='string'>&quot;object&quot;</span> <span class='string'>&quot;template&quot;</span>);
@@ -256,6 +257,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

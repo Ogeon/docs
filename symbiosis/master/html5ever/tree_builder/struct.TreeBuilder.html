@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,14 +44,15 @@
 
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>html5ever</a>::<wbr><a href='index.html'>tree_builder</a>::<wbr><a class='struct' href=''>TreeBuilder</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-3577' class='srclink' href='../../src/html5ever/tree_builder/mod.rs.html#81-141' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-3445' class='srclink' href='../../src/html5ever/tree_builder/mod.rs.html#81-141' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct TreeBuilder&lt;Handle, Sink&gt; {
     // some fields omitted
 }</pre><div class='docblock'><p>The HTML tree builder.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;Handle, Sink&gt; <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilder.html' title='html5ever::tree_builder::TreeBuilder'>TreeBuilder</a>&lt;Handle, Sink&gt; <span class='where'>where Handle: <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>, Sink: <a class='trait' href='../../html5ever/tree_builder/interface/trait.TreeSink.html' title='html5ever::tree_builder::interface::TreeSink'>TreeSink</a>&lt;Handle=Handle&gt;</span></code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(sink: Sink, opts: <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilderOpts.html' title='html5ever::tree_builder::TreeBuilderOpts'>TreeBuilderOpts</a>) -&gt; <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilder.html' title='html5ever::tree_builder::TreeBuilder'>TreeBuilder</a>&lt;Handle, Sink&gt;</code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;Handle, Sink&gt; <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilder.html' title='html5ever::tree_builder::TreeBuilder'>TreeBuilder</a>&lt;Handle, Sink&gt; <span class='where'>where Handle: <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>, Sink: <a class='trait' href='../../html5ever/tree_builder/interface/trait.TreeSink.html' title='html5ever::tree_builder::interface::TreeSink'>TreeSink</a>&lt;Handle=Handle&gt;</span></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-3465' class='srclink' href='../../src/html5ever/tree_builder/mod.rs.html#143-357' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(sink: Sink, opts: <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilderOpts.html' title='html5ever::tree_builder::TreeBuilderOpts'>TreeBuilderOpts</a>) -&gt; <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilder.html' title='html5ever::tree_builder::TreeBuilder'>TreeBuilder</a>&lt;Handle, Sink&gt;</code></h4>
 <div class='docblock'><p>Create a new tree builder which sends tree modifications to a particular <code>TreeSink</code>.</p>
 
 <p>The tree builder is also a <code>TokenSink</code>.</p>
@@ -68,10 +70,14 @@ This is for parsing fragments.</p>
 internal state.  This is intended to support garbage-collected DOMs.</p>
 </div><h4 id='method.is_fragment' class='method'><code>fn <a href='#method.is_fragment' class='fnname'>is_fragment</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
 <div class='docblock'><p>Are we parsing a HTML fragment?</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;Handle, Sink&gt; <a class='trait' href='../../html5ever/tokenizer/trait.TokenSink.html' title='html5ever::tokenizer::TokenSink'>TokenSink</a> for <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilder.html' title='html5ever::tree_builder::TreeBuilder'>TreeBuilder</a>&lt;Handle, Sink&gt; <span class='where'>where Handle: <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>, Sink: <a class='trait' href='../../html5ever/tree_builder/interface/trait.TreeSink.html' title='html5ever::tree_builder::interface::TreeSink'>TreeSink</a>&lt;Handle=Handle&gt;</span></code></h3><div class='impl-items'><h4 id='method.process_token' class='method'><code>fn <a href='../../html5ever/tokenizer/trait.TokenSink.html#method.process_token' class='fnname'>process_token</a>(&amp;mut self, token: <a class='enum' href='../../html5ever/tokenizer/enum.Token.html' title='html5ever::tokenizer::Token'>Token</a>)</code></h4>
-<h4 id='method.adjusted_current_node_present_but_not_in_html_namespace' class='method'><code>fn <a href='../../html5ever/tokenizer/trait.TokenSink.html#method.adjusted_current_node_present_but_not_in_html_namespace' class='fnname'>adjusted_current_node_present_but_not_in_html_namespace</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
-<h4 id='method.query_state_change' class='method'><code>fn <a href='../../html5ever/tokenizer/trait.TokenSink.html#method.query_state_change' class='fnname'>query_state_change</a>(&amp;mut self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='../../html5ever/tokenizer/states/enum.State.html' title='html5ever::tokenizer::states::State'>State</a>&gt;</code></h4>
-</div></section>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;Handle, Sink&gt; <a class='trait' href='../../html5ever/tokenizer/trait.TokenSink.html' title='html5ever::tokenizer::TokenSink'>TokenSink</a> for <a class='struct' href='../../html5ever/tree_builder/struct.TreeBuilder.html' title='html5ever::tree_builder::TreeBuilder'>TreeBuilder</a>&lt;Handle, Sink&gt; <span class='where'>where Handle: <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>, Sink: <a class='trait' href='../../html5ever/tree_builder/interface/trait.TreeSink.html' title='html5ever::tree_builder::interface::TreeSink'>TreeSink</a>&lt;Handle=Handle&gt;</span></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-3566' class='srclink' href='../../src/html5ever/tree_builder/mod.rs.html#359-429' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.process_token' class='method'><code>fn <a href='../../html5ever/tokenizer/trait.TokenSink.html#tymethod.process_token' class='fnname'>process_token</a>(&amp;mut self, token: <a class='enum' href='../../html5ever/tokenizer/enum.Token.html' title='html5ever::tokenizer::Token'>Token</a>)</code></h4>
+<div class='docblock'><p>Process a token.</p>
+</div><h4 id='method.adjusted_current_node_present_but_not_in_html_namespace' class='method'><code>fn <a href='../../html5ever/tokenizer/trait.TokenSink.html#method.adjusted_current_node_present_but_not_in_html_namespace' class='fnname'>adjusted_current_node_present_but_not_in_html_namespace</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>Used in the markup declaration open state. By default, this always returns false and thus all CDATA sections are tokenized as bogus comments. <a href="https://html.spec.whatwg.org/multipage/#markup-declaration-open-state">https://html.spec.whatwg.org/multipage/#markup-declaration-open-state</a> <a href="../../html5ever/tokenizer/trait.TokenSink.html#method.adjusted_current_node_present_but_not_in_html_namespace">Read more</a></p>
+</div><h4 id='method.query_state_change' class='method'><code>fn <a href='../../html5ever/tokenizer/trait.TokenSink.html#method.query_state_change' class='fnname'>query_state_change</a>(&amp;mut self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='../../html5ever/tokenizer/states/enum.State.html' title='html5ever::tokenizer::states::State'>State</a>&gt;</code></h4>
+<div class='docblock'><p>The tokenizer will call this after emitting any tag. This allows the tree builder to change the tokenizer&#39;s state. By default no state changes occur. <a href="../../html5ever/tokenizer/trait.TokenSink.html#method.query_state_change">Read more</a></p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -94,6 +100,8 @@ internal state.  This is intended to support garbage-collected DOMs.</p>
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
 
     
     
@@ -495,7 +496,7 @@
 <span class='kw'>use</span> <span class='ident'>symbiosis_tokenizer</span>::<span class='ident'>codegen</span>::<span class='ident'>Logic</span> <span class='kw'>as</span> <span class='ident'>CoreLogic</span>;
 <span class='kw'>use</span> <span class='ident'>symbiosis_tokenizer</span>::<span class='ident'>codegen</span>::{<span class='ident'>Path</span>, <span class='ident'>Content</span>};
 <span class='kw'>use</span> <span class='ident'>symbiosis_tokenizer</span>::<span class='ident'>fragment</span>::{<span class='ident'>Fragment</span>, <span class='ident'>FragmentStore</span>, <span class='ident'>init_prelude</span>};
-<span class='kw'>use</span> <span class='ident'>symbiosis_tokenizer</span>::<span class='ident'>fragment</span>::<span class='ident'>pattern</span>::<span class='ident'>Argument</span>;
+<span class='kw'>use</span> <span class='ident'>symbiosis_tokenizer</span>::<span class='ident'>fragment</span>::<span class='ident'>Parser</span> <span class='kw'>as</span> <span class='ident'>FragmentParser</span>;
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>symbiosis_tokenizer</span>::<span class='ident'>fragment</span>;
 
@@ -623,7 +624,7 @@
         <span class='self'>self</span>.<span class='ident'>fragments</span>.<span class='ident'>insert</span>(<span class='ident'>fragment</span>.<span class='ident'>identifier</span>(), <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>fragment</span>));
     }
 
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_fragment_fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>, <span class='ident'>function</span>: <span class='kw'>fn</span>(<span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Argument</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>fragment</span>::<span class='ident'>ReturnType</span>, <span class='ident'>fragment</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>) {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>register_fragment_fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>, <span class='ident'>function</span>: <span class='kw'>fn</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>FragmentParser</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>fragment</span>::<span class='ident'>ReturnType</span>, <span class='ident'>fragment</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>) {
         <span class='self'>self</span>.<span class='ident'>register_fragment</span>((<span class='ident'>name</span>, <span class='ident'>function</span>));
     }
 }
@@ -910,8 +911,8 @@
             <span class='ident'>Logic</span>::<span class='ident'>Not</span>(<span class='kw-2'>ref</span> <span class='ident'>x</span>) <span class='op'>=&gt;</span> <span class='op'>!</span><span class='ident'>x</span>.<span class='ident'>evaluate</span>(<span class='ident'>template</span>, <span class='ident'>vars</span>),
             <span class='ident'>Logic</span>::<span class='ident'>Value</span>(<span class='kw-2'>ref</span> <span class='ident'>x</span>) <span class='op'>=&gt;</span> <span class='kw'>match</span> <span class='ident'>template</span>.<span class='ident'>find</span>(<span class='ident'>x</span>, <span class='ident'>vars</span>) {
                 <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>Value</span>::<span class='ident'>String</span>(_)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>Value</span>::<span class='ident'>I64</span>(_)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>Value</span>::<span class='ident'>U64</span>(_)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>Value</span>::<span class='ident'>F64</span>(_)) <span class='op'>|</span>
-                <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>Value</span>::<span class='ident'>Object</span>(_)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>Value</span>::<span class='ident'>Bool</span>(<span class='boolval'>true</span>)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>Value</span>::<span class='ident'>Array</span>(_))  <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
-                <span class='prelude-val'>None</span> <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>Value</span>::<span class='ident'>Bool</span>(<span class='boolval'>false</span>)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>Value</span>::<span class='ident'>Null</span>) <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
+                <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>Value</span>::<span class='ident'>Object</span>(_)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>Value</span>::<span class='ident'>Bool</span>(<span class='boolvalue'>true</span>)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>Value</span>::<span class='ident'>Array</span>(_))  <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>,
+                <span class='prelude-val'>None</span> <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>Value</span>::<span class='ident'>Bool</span>(<span class='boolvalue'>false</span>)) <span class='op'>|</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>Value</span>::<span class='ident'>Null</span>) <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>,
             },
         }
     }
@@ -940,6 +941,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

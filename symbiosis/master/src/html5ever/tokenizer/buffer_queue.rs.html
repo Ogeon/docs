@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/html5ever-0.5.4/src/tokenizer/buffer_queue.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/html5ever-0.5.4/src/tokenizer/buffer_queue.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>buffer_queue.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
 
     
     
@@ -326,7 +327,7 @@
     <span class='doccomment'>/// Get the next character, if one is available.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> (<span class='ident'>result</span>, <span class='ident'>now_empty</span>) <span class='op'>=</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>buffers</span>.<span class='ident'>front_mut</span>() {
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> (<span class='prelude-val'>None</span>, <span class='boolval'>false</span>),
+            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> (<span class='prelude-val'>None</span>, <span class='boolvalue'>false</span>),
             <span class='prelude-val'>Some</span>(<span class='ident'>buf</span>) <span class='op'>=&gt;</span> {
                 <span class='kw'>let</span> <span class='ident'>c</span> <span class='op'>=</span> <span class='ident'>buf</span>.<span class='ident'>pop_front_char</span>().<span class='ident'>expect</span>(<span class='string'>&quot;empty buffer in queue&quot;</span>);
                 (<span class='prelude-val'>Some</span>(<span class='ident'>c</span>), <span class='ident'>buf</span>.<span class='ident'>is_empty</span>())
@@ -346,7 +347,7 @@
     <span class='doccomment'>/// ASCII characters.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>pop_except_from</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>set</span>: <span class='ident'>SmallCharSet</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>SetResult</span><span class='op'>&gt;</span> {
         <span class='kw'>let</span> (<span class='ident'>result</span>, <span class='ident'>now_empty</span>) <span class='op'>=</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>buffers</span>.<span class='ident'>front_mut</span>() {
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> (<span class='prelude-val'>None</span>, <span class='boolval'>false</span>),
+            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> (<span class='prelude-val'>None</span>, <span class='boolvalue'>false</span>),
             <span class='prelude-val'>Some</span>(<span class='ident'>buf</span>) <span class='op'>=&gt;</span> {
                 <span class='kw'>let</span> <span class='ident'>n</span> <span class='op'>=</span> <span class='ident'>set</span>.<span class='ident'>nonmember_prefix_len</span>(<span class='kw-2'>&amp;</span><span class='ident'>buf</span>);
                 <span class='kw'>if</span> <span class='ident'>n</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
@@ -391,7 +392,7 @@
             <span class='kw'>let</span> <span class='kw-2'>ref</span> <span class='ident'>buf</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>buffers</span>[<span class='ident'>buffers_exhausted</span>];
 
             <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>eq</span>(<span class='kw-2'>&amp;</span><span class='ident'>buf</span>.<span class='ident'>as_bytes</span>()[<span class='ident'>consumed_from_last</span>], <span class='kw-2'>&amp;</span><span class='ident'>pattern_byte</span>) {
-                <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='boolval'>false</span>)
+                <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='boolvalue'>false</span>)
             }
 
             <span class='ident'>consumed_from_last</span> <span class='op'>+=</span> <span class='number'>1</span>;
@@ -411,7 +412,7 @@
             <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>buf</span>) <span class='op'>=&gt;</span> <span class='ident'>buf</span>.<span class='ident'>pop_front</span>(<span class='ident'>consumed_from_last</span> <span class='kw'>as</span> <span class='ident'>u32</span>),
         }
 
-        <span class='prelude-val'>Some</span>(<span class='boolval'>true</span>)
+        <span class='prelude-val'>Some</span>(<span class='boolvalue'>true</span>)
     }
 }
 
@@ -420,7 +421,7 @@
 <span class='kw'>mod</span> <span class='ident'>test</span> {
     <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ascii</span>::<span class='ident'>AsciiExt</span>;
     <span class='kw'>use</span> <span class='ident'>tendril</span>::{<span class='ident'>StrTendril</span>, <span class='ident'>SliceExt</span>};
-    <span class='kw'>use</span> <span class='ident'>super</span>::{<span class='ident'>BufferQueue</span>, <span class='ident'>FromSet</span>, <span class='ident'>NotFromSet</span>};
+    <span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>BufferQueue</span>, <span class='ident'>FromSet</span>, <span class='ident'>NotFromSet</span>};
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>smoke_test</span>() {
@@ -474,8 +475,8 @@
         <span class='ident'>bq</span>.<span class='ident'>push_back</span>(<span class='string'>&quot;a&quot;</span>.<span class='ident'>to_tendril</span>());
         <span class='ident'>bq</span>.<span class='ident'>push_back</span>(<span class='string'>&quot;bc&quot;</span>.<span class='ident'>to_tendril</span>());
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>bq</span>.<span class='ident'>eat</span>(<span class='string'>&quot;abcd&quot;</span>, <span class='ident'>u8</span>::<span class='ident'>eq_ignore_ascii_case</span>), <span class='prelude-val'>None</span>);
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>bq</span>.<span class='ident'>eat</span>(<span class='string'>&quot;ax&quot;</span>, <span class='ident'>u8</span>::<span class='ident'>eq_ignore_ascii_case</span>), <span class='prelude-val'>Some</span>(<span class='boolval'>false</span>));
-        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>bq</span>.<span class='ident'>eat</span>(<span class='string'>&quot;ab&quot;</span>, <span class='ident'>u8</span>::<span class='ident'>eq_ignore_ascii_case</span>), <span class='prelude-val'>Some</span>(<span class='boolval'>true</span>));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>bq</span>.<span class='ident'>eat</span>(<span class='string'>&quot;ax&quot;</span>, <span class='ident'>u8</span>::<span class='ident'>eq_ignore_ascii_case</span>), <span class='prelude-val'>Some</span>(<span class='boolvalue'>false</span>));
+        <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>bq</span>.<span class='ident'>eat</span>(<span class='string'>&quot;ab&quot;</span>, <span class='ident'>u8</span>::<span class='ident'>eq_ignore_ascii_case</span>), <span class='prelude-val'>Some</span>(<span class='boolvalue'>true</span>));
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>bq</span>.<span class='ident'>next</span>(), <span class='prelude-val'>Some</span>(<span class='string'>&#39;c&#39;</span>));
         <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>bq</span>.<span class='ident'>next</span>(), <span class='prelude-val'>None</span>);
     }
@@ -504,6 +505,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

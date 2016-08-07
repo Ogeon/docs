@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/tendril-0.2.2/src/stream.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tendril-0.2.2/src/stream.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>stream.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -549,17 +550,17 @@
     <span class='kw'>type</span> <span class='ident'>Output</span>;
 
     <span class='doccomment'>/// Indicates the end of the stream.</span>
-    <span class='kw'>fn</span> <span class='ident'>finish</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>Output</span>;
+    <span class='kw'>fn</span> <span class='ident'>finish</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span>;
 
     <span class='doccomment'>/// Process one tendril and finish.</span>
-    <span class='kw'>fn</span> <span class='ident'>one</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>Output</span> <span class='kw'>where</span> <span class='kw'>Self</span>: <span class='ident'>Sized</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Tendril</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>one</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>t</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> <span class='kw'>where</span> <span class='self'>Self</span>: <span class='ident'>Sized</span>, <span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Tendril</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>process</span>(<span class='ident'>t</span>.<span class='ident'>into</span>());
         <span class='self'>self</span>.<span class='ident'>finish</span>()
     }
 
     <span class='doccomment'>/// Consume an iterator of tendrils, processing each item, then finish.</span>
-    <span class='kw'>fn</span> <span class='ident'>from_iter</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>Output</span>
-    <span class='kw'>where</span> <span class='kw'>Self</span>: <span class='ident'>Sized</span>, <span class='ident'>I</span>: <span class='ident'>IntoIterator</span>, <span class='ident'>I</span>::<span class='ident'>Item</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Tendril</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>from_iter</span><span class='op'>&lt;</span><span class='ident'>I</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>i</span>: <span class='ident'>I</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span>
+    <span class='kw'>where</span> <span class='self'>Self</span>: <span class='ident'>Sized</span>, <span class='ident'>I</span>: <span class='ident'>IntoIterator</span>, <span class='ident'>I</span>::<span class='ident'>Item</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Tendril</span><span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;&gt;</span> {
         <span class='kw'>for</span> <span class='ident'>t</span> <span class='kw'>in</span> <span class='ident'>i</span> {
             <span class='self'>self</span>.<span class='ident'>process</span>(<span class='ident'>t</span>.<span class='ident'>into</span>())
         }
@@ -568,8 +569,8 @@
 
     <span class='doccomment'>/// Read from the given stream of bytes until exhaustion and process incrementally,</span>
     <span class='doccomment'>/// then finish. Return `Err` at the first I/O error.</span>
-    <span class='kw'>fn</span> <span class='ident'>read_from</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>r</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>R</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Self</span>::<span class='ident'>Output</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='kw'>Self</span>: <span class='ident'>Sized</span>, <span class='ident'>R</span>: <span class='ident'>io</span>::<span class='ident'>Read</span>, <span class='ident'>F</span>: <span class='ident'>fmt</span>::<span class='ident'>SliceFormat</span><span class='op'>&lt;</span><span class='ident'>Slice</span><span class='op'>=</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>read_from</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>r</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>R</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Output</span><span class='op'>&gt;</span>
+    <span class='kw'>where</span> <span class='self'>Self</span>: <span class='ident'>Sized</span>, <span class='ident'>R</span>: <span class='ident'>io</span>::<span class='ident'>Read</span>, <span class='ident'>F</span>: <span class='ident'>fmt</span>::<span class='ident'>SliceFormat</span><span class='op'>&lt;</span><span class='ident'>Slice</span><span class='op'>=</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span> {
         <span class='kw'>const</span> <span class='ident'>BUFFER_SIZE</span>: <span class='ident'>u32</span> <span class='op'>=</span> <span class='number'>4</span> <span class='op'>*</span> <span class='number'>1024</span>;
         <span class='kw'>loop</span> {
             <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>tendril</span> <span class='op'>=</span> <span class='ident'>Tendril</span>::<span class='op'>&lt;</span><span class='ident'>F</span>, <span class='ident'>A</span><span class='op'>&gt;</span>::<span class='ident'>new</span>();
@@ -598,8 +599,8 @@
 
     <span class='doccomment'>/// Read from the file at the given path and process incrementally,</span>
     <span class='doccomment'>/// then finish. Return `Err` at the first I/O error.</span>
-    <span class='kw'>fn</span> <span class='ident'>from_file</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>path</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Self</span>::<span class='ident'>Output</span><span class='op'>&gt;</span>
-    <span class='kw'>where</span> <span class='kw'>Self</span>: <span class='ident'>Sized</span>, <span class='ident'>P</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;</span>, <span class='ident'>F</span>: <span class='ident'>fmt</span>::<span class='ident'>SliceFormat</span><span class='op'>&lt;</span><span class='ident'>Slice</span><span class='op'>=</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>from_file</span><span class='op'>&lt;</span><span class='ident'>P</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>path</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>::<span class='ident'>Output</span><span class='op'>&gt;</span>
+    <span class='kw'>where</span> <span class='self'>Self</span>: <span class='ident'>Sized</span>, <span class='ident'>P</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;</span>, <span class='ident'>F</span>: <span class='ident'>fmt</span>::<span class='ident'>SliceFormat</span><span class='op'>&lt;</span><span class='ident'>Slice</span><span class='op'>=</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>read_from</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>File</span>::<span class='ident'>open</span>(<span class='ident'>path</span>)))
     }
 }
@@ -625,7 +626,7 @@
 {
     <span class='doccomment'>/// Create a new incremental UTF-8 decoder.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>inner_sink</span>: <span class='ident'>Sink</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>inner_sink</span>: <span class='ident'>Sink</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='ident'>Utf8LossyDecoder</span> {
             <span class='ident'>decoder</span>: <span class='ident'>utf8</span>::<span class='ident'>Decoder</span>::<span class='ident'>new</span>(),
             <span class='ident'>inner_sink</span>: <span class='ident'>inner_sink</span>,
@@ -805,7 +806,7 @@
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>test</span> {
-    <span class='kw'>use</span> <span class='ident'>super</span>::{<span class='ident'>TendrilSink</span>, <span class='ident'>LossyDecoder</span>, <span class='ident'>Utf8LossyDecoder</span>};
+    <span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>TendrilSink</span>, <span class='ident'>LossyDecoder</span>, <span class='ident'>Utf8LossyDecoder</span>};
     <span class='kw'>use</span> <span class='ident'>tendril</span>::{<span class='ident'>Tendril</span>, <span class='ident'>Atomicity</span>, <span class='ident'>SliceExt</span>, <span class='ident'>NonAtomic</span>};
     <span class='kw'>use</span> <span class='ident'>fmt</span>;
     <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>;
@@ -843,7 +844,7 @@
 
         <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> (<span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Tendril</span><span class='op'>&lt;</span><span class='ident'>fmt</span>::<span class='ident'>UTF8</span>, <span class='ident'>A</span><span class='op'>&gt;&gt;</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>);
 
-        <span class='kw'>fn</span> <span class='ident'>finish</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>Output</span> {
+        <span class='kw'>fn</span> <span class='ident'>finish</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
             (<span class='self'>self</span>.<span class='ident'>tendrils</span>, <span class='self'>self</span>.<span class='ident'>errors</span>)
         }
     }
@@ -996,6 +997,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

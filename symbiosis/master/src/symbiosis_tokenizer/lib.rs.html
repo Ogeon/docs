@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -363,17 +364,17 @@
 <span id="320">320</span>
 <span id="321">321</span>
 <span id="322">322</span>
+<span id="323">323</span>
 </pre><pre class='rust '>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>html5ever</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>string_cache</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>lalrpop_util</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>symbiosis_core</span>;
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>tendril</span>;
 
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>replace</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>fmt</span>;
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>symbiosis_core</span>::<span class='ident'>StrTendril</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>tendril</span>::<span class='ident'>StrTendril</span>;
 
 <span class='kw'>use</span> <span class='ident'>html5ever</span>::<span class='ident'>Attribute</span>;
 <span class='kw'>use</span> <span class='ident'>html5ever</span>::<span class='ident'>tokenizer</span>::{<span class='ident'>Tag</span>, <span class='ident'>TagKind</span>, <span class='ident'>Doctype</span>};
@@ -385,20 +386,22 @@
 <span class='kw'>use</span> <span class='ident'>codegen</span>::{<span class='ident'>Token</span>, <span class='ident'>Content</span>, <span class='ident'>Name</span>, <span class='ident'>Text</span>};
 <span class='kw'>use</span> <span class='ident'>fragment</span>::{<span class='ident'>ReturnType</span>, <span class='ident'>FragmentStore</span>};
 
+<span class='kw'>use</span> <span class='ident'>fragment</span>::<span class='ident'>Error</span> <span class='kw'>as</span> <span class='ident'>ParseError</span>;
+
 <span class='comment'>//haxx</span>
 <span class='kw'>mod</span> <span class='ident'>symbiosis_tokenizer</span> {
-    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>super</span>::<span class='op'>*</span>;
+    <span class='kw'>pub</span> <span class='kw'>use</span> <span class='kw'>super</span>::<span class='op'>*</span>;
 }
+<span class='kw'>mod</span> <span class='ident'>parser</span>;
 
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>codegen</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>parser</span>;
 <span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>fragment</span>;
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Error</span> {
     <span class='ident'>Io</span>(<span class='ident'>io</span>::<span class='ident'>Error</span>),
     <span class='ident'>Format</span>(<span class='ident'>fmt</span>::<span class='ident'>Error</span>),
-    <span class='ident'>Parse</span>(<span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>parser</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>)
+    <span class='ident'>Parse</span>(<span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>ParseError</span><span class='op'>&gt;</span>),
 }
 
 <span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>io</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
@@ -413,8 +416,8 @@
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>parser</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>e</span>: <span class='ident'>parser</span>::<span class='ident'>Error</span>) <span class='op'>-&gt;</span> <span class='ident'>Error</span> {
+<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>ParseError</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>e</span>: <span class='ident'>ParseError</span>) <span class='op'>-&gt;</span> <span class='ident'>Error</span> {
         <span class='ident'>Error</span>::<span class='ident'>Parse</span>(<span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>e</span>])
     }
 }
@@ -437,7 +440,7 @@
 
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Tokenizer</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>TokenSink</span><span class='op'>&gt;</span> {
     <span class='ident'>sink</span>: <span class='ident'>T</span>,
-    <span class='ident'>errors</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>parser</span>::<span class='ident'>Error</span><span class='op'>&gt;</span>,
+    <span class='ident'>errors</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>ParseError</span><span class='op'>&gt;</span>,
     <span class='ident'>parser_state</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>State</span><span class='op'>&gt;</span>,
     <span class='ident'>escape</span>: <span class='ident'>bool</span>,
 }
@@ -448,7 +451,7 @@
             <span class='ident'>sink</span>: <span class='ident'>sink</span>,
             <span class='ident'>errors</span>: <span class='macro'>vec</span><span class='macro'>!</span>[],
             <span class='ident'>parser_state</span>: <span class='prelude-val'>None</span>,
-            <span class='ident'>escape</span>: <span class='boolval'>true</span>,
+            <span class='ident'>escape</span>: <span class='boolvalue'>true</span>,
         }
     }
 
@@ -473,10 +476,10 @@
         <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>Comment</span>(<span class='ident'>comment</span>));
     }
 
-    <span class='kw'>fn</span> <span class='ident'>add_text</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>StrTendril</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>parser</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>add_text</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>text</span>: <span class='ident'>StrTendril</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>ParseError</span><span class='op'>&gt;</span> {
         <span class='kw'>for</span> <span class='ident'>ret</span> <span class='kw'>in</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>::<span class='ident'>parse_content</span>(<span class='ident'>text</span>, <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>fragments</span>())) {
             <span class='kw'>match</span> <span class='ident'>ret</span> {
-                <span class='ident'>ReturnType</span>::<span class='ident'>String</span>(<span class='ident'>text</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>Text</span>(<span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>new</span>(<span class='ident'>text</span>, <span class='self'>self</span>.<span class='ident'>escape</span>, <span class='boolval'>false</span>)))),
+                <span class='ident'>ReturnType</span>::<span class='ident'>String</span>(<span class='ident'>text</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>Text</span>(<span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>new</span>(<span class='ident'>text</span>, <span class='self'>self</span>.<span class='ident'>escape</span>, <span class='boolvalue'>false</span>)))),
                 <span class='ident'>ReturnType</span>::<span class='ident'>Placeholder</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>Text</span>(<span class='ident'>Content</span>::<span class='ident'>Placeholder</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>))),
                 <span class='ident'>ReturnType</span>::<span class='ident'>Logic</span>(_) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;logic can not be used as text&quot;</span>.<span class='ident'>into</span>()),
                 <span class='ident'>ReturnType</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>)),
@@ -489,13 +492,13 @@
         <span class='prelude-val'>Ok</span>(())
     }
 
-    <span class='kw'>fn</span> <span class='ident'>open_tag</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>, <span class='ident'>attributes</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Attribute</span><span class='op'>&gt;</span>, <span class='ident'>self_closing</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>parser</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>open_tag</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>, <span class='ident'>attributes</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Attribute</span><span class='op'>&gt;</span>, <span class='ident'>self_closing</span>: <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>ParseError</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>BeginTag</span>(<span class='ident'>name</span>.<span class='ident'>clone</span>().<span class='ident'>into</span>()));
 
         <span class='kw'>for</span> <span class='ident'>attribute</span> <span class='kw'>in</span> <span class='ident'>attributes</span> {
             <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>content</span> <span class='op'>=</span> <span class='macro'>try</span><span class='macro'>!</span>(<span class='ident'>parser</span>::<span class='ident'>parse_content</span>(<span class='ident'>attribute</span>.<span class='ident'>value</span>, <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>fragments</span>())).<span class='ident'>into_iter</span>();
             <span class='kw'>match</span> <span class='ident'>content</span>.<span class='ident'>next</span>() {
-                <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>String</span>(<span class='ident'>text</span>)) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>BeginAttribute</span>(<span class='ident'>attribute</span>.<span class='ident'>name</span>.<span class='ident'>local</span>.<span class='ident'>into</span>(), <span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>escaped</span>(<span class='ident'>text</span>, <span class='boolval'>true</span>)))),
+                <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>String</span>(<span class='ident'>text</span>)) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>BeginAttribute</span>(<span class='ident'>attribute</span>.<span class='ident'>name</span>.<span class='ident'>local</span>.<span class='ident'>into</span>(), <span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>escaped</span>(<span class='ident'>text</span>, <span class='boolvalue'>true</span>)))),
                 <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>Placeholder</span>(<span class='ident'>name</span>, <span class='ident'>ty</span>)) <span class='op'>=&gt;</span> {
                     <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>BeginAttribute</span>(<span class='ident'>attribute</span>.<span class='ident'>name</span>.<span class='ident'>local</span>.<span class='ident'>into</span>(), <span class='ident'>Content</span>::<span class='ident'>Placeholder</span>(<span class='ident'>name</span>, <span class='ident'>ty</span>)));
                 },
@@ -515,7 +518,7 @@
 
             <span class='kw'>for</span> <span class='ident'>ret</span> <span class='kw'>in</span> <span class='ident'>content</span> {
                 <span class='kw'>match</span> <span class='ident'>ret</span> {
-                    <span class='ident'>ReturnType</span>::<span class='ident'>String</span>(<span class='ident'>text</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>AppendToAttribute</span>(<span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>escaped</span>(<span class='ident'>text</span>, <span class='boolval'>true</span>)))),
+                    <span class='ident'>ReturnType</span>::<span class='ident'>String</span>(<span class='ident'>text</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>AppendToAttribute</span>(<span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>escaped</span>(<span class='ident'>text</span>, <span class='boolvalue'>true</span>)))),
                     <span class='ident'>ReturnType</span>::<span class='ident'>Placeholder</span>(<span class='ident'>name</span>, <span class='ident'>ty</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>AppendToAttribute</span>(<span class='ident'>Content</span>::<span class='ident'>Placeholder</span>(<span class='ident'>name</span>, <span class='ident'>ty</span>))),
                     <span class='ident'>ReturnType</span>::<span class='ident'>Logic</span>(_) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;logic can not be used as text&quot;</span>.<span class='ident'>into</span>()),
                     <span class='ident'>ReturnType</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>)),
@@ -539,8 +542,8 @@
             };
 
             <span class='self'>self</span>.<span class='ident'>escape</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>name</span> {
-                <span class='string'>&quot;style&quot;</span> <span class='op'>|</span> <span class='string'>&quot;script&quot;</span> <span class='op'>|</span> <span class='string'>&quot;xmp&quot;</span> <span class='op'>|</span> <span class='string'>&quot;iframe&quot;</span> <span class='op'>|</span> <span class='string'>&quot;noembed&quot;</span> <span class='op'>|</span> <span class='string'>&quot;noframes&quot;</span> <span class='op'>|</span> <span class='string'>&quot;plaintext&quot;</span> <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
-                _ <span class='op'>=&gt;</span> <span class='boolval'>true</span>
+                <span class='string'>&quot;style&quot;</span> <span class='op'>|</span> <span class='string'>&quot;script&quot;</span> <span class='op'>|</span> <span class='string'>&quot;xmp&quot;</span> <span class='op'>|</span> <span class='string'>&quot;iframe&quot;</span> <span class='op'>|</span> <span class='string'>&quot;noembed&quot;</span> <span class='op'>|</span> <span class='string'>&quot;noframes&quot;</span> <span class='op'>|</span> <span class='string'>&quot;plaintext&quot;</span> <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>,
+                _ <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>
             };
         }
 
@@ -549,16 +552,16 @@
 
     <span class='kw'>fn</span> <span class='ident'>close_tag</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>Atom</span>) {
         <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>CloseTag</span>(<span class='ident'>name</span>.<span class='ident'>into</span>()));
-        <span class='self'>self</span>.<span class='ident'>escape</span> <span class='op'>=</span> <span class='boolval'>true</span>;
+        <span class='self'>self</span>.<span class='ident'>escape</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
     }
 
-    <span class='kw'>fn</span> <span class='ident'>add_tag_tree</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>Name</span>, <span class='ident'>arguments</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>Name</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>ReturnType</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span>, <span class='ident'>content</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>ReturnType</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>parser</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>add_tag_tree</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>name</span>: <span class='ident'>Name</span>, <span class='ident'>arguments</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>(<span class='ident'>Name</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>ReturnType</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span>, <span class='ident'>content</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>ReturnType</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>ParseError</span><span class='op'>&gt;</span> {
         <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>BeginTag</span>(<span class='ident'>name</span>.<span class='ident'>clone</span>()));
 
         <span class='kw'>for</span> (<span class='ident'>attr</span>, <span class='ident'>content</span>) <span class='kw'>in</span> <span class='ident'>arguments</span> {
             <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>content</span> <span class='op'>=</span> <span class='ident'>content</span>.<span class='ident'>into_iter</span>();
             <span class='kw'>match</span> <span class='ident'>content</span>.<span class='ident'>next</span>() {
-                <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>String</span>(<span class='ident'>text</span>)) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>BeginAttribute</span>(<span class='ident'>attr</span>, <span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>escaped</span>(<span class='ident'>text</span>, <span class='boolval'>true</span>)))),
+                <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>String</span>(<span class='ident'>text</span>)) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>BeginAttribute</span>(<span class='ident'>attr</span>, <span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>escaped</span>(<span class='ident'>text</span>, <span class='boolvalue'>true</span>)))),
                 <span class='prelude-val'>Some</span>(<span class='ident'>ReturnType</span>::<span class='ident'>Placeholder</span>(<span class='ident'>name</span>, <span class='ident'>ty</span>)) <span class='op'>=&gt;</span> {
                     <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>BeginAttribute</span>(<span class='ident'>attr</span>, <span class='ident'>Content</span>::<span class='ident'>Placeholder</span>(<span class='ident'>name</span>, <span class='ident'>ty</span>)));
                 },
@@ -578,7 +581,7 @@
 
             <span class='kw'>for</span> <span class='ident'>ret</span> <span class='kw'>in</span> <span class='ident'>content</span> {
                 <span class='kw'>match</span> <span class='ident'>ret</span> {
-                    <span class='ident'>ReturnType</span>::<span class='ident'>String</span>(<span class='ident'>text</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>AppendToAttribute</span>(<span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>escaped</span>(<span class='ident'>text</span>, <span class='boolval'>true</span>)))),
+                    <span class='ident'>ReturnType</span>::<span class='ident'>String</span>(<span class='ident'>text</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>AppendToAttribute</span>(<span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>escaped</span>(<span class='ident'>text</span>, <span class='boolvalue'>true</span>)))),
                     <span class='ident'>ReturnType</span>::<span class='ident'>Placeholder</span>(<span class='ident'>name</span>, <span class='ident'>ty</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>AppendToAttribute</span>(<span class='ident'>Content</span>::<span class='ident'>Placeholder</span>(<span class='ident'>name</span>, <span class='ident'>ty</span>))),
                     <span class='ident'>ReturnType</span>::<span class='ident'>Logic</span>(_) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;logic can not be used as text&quot;</span>.<span class='ident'>into</span>()),
                     <span class='ident'>ReturnType</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>)),
@@ -594,11 +597,11 @@
 
         <span class='kw'>let</span> <span class='ident'>escape</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>content</span>.<span class='ident'>is_some</span>() {
             <span class='kw'>match</span> <span class='kw-2'>&amp;</span><span class='op'>*</span><span class='ident'>name</span> {
-                <span class='string'>&quot;style&quot;</span> <span class='op'>|</span> <span class='string'>&quot;script&quot;</span> <span class='op'>|</span> <span class='string'>&quot;xmp&quot;</span> <span class='op'>|</span> <span class='string'>&quot;iframe&quot;</span> <span class='op'>|</span> <span class='string'>&quot;noembed&quot;</span> <span class='op'>|</span> <span class='string'>&quot;noframes&quot;</span> <span class='op'>|</span> <span class='string'>&quot;plaintext&quot;</span> <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
-                _ <span class='op'>=&gt;</span> <span class='boolval'>true</span>
+                <span class='string'>&quot;style&quot;</span> <span class='op'>|</span> <span class='string'>&quot;script&quot;</span> <span class='op'>|</span> <span class='string'>&quot;xmp&quot;</span> <span class='op'>|</span> <span class='string'>&quot;iframe&quot;</span> <span class='op'>|</span> <span class='string'>&quot;noembed&quot;</span> <span class='op'>|</span> <span class='string'>&quot;noframes&quot;</span> <span class='op'>|</span> <span class='string'>&quot;plaintext&quot;</span> <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>,
+                _ <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>
             }
         } <span class='kw'>else</span> {
-            <span class='boolval'>true</span>
+            <span class='boolvalue'>true</span>
         };
 
         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>content</span>) <span class='op'>=</span> <span class='ident'>content</span> {
@@ -608,7 +611,7 @@
 
             <span class='kw'>for</span> <span class='ident'>ret</span> <span class='kw'>in</span> <span class='ident'>content</span> {
                 <span class='kw'>match</span> <span class='ident'>ret</span> {
-                    <span class='ident'>ReturnType</span>::<span class='ident'>String</span>(<span class='ident'>text</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>Text</span>(<span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>new</span>(<span class='ident'>text</span>, <span class='ident'>escape</span>, <span class='boolval'>false</span>)))),
+                    <span class='ident'>ReturnType</span>::<span class='ident'>String</span>(<span class='ident'>text</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>Text</span>(<span class='ident'>Content</span>::<span class='ident'>String</span>(<span class='ident'>Text</span>::<span class='ident'>new</span>(<span class='ident'>text</span>, <span class='ident'>escape</span>, <span class='boolvalue'>false</span>)))),
                     <span class='ident'>ReturnType</span>::<span class='ident'>Placeholder</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>Text</span>(<span class='ident'>Content</span>::<span class='ident'>Placeholder</span>(<span class='ident'>path</span>, <span class='ident'>ty</span>))),
                     <span class='ident'>ReturnType</span>::<span class='ident'>Logic</span>(_) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='string'>&quot;logic can not be used as text&quot;</span>.<span class='ident'>into</span>()),
                     <span class='ident'>ReturnType</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>sink</span>.<span class='ident'>process_token</span>(<span class='ident'>Token</span>::<span class='ident'>Scope</span>(<span class='ident'>scope</span>)),
@@ -682,8 +685,8 @@
         <span class='string'>&quot;param&quot;</span> <span class='op'>|</span>
         <span class='string'>&quot;source&quot;</span> <span class='op'>|</span>
         <span class='string'>&quot;track&quot;</span> <span class='op'>|</span>
-        <span class='string'>&quot;wbr&quot;</span> <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
-        _ <span class='op'>=&gt;</span> <span class='boolval'>false</span>
+        <span class='string'>&quot;wbr&quot;</span> <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>,
+        _ <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>
     }
 }
 </pre>
@@ -710,6 +713,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

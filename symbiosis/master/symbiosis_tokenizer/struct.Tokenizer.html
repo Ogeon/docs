@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
+    
 
     
     
@@ -43,18 +44,23 @@
 
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>symbiosis_tokenizer</a>::<wbr><a class='struct' href=''>Tokenizer</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-1895' class='srclink' href='../src/symbiosis_tokenizer/tokenizer/src/lib.rs.html#72-77' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-1109' class='srclink' href='../src/symbiosis_tokenizer/tokenizer/src/lib.rs.html#73-78' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Tokenizer&lt;T: <a class='trait' href='../symbiosis_tokenizer/trait.TokenSink.html' title='symbiosis_tokenizer::TokenSink'>TokenSink</a>&gt; {
     // some fields omitted
-}</pre><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl&lt;T: <a class='trait' href='../symbiosis_tokenizer/trait.TokenSink.html' title='symbiosis_tokenizer::TokenSink'>TokenSink</a>&gt; <a class='struct' href='../symbiosis_tokenizer/struct.Tokenizer.html' title='symbiosis_tokenizer::Tokenizer'>Tokenizer</a>&lt;T&gt;</code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(sink: T) -&gt; <a class='struct' href='../symbiosis_tokenizer/struct.Tokenizer.html' title='symbiosis_tokenizer::Tokenizer'>Tokenizer</a>&lt;T&gt;</code></h4>
+}</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;T: <a class='trait' href='../symbiosis_tokenizer/trait.TokenSink.html' title='symbiosis_tokenizer::TokenSink'>TokenSink</a>&gt; <a class='struct' href='../symbiosis_tokenizer/struct.Tokenizer.html' title='symbiosis_tokenizer::Tokenizer'>Tokenizer</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1115' class='srclink' href='../src/symbiosis_tokenizer/tokenizer/src/lib.rs.html#80-262' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(sink: T) -&gt; <a class='struct' href='../symbiosis_tokenizer/struct.Tokenizer.html' title='symbiosis_tokenizer::Tokenizer'>Tokenizer</a>&lt;T&gt;</code></h4>
 <h4 id='method.parse_string' class='method'><code>fn <a href='#method.parse_string' class='fnname'>parse_string</a>(&amp;mut self, source: <a class='type' href='../symbiosis_tokenizer/type.StrTendril.html' title='symbiosis_tokenizer::StrTendril'>StrTendril</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../symbiosis_tokenizer/enum.Error.html' title='symbiosis_tokenizer::Error'>Error</a>&gt;</code></h4>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;'a, T: <a class='trait' href='../symbiosis_tokenizer/trait.TokenSink.html' title='symbiosis_tokenizer::TokenSink'>TokenSink</a>&gt; <a class='trait' href='../html5ever/tokenizer/interface/trait.TokenSink.html' title='html5ever::tokenizer::interface::TokenSink'>TokenSink</a> for &amp;'a mut <a class='struct' href='../symbiosis_tokenizer/struct.Tokenizer.html' title='symbiosis_tokenizer::Tokenizer'>Tokenizer</a>&lt;T&gt;</code></h3><div class='impl-items'><h4 id='method.process_token' class='method'><code>fn <a href='../html5ever/tokenizer/interface/trait.TokenSink.html#method.process_token' class='fnname'>process_token</a>(&amp;mut self, token: <a class='enum' href='../html5ever/tokenizer/interface/enum.Token.html' title='html5ever::tokenizer::interface::Token'>HtmlToken</a>)</code></h4>
-<h4 id='method.query_state_change' class='method'><code>fn <a href='../html5ever/tokenizer/interface/trait.TokenSink.html#method.query_state_change' class='fnname'>query_state_change</a>(&amp;mut self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='../html5ever/tokenizer/states/enum.State.html' title='html5ever::tokenizer::states::State'>State</a>&gt;</code></h4>
-<h4 id='method.adjusted_current_node_present_but_not_in_html_namespace' class='method'><code>fn <a href='../html5ever/tokenizer/interface/trait.TokenSink.html#method.adjusted_current_node_present_but_not_in_html_namespace' class='fnname'>adjusted_current_node_present_but_not_in_html_namespace</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
-</div></section>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, T: <a class='trait' href='../symbiosis_tokenizer/trait.TokenSink.html' title='symbiosis_tokenizer::TokenSink'>TokenSink</a>&gt; <a class='trait' href='../html5ever/tokenizer/interface/trait.TokenSink.html' title='html5ever::tokenizer::interface::TokenSink'>TokenSink</a> for &amp;'a mut <a class='struct' href='../symbiosis_tokenizer/struct.Tokenizer.html' title='symbiosis_tokenizer::Tokenizer'>Tokenizer</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1210' class='srclink' href='../src/symbiosis_tokenizer/tokenizer/src/lib.rs.html#264-296' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.process_token' class='method'><code>fn <a href='../html5ever/tokenizer/interface/trait.TokenSink.html#tymethod.process_token' class='fnname'>process_token</a>(&amp;mut self, token: <a class='enum' href='../html5ever/tokenizer/interface/enum.Token.html' title='html5ever::tokenizer::interface::Token'>HtmlToken</a>)</code></h4>
+<div class='docblock'><p>Process a token.</p>
+</div><h4 id='method.query_state_change' class='method'><code>fn <a href='../html5ever/tokenizer/interface/trait.TokenSink.html#method.query_state_change' class='fnname'>query_state_change</a>(&amp;mut self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='../html5ever/tokenizer/states/enum.State.html' title='html5ever::tokenizer::states::State'>State</a>&gt;</code></h4>
+<div class='docblock'><p>The tokenizer will call this after emitting any tag. This allows the tree builder to change the tokenizer&#39;s state. By default no state changes occur. <a href="../html5ever/tokenizer/interface/trait.TokenSink.html#method.query_state_change">Read more</a></p>
+</div><h4 id='method.adjusted_current_node_present_but_not_in_html_namespace' class='method'><code>fn <a href='../html5ever/tokenizer/interface/trait.TokenSink.html#method.adjusted_current_node_present_but_not_in_html_namespace' class='fnname'>adjusted_current_node_present_but_not_in_html_namespace</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>Used in the markup declaration open state. By default, this always returns false and thus all CDATA sections are tokenized as bogus comments. <a href="https://html.spec.whatwg.org/multipage/#markup-declaration-open-state">https://html.spec.whatwg.org/multipage/#markup-declaration-open-state</a> <a href="../html5ever/tokenizer/interface/trait.TokenSink.html#method.adjusted_current_node_present_but_not_in_html_namespace">Read more</a></p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -77,6 +83,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/string_cache-0.2.13/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/string_cache-0.2.23/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -115,8 +116,6 @@
 <span id="72">72</span>
 <span id="73">73</span>
 <span id="74">74</span>
-<span id="75">75</span>
-<span id="76">76</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The Servo Project Developers. See the COPYRIGHT</span>
 <span class='comment'>// file at the top-level directory of this distribution.</span>
@@ -133,31 +132,29 @@
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>test</span>, <span class='ident'>deny</span>(<span class='ident'>warnings</span>))]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>all</span>(<span class='ident'>test</span>, <span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>), <span class='ident'>feature</span>(<span class='ident'>test</span>, <span class='ident'>filling_drop</span>))]</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>, <span class='ident'>feature</span>(<span class='ident'>unsafe_no_drop_flag</span>))]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;heap_size&quot;</span>, <span class='ident'>feature</span>(<span class='ident'>plugin</span>, <span class='ident'>custom_derive</span>))]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;heap_size&quot;</span>, <span class='ident'>plugin</span>(<span class='ident'>heapsize_plugin</span>))]</span>
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>all</span>(<span class='ident'>test</span>, <span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;unstable&quot;</span>))]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>test</span>;
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;log-events&quot;</span>)]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustc_serialize</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;heap_size&quot;</span>)]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>heapsize</span>;
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;heapsize&quot;</span>)]</span> <span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>heapsize</span>;
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rand</span>;
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>lazy_static</span>;
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span> <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>debug_unreachable</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>serde</span>;
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>phf_shared</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>atom</span>::<span class='ident'>Atom</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>namespace</span>::{<span class='ident'>Namespace</span>, <span class='ident'>QualName</span>};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>atom</span>::{<span class='ident'>Atom</span>, <span class='ident'>BorrowedAtom</span>};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>namespace</span>::{<span class='ident'>BorrowedNamespace</span>, <span class='ident'>Namespace</span>, <span class='ident'>QualName</span>};
 
 <span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>qualname</span> {
     (<span class='string'>&quot;&quot;</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>local</span>:<span class='ident'>tt</span>) <span class='op'>=&gt;</span> {
-        <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>namespace</span>::<span class='ident'>QualName</span> {
+        <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>namespace</span>::<span class='ident'>QualName</span> {
             <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(),
             <span class='ident'>local</span>: <span class='macro'>atom</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>local</span>),
         }
     };
     (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ns</span>:<span class='ident'>tt</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>local</span>:<span class='ident'>tt</span>) <span class='op'>=&gt;</span> {
-        <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>namespace</span>::<span class='ident'>QualName</span> {
+        <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>namespace</span>::<span class='ident'>QualName</span> {
             <span class='ident'>ns</span>: <span class='macro'>ns</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>ns</span>),
             <span class='ident'>local</span>: <span class='macro'>atom</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>local</span>),
         }
@@ -166,13 +163,13 @@
 
 <span class='attribute'>#[<span class='ident'>macro_export</span>]</span>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>ns</span> {
-    () <span class='op'>=&gt;</span> { <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>Namespace</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>)) };
-    (<span class='ident'>html</span>) <span class='op'>=&gt;</span> { <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>Namespace</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;http://www.w3.org/1999/xhtml&quot;</span>)) };
-    (<span class='ident'>xml</span>) <span class='op'>=&gt;</span> { <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>Namespace</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;http://www.w3.org/XML/1998/namespace&quot;</span>)) };
-    (<span class='ident'>xmlns</span>) <span class='op'>=&gt;</span> { <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>Namespace</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;http://www.w3.org/2000/xmlns/&quot;</span>)) };
-    (<span class='ident'>xlink</span>) <span class='op'>=&gt;</span> { <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>Namespace</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;http://www.w3.org/1999/xlink&quot;</span>)) };
-    (<span class='ident'>svg</span>) <span class='op'>=&gt;</span> { <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>Namespace</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;http://www.w3.org/2000/svg&quot;</span>)) };
-    (<span class='ident'>mathml</span>) <span class='op'>=&gt;</span> { <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>crate</span>::<span class='ident'>Namespace</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;http://www.w3.org/1998/Math/MathML&quot;</span>)) };
+    () <span class='op'>=&gt;</span> { <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>Namespace</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;&quot;</span>)) };
+    (<span class='ident'>html</span>) <span class='op'>=&gt;</span> { <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>Namespace</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;http://www.w3.org/1999/xhtml&quot;</span>)) };
+    (<span class='ident'>xml</span>) <span class='op'>=&gt;</span> { <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>Namespace</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;http://www.w3.org/XML/1998/namespace&quot;</span>)) };
+    (<span class='ident'>xmlns</span>) <span class='op'>=&gt;</span> { <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>Namespace</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;http://www.w3.org/2000/xmlns/&quot;</span>)) };
+    (<span class='ident'>xlink</span>) <span class='op'>=&gt;</span> { <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>Namespace</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;http://www.w3.org/1999/xlink&quot;</span>)) };
+    (<span class='ident'>svg</span>) <span class='op'>=&gt;</span> { <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>Namespace</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;http://www.w3.org/2000/svg&quot;</span>)) };
+    (<span class='ident'>mathml</span>) <span class='op'>=&gt;</span> { <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>Namespace</span>(<span class='macro'>atom</span><span class='macro'>!</span>(<span class='string'>&quot;http://www.w3.org/1998/Math/MathML&quot;</span>)) };
 }
 
 <span class='macro'>include</span><span class='macro'>!</span>(<span class='macro'>concat</span><span class='macro'>!</span>(<span class='macro'>env</span><span class='macro'>!</span>(<span class='string'>&quot;OUT_DIR&quot;</span>), <span class='string'>&quot;/atom_macro.rs&quot;</span>));
@@ -218,6 +215,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

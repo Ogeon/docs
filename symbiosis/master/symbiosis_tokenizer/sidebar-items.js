@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Error",""]],"mod":[["codegen",""],["fragment",""],["parser",""]],"struct":[["Tokenizer",""]],"trait":[["TokenSink",""]],"type":[["StrTendril",""]]});
+initSidebarItems({"enum":[["Error",""]],"mod":[["codegen",""],["fragment",""]],"struct":[["Tokenizer",""]],"trait":[["TokenSink",""]],"type":[["StrTendril",""]]});

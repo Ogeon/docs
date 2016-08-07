@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,31 +44,30 @@
 
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>symbiosis</a>::<wbr><a href='index.html'>fragment</a>::<wbr><a class='trait' href=''>Fragment</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-1599' class='srclink' href='../../symbiosis_tokenizer/fragment/trait.Fragment.html?gotosrc=1599' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-892' class='srclink' href='../../symbiosis_tokenizer/fragment/trait.Fragment.html?gotosrc=892' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Fragment {
     fn <a href='#tymethod.identifier' class='fnname'>identifier</a>(&amp;self) -&gt; &amp;'static <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>;
-    fn <a href='#tymethod.pattern' class='fnname'>pattern</a>(&amp;self) -&gt; <a class='struct' href='../../symbiosis/fragment/pattern/struct.Pattern.html' title='symbiosis::fragment::pattern::Pattern'>Pattern</a>;
-    fn <a href='#tymethod.process' class='fnname'>process</a>(&amp;self, args: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../symbiosis/fragment/pattern/enum.Argument.html' title='symbiosis::fragment::pattern::Argument'>Argument</a>&gt;) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../symbiosis/fragment/enum.ReturnType.html' title='symbiosis::fragment::ReturnType'>ReturnType</a>, <a class='struct' href='../../symbiosis/fragment/struct.Error.html' title='symbiosis::fragment::Error'>Error</a>&gt;;
+    fn <a href='#tymethod.process' class='fnname'>process</a>(&amp;self, args: &amp;mut <a class='struct' href='../../symbiosis/fragment/struct.Parser.html' title='symbiosis::fragment::Parser'>Parser</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../symbiosis/fragment/enum.ReturnType.html' title='symbiosis::fragment::ReturnType'>ReturnType</a>, <a class='struct' href='../../symbiosis/fragment/struct.Error.html' title='symbiosis::fragment::Error'>Error</a>&gt;;
 }</pre>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.identifier' class='method stab '><code>fn <a href='#tymethod.identifier' class='fnname'>identifier</a>(&amp;self) -&gt; &amp;'static <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></h3><h3 id='tymethod.pattern' class='method stab '><code>fn <a href='#tymethod.pattern' class='fnname'>pattern</a>(&amp;self) -&gt; <a class='struct' href='../../symbiosis/fragment/pattern/struct.Pattern.html' title='symbiosis::fragment::pattern::Pattern'>Pattern</a></code></h3><h3 id='tymethod.process' class='method stab '><code>fn <a href='#tymethod.process' class='fnname'>process</a>(&amp;self, args: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../symbiosis/fragment/pattern/enum.Argument.html' title='symbiosis::fragment::pattern::Argument'>Argument</a>&gt;) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../symbiosis/fragment/enum.ReturnType.html' title='symbiosis::fragment::ReturnType'>ReturnType</a>, <a class='struct' href='../../symbiosis/fragment/struct.Error.html' title='symbiosis::fragment::Error'>Error</a>&gt;</code></h3></div>
+        <h3 id='tymethod.identifier' class='method stab '><code>fn <a href='#tymethod.identifier' class='fnname'>identifier</a>(&amp;self) -&gt; &amp;'static <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></h3><h3 id='tymethod.process' class='method stab '><code>fn <a href='#tymethod.process' class='fnname'>process</a>(&amp;self, args: &amp;mut <a class='struct' href='../../symbiosis/fragment/struct.Parser.html' title='symbiosis::fragment::Parser'>Parser</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../symbiosis/fragment/enum.ReturnType.html' title='symbiosis::fragment::ReturnType'>ReturnType</a>, <a class='struct' href='../../symbiosis/fragment/struct.Error.html' title='symbiosis::fragment::Error'>Error</a>&gt;</code></h3></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;F&gt; <a class='trait' href='../../symbiosis/fragment/trait.Fragment.html' title='symbiosis::fragment::Fragment'>Fragment</a> for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a>&amp;'static <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, F<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a> <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='enum' href='../../symbiosis/fragment/pattern/enum.Argument.html' title='symbiosis::fragment::pattern::Argument'>Argument</a>&gt;) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../symbiosis/fragment/enum.ReturnType.html' title='symbiosis::fragment::ReturnType'>ReturnType</a>, <a class='struct' href='../../symbiosis/fragment/struct.Error.html' title='symbiosis::fragment::Error'>Error</a>&gt;</span></code></li>
-<li><code>impl&lt;'a, F&gt; <a class='trait' href='../../symbiosis/fragment/trait.Fragment.html' title='symbiosis::fragment::Fragment'>Fragment</a> for &amp;'a F <span class='where'>where F: <a class='trait' href='../../symbiosis/fragment/trait.Fragment.html' title='symbiosis::fragment::Fragment'>Fragment</a></span></code></li>
-<li><code>impl <a class='trait' href='../../symbiosis/fragment/trait.Fragment.html' title='symbiosis::fragment::Fragment'>Fragment</a> for <a class='struct' href='../../symbiosis/fragment/struct.If.html' title='symbiosis::fragment::If'>If</a></code></li>
-<li><code>impl <a class='trait' href='../../symbiosis/fragment/trait.Fragment.html' title='symbiosis::fragment::Fragment'>Fragment</a> for <a class='struct' href='../../symbiosis/fragment/struct.And.html' title='symbiosis::fragment::And'>And</a></code></li>
-<li><code>impl <a class='trait' href='../../symbiosis/fragment/trait.Fragment.html' title='symbiosis::fragment::Fragment'>Fragment</a> for <a class='struct' href='../../symbiosis/fragment/struct.Or.html' title='symbiosis::fragment::Or'>Or</a></code></li>
-<li><code>impl <a class='trait' href='../../symbiosis/fragment/trait.Fragment.html' title='symbiosis::fragment::Fragment'>Fragment</a> for <a class='struct' href='../../symbiosis/fragment/struct.Not.html' title='symbiosis::fragment::Not'>Not</a></code></li>
-<li><code>impl <a class='trait' href='../../symbiosis/fragment/trait.Fragment.html' title='symbiosis::fragment::Fragment'>Fragment</a> for <a class='struct' href='../../symbiosis/fragment/struct.ForEach.html' title='symbiosis::fragment::ForEach'>ForEach</a></code></li>
-<li><code>impl <a class='trait' href='../../symbiosis/fragment/trait.Fragment.html' title='symbiosis::fragment::Fragment'>Fragment</a> for <a class='struct' href='../../symbiosis/fragment/struct.StructName.html' title='symbiosis::fragment::StructName'>StructName</a></code></li>
+    <li><code>impl&lt;F&gt; Fragment for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a>&amp;'static <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>, F<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a> <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(&amp;mut <a class='struct' href='../../symbiosis/fragment/struct.Parser.html' title='symbiosis::fragment::Parser'>Parser</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='enum' href='../../symbiosis/fragment/enum.ReturnType.html' title='symbiosis::fragment::ReturnType'>ReturnType</a>, <a class='struct' href='../../symbiosis/fragment/struct.Error.html' title='symbiosis::fragment::Error'>Error</a>&gt;</span></code></li>
+<li><code>impl&lt;'a, F&gt; Fragment for &amp;'a F <span class='where'>where F: <a class='trait' href='../../symbiosis/fragment/trait.Fragment.html' title='symbiosis::fragment::Fragment'>Fragment</a></span></code></li>
+<li><code>impl Fragment for <a class='struct' href='../../symbiosis/fragment/struct.If.html' title='symbiosis::fragment::If'>If</a></code></li>
+<li><code>impl Fragment for <a class='struct' href='../../symbiosis/fragment/struct.And.html' title='symbiosis::fragment::And'>And</a></code></li>
+<li><code>impl Fragment for <a class='struct' href='../../symbiosis/fragment/struct.Or.html' title='symbiosis::fragment::Or'>Or</a></code></li>
+<li><code>impl Fragment for <a class='struct' href='../../symbiosis/fragment/struct.Not.html' title='symbiosis::fragment::Not'>Not</a></code></li>
+<li><code>impl Fragment for <a class='struct' href='../../symbiosis/fragment/struct.ForEach.html' title='symbiosis::fragment::ForEach'>ForEach</a></code></li>
+<li><code>impl Fragment for <a class='struct' href='../../symbiosis/fragment/struct.StructName.html' title='symbiosis::fragment::StructName'>StructName</a></code></li>
 </ul><script type="text/javascript" async
-                              src="../../implementors/symbiosis_tokenizer/fragment/trait.Fragment.js">
-                      </script></section>
+                         src="../../implementors/symbiosis_tokenizer/fragment/trait.Fragment.js">
+                 </script></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -90,6 +90,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

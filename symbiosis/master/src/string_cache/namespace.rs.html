@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/string_cache-0.2.13/src/namespace.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/string_cache-0.2.23/src/namespace.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>namespace.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -110,6 +111,26 @@
 <span id="67">67</span>
 <span id="68">68</span>
 <span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
+<span id="81">81</span>
+<span id="82">82</span>
+<span id="83">83</span>
+<span id="84">84</span>
+<span id="85">85</span>
+<span id="86">86</span>
+<span id="87">87</span>
+<span id="88">88</span>
+<span id="89">89</span>
 </pre><pre class='rust '>
 <span class='comment'>// Copyright 2014 The Servo Project Developers. See the COPYRIGHT</span>
 <span class='comment'>// file at the top-level directory of this distribution.</span>
@@ -123,21 +144,41 @@
 <span class='doccomment'>//! **Note:** This may move as string-cache becomes less Web-specific.</span>
 
 <span class='kw'>use</span> <span class='ident'>atom</span>::<span class='ident'>Atom</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>;
 
 <span class='doccomment'>/// An atom that is meant to represent a namespace in the HTML / XML sense.</span>
 <span class='doccomment'>/// Whether a given string represents a namespace is contextual, so this is</span>
 <span class='doccomment'>/// a transparent wrapper that will not catch all mistakes.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;heap_size&quot;</span>, <span class='ident'>derive</span>(<span class='ident'>HeapSizeOf</span>))]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Default</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Namespace</span>(<span class='kw'>pub</span> <span class='ident'>Atom</span>);
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;heapsize&quot;</span>)]</span>
+<span class='macro'>known_heap_size</span><span class='macro'>!</span>(<span class='number'>0</span>, <span class='ident'>Namespace</span>);
+
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>BorrowedNamespace</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw'>pub</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Namespace</span>);
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>ops</span>::<span class='ident'>Deref</span> <span class='kw'>for</span> <span class='ident'>BorrowedNamespace</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>type</span> <span class='ident'>Target</span> <span class='op'>=</span> <span class='ident'>Namespace</span>;
+    <span class='kw'>fn</span> <span class='ident'>deref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Namespace</span> {
+        <span class='self'>self</span>.<span class='number'>0</span>
+    }
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>PartialEq</span><span class='op'>&lt;</span><span class='ident'>Namespace</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>BorrowedNamespace</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>eq</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>Namespace</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
+        <span class='self'>self</span>.<span class='number'>0</span> <span class='op'>==</span> <span class='ident'>other</span>
+    }
+}
 
 <span class='doccomment'>/// A name with a namespace.</span>
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>PartialEq</span>, <span class='ident'>Eq</span>, <span class='ident'>PartialOrd</span>, <span class='ident'>Ord</span>, <span class='ident'>Hash</span>, <span class='ident'>Debug</span>, <span class='ident'>Clone</span>)]</span>
-<span class='attribute'>#[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;heap_size&quot;</span>, <span class='ident'>derive</span>(<span class='ident'>HeapSizeOf</span>))]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>QualName</span> {
     <span class='kw'>pub</span> <span class='ident'>ns</span>: <span class='ident'>Namespace</span>,
     <span class='kw'>pub</span> <span class='ident'>local</span>: <span class='ident'>Atom</span>,
 }
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;heapsize&quot;</span>)]</span>
+<span class='macro'>known_heap_size</span><span class='macro'>!</span>(<span class='number'>0</span>, <span class='ident'>QualName</span>);
 
 <span class='kw'>impl</span> <span class='ident'>QualName</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
@@ -151,7 +192,7 @@
 
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>tests</span> {
-    <span class='kw'>use</span> <span class='ident'>super</span>::{<span class='ident'>Namespace</span>, <span class='ident'>QualName</span>};
+    <span class='kw'>use</span> <span class='kw'>super</span>::{<span class='ident'>Namespace</span>, <span class='ident'>QualName</span>};
     <span class='kw'>use</span> <span class='ident'>Atom</span>;
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -204,6 +245,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

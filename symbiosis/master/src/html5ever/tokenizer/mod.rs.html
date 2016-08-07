@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/html5ever-0.5.4/src/tokenizer/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/html5ever-0.5.4/src/tokenizer/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
 
     
     
@@ -1489,9 +1490,9 @@
 <span class='kw'>impl</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>TokenizerOpts</span> {
     <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>TokenizerOpts</span> {
         <span class='ident'>TokenizerOpts</span> {
-            <span class='ident'>exact_errors</span>: <span class='boolval'>false</span>,
-            <span class='ident'>discard_bom</span>: <span class='boolval'>true</span>,
-            <span class='ident'>profile</span>: <span class='boolval'>false</span>,
+            <span class='ident'>exact_errors</span>: <span class='boolvalue'>false</span>,
+            <span class='ident'>discard_bom</span>: <span class='boolvalue'>true</span>,
+            <span class='ident'>profile</span>: <span class='boolvalue'>false</span>,
             <span class='ident'>initial_state</span>: <span class='prelude-val'>None</span>,
             <span class='ident'>last_start_tag_name</span>: <span class='prelude-val'>None</span>,
         }
@@ -1584,14 +1585,14 @@
             <span class='ident'>state</span>: <span class='ident'>state</span>,
             <span class='ident'>char_ref_tokenizer</span>: <span class='prelude-val'>None</span>,
             <span class='ident'>input_buffers</span>: <span class='ident'>BufferQueue</span>::<span class='ident'>new</span>(),
-            <span class='ident'>at_eof</span>: <span class='boolval'>false</span>,
+            <span class='ident'>at_eof</span>: <span class='boolvalue'>false</span>,
             <span class='ident'>current_char</span>: <span class='string'>&#39;\0&#39;</span>,
-            <span class='ident'>reconsume</span>: <span class='boolval'>false</span>,
-            <span class='ident'>ignore_lf</span>: <span class='boolval'>false</span>,
+            <span class='ident'>reconsume</span>: <span class='boolvalue'>false</span>,
+            <span class='ident'>ignore_lf</span>: <span class='boolvalue'>false</span>,
             <span class='ident'>discard_bom</span>: <span class='ident'>discard_bom</span>,
             <span class='ident'>current_tag_kind</span>: <span class='ident'>StartTag</span>,
             <span class='ident'>current_tag_name</span>: <span class='ident'>StrTendril</span>::<span class='ident'>new</span>(),
-            <span class='ident'>current_tag_self_closing</span>: <span class='boolval'>false</span>,
+            <span class='ident'>current_tag_self_closing</span>: <span class='boolvalue'>false</span>,
             <span class='ident'>current_tag_attrs</span>: <span class='macro'>vec</span><span class='macro'>!</span>(),
             <span class='ident'>current_attr_name</span>: <span class='ident'>StrTendril</span>::<span class='ident'>new</span>(),
             <span class='ident'>current_attr_value</span>: <span class='ident'>StrTendril</span>::<span class='ident'>new</span>(),
@@ -1648,21 +1649,21 @@
     <span class='comment'>// &#39;c&#39; that we already consumed from the buffers.</span>
     <span class='kw'>fn</span> <span class='ident'>get_preprocessed_char</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>c</span>: <span class='ident'>char</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> {
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>ignore_lf</span> {
-            <span class='self'>self</span>.<span class='ident'>ignore_lf</span> <span class='op'>=</span> <span class='boolval'>false</span>;
+            <span class='self'>self</span>.<span class='ident'>ignore_lf</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
             <span class='kw'>if</span> <span class='ident'>c</span> <span class='op'>==</span> <span class='string'>&#39;\n&#39;</span> {
                 <span class='ident'>c</span> <span class='op'>=</span> <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>input_buffers</span>.<span class='ident'>next</span>(), <span class='prelude-val'>None</span>);
             }
         }
 
         <span class='kw'>if</span> <span class='ident'>c</span> <span class='op'>==</span> <span class='string'>&#39;\r&#39;</span> {
-            <span class='self'>self</span>.<span class='ident'>ignore_lf</span> <span class='op'>=</span> <span class='boolval'>true</span>;
+            <span class='self'>self</span>.<span class='ident'>ignore_lf</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
             <span class='ident'>c</span> <span class='op'>=</span> <span class='string'>&#39;\n&#39;</span>;
         }
 
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>opts</span>.<span class='ident'>exact_errors</span> <span class='op'>&amp;&amp;</span> <span class='kw'>match</span> <span class='ident'>c</span> <span class='kw'>as</span> <span class='ident'>u32</span> {
-            <span class='number'>0x01</span>...<span class='number'>0x08</span> <span class='op'>|</span> <span class='number'>0x0B</span> <span class='op'>|</span> <span class='number'>0x0E</span>...<span class='number'>0x1F</span> <span class='op'>|</span> <span class='number'>0x7F</span>...<span class='number'>0x9F</span> <span class='op'>|</span> <span class='number'>0xFDD0</span>...<span class='number'>0xFDEF</span> <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
-            <span class='ident'>n</span> <span class='kw'>if</span> (<span class='ident'>n</span> <span class='kw-2'>&amp;</span> <span class='number'>0xFFFE</span>) <span class='op'>==</span> <span class='number'>0xFFFE</span> <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
-            _ <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
+            <span class='number'>0x01</span>...<span class='number'>0x08</span> <span class='op'>|</span> <span class='number'>0x0B</span> <span class='op'>|</span> <span class='number'>0x0E</span>...<span class='number'>0x1F</span> <span class='op'>|</span> <span class='number'>0x7F</span>...<span class='number'>0x9F</span> <span class='op'>|</span> <span class='number'>0xFDD0</span>...<span class='number'>0xFDEF</span> <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>,
+            <span class='ident'>n</span> <span class='kw'>if</span> (<span class='ident'>n</span> <span class='kw-2'>&amp;</span> <span class='number'>0xFFFE</span>) <span class='op'>==</span> <span class='number'>0xFFFE</span> <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>,
+            _ <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>,
         } {
             <span class='kw'>let</span> <span class='ident'>msg</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Bad character {}&quot;</span>, <span class='ident'>c</span>);
             <span class='self'>self</span>.<span class='ident'>emit_error</span>(<span class='ident'>Cow</span>::<span class='ident'>Owned</span>(<span class='ident'>msg</span>));
@@ -1677,7 +1678,7 @@
     <span class='comment'>// Get the next input character, if one is available.</span>
     <span class='kw'>fn</span> <span class='ident'>get_char</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>char</span><span class='op'>&gt;</span> {
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>reconsume</span> {
-            <span class='self'>self</span>.<span class='ident'>reconsume</span> <span class='op'>=</span> <span class='boolval'>false</span>;
+            <span class='self'>self</span>.<span class='ident'>reconsume</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
             <span class='prelude-val'>Some</span>(<span class='self'>self</span>.<span class='ident'>current_char</span>)
         } <span class='kw'>else</span> {
             <span class='self'>self</span>.<span class='ident'>input_buffers</span>.<span class='ident'>next</span>()
@@ -1713,7 +1714,7 @@
     <span class='comment'>// character.</span>
     <span class='kw'>fn</span> <span class='ident'>eat</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>pat</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>eq</span>: <span class='kw'>fn</span>(<span class='kw-2'>&amp;</span><span class='ident'>u8</span>, <span class='kw-2'>&amp;</span><span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span> {
         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>input_buffers</span>.<span class='ident'>eat</span>(<span class='ident'>pat</span>, <span class='ident'>eq</span>) {
-            <span class='prelude-val'>None</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>at_eof</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='boolval'>false</span>),
+            <span class='prelude-val'>None</span> <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>at_eof</span> <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='boolvalue'>false</span>),
             <span class='ident'>r</span> <span class='op'>=&gt;</span> <span class='ident'>r</span>,
         }
     }
@@ -1729,9 +1730,9 @@
                 <span class='kw'>let</span> <span class='ident'>new</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>state_profile</span>.<span class='ident'>get_mut</span>(<span class='kw-2'>&amp;</span><span class='ident'>state</span>) {
                     <span class='prelude-val'>Some</span>(<span class='ident'>x</span>) <span class='op'>=&gt;</span> {
                         <span class='op'>*</span><span class='ident'>x</span> <span class='op'>+=</span> <span class='ident'>dt</span>;
-                        <span class='boolval'>false</span>
+                        <span class='boolvalue'>false</span>
                     }
-                    <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
+                    <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>,
                 };
                 <span class='kw'>if</span> <span class='ident'>new</span> {
                     <span class='comment'>// do this here because of borrow shenanigans</span>
@@ -1824,7 +1825,7 @@
 
     <span class='kw'>fn</span> <span class='ident'>discard_tag</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
         <span class='self'>self</span>.<span class='ident'>current_tag_name</span>.<span class='ident'>clear</span>();
-        <span class='self'>self</span>.<span class='ident'>current_tag_self_closing</span> <span class='op'>=</span> <span class='boolval'>false</span>;
+        <span class='self'>self</span>.<span class='ident'>current_tag_self_closing</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
         <span class='self'>self</span>.<span class='ident'>current_tag_attrs</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>();
     }
 
@@ -1839,7 +1840,7 @@
             <span class='prelude-val'>Some</span>(<span class='ident'>last</span>) <span class='op'>=&gt;</span>
                 (<span class='self'>self</span>.<span class='ident'>current_tag_kind</span> <span class='op'>==</span> <span class='ident'>EndTag</span>)
                 <span class='op'>&amp;&amp;</span> (<span class='op'>*</span><span class='self'>self</span>.<span class='ident'>current_tag_name</span> <span class='op'>==</span> <span class='op'>*</span><span class='op'>*</span><span class='ident'>last</span>),
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
+            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>,
         }
     }
 
@@ -1953,7 +1954,7 @@
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>push_doctype_name</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span>        ) <span class='op'>=&gt;</span> ( <span class='ident'>option_push</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_doctype</span>.<span class='ident'>name</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);      );
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>push_doctype_id</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>:<span class='ident'>expr</span> ) <span class='op'>=&gt;</span> ( <span class='ident'>option_push</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>doctype_id</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k</span>), <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>c</span>);                 );
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>clear_doctype_id</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k</span>:<span class='ident'>ident</span>        ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>clear_doctype_id</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k</span>);                            );
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>force_quirks</span>                     ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_doctype</span>.<span class='ident'>force_quirks</span> <span class='op'>=</span> <span class='boolval'>true</span>;             );
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>force_quirks</span>                     ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>current_doctype</span>.<span class='ident'>force_quirks</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;             );
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>emit_doctype</span>                     ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>emit_current_doctype</span>();                          );
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>error</span>                            ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>bad_char_error</span>();                                );
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>error_eof</span>                        ) <span class='op'>=&gt;</span> ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>bad_eof_error</span>();                                 );
@@ -1982,25 +1983,25 @@
 
     <span class='comment'>// These can only come at the end.</span>
 
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>to</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>:<span class='ident'>ident</span>                    ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>states</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>; <span class='kw'>return</span> <span class='boolval'>true</span>;           });
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>to</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>:<span class='ident'>expr</span>           ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>states</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>); <span class='kw'>return</span> <span class='boolval'>true</span>;      });
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>to</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k2</span>:<span class='ident'>expr</span> ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>states</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k2</span>)); <span class='kw'>return</span> <span class='boolval'>true</span>; });
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>to</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>:<span class='ident'>ident</span>                    ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>states</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>; <span class='kw'>return</span> <span class='boolvalue'>true</span>;           });
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>to</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>:<span class='ident'>expr</span>           ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>states</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>); <span class='kw'>return</span> <span class='boolvalue'>true</span>;      });
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>to</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k2</span>:<span class='ident'>expr</span> ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>states</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k2</span>)); <span class='kw'>return</span> <span class='boolvalue'>true</span>; });
 
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>reconsume</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>:<span class='ident'>ident</span>                    ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>reconsume</span> <span class='op'>=</span> <span class='boolval'>true</span>; <span class='macro'>go</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>: <span class='ident'>to</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>);         });
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>reconsume</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>:<span class='ident'>expr</span>           ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>reconsume</span> <span class='op'>=</span> <span class='boolval'>true</span>; <span class='macro'>go</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>: <span class='ident'>to</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>);     });
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>reconsume</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k2</span>:<span class='ident'>expr</span> ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>reconsume</span> <span class='op'>=</span> <span class='boolval'>true</span>; <span class='macro'>go</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>: <span class='ident'>to</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k2</span>); });
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>reconsume</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>:<span class='ident'>ident</span>                    ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>reconsume</span> <span class='op'>=</span> <span class='boolvalue'>true</span>; <span class='macro'>go</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>: <span class='ident'>to</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>);         });
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>reconsume</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>:<span class='ident'>expr</span>           ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>reconsume</span> <span class='op'>=</span> <span class='boolvalue'>true</span>; <span class='macro'>go</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>: <span class='ident'>to</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>);     });
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>reconsume</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span>:<span class='ident'>ident</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k2</span>:<span class='ident'>expr</span> ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>reconsume</span> <span class='op'>=</span> <span class='boolvalue'>true</span>; <span class='macro'>go</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>: <span class='ident'>to</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k1</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>k2</span>); });
 
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>consume_char_ref</span>             ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>consume_char_ref</span>(<span class='prelude-val'>None</span>); <span class='kw'>return</span> <span class='boolval'>true</span>;         });
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>consume_char_ref</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>addnl</span>:<span class='ident'>expr</span> ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>consume_char_ref</span>(<span class='prelude-val'>Some</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>addnl</span>)); <span class='kw'>return</span> <span class='boolval'>true</span>; });
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>consume_char_ref</span>             ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>consume_char_ref</span>(<span class='prelude-val'>None</span>); <span class='kw'>return</span> <span class='boolvalue'>true</span>;         });
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>consume_char_ref</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>addnl</span>:<span class='ident'>expr</span> ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>consume_char_ref</span>(<span class='prelude-val'>Some</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>addnl</span>)); <span class='kw'>return</span> <span class='boolvalue'>true</span>; });
 
     <span class='comment'>// We have a default next state after emitting a tag, but the sink can override.</span>
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>emit_tag</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>:<span class='ident'>ident</span> ) <span class='op'>=&gt;</span> ({
         <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>states</span>::<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>s</span>;
         <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>emit_current_tag</span>();
-        <span class='kw'>return</span> <span class='boolval'>true</span>;
+        <span class='kw'>return</span> <span class='boolvalue'>true</span>;
     });
 
-    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>eof</span> ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>emit_eof</span>(); <span class='kw'>return</span> <span class='boolval'>false</span>; });
+    ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : <span class='ident'>eof</span> ) <span class='op'>=&gt;</span> ({ <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>emit_eof</span>(); <span class='kw'>return</span> <span class='boolvalue'>false</span>; });
 
     <span class='comment'>// If nothing else matched, it&#39;s a single command</span>
     ( <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>ident</span> : $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cmd</span>:<span class='ident'>tt</span>)<span class='op'>+</span> ) <span class='op'>=&gt;</span> ( <span class='macro'>sh_trace</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>: $(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>cmd</span>)<span class='op'>+</span>); );
@@ -2019,23 +2020,23 @@
 <span class='comment'>// This is a macro because it can cause early return</span>
 <span class='comment'>// from the function where it is used.</span>
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>get_char</span> ( (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (
-    <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>get_char</span>(), <span class='boolval'>false</span>)
+    <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>get_char</span>(), <span class='boolvalue'>false</span>)
 ));
 
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>peek</span> ( (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (
-    <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>peek</span>(), <span class='boolval'>false</span>)
+    <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>peek</span>(), <span class='boolvalue'>false</span>)
 ));
 
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>pop_except_from</span> ( (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>set</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (
-    <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>pop_except_from</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>set</span>), <span class='boolval'>false</span>)
+    <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>pop_except_from</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>set</span>), <span class='boolvalue'>false</span>)
 ));
 
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>eat</span> ( (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pat</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (
-    <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>eat</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pat</span>, <span class='ident'>u8</span>::<span class='ident'>eq_ignore_ascii_case</span>), <span class='boolval'>false</span>)
+    <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>eat</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pat</span>, <span class='ident'>u8</span>::<span class='ident'>eq_ignore_ascii_case</span>), <span class='boolvalue'>false</span>)
 ));
 
 <span class='macro'>macro_rules</span><span class='macro'>!</span> <span class='ident'>eat_exact</span> ( (<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>:<span class='ident'>expr</span>, <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pat</span>:<span class='ident'>expr</span>) <span class='op'>=&gt;</span> (
-    <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>eat</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pat</span>, <span class='ident'>u8</span>::<span class='ident'>eq</span>), <span class='boolval'>false</span>)
+    <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>me</span>.<span class='ident'>eat</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pat</span>, <span class='ident'>u8</span>::<span class='ident'>eq</span>), <span class='boolvalue'>false</span>)
 ));
 
 <span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>Sink</span>: <span class='ident'>TokenSink</span><span class='op'>&gt;</span> <span class='ident'>Tokenizer</span><span class='op'>&lt;</span><span class='ident'>Sink</span><span class='op'>&gt;</span> {
@@ -2053,7 +2054,7 @@
             <span class='comment'>// the tokenizer to suspend processing.</span>
             <span class='ident'>states</span>::<span class='ident'>Quiescent</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>state</span> <span class='op'>=</span> <span class='ident'>states</span>::<span class='ident'>Data</span>;
-                <span class='kw'>return</span> <span class='boolval'>false</span>;
+                <span class='kw'>return</span> <span class='boolvalue'>false</span>;
             }
 
             <span class='comment'>//§ data-state</span>
@@ -2392,7 +2393,7 @@
             <span class='comment'>//§ self-closing-start-tag-state</span>
             <span class='ident'>states</span>::<span class='ident'>SelfClosingStartTag</span> <span class='op'>=&gt;</span> <span class='kw'>loop</span> { <span class='kw'>match</span> <span class='macro'>get_char</span><span class='macro'>!</span>(<span class='self'>self</span>) {
                 <span class='string'>&#39;&gt;&#39;</span> <span class='op'>=&gt;</span> {
-                    <span class='self'>self</span>.<span class='ident'>current_tag_self_closing</span> <span class='op'>=</span> <span class='boolval'>true</span>;
+                    <span class='self'>self</span>.<span class='ident'>current_tag_self_closing</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
                     <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>emit_tag</span> <span class='ident'>Data</span>);
                 }
                 _ <span class='op'>=&gt;</span> <span class='macro'>go</span><span class='macro'>!</span>(<span class='self'>self</span>: <span class='ident'>error</span>; <span class='ident'>reconsume</span> <span class='ident'>BeforeAttributeName</span>),
@@ -2599,11 +2600,11 @@
         <span class='kw'>let</span> <span class='ident'>progress</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>outcome</span> {
             <span class='ident'>char_ref</span>::<span class='ident'>Done</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>process_char_ref</span>(<span class='ident'>tok</span>.<span class='ident'>get_result</span>());
-                <span class='kw'>return</span> <span class='boolval'>true</span>;
+                <span class='kw'>return</span> <span class='boolvalue'>true</span>;
             }
 
-            <span class='ident'>char_ref</span>::<span class='ident'>Stuck</span> <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
-            <span class='ident'>char_ref</span>::<span class='ident'>Progress</span> <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
+            <span class='ident'>char_ref</span>::<span class='ident'>Stuck</span> <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>,
+            <span class='ident'>char_ref</span>::<span class='ident'>Progress</span> <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>,
         };
 
         <span class='self'>self</span>.<span class='ident'>char_ref_tokenizer</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>tok</span>);
@@ -2646,7 +2647,7 @@
 
         <span class='comment'>// Process all remaining buffered input.</span>
         <span class='comment'>// If we&#39;re waiting for lookahead, we&#39;re not gonna get it.</span>
-        <span class='self'>self</span>.<span class='ident'>at_eof</span> <span class='op'>=</span> <span class='boolval'>true</span>;
+        <span class='self'>self</span>.<span class='ident'>at_eof</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
         <span class='self'>self</span>.<span class='ident'>run</span>();
 
         <span class='kw'>while</span> <span class='self'>self</span>.<span class='ident'>eof_step</span>() {
@@ -2748,7 +2749,7 @@
 <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
 <span class='attribute'>#[<span class='ident'>allow</span>(<span class='ident'>non_snake_case</span>)]</span>
 <span class='kw'>mod</span> <span class='ident'>test</span> {
-    <span class='kw'>use</span> <span class='ident'>super</span>::<span class='ident'>option_push</span>; <span class='comment'>// private items</span>
+    <span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>option_push</span>; <span class='comment'>// private items</span>
     <span class='kw'>use</span> <span class='ident'>tendril</span>::{<span class='ident'>StrTendril</span>, <span class='ident'>SliceExt</span>};
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
@@ -2796,6 +2797,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

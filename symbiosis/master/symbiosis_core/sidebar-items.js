@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["ContentType","Types of template parameter content."],["FragmentKind",""],["Input",""],["Logic","Logic expressions."]],"mod":[["pattern",""]],"struct":[["Params",""],["Path",""],["Slicer",""]],"type":[["StrTendril",""]]});

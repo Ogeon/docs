@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Error",""],["FragmentKind",""],["Input",""],["Token",""]],"fn":[["parse_content",""]],"struct":[["Slicer",""]],"type":[["ParseError",""]]});
+initSidebarItems({"enum":[["ErrorKind",""],["Token",""]],"struct":[["Error",""],["Parser",""]]});

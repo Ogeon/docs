@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,12 +44,12 @@
 
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>tendril</a>::<wbr><a href='index.html'>fmt</a>::<wbr><a class='trait' href=''>CharFormat</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-64' class='srclink' href='../../src/tendril/fmt.rs.html#165-180' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-66' class='srclink' href='../../src/tendril/fmt.rs.html#165-180' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub unsafe trait CharFormat&lt;'a&gt;: <a class='trait' href='../../tendril/fmt/trait.Format.html' title='tendril::fmt::Format'>Format</a> {
-    type Iter: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/trait.Iterator.html' title='core::iter::Iterator'>Iterator</a>&lt;Item=<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.char.html'>char</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a>&gt;;
+    type <a href='#associatedtype.Iter' class='type'>Iter</a>: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html' title='core::iter::iterator::Iterator'>Iterator</a>&lt;Item=<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.char.html'>char</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a>&gt;;
     unsafe fn <a href='#tymethod.char_indices' class='fnname'>char_indices</a>(buf: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; Self::<a class='trait' href='../../tendril/fmt/trait.CharFormat.html' title='tendril::fmt::CharFormat'>Iter</a>;
     fn <a href='#tymethod.encode_char' class='fnname'>encode_char</a>&lt;F&gt;(ch: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.char.html'>char</a>, cont: F) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt; <span class='where'>where F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>)</span>;
 }</pre><div class='docblock'><p>Indicates a format which contains characters from Unicode
@@ -56,7 +57,7 @@
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Iter' class='method stab '><code>type Iter: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/trait.Iterator.html' title='core::iter::Iterator'>Iterator</a>&lt;Item=<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.char.html'>char</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a>&gt;</code></h3><div class='docblock'><p>Iterator for characters and their byte indices.</p>
+        <h3 id='associatedtype.Iter' class='method stab '><code>type <a href='#associatedtype.Iter' class='type'>Iter</a>: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html' title='core::iter::iterator::Iterator'>Iterator</a>&lt;Item=<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.char.html'>char</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a>&gt;</code></h3><div class='docblock'><p>Iterator for characters and their byte indices.</p>
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
@@ -70,12 +71,12 @@ indices.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;'a&gt; <a class='trait' href='../../tendril/fmt/trait.CharFormat.html' title='tendril::fmt::CharFormat'>CharFormat</a>&lt;'a&gt; for <a class='struct' href='../../tendril/fmt/struct.ASCII.html' title='tendril::fmt::ASCII'>ASCII</a></code></li>
-<li><code>impl&lt;'a&gt; <a class='trait' href='../../tendril/fmt/trait.CharFormat.html' title='tendril::fmt::CharFormat'>CharFormat</a>&lt;'a&gt; for <a class='struct' href='../../tendril/fmt/struct.UTF8.html' title='tendril::fmt::UTF8'>UTF8</a></code></li>
-<li><code>impl&lt;'a&gt; <a class='trait' href='../../tendril/fmt/trait.CharFormat.html' title='tendril::fmt::CharFormat'>CharFormat</a>&lt;'a&gt; for <a class='struct' href='../../tendril/fmt/struct.Latin1.html' title='tendril::fmt::Latin1'>Latin1</a></code></li>
+    <li><code>impl&lt;'a&gt; CharFormat&lt;'a&gt; for <a class='struct' href='../../tendril/fmt/struct.ASCII.html' title='tendril::fmt::ASCII'>ASCII</a></code></li>
+<li><code>impl&lt;'a&gt; CharFormat&lt;'a&gt; for <a class='struct' href='../../tendril/fmt/struct.UTF8.html' title='tendril::fmt::UTF8'>UTF8</a></code></li>
+<li><code>impl&lt;'a&gt; CharFormat&lt;'a&gt; for <a class='struct' href='../../tendril/fmt/struct.Latin1.html' title='tendril::fmt::Latin1'>Latin1</a></code></li>
 </ul><script type="text/javascript" async
-                              src="../../implementors/tendril/fmt/trait.CharFormat.js">
-                      </script></section>
+                         src="../../implementors/tendril/fmt/trait.CharFormat.js">
+                 </script></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -98,6 +99,8 @@ indices.</p>
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

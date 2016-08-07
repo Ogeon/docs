@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/html5ever-0.5.4/src/driver.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/html5ever-0.5.4/src/driver.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>driver.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -466,7 +467,7 @@
 
     <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Sink</span>::<span class='ident'>Output</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>finish</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>Output</span> {
+    <span class='kw'>fn</span> <span class='ident'>finish</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
         <span class='self'>self</span>.<span class='ident'>tokenizer</span>.<span class='ident'>end</span>();
         <span class='self'>self</span>.<span class='ident'>tokenizer</span>.<span class='ident'>unwrap</span>().<span class='ident'>unwrap</span>().<span class='ident'>finish</span>()
     }
@@ -477,7 +478,7 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// Use this when your input is bytes that are known to be in the UTF-8 encoding.</span>
     <span class='doccomment'>/// Decoding is lossy, like `String::from_utf8_lossy`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_utf8</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Utf8LossyDecoder</span><span class='op'>&lt;</span><span class='kw'>Self</span><span class='op'>&gt;</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>from_utf8</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Utf8LossyDecoder</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
         <span class='ident'>Utf8LossyDecoder</span>::<span class='ident'>new</span>(<span class='self'>self</span>)
     }
 
@@ -621,7 +622,7 @@
 
     <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>Sink</span>::<span class='ident'>Output</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>finish</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>Output</span> {
+    <span class='kw'>fn</span> <span class='ident'>finish</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
         <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>state</span> {
             <span class='ident'>BytesParserState</span>::<span class='ident'>Initial</span> { <span class='ident'>parser</span> } <span class='op'>=&gt;</span> <span class='ident'>parser</span>.<span class='ident'>finish</span>(),
             <span class='ident'>BytesParserState</span>::<span class='ident'>Buffering</span> { <span class='ident'>parser</span>, <span class='ident'>buffer</span> } <span class='op'>=&gt;</span> {
@@ -664,7 +665,7 @@
     <span class='kw'>use</span> <span class='ident'>serialize</span>::<span class='ident'>serialize</span>;
     <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>iter</span>::<span class='ident'>repeat</span>;
     <span class='kw'>use</span> <span class='ident'>tendril</span>::<span class='ident'>TendrilSink</span>;
-    <span class='kw'>use</span> <span class='ident'>super</span>::<span class='op'>*</span>;
+    <span class='kw'>use</span> <span class='kw'>super</span>::<span class='op'>*</span>;
 
     <span class='attribute'>#[<span class='ident'>test</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>from_utf8</span>() {
@@ -724,6 +725,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

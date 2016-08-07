@@ -4,13 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-88ac128001ac3a9a/tendril-0.2.2/src/fmt.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tendril-0.2.2/src/fmt.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>fmt.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -661,7 +662,7 @@
     <span class='doccomment'>/// You may assume the buffer is a prefix of a valid buffer.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>validate_prefix</span>(<span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='op'>&lt;</span><span class='kw'>Self</span> <span class='kw'>as</span> <span class='ident'>Format</span><span class='op'>&gt;</span>::<span class='ident'>validate</span>(<span class='ident'>buf</span>)
+        <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Format</span><span class='op'>&gt;</span>::<span class='ident'>validate</span>(<span class='ident'>buf</span>)
     }
 
     <span class='doccomment'>/// Check whether the buffer is valid for this format.</span>
@@ -669,7 +670,7 @@
     <span class='doccomment'>/// You may assume the buffer is a suffix of a valid buffer.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>validate_suffix</span>(<span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='op'>&lt;</span><span class='kw'>Self</span> <span class='kw'>as</span> <span class='ident'>Format</span><span class='op'>&gt;</span>::<span class='ident'>validate</span>(<span class='ident'>buf</span>)
+        <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Format</span><span class='op'>&gt;</span>::<span class='ident'>validate</span>(<span class='ident'>buf</span>)
     }
 
     <span class='doccomment'>/// Check whether the buffer is valid for this format.</span>
@@ -679,7 +680,7 @@
     <span class='doccomment'>/// a suffix.</span>
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>validate_subseq</span>(<span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='op'>&lt;</span><span class='kw'>Self</span> <span class='kw'>as</span> <span class='ident'>Format</span><span class='op'>&gt;</span>::<span class='ident'>validate</span>(<span class='ident'>buf</span>)
+        <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Format</span><span class='op'>&gt;</span>::<span class='ident'>validate</span>(<span class='ident'>buf</span>)
     }
 
     <span class='doccomment'>/// Compute any fixup needed when concatenating buffers.</span>
@@ -710,7 +711,7 @@
     <span class='doccomment'>/// may implement a check which is cheaper than validating</span>
     <span class='doccomment'>/// from scratch.</span>
     <span class='kw'>fn</span> <span class='ident'>revalidate_subset</span>(<span class='ident'>x</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='ident'>Self</span>::<span class='ident'>validate</span>(<span class='ident'>x</span>)
+        <span class='self'>Self</span>::<span class='ident'>validate</span>(<span class='ident'>x</span>)
     }
 }
 
@@ -730,7 +731,7 @@
     <span class='doccomment'>/// indices.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// You may assume the buffer is *already validated* for `Format`.</span>
-    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>char_indices</span>(<span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>Self</span>::<span class='ident'>Iter</span>;
+    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>char_indices</span>(<span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Iter</span>;
 
     <span class='doccomment'>/// Encode the character as bytes and pass them to a continuation.</span>
     <span class='doccomment'>///</span>
@@ -748,13 +749,13 @@
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// You may assume the buffer is *already validated*</span>
     <span class='doccomment'>/// for `Format`.</span>
-    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>from_bytes</span>(<span class='ident'>x</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw'>Self</span>;
+    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>from_bytes</span>(<span class='ident'>x</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='self'>Self</span>;
 
     <span class='doccomment'>/// Convert a byte slice to this kind of slice.</span>
     <span class='doccomment'>///</span>
     <span class='doccomment'>/// You may assume the buffer is *already validated*</span>
     <span class='doccomment'>/// for `Format`.</span>
-    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>from_mut_bytes</span>(<span class='ident'>x</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='kw'>Self</span>;
+    <span class='kw'>unsafe</span> <span class='kw'>fn</span> <span class='ident'>from_mut_bytes</span>(<span class='ident'>x</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>Self</span>;
 }
 
 <span class='doccomment'>/// Marker type for uninterpreted bytes.</span>
@@ -766,7 +767,7 @@
 <span class='kw'>unsafe</span> <span class='kw'>impl</span> <span class='ident'>Format</span> <span class='kw'>for</span> <span class='ident'>Bytes</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>validate</span>(_: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='boolval'>true</span>
+        <span class='boolvalue'>true</span>
     }
 }
 
@@ -803,17 +804,17 @@
 
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>validate_prefix</span>(_: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='boolval'>true</span>
+        <span class='boolvalue'>true</span>
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>validate_suffix</span>(_: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='boolval'>true</span>
+        <span class='boolvalue'>true</span>
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>validate_subseq</span>(_: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='boolval'>true</span>
+        <span class='boolvalue'>true</span>
     }
 }
 
@@ -852,29 +853,29 @@
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>validate_prefix</span>(<span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='kw'>if</span> <span class='ident'>buf</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
-            <span class='kw'>return</span> <span class='boolval'>true</span>;
+            <span class='kw'>return</span> <span class='boolvalue'>true</span>;
         }
         <span class='kw'>match</span> <span class='ident'>futf</span>::<span class='ident'>classify</span>(<span class='ident'>buf</span>, <span class='ident'>buf</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='number'>1</span>) {
-            <span class='prelude-val'>Some</span>(<span class='ident'>Codepoint</span> { <span class='ident'>meaning</span>: <span class='ident'>Meaning</span>::<span class='ident'>Whole</span>(_), .. }) <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
-            _ <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
+            <span class='prelude-val'>Some</span>(<span class='ident'>Codepoint</span> { <span class='ident'>meaning</span>: <span class='ident'>Meaning</span>::<span class='ident'>Whole</span>(_), .. }) <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>,
+            _ <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>,
         }
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>validate_suffix</span>(<span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='kw'>if</span> <span class='ident'>buf</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
-            <span class='kw'>return</span> <span class='boolval'>true</span>;
+            <span class='kw'>return</span> <span class='boolvalue'>true</span>;
         }
         <span class='kw'>match</span> <span class='ident'>futf</span>::<span class='ident'>classify</span>(<span class='ident'>buf</span>, <span class='number'>0</span>) {
-            <span class='prelude-val'>Some</span>(<span class='ident'>Codepoint</span> { <span class='ident'>meaning</span>: <span class='ident'>Meaning</span>::<span class='ident'>Whole</span>(_), .. }) <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
-            _ <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
+            <span class='prelude-val'>Some</span>(<span class='ident'>Codepoint</span> { <span class='ident'>meaning</span>: <span class='ident'>Meaning</span>::<span class='ident'>Whole</span>(_), .. }) <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>,
+            _ <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>,
         }
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>validate_subseq</span>(<span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='op'>&lt;</span><span class='kw'>Self</span> <span class='kw'>as</span> <span class='ident'>Format</span><span class='op'>&gt;</span>::<span class='ident'>validate_prefix</span>(<span class='ident'>buf</span>)
-            <span class='op'>&amp;&amp;</span> <span class='op'>&lt;</span><span class='kw'>Self</span> <span class='kw'>as</span> <span class='ident'>Format</span><span class='op'>&gt;</span>::<span class='ident'>validate_suffix</span>(<span class='ident'>buf</span>)
+        <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Format</span><span class='op'>&gt;</span>::<span class='ident'>validate_prefix</span>(<span class='ident'>buf</span>)
+            <span class='op'>&amp;&amp;</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Format</span><span class='op'>&gt;</span>::<span class='ident'>validate_suffix</span>(<span class='ident'>buf</span>)
     }
 }
 
@@ -937,8 +938,8 @@
 <span class='kw'>fn</span> <span class='ident'>wtf8_meaningful</span>(<span class='ident'>m</span>: <span class='ident'>Meaning</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
     <span class='kw'>match</span> <span class='ident'>m</span> {
         <span class='ident'>Meaning</span>::<span class='ident'>Whole</span>(_) <span class='op'>|</span> <span class='ident'>Meaning</span>::<span class='ident'>LeadSurrogate</span>(_)
-            <span class='op'>|</span> <span class='ident'>Meaning</span>::<span class='ident'>TrailSurrogate</span>(_) <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
-        _ <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
+            <span class='op'>|</span> <span class='ident'>Meaning</span>::<span class='ident'>TrailSurrogate</span>(_) <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>,
+        _ <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>,
     }
 }
 
@@ -946,49 +947,49 @@
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>validate</span>(<span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>i</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>prev_lead</span> <span class='op'>=</span> <span class='boolval'>false</span>;
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>prev_lead</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
         <span class='kw'>while</span> <span class='ident'>i</span> <span class='op'>&lt;</span> <span class='ident'>buf</span>.<span class='ident'>len</span>() {
-            <span class='kw'>let</span> <span class='ident'>codept</span> <span class='op'>=</span> <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='ident'>futf</span>::<span class='ident'>classify</span>(<span class='ident'>buf</span>, <span class='ident'>i</span>), <span class='boolval'>false</span>);
+            <span class='kw'>let</span> <span class='ident'>codept</span> <span class='op'>=</span> <span class='macro'>unwrap_or_return</span><span class='macro'>!</span>(<span class='ident'>futf</span>::<span class='ident'>classify</span>(<span class='ident'>buf</span>, <span class='ident'>i</span>), <span class='boolvalue'>false</span>);
             <span class='kw'>if</span> <span class='op'>!</span><span class='ident'>wtf8_meaningful</span>(<span class='ident'>codept</span>.<span class='ident'>meaning</span>) {
-                <span class='kw'>return</span> <span class='boolval'>false</span>;
+                <span class='kw'>return</span> <span class='boolvalue'>false</span>;
             }
             <span class='ident'>i</span> <span class='op'>+=</span> <span class='ident'>codept</span>.<span class='ident'>bytes</span>.<span class='ident'>len</span>();
             <span class='ident'>prev_lead</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>codept</span>.<span class='ident'>meaning</span> {
-                <span class='ident'>Meaning</span>::<span class='ident'>TrailSurrogate</span>(_) <span class='kw'>if</span> <span class='ident'>prev_lead</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='boolval'>false</span>,
-                <span class='ident'>Meaning</span>::<span class='ident'>LeadSurrogate</span>(_) <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
-                _ <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
+                <span class='ident'>Meaning</span>::<span class='ident'>TrailSurrogate</span>(_) <span class='kw'>if</span> <span class='ident'>prev_lead</span> <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='boolvalue'>false</span>,
+                <span class='ident'>Meaning</span>::<span class='ident'>LeadSurrogate</span>(_) <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>,
+                _ <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>,
             };
         }
 
-        <span class='boolval'>true</span>
+        <span class='boolvalue'>true</span>
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>validate_prefix</span>(<span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='kw'>if</span> <span class='ident'>buf</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
-            <span class='kw'>return</span> <span class='boolval'>true</span>;
+            <span class='kw'>return</span> <span class='boolvalue'>true</span>;
         }
         <span class='kw'>match</span> <span class='ident'>futf</span>::<span class='ident'>classify</span>(<span class='ident'>buf</span>, <span class='ident'>buf</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='number'>1</span>) {
             <span class='prelude-val'>Some</span>(<span class='ident'>c</span>) <span class='op'>=&gt;</span> <span class='ident'>wtf8_meaningful</span>(<span class='ident'>c</span>.<span class='ident'>meaning</span>),
-            _ <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
+            _ <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>,
         }
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>validate_suffix</span>(<span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
         <span class='kw'>if</span> <span class='ident'>buf</span>.<span class='ident'>len</span>() <span class='op'>==</span> <span class='number'>0</span> {
-            <span class='kw'>return</span> <span class='boolval'>true</span>;
+            <span class='kw'>return</span> <span class='boolvalue'>true</span>;
         }
         <span class='kw'>match</span> <span class='ident'>futf</span>::<span class='ident'>classify</span>(<span class='ident'>buf</span>, <span class='number'>0</span>) {
             <span class='prelude-val'>Some</span>(<span class='ident'>c</span>) <span class='op'>=&gt;</span> <span class='ident'>wtf8_meaningful</span>(<span class='ident'>c</span>.<span class='ident'>meaning</span>),
-            _ <span class='op'>=&gt;</span> <span class='boolval'>false</span>,
+            _ <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>,
         }
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>validate_subseq</span>(<span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='op'>&lt;</span><span class='kw'>Self</span> <span class='kw'>as</span> <span class='ident'>Format</span><span class='op'>&gt;</span>::<span class='ident'>validate_prefix</span>(<span class='ident'>buf</span>)
-            <span class='op'>&amp;&amp;</span> <span class='op'>&lt;</span><span class='kw'>Self</span> <span class='kw'>as</span> <span class='ident'>Format</span><span class='op'>&gt;</span>::<span class='ident'>validate_suffix</span>(<span class='ident'>buf</span>)
+        <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Format</span><span class='op'>&gt;</span>::<span class='ident'>validate_prefix</span>(<span class='ident'>buf</span>)
+            <span class='op'>&amp;&amp;</span> <span class='op'>&lt;</span><span class='self'>Self</span> <span class='kw'>as</span> <span class='ident'>Format</span><span class='op'>&gt;</span>::<span class='ident'>validate_suffix</span>(<span class='ident'>buf</span>)
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
@@ -1037,22 +1038,22 @@
 <span class='kw'>unsafe</span> <span class='kw'>impl</span> <span class='ident'>Format</span> <span class='kw'>for</span> <span class='ident'>Latin1</span> {
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>validate</span>(_: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='boolval'>true</span>
+        <span class='boolvalue'>true</span>
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>validate_prefix</span>(_: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='boolval'>true</span>
+        <span class='boolvalue'>true</span>
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>validate_suffix</span>(_: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='boolval'>true</span>
+        <span class='boolvalue'>true</span>
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>(<span class='ident'>always</span>)]</span>
     <span class='kw'>fn</span> <span class='ident'>validate_subseq</span>(_: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='boolval'>true</span>
+        <span class='boolvalue'>true</span>
     }
 }
 
@@ -1098,6 +1099,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
