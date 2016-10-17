@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,20 +44,19 @@
 
     <section id='main' class="content struct">
 <h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a>::<wbr><a class='struct' href=''>ConeResponseMatrices</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-6118' class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#43-48' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct ConeResponseMatrices&lt;T: <a class='trait' href='../../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>&gt; {
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-6096' class='srclink' href='../../src/palette/src/chromatic_adaptation.rs.html#43-48' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct ConeResponseMatrices&lt;T:&nbsp;<a class='trait' href='../../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>&gt; {
     pub ma: <a class='type' href='../../palette/type.Mat3.html' title='palette::Mat3'>Mat3</a>&lt;T&gt;,
     pub inv_ma: <a class='type' href='../../palette/type.Mat3.html' title='palette::Mat3'>Mat3</a>&lt;T&gt;,
 }</pre><div class='docblock'><p>Holds the matrix coeffecients for the chromatic adaptation methods</p>
-</div><h2 class='fields'>Fields</h2>
-<table><tr class='stab '>
-                                  <td id='structfield.ma'><code>ma</code></td><td><div class='docblock'><p>3x3 matrix for the cone response domains</p>
-</div></td></tr><tr class='stab '>
-                                  <td id='structfield.inv_ma'><code>inv_ma</code></td><td><div class='docblock'><p>3x3 matrix for the inverse of the cone response domains</p>
-</div></td></tr></table></section>
+</div><h2 class='fields'>Fields</h2><span id='structfield.ma' class='structfield'><code>ma: <a class='type' href='../../palette/type.Mat3.html' title='palette::Mat3'>Mat3</a>&lt;T&gt;</code>
+                           </span><span class='stab '></span><div class='docblock'><p>3x3 matrix for the cone response domains</p>
+</div><span id='structfield.inv_ma' class='structfield'><code>inv_ma: <a class='type' href='../../palette/type.Mat3.html' title='palette::Mat3'>Mat3</a>&lt;T&gt;</code>
+                           </span><span class='stab '></span><div class='docblock'><p>3x3 matrix for the inverse of the cone response domains</p>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -79,6 +79,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
@@ -99,7 +101,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

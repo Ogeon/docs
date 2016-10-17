@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Alpha","An alpha component wrapper for colors."]]});

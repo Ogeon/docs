@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,10 +44,10 @@
 
     <section id='main' class="content enum">
 <h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>palette</a>::<wbr><a href='index.html'>blend</a>::<wbr><a class='enum' href=''>Equation</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-851' class='srclink' href='../../src/palette/blend/equations.rs.html#100-119' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-877' class='srclink' href='../../src/palette/src/blend/equations.rs.html#100-119' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Equation {
     Add,
     Subtract,
@@ -55,21 +56,31 @@
     Max,
 }</pre><div class='docblock'><p>A blending equation.</p>
 </div><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.Add'><code>Add</code></td><td><div class='docblock'><p>Add the source and destination, according to <code>sp * S + dp * D</code>.</p>
-</div></td></tr><tr><td id='variant.Subtract'><code>Subtract</code></td><td><div class='docblock'><p>Subtract the destination from the source, according to <code>sp * S - dp * D</code>.</p>
-</div></td></tr><tr><td id='variant.ReverseSubtract'><code>ReverseSubtract</code></td><td><div class='docblock'><p>Subtract the source from the destination, according to <code>dp * D - sp * S</code>.</p>
-</div></td></tr><tr><td id='variant.Min'><code>Min</code></td><td><div class='docblock'><p>Create a color where each component is the smallest of each of the
+<span id='variant.Add' class='variant'><code>Add</code></span><div class='docblock'><p>Add the source and destination, according to <code>sp * S + dp * D</code>.</p>
+</div><span id='variant.Subtract' class='variant'><code>Subtract</code></span><div class='docblock'><p>Subtract the destination from the source, according to <code>sp * S - dp * D</code>.</p>
+</div><span id='variant.ReverseSubtract' class='variant'><code>ReverseSubtract</code></span><div class='docblock'><p>Subtract the source from the destination, according to <code>dp * D - sp * S</code>.</p>
+</div><span id='variant.Min' class='variant'><code>Min</code></span><div class='docblock'><p>Create a color where each component is the smallest of each of the
 source and destination components. A.k.a. component wise min. The
 parameters are ignored.</p>
-</div></td></tr><tr><td id='variant.Max'><code>Max</code></td><td><div class='docblock'><p>Create a color where each component is the largest of each of the
+</div><span id='variant.Max' class='variant'><code>Max</code></span><div class='docblock'><p>Create a color where each component is the largest of each of the
 source and destination components. A.k.a. component wise max. The
 parameters are ignored.</p>
-</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../palette/blend/enum.Equation.html' title='palette::blend::Equation'>Equation</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#method.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
-</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='enum' href='../../palette/blend/enum.Equation.html' title='palette::blend::Equation'>Equation</a></code></h3><div class='impl-items'></div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../../palette/blend/enum.Equation.html' title='palette::blend::Equation'>Equation</a></code></h3><div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../palette/blend/enum.Equation.html' title='palette::blend::Equation'>Equation</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
-<h4 id='method.ne' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../palette/blend/enum.Equation.html' title='palette::blend::Equation'>Equation</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
-</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='enum' href='../../palette/blend/enum.Equation.html' title='palette::blend::Equation'>Equation</a></code></h3><div class='impl-items'></div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../../palette/blend/enum.Equation.html' title='palette::blend::Equation'>Equation</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../../palette/blend/enum.Equation.html' title='palette::blend::Equation'>Equation</a></code></h4>
-<h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
-</div></section>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../palette/blend/enum.Equation.html' title='palette::blend::Equation'>Equation</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-855' class='srclink' href='../../src/palette/src/blend/equations.rs.html#99' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='enum' href='../../palette/blend/enum.Equation.html' title='palette::blend::Equation'>Equation</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-864' class='srclink' href='../../src/palette/src/blend/equations.rs.html#99' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../../palette/blend/enum.Equation.html' title='palette::blend::Equation'>Equation</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-867' class='srclink' href='../../src/palette/src/blend/equations.rs.html#99' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../../palette/blend/enum.Equation.html' title='palette::blend::Equation'>Equation</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, other: &amp;Rhs) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='enum' href='../../palette/blend/enum.Equation.html' title='palette::blend::Equation'>Equation</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-873' class='srclink' href='../../src/palette/src/blend/equations.rs.html#99' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../../palette/blend/enum.Equation.html' title='palette::blend::Equation'>Equation</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-874' class='srclink' href='../../src/palette/src/blend/equations.rs.html#99' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../../palette/blend/enum.Equation.html' title='palette::blend::Equation'>Equation</a></code></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -92,6 +103,8 @@ parameters are ignored.</p>
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
@@ -112,7 +125,7 @@ parameters are ignored.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

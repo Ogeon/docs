@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
+    
 
     
     
@@ -43,54 +44,54 @@
 
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>approx</a>::<wbr><a class='trait' href=''>ApproxEq</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-6' class='srclink' href='../src/approx/lib.rs.html#127-161' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-5' class='srclink' href='../src/approx/lib.rs.html#136-170' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait ApproxEq: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
-    type Epsilon;
-    fn <a href='#tymethod.default_epsilon' class='fnname'>default_epsilon</a>() -&gt; Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a>;
-    fn <a href='#tymethod.default_max_relative' class='fnname'>default_max_relative</a>() -&gt; Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a>;
+    type <a href='#associatedtype.Epsilon' class='type'>Epsilon</a>;
+    fn <a href='#tymethod.default_epsilon' class='fnname'>default_epsilon</a>() -&gt; Self::Epsilon;
+    fn <a href='#tymethod.default_max_relative' class='fnname'>default_max_relative</a>() -&gt; Self::Epsilon;
     fn <a href='#tymethod.default_max_ulps' class='fnname'>default_max_ulps</a>() -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>;
-    fn <a href='#tymethod.relative_eq' class='fnname'>relative_eq</a>(&amp;self, other: &amp;Self, epsilon: Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a>, max_relative: Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
-    fn <a href='#tymethod.ulps_eq' class='fnname'>ulps_eq</a>(&amp;self, other: &amp;Self, epsilon: Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a>, max_ulps: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.relative_eq' class='fnname'>relative_eq</a>(&amp;self, other: &amp;Self, epsilon: Self::Epsilon, max_relative: Self::Epsilon) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+    fn <a href='#tymethod.ulps_eq' class='fnname'>ulps_eq</a>(&amp;self, other: &amp;Self, epsilon: Self::Epsilon, max_ulps: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
 
-    fn <a href='#method.relative_ne' class='fnname'>relative_ne</a>(&amp;self, other: &amp;Self, epsilon: Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a>, max_relative: Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a> { ... }
-    fn <a href='#method.ulps_ne' class='fnname'>ulps_ne</a>(&amp;self, other: &amp;Self, epsilon: Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a>, max_ulps: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a> { ... }
+    fn <a href='#method.relative_ne' class='fnname'>relative_ne</a>(&amp;self, other: &amp;Self, epsilon: Self::Epsilon, max_relative: Self::Epsilon) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a> { ... }
+    fn <a href='#method.ulps_ne' class='fnname'>ulps_ne</a>(&amp;self, other: &amp;Self, epsilon: Self::Epsilon, max_ulps: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a> { ... }
 }</pre><div class='docblock'><p>Equality comparisons based on floating point tolerances.</p>
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Epsilon' class='method stab '><code>type Epsilon</code></h3><div class='docblock'><p>Used for specifying relative comparisons.</p>
+        <h3 id='associatedtype.Epsilon' class='method stab '><code>type <a href='#associatedtype.Epsilon' class='type'>Epsilon</a></code></h3><div class='docblock'><p>Used for specifying relative comparisons.</p>
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.default_epsilon' class='method stab '><code>fn <a href='#tymethod.default_epsilon' class='fnname'>default_epsilon</a>() -&gt; Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a></code></h3><div class='docblock'><p>The default tolerance to use when testing values that are close together.</p>
+        <h3 id='tymethod.default_epsilon' class='method stab '><code>fn <a href='#tymethod.default_epsilon' class='fnname'>default_epsilon</a>() -&gt; Self::Epsilon</code></h3><div class='docblock'><p>The default tolerance to use when testing values that are close together.</p>
 
 <p>This is used when no <code>epsilon</code> value is supplied to the <code>relative_eq</code> or <code>ulps_eq</code> macros.</p>
-</div><h3 id='tymethod.default_max_relative' class='method stab '><code>fn <a href='#tymethod.default_max_relative' class='fnname'>default_max_relative</a>() -&gt; Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a></code></h3><div class='docblock'><p>The default relative tolerance for testing values that are far-apart.</p>
+</div><h3 id='tymethod.default_max_relative' class='method stab '><code>fn <a href='#tymethod.default_max_relative' class='fnname'>default_max_relative</a>() -&gt; Self::Epsilon</code></h3><div class='docblock'><p>The default relative tolerance for testing values that are far-apart.</p>
 
 <p>This is used when no <code>max_relative</code> value is supplied to the <code>relative_eq</code> macro.</p>
 </div><h3 id='tymethod.default_max_ulps' class='method stab '><code>fn <a href='#tymethod.default_max_ulps' class='fnname'>default_max_ulps</a>() -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a></code></h3><div class='docblock'><p>The default ULPs to tolerate when testing values that are far-apart.</p>
 
 <p>This is used when no <code>max_relative</code> value is supplied to the <code>relative_eq</code> macro.</p>
-</div><h3 id='tymethod.relative_eq' class='method stab '><code>fn <a href='#tymethod.relative_eq' class='fnname'>relative_eq</a>(&amp;self, other: &amp;Self, epsilon: Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a>, max_relative: Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>A test for equality that uses a relative comparison if the values are far apart.</p>
-</div><h3 id='tymethod.ulps_eq' class='method stab '><code>fn <a href='#tymethod.ulps_eq' class='fnname'>ulps_eq</a>(&amp;self, other: &amp;Self, epsilon: Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a>, max_ulps: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>A test for equality that uses units in the last place (ULP) if the values are far apart.</p>
+</div><h3 id='tymethod.relative_eq' class='method stab '><code>fn <a href='#tymethod.relative_eq' class='fnname'>relative_eq</a>(&amp;self, other: &amp;Self, epsilon: Self::Epsilon, max_relative: Self::Epsilon) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>A test for equality that uses a relative comparison if the values are far apart.</p>
+</div><h3 id='tymethod.ulps_eq' class='method stab '><code>fn <a href='#tymethod.ulps_eq' class='fnname'>ulps_eq</a>(&amp;self, other: &amp;Self, epsilon: Self::Epsilon, max_ulps: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>A test for equality that uses units in the last place (ULP) if the values are far apart.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.relative_ne' class='method stab '><code>fn <a href='#method.relative_ne' class='fnname'>relative_ne</a>(&amp;self, other: &amp;Self, epsilon: Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a>, max_relative: Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>The inverse of <code>ApproxEq::relative_eq</code>.</p>
-</div><h3 id='method.ulps_ne' class='method stab '><code>fn <a href='#method.ulps_ne' class='fnname'>ulps_ne</a>(&amp;self, other: &amp;Self, epsilon: Self::<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>Epsilon</a>, max_ulps: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>The inverse of <code>ApproxEq::ulps_eq</code>.</p>
+        <h3 id='method.relative_ne' class='method stab '><code>fn <a href='#method.relative_ne' class='fnname'>relative_ne</a>(&amp;self, other: &amp;Self, epsilon: Self::Epsilon, max_relative: Self::Epsilon) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>The inverse of <code>ApproxEq::relative_eq</code>.</p>
+</div><h3 id='method.ulps_ne' class='method stab '><code>fn <a href='#method.ulps_ne' class='fnname'>ulps_ne</a>(&amp;self, other: &amp;Self, epsilon: Self::Epsilon, max_ulps: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h3><div class='docblock'><p>The inverse of <code>ApproxEq::ulps_eq</code>.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl <a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>ApproxEq</a> for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a></code></li>
-<li><code>impl <a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>ApproxEq</a> for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a></code></li>
-<li><code>impl&lt;'a, T: <a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>ApproxEq</a>&gt; <a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>ApproxEq</a> for &amp;'a T</code></li>
-<li><code>impl&lt;'a, T: <a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>ApproxEq</a>&gt; <a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>ApproxEq</a> for &amp;'a mut T</code></li>
+    <li><code>impl ApproxEq for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a></code></li>
+<li><code>impl ApproxEq for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f64.html'>f64</a></code></li>
+<li><code>impl&lt;'a,&nbsp;T:&nbsp;<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>ApproxEq</a>&gt; ApproxEq for &amp;'a T</code></li>
+<li><code>impl&lt;'a,&nbsp;T:&nbsp;<a class='trait' href='../approx/trait.ApproxEq.html' title='approx::ApproxEq'>ApproxEq</a>&gt; ApproxEq for &amp;'a mut T</code></li>
 </ul><script type="text/javascript" async
-                              src="../implementors/approx/trait.ApproxEq.js">
-                      </script></section>
+                         src="../implementors/approx/trait.ApproxEq.js">
+                 </script></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -113,6 +114,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
@@ -133,7 +136,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

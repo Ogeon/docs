@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Lab","The CIE L*a*b* (CIELAB) color space."]],"type":[["Laba","CIE L*a*b* (CIELAB) with an alpha component. See the `Laba` implementation in `Alpha`."]]});

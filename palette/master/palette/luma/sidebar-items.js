@@ -1,1 +1,0 @@
-initSidebarItems({"struct":[["Luma","Linear luminance."]],"type":[["Lumaa","Linear luminance with an alpha component. See the `Lumaa` implementation in `Alpha`."]]});

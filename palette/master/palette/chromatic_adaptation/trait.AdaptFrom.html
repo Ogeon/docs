@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,12 +44,12 @@
 
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a>::<wbr><a class='trait' href=''>AdaptFrom</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-6144' class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#130-141' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait AdaptFrom&lt;S, Swp, Dwp, T&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> <span class='where'>where T: <a class='trait' href='../../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>, Swp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;, Dwp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span> {
-    fn <a href='#tymethod.adapt_from_using' class='fnname'>adapt_from_using</a>&lt;M: <a class='trait' href='../../palette/chromatic_adaptation/trait.TransformMatrix.html' title='palette::chromatic_adaptation::TransformMatrix'>TransformMatrix</a>&lt;Swp, Dwp, T&gt;&gt;(color: S, method: M) -&gt; Self;
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-6122' class='srclink' href='../../src/palette/src/chromatic_adaptation.rs.html#130-141' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait AdaptFrom&lt;S,&nbsp;Swp,&nbsp;Dwp,&nbsp;T&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> <span class='where'>where T: <a class='trait' href='../../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Swp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;, Dwp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span> {
+    fn <a href='#tymethod.adapt_from_using' class='fnname'>adapt_from_using</a>&lt;M:&nbsp;<a class='trait' href='../../palette/chromatic_adaptation/trait.TransformMatrix.html' title='palette::chromatic_adaptation::TransformMatrix'>TransformMatrix</a>&lt;Swp,&nbsp;Dwp,&nbsp;T&gt;&gt;(color: S, method: M) -&gt; Self;
 
     fn <a href='#method.adapt_from' class='fnname'>adapt_from</a>(color: S) -&gt; Self { ... }
 }</pre><div class='docblock'><p>Trait to convert color from one reference white point to another</p>
@@ -58,7 +59,7 @@ Uses the bradford method for conversion by default.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.adapt_from_using' class='method stab '><code>fn <a href='#tymethod.adapt_from_using' class='fnname'>adapt_from_using</a>&lt;M: <a class='trait' href='../../palette/chromatic_adaptation/trait.TransformMatrix.html' title='palette::chromatic_adaptation::TransformMatrix'>TransformMatrix</a>&lt;Swp, Dwp, T&gt;&gt;(color: S, method: M) -&gt; Self</code></h3><div class='docblock'><p>Convert the source color to the destination color using the specified method</p>
+        <h3 id='tymethod.adapt_from_using' class='method stab '><code>fn <a href='#tymethod.adapt_from_using' class='fnname'>adapt_from_using</a>&lt;M:&nbsp;<a class='trait' href='../../palette/chromatic_adaptation/trait.TransformMatrix.html' title='palette::chromatic_adaptation::TransformMatrix'>TransformMatrix</a>&lt;Swp,&nbsp;Dwp,&nbsp;T&gt;&gt;(color: S, method: M) -&gt; Self</code></h3><div class='docblock'><p>Convert the source color to the destination color using the specified method</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
@@ -66,9 +67,10 @@ Uses the bradford method for conversion by default.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    </ul><script type="text/javascript" async
-                              src="../../implementors/palette/chromatic_adaptation/trait.AdaptFrom.js">
-                      </script></section>
+    <li><code>impl&lt;S,&nbsp;D,&nbsp;Swp,&nbsp;Dwp,&nbsp;T&gt; AdaptFrom&lt;S,&nbsp;Swp,&nbsp;Dwp,&nbsp;T&gt; for D <span class='where'>where T: <a class='trait' href='../../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Swp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;, Dwp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;, S: <a class='trait' href='../../palette/trait.IntoColor.html' title='palette::IntoColor'>IntoColor</a>&lt;Swp,&nbsp;T&gt;, D: <a class='trait' href='../../palette/trait.FromColor.html' title='palette::FromColor'>FromColor</a>&lt;Dwp,&nbsp;T&gt;</span></code></li>
+</ul><script type="text/javascript" async
+                         src="../../implementors/palette/chromatic_adaptation/trait.AdaptFrom.js">
+                 </script></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -91,6 +93,8 @@ Uses the bradford method for conversion by default.</p>
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
@@ -111,7 +115,7 @@ Uses the bradford method for conversion by default.</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

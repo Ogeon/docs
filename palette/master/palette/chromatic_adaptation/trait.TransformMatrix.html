@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,11 +44,11 @@
 
     <section id='main' class="content trait">
 <h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a>::<wbr><a class='trait' href=''>TransformMatrix</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-6122' class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#52-75' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait TransformMatrix&lt;Swp, Dwp, T&gt; <span class='where'>where T: <a class='trait' href='../../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>, Swp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;, Dwp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span> {
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-6100' class='srclink' href='../../src/palette/src/chromatic_adaptation.rs.html#52-75' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait TransformMatrix&lt;Swp,&nbsp;Dwp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Swp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;, Dwp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span> {
     fn <a href='#tymethod.get_cone_response' class='fnname'>get_cone_response</a>(&amp;self) -&gt; <a class='struct' href='../../palette/chromatic_adaptation/struct.ConeResponseMatrices.html' title='palette::chromatic_adaptation::ConeResponseMatrices'>ConeResponseMatrices</a>&lt;T&gt;;
 
     fn <a href='#method.generate_transform_matrix' class='fnname'>generate_transform_matrix</a>(&amp;self) -&gt; <a class='type' href='../../palette/type.Mat3.html' title='palette::Mat3'>Mat3</a>&lt;T&gt; { ... }
@@ -65,10 +66,10 @@ to another with the given cone_response</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;Swp, Dwp, T&gt; <a class='trait' href='../../palette/chromatic_adaptation/trait.TransformMatrix.html' title='palette::chromatic_adaptation::TransformMatrix'>TransformMatrix</a>&lt;Swp, Dwp, T&gt; for <a class='enum' href='../../palette/chromatic_adaptation/enum.Method.html' title='palette::chromatic_adaptation::Method'>Method</a> <span class='where'>where T: <a class='trait' href='../../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>, Swp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;, Dwp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
+    <li><code>impl&lt;Swp,&nbsp;Dwp,&nbsp;T&gt; TransformMatrix&lt;Swp,&nbsp;Dwp,&nbsp;T&gt; for <a class='enum' href='../../palette/chromatic_adaptation/enum.Method.html' title='palette::chromatic_adaptation::Method'>Method</a> <span class='where'>where T: <a class='trait' href='../../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Swp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;, Dwp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
 </ul><script type="text/javascript" async
-                              src="../../implementors/palette/chromatic_adaptation/trait.TransformMatrix.js">
-                      </script></section>
+                         src="../../implementors/palette/chromatic_adaptation/trait.TransformMatrix.js">
+                 </script></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -91,6 +92,8 @@ to another with the given cone_response</p>
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
@@ -111,7 +114,7 @@ to another with the given cone_response</p>
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>

@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
+    
 
     
     
@@ -43,22 +44,25 @@
 
     <section id='main' class="content enum">
 <h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a>::<wbr><a class='enum' href=''>Method</a></span><span class='out-of-band'><span id='render-detail'>
-            <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
-                [<span class='inner'>&#x2212;</span>]
-            </a>
-        </span><a id='src-6114' class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#33-40' title='goto source code'>[src]</a></span></h1>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-6092' class='srclink' href='../../src/palette/src/chromatic_adaptation.rs.html#33-40' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum Method {
     Bradford,
     VonKries,
     XyzScaling,
 }</pre><div class='docblock'><p>Chromatic adaptation methods implemented in the library</p>
 </div><h2 class='variants'>Variants</h2>
-<table><tr><td id='variant.Bradford'><code>Bradford</code></td><td><div class='docblock'><p>Bradford chromatic adaptation method</p>
-</div></td></tr><tr><td id='variant.VonKries'><code>VonKries</code></td><td><div class='docblock'><p>VonKries chromatic adaptation method</p>
-</div></td></tr><tr><td id='variant.XyzScaling'><code>XyzScaling</code></td><td><div class='docblock'><p>XyzScaling chromatic adaptation method</p>
-</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl&lt;Swp, Dwp, T&gt; <a class='trait' href='../../palette/chromatic_adaptation/trait.TransformMatrix.html' title='palette::chromatic_adaptation::TransformMatrix'>TransformMatrix</a>&lt;Swp, Dwp, T&gt; for <a class='enum' href='../../palette/chromatic_adaptation/enum.Method.html' title='palette::chromatic_adaptation::Method'>Method</a> <span class='where'>where T: <a class='trait' href='../../num/traits/trait.Float.html' title='num::traits::Float'>Float</a>, Swp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;, Dwp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></h3><div class='impl-items'><h4 id='method.get_cone_response' class='method'><code>fn <a href='../../palette/chromatic_adaptation/trait.TransformMatrix.html#method.get_cone_response' class='fnname'>get_cone_response</a>(&amp;self) -&gt; <a class='struct' href='../../palette/chromatic_adaptation/struct.ConeResponseMatrices.html' title='palette::chromatic_adaptation::ConeResponseMatrices'>ConeResponseMatrices</a>&lt;T&gt;</code></h4>
-<h4 id='method.generate_transform_matrix' class='method'><code>fn <a href='../../palette/chromatic_adaptation/trait.TransformMatrix.html#method.generate_transform_matrix' class='fnname'>generate_transform_matrix</a>(&amp;self) -&gt; <a class='type' href='../../palette/type.Mat3.html' title='palette::Mat3'>Mat3</a>&lt;T&gt;</code></h4>
-</div></section>
+<span id='variant.Bradford' class='variant'><code>Bradford</code></span><div class='docblock'><p>Bradford chromatic adaptation method</p>
+</div><span id='variant.VonKries' class='variant'><code>VonKries</code></span><div class='docblock'><p>VonKries chromatic adaptation method</p>
+</div><span id='variant.XyzScaling' class='variant'><code>XyzScaling</code></span><div class='docblock'><p>XyzScaling chromatic adaptation method</p>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;Swp,&nbsp;Dwp,&nbsp;T&gt; <a class='trait' href='../../palette/chromatic_adaptation/trait.TransformMatrix.html' title='palette::chromatic_adaptation::TransformMatrix'>TransformMatrix</a>&lt;Swp,&nbsp;Dwp,&nbsp;T&gt; for <a class='enum' href='../../palette/chromatic_adaptation/enum.Method.html' title='palette::chromatic_adaptation::Method'>Method</a> <span class='where'>where T: <a class='trait' href='../../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Swp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;, Dwp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-6116' class='srclink' href='../../src/palette/src/chromatic_adaptation.rs.html#78-123' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.get_cone_response' class='method'><code>fn <a href='../../palette/chromatic_adaptation/trait.TransformMatrix.html#tymethod.get_cone_response' class='fnname'>get_cone_response</a>(&amp;self) -&gt; <a class='struct' href='../../palette/chromatic_adaptation/struct.ConeResponseMatrices.html' title='palette::chromatic_adaptation::ConeResponseMatrices'>ConeResponseMatrices</a>&lt;T&gt;</code></h4>
+<div class='docblock'><p>Get the cone response functions for the chromatic adaptation method</p>
+</div><h4 id='method.generate_transform_matrix' class='method'><code>fn <a href='../../palette/chromatic_adaptation/trait.TransformMatrix.html#method.generate_transform_matrix' class='fnname'>generate_transform_matrix</a>(&amp;self) -&gt; <a class='type' href='../../palette/type.Mat3.html' title='palette::Mat3'>Mat3</a>&lt;T&gt;</code></h4>
+<div class='docblock'><p>Generates a 3x3 transformation matrix to convert color from one reference white point to another with the given cone_response <a href="../../palette/chromatic_adaptation/trait.TransformMatrix.html#method.generate_transform_matrix">Read more</a></p>
+</div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -81,6 +85,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
@@ -101,7 +107,7 @@
 
                 <p>
                     Search functions by type signature (e.g.
-                    <code>vec -> usize</code>)
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
                 </p>
             </div>
         </div>
