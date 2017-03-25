@@ -4,11 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.1.2/src/iter.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.2.1/src/iter.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>iter.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -159,7 +160,7 @@
 <span id="115">115</span>
 <span id="116">116</span>
 </pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>slice</span>;
+<span class='kw'>use</span> <span class='ident'>core</span>::<span class='ident'>slice</span>;
 
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Bytes</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
     <span class='ident'>slice</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>],
@@ -230,7 +231,7 @@
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
     <span class='kw'>fn</span> <span class='ident'>next</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span> {
         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>slice</span>.<span class='ident'>len</span>() <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>pos</span> {
-            <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>slice</span>.<span class='ident'>get_unchecked</span>(<span class='self'>self</span>.<span class='ident'>pos</span>) };
+            <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>slice</span>.<span class='ident'>get_unchecked</span>(<span class='self'>self</span>.<span class='ident'>pos</span>) };
             <span class='self'>self</span>.<span class='ident'>pos</span> <span class='op'>+=</span> <span class='number'>1</span>;
             <span class='prelude-val'>Some</span>(<span class='ident'>b</span>)
         } <span class='kw'>else</span> {
@@ -249,7 +250,7 @@
         <span class='attribute'>#[<span class='ident'>inline</span>]</span>
         <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>f</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>u8</span> {
             <span class='macro'>debug_assert</span><span class='macro'>!</span>(<span class='self'>self</span>.<span class='ident'>assert_pos</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>pos</span>));
-            <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='op'>*</span><span class='self'>self</span>.<span class='ident'>bytes</span>.<span class='ident'>slice</span>.<span class='ident'>get_unchecked</span>(<span class='self'>self</span>.<span class='ident'>bytes</span>.<span class='ident'>pos</span>) };
+            <span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>bytes</span>.<span class='ident'>slice</span>.<span class='ident'>get_unchecked</span>(<span class='self'>self</span>.<span class='ident'>bytes</span>.<span class='ident'>pos</span>) };
             <span class='self'>self</span>.<span class='ident'>bytes</span>.<span class='ident'>pos</span> <span class='op'>+=</span> <span class='number'>1</span>;
             <span class='ident'>b</span>
         }
@@ -332,11 +333,9 @@
     <script>
         window.rootPath = "../../";
         window.currentCrate = "httparse";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>

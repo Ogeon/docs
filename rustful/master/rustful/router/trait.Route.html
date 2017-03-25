@@ -9,6 +9,7 @@
 
     <title>rustful::router::Route - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -47,19 +48,19 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1093' class='srclink' href='../../src/rustful/src/router/mod.rs.html#325-348' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/rustful/router/mod.rs.html#325-348' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Route&lt;'a&gt; {
     type <a href='#associatedtype.Segments' class='type'>Segments</a>: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html' title='core::iter::iterator::Iterator'>Iterator</a>&lt;Item=<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt;;
-    fn <a href='#tymethod.segments' class='fnname'>segments</a>(&amp;'a self) -&gt; Self::Segments;
+    fn <a href='#tymethod.segments' class='fnname'>segments</a>(&amp;'a self) -&gt; Self::<a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Segments</a>;
 }</pre><div class='docblock'><p>A segmented route.</p>
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Segments' class='method stab '><code>type <a href='#associatedtype.Segments' class='type'>Segments</a>: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html' title='core::iter::iterator::Iterator'>Iterator</a>&lt;Item=<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt;</code></h3><div class='docblock'><p>An iterator over route segments.</p>
+        <h3 id='associatedtype.Segments' class='method'><span id='Segments.t' class='invisible'><code>type <a href='#associatedtype.Segments' class='type'>Segments</a>: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/iterator/trait.Iterator.html' title='core::iter::iterator::Iterator'>Iterator</a>&lt;Item=<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;'a [</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt;</code></span></h3><div class='docblock'><p>An iterator over route segments.</p>
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.segments' class='method stab '><code>fn <a href='#tymethod.segments' class='fnname'>segments</a>(&amp;'a self) -&gt; Self::Segments</code></h3><div class='docblock'><p>Create a route segment iterator. The iterator is expected to return
+        <h3 id='tymethod.segments' class='method'><span id='segments.v' class='invisible'><code>fn <a href='#tymethod.segments' class='fnname'>segments</a>(&amp;'a self) -&gt; Self::<a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Segments</a></code></span></h3><div class='docblock'><p>Create a route segment iterator. The iterator is expected to return
 None for a root path (<code>/</code>).</p>
 
 <pre class='rust rust-example-rendered'>
@@ -80,7 +81,7 @@ None for a root path (<code>/</code>).</p>
         <ul class='item-list' id='implementors-list'>
     <li><code>impl&lt;'a&gt; Route&lt;'a&gt; for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a></code></li>
 <li><code>impl&lt;'a&gt; Route&lt;'a&gt; for <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>[</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a></code></li>
-<li><code>impl&lt;'a, 'b: 'a, I: 'a, T: 'a&gt; Route&lt;'a&gt; for I <span class='where'>where &amp;'a I: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html' title='core::iter::traits::IntoIterator'>IntoIterator</a>&lt;Item=&amp;'a T&gt;, T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a>, T::Target: <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; + 'b</span></code></li>
+<li><code>impl&lt;'a, 'b: 'a, I:&nbsp;'a, T:&nbsp;'a&gt; Route&lt;'a&gt; for I <span class='where fmt-newline'>where &amp;'a I: <a class='trait' href='https://doc.rust-lang.org/nightly/core/iter/traits/trait.IntoIterator.html' title='core::iter::traits::IntoIterator'>IntoIterator</a>&lt;Item=&amp;'a T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Deref</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;T::<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Deref.html' title='core::ops::Deref'>Target</a>: <a class='trait' href='../../rustful/router/trait.Route.html' title='rustful::router::Route'>Route</a>&lt;'a&gt; + 'b</span></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/rustful/router/trait.Route.js">
                  </script></section>
@@ -139,11 +140,9 @@ None for a root path (<code>/</code>).</p>
     <script>
         window.rootPath = "../../";
         window.currentCrate = "rustful";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>

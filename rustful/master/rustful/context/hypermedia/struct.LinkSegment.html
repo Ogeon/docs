@@ -9,6 +9,7 @@
 
     <title>rustful::context::hypermedia::LinkSegment - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../../main.css">
     
@@ -47,32 +48,35 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1422' class='srclink' href='../../../src/rustful/src/context/hypermedia.rs.html#28-35' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../../src/rustful/context/hypermedia.rs.html#28-35' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct LinkSegment&lt;'a&gt; {
     pub label: <a class='type' href='../../../rustful/context/type.MaybeUtf8Slice.html' title='rustful::context::MaybeUtf8Slice'>MaybeUtf8Slice</a>&lt;'a&gt;,
     pub ty: <a class='enum' href='../../../rustful/context/hypermedia/enum.SegmentType.html' title='rustful::context::hypermedia::SegmentType'>SegmentType</a>,
 }</pre><div class='docblock'><p>A segment of a hyperlink path.</p>
-</div><h2 class='fields'>Fields</h2>
-<table><tr class='stab '>
-                             <td id='structfield.label'><code>label</code></td><td><div class='docblock'><p>The expected static segment or the name of a variable segment. Variable
+</div><h2 class='fields'>Fields</h2><span id='structfield.label' class='structfield'>
+                           <span id='label.v' class='invisible'>
+                           <code>label: <a class='type' href='../../../rustful/context/type.MaybeUtf8Slice.html' title='rustful::context::MaybeUtf8Slice'>MaybeUtf8Slice</a>&lt;'a&gt;</code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>The expected static segment or the name of a variable segment. Variable
 segments are allowed to have an empty string as label if it&#39;s unknown or
 unimportant.</p>
-</div></td></tr><tr class='stab '>
-                             <td id='structfield.ty'><code>ty</code></td><td><div class='docblock'><p>The type of the segment (e.g. static or variable).</p>
-</div></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1426' class='srclink' href='../../../src/rustful/src/context/hypermedia.rs.html#27' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
-<div class='docblock'><p>Formats the value using the given formatter.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1434' class='srclink' href='../../../src/rustful/src/context/hypermedia.rs.html#27' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1440' class='srclink' href='../../../src/rustful/src/context/hypermedia.rs.html#27' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
-<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
-</div><h4 id='method.ne' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
-<div class='docblock'><p>This method tests for <code>!=</code>.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-1456' class='srclink' href='../../../src/rustful/src/context/hypermedia.rs.html#27' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;</code></h4>
+</div><span id='structfield.ty' class='structfield'>
+                           <span id='ty.v' class='invisible'>
+                           <code>ty: <a class='enum' href='../../../rustful/context/hypermedia/enum.SegmentType.html' title='rustful::context::hypermedia::SegmentType'>SegmentType</a></code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>The type of the segment (e.g. static or variable).</p>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/rustful/context/hypermedia.rs.html#27' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;</code></span></h4>
 <div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
-</div><h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></h4>
+</div><h4 id='method.clone_from' class='method'><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
 <div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/rustful/context/hypermedia.rs.html#27' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class='method'><span id='eq.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class='method'><span id='ne.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, __arg_0: &amp;<a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.Eq.html' title='core::cmp::Eq'>Eq</a> for <a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/rustful/context/hypermedia.rs.html#27' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../../rustful/context/hypermedia/struct.LinkSegment.html' title='rustful::context::hypermedia::LinkSegment'>LinkSegment</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/rustful/context/hypermedia.rs.html#27' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
 
@@ -129,11 +133,9 @@ unimportant.</p>
     <script>
         window.rootPath = "../../../";
         window.currentCrate = "rustful";
-        window.playgroundUrl = "";
     </script>
     <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
-    
     <script defer src="../../../search-index.js"></script>
 </body>
 </html>

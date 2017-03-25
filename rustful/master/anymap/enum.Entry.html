@@ -9,6 +9,7 @@
 
     <title>anymap::Entry - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
     
@@ -47,19 +48,19 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-548' class='srclink' href='../src/anymap/lib.rs.html#229-234' title='goto source code'>[src]</a></span></h1>
-<pre class='rust enum'>pub enum Entry&lt;'a, A: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='../anymap/any/trait.UncheckedAnyExt.html' title='anymap::any::UncheckedAnyExt'>UncheckedAnyExt</a>, V: 'a&gt; {
+               </span><a class='srclink' href='../src/anymap/lib.rs.html#238-243' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum Entry&lt;'a, A:&nbsp;?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='../anymap/any/trait.UncheckedAnyExt.html' title='anymap::any::UncheckedAnyExt'>UncheckedAnyExt</a>, V:&nbsp;'a&gt; {
     Occupied(<a class='struct' href='../anymap/struct.OccupiedEntry.html' title='anymap::OccupiedEntry'>OccupiedEntry</a>&lt;'a, A, V&gt;),
     Vacant(<a class='struct' href='../anymap/struct.VacantEntry.html' title='anymap::VacantEntry'>VacantEntry</a>&lt;'a, A, V&gt;),
 }</pre><div class='docblock'><p>A view into a single location in an <code>Map</code>, which may be vacant or occupied.</p>
 </div><h2 class='variants'>Variants</h2>
-<table class='variants_table'><tr><td id='variant.Occupied'><code>Occupied</code></td><td><div class='docblock'><p>An occupied Entry</p>
-</div></td><td></td></tr><tr><td id='variant.Vacant'><code>Vacant</code></td><td><div class='docblock'><p>A vacant Entry</p>
-</div></td><td></td></tr></table><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, A: ?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='../anymap/any/trait.UncheckedAnyExt.html' title='anymap::any::UncheckedAnyExt'>UncheckedAnyExt</a>, V: IntoBox&lt;A&gt; + <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a>&gt; <a class='enum' href='../anymap/enum.Entry.html' title='anymap::Entry'>Entry</a>&lt;'a, A, V&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-556' class='srclink' href='../src/anymap/lib.rs.html#236-254' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.or_insert' class='method'><code>fn <a href='#method.or_insert' class='fnname'>or_insert</a>(self, default: V) -&gt; &amp;'a mut V</code></h4>
+<span id='variant.Occupied' class='variant'><span id='Occupied.v' class='invisible'><code>Occupied(<a class='struct' href='../anymap/struct.OccupiedEntry.html' title='anymap::OccupiedEntry'>OccupiedEntry</a>&lt;'a, A, V&gt;)</code></span></span><div class='docblock'><p>An occupied Entry</p>
+</div><span id='variant.Vacant' class='variant'><span id='Vacant.v' class='invisible'><code>Vacant(<a class='struct' href='../anymap/struct.VacantEntry.html' title='anymap::VacantEntry'>VacantEntry</a>&lt;'a, A, V&gt;)</code></span></span><div class='docblock'><p>A vacant Entry</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, A:&nbsp;?<a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> + <a class='trait' href='../anymap/any/trait.UncheckedAnyExt.html' title='anymap::any::UncheckedAnyExt'>UncheckedAnyExt</a>, V:&nbsp;IntoBox&lt;A&gt;&gt; <a class='enum' href='../anymap/enum.Entry.html' title='anymap::Entry'>Entry</a>&lt;'a, A, V&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/anymap/lib.rs.html#245-265' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.or_insert' class='method'><span id='or_insert.v' class='invisible'><code>fn <a href='#method.or_insert' class='fnname'>or_insert</a>(self, default: V) -&gt; &amp;'a mut V</code></span></h4>
 <div class='docblock'><p>Ensures a value is in the entry by inserting the default if empty, and returns
 a mutable reference to the value in the entry.</p>
-</div><h4 id='method.or_insert_with' class='method'><code>fn <a href='#method.or_insert_with' class='fnname'>or_insert_with</a>&lt;F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>() -&gt; V&gt;(self, default: F) -&gt; &amp;'a mut V</code></h4>
+</div><h4 id='method.or_insert_with' class='method'><span id='or_insert_with.v' class='invisible'><code>fn <a href='#method.or_insert_with' class='fnname'>or_insert_with</a>&lt;F:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>() -&gt; V&gt;(self, default: F) -&gt; &amp;'a mut V</code></span></h4>
 <div class='docblock'><p>Ensures a value is in the entry by inserting the result of the default function if empty,
 and returns a mutable reference to the value in the entry.</p>
 </div></div></section>
@@ -118,11 +119,9 @@ and returns a mutable reference to the value in the entry.</p>
     <script>
         window.rootPath = "../";
         window.currentCrate = "anymap";
-        window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
-    
     <script defer src="../search-index.js"></script>
 </body>
 </html>

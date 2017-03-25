@@ -9,6 +9,7 @@
 
     <title>rustful::response::Response - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -47,29 +48,27 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-2078' class='srclink' href='../../src/rustful/src/response.rs.html#258-264' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct Response&lt;'a, 'b&gt; {
-    // some fields omitted
-}</pre><div class='docblock'><p>An interface for sending data to the client.</p>
+               </span><a class='srclink' href='../../src/rustful/response.rs.html#258-264' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Response&lt;'a, 'b&gt; { /* fields omitted */ }</pre><div class='docblock'><p>An interface for sending data to the client.</p>
 
 <p>This is where the status code and response headers are set, as well as the
 response body. The body can be directly written through the <code>Response</code> if
 its size is known.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, 'b&gt; <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>&lt;'a, 'b&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2086' class='srclink' href='../../src/rustful/src/response.rs.html#266-601' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.status' class='method'><code>fn <a href='#method.status' class='fnname'>status</a>(&amp;self) -&gt; <a class='enum' href='../../rustful/enum.StatusCode.html' title='rustful::StatusCode'>StatusCode</a></code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, 'b&gt; <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>&lt;'a, 'b&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/response.rs.html#266-601' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.status' class='method'><span id='status.v' class='invisible'><code>fn <a href='#method.status' class='fnname'>status</a>(&amp;self) -&gt; <a class='enum' href='../../rustful/enum.StatusCode.html' title='rustful::StatusCode'>StatusCode</a></code></span></h4>
 <div class='docblock'><p>Get the current status code.</p>
-</div><h4 id='method.set_status' class='method'><code>fn <a href='#method.set_status' class='fnname'>set_status</a>(&amp;mut self, status: <a class='enum' href='../../rustful/enum.StatusCode.html' title='rustful::StatusCode'>StatusCode</a>)</code></h4>
+</div><h4 id='method.set_status' class='method'><span id='set_status.v' class='invisible'><code>fn <a href='#method.set_status' class='fnname'>set_status</a>(&amp;mut self, status: <a class='enum' href='../../rustful/enum.StatusCode.html' title='rustful::StatusCode'>StatusCode</a>)</code></span></h4>
 <div class='docblock'><p>Change the status code. <code>Ok (200)</code> is the default.</p>
-</div><h4 id='method.headers' class='method'><code>fn <a href='#method.headers' class='fnname'>headers</a>(&amp;self) -&gt; &amp;<a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a></code></h4>
+</div><h4 id='method.headers' class='method'><span id='headers.v' class='invisible'><code>fn <a href='#method.headers' class='fnname'>headers</a>(&amp;self) -&gt; &amp;<a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a></code></span></h4>
 <div class='docblock'><p>Get a reference to the headers.</p>
-</div><h4 id='method.headers_mut' class='method'><code>fn <a href='#method.headers_mut' class='fnname'>headers_mut</a>(&amp;mut self) -&gt; &amp;mut <a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a></code></h4>
+</div><h4 id='method.headers_mut' class='method'><span id='headers_mut.v' class='invisible'><code>fn <a href='#method.headers_mut' class='fnname'>headers_mut</a>(&amp;mut self) -&gt; &amp;mut <a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a></code></span></h4>
 <div class='docblock'><p>Get a mutable reference to the headers.</p>
-</div><h4 id='method.filter_storage' class='method'><code>fn <a href='#method.filter_storage' class='fnname'>filter_storage</a>(&amp;self) -&gt; &amp;<a class='type' href='../../anymap/type.AnyMap.html' title='anymap::AnyMap'>AnyMap</a></code></h4>
+</div><h4 id='method.filter_storage' class='method'><span id='filter_storage.v' class='invisible'><code>fn <a href='#method.filter_storage' class='fnname'>filter_storage</a>(&amp;self) -&gt; &amp;<a class='type' href='../../anymap/type.AnyMap.html' title='anymap::AnyMap'>AnyMap</a></code></span></h4>
 <div class='docblock'><p>Get a reference to the filter storage.</p>
-</div><h4 id='method.filter_storage_mut' class='method'><code>fn <a href='#method.filter_storage_mut' class='fnname'>filter_storage_mut</a>(&amp;mut self) -&gt; &amp;mut <a class='type' href='../../anymap/type.AnyMap.html' title='anymap::AnyMap'>AnyMap</a></code></h4>
+</div><h4 id='method.filter_storage_mut' class='method'><span id='filter_storage_mut.v' class='invisible'><code>fn <a href='#method.filter_storage_mut' class='fnname'>filter_storage_mut</a>(&amp;mut self) -&gt; &amp;mut <a class='type' href='../../anymap/type.AnyMap.html' title='anymap::AnyMap'>AnyMap</a></code></span></h4>
 <div class='docblock'><p>Get a mutable reference to the filter storage. It can be used to
 communicate with the response filters.</p>
-</div><h4 id='method.send' class='method'><code>fn <a href='#method.send' class='fnname'>send</a>&lt;'d, Content: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'d&gt;&gt;&gt;(self, content: Content)</code></h4>
+</div><h4 id='method.send' class='method'><span id='send.v' class='invisible'><code>fn <a href='#method.send' class='fnname'>send</a>&lt;'d, Content:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'d&gt;&gt;&gt;(self, content: Content)</code></span></h4>
 <div class='docblock'><p>Send data to the client and finish the response, ignoring eventual
 errors. Use <code>try_send</code> to get error information.</p>
 
@@ -79,7 +78,7 @@ errors. Use <code>try_send</code> to get error information.</p>
 <span class='kw'>fn</span> <span class='ident'>my_handler</span>(<span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span>) {
     <span class='ident'>response</span>.<span class='ident'>send</span>(<span class='string'>&quot;hello&quot;</span>);
 }</pre>
-</div><h4 id='method.try_send' class='method'><code>fn <a href='#method.try_send' class='fnname'>try_send</a>&lt;'d, Content: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'d&gt;&gt;&gt;(self, content: Content) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../../rustful/response/enum.Error.html' title='rustful::response::Error'>Error</a>&gt;</code></h4>
+</div><h4 id='method.try_send' class='method'><span id='try_send.v' class='invisible'><code>fn <a href='#method.try_send' class='fnname'>try_send</a>&lt;'d, Content:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'d&gt;&gt;&gt;(self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; content: Content)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../../rustful/response/enum.Error.html' title='rustful::response::Error'>Error</a>&gt;</code></span></h4>
 <div class='docblock'><p>Try to send data to the client and finish the response. This is the
 same as <code>send</code>, but errors are not ignored.</p>
 
@@ -94,7 +93,7 @@ same as <code>send</code>, but errors are not ignored.</p>
     }
 }
 </pre>
-</div><h4 id='method.send_file' class='method'><code>fn <a href='#method.send_file' class='fnname'>send_file</a>&lt;P: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(self, path: P) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../../rustful/response/enum.FileError.html' title='rustful::response::FileError'>FileError</a>&lt;'a, 'b&gt;&gt;</code></h4>
+</div><h4 id='method.send_file' class='method'><span id='send_file.v' class='invisible'><code>fn <a href='#method.send_file' class='fnname'>send_file</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(self, path: P) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../../rustful/response/enum.FileError.html' title='rustful::response::FileError'>FileError</a>&lt;'a, 'b&gt;&gt;</code></span></h4>
 <div class='docblock'><p>Send a static file to the client.</p>
 
 <p>A MIME type is automatically applied to the response, based on the file
@@ -142,7 +141,7 @@ from there if the file could not be opened.</p>
         <span class='ident'>response</span>.<span class='ident'>set_status</span>(<span class='ident'>StatusCode</span>::<span class='ident'>Forbidden</span>);
     }
 }</pre>
-</div><h4 id='method.send_file_with_mime' class='method'><code>fn <a href='#method.send_file_with_mime' class='fnname'>send_file_with_mime</a>&lt;P, F&gt;(self, path: P, to_mime: F) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../../rustful/response/enum.FileError.html' title='rustful::response::FileError'>FileError</a>&lt;'a, 'b&gt;&gt; <span class='where'>where P: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;, F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../rustful/mime/struct.Mime.html' title='rustful::mime::Mime'>Mime</a>&gt;</span></code></h4>
+</div><h4 id='method.send_file_with_mime' class='method'><span id='send_file_with_mime.v' class='invisible'><code>fn <a href='#method.send_file_with_mime' class='fnname'>send_file_with_mime</a>&lt;P, F&gt;(self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; path: P,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; to_mime: F)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, <a class='enum' href='../../rustful/response/enum.FileError.html' title='rustful::response::FileError'>FileError</a>&lt;'a, 'b&gt;&gt; <span class='where fmt-newline'>where P: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;, F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../rustful/mime/struct.Mime.html' title='rustful::mime::Mime'>Mime</a>&gt;</span></code></span></h4>
 <div class='docblock'><p>Send a static file with a specified MIME type to the client.</p>
 
 <p>This can be used instead of <code>send_file</code> to control what MIME type the
@@ -193,18 +192,18 @@ from there if the file could not be opened.</p>
         <span class='ident'>response</span>.<span class='ident'>set_status</span>(<span class='ident'>StatusCode</span>::<span class='ident'>Forbidden</span>);
     }
 }</pre>
-</div><h4 id='method.into_chunked' class='method'><code>fn <a href='#method.into_chunked' class='fnname'>into_chunked</a>(self) -&gt; <a class='struct' href='../../rustful/response/struct.Chunked.html' title='rustful::response::Chunked'>Chunked</a>&lt;'a, 'b&gt;</code></h4>
+</div><h4 id='method.into_chunked' class='method'><span id='into_chunked.v' class='invisible'><code>fn <a href='#method.into_chunked' class='fnname'>into_chunked</a>(self) -&gt; <a class='struct' href='../../rustful/response/struct.Chunked.html' title='rustful::response::Chunked'>Chunked</a>&lt;'a, 'b&gt;</code></span></h4>
 <div class='docblock'><p>Write the status code and headers to the client and turn the <code>Response</code>
 into a <code>Chunked</code> response.</p>
-</div><h4 id='method.into_raw' class='method'><code>unsafe fn <a href='#method.into_raw' class='fnname'>into_raw</a>(self, content_length: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; <a class='struct' href='../../rustful/response/struct.Raw.html' title='rustful::response::Raw'>Raw</a>&lt;'a&gt;</code></h4>
+</div><h4 id='method.into_raw' class='method'><span id='into_raw.v' class='invisible'><code>unsafe fn <a href='#method.into_raw' class='fnname'>into_raw</a>(self, content_length: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; <a class='struct' href='../../rustful/response/struct.Raw.html' title='rustful::response::Raw'>Raw</a>&lt;'a&gt;</code></span></h4>
 <div class='docblock'><p>Write the status code and headers to the client and turn the <code>Response</code>
 into a <code>Raw</code> response. Any eventual response filters are bypassed to
 make sure that the data is not modified.</p>
 
 <p><strong>Unsafety</strong>: The content length is set beforehand, which makes it
 possible to send responses that are too short.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, 'b&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>&lt;'a, 'b&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2191' class='srclink' href='../../src/rustful/src/response.rs.html#604-611' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.drop' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, 'b&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html' title='core::ops::Drop'>Drop</a> for <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>&lt;'a, 'b&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/response.rs.html#604-611' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.drop' class='method'><span id='drop.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/ops/trait.Drop.html#tymethod.drop' class='fnname'>drop</a>(&amp;mut self)</code></span></h4>
 <div class='docblock'><p>Writes status code and headers and closes the connection.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -262,11 +261,9 @@ possible to send responses that are too short.</p>
     <script>
         window.rootPath = "../../";
         window.currentCrate = "rustful";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>

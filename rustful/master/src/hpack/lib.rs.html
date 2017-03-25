@@ -9,6 +9,7 @@
 
     <title>lib.rs.html -- source</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -1050,7 +1051,7 @@
 <span class='doccomment'>/// closure cannot be passed, since it cannot be named.</span>
 <span class='kw'>fn</span> <span class='ident'>static_table_mapper</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='ident'>h</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> (<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>], <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>]))
         <span class='op'>-&gt;</span> (<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>], <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>]) {
-    <span class='op'>*</span><span class='ident'>h</span>
+    <span class='kw-2'>*</span><span class='ident'>h</span>
 }
 
 <span class='doccomment'>/// The struct represents the header table obtained by merging the static and</span>
@@ -1164,7 +1165,7 @@
             <span class='kw'>if</span> <span class='ident'>header</span>.<span class='number'>0</span> <span class='op'>==</span> <span class='ident'>h</span>.<span class='number'>0</span> {
                 <span class='kw'>if</span> <span class='ident'>header</span>.<span class='number'>1</span> <span class='op'>==</span> <span class='ident'>h</span>.<span class='number'>1</span> {
                     <span class='comment'>// Both name and value matched: returns it immediately</span>
-                    <span class='kw'>return</span> <span class='prelude-val'>Some</span>((<span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='boolvalue'>true</span>));
+                    <span class='kw'>return</span> <span class='prelude-val'>Some</span>((<span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='bool-val'>true</span>));
                 }
                 <span class='comment'>// If only the name was valid, we continue scanning, hoping to</span>
                 <span class='comment'>// find one where both the name and value match. We remember</span>
@@ -1176,7 +1177,7 @@
         <span class='comment'>// Finally, if there&#39;s no header with a matching name and value,</span>
         <span class='comment'>// return one that matched only the name, if that *was* found.</span>
         <span class='kw'>match</span> <span class='ident'>matching_name</span> {
-            <span class='prelude-val'>Some</span>(<span class='ident'>i</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>((<span class='ident'>i</span>, <span class='boolvalue'>false</span>)),
+            <span class='prelude-val'>Some</span>(<span class='ident'>i</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>((<span class='ident'>i</span>, <span class='bool-val'>false</span>)),
             <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
         }
     }
@@ -1396,7 +1397,7 @@
         <span class='kw'>let</span> <span class='ident'>table</span> <span class='op'>=</span> <span class='ident'>HeaderTable</span>::<span class='ident'>with_static_table</span>(<span class='ident'>STATIC_TABLE</span>);
 
         <span class='kw'>for</span> (<span class='ident'>index</span>, <span class='ident'>entry</span>) <span class='kw'>in</span> <span class='ident'>STATIC_TABLE</span>.<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
-            <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>table</span>.<span class='ident'>get_from_table</span>(<span class='ident'>index</span> <span class='op'>+</span> <span class='number'>1</span>).<span class='ident'>unwrap</span>(), <span class='op'>*</span><span class='ident'>entry</span>);
+            <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>table</span>.<span class='ident'>get_from_table</span>(<span class='ident'>index</span> <span class='op'>+</span> <span class='number'>1</span>).<span class='ident'>unwrap</span>(), <span class='kw-2'>*</span><span class='ident'>entry</span>);
         }
     }
 
@@ -1471,8 +1472,8 @@
         <span class='kw'>let</span> <span class='ident'>table</span> <span class='op'>=</span> <span class='ident'>HeaderTable</span>::<span class='ident'>with_static_table</span>(<span class='ident'>STATIC_TABLE</span>);
 
         <span class='kw'>for</span> (<span class='ident'>i</span>, <span class='ident'>h</span>) <span class='kw'>in</span> <span class='ident'>STATIC_TABLE</span>.<span class='ident'>iter</span>().<span class='ident'>enumerate</span>() {
-            <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>table</span>.<span class='ident'>find_header</span>(<span class='op'>*</span><span class='ident'>h</span>).<span class='ident'>unwrap</span>(),
-                       (<span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='boolvalue'>true</span>));
+            <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>table</span>.<span class='ident'>find_header</span>(<span class='kw-2'>*</span><span class='ident'>h</span>).<span class='ident'>unwrap</span>(),
+                       (<span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span>, <span class='bool-val'>true</span>));
         }
     }
 
@@ -1484,7 +1485,7 @@
             <span class='kw'>let</span> <span class='ident'>table</span> <span class='op'>=</span> <span class='ident'>HeaderTable</span>::<span class='ident'>with_static_table</span>(<span class='ident'>STATIC_TABLE</span>);
             <span class='kw'>let</span> <span class='ident'>h</span>: (<span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>], <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>=</span> (<span class='string'>b&quot;:method&quot;</span>, <span class='string'>b&quot;PUT&quot;</span>);
 
-            <span class='kw'>if</span> <span class='kw'>let</span> (<span class='ident'>index</span>, <span class='boolvalue'>false</span>) <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>find_header</span>(<span class='ident'>h</span>).<span class='ident'>unwrap</span>() {
+            <span class='kw'>if</span> <span class='kw'>let</span> (<span class='ident'>index</span>, <span class='bool-val'>false</span>) <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>find_header</span>(<span class='ident'>h</span>).<span class='ident'>unwrap</span>() {
                 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>h</span>.<span class='number'>0</span>, <span class='ident'>STATIC_TABLE</span>[<span class='ident'>index</span> <span class='op'>-</span> <span class='number'>1</span>].<span class='number'>0</span>);
                 <span class='comment'>// The index is the last one with the corresponding name</span>
                 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='number'>3</span>, <span class='ident'>index</span>);
@@ -1496,7 +1497,7 @@
             <span class='kw'>let</span> <span class='ident'>table</span> <span class='op'>=</span> <span class='ident'>HeaderTable</span>::<span class='ident'>with_static_table</span>(<span class='ident'>STATIC_TABLE</span>);
             <span class='kw'>let</span> <span class='ident'>h</span>: (<span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>], <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>=</span> (<span class='string'>b&quot;:status&quot;</span>, <span class='string'>b&quot;333&quot;</span>);
 
-            <span class='kw'>if</span> <span class='kw'>let</span> (<span class='ident'>index</span>, <span class='boolvalue'>false</span>) <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>find_header</span>(<span class='ident'>h</span>).<span class='ident'>unwrap</span>() {
+            <span class='kw'>if</span> <span class='kw'>let</span> (<span class='ident'>index</span>, <span class='bool-val'>false</span>) <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>find_header</span>(<span class='ident'>h</span>).<span class='ident'>unwrap</span>() {
                 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>h</span>.<span class='number'>0</span>, <span class='ident'>STATIC_TABLE</span>[<span class='ident'>index</span> <span class='op'>-</span> <span class='number'>1</span>].<span class='number'>0</span>);
                 <span class='comment'>// The index is the last one with the corresponding name</span>
                 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='number'>14</span>, <span class='ident'>index</span>);
@@ -1508,7 +1509,7 @@
             <span class='kw'>let</span> <span class='ident'>table</span> <span class='op'>=</span> <span class='ident'>HeaderTable</span>::<span class='ident'>with_static_table</span>(<span class='ident'>STATIC_TABLE</span>);
             <span class='kw'>let</span> <span class='ident'>h</span>: (<span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>], <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>=</span> (<span class='string'>b&quot;:authority&quot;</span>, <span class='string'>b&quot;example.com&quot;</span>);
 
-            <span class='kw'>if</span> <span class='kw'>let</span> (<span class='ident'>index</span>, <span class='boolvalue'>false</span>) <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>find_header</span>(<span class='ident'>h</span>).<span class='ident'>unwrap</span>() {
+            <span class='kw'>if</span> <span class='kw'>let</span> (<span class='ident'>index</span>, <span class='bool-val'>false</span>) <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>find_header</span>(<span class='ident'>h</span>).<span class='ident'>unwrap</span>() {
                 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>h</span>.<span class='number'>0</span>, <span class='ident'>STATIC_TABLE</span>[<span class='ident'>index</span> <span class='op'>-</span> <span class='number'>1</span>].<span class='number'>0</span>);
             } <span class='kw'>else</span> {
                 <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;The header should have matched only partially&quot;</span>);
@@ -1518,7 +1519,7 @@
             <span class='kw'>let</span> <span class='ident'>table</span> <span class='op'>=</span> <span class='ident'>HeaderTable</span>::<span class='ident'>with_static_table</span>(<span class='ident'>STATIC_TABLE</span>);
             <span class='kw'>let</span> <span class='ident'>h</span>: (<span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>], <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>=</span> (<span class='string'>b&quot;www-authenticate&quot;</span>, <span class='string'>b&quot;asdf&quot;</span>);
 
-            <span class='kw'>if</span> <span class='kw'>let</span> (<span class='ident'>index</span>, <span class='boolvalue'>false</span>) <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>find_header</span>(<span class='ident'>h</span>).<span class='ident'>unwrap</span>() {
+            <span class='kw'>if</span> <span class='kw'>let</span> (<span class='ident'>index</span>, <span class='bool-val'>false</span>) <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>find_header</span>(<span class='ident'>h</span>).<span class='ident'>unwrap</span>() {
                 <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>h</span>.<span class='number'>0</span>, <span class='ident'>STATIC_TABLE</span>[<span class='ident'>index</span> <span class='op'>-</span> <span class='number'>1</span>].<span class='number'>0</span>);
             } <span class='kw'>else</span> {
                 <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;The header should have matched only partially&quot;</span>);
@@ -1535,7 +1536,7 @@
         <span class='kw'>let</span> <span class='ident'>h</span>: (<span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>], <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>=</span> (<span class='string'>b&quot;:method&quot;</span>, <span class='string'>b&quot;PUT&quot;</span>);
         <span class='ident'>table</span>.<span class='ident'>add_header</span>(<span class='ident'>h</span>.<span class='number'>0</span>.<span class='ident'>to_vec</span>(), <span class='ident'>h</span>.<span class='number'>1</span>.<span class='ident'>to_vec</span>());
 
-        <span class='kw'>if</span> <span class='kw'>let</span> (<span class='ident'>index</span>, <span class='boolvalue'>true</span>) <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>find_header</span>(<span class='ident'>h</span>).<span class='ident'>unwrap</span>() {
+        <span class='kw'>if</span> <span class='kw'>let</span> (<span class='ident'>index</span>, <span class='bool-val'>true</span>) <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>find_header</span>(<span class='ident'>h</span>).<span class='ident'>unwrap</span>() {
             <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>index</span>, <span class='ident'>STATIC_TABLE</span>.<span class='ident'>len</span>() <span class='op'>+</span> <span class='number'>1</span>);
         } <span class='kw'>else</span> {
             <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;The header should have matched fully&quot;</span>);
@@ -1556,7 +1557,7 @@
         <span class='kw'>let</span> <span class='ident'>h</span>: (<span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>], <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>=</span> (<span class='string'>b&quot;X-Custom-Header&quot;</span>, <span class='string'>b&quot;different-stuff&quot;</span>);
 
         <span class='comment'>// It must match only partially</span>
-        <span class='kw'>if</span> <span class='kw'>let</span> (<span class='ident'>index</span>, <span class='boolvalue'>false</span>) <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>find_header</span>(<span class='ident'>h</span>).<span class='ident'>unwrap</span>() {
+        <span class='kw'>if</span> <span class='kw'>let</span> (<span class='ident'>index</span>, <span class='bool-val'>false</span>) <span class='op'>=</span> <span class='ident'>table</span>.<span class='ident'>find_header</span>(<span class='ident'>h</span>).<span class='ident'>unwrap</span>() {
             <span class='comment'>// The index must be the first one in the dynamic table</span>
             <span class='comment'>// segment of the header table.</span>
             <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>index</span>, <span class='ident'>STATIC_TABLE</span>.<span class='ident'>len</span>() <span class='op'>+</span> <span class='number'>1</span>);
@@ -1622,11 +1623,9 @@
     <script>
         window.rootPath = "../../";
         window.currentCrate = "hpack";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>

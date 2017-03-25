@@ -9,6 +9,7 @@
 
     <title>rustful::handler::Handler - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -47,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-1276' class='srclink' href='../../src/rustful/src/handler.rs.html#9-18' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/rustful/handler.rs.html#9-18' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Handler: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> + 'static {
     fn <a href='#tymethod.handle_request' class='fnname'>handle_request</a>(&amp;self, context: <a class='struct' href='../../rustful/context/struct.Context.html' title='rustful::context::Context'>Context</a>, response: <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>);
 
@@ -56,17 +57,17 @@
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.handle_request' class='method stab '><code>fn <a href='#tymethod.handle_request' class='fnname'>handle_request</a>(&amp;self, context: <a class='struct' href='../../rustful/context/struct.Context.html' title='rustful::context::Context'>Context</a>, response: <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>)</code></h3><div class='docblock'><p>Handle a request from the client. Panicking within this method is
+        <h3 id='tymethod.handle_request' class='method'><span id='handle_request.v' class='invisible'><code>fn <a href='#tymethod.handle_request' class='fnname'>handle_request</a>(&amp;self, context: <a class='struct' href='../../rustful/context/struct.Context.html' title='rustful::context::Context'>Context</a>, response: <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>)</code></span></h3><div class='docblock'><p>Handle a request from the client. Panicking within this method is
 discouraged, to allow the server to run smoothly.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.description' class='method stab '><code>fn <a href='#method.description' class='fnname'>description</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='https://doc.rust-lang.org/nightly/collections/borrow/enum.Cow.html' title='collections::borrow::Cow'>Cow</a>&lt;'static, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;&gt;</code></h3><div class='docblock'><p>Get a description for the handler.</p>
+        <h3 id='method.description' class='method'><span id='description.v' class='invisible'><code>fn <a href='#method.description' class='fnname'>description</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='enum' href='https://doc.rust-lang.org/nightly/collections/borrow/enum.Cow.html' title='collections::borrow::Cow'>Cow</a>&lt;'static, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;&gt;</code></span></h3><div class='docblock'><p>Get a description for the handler.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;F: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(<a class='struct' href='../../rustful/context/struct.Context.html' title='rustful::context::Context'>Context</a>, <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>) + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> + 'static&gt; Handler for F</code></li>
-<li><code>impl&lt;T: <a class='trait' href='../../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a>&gt; Handler for <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/arc/struct.Arc.html' title='alloc::arc::Arc'>Arc</a>&lt;T&gt;</code></li>
+    <li><code>impl&lt;F:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html' title='core::ops::Fn'>Fn</a>(<a class='struct' href='../../rustful/context/struct.Context.html' title='rustful::context::Context'>Context</a>, <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>) + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Send.html' title='core::marker::Send'>Send</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html' title='core::marker::Sync'>Sync</a> + 'static&gt; Handler for F</code></li>
+<li><code>impl&lt;T:&nbsp;<a class='trait' href='../../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a>&gt; Handler for <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/arc/struct.Arc.html' title='alloc::arc::Arc'>Arc</a>&lt;T&gt;</code></li>
 <li><code>impl Handler for <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='trait' href='../../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a>&gt;</code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/rustful/handler/trait.Handler.js">
@@ -126,11 +127,9 @@ discouraged, to allow the server to run smoothly.</p>
     <script>
         window.rootPath = "../../";
         window.currentCrate = "rustful";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>
