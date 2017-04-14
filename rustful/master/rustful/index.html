@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/rustful/lib.rs.html#1-112' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/rustful/lib.rs.html#1-118' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>A light HTTP framework with REST-like features. The main purpose of Rustful
 is to create a simple, modular and non-intrusive foundation for HTTP
 applications. It has a mainly stateless structure, which naturally allows
@@ -60,12 +60,12 @@ all the necessary settings as fields:</p>
 <pre class='rust rust-example-rendered'>
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
 <span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
-<span class='kw'>use</span> <span class='ident'>rustful</span>::{<span class='ident'>Server</span>, <span class='ident'>Handler</span>, <span class='ident'>Context</span>, <span class='ident'>Response</span>, <span class='ident'>TreeRouter</span>};
+<span class='kw'>use</span> <span class='ident'>rustful</span>::{<span class='ident'>Server</span>, <span class='ident'>Handler</span>, <span class='ident'>Context</span>, <span class='ident'>Response</span>, <span class='ident'>DefaultRouter</span>};
 
 <span class='kw'>struct</span> <span class='ident'>Greeting</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span>);
 
 <span class='kw'>impl</span> <span class='ident'>Handler</span> <span class='kw'>for</span> <span class='ident'>Greeting</span> {
-    <span class='kw'>fn</span> <span class='ident'>handle_request</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span>) {
+    <span class='kw'>fn</span> <span class='ident'>handle</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span>) {
         <span class='comment'>//Check if the client accessed /hello/:name or /good_bye/:name</span>
         <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>name</span>) <span class='op'>=</span> <span class='ident'>context</span>.<span class='ident'>variables</span>.<span class='ident'>get</span>(<span class='string'>&quot;name&quot;</span>) {
             <span class='comment'>//Use the value of :name</span>
@@ -77,8 +77,8 @@ all the necessary settings as fields:</p>
 }
 
 <span class='kw'>let</span> <span class='ident'>my_router</span> <span class='op'>=</span> <span class='macro'>insert_routes</span><span class='macro'>!</span>{
-    <span class='comment'>//Create a new TreeRouter</span>
-    <span class='ident'>TreeRouter</span>::<span class='ident'>new</span>() <span class='op'>=&gt;</span> {
+    <span class='comment'>//Create a new DefaultRouter</span>
+    <span class='ident'>DefaultRouter</span>::<span class='op'>&lt;</span><span class='ident'>Greeting</span><span class='op'>&gt;</span>::<span class='ident'>new</span>() <span class='op'>=&gt;</span> {
         <span class='comment'>//Receive GET requests to /hello and /hello/:name</span>
         <span class='string'>&quot;hello&quot;</span> <span class='op'>=&gt;</span> {
             <span class='ident'>Get</span>: <span class='ident'>Greeting</span>(<span class='string'>&quot;hello&quot;</span>),
@@ -106,8 +106,13 @@ all the necessary settings as fields:</p>
                                        href='./context/index.html'>context</a>::<a class='struct' href='../rustful/context/struct.Context.html' title='rustful::context::Context'>Context</a>;</code></td></tr><tr><td><code>pub use self::<a class='mod'
                                        href='./response/index.html'>response</a>::<a class='struct' href='../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>;</code></td></tr><tr><td><code>pub use self::<a class='mod'
                                        href='./response/index.html'>response</a>::<a class='enum' href='../rustful/response/enum.Error.html' title='rustful::response::Error'>Error</a>;</code></td></tr><tr><td><code>pub use self::<a class='mod'
+                                       href='./response/index.html'>response</a>::<a class='trait' href='../rustful/response/trait.SendResponse.html' title='rustful::response::SendResponse'>SendResponse</a>;</code></td></tr><tr><td><code>pub use self::<a class='mod'
                                        href='./handler/index.html'>handler</a>::<a class='trait' href='../rustful/handler/trait.Handler.html' title='rustful::handler::Handler'>Handler</a>;</code></td></tr><tr><td><code>pub use self::<a class='mod'
-                                       href='./router/index.html'>router</a>::<a class='trait' href='../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+                                       href='./handler/index.html'>handler</a>::<a class='type' href='../rustful/handler/type.DefaultRouter.html' title='rustful::handler::DefaultRouter'>DefaultRouter</a>;</code></td></tr><tr><td><code>pub use self::<a class='mod'
+                                       href='./handler/index.html'>handler</a>::<a class='struct' href='../rustful/handler/struct.ContentFactory.html' title='rustful::handler::ContentFactory'>ContentFactory</a>;</code></td></tr><tr><td><code>pub use self::<a class='mod'
+                                       href='./handler/index.html'>handler</a>::<a class='trait' href='../rustful/handler/trait.CreateContent.html' title='rustful::handler::CreateContent'>CreateContent</a>;</code></td></tr><tr><td><code>pub use self::<a class='mod'
+                                       href='./handler/index.html'>handler</a>::<a class='mod'
+                                       href='./handler/routing/index.html'>routing</a>::<a class='trait' href='../rustful/handler/routing/trait.Insert.html' title='rustful::handler::routing::Insert'>Insert</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class='mod' href='context/index.html'
@@ -159,13 +164,6 @@ all the necessary settings as fields:</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='router/index.html'
-                                  title='rustful::router'>router</a></td>
-                           <td class='docblock-short'>
-                                <p>Routers stores request handlers, using an HTTP method and a path as keys.</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
                            <td><a class='mod' href='server/index.html'
                                   title='rustful::server'>server</a></td>
                            <td class='docblock-short'>
@@ -190,10 +188,17 @@ adds them to the provided router. The router is then returned.</p>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.TreeRouter.html'
-                                  title='rustful::TreeRouter'>TreeRouter</a></td>
+                           <td><a class='struct' href='struct.OrElse.html'
+                                  title='rustful::OrElse'>OrElse</a></td>
                            <td class='docblock-short'>
-                                <p>A tree shaped router that selects handlers using paths.</p>
+                                <p>A router that selects an item from a secondary handler on error.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.StatusRouter.html'
+                                  title='rustful::StatusRouter'>StatusRouter</a></td>
+                           <td class='docblock-short'>
+                                <p>A router that selects an item from an HTTP status code.</p>
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>

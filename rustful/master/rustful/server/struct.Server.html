@@ -48,10 +48,9 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/rustful/server/mod.rs.html#43-83' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct Server&lt;R:&nbsp;<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a>&gt; {
+               </span><a class='srclink' href='../../src/rustful/server/mod.rs.html#43-78' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Server&lt;R&gt; {
     pub handlers: R,
-    pub fallback_handler: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;R::<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Handler</a>&gt;,
     pub host: <a class='struct' href='../../rustful/server/struct.Host.html' title='rustful::server::Host'>Host</a>,
     pub scheme: <a class='enum' href='../../rustful/server/enum.Scheme.html' title='rustful::server::Scheme'>Scheme</a>,
     pub threads: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;,
@@ -78,12 +77,6 @@
                            <span id='handlers.v' class='invisible'>
                            <code>handlers: R</code>
                            </span></span><span class='stab '></span><div class='docblock'><p>One or several response handlers.</p>
-</div><span id='structfield.fallback_handler' class='structfield'>
-                           <span id='fallback_handler.v' class='invisible'>
-                           <code>fallback_handler: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;R::<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Handler</a>&gt;</code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>A fallback handler for when none is found in <code>handlers</code>. Leaving this
-unspecified will cause an empty <code>404</code> response to be automatically sent
-instead.</p>
 </div><span id='structfield.host' class='structfield'>
                            <span id='host.v' class='invisible'>
                            <code>host: <a class='struct' href='../../rustful/server/struct.Host.html' title='rustful::server::Host'>Host</a></code>
@@ -125,7 +118,7 @@ will force connections to close after each request. Default is <code>None</code>
                            <span id='response_filters.v' class='invisible'>
                            <code>response_filters: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='trait' href='../../rustful/filter/trait.ResponseFilter.html' title='rustful::filter::ResponseFilter'>ResponseFilter</a>&gt;&gt;</code>
                            </span></span><span class='stab '></span><div class='docblock'><p>The response filter stack.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a>&gt; <a class='struct' href='../../rustful/server/struct.Server.html' title='rustful::server::Server'>Server</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/server/mod.rs.html#85-131' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class='trait' href='../../rustful/handler/trait.HandleRequest.html' title='rustful::handler::HandleRequest'>HandleRequest</a>&gt; <a class='struct' href='../../rustful/server/struct.Server.html' title='rustful::server::Server'>Server</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/server/mod.rs.html#80-125' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.new' class='method'><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(handlers: R) -&gt; <a class='struct' href='../../rustful/server/struct.Server.html' title='rustful::server::Server'>Server</a>&lt;R&gt;</code></span></h4>
 <div class='docblock'><p>Set up a new standard server. This can be useful when <code>handlers</code>
 doesn&#39;t implement <code>Default</code>:</p>
@@ -143,7 +136,7 @@ doesn&#39;t implement <code>Default</code>:</p>
 <div class='docblock'><p>Start the server.</p>
 </div><h4 id='method.build' class='method'><span id='build.v' class='invisible'><code>fn <a href='#method.build' class='fnname'>build</a>(self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='struct' href='../../rustful/server/struct.ServerInstance.html' title='rustful::server::ServerInstance'>ServerInstance</a>&lt;R&gt;, <a class='enum' href='../../rustful/server/enum.Scheme.html' title='rustful::server::Scheme'>Scheme</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a></code></span></h4>
 <div class='docblock'><p>Build a runnable instance of the server.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class='trait' href='../../rustful/router/trait.Router.html' title='rustful::router::Router'>Router</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../rustful/server/struct.Server.html' title='rustful::server::Server'>Server</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/server/mod.rs.html#133-137' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> + <a class='trait' href='../../rustful/handler/trait.HandleRequest.html' title='rustful::handler::HandleRequest'>HandleRequest</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../../rustful/server/struct.Server.html' title='rustful::server::Server'>Server</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/server/mod.rs.html#127-131' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.default' class='method'><span id='default.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; <a class='struct' href='../../rustful/server/struct.Server.html' title='rustful::server::Server'>Server</a>&lt;R&gt;</code></span></h4>
 <div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
 </div></div></section>

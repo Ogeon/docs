@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/rustful/response.rs.html#784-786' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/rustful/response.rs.html#1016-1018' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Raw&lt;'a&gt; { /* fields omitted */ }</pre><div class='docblock'><p>A streaming fixed-size response.</p>
 
 <p>Everything is written directly to the network stream, without being
@@ -56,7 +56,7 @@ filtered, which makes <code>Raw</code> especially suitable for transferring file
 
 <p><strong>Unsafety</strong>: The content length is set beforehand, which makes it possible
 to send responses that are too short.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../../rustful/response/struct.Raw.html' title='rustful::response::Raw'>Raw</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/response.rs.html#788-861' title='goto source code'>[src]</a></span></h3>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='struct' href='../../rustful/response/struct.Raw.html' title='rustful::response::Raw'>Raw</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/response.rs.html#1020-1093' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.send' class='method'><span id='send.v' class='invisible'><code>fn <a href='#method.send' class='fnname'>send</a>&lt;'d, Content:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'d&gt;&gt;&gt;(&amp;mut self, content: Content)</code></span></h4>
 <div class='docblock'><p>Send a piece of data to the client, ignoring any eventual errors. Use
 <code>try_send</code> to get error information.</p>
@@ -100,7 +100,7 @@ errors are not ignored.</p>
 
 <p>This is optional and will happen silently when the writer drops out of
 scope.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a> for <a class='struct' href='../../rustful/response/struct.Raw.html' title='rustful::response::Raw'>Raw</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/response.rs.html#863-878' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a> for <a class='struct' href='../../rustful/response/struct.Raw.html' title='rustful::response::Raw'>Raw</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/response.rs.html#1095-1110' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.write' class='method'><span id='write.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html#tymethod.write' class='fnname'>write</a>(&amp;mut self, content: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;</code></span></h4>
 <div class='docblock'><p>Write a buffer into this object, returning how many bytes were written. <a href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html#tymethod.write">Read more</a></p>
 </div><h4 id='method.write_all' class='method'><span id='write_all.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html#method.write_all' class='fnname'>write_all</a>(&amp;mut self, content: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>&gt;</code></span></h4>

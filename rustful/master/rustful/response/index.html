@@ -48,7 +48,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/rustful/response.rs.html#1-1015' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../../src/rustful/response.rs.html#1-1247' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Response writers.</p>
 
 <p>The response writers are the output channel from the handlers to the
@@ -148,6 +148,23 @@ correct.</p>
                                   title='rustful::response::FileError'>FileError</a></td>
                            <td class='docblock-short'>
                                 <p>Error that may occure while sending a file.</p>
+                           </td>
+                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.ResponseError.html'
+                                  title='rustful::response::ResponseError'>ResponseError</a></td>
+                           <td class='docblock-short'>
+                                <p>Helper trait for dealing with errors that may occur while sending a
+response. It provides a default method of handling the error.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.SendResponse.html'
+                                  title='rustful::response::SendResponse'>SendResponse</a></td>
+                           <td class='docblock-short'>
+                                <p>A trait for higher level types that can be sent as responses, like
+<code>Result</code>.</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>

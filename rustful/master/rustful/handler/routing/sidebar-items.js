@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["RouteIter","Utility iterator for when a root path may be hard to represent."]],"struct":[["InsertState","A state object for route insertion."],["RouteState","A state object for routing."]],"trait":[["Insert","A common trait for building routers."],["InsertExt","Additional insertion and modification methods."],["Route","A segmented route."]]});

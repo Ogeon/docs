@@ -174,12 +174,6 @@
 <span id="129">129</span>
 <span id="130">130</span>
 <span id="131">131</span>
-<span id="132">132</span>
-<span id="133">133</span>
-<span id="134">134</span>
-<span id="135">135</span>
-<span id="136">136</span>
-<span id="137">137</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Server configuration and instance.</span>
 
@@ -191,7 +185,7 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Listening</span>;
 
 <span class='kw'>use</span> <span class='ident'>filter</span>::{<span class='ident'>ContextFilter</span>, <span class='ident'>ResponseFilter</span>};
-<span class='kw'>use</span> <span class='ident'>router</span>::<span class='ident'>Router</span>;
+<span class='kw'>use</span> <span class='ident'>handler</span>::<span class='ident'>HandleRequest</span>;
 
 <span class='kw'>use</span> <span class='ident'>HttpResult</span>;
 
@@ -209,7 +203,7 @@
 <span class='doccomment'>///# #[derive(Default)]</span>
 <span class='doccomment'>///# struct R;</span>
 <span class='doccomment'>///# impl Handler for R {</span>
-<span class='doccomment'>///#     fn handle_request(&amp;self, _context: Context, _response: Response) {}</span>
+<span class='doccomment'>///#     fn handle(&amp;self, _context: Context, _response: Response) {}</span>
 <span class='doccomment'>///# }</span>
 <span class='doccomment'>///# let router = R;</span>
 <span class='doccomment'>///let server_result = Server {</span>
@@ -223,14 +217,9 @@
 <span class='doccomment'>///    Err(e) =&gt; println!(&quot;could not start server: {}&quot;, e.description())</span>
 <span class='doccomment'>///}</span>
 <span class='doccomment'>///```</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>Router</span><span class='op'>&gt;</span> {
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
     <span class='doccomment'>///One or several response handlers.</span>
     <span class='kw'>pub</span> <span class='ident'>handlers</span>: <span class='ident'>R</span>,
-
-    <span class='doccomment'>///A fallback handler for when none is found in `handlers`. Leaving this</span>
-    <span class='doccomment'>///unspecified will cause an empty `404` response to be automatically sent</span>
-    <span class='doccomment'>///instead.</span>
-    <span class='kw'>pub</span> <span class='ident'>fallback_handler</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>R</span>::<span class='ident'>Handler</span><span class='op'>&gt;</span>,
 
     <span class='doccomment'>///The host address and port where the server will listen for requests.</span>
     <span class='doccomment'>///Default is `0.0.0.0:80`.</span>
@@ -265,7 +254,7 @@
     <span class='kw'>pub</span> <span class='ident'>response_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponseFilter</span><span class='op'>&gt;&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>Router</span><span class='op'>&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>HandleRequest</span><span class='op'>&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
     <span class='doccomment'>///Set up a new standard server. This can be useful when `handlers`</span>
     <span class='doccomment'>///doesn&#39;t implement `Default`:</span>
     <span class='doccomment'>///</span>
@@ -284,7 +273,6 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>handlers</span>: <span class='ident'>R</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
         <span class='ident'>Server</span> {
             <span class='ident'>handlers</span>: <span class='ident'>handlers</span>,
-            <span class='ident'>fallback_handler</span>: <span class='prelude-val'>None</span>,
             <span class='ident'>host</span>: <span class='number'>80</span>.<span class='ident'>into</span>(),
             <span class='ident'>scheme</span>: <span class='ident'>Scheme</span>::<span class='ident'>Http</span>,
             <span class='ident'>threads</span>: <span class='prelude-val'>None</span>,
@@ -313,7 +301,7 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>Router</span> <span class='op'>+</span> <span class='ident'>Default</span><span class='op'>&gt;</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>Default</span> <span class='op'>+</span> <span class='ident'>HandleRequest</span><span class='op'>&gt;</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
         <span class='ident'>Server</span>::<span class='ident'>new</span>(<span class='ident'>R</span>::<span class='ident'>default</span>())
     }
