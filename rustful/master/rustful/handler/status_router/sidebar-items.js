@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Builder","A builder for a `StatusRouter`."],["StatusRouter","A router that selects an item from an HTTP status code."]]});

@@ -158,9 +158,6 @@
 <span id="113">113</span>
 <span id="114">114</span>
 <span id="115">115</span>
-<span id="116">116</span>
-<span id="117">117</span>
-<span id="118">118</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!A light HTTP framework with REST-like features. The main purpose of Rustful</span>
 <span class='doccomment'>//!is to create a simple, modular and non-intrusive foundation for HTTP</span>
@@ -171,13 +168,12 @@
 <span class='doccomment'>//!all the necessary settings as fields:</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//!```no_run</span>
-<span class='doccomment'>//!#[macro_use]</span>
 <span class='doccomment'>//!extern crate rustful;</span>
 <span class='doccomment'>//!use rustful::{Server, Handler, Context, Response, DefaultRouter};</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//!struct Greeting(&amp;&#39;static str);</span>
+<span class='doccomment'>//!struct Phrase(&amp;&#39;static str);</span>
 <span class='doccomment'>//!</span>
-<span class='doccomment'>//!impl Handler for Greeting {</span>
+<span class='doccomment'>//!impl Handler for Phrase {</span>
 <span class='doccomment'>//!    fn handle(&amp;self, context: Context, response: Response) {</span>
 <span class='doccomment'>//!        //Check if the client accessed /hello/:name or /good_bye/:name</span>
 <span class='doccomment'>//!        if let Some(name) = context.variables.get(&quot;name&quot;) {</span>
@@ -190,21 +186,20 @@
 <span class='doccomment'>//!}</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//!# fn main() {</span>
-<span class='doccomment'>//!let my_router = insert_routes!{</span>
-<span class='doccomment'>//!    //Create a new DefaultRouter</span>
-<span class='doccomment'>//!    DefaultRouter::&lt;Greeting&gt;::new() =&gt; {</span>
-<span class='doccomment'>//!        //Receive GET requests to /hello and /hello/:name</span>
-<span class='doccomment'>//!        &quot;hello&quot; =&gt; {</span>
-<span class='doccomment'>//!            Get: Greeting(&quot;hello&quot;),</span>
-<span class='doccomment'>//!            &quot;:name&quot; =&gt; Get: Greeting(&quot;hello&quot;)</span>
-<span class='doccomment'>//!        },</span>
-<span class='doccomment'>//!        //Receive GET requests to /good_bye and /good_bye/:name</span>
-<span class='doccomment'>//!        &quot;good_bye&quot; =&gt; {</span>
-<span class='doccomment'>//!            Get: Greeting(&quot;good bye&quot;),</span>
-<span class='doccomment'>//!            &quot;:name&quot; =&gt; Get: Greeting(&quot;good bye&quot;)</span>
-<span class='doccomment'>//!        }</span>
-<span class='doccomment'>//!    }</span>
-<span class='doccomment'>//!};</span>
+<span class='doccomment'>//!let mut my_router = DefaultRouter::&lt;Phrase&gt;::new();</span>
+<span class='doccomment'>//!my_router.build().many(|mut node| {</span>
+<span class='doccomment'>//!    //Receive GET requests to /hello and /hello/:name</span>
+<span class='doccomment'>//!    node.path(&quot;hello&quot;).many(|mut node| {</span>
+<span class='doccomment'>//!        node.then().on_get(Phrase(&quot;hello&quot;));</span>
+<span class='doccomment'>//!        node.path(&quot;:name&quot;).then().on_get(Phrase(&quot;hello&quot;));</span>
+<span class='doccomment'>//!    });</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!    //Receive GET requests to /good_bye and /good_bye/:name</span>
+<span class='doccomment'>//!    node.path(&quot;good_bye&quot;).many(|mut node| {</span>
+<span class='doccomment'>//!        node.then().on_get(Phrase(&quot;good bye&quot;));</span>
+<span class='doccomment'>//!        node.path(&quot;:name&quot;).then().on_get(Phrase(&quot;good bye&quot;));</span>
+<span class='doccomment'>//!    });</span>
+<span class='doccomment'>//!});</span>
 <span class='doccomment'>//!</span>
 <span class='doccomment'>//!Server {</span>
 <span class='doccomment'>//!    //Use a closure to handle requests.</span>
@@ -267,7 +262,6 @@
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>handler</span>::<span class='ident'>CreateContent</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>handler</span>::<span class='ident'>OrElse</span>;
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>handler</span>::<span class='ident'>StatusRouter</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>handler</span>::<span class='ident'>routing</span>::<span class='ident'>Insert</span>;
 
 <span class='kw'>mod</span> <span class='ident'>utils</span>;
 <span class='attribute'>#[<span class='ident'>macro_use</span>]</span>

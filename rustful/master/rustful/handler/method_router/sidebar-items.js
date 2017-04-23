@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Builder","A builder for a `MethodRouter`."],["MethodRouter","A router that selects a handler from an HTTP method."]]});

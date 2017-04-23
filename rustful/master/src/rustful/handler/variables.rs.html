@@ -115,12 +115,18 @@
 <span id="70">70</span>
 <span id="71">71</span>
 <span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>context</span>::<span class='ident'>MaybeUtf8Owned</span>;
 <span class='kw'>use</span> <span class='ident'>context</span>::<span class='ident'>hypermedia</span>::<span class='ident'>Link</span>;
-<span class='kw'>use</span> {<span class='ident'>Method</span>, <span class='ident'>Handler</span>};
-<span class='kw'>use</span> <span class='ident'>handler</span>::{<span class='ident'>HandleRequest</span>, <span class='ident'>Environment</span>};
-<span class='kw'>use</span> <span class='ident'>handler</span>::<span class='ident'>routing</span>::{<span class='ident'>Insert</span>, <span class='ident'>InsertExt</span>, <span class='ident'>InsertState</span>};
+<span class='kw'>use</span> <span class='ident'>handler</span>::{<span class='ident'>HandleRequest</span>, <span class='ident'>Environment</span>, <span class='ident'>FromHandler</span>, <span class='ident'>Build</span>, <span class='ident'>BuilderContext</span>, <span class='ident'>ApplyContext</span>, <span class='ident'>Merge</span>, <span class='ident'>VariableNames</span>};
 
 <span class='doccomment'>///Assigns names to route variables.</span>
 <span class='doccomment'>///</span>
@@ -135,37 +141,47 @@
     <span class='ident'>variables</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8Owned</span><span class='op'>&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Insert</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>, <span class='ident'>H</span><span class='op'>&gt;</span> <span class='ident'>Insert</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Variables</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>build</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>R</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>InsertState</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span><span class='op'>&gt;&gt;</span>, <span class='ident'>I</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>]<span class='op'>&gt;&gt;</span>(<span class='ident'>method</span>: <span class='ident'>Method</span>, <span class='ident'>route</span>: <span class='ident'>R</span>, <span class='ident'>item</span>: <span class='ident'>H</span>) <span class='op'>-&gt;</span> <span class='ident'>Variables</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>route</span> <span class='op'>=</span> <span class='ident'>route</span>.<span class='ident'>into</span>();
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>, <span class='ident'>H</span><span class='op'>&gt;</span> <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Variables</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>from_handler</span>(<span class='kw-2'>mut</span> <span class='ident'>context</span>: <span class='ident'>BuilderContext</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='op'>-&gt;</span> <span class='ident'>Variables</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
         <span class='ident'>Variables</span> {
-            <span class='ident'>variables</span>: <span class='ident'>route</span>.<span class='ident'>variables</span>(),
-            <span class='ident'>handler</span>: <span class='ident'>T</span>::<span class='ident'>build</span>(<span class='ident'>method</span>, <span class='ident'>route</span>, <span class='ident'>item</span>),
+            <span class='ident'>variables</span>: <span class='ident'>context</span>.<span class='ident'>remove</span>::<span class='op'>&lt;</span><span class='ident'>VariableNames</span><span class='op'>&gt;</span>().<span class='ident'>unwrap_or_default</span>().<span class='number'>0</span>,
+            <span class='ident'>handler</span>: <span class='ident'>T</span>::<span class='ident'>from_handler</span>(<span class='ident'>context</span>, <span class='ident'>handler</span>),
         }
-    }
-
-    <span class='kw'>fn</span> <span class='ident'>insert</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>R</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>InsertState</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span><span class='op'>&gt;&gt;</span>, <span class='ident'>I</span>: <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>]<span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>method</span>: <span class='ident'>Method</span>, <span class='ident'>route</span>: <span class='ident'>R</span>, <span class='ident'>item</span>: <span class='ident'>H</span>) {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>route</span> <span class='op'>=</span> <span class='ident'>route</span>.<span class='ident'>into</span>();
-        <span class='self'>self</span>.<span class='ident'>variables</span> <span class='op'>=</span> <span class='ident'>route</span>.<span class='ident'>variables</span>();
-        <span class='self'>self</span>.<span class='ident'>handler</span>.<span class='ident'>insert</span>(<span class='ident'>method</span>, <span class='ident'>route</span>, <span class='ident'>item</span>);
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>InsertExt</span><span class='op'>&gt;</span> <span class='ident'>InsertExt</span> <span class='kw'>for</span> <span class='ident'>Variables</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>insert_router</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>R</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>InsertState</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span><span class='op'>&gt;&gt;</span>, <span class='ident'>I</span>: <span class='ident'>Clone</span> <span class='op'>+</span> <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>]<span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>route</span>: <span class='ident'>R</span>, <span class='ident'>router</span>: <span class='ident'>Variables</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>) {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>route</span> <span class='op'>=</span> <span class='ident'>route</span>.<span class='ident'>into</span>();
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>new_vars</span> <span class='op'>=</span> <span class='ident'>route</span>.<span class='ident'>variables</span>();
-        <span class='ident'>new_vars</span>.<span class='ident'>extend</span>(<span class='self'>self</span>.<span class='ident'>variables</span>.<span class='ident'>drain</span>(..));
-        <span class='self'>self</span>.<span class='ident'>variables</span> <span class='op'>=</span> <span class='ident'>new_vars</span>;
-        <span class='self'>self</span>.<span class='ident'>handler</span>.<span class='ident'>insert_router</span>(<span class='ident'>route</span>, <span class='ident'>router</span>.<span class='ident'>handler</span>);
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>ApplyContext</span><span class='op'>&gt;</span> <span class='ident'>ApplyContext</span> <span class='kw'>for</span> <span class='ident'>Variables</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>apply_context</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>context</span>: <span class='ident'>BuilderContext</span>) {
+        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>VariableNames</span>(<span class='ident'>variables</span>)) <span class='op'>=</span> <span class='ident'>context</span>.<span class='ident'>remove</span>() {
+            <span class='self'>self</span>.<span class='ident'>variables</span> <span class='op'>=</span> <span class='ident'>variables</span>;
+        }
+
+        <span class='self'>self</span>.<span class='ident'>handler</span>.<span class='ident'>apply_context</span>(<span class='ident'>context</span>);
     }
 
-    <span class='kw'>fn</span> <span class='ident'>prefix</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>R</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>InsertState</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>I</span><span class='op'>&gt;&gt;</span>, <span class='ident'>I</span>: <span class='ident'>Clone</span> <span class='op'>+</span> <span class='ident'>Iterator</span><span class='op'>&lt;</span><span class='ident'>Item</span> <span class='op'>=</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>]<span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>route</span>: <span class='ident'>R</span>) {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>route</span> <span class='op'>=</span> <span class='ident'>route</span>.<span class='ident'>into</span>();
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>new_vars</span> <span class='op'>=</span> <span class='ident'>route</span>.<span class='ident'>variables</span>();
-        <span class='ident'>new_vars</span>.<span class='ident'>extend</span>(<span class='self'>self</span>.<span class='ident'>variables</span>.<span class='ident'>drain</span>(..));
-        <span class='self'>self</span>.<span class='ident'>variables</span> <span class='op'>=</span> <span class='ident'>new_vars</span>;
-        <span class='self'>self</span>.<span class='ident'>handler</span>.<span class='ident'>prefix</span>(<span class='ident'>route</span>);
+    <span class='kw'>fn</span> <span class='ident'>prepend_context</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>context</span>: <span class='ident'>BuilderContext</span>) {
+        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>VariableNames</span>(<span class='kw-2'>mut</span> <span class='ident'>variables</span>)) <span class='op'>=</span> <span class='ident'>context</span>.<span class='ident'>remove</span>() {
+            ::<span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>swap</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>variables</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>variables</span>);
+            <span class='self'>self</span>.<span class='ident'>variables</span>.<span class='ident'>extend</span>(<span class='ident'>variables</span>);
+        }
+
+        <span class='self'>self</span>.<span class='ident'>handler</span>.<span class='ident'>prepend_context</span>(<span class='ident'>context</span>);
+    }
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Merge</span><span class='op'>&gt;</span> <span class='ident'>Merge</span> <span class='kw'>for</span> <span class='ident'>Variables</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
+    <span class='kw'>fn</span> <span class='ident'>merge</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>Variables</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) {
+        <span class='self'>self</span>.<span class='ident'>variables</span> <span class='op'>=</span> <span class='ident'>other</span>.<span class='ident'>variables</span>;
+        <span class='self'>self</span>.<span class='ident'>handler</span>.<span class='ident'>merge</span>(<span class='ident'>other</span>.<span class='ident'>handler</span>);
+    }
+}
+
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>H</span>: <span class='ident'>Build</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> <span class='ident'>Build</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Variables</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
+    <span class='kw'>type</span> <span class='ident'>Builder</span> <span class='op'>=</span> <span class='ident'>H</span>::<span class='ident'>Builder</span>;
+
+    <span class='kw'>fn</span> <span class='ident'>get_builder</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>context</span>: <span class='ident'>BuilderContext</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Builder</span> {
+        <span class='ident'>context</span>.<span class='ident'>remove</span>::<span class='op'>&lt;</span><span class='ident'>VariableNames</span><span class='op'>&gt;</span>();
+        <span class='self'>self</span>.<span class='ident'>handler</span>.<span class='ident'>get_builder</span>(<span class='ident'>context</span>)
     }
 }
 
@@ -180,7 +196,7 @@
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>Handler</span> <span class='op'>+</span> <span class='ident'>Default</span><span class='op'>&gt;</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>Variables</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
+<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>Default</span><span class='op'>&gt;</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>Variables</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
     <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>Variables</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
         <span class='ident'>Variables</span> {
             <span class='ident'>handler</span>: <span class='ident'>H</span>::<span class='ident'>default</span>(),
