@@ -2,10 +2,9 @@
 implementors["hyper"] = ["impl <a class='trait' href='https://doc.rust-lang.org/nightly/std/sys/imp/ext/io/trait.FromRawFd.html' title='std::sys::imp::ext::io::FromRawFd'>FromRawFd</a> for <a class='struct' href='hyper/net/struct.HttpListener.html' title='hyper::net::HttpListener'>HttpListener</a>","impl <a class='trait' href='https://doc.rust-lang.org/nightly/std/sys/imp/ext/io/trait.FromRawFd.html' title='std::sys::imp::ext::io::FromRawFd'>FromRawFd</a> for <a class='struct' href='hyper/net/struct.HttpStream.html' title='hyper::net::HttpStream'>HttpStream</a>",];
 implementors["libc"] = [];
 implementors["mime_guess"] = [];
-implementors["openssl"] = [];
+implementors["multipart"] = [];
 implementors["phf"] = [];
-implementors["regex_syntax"] = [];
-implementors["rustful"] = ["impl <a class='trait' href='https://doc.rust-lang.org/nightly/std/sys/imp/ext/io/trait.FromRawFd.html' title='std::sys::imp::ext::io::FromRawFd'>FromRawFd</a> for <a class='struct' href='hyper/net/struct.HttpListener.html' title='hyper::net::HttpListener'>HttpListener</a>","impl <a class='trait' href='https://doc.rust-lang.org/nightly/std/sys/imp/ext/io/trait.FromRawFd.html' title='std::sys::imp::ext::io::FromRawFd'>FromRawFd</a> for <a class='struct' href='hyper/net/struct.HttpStream.html' title='hyper::net::HttpStream'>HttpStream</a>",];
+implementors["rustful"] = ["impl <a class='trait' href='https://doc.rust-lang.org/nightly/std/sys/imp/ext/io/trait.FromRawFd.html' title='std::sys::imp::ext::io::FromRawFd'>FromRawFd</a> for <a class='struct' href='hyper/net/struct.HttpListener.html' title='hyper::net::HttpListener'>HttpListener</a>","impl <a class='trait' href='https://doc.rust-lang.org/nightly/std/sys/imp/ext/io/trait.FromRawFd.html' title='std::sys::imp::ext::io::FromRawFd'>FromRawFd</a> for <a class='struct' href='rustful/net/struct.HttpStream.html' title='rustful::net::HttpStream'>HttpStream</a>",];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);

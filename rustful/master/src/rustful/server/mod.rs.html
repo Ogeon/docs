@@ -174,6 +174,7 @@
 <span id="129">129</span>
 <span id="130">130</span>
 <span id="131">131</span>
+<span id="132">132</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//!Server configuration and instance.</span>
 
@@ -186,11 +187,12 @@
 
 <span class='kw'>use</span> <span class='ident'>filter</span>::{<span class='ident'>ContextFilter</span>, <span class='ident'>ResponseFilter</span>};
 <span class='kw'>use</span> <span class='ident'>handler</span>::<span class='ident'>HandleRequest</span>;
+<span class='kw'>use</span> <span class='ident'>net</span>::<span class='ident'>SslServer</span>;
 
 <span class='kw'>use</span> <span class='ident'>HttpResult</span>;
 
 <span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>instance</span>::<span class='ident'>ServerInstance</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>config</span>::{<span class='ident'>Host</span>, <span class='ident'>Global</span>, <span class='ident'>Scheme</span>, <span class='ident'>KeepAlive</span>};
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>config</span>::{<span class='ident'>Host</span>, <span class='ident'>Global</span>, <span class='ident'>KeepAlive</span>};
 
 <span class='kw'>mod</span> <span class='ident'>instance</span>;
 <span class='kw'>mod</span> <span class='ident'>config</span>;
@@ -224,9 +226,6 @@
     <span class='doccomment'>///The host address and port where the server will listen for requests.</span>
     <span class='doccomment'>///Default is `0.0.0.0:80`.</span>
     <span class='kw'>pub</span> <span class='ident'>host</span>: <span class='ident'>Host</span>,
-
-    <span class='doccomment'>///Use good old HTTP or the more secure HTTPS. Default is HTTP.</span>
-    <span class='kw'>pub</span> <span class='ident'>scheme</span>: <span class='ident'>Scheme</span>,
 
     <span class='doccomment'>///The number of threads to be used in the server thread pool. The default</span>
     <span class='doccomment'>///(`None`) will cause the server to optimistically use the formula</span>
@@ -274,7 +273,6 @@
         <span class='ident'>Server</span> {
             <span class='ident'>handlers</span>: <span class='ident'>handlers</span>,
             <span class='ident'>host</span>: <span class='number'>80</span>.<span class='ident'>into</span>(),
-            <span class='ident'>scheme</span>: <span class='ident'>Scheme</span>::<span class='ident'>Http</span>,
             <span class='ident'>threads</span>: <span class='prelude-val'>None</span>,
             <span class='ident'>keep_alive</span>: <span class='prelude-val'>None</span>,
             <span class='ident'>server</span>: <span class='string'>&quot;rustful&quot;</span>.<span class='ident'>to_owned</span>(),
@@ -291,12 +289,16 @@
 
     <span class='doccomment'>///Start the server.</span>
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> (<span class='ident'>server</span>, <span class='ident'>scheme</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>build</span>();
-        <span class='ident'>server</span>.<span class='ident'>run</span>(<span class='ident'>scheme</span>)
+        <span class='self'>self</span>.<span class='ident'>build</span>().<span class='ident'>run</span>()
+    }
+
+    <span class='doccomment'>///Start the server with SSL.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run_https</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>SslServer</span> <span class='op'>+</span> <span class='ident'>Clone</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>ssl</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
+        <span class='self'>self</span>.<span class='ident'>build</span>().<span class='ident'>run_https</span>(<span class='ident'>ssl</span>)
     }
 
     <span class='doccomment'>///Build a runnable instance of the server.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>build</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> (<span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>, <span class='ident'>Scheme</span>) {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>build</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
         <span class='ident'>ServerInstance</span>::<span class='ident'>new</span>(<span class='self'>self</span>)
     }
 }

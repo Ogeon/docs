@@ -282,22 +282,6 @@
 <span id="237">237</span>
 <span id="238">238</span>
 <span id="239">239</span>
-<span id="240">240</span>
-<span id="241">241</span>
-<span id="242">242</span>
-<span id="243">243</span>
-<span id="244">244</span>
-<span id="245">245</span>
-<span id="246">246</span>
-<span id="247">247</span>
-<span id="248">248</span>
-<span id="249">249</span>
-<span id="250">250</span>
-<span id="251">251</span>
-<span id="252">252</span>
-<span id="253">253</span>
-<span id="254">254</span>
-<span id="255">255</span>
 </pre><pre class='rust '>
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::{<span class='ident'>SocketAddr</span>, <span class='ident'>SocketAddrV4</span>, <span class='ident'>SocketAddrV6</span>, <span class='ident'>Ipv4Addr</span>};
 <span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>FromStr</span>;
@@ -307,22 +291,6 @@
 
 <span class='kw'>use</span> <span class='ident'>anymap</span>::<span class='ident'>Map</span>;
 <span class='kw'>use</span> <span class='ident'>anymap</span>::<span class='ident'>any</span>::{<span class='ident'>Any</span>, <span class='ident'>UncheckedAnyExt</span>};
-
-<span class='doccomment'>///HTTP or HTTPS.</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>Scheme</span> {
-    <span class='doccomment'>///Standard HTTP.</span>
-    <span class='ident'>Http</span>,
-
-    <span class='doccomment'>///HTTP with SSL encryption.</span>
-    <span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;ssl&quot;</span>)]</span>
-    <span class='ident'>Https</span> {
-        <span class='doccomment'>///Path to SSL certificate.</span>
-        <span class='ident'>cert</span>: ::<span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>PathBuf</span>,
-
-        <span class='doccomment'>///Path to key file.</span>
-        <span class='ident'>key</span>: ::<span class='ident'>std</span>::<span class='ident'>path</span>::<span class='ident'>PathBuf</span>
-    }
-}
 
 <span class='doccomment'>///A host address and a port.</span>
 <span class='doccomment'>///</span>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `SaveBuilder` struct in crate `multipart`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, SaveBuilder">
+
+    <title>multipart::server::save::SaveBuilder - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../../index.html'>multipart</a>::<wbr><a href='../index.html'>server</a>::<wbr><a href='index.html'>save</a></p><script>window.sidebarCurrent = {name: 'SaveBuilder', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>multipart</a>::<wbr><a href='../index.html'>server</a>::<wbr><a href='index.html'>save</a>::<wbr><a class='struct' href=''>SaveBuilder</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../../src/multipart/server/save.rs.html#71-76' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'><div class="docblock attributes">#[must_use = "nothing saved to the filesystem yet"]
+</div>pub struct SaveBuilder&lt;S&gt; { /* fields omitted */ }</pre><div class='docblock'><p>A builder for saving a file or files to the local filesystem.</p>
+
+<h3 id='openoptions' class='section-header'><a href='#openoptions'><code>OpenOptions</code></a></h3>
+<p>This builder holds an instance of <code>std::fs::OpenOptions</code> which is used
+when creating the new file(s).</p>
+
+<p>By default, the open options are set with <code>.write(true).create_new(true)</code>,
+so if the file already exists then an error will be thrown. This is to avoid accidentally
+overwriting files from other requests.</p>
+
+<p>If you want to modify the options used to open the save file, you can use
+<code>mod_open_opts()</code>.</p>
+
+<h3 id='file-size-and-count-limits' class='section-header'><a href='#file-size-and-count-limits'>File Size and Count Limits</a></h3>
+<p>You can set a size limit for individual files with <code>size_limit()</code>, which takes either <code>u64</code>
+or <code>Option&lt;u64&gt;</code>.</p>
+
+<p>You can also set the maximum number of files to process with <code>count_limit()</code>, which
+takes either <code>u32</code> or <code>Option&lt;u32&gt;</code>. This only has an effect when using
+<code>SaveBuilder&lt;[&amp;mut] Multipart&gt;</code>.</p>
+
+<h3 id='warning-do-not-trust-user-input' class='section-header'><a href='#warning-do-not-trust-user-input'>Warning: Do <strong>not</strong> trust user input!</a></h3>
+<p>It is a serious security risk to create files or directories with paths based on user input.
+A malicious user could craft a path which can be used to overwrite important files, such as
+web templates, static assets, Javascript files, database files, configuration files, etc.,
+if they are writable by the server process.</p>
+
+<p>This can be mitigated somewhat by setting filesystem permissions as
+conservatively as possible and running the server under its own user with restricted
+permissions, but you should still not use user input directly as filesystem paths.
+If it is truly necessary, you should sanitize user input such that it cannot cause a path to be
+misinterpreted by the OS. Such functionality is outside the scope of this crate.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;S&gt; <a class='struct' href='../../../multipart/server/save/struct.SaveBuilder.html' title='multipart::server::save::SaveBuilder'>SaveBuilder</a>&lt;S&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/multipart/server/save.rs.html#78-110' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.size_limit' class='method'><span id='size_limit.v' class='invisible'><code>fn <a href='#method.size_limit' class='fnname'>size_limit</a>&lt;L:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>&gt;&gt;&gt;(self, limit: L) -&gt; Self</code></span></h4>
+<div class='docblock'><p>Set the maximum number of bytes to write out <em>per file</em>.</p>
+
+<p>Can be <code>u64</code> or <code>Option&lt;u64&gt;</code>. If <code>None</code>, clears the limit.</p>
+</div><h4 id='method.mod_open_opts' class='method'><span id='mod_open_opts.v' class='invisible'><code>fn <a href='#method.mod_open_opts' class='fnname'>mod_open_opts</a>&lt;F:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(&amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/std/fs/struct.OpenOptions.html' title='std::fs::OpenOptions'>OpenOptions</a>)&gt;(self, opts_fn: F) -&gt; Self</code></span></h4>
+<div class='docblock'><p>Modify the <code>OpenOptions</code> used to open any files for writing.</p>
+
+<p>The <code>write</code> flag will be reset to <code>true</code> after the closure returns. (It&#39;d be pretty
+pointless otherwise, right?)</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;M&gt; <a class='struct' href='../../../multipart/server/save/struct.SaveBuilder.html' title='multipart::server::save::SaveBuilder'>SaveBuilder</a>&lt;M&gt; <span class='where fmt-newline'>where M: <a class='trait' href='../../../multipart/server/trait.ReadEntry.html' title='multipart::server::ReadEntry'>ReadEntry</a></span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/multipart/server/save.rs.html#113-241' title='goto source code'>[src]</a></span></h3>
+<div class='docblock'><p>Save API for whole multipart requests.</p>
+</div><div class='impl-items'><h4 id='method.count_limit' class='method'><span id='count_limit.v' class='invisible'><code>fn <a href='#method.count_limit' class='fnname'>count_limit</a>&lt;L:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u32.html'>u32</a>&gt;&gt;&gt;(self, count_limit: L) -&gt; Self</code></span></h4>
+<div class='docblock'><p>Set the maximum number of files to write out.</p>
+
+<p>Can be <code>u32</code> or <code>Option&lt;u32&gt;</code>. If <code>None</code>, clears the limit.</p>
+</div><h4 id='method.temp' class='method'><span id='temp.v' class='invisible'><code>fn <a href='#method.temp' class='fnname'>temp</a>(self) -&gt; <a class='type' href='../../../multipart/server/save/type.EntriesSaveResult.html' title='multipart::server::save::EntriesSaveResult'>EntriesSaveResult</a>&lt;M&gt;</code></span></h4>
+<div class='docblock'><p>Save the file fields in the request to a new temporary directory prefixed with
+<code>multipart-rs</code> in the OS temporary directory.</p>
+
+<p>For more options, create a <code>TempDir</code> yourself and pass it to <code>with_temp_dir()</code> instead.</p>
+
+<h3 id='note-temporary' class='section-header'><a href='#note-temporary'>Note: Temporary</a></h3>
+<p>See <code>SaveDir</code> for more info (the type of <code>Entries::save_dir</code>).</p>
+</div><h4 id='method.temp_with_prefix' class='method'><span id='temp_with_prefix.v' class='invisible'><code>fn <a href='#method.temp_with_prefix' class='fnname'>temp_with_prefix</a>(self, prefix: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../../../multipart/server/save/type.EntriesSaveResult.html' title='multipart::server::save::EntriesSaveResult'>EntriesSaveResult</a>&lt;M&gt;</code></span></h4>
+<div class='docblock'><p>Save the file fields in the request to a new temporary directory with the given string
+as a prefix in the OS temporary directory.</p>
+
+<p>For more options, create a <code>TempDir</code> yourself and pass it to <code>with_temp_dir()</code> instead.</p>
+
+<h3 id='note-temporary-1' class='section-header'><a href='#note-temporary-1'>Note: Temporary</a></h3>
+<p>See <code>SaveDir</code> for more info (the type of <code>Entries::save_dir</code>).</p>
+</div><h4 id='method.with_temp_dir' class='method'><span id='with_temp_dir.v' class='invisible'><code>fn <a href='#method.with_temp_dir' class='fnname'>with_temp_dir</a>(self, tempdir: <a class='struct' href='../../../multipart/server/save/struct.TempDir.html' title='multipart::server::save::TempDir'>TempDir</a>) -&gt; <a class='type' href='../../../multipart/server/save/type.EntriesSaveResult.html' title='multipart::server::save::EntriesSaveResult'>EntriesSaveResult</a>&lt;M&gt;</code></span></h4>
+<div class='docblock'><p>Save the file fields to the given <code>TempDir</code>.</p>
+
+<p>The <code>TempDir</code> is returned in the result under <code>Entries::save_dir</code>.</p>
+</div><h4 id='method.with_dir' class='method'><span id='with_dir.v' class='invisible'><code>fn <a href='#method.with_dir' class='fnname'>with_dir</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html' title='std::path::PathBuf'>PathBuf</a>&gt;&gt;(self, dir: P) -&gt; <a class='type' href='../../../multipart/server/save/type.EntriesSaveResult.html' title='multipart::server::save::EntriesSaveResult'>EntriesSaveResult</a>&lt;M&gt;</code></span></h4>
+<div class='docblock'><p>Save the file fields in the request to a new permanent directory with the given path.</p>
+
+<p>Any nonexistent directories in the path will be created.</p>
+</div><h4 id='method.with_entries' class='method'><span id='with_entries.v' class='invisible'><code>fn <a href='#method.with_entries' class='fnname'>with_entries</a>(self, entries: <a class='struct' href='../../../multipart/server/save/struct.Entries.html' title='multipart::server::save::Entries'>Entries</a>) -&gt; <a class='type' href='../../../multipart/server/save/type.EntriesSaveResult.html' title='multipart::server::save::EntriesSaveResult'>EntriesSaveResult</a>&lt;M&gt;</code></span></h4>
+<div class='docblock'><p>Commence the save operation using the existing <code>Entries</code> instance.</p>
+
+<p>May be used to resume a saving operation after handling an error.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'m, M:&nbsp;'m&gt; <a class='struct' href='../../../multipart/server/save/struct.SaveBuilder.html' title='multipart::server::save::SaveBuilder'>SaveBuilder</a>&lt;&amp;'m mut <a class='struct' href='../../../multipart/server/struct.MultipartFile.html' title='multipart::server::MultipartFile'>MultipartFile</a>&lt;M&gt;&gt; <span class='where fmt-newline'>where <a class='struct' href='../../../multipart/server/struct.MultipartFile.html' title='multipart::server::MultipartFile'>MultipartFile</a>&lt;M&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.BufRead.html' title='std::io::BufRead'>BufRead</a></span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/multipart/server/save.rs.html#244-345' title='goto source code'>[src]</a></span></h3>
+<div class='docblock'><p>Save API for individual files.</p>
+</div><div class='impl-items'><h4 id='method.temp-1' class='method'><span id='temp.v-1' class='invisible'><code>fn <a href='#method.temp-1' class='fnname'>temp</a>(&amp;mut self) -&gt; <a class='type' href='../../../multipart/server/save/type.FileSaveResult.html' title='multipart::server::save::FileSaveResult'>FileSaveResult</a></code></span></h4>
+<div class='docblock'><p>Save to a file with a random alphanumeric name in the OS temporary directory.</p>
+
+<p>Does not use user input to create the path.</p>
+
+<p>See <code>with_path()</code> for more details.</p>
+</div><h4 id='method.with_filename' class='method'><span id='with_filename.v' class='invisible'><code>fn <a href='#method.with_filename' class='fnname'>with_filename</a>(&amp;mut self, filename: &amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>) -&gt; <a class='type' href='../../../multipart/server/save/type.FileSaveResult.html' title='multipart::server::save::FileSaveResult'>FileSaveResult</a></code></span></h4>
+<div class='docblock'><p>Save to a file with the given name in the OS temporary directory.</p>
+
+<p>See <code>with_path()</code> for more details.</p>
+
+<h3 id='warning-do-not-trust-user-input-1' class='section-header'><a href='#warning-do-not-trust-user-input-1'>Warning: Do **not* trust user input!</a></h3>
+<p>It is a serious security risk to create files or directories with paths based on user input.
+A malicious user could craft a path which can be used to overwrite important files, such as
+web templates, static assets, Javascript files, database files, configuration files, etc.,
+if they are writable by the server process.</p>
+
+<p>This can be mitigated somewhat by setting filesystem permissions as
+conservatively as possible and running the server under its own user with restricted
+permissions, but you should still not use user input directly as filesystem paths.
+If it is truly necessary, you should sanitize filenames such that they cannot be
+misinterpreted by the OS.</p>
+</div><h4 id='method.with_dir-1' class='method'><span id='with_dir.v-1' class='invisible'><code>fn <a href='#method.with_dir-1' class='fnname'>with_dir</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(&amp;mut self, dir: P) -&gt; <a class='type' href='../../../multipart/server/save/type.FileSaveResult.html' title='multipart::server::save::FileSaveResult'>FileSaveResult</a></code></span></h4>
+<div class='docblock'><p>Save to a file with a random alphanumeric name in the given directory.</p>
+
+<p>See <code>with_path()</code> for more details.</p>
+
+<h3 id='warning-do-not-trust-user-input-2' class='section-header'><a href='#warning-do-not-trust-user-input-2'>Warning: Do **not* trust user input!</a></h3>
+<p>It is a serious security risk to create files or directories with paths based on user input.
+A malicious user could craft a path which can be used to overwrite important files, such as
+web templates, static assets, Javascript files, database files, configuration files, etc.,
+if they are writable by the server process.</p>
+
+<p>This can be mitigated somewhat by setting filesystem permissions as
+conservatively as possible and running the server under its own user with restricted
+permissions, but you should still not use user input directly as filesystem paths.
+If it is truly necessary, you should sanitize filenames such that they cannot be
+misinterpreted by the OS.</p>
+</div><h4 id='method.with_path' class='method'><span id='with_path.v' class='invisible'><code>fn <a href='#method.with_path' class='fnname'>with_path</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html' title='std::path::PathBuf'>PathBuf</a>&gt;&gt;(&amp;mut self, path: P) -&gt; <a class='type' href='../../../multipart/server/save/type.FileSaveResult.html' title='multipart::server::save::FileSaveResult'>FileSaveResult</a></code></span></h4>
+<div class='docblock'><p>Save to a file with the given path.</p>
+
+<p>Creates any missing directories in the path.
+Uses the contained <code>OpenOptions</code> to create the file.
+Truncates the file to the given limit, if set.</p>
+</div><h4 id='method.write_to' class='method'><span id='write_to.v' class='invisible'><code>fn <a href='#method.write_to' class='fnname'>write_to</a>&lt;W:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;mut self, dest: W) -&gt; <a class='enum' href='../../../multipart/server/save/enum.SaveResult.html' title='multipart::server::save::SaveResult'>SaveResult</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>, <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>&gt;</code></span></h4>
+<div class='docblock'><p>Write out the file field to <code>dest</code>, truncating if a limit was set.</p>
+
+<p>Returns the number of bytes copied, and whether or not the limit was reached
+(tested by <code>MultipartFile::fill_buf().is_empty()</code> so no bytes are consumed).</p>
+
+<p>Retries on interrupts.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "multipart";
+    </script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

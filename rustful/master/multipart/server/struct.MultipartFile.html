@@ -48,37 +48,110 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/multipart/server/mod.rs.html#499-503' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct MultipartFile&lt;'a, B:&nbsp;'a&gt; { /* fields omitted */ }</pre><div class='docblock'><p>A representation of a file in HTTP <code>multipart/form-data</code>.</p>
+               </span><a class='srclink' href='../../src/multipart/server/field.rs.html#313-346' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct MultipartFile&lt;M&gt; {
+    pub filename: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
+    pub content_type: <a class='struct' href='../../mime/struct.Mime.html' title='mime::Mime'>Mime</a>,
+    // some fields omitted
+}</pre><div class='docblock'><p>A representation of a file in HTTP <code>multipart/form-data</code>.</p>
 
-<p>Note that the file is not yet saved to the local filesystem; 
+<p>Note that the file is not yet saved to the local filesystem;
 instead, this struct exposes <code>Read</code> and <code>BufRead</code> impls which point
-to the beginning of the file&#39;s contents in the HTTP stream. </p>
+to the beginning of the file&#39;s contents in the HTTP stream.</p>
 
-<p>You can read it to EOF, or use one of the <code>save_*()</code> methods here 
+<p>You can read it to EOF, or use one of the <code>save()</code> method
 to save it to disk.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, B:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a>&gt; <a class='struct' href='../../multipart/server/struct.MultipartFile.html' title='multipart::server::MultipartFile'>MultipartFile</a>&lt;'a, B&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/mod.rs.html#505-614' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.save_to' class='method'><span id='save_to.v' class='invisible'><code>fn <a href='#method.save_to' class='fnname'>save_to</a>&lt;W:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;mut self, out: W) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>&gt;</code></span></h4>
-<div class='docblock'><p>Save this file to the given output stream.</p>
+</div><h2 class='fields'>Fields</h2><span id='structfield.filename' class='structfield'>
+                           <span id='filename.v' class='invisible'>
+                           <code>filename: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>The filename of this entry, if supplied.</p>
+
+<h3 id='warning-client-provided--untrustworthy' class='section-header'><a href='#warning-client-provided--untrustworthy'>Warning: Client Provided / Untrustworthy</a></h3>
+<p>You should treat this value as <strong>untrustworthy</strong> because it is an arbitrary string
+provided by the client.</p>
+
+<p>It is a serious security risk to create files or directories with paths based on user input.
+A malicious user could craft a path which can be used to overwrite important files, such as
+web templates, static assets, Javascript files, database files, configuration files, etc.,
+if they are writable by the server process.</p>
+
+<p>This can be mitigated somewhat by setting filesystem permissions as
+conservatively as possible and running the server under its own user with restricted
+permissions, but you should still not use user input directly as filesystem paths.
+If it is truly necessary, you should sanitize filenames such that they cannot be
+misinterpreted by the OS. Such functionality is outside the scope of this crate.</p>
+</div><span id='structfield.content_type' class='structfield'>
+                           <span id='content_type.v' class='invisible'>
+                           <code>content_type: <a class='struct' href='../../mime/struct.Mime.html' title='mime::Mime'>Mime</a></code>
+                           </span></span><span class='stab '></span><div class='docblock'><p>The MIME type (<code>Content-Type</code> value) of this file, if supplied by the client,
+or <code>&quot;applicaton/octet-stream&quot;</code> otherwise.</p>
+
+<h3 id='note-client-provided' class='section-header'><a href='#note-client-provided'>Note: Client Provided</a></h3>
+<p>Consider this value to be potentially untrustworthy, as it is provided by the client.
+It may be inaccurate or entirely wrong, depending on how the client determined it.</p>
+
+<p>Some variants wrap arbitrary strings which could be abused by a malicious user if your
+application performs any non-idempotent operations based on their value, such as
+starting another program or querying/updating a database (web-search &quot;SQL injection&quot;).</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;M&gt; <a class='struct' href='../../multipart/server/struct.MultipartFile.html' title='multipart::server::MultipartFile'>MultipartFile</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#348-398' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.filename' class='method'><span id='filename.v-1' class='invisible'><code>fn <a href='#method.filename' class='fnname'>filename</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></span></h4>
+<div class='stability'><div class='stab deprecated'>Deprecated since 0.10.0<p>: <code>filename</code> field is now public</p>
+</div></div><div class='docblock'><p>Get the filename of this entry, if supplied.</p>
+
+<h3 id='warning-client-provided--untrustworthy-1' class='section-header'><a href='#warning-client-provided--untrustworthy-1'>Warning: Client Provided / Untrustworthy</a></h3>
+<p>You should treat this value as <strong>untrustworthy</strong> because it is an arbitrary string
+provided by the client.</p>
+
+<p>It is a serious security risk to create files or directories with paths based on user input.
+A malicious user could craft a path which can be used to overwrite important files, such as
+web templates, static assets, Javascript files, database files, configuration files, etc.,
+if they are writable by the server process.</p>
+
+<p>This can be mitigated somewhat by setting filesystem permissions as
+conservatively as possible and running the server under its own user with restricted
+permissions, but you should still not use user input directly as filesystem paths.
+If it is truly necessary, you should sanitize filenames such that they cannot be
+misinterpreted by the OS. Such functionality is outside the scope of this crate.</p>
+</div><h4 id='method.content_type' class='method'><span id='content_type.v-1' class='invisible'><code>fn <a href='#method.content_type' class='fnname'>content_type</a>(&amp;self) -&gt; &amp;<a class='struct' href='../../mime/struct.Mime.html' title='mime::Mime'>Mime</a></code></span></h4>
+<div class='stability'><div class='stab deprecated'>Deprecated since 0.10.0<p>: <code>content_type</code> field is now public</p>
+</div></div><div class='docblock'><p>Get the MIME type (<code>Content-Type</code> value) of this file, if supplied by the client,
+or <code>&quot;applicaton/octet-stream&quot;</code> otherwise.</p>
+
+<h3 id='note-client-provided-1' class='section-header'><a href='#note-client-provided-1'>Note: Client Provided</a></h3>
+<p>Consider this value to be potentially untrustworthy, as it is provided by the client.
+It may be inaccurate or entirely wrong, depending on how the client determined it.</p>
+
+<p>Some variants wrap arbitrary strings which could be abused by a malicious user if your
+application performs any non-idempotent operations based on their value, such as
+starting another program or querying/updating a database (web-search &quot;SQL injection&quot;).</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;M&gt; <a class='struct' href='../../multipart/server/struct.MultipartFile.html' title='multipart::server::MultipartFile'>MultipartFile</a>&lt;M&gt; <span class='where fmt-newline'>where M: <a class='trait' href='../../multipart/server/trait.ReadEntry.html' title='multipart::server::ReadEntry'>ReadEntry</a></span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#400-476' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.save' class='method'><span id='save.v' class='invisible'><code>fn <a href='#method.save' class='fnname'>save</a>(&amp;mut self) -&gt; <a class='struct' href='../../multipart/server/save/struct.SaveBuilder.html' title='multipart::server::save::SaveBuilder'>SaveBuilder</a>&lt;&amp;mut Self&gt;</code></span></h4>
+<div class='docblock'><p>Get a builder type which can save the file with or without a size limit.</p>
+</div><h4 id='method.save_to' class='method'><span id='save_to.v' class='invisible'><code>fn <a href='#method.save_to' class='fnname'>save_to</a>&lt;W:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;mut self, out: W) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>&gt;</code></span></h4>
+<div class='stability'><div class='stab deprecated'>Deprecated since 0.10.0<p>: use <code>.save().write_to()</code> instead</p>
+</div></div><div class='docblock'><p>Save this file to the given output stream.</p>
 
 <p>If successful, returns the number of bytes written.</p>
 
 <p>Retries when <code>io::Error::kind() == io::ErrorKind::Interrupted</code>.</p>
 </div><h4 id='method.save_to_limited' class='method'><span id='save_to_limited.v' class='invisible'><code>fn <a href='#method.save_to_limited' class='fnname'>save_to_limited</a>&lt;W:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Write.html' title='std::io::Write'>Write</a>&gt;(&amp;mut self, out: W, limit: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>&gt;</code></span></h4>
-<div class='docblock'><p>Save this file to the given output stream, <strong>truncated</strong> to <code>limit</code>
+<div class='stability'><div class='stab deprecated'>Deprecated since 0.10.0<p>: use <code>.save().size_limit(limit).write_to(out)</code> instead</p>
+</div></div><div class='docblock'><p>Save this file to the given output stream, <strong>truncated</strong> to <code>limit</code>
 (no more than <code>limit</code> bytes will be written out).</p>
 
 <p>If successful, returns the number of bytes written.</p>
 
 <p>Retries when <code>io::Error::kind() == io::ErrorKind::Interrupted</code>.</p>
-</div><h4 id='method.save_as' class='method'><span id='save_as.v' class='invisible'><code>fn <a href='#method.save_as' class='fnname'>save_as</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html' title='std::path::PathBuf'>PathBuf</a>&gt;&gt;(&amp;mut self, path: P) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='../../multipart/server/struct.SavedFile.html' title='multipart::server::SavedFile'>SavedFile</a>&gt;</code></span></h4>
-<div class='docblock'><p>Save this file to <code>path</code>.</p>
+</div><h4 id='method.save_as' class='method'><span id='save_as.v' class='invisible'><code>fn <a href='#method.save_as' class='fnname'>save_as</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html' title='std::path::PathBuf'>PathBuf</a>&gt;&gt;(&amp;mut self, path: P) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='../../multipart/server/save/struct.SavedFile.html' title='multipart::server::save::SavedFile'>SavedFile</a>&gt;</code></span></h4>
+<div class='stability'><div class='stab deprecated'>Deprecated since 0.10.0<p>: use <code>.save().with_path(path)</code> instead</p>
+</div></div><div class='docblock'><p>Save this file to <code>path</code>.</p>
 
 <p>Returns the saved file info on success, or any errors otherwise.</p>
 
 <p>Retries when <code>io::Error::kind() == io::ErrorKind::Interrupted</code>.</p>
-</div><h4 id='method.save_in' class='method'><span id='save_in.v' class='invisible'><code>fn <a href='#method.save_in' class='fnname'>save_in</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(&amp;mut self, dir: P) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='../../multipart/server/struct.SavedFile.html' title='multipart::server::SavedFile'>SavedFile</a>&gt;</code></span></h4>
-<div class='docblock'><p>Save this file in the directory pointed at by <code>dir</code>,
+</div><h4 id='method.save_in' class='method'><span id='save_in.v' class='invisible'><code>fn <a href='#method.save_in' class='fnname'>save_in</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(&amp;mut self, dir: P) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='../../multipart/server/save/struct.SavedFile.html' title='multipart::server::save::SavedFile'>SavedFile</a>&gt;</code></span></h4>
+<div class='stability'><div class='stab deprecated'>Deprecated since 0.10.0<p>: use <code>.save().with_dir(dir)</code> instead</p>
+</div></div><div class='docblock'><p>Save this file in the directory pointed at by <code>dir</code>,
 using a random alphanumeric string as the filename.</p>
 
 <p>Any missing directories in the <code>dir</code> path will be created.</p>
@@ -86,16 +159,18 @@ using a random alphanumeric string as the filename.</p>
 <p>Returns the saved file&#39;s info on success, or any errors otherwise.</p>
 
 <p>Retries when <code>io::Error::kind() == io::ErrorKind::Interrupted</code>.</p>
-</div><h4 id='method.save_as_limited' class='method'><span id='save_as_limited.v' class='invisible'><code>fn <a href='#method.save_as_limited' class='fnname'>save_as_limited</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html' title='std::path::PathBuf'>PathBuf</a>&gt;&gt;(&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; path: P,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; limit: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='../../multipart/server/struct.SavedFile.html' title='multipart::server::SavedFile'>SavedFile</a>&gt;</code></span></h4>
-<div class='docblock'><p>Save this file to <code>path</code>, <strong>truncated</strong> to <code>limit</code> (no more than <code>limit</code> bytes will be written out).</p>
+</div><h4 id='method.save_as_limited' class='method'><span id='save_as_limited.v' class='invisible'><code>fn <a href='#method.save_as_limited' class='fnname'>save_as_limited</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html' title='std::path::PathBuf'>PathBuf</a>&gt;&gt;(&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; path: P,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; limit: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='../../multipart/server/save/struct.SavedFile.html' title='multipart::server::save::SavedFile'>SavedFile</a>&gt;</code></span></h4>
+<div class='stability'><div class='stab deprecated'>Deprecated since 0.10.0<p>: use <code>.save().size_limit(limit).with_path(path)</code> instead</p>
+</div></div><div class='docblock'><p>Save this file to <code>path</code>, <strong>truncated</strong> to <code>limit</code> (no more than <code>limit</code> bytes will be written out).</p>
 
 <p>Any missing directories in the <code>dir</code> path will be created.</p>
 
 <p>Returns the saved file&#39;s info on success, or any errors otherwise.</p>
 
 <p>Retries when <code>io::Error::kind() == io::ErrorKind::Interrupted</code>.</p>
-</div><h4 id='method.save_in_limited' class='method'><span id='save_in_limited.v' class='invisible'><code>fn <a href='#method.save_in_limited' class='fnname'>save_in_limited</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dir: P,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; limit: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='../../multipart/server/struct.SavedFile.html' title='multipart::server::SavedFile'>SavedFile</a>&gt;</code></span></h4>
-<div class='docblock'><p>Save this file in the directory pointed at by <code>dir</code>,
+</div><h4 id='method.save_in_limited' class='method'><span id='save_in_limited.v' class='invisible'><code>fn <a href='#method.save_in_limited' class='fnname'>save_in_limited</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html' title='core::convert::AsRef'>AsRef</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a>&gt;&gt;(&amp;mut self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; dir: P,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; limit: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='struct' href='../../multipart/server/save/struct.SavedFile.html' title='multipart::server::save::SavedFile'>SavedFile</a>&gt;</code></span></h4>
+<div class='stability'><div class='stab deprecated'>Deprecated since 0.10.0<p>: use <code>.save().size_limit(limit).with_dir(dir)</code> instead</p>
+</div></div><div class='docblock'><p>Save this file in the directory pointed at by <code>dir</code>,
 using a random alphanumeric string as the filename.</p>
 
 <p><strong>Truncates</strong> file to <code>limit</code> (no more than <code>limit</code> bytes will be written out).</p>
@@ -105,20 +180,10 @@ using a random alphanumeric string as the filename.</p>
 <p>Returns the saved file&#39;s info on success, or any errors otherwise.</p>
 
 <p>Retries when <code>io::Error::kind() == io::ErrorKind::Interrupted</code>.</p>
-</div><h4 id='method.filename' class='method'><span id='filename.v' class='invisible'><code>fn <a href='#method.filename' class='fnname'>filename</a>(&amp;self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></span></h4>
-<div class='docblock'><p>Get the filename of this entry, if supplied.</p>
-
-<h2 id='warning' class='section-header'><a href='#warning'>Warning</a></h2>
-<p>You should treat this value as untrustworthy because it is an arbitrary string provided by
-the client. You should <em>not</em> blindly append it to a directory path and save the file there, 
-as such behavior could easily be exploited by a malicious client.</p>
-</div><h4 id='method.content_type' class='method'><span id='content_type.v' class='invisible'><code>fn <a href='#method.content_type' class='fnname'>content_type</a>(&amp;self) -&gt; &amp;<a class='struct' href='../../mime/struct.Mime.html' title='mime::Mime'>Mime</a></code></span></h4>
-<div class='docblock'><p>Get the MIME type (<code>Content-Type</code> value) of this file, if supplied by the client,
-or <code>&quot;applicaton/octet-stream&quot;</code> otherwise.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, B:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + 'a&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../multipart/server/struct.MultipartFile.html' title='multipart::server::MultipartFile'>MultipartFile</a>&lt;'a, B&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/mod.rs.html#498' title='goto source code'>[src]</a></span></h3>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;M:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../multipart/server/struct.MultipartFile.html' title='multipart::server::MultipartFile'>MultipartFile</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#312' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a, B:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a> for <a class='struct' href='../../multipart/server/struct.MultipartFile.html' title='multipart::server::MultipartFile'>MultipartFile</a>&lt;'a, B&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/mod.rs.html#616-620' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;M:&nbsp;<a class='trait' href='../../multipart/server/trait.ReadEntry.html' title='multipart::server::ReadEntry'>ReadEntry</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a> for <a class='struct' href='../../multipart/server/struct.MultipartFile.html' title='multipart::server::MultipartFile'>MultipartFile</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#478-482' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.read' class='method'><span id='read.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html#tymethod.read' class='fnname'>read</a>(&amp;mut self, buf: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;mut [</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>&gt;</code></span></h4>
 <div class='docblock'><p>Pull some bytes from this source into the specified buffer, returning how many bytes were read. <a href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html#tymethod.read">Read more</a></p>
 </div><h4 id='method.read_to_end' class='method'><span id='read_to_end.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html#method.read_to_end' class='fnname'>read_to_end</a>(&amp;mut self, buf: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, <a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt;</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
@@ -138,7 +203,7 @@ or <code>&quot;applicaton/octet-stream&quot;</code> otherwise.</p>
 <div class='docblock'><p>Creates an adaptor which will chain this stream with another. <a href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html#method.chain">Read more</a></p>
 </div><h4 id='method.take' class='method'><span id='take.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html#method.take' class='fnname'>take</a>(self, limit: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>) -&gt; <a class='struct' href='https://doc.rust-lang.org/nightly/std/io/struct.Take.html' title='std::io::Take'>Take</a>&lt;Self&gt;</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
 <div class='docblock'><p>Creates an adaptor which will read at most <code>limit</code> bytes from it. <a href="https://doc.rust-lang.org/nightly/std/io/trait.Read.html#method.take">Read more</a></p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;'a, B:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.Read.html' title='std::io::Read'>Read</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.BufRead.html' title='std::io::BufRead'>BufRead</a> for <a class='struct' href='../../multipart/server/struct.MultipartFile.html' title='multipart::server::MultipartFile'>MultipartFile</a>&lt;'a, B&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/mod.rs.html#622-630' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;M:&nbsp;<a class='trait' href='../../multipart/server/trait.ReadEntry.html' title='multipart::server::ReadEntry'>ReadEntry</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/std/io/trait.BufRead.html' title='std::io::BufRead'>BufRead</a> for <a class='struct' href='../../multipart/server/struct.MultipartFile.html' title='multipart::server::MultipartFile'>MultipartFile</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#484-492' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.fill_buf' class='method'><span id='fill_buf.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/std/io/trait.BufRead.html#tymethod.fill_buf' class='fnname'>fill_buf</a>(&amp;mut self) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>&gt;</code></span></h4>
 <div class='docblock'><p>Fills the internal buffer of this object, returning the buffer contents. <a href="https://doc.rust-lang.org/nightly/std/io/trait.BufRead.html#tymethod.fill_buf">Read more</a></p>
 </div><h4 id='method.consume' class='method'><span id='consume.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/std/io/trait.BufRead.html#tymethod.consume' class='fnname'>consume</a>(&amp;mut self, amt: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>)</code></span></h4>

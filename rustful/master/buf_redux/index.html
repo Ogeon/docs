@@ -48,51 +48,71 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/buf_redux/lib.rs.html#12-357' title='goto source code'>[src]</a></span></h1>
-<div class='docblock'><p>A drop-in replacement for <code>std::io::BufReader</code> with more functionality.</p>
+               </span><a class='srclink' href='../src/buf_redux/lib.rs.html#12-1097' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Drop-in replacements for buffered I/O types in <code>std::io</code>.</p>
 
-<p>Features include:</p>
+<p>These replacements retain the method names/signatures and implemented traits of their stdlib
+counterparts, making replacement as simple as swapping the import of the type:</p>
+
+<h4 id='bufreader' class='section-header'><a href='#bufreader'><code>BufReader</code>:</a></h4>
+<pre><code class="language-notest">- use std::io::BufReader;
++ use buf_redux::BufReader;
+</code></pre>
+
+<h4 id='bufwriter' class='section-header'><a href='#bufwriter'><code>BufWriter</code>:</a></h4>
+<pre><code class="language-notest">- use std::io::BufWriter;
++ use buf_redux::BufWriter;
+</code></pre>
+
+<h4 id='linewriter' class='section-header'><a href='#linewriter'><code>LineWriter</code>:</a></h4>
+<pre><code class="language-notest">- use std::io::LineWriter;
++ use buf_redux::LineWriter;
+</code></pre>
+
+<h3 id='more-direct-control' class='section-header'><a href='#more-direct-control'>More Direct Control</a></h3>
+<p>All replacement types provide methods to:
+* Increase the capacity of the buffer
+* Get the number of available bytes as well as the total capacity of the buffer
+* Consume the wrapper without losing data</p>
+
+<p><code>BufReader</code> provides methods to:
+* Access the buffer through an <code>&amp;</code>-reference without performing I/O
+* Force unconditional reads into the buffer
+* Get a <code>Read</code> adapter which empties the buffer and then pulls from the inner reader directly
+* Shuffle bytes down to the beginning of the buffer to make room for more reading
+* Get inner reader and trimmed buffer with the remaining data</p>
+
+<p><code>BufWriter</code> and <code>LineWriter</code> provides methods to:
+* Flush the buffer and unwrap the inner writer unconditionally.
+* Get the inner writer and trimmed buffer with the unflushed data.</p>
+
+<h3 id='more-sensible-and-customizable-buffering-behavior' class='section-header'><a href='#more-sensible-and-customizable-buffering-behavior'>More Sensible and Customizable Buffering Behavior</a></h3>
+<ul>
+<li>Tune the behavior of the buffer to your specific use-case using the types in the <a href="strategy/index.html"><code>strategy</code>
+module</a>:
 
 <ul>
-<li>More direct control over the buffer. Provides methods to:
-
-<ul>
-<li>Access the buffer through an <code>&amp;</code>-reference without performing I/O</li>
-<li>Force unconditional reads into the buffer</li>
-<li>Increase the capacity of the buffer</li>
-<li>Get the number of available bytes as well as the total capacity of the buffer</li>
-<li>Consume the <code>BufReader</code> without losing data</li>
-<li>Get inner reader and trimmed buffer with the remaining data</li>
-<li>Get a <code>Read</code> adapter which empties the buffer and then pulls from the inner reader directly</li>
+<li><code>BufReader</code> performs reads as dictated by the <a href="strategy/trait.ReadStrategy.html"><code>ReadStrategy</code> trait</a>.</li>
+<li><code>BufReader</code> moves bytes down to the beginning of the buffer, to make more room at the end, when deemed appropriate by the
+<a href="strategy/trait.MoveStrategy.html"><code>MoveStrategy</code> trait</a>.</li>
+<li><code>BufWriter</code> flushes bytes to the inner writer when full, or when deemed appropriate by
+the <a href="strategy/trait.FlushStrategy.html"><code>FlushStrategy</code> trait</a>.</li>
 </ul></li>
-<li>More sensible buffering behavior
-
-<ul>
-<li>Data is moved down to the beginning of the buffer when appropriate
-
-<ul>
-<li>Such as when there is more room at the beginning of the buffer than at the end</li>
-</ul></li>
-<li>Exact allocation instead of leaving it up to <code>Vec</code>, which allocates sizes in powers of two
+<li><code>Buffer</code> uses exact allocation instead of leaving it up to <code>Vec</code>, which allocates sizes in powers of two.
 
 <ul>
 <li>Vec&#39;s behavior is more efficient for frequent growth, but much too greedy for infrequent growth and custom capacities.</li>
 </ul></li>
-</ul></li>
-<li>Drop-in replacement
-
-<ul>
-<li>Method names/signatures and implemented traits are unchanged from <code>std::io::BufReader</code>, making replacement as simple as swapping the import of the type.</li>
-</ul></li>
 </ul>
-
-<pre><code class="language-notest">- use std::io::BufReader;
-+ extern crate buf_redux;
-+ use buf_redux::BufReader;
-</code></pre>
-
-<p>See the <code>BufReader</code> type in this crate for more info.</p>
-</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='strategy/index.html'
+                                  title='buf_redux::strategy'>strategy</a></td>
+                           <td class='docblock-short'>
+                                <p>Types which can be used to tune the behavior of <code>BufReader</code>.</p>
+                           </td>
+                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class='struct' href='struct.BufReader.html'
@@ -102,11 +122,57 @@
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class='struct' href='struct.BufWriter.html'
+                                  title='buf_redux::BufWriter'>BufWriter</a></td>
+                           <td class='docblock-short'>
+                                <p>A drop-in replacement for <code>std::io::BufWriter</code> with more functionality.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Buffer.html'
+                                  title='buf_redux::Buffer'>Buffer</a></td>
+                           <td class='docblock-short'>
+                                <p>A deque-like datastructure for managing bytes.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.IntoInnerError.html'
+                                  title='buf_redux::IntoInnerError'>IntoInnerError</a></td>
+                           <td class='docblock-short'>
+                                <p>The error type for <code>BufWriter::into_inner()</code>,
+contains the <code>BufWriter</code> as well as the error that occurred.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.LineWriter.html'
+                                  title='buf_redux::LineWriter'>LineWriter</a></td>
+                           <td class='docblock-short'>
+                                <p>A drop-in replacement for <code>std::io::LineWriter</code> with more functionality.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class='struct' href='struct.Unbuffer.html'
                                   title='buf_redux::Unbuffer'>Unbuffer</a></td>
                            <td class='docblock-short'>
                                 <p>A <code>Read</code> adapter for a consumed <code>BufReader</code> which will empty bytes from the buffer before reading from
 <code>inner</code> directly. Frees the buffer when it has been emptied. </p>
+                           </td>
+                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='trait' href='trait.TrustRead.html'
+                                  title='buf_redux::TrustRead'>TrustRead</a></td>
+                           <td class='docblock-short'>
+                                <p>A trait which <code>Buffer</code> can use to determine whether or not
+it is safe to elide zeroing of its buffer.</p>
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.copy_buf.html'
+                                  title='buf_redux::copy_buf'>copy_buf</a></td>
+                           <td class='docblock-short'>
+                                <p>Copy data between a <code>BufRead</code> and a <code>Write</code> without an intermediate buffer.</p>
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>

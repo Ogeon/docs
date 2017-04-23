@@ -2,10 +2,9 @@
 implementors["hyper"] = [];
 implementors["libc"] = [];
 implementors["mime_guess"] = [];
-implementors["openssl"] = [];
+implementors["multipart"] = [];
 implementors["phf"] = [];
 implementors["rand"] = [];
-implementors["regex_syntax"] = [];
 implementors["rustful"] = [];
 
             if (window.register_implementors) {

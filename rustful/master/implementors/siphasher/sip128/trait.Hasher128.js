@@ -1,5 +1,6 @@
 (function() {var implementors = {};
 implementors["mime_guess"] = [];
+implementors["multipart"] = [];
 implementors["phf"] = [];
 implementors["rustful"] = [];
 implementors["siphasher"] = [];

@@ -48,34 +48,36 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/multipart/lib.rs.html#7-98' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/multipart/lib.rs.html#7-109' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Client- and server-side abstractions for HTTP <code>multipart/form-data</code> requests.</p>
 
-<p>Features: </p>
+<h3 id='features' class='section-header'><a href='#features'>Features:</a></h3>
+<p>This documentation is built with all features enabled.</p>
 
 <ul>
-<li><p><code>client</code> (default): Enable the client-side abstractions for multipart requests. If the
-<code>hyper</code> feature is also set, enables integration with the Hyper HTTP client API.</p></li>
-<li><p><code>server</code> (default): Enable the server-side abstractions for multipart requests. If the
-<code>hyper</code> feature is also set, enables integration with the Hyper HTTP server API.</p></li>
-<li><p><code>hyper</code> (default): Enable integration with the <a href="https://github.com/hyperium/hyper">Hyper</a> HTTP library 
+<li><p><code>client</code>: The client-side abstractions for generating multipart requests.</p></li>
+<li><p><code>server</code>: The server-side abstractions for parsing multipart requests.</p></li>
+<li><p><code>mock</code>: Provides mock implementations of core <code>client</code> and <code>server</code> traits for debugging
+or non-standard use.</p></li>
+<li><p><code>hyper</code>: Integration with the <a href="https://github.com/hyperium/hyper">Hyper</a> HTTP library
 for client and/or server depending on which other feature flags are set.</p></li>
-<li><p><code>iron</code>: Enable integration with the <a href="http://ironframework.io">Iron</a> web application
+<li><p><code>iron</code>: Integration with the <a href="http://ironframework.io">Iron</a> web application
 framework. See the <a href="server/iron/index.html"><code>server::iron</code></a> module for more information.</p></li>
-<li><p><code>tiny_http</code>: Enable integration with the <a href="https://github.com/frewsxcv/tiny-http"><code>tiny_http</code></a>
+<li><p><code>tiny_http</code>: Integration with the <a href="https://github.com/frewsxcv/tiny-http"><code>tiny_http</code></a>
 crate. See the <a href="server/tiny_http/index.html"><code>server::tiny_http</code></a> module for more information.</p></li>
-<li><p><code>nickel_</code>: Enable integration with the <a href="http://nickel.rs">Nickel</a> web application framework.
-See the <a href="server/nickel/index.html"><code>server::nickel</code></a> module for more information. Enables the <code>hyper</code>
-feature.</p></li>
 </ul>
+
+<p><strong>Note</strong>: in-crate integration for Nickel was removed in 0.11.0;
+integration will be provided in the
+<a href="https://crates.io/crates/multipart-nickel"><code>multipart-nickel</code></a>
+crate for the foreseeable future.</p>
 </div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class='mod' href='server/index.html'
                                   title='multipart::server'>server</a></td>
                            <td class='docblock-short'>
-                                <p>The server-side abstraction for multipart requests. Enabled with the <code>server</code> feature (on by
-default).</p>
+                                <p>The server-side abstraction for multipart requests. Enabled with the <code>server</code> feature.</p>
                            </td>
                        </tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
 <table>

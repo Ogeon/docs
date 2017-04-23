@@ -1,4 +1,5 @@
 (function() {var implementors = {};
+implementors["multipart"] = [];
 implementors["rand"] = [];
 implementors["rustful"] = [];
 
