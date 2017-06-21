@@ -1,4 +1,7 @@
 (function() {var implementors = {};
+implementors["libc"] = [];
+implementors["num"] = [];
+implementors["phf"] = [];
 implementors["rand"] = [];
 
             if (window.register_implementors) {

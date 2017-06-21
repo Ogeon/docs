@@ -9,6 +9,7 @@
 
     <title>palette::Saturate - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'Saturate', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Saturate</p><div class="block items"><ul><li><a href="#associated-types">Associated Types</a></li><li><a href="#required-methods">Required Methods</a></li><li><a href="#provided-methods">Provided Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'Saturate', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -42,47 +43,47 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>palette</a>::<wbr><a class='trait' href=''>Saturate</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>palette</a>::<wbr><a class="trait" href=''>Saturate</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-7016' class='srclink' href='../src/palette/src/lib.rs.html#669-680' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Saturate: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
-    type <a href='#associatedtype.Scalar' class='type'>Scalar</a>: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>;
-    fn <a href='#tymethod.saturate' class='fnname'>saturate</a>(&amp;self, factor: Self::Scalar) -&gt; Self;
+               </span><a class='srclink' href='../src/palette/lib.rs.html#669-680' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Saturate: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> {
+    type <a href='#associatedtype.Scalar' class="type">Scalar</a>: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>;
+    fn <a href='#tymethod.saturate' class='fnname'>saturate</a>(&amp;self, factor: Self::<a class="trait" href="../palette/trait.Saturate.html" title="trait palette::Saturate">Scalar</a>) -&gt; Self;
 
-    fn <a href='#method.desaturate' class='fnname'>desaturate</a>(&amp;self, factor: Self::Scalar) -&gt; Self { ... }
+    fn <a href='#method.desaturate' class='fnname'>desaturate</a>(&amp;self, factor: Self::<a class="trait" href="../palette/trait.Saturate.html" title="trait palette::Saturate">Scalar</a>) -&gt; Self { ... }
 }</pre><div class='docblock'><p>A trait for colors where the saturation (or chroma) can be manipulated
 without conversion.</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='kw'>use</span> <span class='ident'>palette</span>::{<span class='ident'>Hsv</span>, <span class='ident'>Saturate</span>};
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">palette</span>::{<span class="ident">Hsv</span>, <span class="ident">Saturate</span>};
 
-<span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Hsv</span>::<span class='ident'>new</span>(<span class='number'>0.0</span>.<span class='ident'>into</span>(), <span class='number'>0.25</span>, <span class='number'>1.0</span>);
-<span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Hsv</span>::<span class='ident'>new</span>(<span class='number'>0.0</span>.<span class='ident'>into</span>(), <span class='number'>1.0</span>, <span class='number'>1.0</span>);
+<span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="number">0.0</span>.<span class="ident">into</span>(), <span class="number">0.25</span>, <span class="number">1.0</span>);
+<span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="number">0.0</span>.<span class="ident">into</span>(), <span class="number">1.0</span>, <span class="number">1.0</span>);
 
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>.<span class='ident'>saturate</span>(<span class='number'>1.0</span>), <span class='ident'>b</span>.<span class='ident'>desaturate</span>(<span class='number'>0.5</span>));</pre>
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">a</span>.<span class="ident">saturate</span>(<span class="number">1.0</span>), <span class="ident">b</span>.<span class="ident">desaturate</span>(<span class="number">0.5</span>));</pre>
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Scalar' class='method stab '><code>type <a href='#associatedtype.Scalar' class='type'>Scalar</a>: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a></code></h3><div class='docblock'><p>The type of the (de)saturation factor.</p>
+        <h3 id='associatedtype.Scalar' class='method'><span id='Scalar.t' class='invisible'><code>type <a href='#associatedtype.Scalar' class="type">Scalar</a>: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a></code></span></h3><div class='docblock'><p>The type of the (de)saturation factor.</p>
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.saturate' class='method stab '><code>fn <a href='#tymethod.saturate' class='fnname'>saturate</a>(&amp;self, factor: Self::Scalar) -&gt; Self</code></h3><div class='docblock'><p>Increase the saturation by <code>factor</code>.</p>
+        <h3 id='tymethod.saturate' class='method'><span id='saturate.v' class='invisible'><code>fn <a href='#tymethod.saturate' class='fnname'>saturate</a>(&amp;self, factor: Self::<a class="trait" href="../palette/trait.Saturate.html" title="trait palette::Saturate">Scalar</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Increase the saturation by <code>factor</code>.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.desaturate' class='method stab '><code>fn <a href='#method.desaturate' class='fnname'>desaturate</a>(&amp;self, factor: Self::Scalar) -&gt; Self</code></h3><div class='docblock'><p>Decrease the saturation by <code>factor</code>.</p>
+        <h3 id='method.desaturate' class='method'><span id='desaturate.v' class='invisible'><code>fn <a href='#method.desaturate' class='fnname'>desaturate</a>(&amp;self, factor: Self::<a class="trait" href="../palette/trait.Saturate.html" title="trait palette::Saturate">Scalar</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Decrease the saturation by <code>factor</code>.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;C:&nbsp;<a class='trait' href='../palette/trait.Saturate.html' title='palette::Saturate'>Saturate</a>&gt; Saturate for <a class='struct' href='../palette/struct.Alpha.html' title='palette::Alpha'>Alpha</a>&lt;C,&nbsp;C::Scalar&gt;</code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; Saturate for <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; Saturate for <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; Saturate for <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; Saturate for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
+    <li><code>impl&lt;C:&nbsp;<a class="trait" href="../palette/trait.Saturate.html" title="trait palette::Saturate">Saturate</a>&gt; Saturate for <a class="struct" href="../palette/struct.Alpha.html" title="struct palette::Alpha">Alpha</a>&lt;C, C::<a class="trait" href="../palette/trait.Saturate.html" title="trait palette::Saturate">Scalar</a>&gt;</code></li>
+<li><code>impl&lt;Wp, T&gt; Saturate for <a class="struct" href="../palette/struct.Lch.html" title="struct palette::Lch">Lch</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; Saturate for <a class="struct" href="../palette/struct.Hsv.html" title="struct palette::Hsv">Hsv</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; Saturate for <a class="struct" href="../palette/struct.Hsl.html" title="struct palette::Hsl">Hsl</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; Saturate for <a class="enum" href="../palette/enum.Color.html" title="enum palette::Color">Color</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/palette/trait.Saturate.js">
                  </script></section>
@@ -141,11 +142,9 @@ without conversion.</p>
     <script>
         window.rootPath = "../";
         window.currentCrate = "palette";
-        window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
-    
     <script defer src="../search-index.js"></script>
 </body>
 </html>

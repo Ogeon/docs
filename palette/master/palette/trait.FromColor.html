@@ -9,6 +9,7 @@
 
     <title>palette::FromColor - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'FromColor', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait FromColor</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#provided-methods">Provided Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'FromColor', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -42,23 +43,23 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>palette</a>::<wbr><a class='trait' href=''>FromColor</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>palette</a>::<wbr><a class="trait" href=''>FromColor</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-3810' class='srclink' href='../src/palette/src/convert.rs.html#14-61' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait FromColor&lt;Wp&nbsp;=&nbsp;<a class='struct' href='../palette/white_point/struct.D65.html' title='palette::white_point::D65'>D65</a>,&nbsp;T&nbsp;=&nbsp;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.f32.html'>f32</a>&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span> {
-    fn <a href='#tymethod.from_xyz' class='fnname'>from_xyz</a>(<a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self;
+               </span><a class='srclink' href='../src/palette/convert.rs.html#14-61' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait FromColor&lt;Wp&nbsp;=&nbsp;<a class="struct" href="../palette/white_point/struct.D65.html" title="struct palette::white_point::D65">D65</a>, T&nbsp;=&nbsp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span>{
+    fn <a href='#tymethod.from_xyz' class='fnname'>from_xyz</a>(_: <a class="struct" href="../palette/struct.Xyz.html" title="struct palette::Xyz">Xyz</a>&lt;Wp, T&gt;) -&gt; Self;
 
-    fn <a href='#method.from_yxy' class='fnname'>from_yxy</a>(inp: <a class='struct' href='../palette/struct.Yxy.html' title='palette::Yxy'>Yxy</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self { ... }
-    fn <a href='#method.from_lab' class='fnname'>from_lab</a>(inp: <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self { ... }
-    fn <a href='#method.from_lch' class='fnname'>from_lch</a>(inp: <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self { ... }
-    fn <a href='#method.from_rgb' class='fnname'>from_rgb</a>(inp: <a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self { ... }
-    fn <a href='#method.from_hsl' class='fnname'>from_hsl</a>(inp: <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self { ... }
-    fn <a href='#method.from_hsv' class='fnname'>from_hsv</a>(inp: <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self { ... }
-    fn <a href='#method.from_hwb' class='fnname'>from_hwb</a>(inp: <a class='struct' href='../palette/struct.Hwb.html' title='palette::Hwb'>Hwb</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self { ... }
-    fn <a href='#method.from_luma' class='fnname'>from_luma</a>(inp: <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self { ... }
+    fn <a href='#method.from_yxy' class='fnname'>from_yxy</a>(inp: <a class="struct" href="../palette/struct.Yxy.html" title="struct palette::Yxy">Yxy</a>&lt;Wp, T&gt;) -&gt; Self { ... }
+    fn <a href='#method.from_lab' class='fnname'>from_lab</a>(inp: <a class="struct" href="../palette/struct.Lab.html" title="struct palette::Lab">Lab</a>&lt;Wp, T&gt;) -&gt; Self { ... }
+    fn <a href='#method.from_lch' class='fnname'>from_lch</a>(inp: <a class="struct" href="../palette/struct.Lch.html" title="struct palette::Lch">Lch</a>&lt;Wp, T&gt;) -&gt; Self { ... }
+    fn <a href='#method.from_rgb' class='fnname'>from_rgb</a>(inp: <a class="struct" href="../palette/struct.Rgb.html" title="struct palette::Rgb">Rgb</a>&lt;Wp, T&gt;) -&gt; Self { ... }
+    fn <a href='#method.from_hsl' class='fnname'>from_hsl</a>(inp: <a class="struct" href="../palette/struct.Hsl.html" title="struct palette::Hsl">Hsl</a>&lt;Wp, T&gt;) -&gt; Self { ... }
+    fn <a href='#method.from_hsv' class='fnname'>from_hsv</a>(inp: <a class="struct" href="../palette/struct.Hsv.html" title="struct palette::Hsv">Hsv</a>&lt;Wp, T&gt;) -&gt; Self { ... }
+    fn <a href='#method.from_hwb' class='fnname'>from_hwb</a>(inp: <a class="struct" href="../palette/struct.Hwb.html" title="struct palette::Hwb">Hwb</a>&lt;Wp, T&gt;) -&gt; Self { ... }
+    fn <a href='#method.from_luma' class='fnname'>from_luma</a>(inp: <a class="struct" href="../palette/struct.Luma.html" title="struct palette::Luma">Luma</a>&lt;Wp, T&gt;) -&gt; Self { ... }
 }</pre><div class='docblock'><p>FromColor provides conversion between the colors.</p>
 
 <p>It requires from_xyz and derives conversion to other colors as a default from this.
@@ -70,30 +71,30 @@ with self to avoid the unnecessary converison.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.from_xyz' class='method stab '><code>fn <a href='#tymethod.from_xyz' class='fnname'>from_xyz</a>(<a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self</code></h3><div class='docblock'><p>Convert from XYZ color space</p>
+        <h3 id='tymethod.from_xyz' class='method'><span id='from_xyz.v' class='invisible'><code>fn <a href='#tymethod.from_xyz' class='fnname'>from_xyz</a>(_: <a class="struct" href="../palette/struct.Xyz.html" title="struct palette::Xyz">Xyz</a>&lt;Wp, T&gt;) -&gt; Self</code></span></h3><div class='docblock'><p>Convert from XYZ color space</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.from_yxy' class='method stab '><code>fn <a href='#method.from_yxy' class='fnname'>from_yxy</a>(inp: <a class='struct' href='../palette/struct.Yxy.html' title='palette::Yxy'>Yxy</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self</code></h3><div class='docblock'><p>Convert from Yxy color space</p>
-</div><h3 id='method.from_lab' class='method stab '><code>fn <a href='#method.from_lab' class='fnname'>from_lab</a>(inp: <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self</code></h3><div class='docblock'><p>Convert from L*a*b* color space</p>
-</div><h3 id='method.from_lch' class='method stab '><code>fn <a href='#method.from_lch' class='fnname'>from_lch</a>(inp: <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self</code></h3><div class='docblock'><p>Convert from L*C*h° color space</p>
-</div><h3 id='method.from_rgb' class='method stab '><code>fn <a href='#method.from_rgb' class='fnname'>from_rgb</a>(inp: <a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self</code></h3><div class='docblock'><p>Convert from RGB color space</p>
-</div><h3 id='method.from_hsl' class='method stab '><code>fn <a href='#method.from_hsl' class='fnname'>from_hsl</a>(inp: <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self</code></h3><div class='docblock'><p>Convert from HSL color space</p>
-</div><h3 id='method.from_hsv' class='method stab '><code>fn <a href='#method.from_hsv' class='fnname'>from_hsv</a>(inp: <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self</code></h3><div class='docblock'><p>Convert from HSV color space</p>
-</div><h3 id='method.from_hwb' class='method stab '><code>fn <a href='#method.from_hwb' class='fnname'>from_hwb</a>(inp: <a class='struct' href='../palette/struct.Hwb.html' title='palette::Hwb'>Hwb</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self</code></h3><div class='docblock'><p>Convert from HWB color space</p>
-</div><h3 id='method.from_luma' class='method stab '><code>fn <a href='#method.from_luma' class='fnname'>from_luma</a>(inp: <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a>&lt;Wp,&nbsp;T&gt;) -&gt; Self</code></h3><div class='docblock'><p>Convert from Luma</p>
+        <h3 id='method.from_yxy' class='method'><span id='from_yxy.v' class='invisible'><code>fn <a href='#method.from_yxy' class='fnname'>from_yxy</a>(inp: <a class="struct" href="../palette/struct.Yxy.html" title="struct palette::Yxy">Yxy</a>&lt;Wp, T&gt;) -&gt; Self</code></span></h3><div class='docblock'><p>Convert from Yxy color space</p>
+</div><h3 id='method.from_lab' class='method'><span id='from_lab.v' class='invisible'><code>fn <a href='#method.from_lab' class='fnname'>from_lab</a>(inp: <a class="struct" href="../palette/struct.Lab.html" title="struct palette::Lab">Lab</a>&lt;Wp, T&gt;) -&gt; Self</code></span></h3><div class='docblock'><p>Convert from L*a*b* color space</p>
+</div><h3 id='method.from_lch' class='method'><span id='from_lch.v' class='invisible'><code>fn <a href='#method.from_lch' class='fnname'>from_lch</a>(inp: <a class="struct" href="../palette/struct.Lch.html" title="struct palette::Lch">Lch</a>&lt;Wp, T&gt;) -&gt; Self</code></span></h3><div class='docblock'><p>Convert from L*C*h° color space</p>
+</div><h3 id='method.from_rgb' class='method'><span id='from_rgb.v' class='invisible'><code>fn <a href='#method.from_rgb' class='fnname'>from_rgb</a>(inp: <a class="struct" href="../palette/struct.Rgb.html" title="struct palette::Rgb">Rgb</a>&lt;Wp, T&gt;) -&gt; Self</code></span></h3><div class='docblock'><p>Convert from RGB color space</p>
+</div><h3 id='method.from_hsl' class='method'><span id='from_hsl.v' class='invisible'><code>fn <a href='#method.from_hsl' class='fnname'>from_hsl</a>(inp: <a class="struct" href="../palette/struct.Hsl.html" title="struct palette::Hsl">Hsl</a>&lt;Wp, T&gt;) -&gt; Self</code></span></h3><div class='docblock'><p>Convert from HSL color space</p>
+</div><h3 id='method.from_hsv' class='method'><span id='from_hsv.v' class='invisible'><code>fn <a href='#method.from_hsv' class='fnname'>from_hsv</a>(inp: <a class="struct" href="../palette/struct.Hsv.html" title="struct palette::Hsv">Hsv</a>&lt;Wp, T&gt;) -&gt; Self</code></span></h3><div class='docblock'><p>Convert from HSV color space</p>
+</div><h3 id='method.from_hwb' class='method'><span id='from_hwb.v' class='invisible'><code>fn <a href='#method.from_hwb' class='fnname'>from_hwb</a>(inp: <a class="struct" href="../palette/struct.Hwb.html" title="struct palette::Hwb">Hwb</a>&lt;Wp, T&gt;) -&gt; Self</code></span></h3><div class='docblock'><p>Convert from HWB color space</p>
+</div><h3 id='method.from_luma' class='method'><span id='from_luma.v' class='invisible'><code>fn <a href='#method.from_luma' class='fnname'>from_luma</a>(inp: <a class="struct" href="../palette/struct.Luma.html" title="struct palette::Luma">Luma</a>&lt;Wp, T&gt;) -&gt; Self</code></span></h3><div class='docblock'><p>Convert from Luma</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;Wp,&nbsp;T&gt; FromColor&lt;Wp,&nbsp;T&gt; for <a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; FromColor&lt;Wp,&nbsp;T&gt; for <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; FromColor&lt;Wp,&nbsp;T&gt; for <a class='struct' href='../palette/struct.Yxy.html' title='palette::Yxy'>Yxy</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; FromColor&lt;Wp,&nbsp;T&gt; for <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; FromColor&lt;Wp,&nbsp;T&gt; for <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; FromColor&lt;Wp,&nbsp;T&gt; for <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; FromColor&lt;Wp,&nbsp;T&gt; for <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; FromColor&lt;Wp,&nbsp;T&gt; for <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; FromColor&lt;Wp,&nbsp;T&gt; for <a class='struct' href='../palette/struct.Hwb.html' title='palette::Hwb'>Hwb</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
+    <li><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Rgb.html" title="struct palette::Rgb">Rgb</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Luma.html" title="struct palette::Luma">Luma</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Yxy.html" title="struct palette::Yxy">Yxy</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Xyz.html" title="struct palette::Xyz">Xyz</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Lab.html" title="struct palette::Lab">Lab</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Lch.html" title="struct palette::Lch">Lch</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Hsv.html" title="struct palette::Hsv">Hsv</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Hsl.html" title="struct palette::Hsl">Hsl</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Hwb.html" title="struct palette::Hwb">Hwb</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/palette/trait.FromColor.js">
                  </script></section>
@@ -152,11 +153,9 @@ with self to avoid the unnecessary converison.</p>
     <script>
         window.rootPath = "../";
         window.currentCrate = "palette";
-        window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
-    
     <script defer src="../search-index.js"></script>
 </body>
 </html>

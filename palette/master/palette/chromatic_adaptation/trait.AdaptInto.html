@@ -9,6 +9,7 @@
 
     <title>palette::chromatic_adaptation::AdaptInto - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
     <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a></p><script>window.sidebarCurrent = {name: 'AdaptInto', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait AdaptInto</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#provided-methods">Provided Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a></p><script>window.sidebarCurrent = {name: 'AdaptInto', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -42,14 +43,14 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a>::<wbr><a class='trait' href=''>AdaptInto</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a>::<wbr><a class="trait" href=''>AdaptInto</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-6146' class='srclink' href='../../src/palette/src/chromatic_adaptation.rs.html#163-174' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait AdaptInto&lt;D,&nbsp;Swp,&nbsp;Dwp,&nbsp;T&gt;: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> <span class='where'>where T: <a class='trait' href='../../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Swp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;, Dwp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span> {
-    fn <a href='#tymethod.adapt_into_using' class='fnname'>adapt_into_using</a>&lt;M:&nbsp;<a class='trait' href='../../palette/chromatic_adaptation/trait.TransformMatrix.html' title='palette::chromatic_adaptation::TransformMatrix'>TransformMatrix</a>&lt;Swp,&nbsp;Dwp,&nbsp;T&gt;&gt;(self, method: M) -&gt; D;
+               </span><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#163-174' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait AdaptInto&lt;D, Swp, Dwp, T&gt;: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span>{
+    fn <a href='#tymethod.adapt_into_using' class='fnname'>adapt_into_using</a>&lt;M:&nbsp;<a class="trait" href="../../palette/chromatic_adaptation/trait.TransformMatrix.html" title="trait palette::chromatic_adaptation::TransformMatrix">TransformMatrix</a>&lt;Swp, Dwp, T&gt;&gt;(self, method: M) -&gt; D;
 
     fn <a href='#method.adapt_into' class='fnname'>adapt_into</a>(self) -&gt; D { ... }
 }</pre><div class='docblock'><p>Trait to convert color with one reference white point into another</p>
@@ -59,15 +60,15 @@ Uses the bradford method for conversion by default.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.adapt_into_using' class='method stab '><code>fn <a href='#tymethod.adapt_into_using' class='fnname'>adapt_into_using</a>&lt;M:&nbsp;<a class='trait' href='../../palette/chromatic_adaptation/trait.TransformMatrix.html' title='palette::chromatic_adaptation::TransformMatrix'>TransformMatrix</a>&lt;Swp,&nbsp;Dwp,&nbsp;T&gt;&gt;(self, method: M) -&gt; D</code></h3><div class='docblock'><p>Convert the source color to the destination color using the specified method</p>
+        <h3 id='tymethod.adapt_into_using' class='method'><span id='adapt_into_using.v' class='invisible'><code>fn <a href='#tymethod.adapt_into_using' class='fnname'>adapt_into_using</a>&lt;M:&nbsp;<a class="trait" href="../../palette/chromatic_adaptation/trait.TransformMatrix.html" title="trait palette::chromatic_adaptation::TransformMatrix">TransformMatrix</a>&lt;Swp, Dwp, T&gt;&gt;(self, method: M) -&gt; D</code></span></h3><div class='docblock'><p>Convert the source color to the destination color using the specified method</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.adapt_into' class='method stab '><code>fn <a href='#method.adapt_into' class='fnname'>adapt_into</a>(self) -&gt; D</code></h3><div class='docblock'><p>Convert the source color to the destination color using the bradford method by default</p>
+        <h3 id='method.adapt_into' class='method'><span id='adapt_into.v' class='invisible'><code>fn <a href='#method.adapt_into' class='fnname'>adapt_into</a>(self) -&gt; D</code></span></h3><div class='docblock'><p>Convert the source color to the destination color using the bradford method by default</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;S,&nbsp;D,&nbsp;Swp,&nbsp;Dwp,&nbsp;T&gt; AdaptInto&lt;D,&nbsp;Swp,&nbsp;Dwp,&nbsp;T&gt; for S <span class='where'>where T: <a class='trait' href='../../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Swp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;, Dwp: <a class='trait' href='../../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;, D: <a class='trait' href='../../palette/chromatic_adaptation/trait.AdaptFrom.html' title='palette::chromatic_adaptation::AdaptFrom'>AdaptFrom</a>&lt;S,&nbsp;Swp,&nbsp;Dwp,&nbsp;T&gt;</span></code></li>
+    <li><code>impl&lt;S, D, Swp, Dwp, T&gt; AdaptInto&lt;D, Swp, Dwp, T&gt; for S <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;D: <a class="trait" href="../../palette/chromatic_adaptation/trait.AdaptFrom.html" title="trait palette::chromatic_adaptation::AdaptFrom">AdaptFrom</a>&lt;S, Swp, Dwp, T&gt;,&nbsp;</span></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/palette/chromatic_adaptation/trait.AdaptInto.js">
                  </script></section>
@@ -126,11 +127,9 @@ Uses the bradford method for conversion by default.</p>
     <script>
         window.rootPath = "../../";
         window.currentCrate = "palette";
-        window.playgroundUrl = "";
     </script>
     <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
-    
     <script defer src="../../search-index.js"></script>
 </body>
 </html>

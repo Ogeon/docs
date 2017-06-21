@@ -9,6 +9,7 @@
 
     <title>palette::Shade - Rust</title>
 
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
     <link rel="stylesheet" type="text/css" href="../rustdoc.css">
     <link rel="stylesheet" type="text/css" href="../main.css">
     
@@ -16,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -28,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'Shade', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Shade</p><div class="block items"><ul><li><a href="#associated-types">Associated Types</a></li><li><a href="#required-methods">Required Methods</a></li><li><a href="#provided-methods">Provided Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'Shade', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -42,52 +43,52 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>palette</a>::<wbr><a class='trait' href=''>Shade</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='index.html'>palette</a>::<wbr><a class="trait" href=''>Shade</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-6997' class='srclink' href='../src/palette/src/lib.rs.html#605-616' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait Shade: <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html' title='core::marker::Sized'>Sized</a> {
-    type <a href='#associatedtype.Scalar' class='type'>Scalar</a>: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>;
-    fn <a href='#tymethod.lighten' class='fnname'>lighten</a>(&amp;self, amount: Self::Scalar) -&gt; Self;
+               </span><a class='srclink' href='../src/palette/lib.rs.html#605-616' title='goto source code'>[src]</a></span></h1>
+<pre class='rust trait'>pub trait Shade: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> {
+    type <a href='#associatedtype.Scalar' class="type">Scalar</a>: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>;
+    fn <a href='#tymethod.lighten' class='fnname'>lighten</a>(&amp;self, amount: Self::<a class="trait" href="../palette/trait.Shade.html" title="trait palette::Shade">Scalar</a>) -&gt; Self;
 
-    fn <a href='#method.darken' class='fnname'>darken</a>(&amp;self, amount: Self::Scalar) -&gt; Self { ... }
+    fn <a href='#method.darken' class='fnname'>darken</a>(&amp;self, amount: Self::<a class="trait" href="../palette/trait.Shade.html" title="trait palette::Shade">Scalar</a>) -&gt; Self { ... }
 }</pre><div class='docblock'><p>The <code>Shade</code> trait allows a color to be lightened or darkened.</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='kw'>use</span> <span class='ident'>palette</span>::{<span class='ident'>Rgb</span>, <span class='ident'>Shade</span>};
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">palette</span>::{<span class="ident">Rgb</span>, <span class="ident">Shade</span>};
 
-<span class='kw'>let</span> <span class='ident'>a</span> <span class='op'>=</span> <span class='ident'>Rgb</span>::<span class='ident'>new</span>(<span class='number'>0.4</span>, <span class='number'>0.4</span>, <span class='number'>0.4</span>);
-<span class='kw'>let</span> <span class='ident'>b</span> <span class='op'>=</span> <span class='ident'>Rgb</span>::<span class='ident'>new</span>(<span class='number'>0.6</span>, <span class='number'>0.6</span>, <span class='number'>0.6</span>);
+<span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Rgb</span>::<span class="ident">new</span>(<span class="number">0.4</span>, <span class="number">0.4</span>, <span class="number">0.4</span>);
+<span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Rgb</span>::<span class="ident">new</span>(<span class="number">0.6</span>, <span class="number">0.6</span>, <span class="number">0.6</span>);
 
-<span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>a</span>.<span class='ident'>lighten</span>(<span class='number'>0.1</span>), <span class='ident'>b</span>.<span class='ident'>darken</span>(<span class='number'>0.1</span>));</pre>
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">a</span>.<span class="ident">lighten</span>(<span class="number">0.1</span>), <span class="ident">b</span>.<span class="ident">darken</span>(<span class="number">0.1</span>));</pre>
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Scalar' class='method stab '><code>type <a href='#associatedtype.Scalar' class='type'>Scalar</a>: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a></code></h3><div class='docblock'><p>The type of the lighten/darken amount.</p>
+        <h3 id='associatedtype.Scalar' class='method'><span id='Scalar.t' class='invisible'><code>type <a href='#associatedtype.Scalar' class="type">Scalar</a>: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a></code></span></h3><div class='docblock'><p>The type of the lighten/darken amount.</p>
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.lighten' class='method stab '><code>fn <a href='#tymethod.lighten' class='fnname'>lighten</a>(&amp;self, amount: Self::Scalar) -&gt; Self</code></h3><div class='docblock'><p>Lighten the color by <code>amount</code>.</p>
+        <h3 id='tymethod.lighten' class='method'><span id='lighten.v' class='invisible'><code>fn <a href='#tymethod.lighten' class='fnname'>lighten</a>(&amp;self, amount: Self::<a class="trait" href="../palette/trait.Shade.html" title="trait palette::Shade">Scalar</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Lighten the color by <code>amount</code>.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.darken' class='method stab '><code>fn <a href='#method.darken' class='fnname'>darken</a>(&amp;self, amount: Self::Scalar) -&gt; Self</code></h3><div class='docblock'><p>Darken the color by <code>amount</code>.</p>
+        <h3 id='method.darken' class='method'><span id='darken.v' class='invisible'><code>fn <a href='#method.darken' class='fnname'>darken</a>(&amp;self, amount: Self::<a class="trait" href="../palette/trait.Shade.html" title="trait palette::Shade">Scalar</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Darken the color by <code>amount</code>.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;C:&nbsp;<a class='trait' href='../palette/trait.Shade.html' title='palette::Shade'>Shade</a>&gt; Shade for <a class='struct' href='../palette/struct.Alpha.html' title='palette::Alpha'>Alpha</a>&lt;C,&nbsp;C::Scalar&gt;</code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; Shade for <a class='struct' href='../palette/struct.Rgb.html' title='palette::Rgb'>Rgb</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; Shade for <a class='struct' href='../palette/struct.Luma.html' title='palette::Luma'>Luma</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; Shade for <a class='struct' href='../palette/struct.Yxy.html' title='palette::Yxy'>Yxy</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; Shade for <a class='struct' href='../palette/struct.Xyz.html' title='palette::Xyz'>Xyz</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; Shade for <a class='struct' href='../palette/struct.Lab.html' title='palette::Lab'>Lab</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; Shade for <a class='struct' href='../palette/struct.Lch.html' title='palette::Lch'>Lch</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; Shade for <a class='struct' href='../palette/struct.Hsv.html' title='palette::Hsv'>Hsv</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; Shade for <a class='struct' href='../palette/struct.Hsl.html' title='palette::Hsl'>Hsl</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; Shade for <a class='struct' href='../palette/struct.Hwb.html' title='palette::Hwb'>Hwb</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
-<li><code>impl&lt;Wp,&nbsp;T&gt; Shade for <a class='enum' href='../palette/enum.Color.html' title='palette::Color'>Color</a>&lt;Wp,&nbsp;T&gt; <span class='where'>where T: <a class='trait' href='../num_traits/float/trait.Float.html' title='num_traits::float::Float'>Float</a>, Wp: <a class='trait' href='../palette/white_point/trait.WhitePoint.html' title='palette::white_point::WhitePoint'>WhitePoint</a>&lt;T&gt;</span></code></li>
+    <li><code>impl&lt;C:&nbsp;<a class="trait" href="../palette/trait.Shade.html" title="trait palette::Shade">Shade</a>&gt; Shade for <a class="struct" href="../palette/struct.Alpha.html" title="struct palette::Alpha">Alpha</a>&lt;C, C::<a class="trait" href="../palette/trait.Shade.html" title="trait palette::Shade">Scalar</a>&gt;</code></li>
+<li><code>impl&lt;Wp, T&gt; Shade for <a class="struct" href="../palette/struct.Rgb.html" title="struct palette::Rgb">Rgb</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; Shade for <a class="struct" href="../palette/struct.Luma.html" title="struct palette::Luma">Luma</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; Shade for <a class="struct" href="../palette/struct.Yxy.html" title="struct palette::Yxy">Yxy</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; Shade for <a class="struct" href="../palette/struct.Xyz.html" title="struct palette::Xyz">Xyz</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; Shade for <a class="struct" href="../palette/struct.Lab.html" title="struct palette::Lab">Lab</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; Shade for <a class="struct" href="../palette/struct.Lch.html" title="struct palette::Lch">Lch</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; Shade for <a class="struct" href="../palette/struct.Hsv.html" title="struct palette::Hsv">Hsv</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; Shade for <a class="struct" href="../palette/struct.Hsl.html" title="struct palette::Hsl">Hsl</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; Shade for <a class="struct" href="../palette/struct.Hwb.html" title="struct palette::Hwb">Hwb</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;Wp, T&gt; Shade for <a class="enum" href="../palette/enum.Color.html" title="enum palette::Color">Color</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/palette/trait.Shade.js">
                  </script></section>
@@ -146,11 +147,9 @@
     <script>
         window.rootPath = "../";
         window.currentCrate = "palette";
-        window.playgroundUrl = "";
     </script>
     <script src="../jquery.js"></script>
     <script src="../main.js"></script>
-    
     <script defer src="../search-index.js"></script>
 </body>
 </html>
