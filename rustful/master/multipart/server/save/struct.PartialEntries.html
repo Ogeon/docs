@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../../index.html'>multipart</a>::<wbr><a href='../index.html'>server</a>::<wbr><a href='index.html'>save</a></p><script>window.sidebarCurrent = {name: 'PartialEntries', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct PartialEntries</p><div class="block items"><ul><li><a href="#fields">Fields</a></li><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../../index.html'>multipart</a>::<wbr><a href='../index.html'>server</a>::<wbr><a href='index.html'>save</a></p><script>window.sidebarCurrent = {name: 'PartialEntries', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,41 +43,41 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>multipart</a>::<wbr><a href='../index.html'>server</a>::<wbr><a href='index.html'>save</a>::<wbr><a class='struct' href=''>PartialEntries</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>multipart</a>::<wbr><a href='../index.html'>server</a>::<wbr><a href='index.html'>save</a>::<wbr><a class="struct" href=''>PartialEntries</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../../src/multipart/server/save.rs.html#562-568' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct PartialEntries&lt;M&gt; {
-    pub entries: <a class='struct' href='../../../multipart/server/save/struct.Entries.html' title='multipart::server::save::Entries'>Entries</a>,
-    pub partial_file: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../../multipart/server/save/struct.PartialFileField.html' title='multipart::server::save::PartialFileField'>PartialFileField</a>&lt;M&gt;&gt;,
+    pub entries: <a class="struct" href="../../../multipart/server/save/struct.Entries.html" title="struct multipart::server::save::Entries">Entries</a>,
+    pub partial_file: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../../multipart/server/save/struct.PartialFileField.html" title="struct multipart::server::save::PartialFileField">PartialFileField</a>&lt;M&gt;&gt;,
 }</pre><div class='docblock'><p>The partial result type for <code>Multipart::save*()</code>.</p>
 
 <p>Contains the successfully saved entries as well as the partially
 saved file that was in the process of being read when the error occurred,
 if applicable.</p>
-</div><h2 class='fields'>Fields</h2><span id='structfield.entries' class='structfield'>
+</div><h2 id='fields' class='fields'>Fields</h2><span id='structfield.entries' class="structfield">
                            <span id='entries.v' class='invisible'>
-                           <code>entries: <a class='struct' href='../../../multipart/server/save/struct.Entries.html' title='multipart::server::save::Entries'>Entries</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The entries that were saved successfully.</p>
-</div><span id='structfield.partial_file' class='structfield'>
+                           <code>entries: <a class="struct" href="../../../multipart/server/save/struct.Entries.html" title="struct multipart::server::save::Entries">Entries</a></code>
+                           </span></span><div class='docblock'><p>The entries that were saved successfully.</p>
+</div><span id='structfield.partial_file' class="structfield">
                            <span id='partial_file.v' class='invisible'>
-                           <code>partial_file: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../../../multipart/server/save/struct.PartialFileField.html' title='multipart::server::save::PartialFileField'>PartialFileField</a>&lt;M&gt;&gt;</code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The file that was in the process of being read. <code>None</code> if the error
+                           <code>partial_file: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="../../../multipart/server/save/struct.PartialFileField.html" title="struct multipart::server::save::PartialFileField">PartialFileField</a>&lt;M&gt;&gt;</code>
+                           </span></span><div class='docblock'><p>The file that was in the process of being read. <code>None</code> if the error
 occurred between file entries.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;M&gt; <a class='struct' href='../../../multipart/server/save/struct.PartialEntries.html' title='multipart::server::save::PartialEntries'>PartialEntries</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/multipart/server/save.rs.html#577-591' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.keep_partial' class='method'><span id='keep_partial.v' class='invisible'><code>fn <a href='#method.keep_partial' class='fnname'>keep_partial</a>(self) -&gt; <a class='struct' href='../../../multipart/server/save/struct.Entries.html' title='multipart::server::save::Entries'>Entries</a></code></span></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;M&gt; <a class="struct" href="../../../multipart/server/save/struct.PartialEntries.html" title="struct multipart::server::save::PartialEntries">PartialEntries</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/multipart/server/save.rs.html#577-591' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.keep_partial' class="method"><span id='keep_partial.v' class='invisible'><code>fn <a href='#method.keep_partial' class='fnname'>keep_partial</a>(self) -&gt; <a class="struct" href="../../../multipart/server/save/struct.Entries.html" title="struct multipart::server::save::Entries">Entries</a></code></span></h4>
 <div class='docblock'><p>If <code>partial_file</code> is present and contains a <code>SavedFile</code> then just
 add it to the <code>Entries</code> instance and return it.</p>
 
 <p>Otherwise, returns <code>self.entries</code></p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;M:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../../multipart/server/save/struct.PartialEntries.html' title='multipart::server::save::PartialEntries'>PartialEntries</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/multipart/server/save.rs.html#561' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;M:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a>&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../../multipart/server/save/struct.PartialEntries.html" title="struct multipart::server::save::PartialEntries">PartialEntries</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/multipart/server/save.rs.html#561' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
-</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;M&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='../../../multipart/server/save/struct.Entries.html' title='multipart::server::save::Entries'>Entries</a>&gt; for <a class='struct' href='../../../multipart/server/save/struct.PartialEntries.html' title='multipart::server::save::PartialEntries'>PartialEntries</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/multipart/server/save.rs.html#571-575' title='goto source code'>[src]</a></span></h3>
+</div></div><h3 class='impl'><span class='in-band'><code>impl&lt;M&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="struct" href="../../../multipart/server/save/struct.Entries.html" title="struct multipart::server::save::Entries">Entries</a>&gt; for <a class="struct" href="../../../multipart/server/save/struct.PartialEntries.html" title="struct multipart::server::save::PartialEntries">PartialEntries</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/multipart/server/save.rs.html#571-575' title='goto source code'>[src]</a></span></h3>
 <div class='docblock'><p>Discards <code>partial_file</code></p>
-</div><div class='impl-items'><h4 id='method.into' class='method'><span id='into.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into' class='fnname'>into</a>(self) -&gt; <a class='struct' href='../../../multipart/server/save/struct.Entries.html' title='multipart::server::save::Entries'>Entries</a></code></span></h4>
+</div><div class='impl-items'><h4 id='method.into' class="method"><span id='into.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html#tymethod.into' class='fnname'>into</a>(self) -&gt; <a class="struct" href="../../../multipart/server/save/struct.Entries.html" title="struct multipart::server::save::Entries">Entries</a></code></span></h4>
 <div class='docblock'><p>Performs the conversion.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

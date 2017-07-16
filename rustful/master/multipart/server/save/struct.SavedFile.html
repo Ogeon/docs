@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../../index.html'>multipart</a>::<wbr><a href='../index.html'>server</a>::<wbr><a href='index.html'>save</a></p><script>window.sidebarCurrent = {name: 'SavedFile', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct SavedFile</p><div class="block items"><ul><li><a href="#fields">Fields</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../../index.html'>multipart</a>::<wbr><a href='../index.html'>server</a>::<wbr><a href='index.html'>save</a></p><script>window.sidebarCurrent = {name: 'SavedFile', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,26 +43,26 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>multipart</a>::<wbr><a href='../index.html'>server</a>::<wbr><a href='index.html'>save</a>::<wbr><a class='struct' href=''>SavedFile</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../../index.html'>multipart</a>::<wbr><a href='../index.html'>server</a>::<wbr><a href='index.html'>save</a>::<wbr><a class="struct" href=''>SavedFile</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../../src/multipart/server/save.rs.html#349-383' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct SavedFile {
-    pub path: <a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html' title='std::path::PathBuf'>PathBuf</a>,
-    pub filename: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;,
-    pub content_type: <a class='struct' href='../../../mime/struct.Mime.html' title='mime::Mime'>Mime</a>,
-    pub size: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a>,
+    pub path: <a class="struct" href="https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html" title="struct std::path::PathBuf">PathBuf</a>,
+    pub filename: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;,
+    pub content_type: <a class="struct" href="../../../mime/struct.Mime.html" title="struct mime::Mime">Mime</a>,
+    pub size: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a>,
 }</pre><div class='docblock'><p>A file saved to the local filesystem from a multipart request.</p>
-</div><h2 class='fields'>Fields</h2><span id='structfield.path' class='structfield'>
+</div><h2 id='fields' class='fields'>Fields</h2><span id='structfield.path' class="structfield">
                            <span id='path.v' class='invisible'>
-                           <code>path: <a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html' title='std::path::PathBuf'>PathBuf</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The complete path this file was saved at.</p>
-</div><span id='structfield.filename' class='structfield'>
+                           <code>path: <a class="struct" href="https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html" title="struct std::path::PathBuf">PathBuf</a></code>
+                           </span></span><div class='docblock'><p>The complete path this file was saved at.</p>
+</div><span id='structfield.filename' class="structfield">
                            <span id='filename.v' class='invisible'>
-                           <code>filename: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;</code>
-                           </span></span><span class='stab '></span><div class='docblock'>
+                           <code>filename: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;</code>
+                           </span></span><div class='docblock'>
 <h3 id='warning-client-provided--untrustworthy' class='section-header'><a href='#warning-client-provided--untrustworthy'>Warning: Client Provided / Untrustworthy</a></h3>
 <p>You should treat this value as <strong>untrustworthy</strong> because it is an arbitrary string
 provided by the client.</p>
@@ -77,10 +77,10 @@ conservatively as possible and running the server under its own user with restri
 permissions, but you should still not use user input directly as filesystem paths.
 If it is truly necessary, you should sanitize filenames such that they cannot be
 misinterpreted by the OS. Such functionality is outside the scope of this crate.</p>
-</div><span id='structfield.content_type' class='structfield'>
+</div><span id='structfield.content_type' class="structfield">
                            <span id='content_type.v' class='invisible'>
-                           <code>content_type: <a class='struct' href='../../../mime/struct.Mime.html' title='mime::Mime'>Mime</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The MIME type (<code>Content-Type</code> value) of this file, if supplied by the client,
+                           <code>content_type: <a class="struct" href="../../../mime/struct.Mime.html" title="struct mime::Mime">Mime</a></code>
+                           </span></span><div class='docblock'><p>The MIME type (<code>Content-Type</code> value) of this file, if supplied by the client,
 or <code>&quot;applicaton/octet-stream&quot;</code> otherwise.</p>
 
 <h3 id='note-client-provided' class='section-header'><a href='#note-client-provided'>Note: Client Provided</a></h3>
@@ -90,12 +90,12 @@ It may be inaccurate or entirely wrong, depending on how the client determined i
 <p>Some variants wrap arbitrary strings which could be abused by a malicious user if your
 application performs any non-idempotent operations based on their value, such as
 starting another program or querying/updating a database (web-search &quot;SQL injection&quot;).</p>
-</div><span id='structfield.size' class='structfield'>
+</div><span id='structfield.size' class="structfield">
                            <span id='size.v' class='invisible'>
-                           <code>size: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u64.html'>u64</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The number of bytes written to the disk.</p>
-</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../../multipart/server/save/struct.SavedFile.html' title='multipart::server::save::SavedFile'>SavedFile</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/multipart/server/save.rs.html#348' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+                           <code>size: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u64.html">u64</a></code>
+                           </span></span><div class='docblock'><p>The number of bytes written to the disk.</p>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../../multipart/server/save/struct.SavedFile.html" title="struct multipart::server::save::SavedFile">SavedFile</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/multipart/server/save.rs.html#348' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

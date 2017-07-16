@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -440,403 +440,403 @@
 <span id="395">395</span>
 <span id="396">396</span>
 <span id="397">397</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>net</span>::<span class='ident'>SocketAddr</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>atomic</span>::{<span class='ident'>AtomicUsize</span>, <span class='ident'>Ordering</span>};
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">net</span>::<span class="ident">SocketAddr</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">atomic</span>::{<span class="ident">AtomicUsize</span>, <span class="ident">Ordering</span>};
 
-<span class='kw'>use</span> <span class='ident'>time</span>;
+<span class="kw">use</span> <span class="ident">time</span>;
 
-<span class='kw'>use</span> <span class='ident'>num_cpus</span>;
+<span class="kw">use</span> <span class="ident">num_cpus</span>;
 
-<span class='kw'>use</span> <span class='ident'>url</span>::<span class='ident'>percent_encoding</span>::<span class='ident'>percent_decode</span>;
-<span class='kw'>use</span> <span class='ident'>url</span>::<span class='ident'>Url</span>;
+<span class="kw">use</span> <span class="ident">url</span>::<span class="ident">percent_encoding</span>::<span class="ident">percent_decode</span>;
+<span class="kw">use</span> <span class="ident">url</span>::<span class="ident">Url</span>;
 
-<span class='kw'>use</span> <span class='ident'>hyper</span>;
-<span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Handler</span> <span class='kw'>as</span> <span class='ident'>HyperHandler</span>;
-<span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>header</span>::{<span class='ident'>Date</span>, <span class='ident'>ContentType</span>};
-<span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>mime</span>::<span class='ident'>Mime</span>;
-<span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>uri</span>::<span class='ident'>RequestUri</span>;
+<span class="kw">use</span> <span class="ident">hyper</span>;
+<span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">server</span>::<span class="ident">Handler</span> <span class="kw">as</span> <span class="ident">HyperHandler</span>;
+<span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">header</span>::{<span class="ident">Date</span>, <span class="ident">ContentType</span>};
+<span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">mime</span>::<span class="ident">Mime</span>;
+<span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">uri</span>::<span class="ident">RequestUri</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Listening</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">server</span>::<span class="ident">Listening</span>;
 
-<span class='kw'>use</span> <span class='ident'>anymap</span>::<span class='ident'>AnyMap</span>;
+<span class="kw">use</span> <span class="ident">anymap</span>::<span class="ident">AnyMap</span>;
 
-<span class='kw'>use</span> <span class='ident'>StatusCode</span>;
+<span class="kw">use</span> <span class="ident">StatusCode</span>;
 
-<span class='kw'>use</span> <span class='ident'>context</span>::{<span class='self'>self</span>, <span class='ident'>Context</span>, <span class='ident'>UriPath</span>, <span class='ident'>MaybeUtf8Owned</span>, <span class='ident'>Parameters</span>};
-<span class='kw'>use</span> <span class='ident'>filter</span>::{<span class='ident'>FilterContext</span>, <span class='ident'>ContextFilter</span>, <span class='ident'>ContextAction</span>, <span class='ident'>ResponseFilter</span>};
-<span class='kw'>use</span> <span class='ident'>handler</span>::{<span class='ident'>HandleRequest</span>, <span class='ident'>Environment</span>};
-<span class='kw'>use</span> <span class='ident'>response</span>::<span class='ident'>Response</span>;
-<span class='kw'>use</span> <span class='ident'>header</span>::<span class='ident'>HttpDate</span>;
-<span class='kw'>use</span> <span class='ident'>server</span>::{<span class='ident'>Global</span>, <span class='ident'>KeepAlive</span>};
-<span class='kw'>use</span> <span class='ident'>net</span>::<span class='ident'>SslServer</span>;
+<span class="kw">use</span> <span class="ident">context</span>::{<span class="self">self</span>, <span class="ident">Context</span>, <span class="ident">UriPath</span>, <span class="ident">MaybeUtf8Owned</span>, <span class="ident">Parameters</span>};
+<span class="kw">use</span> <span class="ident">filter</span>::{<span class="ident">FilterContext</span>, <span class="ident">ContextFilter</span>, <span class="ident">ContextAction</span>, <span class="ident">ResponseFilter</span>};
+<span class="kw">use</span> <span class="ident">handler</span>::{<span class="ident">HandleRequest</span>, <span class="ident">Environment</span>};
+<span class="kw">use</span> <span class="ident">response</span>::<span class="ident">Response</span>;
+<span class="kw">use</span> <span class="ident">header</span>::<span class="ident">HttpDate</span>;
+<span class="kw">use</span> <span class="ident">server</span>::{<span class="ident">Global</span>, <span class="ident">KeepAlive</span>};
+<span class="kw">use</span> <span class="ident">net</span>::<span class="ident">SslServer</span>;
 
-<span class='kw'>use</span> <span class='ident'>HttpResult</span>;
-<span class='kw'>use</span> <span class='ident'>Server</span>;
+<span class="kw">use</span> <span class="ident">HttpResult</span>;
+<span class="kw">use</span> <span class="ident">Server</span>;
 
-<span class='kw'>use</span> <span class='ident'>utils</span>;
+<span class="kw">use</span> <span class="ident">utils</span>;
 
-<span class='doccomment'>///A runnable instance of a server.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///It&#39;s not meant to be used directly,</span>
-<span class='doccomment'>///unless additional control is required.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///```no_run</span>
-<span class='doccomment'>///# use rustful::{Server, Handler, Context, Response};</span>
-<span class='doccomment'>///# #[derive(Default)]</span>
-<span class='doccomment'>///# struct R;</span>
-<span class='doccomment'>///# impl Handler for R {</span>
-<span class='doccomment'>///#     fn handle(&amp;self, _context: Context, _response: Response) {}</span>
-<span class='doccomment'>///# }</span>
-<span class='doccomment'>///# let router = R;</span>
-<span class='doccomment'>///let server_instance = Server {</span>
-<span class='doccomment'>///    host: 8080.into(),</span>
-<span class='doccomment'>///    handlers: router,</span>
-<span class='doccomment'>///    ..Server::default()</span>
-<span class='doccomment'>///}.build();</span>
-<span class='doccomment'>///```</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
-    <span class='ident'>handlers</span>: <span class='ident'>R</span>,
+<span class="doccomment">///A runnable instance of a server.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///It&#39;s not meant to be used directly,</span>
+<span class="doccomment">///unless additional control is required.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///```no_run</span>
+<span class="doccomment">///# use rustful::{Server, Handler, Context, Response};</span>
+<span class="doccomment">///# #[derive(Default)]</span>
+<span class="doccomment">///# struct R;</span>
+<span class="doccomment">///# impl Handler for R {</span>
+<span class="doccomment">///#     fn handle(&amp;self, _context: Context, _response: Response) {}</span>
+<span class="doccomment">///# }</span>
+<span class="doccomment">///# let router = R;</span>
+<span class="doccomment">///let server_instance = Server {</span>
+<span class="doccomment">///    host: 8080.into(),</span>
+<span class="doccomment">///    handlers: router,</span>
+<span class="doccomment">///    ..Server::default()</span>
+<span class="doccomment">///}.build();</span>
+<span class="doccomment">///```</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ServerInstance</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="ident">handlers</span>: <span class="ident">R</span>,
 
-    <span class='ident'>host</span>: <span class='ident'>SocketAddr</span>,
+    <span class="ident">host</span>: <span class="ident">SocketAddr</span>,
 
-    <span class='ident'>server</span>: <span class='ident'>String</span>,
-    <span class='ident'>content_type</span>: <span class='ident'>Mime</span>,
+    <span class="ident">server</span>: <span class="ident">String</span>,
+    <span class="ident">content_type</span>: <span class="ident">Mime</span>,
 
-    <span class='ident'>threads</span>: <span class='ident'>usize</span>,
-    <span class='ident'>keep_alive</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>KeepAlive</span><span class='op'>&gt;</span>,
-    <span class='ident'>threads_in_use</span>: <span class='ident'>AtomicUsize</span>,
+    <span class="ident">threads</span>: <span class="ident">usize</span>,
+    <span class="ident">keep_alive</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">KeepAlive</span><span class="op">&gt;</span>,
+    <span class="ident">threads_in_use</span>: <span class="ident">AtomicUsize</span>,
 
-    <span class='ident'>context_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ContextFilter</span><span class='op'>&gt;&gt;</span>,
-    <span class='ident'>response_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponseFilter</span><span class='op'>&gt;&gt;</span>,
+    <span class="ident">context_filters</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">ContextFilter</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">response_filters</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">ResponseFilter</span><span class="op">&gt;&gt;</span>,
 
-    <span class='ident'>global</span>: <span class='ident'>Global</span>,
+    <span class="ident">global</span>: <span class="ident">Global</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>HandleRequest</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>///Create a new server instance, with the provided configuration. This is</span>
-    <span class='doccomment'>///the same as `Server{...}.build()`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>config</span>: <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
-        <span class='ident'>ServerInstance</span> {
-            <span class='ident'>handlers</span>: <span class='ident'>config</span>.<span class='ident'>handlers</span>,
-            <span class='ident'>host</span>: <span class='ident'>config</span>.<span class='ident'>host</span>.<span class='ident'>into</span>(),
-            <span class='ident'>server</span>: <span class='ident'>config</span>.<span class='ident'>server</span>,
-            <span class='ident'>content_type</span>: <span class='ident'>config</span>.<span class='ident'>content_type</span>,
-            <span class='ident'>threads</span>: <span class='ident'>config</span>.<span class='ident'>threads</span>.<span class='ident'>unwrap_or_else</span>(<span class='op'>||</span> (<span class='ident'>num_cpus</span>::<span class='ident'>get</span>() <span class='op'>*</span> <span class='number'>5</span>) <span class='op'>/</span> <span class='number'>4</span>),
-            <span class='ident'>keep_alive</span>: <span class='ident'>config</span>.<span class='ident'>keep_alive</span>,
-            <span class='ident'>threads_in_use</span>: <span class='ident'>AtomicUsize</span>::<span class='ident'>new</span>(<span class='number'>0</span>),
-            <span class='ident'>context_filters</span>: <span class='ident'>config</span>.<span class='ident'>context_filters</span>,
-            <span class='ident'>response_filters</span>: <span class='ident'>config</span>.<span class='ident'>response_filters</span>,
-            <span class='ident'>global</span>: <span class='ident'>config</span>.<span class='ident'>global</span>,
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">HandleRequest</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span> <span class="ident">ServerInstance</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="doccomment">///Create a new server instance, with the provided configuration. This is</span>
+    <span class="doccomment">///the same as `Server{...}.build()`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">config</span>: <span class="ident">Server</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">ServerInstance</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+        <span class="ident">ServerInstance</span> {
+            <span class="ident">handlers</span>: <span class="ident">config</span>.<span class="ident">handlers</span>,
+            <span class="ident">host</span>: <span class="ident">config</span>.<span class="ident">host</span>.<span class="ident">into</span>(),
+            <span class="ident">server</span>: <span class="ident">config</span>.<span class="ident">server</span>,
+            <span class="ident">content_type</span>: <span class="ident">config</span>.<span class="ident">content_type</span>,
+            <span class="ident">threads</span>: <span class="ident">config</span>.<span class="ident">threads</span>.<span class="ident">unwrap_or_else</span>(<span class="op">||</span> (<span class="ident">num_cpus</span>::<span class="ident">get</span>() <span class="op">*</span> <span class="number">5</span>) <span class="op">/</span> <span class="number">4</span>),
+            <span class="ident">keep_alive</span>: <span class="ident">config</span>.<span class="ident">keep_alive</span>,
+            <span class="ident">threads_in_use</span>: <span class="ident">AtomicUsize</span>::<span class="ident">new</span>(<span class="number">0</span>),
+            <span class="ident">context_filters</span>: <span class="ident">config</span>.<span class="ident">context_filters</span>,
+            <span class="ident">response_filters</span>: <span class="ident">config</span>.<span class="ident">response_filters</span>,
+            <span class="ident">global</span>: <span class="ident">config</span>.<span class="ident">global</span>,
         }
     }
 
-    <span class='doccomment'>///Start the server.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>host</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>host</span>;
-        <span class='kw'>let</span> <span class='ident'>threads</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>threads</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>server</span> <span class='op'>=</span> <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Server</span>::<span class='ident'>http</span>(<span class='ident'>host</span>)<span class='question-mark'>?</span>;
-        <span class='ident'>server</span>.<span class='ident'>keep_alive</span>(<span class='self'>self</span>.<span class='ident'>keep_alive</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>k</span><span class='op'>|</span> <span class='ident'>k</span>.<span class='ident'>timeout</span>));
-        <span class='ident'>server</span>.<span class='ident'>handle_threads</span>(<span class='self'>self</span>, <span class='ident'>threads</span>)
+    <span class="doccomment">///Start the server.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">HttpResult</span><span class="op">&lt;</span><span class="ident">Listening</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">host</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">host</span>;
+        <span class="kw">let</span> <span class="ident">threads</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">threads</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">server</span> <span class="op">=</span> <span class="ident">hyper</span>::<span class="ident">server</span>::<span class="ident">Server</span>::<span class="ident">http</span>(<span class="ident">host</span>)<span class="question-mark">?</span>;
+        <span class="ident">server</span>.<span class="ident">keep_alive</span>(<span class="self">self</span>.<span class="ident">keep_alive</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">k</span><span class="op">|</span> <span class="ident">k</span>.<span class="ident">timeout</span>));
+        <span class="ident">server</span>.<span class="ident">handle_threads</span>(<span class="self">self</span>, <span class="ident">threads</span>)
     }
 
-    <span class='doccomment'>///Start the server with SSL.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run_https</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>SslServer</span> <span class='op'>+</span> <span class='ident'>Clone</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>ssl</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>host</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>host</span>;
-        <span class='kw'>let</span> <span class='ident'>threads</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>threads</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>server</span> <span class='op'>=</span> <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Server</span>::<span class='ident'>https</span>(<span class='ident'>host</span>, <span class='ident'>ssl</span>)<span class='question-mark'>?</span>;
-        <span class='ident'>server</span>.<span class='ident'>keep_alive</span>(<span class='self'>self</span>.<span class='ident'>keep_alive</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>k</span><span class='op'>|</span> <span class='ident'>k</span>.<span class='ident'>timeout</span>));
-        <span class='ident'>server</span>.<span class='ident'>handle_threads</span>(<span class='self'>self</span>, <span class='ident'>threads</span>)
+    <span class="doccomment">///Start the server with SSL.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run_https</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">SslServer</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">ssl</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="ident">HttpResult</span><span class="op">&lt;</span><span class="ident">Listening</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">host</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">host</span>;
+        <span class="kw">let</span> <span class="ident">threads</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">threads</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">server</span> <span class="op">=</span> <span class="ident">hyper</span>::<span class="ident">server</span>::<span class="ident">Server</span>::<span class="ident">https</span>(<span class="ident">host</span>, <span class="ident">ssl</span>)<span class="question-mark">?</span>;
+        <span class="ident">server</span>.<span class="ident">keep_alive</span>(<span class="self">self</span>.<span class="ident">keep_alive</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">k</span><span class="op">|</span> <span class="ident">k</span>.<span class="ident">timeout</span>));
+        <span class="ident">server</span>.<span class="ident">handle_threads</span>(<span class="self">self</span>, <span class="ident">threads</span>)
     }
 
-    <span class='kw'>fn</span> <span class='ident'>modify_context</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>filter_storage</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>AnyMap</span>, <span class='ident'>context</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Context</span>) <span class='op'>-&gt;</span> <span class='ident'>ContextAction</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='ident'>ContextAction</span>::<span class='ident'>Next</span>;
+    <span class="kw">fn</span> <span class="ident">modify_context</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">filter_storage</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">AnyMap</span>, <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span>) <span class="op">-&gt;</span> <span class="ident">ContextAction</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">ContextAction</span>::<span class="ident">Next</span>;
 
-        <span class='kw'>for</span> <span class='ident'>filter</span> <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>context_filters</span> {
-            <span class='ident'>result</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>result</span> {
-                <span class='ident'>ContextAction</span>::<span class='ident'>Next</span> <span class='op'>=&gt;</span> {
-                    <span class='kw'>let</span> <span class='ident'>filter_context</span> <span class='op'>=</span> <span class='ident'>FilterContext</span> {
-                        <span class='ident'>storage</span>: <span class='ident'>filter_storage</span>,
-                        <span class='ident'>global</span>: <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>global</span>,
+        <span class="kw">for</span> <span class="ident">filter</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">context_filters</span> {
+            <span class="ident">result</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">result</span> {
+                <span class="ident">ContextAction</span>::<span class="ident">Next</span> <span class="op">=&gt;</span> {
+                    <span class="kw">let</span> <span class="ident">filter_context</span> <span class="op">=</span> <span class="ident">FilterContext</span> {
+                        <span class="ident">storage</span>: <span class="ident">filter_storage</span>,
+                        <span class="ident">global</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global</span>,
                     };
-                    <span class='ident'>filter</span>.<span class='ident'>modify</span>(<span class='ident'>filter_context</span>, <span class='ident'>context</span>)
+                    <span class="ident">filter</span>.<span class="ident">modify</span>(<span class="ident">filter_context</span>, <span class="ident">context</span>)
                 },
-                _ <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='ident'>result</span>
+                _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="ident">result</span>
             };
         }
 
-        <span class='ident'>result</span>
+        <span class="ident">result</span>
     }
 
 }
 
-<span class='kw'>struct</span> <span class='ident'>ParsedUri</span> {
-    <span class='ident'>host</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='ident'>String</span>, <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>u16</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span>,
-    <span class='ident'>uri_path</span>: <span class='ident'>UriPath</span>,
-    <span class='ident'>query</span>: <span class='ident'>Parameters</span>,
-    <span class='ident'>fragment</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8Owned</span><span class='op'>&gt;</span>
+<span class="kw">struct</span> <span class="ident">ParsedUri</span> {
+    <span class="ident">host</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span>)<span class="op">&gt;</span>,
+    <span class="ident">uri_path</span>: <span class="ident">UriPath</span>,
+    <span class="ident">query</span>: <span class="ident">Parameters</span>,
+    <span class="ident">fragment</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MaybeUtf8Owned</span><span class="op">&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>HandleRequest</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> <span class='ident'>HyperHandler</span> <span class='kw'>for</span> <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>handle</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>request</span>: <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>request</span>::<span class='ident'>Request</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>, <span class='ident'>writer</span>: <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>response</span>::<span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>) {
-        <span class='kw'>let</span> (
-            <span class='ident'>request_addr</span>,
-            <span class='ident'>request_method</span>,
-            <span class='kw-2'>mut</span> <span class='ident'>request_headers</span>,
-            <span class='ident'>request_uri</span>,
-            <span class='ident'>request_version</span>,
-            <span class='ident'>request_reader</span>
-        ) <span class='op'>=</span> <span class='ident'>request</span>.<span class='ident'>deconstruct</span>();
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">HandleRequest</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span> <span class="ident">HyperHandler</span> <span class="kw">for</span> <span class="ident">ServerInstance</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">handle</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">request</span>: <span class="ident">hyper</span>::<span class="ident">server</span>::<span class="ident">request</span>::<span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>, <span class="ident">writer</span>: <span class="ident">hyper</span>::<span class="ident">server</span>::<span class="ident">response</span>::<span class="ident">Response</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) {
+        <span class="kw">let</span> (
+            <span class="ident">request_addr</span>,
+            <span class="ident">request_method</span>,
+            <span class="kw-2">mut</span> <span class="ident">request_headers</span>,
+            <span class="ident">request_uri</span>,
+            <span class="ident">request_version</span>,
+            <span class="ident">request_reader</span>
+        ) <span class="op">=</span> <span class="ident">request</span>.<span class="ident">deconstruct</span>();
 
-        <span class='kw'>let</span> <span class='ident'>force_close</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>keep_alive</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>keep_alive</span> {
-            <span class='self'>self</span>.<span class='ident'>threads_in_use</span>.<span class='ident'>load</span>(<span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>) <span class='op'>+</span> <span class='ident'>keep_alive</span>.<span class='ident'>free_threads</span> <span class='op'>&gt;</span> <span class='self'>self</span>.<span class='ident'>threads</span>
-        } <span class='kw'>else</span> {
-            <span class='bool-val'>false</span>
+        <span class="kw">let</span> <span class="ident">force_close</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">keep_alive</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">keep_alive</span> {
+            <span class="self">self</span>.<span class="ident">threads_in_use</span>.<span class="ident">load</span>(<span class="ident">Ordering</span>::<span class="ident">SeqCst</span>) <span class="op">+</span> <span class="ident">keep_alive</span>.<span class="ident">free_threads</span> <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">threads</span>
+        } <span class="kw">else</span> {
+            <span class="bool-val">false</span>
         };
 
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>response</span> <span class='op'>=</span> <span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>writer</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>response_filters</span>, <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>global</span>, <span class='ident'>force_close</span>);
-        <span class='ident'>response</span>.<span class='ident'>headers_mut</span>().<span class='ident'>set</span>(<span class='ident'>Date</span>(<span class='ident'>HttpDate</span>(<span class='ident'>time</span>::<span class='ident'>now_utc</span>())));
-        <span class='ident'>response</span>.<span class='ident'>headers_mut</span>().<span class='ident'>set</span>(<span class='ident'>ContentType</span>(<span class='self'>self</span>.<span class='ident'>content_type</span>.<span class='ident'>clone</span>()));
-        <span class='ident'>response</span>.<span class='ident'>headers_mut</span>().<span class='ident'>set</span>(<span class='ident'>hyper</span>::<span class='ident'>header</span>::<span class='ident'>Server</span>(<span class='self'>self</span>.<span class='ident'>server</span>.<span class='ident'>clone</span>()));
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">response</span> <span class="op">=</span> <span class="ident">Response</span>::<span class="ident">new</span>(<span class="ident">writer</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">response_filters</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global</span>, <span class="ident">force_close</span>);
+        <span class="ident">response</span>.<span class="ident">headers_mut</span>().<span class="ident">set</span>(<span class="ident">Date</span>(<span class="ident">HttpDate</span>(<span class="ident">time</span>::<span class="ident">now_utc</span>())));
+        <span class="ident">response</span>.<span class="ident">headers_mut</span>().<span class="ident">set</span>(<span class="ident">ContentType</span>(<span class="self">self</span>.<span class="ident">content_type</span>.<span class="ident">clone</span>()));
+        <span class="ident">response</span>.<span class="ident">headers_mut</span>().<span class="ident">set</span>(<span class="ident">hyper</span>::<span class="ident">header</span>::<span class="ident">Server</span>(<span class="self">self</span>.<span class="ident">server</span>.<span class="ident">clone</span>()));
 
-        <span class='kw'>let</span> <span class='ident'>path_components</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>request_uri</span> {
-            <span class='ident'>RequestUri</span>::<span class='ident'>AbsoluteUri</span>(<span class='ident'>url</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>parse_url</span>(<span class='kw-2'>&amp;</span><span class='ident'>url</span>)),
-            <span class='ident'>RequestUri</span>::<span class='ident'>AbsolutePath</span>(<span class='ident'>path</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>parse_path</span>(<span class='kw-2'>&amp;</span><span class='ident'>path</span>)),
-            <span class='ident'>RequestUri</span>::<span class='ident'>Star</span> <span class='op'>=&gt;</span> {
-                <span class='prelude-val'>Some</span>(<span class='ident'>ParsedUri</span> {
-                    <span class='ident'>host</span>: <span class='prelude-val'>None</span>,
-                    <span class='ident'>uri_path</span>: <span class='ident'>UriPath</span>::<span class='ident'>Asterisk</span>,
-                    <span class='ident'>query</span>: <span class='ident'>Parameters</span>::<span class='ident'>new</span>(),
-                    <span class='ident'>fragment</span>: <span class='prelude-val'>None</span>
+        <span class="kw">let</span> <span class="ident">path_components</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">request_uri</span> {
+            <span class="ident">RequestUri</span>::<span class="ident">AbsoluteUri</span>(<span class="ident">url</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">parse_url</span>(<span class="kw-2">&amp;</span><span class="ident">url</span>)),
+            <span class="ident">RequestUri</span>::<span class="ident">AbsolutePath</span>(<span class="ident">path</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">parse_path</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>)),
+            <span class="ident">RequestUri</span>::<span class="ident">Star</span> <span class="op">=&gt;</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">ParsedUri</span> {
+                    <span class="ident">host</span>: <span class="prelude-val">None</span>,
+                    <span class="ident">uri_path</span>: <span class="ident">UriPath</span>::<span class="ident">Asterisk</span>,
+                    <span class="ident">query</span>: <span class="ident">Parameters</span>::<span class="ident">new</span>(),
+                    <span class="ident">fragment</span>: <span class="prelude-val">None</span>
                 })
             },
-            _ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>
+            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         };
 
-        <span class='kw'>match</span> <span class='ident'>path_components</span> {
-            <span class='prelude-val'>Some</span>(<span class='ident'>ParsedUri</span>{ <span class='ident'>host</span>, <span class='ident'>uri_path</span>, <span class='ident'>query</span>, <span class='ident'>fragment</span> }) <span class='op'>=&gt;</span> {
-                <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>((<span class='ident'>name</span>, <span class='ident'>port</span>)) <span class='op'>=</span> <span class='ident'>host</span> {
-                    <span class='ident'>request_headers</span>.<span class='ident'>set</span>(::<span class='ident'>header</span>::<span class='ident'>Host</span> {
-                        <span class='ident'>hostname</span>: <span class='ident'>name</span>,
-                        <span class='ident'>port</span>: <span class='ident'>port</span>
+        <span class="kw">match</span> <span class="ident">path_components</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">ParsedUri</span>{ <span class="ident">host</span>, <span class="ident">uri_path</span>, <span class="ident">query</span>, <span class="ident">fragment</span> }) <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">name</span>, <span class="ident">port</span>)) <span class="op">=</span> <span class="ident">host</span> {
+                    <span class="ident">request_headers</span>.<span class="ident">set</span>(::<span class="ident">header</span>::<span class="ident">Host</span> {
+                        <span class="ident">hostname</span>: <span class="ident">name</span>,
+                        <span class="ident">port</span>: <span class="ident">port</span>
                     });
                 }
 
-                <span class='kw'>let</span> <span class='ident'>body</span> <span class='op'>=</span> <span class='ident'>context</span>::<span class='ident'>body</span>::<span class='ident'>BodyReader</span>::<span class='ident'>from_reader</span>(<span class='ident'>request_reader</span>, <span class='kw-2'>&amp;</span><span class='ident'>request_headers</span>);
+                <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="ident">context</span>::<span class="ident">body</span>::<span class="ident">BodyReader</span>::<span class="ident">from_reader</span>(<span class="ident">request_reader</span>, <span class="kw-2">&amp;</span><span class="ident">request_headers</span>);
 
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>context</span> <span class='op'>=</span> <span class='ident'>Context</span> {
-                    <span class='ident'>headers</span>: <span class='ident'>request_headers</span>,
-                    <span class='ident'>http_version</span>: <span class='ident'>request_version</span>,
-                    <span class='ident'>method</span>: <span class='ident'>request_method</span>,
-                    <span class='ident'>address</span>: <span class='ident'>request_addr</span>,
-                    <span class='ident'>uri_path</span>: <span class='ident'>uri_path</span>,
-                    <span class='ident'>hyperlinks</span>: <span class='macro'>vec</span><span class='macro'>!</span>[],
-                    <span class='ident'>variables</span>: <span class='ident'>Parameters</span>::<span class='ident'>new</span>(),
-                    <span class='ident'>query</span>: <span class='ident'>query</span>.<span class='ident'>into</span>(),
-                    <span class='ident'>fragment</span>: <span class='ident'>fragment</span>,
-                    <span class='ident'>global</span>: <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>global</span>,
-                    <span class='ident'>body</span>: <span class='ident'>body</span>
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">Context</span> {
+                    <span class="ident">headers</span>: <span class="ident">request_headers</span>,
+                    <span class="ident">http_version</span>: <span class="ident">request_version</span>,
+                    <span class="ident">method</span>: <span class="ident">request_method</span>,
+                    <span class="ident">address</span>: <span class="ident">request_addr</span>,
+                    <span class="ident">uri_path</span>: <span class="ident">uri_path</span>,
+                    <span class="ident">hyperlinks</span>: <span class="macro">vec</span><span class="macro">!</span>[],
+                    <span class="ident">variables</span>: <span class="ident">Parameters</span>::<span class="ident">new</span>(),
+                    <span class="ident">query</span>: <span class="ident">query</span>.<span class="ident">into</span>(),
+                    <span class="ident">fragment</span>: <span class="ident">fragment</span>,
+                    <span class="ident">global</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">global</span>,
+                    <span class="ident">body</span>: <span class="ident">body</span>
                 };
 
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>filter_storage</span> <span class='op'>=</span> <span class='ident'>AnyMap</span>::<span class='ident'>new</span>();
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">filter_storage</span> <span class="op">=</span> <span class="ident">AnyMap</span>::<span class="ident">new</span>();
 
-                <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>modify_context</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>filter_storage</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>context</span>) {
-                    <span class='ident'>ContextAction</span>::<span class='ident'>Next</span> <span class='op'>=&gt;</span> {
-                        <span class='kw-2'>*</span><span class='ident'>response</span>.<span class='ident'>filter_storage_mut</span>() <span class='op'>=</span> <span class='ident'>filter_storage</span>;
+                <span class="kw">match</span> <span class="self">self</span>.<span class="ident">modify_context</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">filter_storage</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">context</span>) {
+                    <span class="ident">ContextAction</span>::<span class="ident">Next</span> <span class="op">=&gt;</span> {
+                        <span class="kw-2">*</span><span class="ident">response</span>.<span class="ident">filter_storage_mut</span>() <span class="op">=</span> <span class="ident">filter_storage</span>;
 
-                        <span class='kw'>let</span> <span class='ident'>path</span> <span class='op'>=</span> <span class='ident'>context</span>.<span class='ident'>uri_path</span>.<span class='ident'>clone</span>();
-                        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>path</span>) <span class='op'>=</span> <span class='ident'>path</span>.<span class='ident'>as_path</span>() {
-                            <span class='kw'>let</span> <span class='ident'>result</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>handlers</span>.<span class='ident'>handle_request</span>(<span class='ident'>Environment</span> {
-                                <span class='ident'>context</span>: <span class='ident'>context</span>,
-                                <span class='ident'>response</span>: <span class='ident'>response</span>,
-                                <span class='ident'>route_state</span>: (<span class='kw-2'>&amp;</span><span class='ident'>path</span>[..]).<span class='ident'>into</span>(),
+                        <span class="kw">let</span> <span class="ident">path</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">uri_path</span>.<span class="ident">clone</span>();
+                        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">path</span>) <span class="op">=</span> <span class="ident">path</span>.<span class="ident">as_path</span>() {
+                            <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">handlers</span>.<span class="ident">handle_request</span>(<span class="ident">Environment</span> {
+                                <span class="ident">context</span>: <span class="ident">context</span>,
+                                <span class="ident">response</span>: <span class="ident">response</span>,
+                                <span class="ident">route_state</span>: (<span class="kw-2">&amp;</span><span class="ident">path</span>[..]).<span class="ident">into</span>(),
                             });
 
-                            <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Err</span>(<span class='kw-2'>mut</span> <span class='ident'>environment</span>) <span class='op'>=</span> <span class='ident'>result</span> {
-                                <span class='kw'>if</span> <span class='ident'>environment</span>.<span class='ident'>response</span>.<span class='ident'>status</span>() <span class='op'>==</span> <span class='ident'>StatusCode</span>::<span class='prelude-val'>Ok</span> {
-                                    <span class='ident'>environment</span>.<span class='ident'>response</span>.<span class='ident'>set_status</span>(<span class='ident'>StatusCode</span>::<span class='ident'>NotFound</span>);
+                            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="kw-2">mut</span> <span class="ident">environment</span>) <span class="op">=</span> <span class="ident">result</span> {
+                                <span class="kw">if</span> <span class="ident">environment</span>.<span class="ident">response</span>.<span class="ident">status</span>() <span class="op">==</span> <span class="ident">StatusCode</span>::<span class="prelude-val">Ok</span> {
+                                    <span class="ident">environment</span>.<span class="ident">response</span>.<span class="ident">set_status</span>(<span class="ident">StatusCode</span>::<span class="ident">NotFound</span>);
                                 }
                             }
                         }
                     },
-                    <span class='ident'>ContextAction</span>::<span class='ident'>Abort</span>(<span class='ident'>status</span>) <span class='op'>=&gt;</span> {
-                        <span class='kw-2'>*</span><span class='ident'>response</span>.<span class='ident'>filter_storage_mut</span>() <span class='op'>=</span> <span class='ident'>filter_storage</span>;
-                        <span class='ident'>response</span>.<span class='ident'>set_status</span>(<span class='ident'>status</span>);
+                    <span class="ident">ContextAction</span>::<span class="ident">Abort</span>(<span class="ident">status</span>) <span class="op">=&gt;</span> {
+                        <span class="kw-2">*</span><span class="ident">response</span>.<span class="ident">filter_storage_mut</span>() <span class="op">=</span> <span class="ident">filter_storage</span>;
+                        <span class="ident">response</span>.<span class="ident">set_status</span>(<span class="ident">status</span>);
                     }
                 }
             },
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
-                <span class='ident'>response</span>.<span class='ident'>set_status</span>(<span class='ident'>StatusCode</span>::<span class='ident'>BadRequest</span>);
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+                <span class="ident">response</span>.<span class="ident">set_status</span>(<span class="ident">StatusCode</span>::<span class="ident">BadRequest</span>);
             }
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>on_connection_start</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>threads_in_use</span>.<span class='ident'>fetch_add</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>);
+    <span class="kw">fn</span> <span class="ident">on_connection_start</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">threads_in_use</span>.<span class="ident">fetch_add</span>(<span class="number">1</span>, <span class="ident">Ordering</span>::<span class="ident">SeqCst</span>);
     }
 
-    <span class='kw'>fn</span> <span class='ident'>on_connection_end</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) {
-        <span class='self'>self</span>.<span class='ident'>threads_in_use</span>.<span class='ident'>fetch_sub</span>(<span class='number'>1</span>, <span class='ident'>Ordering</span>::<span class='ident'>SeqCst</span>);
+    <span class="kw">fn</span> <span class="ident">on_connection_end</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) {
+        <span class="self">self</span>.<span class="ident">threads_in_use</span>.<span class="ident">fetch_sub</span>(<span class="number">1</span>, <span class="ident">Ordering</span>::<span class="ident">SeqCst</span>);
     }
 }
 
-<span class='kw'>fn</span> <span class='ident'>parse_path</span>(<span class='ident'>path</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>ParsedUri</span> {
-    <span class='kw'>match</span> <span class='ident'>path</span>.<span class='ident'>find</span>(<span class='string'>&#39;?&#39;</span>) {
-        <span class='prelude-val'>Some</span>(<span class='ident'>index</span>) <span class='op'>=&gt;</span> {
-            <span class='kw'>let</span> (<span class='ident'>query</span>, <span class='ident'>fragment</span>) <span class='op'>=</span> <span class='ident'>parse_fragment</span>(<span class='kw-2'>&amp;</span><span class='ident'>path</span>[<span class='ident'>index</span><span class='op'>+</span><span class='number'>1</span>..]);
+<span class="kw">fn</span> <span class="ident">parse_path</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">ParsedUri</span> {
+    <span class="kw">match</span> <span class="ident">path</span>.<span class="ident">find</span>(<span class="string">&#39;?&#39;</span>) {
+        <span class="prelude-val">Some</span>(<span class="ident">index</span>) <span class="op">=&gt;</span> {
+            <span class="kw">let</span> (<span class="ident">query</span>, <span class="ident">fragment</span>) <span class="op">=</span> <span class="ident">parse_fragment</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>[<span class="ident">index</span><span class="op">+</span><span class="number">1</span>..]);
 
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>path</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>percent_decode</span>(<span class='ident'>path</span>[..<span class='ident'>index</span>].<span class='ident'>as_bytes</span>()).<span class='ident'>collect</span>();
-            <span class='kw'>if</span> <span class='ident'>path</span>.<span class='ident'>is_empty</span>() {
-                <span class='ident'>path</span>.<span class='ident'>push</span>(<span class='string'>b&#39;/&#39;</span>);
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">path</span>: <span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">percent_decode</span>(<span class="ident">path</span>[..<span class="ident">index</span>].<span class="ident">as_bytes</span>()).<span class="ident">collect</span>();
+            <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">is_empty</span>() {
+                <span class="ident">path</span>.<span class="ident">push</span>(<span class="string">b&#39;/&#39;</span>);
             }
 
-            <span class='ident'>ParsedUri</span> {
-                <span class='ident'>host</span>: <span class='prelude-val'>None</span>,
-                <span class='ident'>uri_path</span>: <span class='ident'>UriPath</span>::<span class='ident'>Path</span>(<span class='ident'>path</span>.<span class='ident'>into</span>()),
-                <span class='ident'>query</span>: <span class='ident'>utils</span>::<span class='ident'>parse_parameters</span>(<span class='ident'>query</span>.<span class='ident'>as_bytes</span>()),
-                <span class='ident'>fragment</span>: <span class='ident'>fragment</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>f</span><span class='op'>|</span> <span class='ident'>percent_decode</span>(<span class='ident'>f</span>.<span class='ident'>as_bytes</span>()).<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>().<span class='ident'>into</span>()),
+            <span class="ident">ParsedUri</span> {
+                <span class="ident">host</span>: <span class="prelude-val">None</span>,
+                <span class="ident">uri_path</span>: <span class="ident">UriPath</span>::<span class="ident">Path</span>(<span class="ident">path</span>.<span class="ident">into</span>()),
+                <span class="ident">query</span>: <span class="ident">utils</span>::<span class="ident">parse_parameters</span>(<span class="ident">query</span>.<span class="ident">as_bytes</span>()),
+                <span class="ident">fragment</span>: <span class="ident">fragment</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">percent_decode</span>(<span class="ident">f</span>.<span class="ident">as_bytes</span>()).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>().<span class="ident">into</span>()),
             }
         },
-        <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
-            <span class='kw'>let</span> (<span class='ident'>path</span>, <span class='ident'>fragment</span>) <span class='op'>=</span> <span class='ident'>parse_fragment</span>(<span class='kw-2'>&amp;</span><span class='ident'>path</span>);
+        <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+            <span class="kw">let</span> (<span class="ident">path</span>, <span class="ident">fragment</span>) <span class="op">=</span> <span class="ident">parse_fragment</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>);
 
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>path</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>percent_decode</span>(<span class='ident'>path</span>.<span class='ident'>as_bytes</span>()).<span class='ident'>collect</span>();
-            <span class='kw'>if</span> <span class='ident'>path</span>.<span class='ident'>is_empty</span>() {
-                <span class='ident'>path</span>.<span class='ident'>push</span>(<span class='string'>b&#39;/&#39;</span>);
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">path</span>: <span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">percent_decode</span>(<span class="ident">path</span>.<span class="ident">as_bytes</span>()).<span class="ident">collect</span>();
+            <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">is_empty</span>() {
+                <span class="ident">path</span>.<span class="ident">push</span>(<span class="string">b&#39;/&#39;</span>);
             }
 
-            <span class='ident'>ParsedUri</span> {
-                <span class='ident'>host</span>: <span class='prelude-val'>None</span>,
-                <span class='ident'>uri_path</span>: <span class='ident'>UriPath</span>::<span class='ident'>Path</span>(<span class='ident'>path</span>.<span class='ident'>into</span>()),
-                <span class='ident'>query</span>: <span class='ident'>Parameters</span>::<span class='ident'>new</span>(),
-                <span class='ident'>fragment</span>: <span class='ident'>fragment</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>f</span><span class='op'>|</span> <span class='ident'>percent_decode</span>(<span class='ident'>f</span>.<span class='ident'>as_bytes</span>()).<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>().<span class='ident'>into</span>())
+            <span class="ident">ParsedUri</span> {
+                <span class="ident">host</span>: <span class="prelude-val">None</span>,
+                <span class="ident">uri_path</span>: <span class="ident">UriPath</span>::<span class="ident">Path</span>(<span class="ident">path</span>.<span class="ident">into</span>()),
+                <span class="ident">query</span>: <span class="ident">Parameters</span>::<span class="ident">new</span>(),
+                <span class="ident">fragment</span>: <span class="ident">fragment</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">percent_decode</span>(<span class="ident">f</span>.<span class="ident">as_bytes</span>()).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>().<span class="ident">into</span>())
             }
         }
     }
 }
 
-<span class='kw'>fn</span> <span class='ident'>parse_fragment</span>(<span class='ident'>path</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> (<span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span>) {
-    <span class='kw'>match</span> <span class='ident'>path</span>.<span class='ident'>find</span>(<span class='string'>&#39;#&#39;</span>) {
-        <span class='prelude-val'>Some</span>(<span class='ident'>index</span>) <span class='op'>=&gt;</span> (<span class='kw-2'>&amp;</span><span class='ident'>path</span>[..<span class='ident'>index</span>], <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>path</span>[<span class='ident'>index</span><span class='op'>+</span><span class='number'>1</span>..])),
-        <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> (<span class='ident'>path</span>, <span class='prelude-val'>None</span>)
+<span class="kw">fn</span> <span class="ident">parse_fragment</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> (<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span>) {
+    <span class="kw">match</span> <span class="ident">path</span>.<span class="ident">find</span>(<span class="string">&#39;#&#39;</span>) {
+        <span class="prelude-val">Some</span>(<span class="ident">index</span>) <span class="op">=&gt;</span> (<span class="kw-2">&amp;</span><span class="ident">path</span>[..<span class="ident">index</span>], <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>[<span class="ident">index</span><span class="op">+</span><span class="number">1</span>..])),
+        <span class="prelude-val">None</span> <span class="op">=&gt;</span> (<span class="ident">path</span>, <span class="prelude-val">None</span>)
     }
 }
 
-<span class='kw'>fn</span> <span class='ident'>parse_url</span>(<span class='ident'>url</span>: <span class='kw-2'>&amp;</span><span class='ident'>Url</span>) <span class='op'>-&gt;</span> <span class='ident'>ParsedUri</span> {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>path</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[];
-    <span class='ident'>path</span>.<span class='ident'>extend</span>(<span class='ident'>percent_decode</span>(<span class='ident'>url</span>.<span class='ident'>path</span>().<span class='ident'>as_bytes</span>()));
+<span class="kw">fn</span> <span class="ident">parse_url</span>(<span class="ident">url</span>: <span class="kw-2">&amp;</span><span class="ident">Url</span>) <span class="op">-&gt;</span> <span class="ident">ParsedUri</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">path</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
+    <span class="ident">path</span>.<span class="ident">extend</span>(<span class="ident">percent_decode</span>(<span class="ident">url</span>.<span class="ident">path</span>().<span class="ident">as_bytes</span>()));
 
-    <span class='kw'>let</span> <span class='ident'>query</span> <span class='op'>=</span> <span class='ident'>url</span>.<span class='ident'>query_pairs</span>()
-        .<span class='ident'>map</span>(<span class='op'>|</span>(<span class='ident'>k</span>, <span class='ident'>v</span>)<span class='op'>|</span> (<span class='ident'>k</span>.<span class='ident'>into_owned</span>(), <span class='ident'>v</span>.<span class='ident'>into_owned</span>()))
-        .<span class='ident'>collect</span>();
+    <span class="kw">let</span> <span class="ident">query</span> <span class="op">=</span> <span class="ident">url</span>.<span class="ident">query_pairs</span>()
+        .<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">k</span>, <span class="ident">v</span>)<span class="op">|</span> (<span class="ident">k</span>.<span class="ident">into_owned</span>(), <span class="ident">v</span>.<span class="ident">into_owned</span>()))
+        .<span class="ident">collect</span>();
 
-    <span class='kw'>let</span> <span class='ident'>host</span> <span class='op'>=</span> <span class='ident'>url</span>.<span class='ident'>host_str</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>host</span><span class='op'>|</span> (<span class='ident'>host</span>.<span class='ident'>into</span>(), <span class='ident'>url</span>.<span class='ident'>port</span>()));
+    <span class="kw">let</span> <span class="ident">host</span> <span class="op">=</span> <span class="ident">url</span>.<span class="ident">host_str</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">host</span><span class="op">|</span> (<span class="ident">host</span>.<span class="ident">into</span>(), <span class="ident">url</span>.<span class="ident">port</span>()));
 
-    <span class='ident'>ParsedUri</span> {
-        <span class='ident'>host</span>: <span class='ident'>host</span>,
-        <span class='ident'>uri_path</span>: <span class='ident'>UriPath</span>::<span class='ident'>Path</span>(<span class='ident'>path</span>.<span class='ident'>into</span>()),
-        <span class='ident'>query</span>: <span class='ident'>query</span>,
-        <span class='ident'>fragment</span>: <span class='ident'>url</span>.<span class='ident'>fragment</span>().<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>f</span><span class='op'>|</span> <span class='ident'>percent_decode</span>(<span class='ident'>f</span>.<span class='ident'>as_bytes</span>()).<span class='ident'>collect</span>::<span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span>_<span class='op'>&gt;&gt;</span>().<span class='ident'>into</span>())
+    <span class="ident">ParsedUri</span> {
+        <span class="ident">host</span>: <span class="ident">host</span>,
+        <span class="ident">uri_path</span>: <span class="ident">UriPath</span>::<span class="ident">Path</span>(<span class="ident">path</span>.<span class="ident">into</span>()),
+        <span class="ident">query</span>: <span class="ident">query</span>,
+        <span class="ident">fragment</span>: <span class="ident">url</span>.<span class="ident">fragment</span>().<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">f</span><span class="op">|</span> <span class="ident">percent_decode</span>(<span class="ident">f</span>.<span class="ident">as_bytes</span>()).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;&gt;</span>().<span class="ident">into</span>())
     }
 }
 
 
-<span class='attribute'>#[<span class='ident'>test</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>parse_path_parts</span>() {
-    <span class='kw'>let</span> <span class='ident'>with</span> <span class='op'>=</span> <span class='string'>&quot;this&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>();
-    <span class='kw'>let</span> <span class='ident'>and</span> <span class='op'>=</span> <span class='string'>&quot;that&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>();
-    <span class='kw'>let</span> <span class='ident'>ParsedUri</span> { <span class='ident'>uri_path</span>, <span class='ident'>query</span>, <span class='ident'>fragment</span>, .. } <span class='op'>=</span> <span class='ident'>parse_path</span>(<span class='string'>&quot;/path/to/something?with=this&amp;and=that#lol&quot;</span>);
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>uri_path</span>.<span class='ident'>as_path</span>(), <span class='prelude-val'>Some</span>(<span class='string'>&quot;/path/to/something&quot;</span>.<span class='ident'>into</span>()));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;with&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>with</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;and&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>and</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>fragment</span>, <span class='prelude-val'>Some</span>(<span class='string'>&quot;lol&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>()));
+<span class="attribute">#[<span class="ident">test</span>]</span>
+<span class="kw">fn</span> <span class="ident">parse_path_parts</span>() {
+    <span class="kw">let</span> <span class="ident">with</span> <span class="op">=</span> <span class="string">&quot;this&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>();
+    <span class="kw">let</span> <span class="ident">and</span> <span class="op">=</span> <span class="string">&quot;that&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>();
+    <span class="kw">let</span> <span class="ident">ParsedUri</span> { <span class="ident">uri_path</span>, <span class="ident">query</span>, <span class="ident">fragment</span>, .. } <span class="op">=</span> <span class="ident">parse_path</span>(<span class="string">&quot;/path/to/something?with=this&amp;and=that#lol&quot;</span>);
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri_path</span>.<span class="ident">as_path</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;/path/to/something&quot;</span>.<span class="ident">into</span>()));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;with&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">with</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;and&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">and</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fragment</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;lol&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>()));
 }
 
-<span class='attribute'>#[<span class='ident'>test</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>parse_strange_path</span>() {
-    <span class='kw'>let</span> <span class='ident'>with</span> <span class='op'>=</span> <span class='string'>&quot;this&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>();
-    <span class='kw'>let</span> <span class='ident'>and</span> <span class='op'>=</span> <span class='string'>&quot;what?&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>();
-    <span class='kw'>let</span> <span class='ident'>ParsedUri</span> { <span class='ident'>uri_path</span>, <span class='ident'>query</span>, <span class='ident'>fragment</span>, .. } <span class='op'>=</span> <span class='ident'>parse_path</span>(<span class='string'>&quot;/path/to/something?with=this&amp;and=what?#&quot;</span>);
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>uri_path</span>.<span class='ident'>as_path</span>(), <span class='prelude-val'>Some</span>(<span class='string'>&quot;/path/to/something&quot;</span>.<span class='ident'>into</span>()));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;with&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>with</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;and&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>and</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>fragment</span>, <span class='prelude-val'>Some</span>(<span class='ident'>String</span>::<span class='ident'>new</span>().<span class='ident'>into</span>()));
+<span class="attribute">#[<span class="ident">test</span>]</span>
+<span class="kw">fn</span> <span class="ident">parse_strange_path</span>() {
+    <span class="kw">let</span> <span class="ident">with</span> <span class="op">=</span> <span class="string">&quot;this&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>();
+    <span class="kw">let</span> <span class="ident">and</span> <span class="op">=</span> <span class="string">&quot;what?&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>();
+    <span class="kw">let</span> <span class="ident">ParsedUri</span> { <span class="ident">uri_path</span>, <span class="ident">query</span>, <span class="ident">fragment</span>, .. } <span class="op">=</span> <span class="ident">parse_path</span>(<span class="string">&quot;/path/to/something?with=this&amp;and=what?#&quot;</span>);
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri_path</span>.<span class="ident">as_path</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;/path/to/something&quot;</span>.<span class="ident">into</span>()));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;with&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">with</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;and&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">and</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fragment</span>, <span class="prelude-val">Some</span>(<span class="ident">String</span>::<span class="ident">new</span>().<span class="ident">into</span>()));
 }
 
-<span class='attribute'>#[<span class='ident'>test</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>parse_missing_path_parts</span>() {
-    <span class='kw'>let</span> <span class='ident'>with</span> <span class='op'>=</span> <span class='string'>&quot;this&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>();
-    <span class='kw'>let</span> <span class='ident'>and</span> <span class='op'>=</span> <span class='string'>&quot;that&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>();
-    <span class='kw'>let</span> <span class='ident'>ParsedUri</span> { <span class='ident'>uri_path</span>, <span class='ident'>query</span>, <span class='ident'>fragment</span>, .. } <span class='op'>=</span> <span class='ident'>parse_path</span>(<span class='string'>&quot;/path/to/something?with=this&amp;and=that&quot;</span>);
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>uri_path</span>.<span class='ident'>as_path</span>(), <span class='prelude-val'>Some</span>(<span class='string'>&quot;/path/to/something&quot;</span>.<span class='ident'>into</span>()));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;with&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>with</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;and&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>and</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>fragment</span>, <span class='prelude-val'>None</span>);
+<span class="attribute">#[<span class="ident">test</span>]</span>
+<span class="kw">fn</span> <span class="ident">parse_missing_path_parts</span>() {
+    <span class="kw">let</span> <span class="ident">with</span> <span class="op">=</span> <span class="string">&quot;this&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>();
+    <span class="kw">let</span> <span class="ident">and</span> <span class="op">=</span> <span class="string">&quot;that&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>();
+    <span class="kw">let</span> <span class="ident">ParsedUri</span> { <span class="ident">uri_path</span>, <span class="ident">query</span>, <span class="ident">fragment</span>, .. } <span class="op">=</span> <span class="ident">parse_path</span>(<span class="string">&quot;/path/to/something?with=this&amp;and=that&quot;</span>);
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri_path</span>.<span class="ident">as_path</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;/path/to/something&quot;</span>.<span class="ident">into</span>()));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;with&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">with</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;and&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">and</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fragment</span>, <span class="prelude-val">None</span>);
 
 
-    <span class='kw'>let</span> <span class='ident'>ParsedUri</span> { <span class='ident'>uri_path</span>, <span class='ident'>query</span>, <span class='ident'>fragment</span>, .. } <span class='op'>=</span> <span class='ident'>parse_path</span>(<span class='string'>&quot;/path/to/something#lol&quot;</span>);
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>uri_path</span>.<span class='ident'>as_path</span>(), <span class='prelude-val'>Some</span>(<span class='string'>&quot;/path/to/something&quot;</span>.<span class='ident'>into</span>()));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>len</span>(), <span class='number'>0</span>);
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>fragment</span>, <span class='prelude-val'>Some</span>(<span class='string'>&quot;lol&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>()));
+    <span class="kw">let</span> <span class="ident">ParsedUri</span> { <span class="ident">uri_path</span>, <span class="ident">query</span>, <span class="ident">fragment</span>, .. } <span class="op">=</span> <span class="ident">parse_path</span>(<span class="string">&quot;/path/to/something#lol&quot;</span>);
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri_path</span>.<span class="ident">as_path</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;/path/to/something&quot;</span>.<span class="ident">into</span>()));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">len</span>(), <span class="number">0</span>);
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fragment</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;lol&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>()));
 
 
-    <span class='kw'>let</span> <span class='ident'>ParsedUri</span> { <span class='ident'>uri_path</span>, <span class='ident'>query</span>, <span class='ident'>fragment</span>, .. } <span class='op'>=</span> <span class='ident'>parse_path</span>(<span class='string'>&quot;?with=this&amp;and=that#lol&quot;</span>);
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>uri_path</span>.<span class='ident'>as_path</span>(), <span class='prelude-val'>Some</span>(<span class='string'>&quot;/&quot;</span>.<span class='ident'>into</span>()));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;with&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>with</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;and&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>and</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>fragment</span>, <span class='prelude-val'>Some</span>(<span class='string'>&quot;lol&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>()));
+    <span class="kw">let</span> <span class="ident">ParsedUri</span> { <span class="ident">uri_path</span>, <span class="ident">query</span>, <span class="ident">fragment</span>, .. } <span class="op">=</span> <span class="ident">parse_path</span>(<span class="string">&quot;?with=this&amp;and=that#lol&quot;</span>);
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri_path</span>.<span class="ident">as_path</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;/&quot;</span>.<span class="ident">into</span>()));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;with&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">with</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;and&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">and</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fragment</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;lol&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>()));
 }
 
 
-<span class='attribute'>#[<span class='ident'>test</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>parse_url_parts</span>() {
-    <span class='kw'>let</span> <span class='ident'>with</span> <span class='op'>=</span> <span class='string'>&quot;this&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>();
-    <span class='kw'>let</span> <span class='ident'>and</span> <span class='op'>=</span> <span class='string'>&quot;that&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>();
-    <span class='kw'>let</span> <span class='ident'>url</span> <span class='op'>=</span> <span class='ident'>Url</span>::<span class='ident'>parse</span>(<span class='string'>&quot;http://example.com/path/to/something?with=this&amp;and=that#lol&quot;</span>).<span class='ident'>unwrap</span>();
-    <span class='kw'>let</span> <span class='ident'>ParsedUri</span> { <span class='ident'>uri_path</span>, <span class='ident'>query</span>, <span class='ident'>fragment</span>, .. } <span class='op'>=</span> <span class='ident'>parse_url</span>(<span class='kw-2'>&amp;</span><span class='ident'>url</span>);
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>uri_path</span>.<span class='ident'>as_path</span>(), <span class='prelude-val'>Some</span>(<span class='string'>&quot;/path/to/something&quot;</span>.<span class='ident'>into</span>()));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;with&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>with</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;and&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>and</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>fragment</span>, <span class='prelude-val'>Some</span>(<span class='string'>&quot;lol&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>()));
+<span class="attribute">#[<span class="ident">test</span>]</span>
+<span class="kw">fn</span> <span class="ident">parse_url_parts</span>() {
+    <span class="kw">let</span> <span class="ident">with</span> <span class="op">=</span> <span class="string">&quot;this&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>();
+    <span class="kw">let</span> <span class="ident">and</span> <span class="op">=</span> <span class="string">&quot;that&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>();
+    <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(<span class="string">&quot;http://example.com/path/to/something?with=this&amp;and=that#lol&quot;</span>).<span class="ident">unwrap</span>();
+    <span class="kw">let</span> <span class="ident">ParsedUri</span> { <span class="ident">uri_path</span>, <span class="ident">query</span>, <span class="ident">fragment</span>, .. } <span class="op">=</span> <span class="ident">parse_url</span>(<span class="kw-2">&amp;</span><span class="ident">url</span>);
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri_path</span>.<span class="ident">as_path</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;/path/to/something&quot;</span>.<span class="ident">into</span>()));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;with&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">with</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;and&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">and</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fragment</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;lol&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>()));
 }
 
-<span class='attribute'>#[<span class='ident'>test</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>parse_strange_url</span>() {
-    <span class='kw'>let</span> <span class='ident'>with</span> <span class='op'>=</span> <span class='string'>&quot;this&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>();
-    <span class='kw'>let</span> <span class='ident'>and</span> <span class='op'>=</span> <span class='string'>&quot;what?&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>();
-    <span class='kw'>let</span> <span class='ident'>url</span> <span class='op'>=</span> <span class='ident'>Url</span>::<span class='ident'>parse</span>(<span class='string'>&quot;http://example.com/path/to/something?with=this&amp;and=what?#&quot;</span>).<span class='ident'>unwrap</span>();
-    <span class='kw'>let</span> <span class='ident'>ParsedUri</span> { <span class='ident'>uri_path</span>, <span class='ident'>query</span>, <span class='ident'>fragment</span>, .. } <span class='op'>=</span> <span class='ident'>parse_url</span>(<span class='kw-2'>&amp;</span><span class='ident'>url</span>);
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>uri_path</span>.<span class='ident'>as_path</span>(), <span class='prelude-val'>Some</span>(<span class='string'>&quot;/path/to/something&quot;</span>.<span class='ident'>into</span>()));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;with&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>with</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;and&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>and</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>fragment</span>, <span class='prelude-val'>Some</span>(<span class='ident'>String</span>::<span class='ident'>new</span>().<span class='ident'>into</span>()));
+<span class="attribute">#[<span class="ident">test</span>]</span>
+<span class="kw">fn</span> <span class="ident">parse_strange_url</span>() {
+    <span class="kw">let</span> <span class="ident">with</span> <span class="op">=</span> <span class="string">&quot;this&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>();
+    <span class="kw">let</span> <span class="ident">and</span> <span class="op">=</span> <span class="string">&quot;what?&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>();
+    <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(<span class="string">&quot;http://example.com/path/to/something?with=this&amp;and=what?#&quot;</span>).<span class="ident">unwrap</span>();
+    <span class="kw">let</span> <span class="ident">ParsedUri</span> { <span class="ident">uri_path</span>, <span class="ident">query</span>, <span class="ident">fragment</span>, .. } <span class="op">=</span> <span class="ident">parse_url</span>(<span class="kw-2">&amp;</span><span class="ident">url</span>);
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri_path</span>.<span class="ident">as_path</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;/path/to/something&quot;</span>.<span class="ident">into</span>()));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;with&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">with</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;and&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">and</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fragment</span>, <span class="prelude-val">Some</span>(<span class="ident">String</span>::<span class="ident">new</span>().<span class="ident">into</span>()));
 }
 
-<span class='attribute'>#[<span class='ident'>test</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>parse_missing_url_parts</span>() {
-    <span class='kw'>let</span> <span class='ident'>with</span> <span class='op'>=</span> <span class='string'>&quot;this&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>();
-    <span class='kw'>let</span> <span class='ident'>and</span> <span class='op'>=</span> <span class='string'>&quot;that&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>();
-    <span class='kw'>let</span> <span class='ident'>url</span> <span class='op'>=</span> <span class='ident'>Url</span>::<span class='ident'>parse</span>(<span class='string'>&quot;http://example.com/path/to/something?with=this&amp;and=that&quot;</span>).<span class='ident'>unwrap</span>();
-    <span class='kw'>let</span> <span class='ident'>ParsedUri</span> { <span class='ident'>uri_path</span>, <span class='ident'>query</span>, <span class='ident'>fragment</span>, .. } <span class='op'>=</span> <span class='ident'>parse_url</span>(<span class='kw-2'>&amp;</span><span class='ident'>url</span>);
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>uri_path</span>.<span class='ident'>as_path</span>(), <span class='prelude-val'>Some</span>(<span class='string'>&quot;/path/to/something&quot;</span>.<span class='ident'>into</span>()));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;with&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>with</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;and&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>and</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>fragment</span>, <span class='prelude-val'>None</span>);
+<span class="attribute">#[<span class="ident">test</span>]</span>
+<span class="kw">fn</span> <span class="ident">parse_missing_url_parts</span>() {
+    <span class="kw">let</span> <span class="ident">with</span> <span class="op">=</span> <span class="string">&quot;this&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>();
+    <span class="kw">let</span> <span class="ident">and</span> <span class="op">=</span> <span class="string">&quot;that&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>();
+    <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(<span class="string">&quot;http://example.com/path/to/something?with=this&amp;and=that&quot;</span>).<span class="ident">unwrap</span>();
+    <span class="kw">let</span> <span class="ident">ParsedUri</span> { <span class="ident">uri_path</span>, <span class="ident">query</span>, <span class="ident">fragment</span>, .. } <span class="op">=</span> <span class="ident">parse_url</span>(<span class="kw-2">&amp;</span><span class="ident">url</span>);
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri_path</span>.<span class="ident">as_path</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;/path/to/something&quot;</span>.<span class="ident">into</span>()));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;with&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">with</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;and&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">and</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fragment</span>, <span class="prelude-val">None</span>);
 
 
-    <span class='kw'>let</span> <span class='ident'>url</span> <span class='op'>=</span> <span class='ident'>Url</span>::<span class='ident'>parse</span>(<span class='string'>&quot;http://example.com/path/to/something#lol&quot;</span>).<span class='ident'>unwrap</span>();
-    <span class='kw'>let</span> <span class='ident'>ParsedUri</span> { <span class='ident'>uri_path</span>, <span class='ident'>query</span>, <span class='ident'>fragment</span>, .. } <span class='op'>=</span> <span class='ident'>parse_url</span>(<span class='kw-2'>&amp;</span><span class='ident'>url</span>);
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>uri_path</span>.<span class='ident'>as_path</span>(), <span class='prelude-val'>Some</span>(<span class='string'>&quot;/path/to/something&quot;</span>.<span class='ident'>into</span>()));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>len</span>(), <span class='number'>0</span>);
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>fragment</span>, <span class='prelude-val'>Some</span>(<span class='string'>&quot;lol&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>()));
+    <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(<span class="string">&quot;http://example.com/path/to/something#lol&quot;</span>).<span class="ident">unwrap</span>();
+    <span class="kw">let</span> <span class="ident">ParsedUri</span> { <span class="ident">uri_path</span>, <span class="ident">query</span>, <span class="ident">fragment</span>, .. } <span class="op">=</span> <span class="ident">parse_url</span>(<span class="kw-2">&amp;</span><span class="ident">url</span>);
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri_path</span>.<span class="ident">as_path</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;/path/to/something&quot;</span>.<span class="ident">into</span>()));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">len</span>(), <span class="number">0</span>);
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fragment</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;lol&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>()));
 
 
-    <span class='kw'>let</span> <span class='ident'>url</span> <span class='op'>=</span> <span class='ident'>Url</span>::<span class='ident'>parse</span>(<span class='string'>&quot;http://example.com?with=this&amp;and=that#lol&quot;</span>).<span class='ident'>unwrap</span>();
-    <span class='kw'>let</span> <span class='ident'>ParsedUri</span> { <span class='ident'>uri_path</span>, <span class='ident'>query</span>, <span class='ident'>fragment</span>, .. } <span class='op'>=</span> <span class='ident'>parse_url</span>(<span class='kw-2'>&amp;</span><span class='ident'>url</span>);
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>uri_path</span>.<span class='ident'>as_path</span>(), <span class='prelude-val'>Some</span>(<span class='string'>&quot;/&quot;</span>.<span class='ident'>into</span>()));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;with&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>with</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>query</span>.<span class='ident'>get_raw</span>(<span class='string'>&quot;and&quot;</span>), <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>and</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>fragment</span>, <span class='prelude-val'>Some</span>(<span class='string'>&quot;lol&quot;</span>.<span class='ident'>to_owned</span>().<span class='ident'>into</span>()));
+    <span class="kw">let</span> <span class="ident">url</span> <span class="op">=</span> <span class="ident">Url</span>::<span class="ident">parse</span>(<span class="string">&quot;http://example.com?with=this&amp;and=that#lol&quot;</span>).<span class="ident">unwrap</span>();
+    <span class="kw">let</span> <span class="ident">ParsedUri</span> { <span class="ident">uri_path</span>, <span class="ident">query</span>, <span class="ident">fragment</span>, .. } <span class="op">=</span> <span class="ident">parse_url</span>(<span class="kw-2">&amp;</span><span class="ident">url</span>);
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">uri_path</span>.<span class="ident">as_path</span>(), <span class="prelude-val">Some</span>(<span class="string">&quot;/&quot;</span>.<span class="ident">into</span>()));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;with&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">with</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">query</span>.<span class="ident">get_raw</span>(<span class="string">&quot;and&quot;</span>), <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">and</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">fragment</span>, <span class="prelude-val">Some</span>(<span class="string">&quot;lol&quot;</span>.<span class="ident">to_owned</span>().<span class="ident">into</span>()));
 }
 </pre>
 </section>

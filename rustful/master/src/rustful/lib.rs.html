@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -156,126 +156,120 @@
 <span id="111">111</span>
 <span id="112">112</span>
 <span id="113">113</span>
-<span id="114">114</span>
-<span id="115">115</span>
-<span id="116">116</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//!A light HTTP framework with REST-like features. The main purpose of Rustful</span>
-<span class='doccomment'>//!is to create a simple, modular and non-intrusive foundation for HTTP</span>
-<span class='doccomment'>//!applications. It has a mainly stateless structure, which naturally allows</span>
-<span class='doccomment'>//!it to run both as one single server and as multiple instances in a cluster.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!A new server is created using the [`Server`][server] type, which contains</span>
-<span class='doccomment'>//!all the necessary settings as fields:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!```no_run</span>
-<span class='doccomment'>//!extern crate rustful;</span>
-<span class='doccomment'>//!use rustful::{Server, Handler, Context, Response, DefaultRouter};</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!struct Phrase(&amp;&#39;static str);</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!impl Handler for Phrase {</span>
-<span class='doccomment'>//!    fn handle(&amp;self, context: Context, response: Response) {</span>
-<span class='doccomment'>//!        //Check if the client accessed /hello/:name or /good_bye/:name</span>
-<span class='doccomment'>//!        if let Some(name) = context.variables.get(&quot;name&quot;) {</span>
-<span class='doccomment'>//!            //Use the value of :name</span>
-<span class='doccomment'>//!            response.send(format!(&quot;{}, {}&quot;, self.0, name));</span>
-<span class='doccomment'>//!        } else {</span>
-<span class='doccomment'>//!            response.send(self.0)</span>
-<span class='doccomment'>//!        }</span>
-<span class='doccomment'>//!    }</span>
-<span class='doccomment'>//!}</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!# fn main() {</span>
-<span class='doccomment'>//!let mut my_router = DefaultRouter::&lt;Phrase&gt;::new();</span>
-<span class='doccomment'>//!my_router.build().many(|mut node| {</span>
-<span class='doccomment'>//!    //Receive GET requests to /hello and /hello/:name</span>
-<span class='doccomment'>//!    node.path(&quot;hello&quot;).many(|mut node| {</span>
-<span class='doccomment'>//!        node.then().on_get(Phrase(&quot;hello&quot;));</span>
-<span class='doccomment'>//!        node.path(&quot;:name&quot;).then().on_get(Phrase(&quot;hello&quot;));</span>
-<span class='doccomment'>//!    });</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!    //Receive GET requests to /good_bye and /good_bye/:name</span>
-<span class='doccomment'>//!    node.path(&quot;good_bye&quot;).many(|mut node| {</span>
-<span class='doccomment'>//!        node.then().on_get(Phrase(&quot;good bye&quot;));</span>
-<span class='doccomment'>//!        node.path(&quot;:name&quot;).then().on_get(Phrase(&quot;good bye&quot;));</span>
-<span class='doccomment'>//!    });</span>
-<span class='doccomment'>//!});</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!Server {</span>
-<span class='doccomment'>//!    //Use a closure to handle requests.</span>
-<span class='doccomment'>//!    handlers: my_router,</span>
-<span class='doccomment'>//!    //Set the listening port to `8080`.</span>
-<span class='doccomment'>//!    host: 8080.into(),</span>
-<span class='doccomment'>//!    //Fill out everything else with default values.</span>
-<span class='doccomment'>//!    ..Server::default()</span>
-<span class='doccomment'>//!}.run();</span>
-<span class='doccomment'>//!# }</span>
-<span class='doccomment'>//!```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//![server]: server/struct.Server.html</span>
+</pre><pre class="rust ">
+<span class="doccomment">//!A light HTTP framework with REST-like features. The main purpose of Rustful</span>
+<span class="doccomment">//!is to create a simple, modular and non-intrusive foundation for HTTP</span>
+<span class="doccomment">//!applications. It has a mainly stateless structure, which naturally allows</span>
+<span class="doccomment">//!it to run both as one single server and as multiple instances in a cluster.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!A new server is created using the [`Server`][server] type, which contains</span>
+<span class="doccomment">//!all the necessary settings as fields:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!```no_run</span>
+<span class="doccomment">//!extern crate rustful;</span>
+<span class="doccomment">//!use rustful::{Server, Handler, Context, Response, DefaultRouter};</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!struct Phrase(&amp;&#39;static str);</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!impl Handler for Phrase {</span>
+<span class="doccomment">//!    fn handle(&amp;self, context: Context, response: Response) {</span>
+<span class="doccomment">//!        //Check if the client accessed /hello/:name or /good_bye/:name</span>
+<span class="doccomment">//!        if let Some(name) = context.variables.get(&quot;name&quot;) {</span>
+<span class="doccomment">//!            //Use the value of :name</span>
+<span class="doccomment">//!            response.send(format!(&quot;{}, {}&quot;, self.0, name));</span>
+<span class="doccomment">//!        } else {</span>
+<span class="doccomment">//!            response.send(self.0)</span>
+<span class="doccomment">//!        }</span>
+<span class="doccomment">//!    }</span>
+<span class="doccomment">//!}</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!# fn main() {</span>
+<span class="doccomment">//!let mut my_router = DefaultRouter::&lt;Phrase&gt;::new();</span>
+<span class="doccomment">//!my_router.build().many(|mut node| {</span>
+<span class="doccomment">//!    //Receive GET requests to /hello and /hello/:name</span>
+<span class="doccomment">//!    node.path(&quot;hello&quot;).many(|mut node| {</span>
+<span class="doccomment">//!        node.then().on_get(Phrase(&quot;hello&quot;));</span>
+<span class="doccomment">//!        node.path(&quot;:name&quot;).then().on_get(Phrase(&quot;hello&quot;));</span>
+<span class="doccomment">//!    });</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!    //Receive GET requests to /good_bye and /good_bye/:name</span>
+<span class="doccomment">//!    node.path(&quot;good_bye&quot;).many(|mut node| {</span>
+<span class="doccomment">//!        node.then().on_get(Phrase(&quot;good bye&quot;));</span>
+<span class="doccomment">//!        node.path(&quot;:name&quot;).then().on_get(Phrase(&quot;good bye&quot;));</span>
+<span class="doccomment">//!    });</span>
+<span class="doccomment">//!});</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!Server {</span>
+<span class="doccomment">//!    //Use a closure to handle requests.</span>
+<span class="doccomment">//!    handlers: my_router,</span>
+<span class="doccomment">//!    //Set the listening port to `8080`.</span>
+<span class="doccomment">//!    host: 8080.into(),</span>
+<span class="doccomment">//!    //Fill out everything else with default values.</span>
+<span class="doccomment">//!    ..Server::default()</span>
+<span class="doccomment">//!}.run();</span>
+<span class="doccomment">//!# }</span>
+<span class="doccomment">//!```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//![server]: server/struct.Server.html</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_name</span> <span class='op'>=</span> <span class='string'>&quot;rustful&quot;</span>]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">crate_name</span> <span class="op">=</span> <span class="string">&quot;rustful&quot;</span>]</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>crate_type</span> <span class='op'>=</span> <span class='string'>&quot;rlib&quot;</span>]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">crate_type</span> <span class="op">=</span> <span class="string">&quot;rlib&quot;</span>]</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_root_url</span> <span class='op'>=</span> <span class='string'>&quot;http://ogeon.github.io/docs/rustful/master/&quot;</span>)]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;http://ogeon.github.io/docs/rustful/master/&quot;</span>)]</span>
 
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>all</span>(<span class='ident'>test</span>, <span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;benchmark&quot;</span>), <span class='ident'>feature</span>(<span class='ident'>test</span>))]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;strict&quot;</span>, <span class='ident'>deny</span>(<span class='ident'>missing_docs</span>))]</span>
-<span class='attribute'>#<span class='op'>!</span>[<span class='ident'>cfg_attr</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;strict&quot;</span>, <span class='ident'>deny</span>(<span class='ident'>warnings</span>))]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">all</span>(<span class="ident">test</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;benchmark&quot;</span>), <span class="ident">feature</span>(<span class="ident">test</span>))]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;strict&quot;</span>, <span class="ident">deny</span>(<span class="ident">missing_docs</span>))]</span>
+<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;strict&quot;</span>, <span class="ident">deny</span>(<span class="ident">warnings</span>))]</span>
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;benchmark&quot;</span>)]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>test</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;benchmark&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">test</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;rustc-serialize&quot;</span>)]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustc_serialize</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;multipart&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">multipart</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>feature</span> <span class='op'>=</span> <span class='string'>&quot;multipart&quot;</span>)]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>multipart</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">url</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">time</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">hyper</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">anymap</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">phf</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num_cpus</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">log</span>;
 
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>url</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>time</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>hyper</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>anymap</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>phf</span>;
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>num_cpus</span>;
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>log</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">mime</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">method</span>::<span class="ident">Method</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">status</span>::<span class="ident">StatusCode</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">header</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>::<span class="prelude-ty">Result</span> <span class="kw">as</span> <span class="ident">HttpResult</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">HttpError</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">version</span>::<span class="ident">HttpVersion</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>mime</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>method</span>::<span class='ident'>Method</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>status</span>::<span class='ident'>StatusCode</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>header</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='prelude-ty'>Result</span> <span class='kw'>as</span> <span class='ident'>HttpResult</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>Error</span> <span class='kw'>as</span> <span class='ident'>HttpError</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>version</span>::<span class='ident'>HttpVersion</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">server</span>::<span class="ident">Server</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">context</span>::<span class="ident">Context</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">response</span>::<span class="ident">Response</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">response</span>::<span class="ident">Error</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">response</span>::<span class="ident">SendResponse</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">handler</span>::<span class="ident">Handler</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">handler</span>::<span class="ident">DefaultRouter</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">handler</span>::<span class="ident">ContentFactory</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">handler</span>::<span class="ident">CreateContent</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">handler</span>::<span class="ident">OrElse</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">handler</span>::<span class="ident">StatusRouter</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>server</span>::<span class='ident'>Server</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>context</span>::<span class='ident'>Context</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>response</span>::<span class='ident'>Response</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>response</span>::<span class='ident'>Error</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>response</span>::<span class='ident'>SendResponse</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>handler</span>::<span class='ident'>Handler</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>handler</span>::<span class='ident'>DefaultRouter</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>handler</span>::<span class='ident'>ContentFactory</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>handler</span>::<span class='ident'>CreateContent</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>handler</span>::<span class='ident'>OrElse</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>handler</span>::<span class='ident'>StatusRouter</span>;
+<span class="kw">mod</span> <span class="ident">utils</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">macros</span>;
 
-<span class='kw'>mod</span> <span class='ident'>utils</span>;
-<span class='attribute'>#[<span class='ident'>macro_use</span>]</span>
-<span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>macros</span>;
-
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>server</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>handler</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>context</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>response</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>filter</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>file</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>net</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">server</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">handler</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">context</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">response</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">filter</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">file</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">net</span>;
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a></p><script>window.sidebarCurrent = {name: 'Context', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct Context</p><div class="block items"><ul><li><a href="#fields">Fields</a></li><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a></p><script>window.sidebarCurrent = {name: 'Context', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,73 +43,73 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a>::<wbr><a class='struct' href=''>Context</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>context</a>::<wbr><a class="struct" href=''>Context</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/rustful/context/mod.rs.html#134-167' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Context&lt;'a, 'b: 'a, 'l, 'g&gt; {
-    pub headers: <a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a>,
-    pub http_version: <a class='enum' href='../../rustful/enum.HttpVersion.html' title='rustful::HttpVersion'>HttpVersion</a>,
-    pub address: <a class='enum' href='https://doc.rust-lang.org/nightly/std/net/addr/enum.SocketAddr.html' title='std::net::addr::SocketAddr'>SocketAddr</a>,
-    pub method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>,
-    pub uri_path: <a class='enum' href='../../rustful/context/enum.UriPath.html' title='rustful::context::UriPath'>UriPath</a>,
-    pub hyperlinks: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../rustful/context/hypermedia/struct.Link.html' title='rustful::context::hypermedia::Link'>Link</a>&lt;'l&gt;&gt;,
-    pub variables: <a class='struct' href='../../rustful/context/struct.Parameters.html' title='rustful::context::Parameters'>Parameters</a>,
-    pub query: <a class='struct' href='../../rustful/context/struct.Parameters.html' title='rustful::context::Parameters'>Parameters</a>,
-    pub fragment: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='type' href='../../rustful/context/type.MaybeUtf8Owned.html' title='rustful::context::MaybeUtf8Owned'>MaybeUtf8Owned</a>&gt;,
-    pub global: &amp;'g <a class='struct' href='../../rustful/server/struct.Global.html' title='rustful::server::Global'>Global</a>,
-    pub body: <a class='struct' href='../../rustful/context/body/struct.BodyReader.html' title='rustful::context::body::BodyReader'>BodyReader</a>&lt;'a, 'b&gt;,
+    pub headers: <a class="struct" href="../../rustful/header/struct.Headers.html" title="struct rustful::header::Headers">Headers</a>,
+    pub http_version: <a class="enum" href="../../rustful/enum.HttpVersion.html" title="enum rustful::HttpVersion">HttpVersion</a>,
+    pub address: <a class="enum" href="https://doc.rust-lang.org/nightly/std/net/addr/enum.SocketAddr.html" title="enum std::net::addr::SocketAddr">SocketAddr</a>,
+    pub method: <a class="enum" href="../../rustful/enum.Method.html" title="enum rustful::Method">Method</a>,
+    pub uri_path: <a class="enum" href="../../rustful/context/enum.UriPath.html" title="enum rustful::context::UriPath">UriPath</a>,
+    pub hyperlinks: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="../../rustful/context/hypermedia/struct.Link.html" title="struct rustful::context::hypermedia::Link">Link</a>&lt;'l&gt;&gt;,
+    pub variables: <a class="struct" href="../../rustful/context/struct.Parameters.html" title="struct rustful::context::Parameters">Parameters</a>,
+    pub query: <a class="struct" href="../../rustful/context/struct.Parameters.html" title="struct rustful::context::Parameters">Parameters</a>,
+    pub fragment: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="type" href="../../rustful/context/type.MaybeUtf8Owned.html" title="type rustful::context::MaybeUtf8Owned">MaybeUtf8Owned</a>&gt;,
+    pub global: &amp;'g <a class="struct" href="../../rustful/server/struct.Global.html" title="struct rustful::server::Global">Global</a>,
+    pub body: <a class="struct" href="../../rustful/context/body/struct.BodyReader.html" title="struct rustful::context::body::BodyReader">BodyReader</a>&lt;'a, 'b&gt;,
 }</pre><div class='docblock'><p>A container for handler input, like request data and utilities.</p>
-</div><h2 class='fields'>Fields</h2><span id='structfield.headers' class='structfield'>
+</div><h2 id='fields' class='fields'>Fields</h2><span id='structfield.headers' class="structfield">
                            <span id='headers.v' class='invisible'>
-                           <code>headers: <a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>Headers from the HTTP request.</p>
-</div><span id='structfield.http_version' class='structfield'>
+                           <code>headers: <a class="struct" href="../../rustful/header/struct.Headers.html" title="struct rustful::header::Headers">Headers</a></code>
+                           </span></span><div class='docblock'><p>Headers from the HTTP request.</p>
+</div><span id='structfield.http_version' class="structfield">
                            <span id='http_version.v' class='invisible'>
-                           <code>http_version: <a class='enum' href='../../rustful/enum.HttpVersion.html' title='rustful::HttpVersion'>HttpVersion</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The HTTP version used in the request.</p>
-</div><span id='structfield.address' class='structfield'>
+                           <code>http_version: <a class="enum" href="../../rustful/enum.HttpVersion.html" title="enum rustful::HttpVersion">HttpVersion</a></code>
+                           </span></span><div class='docblock'><p>The HTTP version used in the request.</p>
+</div><span id='structfield.address' class="structfield">
                            <span id='address.v' class='invisible'>
-                           <code>address: <a class='enum' href='https://doc.rust-lang.org/nightly/std/net/addr/enum.SocketAddr.html' title='std::net::addr::SocketAddr'>SocketAddr</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The client address</p>
-</div><span id='structfield.method' class='structfield'>
+                           <code>address: <a class="enum" href="https://doc.rust-lang.org/nightly/std/net/addr/enum.SocketAddr.html" title="enum std::net::addr::SocketAddr">SocketAddr</a></code>
+                           </span></span><div class='docblock'><p>The client address</p>
+</div><span id='structfield.method' class="structfield">
                            <span id='method.v' class='invisible'>
-                           <code>method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The HTTP method.</p>
-</div><span id='structfield.uri_path' class='structfield'>
+                           <code>method: <a class="enum" href="../../rustful/enum.Method.html" title="enum rustful::Method">Method</a></code>
+                           </span></span><div class='docblock'><p>The HTTP method.</p>
+</div><span id='structfield.uri_path' class="structfield">
                            <span id='uri_path.v' class='invisible'>
-                           <code>uri_path: <a class='enum' href='../../rustful/context/enum.UriPath.html' title='rustful::context::UriPath'>UriPath</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The requested path.</p>
-</div><span id='structfield.hyperlinks' class='structfield'>
+                           <code>uri_path: <a class="enum" href="../../rustful/context/enum.UriPath.html" title="enum rustful::context::UriPath">UriPath</a></code>
+                           </span></span><div class='docblock'><p>The requested path.</p>
+</div><span id='structfield.hyperlinks' class="structfield">
                            <span id='hyperlinks.v' class='invisible'>
-                           <code>hyperlinks: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../rustful/context/hypermedia/struct.Link.html' title='rustful::context::hypermedia::Link'>Link</a>&lt;'l&gt;&gt;</code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>Hyperlinks from the current endpoint.</p>
-</div><span id='structfield.variables' class='structfield'>
+                           <code>hyperlinks: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="../../rustful/context/hypermedia/struct.Link.html" title="struct rustful::context::hypermedia::Link">Link</a>&lt;'l&gt;&gt;</code>
+                           </span></span><div class='docblock'><p>Hyperlinks from the current endpoint.</p>
+</div><span id='structfield.variables' class="structfield">
                            <span id='variables.v' class='invisible'>
-                           <code>variables: <a class='struct' href='../../rustful/context/struct.Parameters.html' title='rustful::context::Parameters'>Parameters</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>Route variables.</p>
-</div><span id='structfield.query' class='structfield'>
+                           <code>variables: <a class="struct" href="../../rustful/context/struct.Parameters.html" title="struct rustful::context::Parameters">Parameters</a></code>
+                           </span></span><div class='docblock'><p>Route variables.</p>
+</div><span id='structfield.query' class="structfield">
                            <span id='query.v' class='invisible'>
-                           <code>query: <a class='struct' href='../../rustful/context/struct.Parameters.html' title='rustful::context::Parameters'>Parameters</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>Query variables from the path.</p>
-</div><span id='structfield.fragment' class='structfield'>
+                           <code>query: <a class="struct" href="../../rustful/context/struct.Parameters.html" title="struct rustful::context::Parameters">Parameters</a></code>
+                           </span></span><div class='docblock'><p>Query variables from the path.</p>
+</div><span id='structfield.fragment' class="structfield">
                            <span id='fragment.v' class='invisible'>
-                           <code>fragment: <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='type' href='../../rustful/context/type.MaybeUtf8Owned.html' title='rustful::context::MaybeUtf8Owned'>MaybeUtf8Owned</a>&gt;</code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The fragment part of the URL (after #), if provided.</p>
-</div><span id='structfield.global' class='structfield'>
+                           <code>fragment: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="type" href="../../rustful/context/type.MaybeUtf8Owned.html" title="type rustful::context::MaybeUtf8Owned">MaybeUtf8Owned</a>&gt;</code>
+                           </span></span><div class='docblock'><p>The fragment part of the URL (after #), if provided.</p>
+</div><span id='structfield.global' class="structfield">
                            <span id='global.v' class='invisible'>
-                           <code>global: &amp;'g <a class='struct' href='../../rustful/server/struct.Global.html' title='rustful::server::Global'>Global</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>Globally accessible data.</p>
-</div><span id='structfield.body' class='structfield'>
+                           <code>global: &amp;'g <a class="struct" href="../../rustful/server/struct.Global.html" title="struct rustful::server::Global">Global</a></code>
+                           </span></span><div class='docblock'><p>Globally accessible data.</p>
+</div><span id='structfield.body' class="structfield">
                            <span id='body.v' class='invisible'>
-                           <code>body: <a class='struct' href='../../rustful/context/body/struct.BodyReader.html' title='rustful::context::body::BodyReader'>BodyReader</a>&lt;'a, 'b&gt;</code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>A reader for the request body.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, 'b, 'l, 'g&gt; <a class='struct' href='../../rustful/context/struct.Context.html' title='rustful::context::Context'>Context</a>&lt;'a, 'b, 'l, 'g&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/context/mod.rs.html#169-211' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.mock' class='method'><span id='mock.v' class='invisible'><code>fn <a href='#method.mock' class='fnname'>mock</a>&lt;P:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>&gt;&gt;(method: <a class='enum' href='../../rustful/enum.Method.html' title='rustful::Method'>Method</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; path: P,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; headers: <a class='struct' href='../../rustful/header/struct.Headers.html' title='rustful::header::Headers'>Headers</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; global: &amp;'g <a class='struct' href='../../rustful/server/struct.Global.html' title='rustful::server::Global'>Global</a>)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='struct' href='../../rustful/context/struct.Context.html' title='rustful::context::Context'>Context</a>&lt;'static, 'static, 'l, 'g&gt;</code></span></h4>
+                           <code>body: <a class="struct" href="../../rustful/context/body/struct.BodyReader.html" title="struct rustful::context::body::BodyReader">BodyReader</a>&lt;'a, 'b&gt;</code>
+                           </span></span><div class='docblock'><p>A reader for the request body.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a, 'b, 'l, 'g&gt; <a class="struct" href="../../rustful/context/struct.Context.html" title="struct rustful::context::Context">Context</a>&lt;'a, 'b, 'l, 'g&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/context/mod.rs.html#169-211' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.mock' class="method"><span id='mock.v' class='invisible'><code>fn <a href='#method.mock' class='fnname'>mock</a>&lt;P:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;method: <a class="enum" href="../../rustful/enum.Method.html" title="enum rustful::Method">Method</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;path: P, <br>&nbsp;&nbsp;&nbsp;&nbsp;headers: <a class="struct" href="../../rustful/header/struct.Headers.html" title="struct rustful::header::Headers">Headers</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;global: &amp;'g <a class="struct" href="../../rustful/server/struct.Global.html" title="struct rustful::server::Global">Global</a><br>) -&gt; <a class="struct" href="../../rustful/context/struct.Context.html" title="struct rustful::context::Context">Context</a>&lt;'static, 'static, 'l, 'g&gt;</code></span></h4>
 <div class='docblock'><p>Create a context with minimal setup, for testing purposes.</p>
-</div><h4 id='method.replace_hyperlinks' class='method'><span id='replace_hyperlinks.v' class='invisible'><code>fn <a href='#method.replace_hyperlinks' class='fnname'>replace_hyperlinks</a>&lt;'n&gt;(self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hyperlinks: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../rustful/context/hypermedia/struct.Link.html' title='rustful::context::hypermedia::Link'>Link</a>&lt;'n&gt;&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='struct' href='../../rustful/context/struct.Context.html' title='rustful::context::Context'>Context</a>&lt;'a, 'b, 'n, 'g&gt;, <a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='struct' href='../../rustful/context/hypermedia/struct.Link.html' title='rustful::context::hypermedia::Link'>Link</a>&lt;'l&gt;&gt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a></code></span></h4>
+</div><h4 id='method.replace_hyperlinks' class="method"><span id='replace_hyperlinks.v' class='invisible'><code>fn <a href='#method.replace_hyperlinks' class='fnname'>replace_hyperlinks</a>&lt;'n&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;hyperlinks: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="../../rustful/context/hypermedia/struct.Link.html" title="struct rustful::context::hypermedia::Link">Link</a>&lt;'n&gt;&gt;<br>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="struct" href="../../rustful/context/struct.Context.html" title="struct rustful::context::Context">Context</a>&lt;'a, 'b, 'n, 'g&gt;, <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="../../rustful/context/hypermedia/struct.Link.html" title="struct rustful::context::hypermedia::Link">Link</a>&lt;'l&gt;&gt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a></code></span></h4>
 <div class='docblock'><p>Replace the hyperlinks. This consumes the context and returns a new one
 with a different lifetime, together with the old hyperlinks.</p>
 </div></div></section>

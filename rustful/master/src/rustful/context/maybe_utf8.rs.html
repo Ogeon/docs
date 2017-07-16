@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -534,496 +534,496 @@
 <span id="489">489</span>
 <span id="490">490</span>
 <span id="491">491</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Deref</span>, <span class='ident'>DerefMut</span>, <span class='ident'>Drop</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::{<span class='ident'>Cow</span>, <span class='ident'>Borrow</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>hash</span>::{<span class='ident'>Hash</span>, <span class='ident'>Hasher</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>::<span class='ident'>Ordering</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Deref</span>, <span class="ident">DerefMut</span>, <span class="ident">Drop</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::{<span class="ident">Cow</span>, <span class="ident">Borrow</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">hash</span>::{<span class="ident">Hash</span>, <span class="ident">Hasher</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
 
-<span class='kw'>use</span> ::<span class='ident'>utils</span>::<span class='ident'>BytesExt</span>;
+<span class="kw">use</span> ::<span class="ident">utils</span>::<span class="ident">BytesExt</span>;
 
-<span class='doccomment'>///An owned string that may be UTF-8 encoded.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>MaybeUtf8Owned</span> <span class='op'>=</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span>;
-<span class='doccomment'>///A slice of a string that may be UTF-8 encoded.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>MaybeUtf8Slice</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>, <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>]<span class='op'>&gt;</span>;
+<span class="doccomment">///An owned string that may be UTF-8 encoded.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">MaybeUtf8Owned</span> <span class="op">=</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span>;
+<span class="doccomment">///A slice of a string that may be UTF-8 encoded.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">MaybeUtf8Slice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]<span class="op">&gt;</span>;
 
-<span class='doccomment'>///String data that may or may not be UTF-8 encoded.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>///A UTF-8 encoded string.</span>
-    <span class='ident'>Utf8</span>(<span class='ident'>S</span>),
-    <span class='doccomment'>///A non-UTF-8 string.</span>
-    <span class='ident'>NotUtf8</span>(<span class='ident'>V</span>)
+<span class="doccomment">///String data that may or may not be UTF-8 encoded.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="doccomment">///A UTF-8 encoded string.</span>
+    <span class="ident">Utf8</span>(<span class="ident">S</span>),
+    <span class="doccomment">///A non-UTF-8 string.</span>
+    <span class="ident">NotUtf8</span>(<span class="ident">V</span>)
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>///Create an empty UTF-8 string.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>S</span>: <span class='ident'>From</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span><span class='op'>&gt;</span> {
-        <span class='ident'>MaybeUtf8</span>::<span class='ident'>Utf8</span>(<span class='string'>&quot;&quot;</span>.<span class='ident'>into</span>())
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="doccomment">///Create an empty UTF-8 string.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="ident">MaybeUtf8</span>::<span class="ident">Utf8</span>(<span class="string">&quot;&quot;</span>.<span class="ident">into</span>())
     }
 
-    <span class='doccomment'>///Produce a slice of this string.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///```</span>
-    <span class='doccomment'>///use rustful::context::{MaybeUtf8Owned, MaybeUtf8Slice};</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///let owned = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
-    <span class='doccomment'>///let slice: MaybeUtf8Slice = owned.as_slice();</span>
-    <span class='doccomment'>///```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_slice</span><span class='op'>&lt;</span><span class='ident'>Sref</span>: <span class='question-mark'>?</span><span class='ident'>Sized</span>, <span class='ident'>Vref</span>: <span class='question-mark'>?</span><span class='ident'>Sized</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>Sref</span>, <span class='kw-2'>&amp;</span><span class='ident'>Vref</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Sref</span><span class='op'>&gt;</span>, <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Vref</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>Utf8</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>MaybeUtf8</span>::<span class='ident'>Utf8</span>(<span class='ident'>s</span>.<span class='ident'>as_ref</span>()),
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>NotUtf8</span>(<span class='kw-2'>ref</span> <span class='ident'>v</span>) <span class='op'>=&gt;</span> <span class='ident'>MaybeUtf8</span>::<span class='ident'>NotUtf8</span>(<span class='ident'>v</span>.<span class='ident'>as_ref</span>())
+    <span class="doccomment">///Produce a slice of this string.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///```</span>
+    <span class="doccomment">///use rustful::context::{MaybeUtf8Owned, MaybeUtf8Slice};</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///let owned = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
+    <span class="doccomment">///let slice: MaybeUtf8Slice = owned.as_slice();</span>
+    <span class="doccomment">///```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_slice</span><span class="op">&lt;</span><span class="ident">Sref</span>: <span class="question-mark">?</span><span class="ident">Sized</span>, <span class="ident">Vref</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Sref</span>, <span class="kw-2">&amp;</span><span class="ident">Vref</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Sref</span><span class="op">&gt;</span>, <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Vref</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">MaybeUtf8</span>::<span class="ident">Utf8</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">MaybeUtf8</span>::<span class="ident">Utf8</span>(<span class="ident">s</span>.<span class="ident">as_ref</span>()),
+            <span class="ident">MaybeUtf8</span>::<span class="ident">NotUtf8</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) <span class="op">=&gt;</span> <span class="ident">MaybeUtf8</span>::<span class="ident">NotUtf8</span>(<span class="ident">v</span>.<span class="ident">as_ref</span>())
         }
     }
 
-    <span class='doccomment'>///Borrow the string if it&#39;s encoded as valid UTF-8.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///```</span>
-    <span class='doccomment'>///use rustful::context::MaybeUtf8Owned;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///let string = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
-    <span class='doccomment'>///assert_eq!(Some(&quot;abc&quot;), string.as_utf8());</span>
-    <span class='doccomment'>///```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_utf8</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>Utf8</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>s</span>.<span class='ident'>as_ref</span>()),
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>NotUtf8</span>(_) <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>
+    <span class="doccomment">///Borrow the string if it&#39;s encoded as valid UTF-8.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///```</span>
+    <span class="doccomment">///use rustful::context::MaybeUtf8Owned;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///let string = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
+    <span class="doccomment">///assert_eq!(Some(&quot;abc&quot;), string.as_utf8());</span>
+    <span class="doccomment">///```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_utf8</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">MaybeUtf8</span>::<span class="ident">Utf8</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">s</span>.<span class="ident">as_ref</span>()),
+            <span class="ident">MaybeUtf8</span>::<span class="ident">NotUtf8</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 
-    <span class='doccomment'>///Borrow the string if it&#39;s encoded as valid UTF-8, or make a lossy conversion.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///```</span>
-    <span class='doccomment'>///use rustful::context::MaybeUtf8Owned;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///let string = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
-    <span class='doccomment'>///assert_eq!(&quot;abc&quot;, string.as_utf8_lossy());</span>
-    <span class='doccomment'>///```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Cow</span><span class='op'>&lt;</span><span class='ident'>str</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>str</span><span class='op'>&gt;</span>, <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>Utf8</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>as_ref</span>().<span class='ident'>into</span>(),
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>NotUtf8</span>(<span class='kw-2'>ref</span> <span class='ident'>v</span>) <span class='op'>=&gt;</span> <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='ident'>v</span>.<span class='ident'>as_ref</span>())
+    <span class="doccomment">///Borrow the string if it&#39;s encoded as valid UTF-8, or make a lossy conversion.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///```</span>
+    <span class="doccomment">///use rustful::context::MaybeUtf8Owned;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///let string = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
+    <span class="doccomment">///assert_eq!(&quot;abc&quot;, string.as_utf8_lossy());</span>
+    <span class="doccomment">///```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_utf8_lossy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">MaybeUtf8</span>::<span class="ident">Utf8</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">as_ref</span>().<span class="ident">into</span>(),
+            <span class="ident">MaybeUtf8</span>::<span class="ident">NotUtf8</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) <span class="op">=&gt;</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="ident">v</span>.<span class="ident">as_ref</span>())
         }
     }
 
-    <span class='doccomment'>///Borrow the string as a slice of bytes.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///```</span>
-    <span class='doccomment'>///use rustful::context::MaybeUtf8Owned;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///let string = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
-    <span class='doccomment'>///assert_eq!(b&quot;abc&quot;, string.as_bytes());</span>
-    <span class='doccomment'>///```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_bytes</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>] <span class='kw'>where</span> <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>, <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>Utf8</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>as_ref</span>(),
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>NotUtf8</span>(<span class='kw-2'>ref</span> <span class='ident'>v</span>) <span class='op'>=&gt;</span> <span class='ident'>v</span>.<span class='ident'>as_ref</span>()
+    <span class="doccomment">///Borrow the string as a slice of bytes.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///```</span>
+    <span class="doccomment">///use rustful::context::MaybeUtf8Owned;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///let string = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
+    <span class="doccomment">///assert_eq!(b&quot;abc&quot;, string.as_bytes());</span>
+    <span class="doccomment">///```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] <span class="kw">where</span> <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">MaybeUtf8</span>::<span class="ident">Utf8</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">as_ref</span>(),
+            <span class="ident">MaybeUtf8</span>::<span class="ident">NotUtf8</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) <span class="op">=&gt;</span> <span class="ident">v</span>.<span class="ident">as_ref</span>()
         }
     }
 
-    <span class='doccomment'>///Check if the string is valid UTF-8.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///```</span>
-    <span class='doccomment'>///use rustful::context::MaybeUtf8Owned;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///let valid = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
-    <span class='doccomment'>///assert_eq!(valid.is_utf8(), true);</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///let invalid = MaybeUtf8Owned::from(vec![255]);</span>
-    <span class='doccomment'>///assert_eq!(invalid.is_utf8(), false);</span>
-    <span class='doccomment'>///```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>is_utf8</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>Utf8</span>(_) <span class='op'>=&gt;</span> <span class='bool-val'>true</span>,
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>NotUtf8</span>(_) <span class='op'>=&gt;</span> <span class='bool-val'>false</span>
+    <span class="doccomment">///Check if the string is valid UTF-8.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///```</span>
+    <span class="doccomment">///use rustful::context::MaybeUtf8Owned;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///let valid = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
+    <span class="doccomment">///assert_eq!(valid.is_utf8(), true);</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///let invalid = MaybeUtf8Owned::from(vec![255]);</span>
+    <span class="doccomment">///assert_eq!(invalid.is_utf8(), false);</span>
+    <span class="doccomment">///```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_utf8</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">MaybeUtf8</span>::<span class="ident">Utf8</span>(_) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
+            <span class="ident">MaybeUtf8</span>::<span class="ident">NotUtf8</span>(_) <span class="op">=&gt;</span> <span class="bool-val">false</span>
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span> {
-    <span class='doccomment'>///Push a single `char` to the end of the string.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///```</span>
-    <span class='doccomment'>///use rustful::context::MaybeUtf8Owned;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///let mut string = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
-    <span class='doccomment'>///string.push_char(&#39;d&#39;);</span>
-    <span class='doccomment'>///assert_eq!(&quot;abcd&quot;, string);</span>
-    <span class='doccomment'>///```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>push_char</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>c</span>: <span class='ident'>char</span>) {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>Utf8</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>push</span>(<span class='ident'>c</span>),
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>NotUtf8</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>v</span>) <span class='op'>=&gt;</span> {
-                <span class='comment'>//Do some witchcraft until encode_utf8 becomes a thing.</span>
-                <span class='kw'>let</span> <span class='ident'>string</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>String</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { ::<span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='ident'>v</span>) };
-                <span class='ident'>string</span>.<span class='ident'>push</span>(<span class='ident'>c</span>);
+<span class="kw">impl</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span> {
+    <span class="doccomment">///Push a single `char` to the end of the string.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///```</span>
+    <span class="doccomment">///use rustful::context::MaybeUtf8Owned;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///let mut string = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
+    <span class="doccomment">///string.push_char(&#39;d&#39;);</span>
+    <span class="doccomment">///assert_eq!(&quot;abcd&quot;, string);</span>
+    <span class="doccomment">///```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_char</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">c</span>: <span class="ident">char</span>) {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">MaybeUtf8</span>::<span class="ident">Utf8</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">push</span>(<span class="ident">c</span>),
+            <span class="ident">MaybeUtf8</span>::<span class="ident">NotUtf8</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">v</span>) <span class="op">=&gt;</span> {
+                <span class="comment">//Do some witchcraft until encode_utf8 becomes a thing.</span>
+                <span class="kw">let</span> <span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">String</span> <span class="op">=</span> <span class="kw">unsafe</span> { ::<span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">v</span>) };
+                <span class="ident">string</span>.<span class="ident">push</span>(<span class="ident">c</span>);
             }
         }
     }
 
-    <span class='doccomment'>///Push a single byte to the end of the string. The string&#39;s UTF-8</span>
-    <span class='doccomment'>///compatibility will be reevaluated and may change each time `push_byte`</span>
-    <span class='doccomment'>///is called. This may have a noticeable performance impact.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///```</span>
-    <span class='doccomment'>///use rustful::context::MaybeUtf8Owned;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///let mut string = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
-    <span class='doccomment'>///string.push_byte(255);</span>
-    <span class='doccomment'>///assert_eq!(string.is_utf8(), false);</span>
-    <span class='doccomment'>///```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>push_byte</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>byte</span>: <span class='ident'>u8</span>) {
-        <span class='self'>self</span>.<span class='ident'>push_bytes</span>(<span class='kw-2'>&amp;</span>[<span class='ident'>byte</span>])
+    <span class="doccomment">///Push a single byte to the end of the string. The string&#39;s UTF-8</span>
+    <span class="doccomment">///compatibility will be reevaluated and may change each time `push_byte`</span>
+    <span class="doccomment">///is called. This may have a noticeable performance impact.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///```</span>
+    <span class="doccomment">///use rustful::context::MaybeUtf8Owned;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///let mut string = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
+    <span class="doccomment">///string.push_byte(255);</span>
+    <span class="doccomment">///assert_eq!(string.is_utf8(), false);</span>
+    <span class="doccomment">///```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_byte</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">byte</span>: <span class="ident">u8</span>) {
+        <span class="self">self</span>.<span class="ident">push_bytes</span>(<span class="kw-2">&amp;</span>[<span class="ident">byte</span>])
     }
 
-    <span class='doccomment'>///Extend the string.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///```</span>
-    <span class='doccomment'>///use rustful::context::MaybeUtf8Owned;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///let mut string = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
-    <span class='doccomment'>///string.push_str(&quot;def&quot;);</span>
-    <span class='doccomment'>///assert_eq!(&quot;abcdef&quot;, string);</span>
-    <span class='doccomment'>///```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>push_str</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>string</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>Utf8</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>push_str</span>(<span class='ident'>string</span>),
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>NotUtf8</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>v</span>) <span class='op'>=&gt;</span> <span class='ident'>v</span>.<span class='ident'>push_bytes</span>(<span class='ident'>string</span>.<span class='ident'>as_bytes</span>())
+    <span class="doccomment">///Extend the string.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///```</span>
+    <span class="doccomment">///use rustful::context::MaybeUtf8Owned;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///let mut string = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
+    <span class="doccomment">///string.push_str(&quot;def&quot;);</span>
+    <span class="doccomment">///assert_eq!(&quot;abcdef&quot;, string);</span>
+    <span class="doccomment">///```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">MaybeUtf8</span>::<span class="ident">Utf8</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">push_str</span>(<span class="ident">string</span>),
+            <span class="ident">MaybeUtf8</span>::<span class="ident">NotUtf8</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">v</span>) <span class="op">=&gt;</span> <span class="ident">v</span>.<span class="ident">push_bytes</span>(<span class="ident">string</span>.<span class="ident">as_bytes</span>())
         }
     }
 
-    <span class='doccomment'>///Push a number of bytes to the string. The string&#39;s UTF-8 compatibility</span>
-    <span class='doccomment'>///may change.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///```</span>
-    <span class='doccomment'>///use rustful::context::MaybeUtf8Owned;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///let mut string = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
-    <span class='doccomment'>///string.push_bytes(&amp;[100, 101, 102]);</span>
-    <span class='doccomment'>///assert_eq!(&quot;abcdef&quot;, string);</span>
-    <span class='doccomment'>///```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>push_bytes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>bytes</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) {
-        <span class='kw'>match</span> ::<span class='ident'>std</span>::<span class='ident'>str</span>::<span class='ident'>from_utf8</span>(<span class='ident'>bytes</span>) {
-            <span class='prelude-val'>Ok</span>(<span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>push_str</span>(<span class='ident'>string</span>),
-            <span class='prelude-val'>Err</span>(_) <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>as_buffer</span>().<span class='ident'>push_bytes</span>(<span class='ident'>bytes</span>);
+    <span class="doccomment">///Push a number of bytes to the string. The string&#39;s UTF-8 compatibility</span>
+    <span class="doccomment">///may change.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///```</span>
+    <span class="doccomment">///use rustful::context::MaybeUtf8Owned;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///let mut string = MaybeUtf8Owned::from(&quot;abc&quot;);</span>
+    <span class="doccomment">///string.push_bytes(&amp;[100, 101, 102]);</span>
+    <span class="doccomment">///assert_eq!(&quot;abcdef&quot;, string);</span>
+    <span class="doccomment">///```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) {
+        <span class="kw">match</span> ::<span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">bytes</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">string</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">push_str</span>(<span class="ident">string</span>),
+            <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">as_buffer</span>().<span class="ident">push_bytes</span>(<span class="ident">bytes</span>);
             }
         }
     }
 
-    <span class='doccomment'>///Borrow this string as a mutable byte buffer. The string&#39;s UTF-8</span>
-    <span class='doccomment'>///compatibility will be reevaluated when the buffer is dropped.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_buffer</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Buffer</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='ident'>MaybeUtf8</span>::<span class='ident'>NotUtf8</span>(<span class='macro'>vec</span><span class='macro'>!</span>[]);
-        ::<span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>swap</span>(<span class='self'>self</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>v</span>);
-        <span class='ident'>Buffer</span> {
-            <span class='ident'>bytes</span>: <span class='ident'>v</span>.<span class='ident'>into</span>(),
-            <span class='ident'>source</span>: <span class='self'>self</span>
+    <span class="doccomment">///Borrow this string as a mutable byte buffer. The string&#39;s UTF-8</span>
+    <span class="doccomment">///compatibility will be reevaluated when the buffer is dropped.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_buffer</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Buffer</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">MaybeUtf8</span>::<span class="ident">NotUtf8</span>(<span class="macro">vec</span><span class="macro">!</span>[]);
+        ::<span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">swap</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">v</span>);
+        <span class="ident">Buffer</span> {
+            <span class="ident">bytes</span>: <span class="ident">v</span>.<span class="ident">into</span>(),
+            <span class="ident">source</span>: <span class="self">self</span>
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>string</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>V</span><span class='op'>&gt;</span> {
-        <span class='ident'>MaybeUtf8</span>::<span class='ident'>Utf8</span>(<span class='ident'>string</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">string</span>: <span class="ident">String</span>) <span class="op">-&gt;</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">V</span><span class="op">&gt;</span> {
+        <span class="ident">MaybeUtf8</span>::<span class="ident">Utf8</span>(<span class="ident">string</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>S</span>: <span class='ident'>From</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span><span class='op'>&gt;</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>string</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> {
-        <span class='ident'>MaybeUtf8</span>::<span class='ident'>Utf8</span>(<span class='ident'>string</span>.<span class='ident'>into</span>())
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span>: <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> {
+        <span class="ident">MaybeUtf8</span>::<span class="ident">Utf8</span>(<span class="ident">string</span>.<span class="ident">into</span>())
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>bytes</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>match</span> <span class='ident'>String</span>::<span class='ident'>from_utf8</span>(<span class='ident'>bytes</span>) {
-            <span class='prelude-val'>Ok</span>(<span class='ident'>string</span>) <span class='op'>=&gt;</span> <span class='ident'>MaybeUtf8</span>::<span class='ident'>Utf8</span>(<span class='ident'>string</span>),
-            <span class='prelude-val'>Err</span>(<span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='ident'>MaybeUtf8</span>::<span class='ident'>NotUtf8</span>(<span class='ident'>e</span>.<span class='ident'>into_bytes</span>())
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">bytes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">match</span> <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">bytes</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">string</span>) <span class="op">=&gt;</span> <span class="ident">MaybeUtf8</span>::<span class="ident">Utf8</span>(<span class="ident">string</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=&gt;</span> <span class="ident">MaybeUtf8</span>::<span class="ident">NotUtf8</span>(<span class="ident">e</span>.<span class="ident">into_bytes</span>())
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>, <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;&gt;</span> <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>as_ref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>] {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>Utf8</span>(<span class='kw-2'>ref</span> <span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>as_ref</span>(),
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>NotUtf8</span>(<span class='kw-2'>ref</span> <span class='ident'>v</span>) <span class='op'>=&gt;</span> <span class='ident'>v</span>.<span class='ident'>as_ref</span>()
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">MaybeUtf8</span>::<span class="ident">Utf8</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">as_ref</span>(),
+            <span class="ident">MaybeUtf8</span>::<span class="ident">NotUtf8</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) <span class="op">=&gt;</span> <span class="ident">v</span>.<span class="ident">as_ref</span>()
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>, <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;&gt;</span> <span class='ident'>Borrow</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>borrow</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>] {
-        <span class='self'>self</span>.<span class='ident'>as_ref</span>()
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">Borrow</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">borrow</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+        <span class="self">self</span>.<span class="ident">as_ref</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span>, <span class='ident'>B</span>: <span class='question-mark'>?</span><span class='ident'>Sized</span><span class='op'>&gt;</span> <span class='ident'>PartialEq</span><span class='op'>&lt;</span><span class='ident'>B</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>B</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span>, <span class="ident">B</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>eq</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='self'>self</span>.<span class='ident'>as_ref</span>().<span class='ident'>eq</span>(<span class='ident'>other</span>.<span class='ident'>as_ref</span>())
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">B</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">eq</span>(<span class="ident">other</span>.<span class="ident">as_ref</span>())
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>PartialEq</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>str</span> <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">str</span> <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>eq</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='ident'>other</span>.<span class='ident'>eq</span>(<span class='self'>self</span>)
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="ident">other</span>.<span class="ident">eq</span>(<span class="self">self</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>PartialEq</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span> <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>eq</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='ident'>other</span>.<span class='ident'>eq</span>(<span class='self'>self</span>)
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="ident">other</span>.<span class="ident">eq</span>(<span class="self">self</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>PartialEq</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>String</span> <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">String</span> <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>eq</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='ident'>other</span>.<span class='ident'>eq</span>(<span class='self'>self</span>)
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="ident">other</span>.<span class="ident">eq</span>(<span class="self">self</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>PartialEq</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>str</span><span class='op'>&gt;</span> <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span><span class="op">&gt;</span> <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>eq</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='ident'>other</span>.<span class='ident'>eq</span>(<span class='self'>self</span>.<span class='ident'>as_ref</span>())
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="ident">other</span>.<span class="ident">eq</span>(<span class="self">self</span>.<span class="ident">as_ref</span>())
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>PartialEq</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> [<span class='ident'>u8</span>] <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> [<span class="ident">u8</span>] <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>eq</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='ident'>other</span>.<span class='ident'>eq</span>(<span class='self'>self</span>)
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="ident">other</span>.<span class="ident">eq</span>(<span class="self">self</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>PartialEq</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>] <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>] <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>eq</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='ident'>other</span>.<span class='ident'>eq</span>(<span class='self'>self</span>)
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="ident">other</span>.<span class="ident">eq</span>(<span class="self">self</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>PartialEq</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span> <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>eq</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='ident'>other</span>.<span class='ident'>eq</span>(<span class='self'>self</span>)
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="ident">other</span>.<span class="ident">eq</span>(<span class="self">self</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>, <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;&gt;</span> <span class='ident'>Eq</span> <span class='kw'>for</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> {}
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> {}
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span>, <span class='ident'>B</span>: <span class='question-mark'>?</span><span class='ident'>Sized</span><span class='op'>&gt;</span> <span class='ident'>PartialOrd</span><span class='op'>&lt;</span><span class='ident'>B</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>B</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span>, <span class="ident">B</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>partial_cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>B</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Ordering</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>as_ref</span>().<span class='ident'>partial_cmp</span>(<span class='ident'>other</span>.<span class='ident'>as_ref</span>())
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">B</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">partial_cmp</span>(<span class="ident">other</span>.<span class="ident">as_ref</span>())
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>PartialOrd</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>str</span> <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">str</span> <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>partial_cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Ordering</span><span class='op'>&gt;</span> {
-        <span class='ident'>other</span>.<span class='ident'>partial_cmp</span>(<span class='self'>self</span>)
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+        <span class="ident">other</span>.<span class="ident">partial_cmp</span>(<span class="self">self</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>PartialOrd</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span> <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>partial_cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Ordering</span><span class='op'>&gt;</span> {
-        <span class='ident'>other</span>.<span class='ident'>partial_cmp</span>(<span class='self'>self</span>)
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+        <span class="ident">other</span>.<span class="ident">partial_cmp</span>(<span class="self">self</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>PartialOrd</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>String</span> <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">String</span> <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>partial_cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Ordering</span><span class='op'>&gt;</span> {
-        <span class='ident'>other</span>.<span class='ident'>partial_cmp</span>(<span class='self'>self</span>)
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+        <span class="ident">other</span>.<span class="ident">partial_cmp</span>(<span class="self">self</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>PartialOrd</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>str</span><span class='op'>&gt;</span> <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">str</span><span class="op">&gt;</span> <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>partial_cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Ordering</span><span class='op'>&gt;</span> {
-        <span class='ident'>other</span>.<span class='ident'>partial_cmp</span>(<span class='self'>self</span>.<span class='ident'>as_ref</span>())
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+        <span class="ident">other</span>.<span class="ident">partial_cmp</span>(<span class="self">self</span>.<span class="ident">as_ref</span>())
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>PartialOrd</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> [<span class='ident'>u8</span>] <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> [<span class="ident">u8</span>] <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>partial_cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Ordering</span><span class='op'>&gt;</span> {
-        <span class='ident'>other</span>.<span class='ident'>partial_cmp</span>(<span class='self'>self</span>)
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+        <span class="ident">other</span>.<span class="ident">partial_cmp</span>(<span class="self">self</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>PartialOrd</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>u8</span>] <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>] <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>partial_cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Ordering</span><span class='op'>&gt;</span> {
-        <span class='ident'>other</span>.<span class='ident'>partial_cmp</span>(<span class='self'>self</span>)
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+        <span class="ident">other</span>.<span class="ident">partial_cmp</span>(<span class="self">self</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> <span class='ident'>PartialOrd</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span> <span class='kw'>where</span>
-    <span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>,
-    <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>,
+    <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>
 {
-    <span class='kw'>fn</span> <span class='ident'>partial_cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Ordering</span><span class='op'>&gt;</span> {
-        <span class='ident'>other</span>.<span class='ident'>partial_cmp</span>(<span class='self'>self</span>)
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+        <span class="ident">other</span>.<span class="ident">partial_cmp</span>(<span class="self">self</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>, <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;&gt;</span> <span class='ident'>Ord</span> <span class='kw'>for</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>cmp</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>other</span>: <span class='kw-2'>&amp;</span><span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Ordering</span> {
-        <span class='self'>self</span>.<span class='ident'>partial_cmp</span>(<span class='ident'>other</span>).<span class='ident'>unwrap</span>()
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">Ord</span> <span class="kw">for</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Ordering</span> {
+        <span class="self">self</span>.<span class="ident">partial_cmp</span>(<span class="ident">other</span>).<span class="ident">unwrap</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>, <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;&gt;</span> <span class='ident'>Hash</span> <span class='kw'>for</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>hash</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>Hasher</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>hasher</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>H</span>) {
-        <span class='self'>self</span>.<span class='ident'>as_ref</span>().<span class='ident'>hash</span>(<span class='ident'>hasher</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">Hash</span> <span class="kw">for</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">hash</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Hasher</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hasher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">H</span>) {
+        <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">hash</span>(<span class="ident">hasher</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>, <span class='ident'>V</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>into</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>Utf8</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>into</span>(),
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>NotUtf8</span>(<span class='ident'>v</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>bytes</span> <span class='op'>=</span> <span class='ident'>v</span>.<span class='ident'>into</span>();
-                <span class='kw'>match</span> <span class='ident'>String</span>::<span class='ident'>from_utf8_lossy</span>(<span class='kw-2'>&amp;</span><span class='ident'>bytes</span>) {
-                    <span class='ident'>Cow</span>::<span class='ident'>Borrowed</span>(_) <span class='op'>=&gt;</span> <span class='kw'>unsafe</span> { <span class='ident'>String</span>::<span class='ident'>from_utf8_unchecked</span>(<span class='ident'>bytes</span>) },
-                    <span class='ident'>Cow</span>::<span class='ident'>Owned</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">MaybeUtf8</span>::<span class="ident">Utf8</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">into</span>(),
+            <span class="ident">MaybeUtf8</span>::<span class="ident">NotUtf8</span>(<span class="ident">v</span>) <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">v</span>.<span class="ident">into</span>();
+                <span class="kw">match</span> <span class="ident">String</span>::<span class="ident">from_utf8_lossy</span>(<span class="kw-2">&amp;</span><span class="ident">bytes</span>) {
+                    <span class="ident">Cow</span>::<span class="ident">Borrowed</span>(_) <span class="op">=&gt;</span> <span class="kw">unsafe</span> { <span class="ident">String</span>::<span class="ident">from_utf8_unchecked</span>(<span class="ident">bytes</span>) },
+                    <span class="ident">Cow</span>::<span class="ident">Owned</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>
                 }
             }
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span>, <span class='ident'>V</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span> <span class='kw'>for</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>into</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>Utf8</span>(<span class='ident'>s</span>) <span class='op'>=&gt;</span> <span class='ident'>s</span>.<span class='ident'>into</span>(),
-            <span class='ident'>MaybeUtf8</span>::<span class='ident'>NotUtf8</span>(<span class='ident'>v</span>) <span class='op'>=&gt;</span> <span class='ident'>v</span>.<span class='ident'>into</span>()
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span>, <span class="ident">V</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">MaybeUtf8</span>::<span class="ident">Utf8</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">into</span>(),
+            <span class="ident">MaybeUtf8</span>::<span class="ident">NotUtf8</span>(<span class="ident">v</span>) <span class="op">=&gt;</span> <span class="ident">v</span>.<span class="ident">into</span>()
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span>, <span class='ident'>V</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;&gt;</span> <span class='ident'>Deref</span> <span class='kw'>for</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>S</span>, <span class='ident'>V</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Target</span><span class='op'>=</span>[<span class='ident'>u8</span>];
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">V</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">V</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Target</span><span class="op">=</span>[<span class="ident">u8</span>];
 
-    <span class='kw'>fn</span> <span class='ident'>deref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>] {
-        <span class='self'>self</span>.<span class='ident'>as_ref</span>()
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+        <span class="self">self</span>.<span class="ident">as_ref</span>()
     }
 }
 
-<span class='doccomment'>///A byte buffer for more efficient `MaybeUtf8` manipulation.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///The buffer is essentially a `&amp;mut Vec&lt;u8&gt;` that will be checked for UTF-8</span>
-<span class='doccomment'>///compatibility when dropped. It comes with a few extra convenience methods.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Buffer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>bytes</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span>,
-    <span class='ident'>source</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>MaybeUtf8</span><span class='op'>&lt;</span><span class='ident'>String</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span>
+<span class="doccomment">///A byte buffer for more efficient `MaybeUtf8` manipulation.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///The buffer is essentially a `&amp;mut Vec&lt;u8&gt;` that will be checked for UTF-8</span>
+<span class="doccomment">///compatibility when dropped. It comes with a few extra convenience methods.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Buffer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">bytes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+    <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">MaybeUtf8</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Buffer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>///Push a number of bytes to the buffer in a relatively efficient way.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///```</span>
-    <span class='doccomment'>///use rustful::context::MaybeUtf8Owned;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///let mut string = MaybeUtf8Owned::new();</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///{</span>
-    <span class='doccomment'>///    let mut buffer = string.as_buffer();</span>
-    <span class='doccomment'>///    buffer.push_bytes(&quot;abc&quot;.as_bytes());</span>
-    <span class='doccomment'>///}</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///assert!(string.is_utf8());</span>
-    <span class='doccomment'>///assert_eq!(&quot;abc&quot;, string);</span>
-    <span class='doccomment'>///```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>push_bytes</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>bytes</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) {
-        <span class='self'>self</span>.<span class='ident'>bytes</span>.<span class='ident'>push_bytes</span>(<span class='ident'>bytes</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Buffer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">///Push a number of bytes to the buffer in a relatively efficient way.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///```</span>
+    <span class="doccomment">///use rustful::context::MaybeUtf8Owned;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///let mut string = MaybeUtf8Owned::new();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///{</span>
+    <span class="doccomment">///    let mut buffer = string.as_buffer();</span>
+    <span class="doccomment">///    buffer.push_bytes(&quot;abc&quot;.as_bytes());</span>
+    <span class="doccomment">///}</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///assert!(string.is_utf8());</span>
+    <span class="doccomment">///assert_eq!(&quot;abc&quot;, string);</span>
+    <span class="doccomment">///```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) {
+        <span class="self">self</span>.<span class="ident">bytes</span>.<span class="ident">push_bytes</span>(<span class="ident">bytes</span>)
     }
 
-    <span class='doccomment'>///Push a single `char` to the end of the buffer.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///```</span>
-    <span class='doccomment'>///use rustful::context::MaybeUtf8Owned;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///let mut string = MaybeUtf8Owned::new();</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///{</span>
-    <span class='doccomment'>///    let mut buffer = string.as_buffer();</span>
-    <span class='doccomment'>///    buffer.push_char(&#39;å&#39;);</span>
-    <span class='doccomment'>///    buffer.push_char(&#39;1&#39;);</span>
-    <span class='doccomment'>///    buffer.push_char(&#39;€&#39;);</span>
-    <span class='doccomment'>///}</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///assert!(string.is_utf8());</span>
-    <span class='doccomment'>///assert_eq!(&quot;å1€&quot;, string);</span>
-    <span class='doccomment'>///```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>push_char</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>c</span>: <span class='ident'>char</span>) {
-        <span class='comment'>//Do some witchcraft until encode_utf8 becomes a thing.</span>
-        <span class='kw'>let</span> <span class='ident'>string</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>String</span> <span class='op'>=</span> <span class='kw'>unsafe</span> { ::<span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>transmute</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>bytes</span>) };
-        <span class='ident'>string</span>.<span class='ident'>push</span>(<span class='ident'>c</span>);
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Deref</span> <span class='kw'>for</span> <span class='ident'>Buffer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Target</span> <span class='op'>=</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span>;
-
-    <span class='kw'>fn</span> <span class='ident'>deref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>bytes</span>
+    <span class="doccomment">///Push a single `char` to the end of the buffer.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///```</span>
+    <span class="doccomment">///use rustful::context::MaybeUtf8Owned;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///let mut string = MaybeUtf8Owned::new();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///{</span>
+    <span class="doccomment">///    let mut buffer = string.as_buffer();</span>
+    <span class="doccomment">///    buffer.push_char(&#39;å&#39;);</span>
+    <span class="doccomment">///    buffer.push_char(&#39;1&#39;);</span>
+    <span class="doccomment">///    buffer.push_char(&#39;€&#39;);</span>
+    <span class="doccomment">///}</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///assert!(string.is_utf8());</span>
+    <span class="doccomment">///assert_eq!(&quot;å1€&quot;, string);</span>
+    <span class="doccomment">///```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">push_char</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">c</span>: <span class="ident">char</span>) {
+        <span class="comment">//Do some witchcraft until encode_utf8 becomes a thing.</span>
+        <span class="kw">let</span> <span class="ident">string</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">String</span> <span class="op">=</span> <span class="kw">unsafe</span> { ::<span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">bytes</span>) };
+        <span class="ident">string</span>.<span class="ident">push</span>(<span class="ident">c</span>);
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>DerefMut</span> <span class='kw'>for</span> <span class='ident'>Buffer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>deref_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;</span> {
-        <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>bytes</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">Buffer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>;
+
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bytes</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Drop</span> <span class='kw'>for</span> <span class='ident'>Buffer</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>drop</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='macro'>vec</span><span class='macro'>!</span>[];
-        ::<span class='ident'>std</span>::<span class='ident'>mem</span>::<span class='ident'>swap</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>v</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>bytes</span>);
-        <span class='kw-2'>*</span><span class='self'>self</span>.<span class='ident'>source</span> <span class='op'>=</span> <span class='ident'>v</span>.<span class='ident'>into</span>();
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">DerefMut</span> <span class="kw">for</span> <span class="ident">Buffer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deref_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">bytes</span>
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Buffer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">v</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[];
+        ::<span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">swap</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">v</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">bytes</span>);
+        <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">source</span> <span class="op">=</span> <span class="ident">v</span>.<span class="ident">into</span>();
     }
 }
 </pre>

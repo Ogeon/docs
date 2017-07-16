@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc struct">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>multipart</a>::<wbr><a href='index.html'>server</a></p><script>window.sidebarCurrent = {name: 'MultipartField', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct MultipartField</p><div class="block items"><ul><li><a href="#fields">Fields</a></li><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>multipart</a>::<wbr><a href='index.html'>server</a></p><script>window.sidebarCurrent = {name: 'MultipartField', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,34 +43,34 @@
         </form>
     </nav>
 
-    <section id='main' class="content struct">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>multipart</a>::<wbr><a href='index.html'>server</a>::<wbr><a class='struct' href=''>MultipartField</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>multipart</a>::<wbr><a href='index.html'>server</a>::<wbr><a class="struct" href=''>MultipartField</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/multipart/server/field.rs.html#175-180' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct MultipartField&lt;M:&nbsp;<a class='trait' href='../../multipart/server/trait.ReadEntry.html' title='multipart::server::ReadEntry'>ReadEntry</a>&gt; {
-    pub name: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a>,
-    pub data: <a class='enum' href='../../multipart/server/enum.MultipartData.html' title='multipart::server::MultipartData'>MultipartData</a>&lt;M&gt;,
+<pre class='rust struct'>pub struct MultipartField&lt;M:&nbsp;<a class="trait" href="../../multipart/server/trait.ReadEntry.html" title="trait multipart::server::ReadEntry">ReadEntry</a>&gt; {
+    pub name: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a>,
+    pub data: <a class="enum" href="../../multipart/server/enum.MultipartData.html" title="enum multipart::server::MultipartData">MultipartData</a>&lt;M&gt;,
 }</pre><div class='docblock'><p>A field in a multipart request. May be either text or a binary stream (file).</p>
-</div><h2 class='fields'>Fields</h2><span id='structfield.name' class='structfield'>
+</div><h2 id='fields' class='fields'>Fields</h2><span id='structfield.name' class="structfield">
                            <span id='name.v' class='invisible'>
-                           <code>name: <a class='struct' href='https://doc.rust-lang.org/nightly/collections/string/struct.String.html' title='collections::string::String'>String</a></code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The field&#39;s name from the form</p>
-</div><span id='structfield.data' class='structfield'>
+                           <code>name: <a class="struct" href="https://doc.rust-lang.org/nightly/collections/string/struct.String.html" title="struct collections::string::String">String</a></code>
+                           </span></span><div class='docblock'><p>The field&#39;s name from the form</p>
+</div><span id='structfield.data' class="structfield">
                            <span id='data.v' class='invisible'>
-                           <code>data: <a class='enum' href='../../multipart/server/enum.MultipartData.html' title='multipart::server::MultipartData'>MultipartData</a>&lt;M&gt;</code>
-                           </span></span><span class='stab '></span><div class='docblock'><p>The data of the field. Can be text or binary.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;M:&nbsp;<a class='trait' href='../../multipart/server/trait.ReadEntry.html' title='multipart::server::ReadEntry'>ReadEntry</a>&gt; <a class='struct' href='../../multipart/server/struct.MultipartField.html' title='multipart::server::MultipartField'>MultipartField</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#182-210' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.next_entry' class='method'><span id='next_entry.v' class='invisible'><code>fn <a href='#method.next_entry' class='fnname'>next_entry</a>(self) -&gt; <a class='enum' href='../../multipart/server/enum.ReadEntryResult.html' title='multipart::server::ReadEntryResult'>ReadEntryResult</a>&lt;M&gt;</code></span></h4>
+                           <code>data: <a class="enum" href="../../multipart/server/enum.MultipartData.html" title="enum multipart::server::MultipartData">MultipartData</a>&lt;M&gt;</code>
+                           </span></span><div class='docblock'><p>The data of the field. Can be text or binary.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;M:&nbsp;<a class="trait" href="../../multipart/server/trait.ReadEntry.html" title="trait multipart::server::ReadEntry">ReadEntry</a>&gt; <a class="struct" href="../../multipart/server/struct.MultipartField.html" title="struct multipart::server::MultipartField">MultipartField</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#182-210' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.next_entry' class="method"><span id='next_entry.v' class='invisible'><code>fn <a href='#method.next_entry' class='fnname'>next_entry</a>(self) -&gt; <a class="enum" href="../../multipart/server/enum.ReadEntryResult.html" title="enum multipart::server::ReadEntryResult">ReadEntryResult</a>&lt;M&gt;</code></span></h4>
 <div class='docblock'><p>Read the next entry in the request.</p>
-</div><h4 id='method.next_entry_inplace' class='method'><span id='next_entry_inplace.v' class='invisible'><code>fn <a href='#method.next_entry_inplace' class='fnname'>next_entry_inplace</a>(&amp;mut self) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;<a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;&amp;mut Self&gt;&gt; <span class='where fmt-newline'>where &amp;'a mut M: <a class='trait' href='../../multipart/server/trait.ReadEntry.html' title='multipart::server::ReadEntry'>ReadEntry</a></span></code></span></h4>
+</div><h4 id='method.next_entry_inplace' class="method"><span id='next_entry_inplace.v' class='invisible'><code>fn <a href='#method.next_entry_inplace' class='fnname'>next_entry_inplace</a>(&amp;mut self) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;mut Self&gt;&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;'a mut M: <a class="trait" href="../../multipart/server/trait.ReadEntry.html" title="trait multipart::server::ReadEntry">ReadEntry</a>,&nbsp;</span></code></span></h4>
 <div class='docblock'><p>Update <code>self</code> as the next entry.</p>
 
 <p>Returns <code>Ok(Some(self))</code> if another entry was read, <code>Ok(None)</code> if the end of the body was
 reached, and <code>Err(e)</code> for any errors that occur.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;M:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> + <a class='trait' href='../../multipart/server/trait.ReadEntry.html' title='multipart::server::ReadEntry'>ReadEntry</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='struct' href='../../multipart/server/struct.MultipartField.html' title='multipart::server::MultipartField'>MultipartField</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#174' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;M:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> + <a class="trait" href="../../multipart/server/trait.ReadEntry.html" title="trait multipart::server::ReadEntry">ReadEntry</a>&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../multipart/server/struct.MultipartField.html" title="struct multipart::server::MultipartField">MultipartField</a>&lt;M&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#174' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

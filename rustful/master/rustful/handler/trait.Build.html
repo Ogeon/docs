@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>handler</a></p><script>window.sidebarCurrent = {name: 'Build', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait Build</p><div class="block items"><ul><li><a href="#associated-types">Associated Types</a></li><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>handler</a></p><script>window.sidebarCurrent = {name: 'Build', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,32 +43,32 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>handler</a>::<wbr><a class='trait' href=''>Build</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>handler</a>::<wbr><a class="trait" href=''>Build</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/rustful/handler/mod.rs.html#347-353' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Build&lt;'a&gt; {
-    type <a href='#associatedtype.Builder' class='type'>Builder</a>: 'a;
-    fn <a href='#tymethod.get_builder' class='fnname'>get_builder</a>(&amp;'a mut self, context: <a class='type' href='../../rustful/handler/type.BuilderContext.html' title='rustful::handler::BuilderContext'>BuilderContext</a>) -&gt; Self::<a class='trait' href='../../rustful/handler/trait.Build.html' title='rustful::handler::Build'>Builder</a>;
+    type <a href='#associatedtype.Builder' class="type">Builder</a>: 'a;
+    fn <a href='#tymethod.get_builder' class='fnname'>get_builder</a>(&amp;'a mut self, context: <a class="type" href="../../rustful/handler/type.BuilderContext.html" title="type rustful::handler::BuilderContext">BuilderContext</a>) -&gt; Self::<a class="trait" href="../../rustful/handler/trait.Build.html" title="trait rustful::handler::Build">Builder</a>;
 }</pre><div class='docblock'><p>A trait for handlers that can be build, using a chainable API.</p>
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Builder' class='method'><span id='Builder.t' class='invisible'><code>type <a href='#associatedtype.Builder' class='type'>Builder</a>: 'a</code></span></h3><div class='docblock'><p>The type that provides the builder API.</p>
+        <h3 id='associatedtype.Builder' class='method'><span id='Builder.t' class='invisible'><code>type <a href='#associatedtype.Builder' class="type">Builder</a>: 'a</code></span></h3><div class='docblock'><p>The type that provides the builder API.</p>
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.get_builder' class='method'><span id='get_builder.v' class='invisible'><code>fn <a href='#tymethod.get_builder' class='fnname'>get_builder</a>(&amp;'a mut self, context: <a class='type' href='../../rustful/handler/type.BuilderContext.html' title='rustful::handler::BuilderContext'>BuilderContext</a>) -&gt; Self::<a class='trait' href='../../rustful/handler/trait.Build.html' title='rustful::handler::Build'>Builder</a></code></span></h3><div class='docblock'><p>Get the builder type for this type, and prepare it with a context.</p>
+        <h3 id='tymethod.get_builder' class='method'><span id='get_builder.v' class='invisible'><code>fn <a href='#tymethod.get_builder' class='fnname'>get_builder</a>(&amp;'a mut self, context: <a class="type" href="../../rustful/handler/type.BuilderContext.html" title="type rustful::handler::BuilderContext">BuilderContext</a>) -&gt; Self::<a class="trait" href="../../rustful/handler/trait.Build.html" title="trait rustful::handler::Build">Builder</a></code></span></h3><div class='docblock'><p>Get the builder type for this type, and prepare it with a context.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;'a, T:&nbsp;'a&gt; Build&lt;'a&gt; for <a class='struct' href='../../rustful/handler/tree_router/struct.TreeRouter.html' title='rustful::handler::tree_router::TreeRouter'>TreeRouter</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;'a, T:&nbsp;'a&gt; Build&lt;'a&gt; for <a class='struct' href='../../rustful/handler/method_router/struct.MethodRouter.html' title='rustful::handler::method_router::MethodRouter'>MethodRouter</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;'a, A:&nbsp;'a, B:&nbsp;'a&gt; Build&lt;'a&gt; for <a class='struct' href='../../rustful/handler/or_else/struct.OrElse.html' title='rustful::handler::or_else::OrElse'>OrElse</a>&lt;A, B&gt;</code></li>
-<li><code>impl&lt;'a, T:&nbsp;'a&gt; Build&lt;'a&gt; for <a class='struct' href='../../rustful/handler/status_router/struct.StatusRouter.html' title='rustful::handler::status_router::StatusRouter'>StatusRouter</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;'a, H:&nbsp;<a class='trait' href='../../rustful/handler/trait.Build.html' title='rustful::handler::Build'>Build</a>&lt;'a&gt;&gt; Build&lt;'a&gt; for <a class='struct' href='../../rustful/handler/struct.Variables.html' title='rustful::handler::Variables'>Variables</a>&lt;H&gt;</code></li>
+    <li><code>impl&lt;'a, T:&nbsp;'a&gt; Build&lt;'a&gt; for <a class="struct" href="../../rustful/handler/tree_router/struct.TreeRouter.html" title="struct rustful::handler::tree_router::TreeRouter">TreeRouter</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;'a, T:&nbsp;'a&gt; Build&lt;'a&gt; for <a class="struct" href="../../rustful/handler/method_router/struct.MethodRouter.html" title="struct rustful::handler::method_router::MethodRouter">MethodRouter</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;'a, A:&nbsp;'a, B:&nbsp;'a&gt; Build&lt;'a&gt; for <a class="struct" href="../../rustful/handler/or_else/struct.OrElse.html" title="struct rustful::handler::or_else::OrElse">OrElse</a>&lt;A, B&gt;</code></li>
+<li><code>impl&lt;'a, T:&nbsp;'a&gt; Build&lt;'a&gt; for <a class="struct" href="../../rustful/handler/status_router/struct.StatusRouter.html" title="struct rustful::handler::status_router::StatusRouter">StatusRouter</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;'a, H:&nbsp;<a class="trait" href="../../rustful/handler/trait.Build.html" title="trait rustful::handler::Build">Build</a>&lt;'a&gt;&gt; Build&lt;'a&gt; for <a class="struct" href="../../rustful/handler/struct.Variables.html" title="struct rustful::handler::Variables">Variables</a>&lt;H&gt;</code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/rustful/handler/trait.Build.js">
                  </script></section>

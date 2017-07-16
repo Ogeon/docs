@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc mod">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>rustful</a></p><script>window.sidebarCurrent = {name: 'handler', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module handler</p><div class="block items"><ul><li><a href="#reexports">Reexports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'><a href='../index.html'>rustful</a></p><script>window.sidebarCurrent = {name: 'handler', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,8 +43,8 @@
         </form>
     </nav>
 
-    <section id='main' class="content mod">
-<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>rustful</a>::<wbr><a class='mod' href=''>handler</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>rustful</a>::<wbr><a class="mod" href=''>handler</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
@@ -57,23 +57,23 @@ but any other type of router can be used, as long as it implements the
 <a href="trait.HandleRequest.html"><code>HandleRequest</code></a> trait. Implementing the <a href="trait.Build.html"><code>Build</code></a>
 trait will also make it compatible with router builders:</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>rustful</span>;
-<span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>DefaultRouter</span>;
+<pre class="rust rust-example-rendered">
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rustful</span>;
+<span class="kw">use</span> <span class="ident">rustful</span>::<span class="ident">DefaultRouter</span>;
 
-<span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>router</span> <span class='op'>=</span> <span class='ident'>DefaultRouter</span>::<span class='op'>&lt;</span><span class='ident'>ExampleHandler</span><span class='op'>&gt;</span>::<span class='ident'>new</span>();
-<span class='ident'>router</span>.<span class='ident'>build</span>().<span class='ident'>many</span>(<span class='op'>|</span><span class='kw-2'>mut</span> <span class='ident'>node</span><span class='op'>|</span> {
-    <span class='ident'>node</span>.<span class='ident'>then</span>().<span class='ident'>on_get</span>(<span class='ident'>show_welcome</span>);
-    <span class='ident'>node</span>.<span class='ident'>path</span>(<span class='string'>&quot;about&quot;</span>).<span class='ident'>then</span>().<span class='ident'>on_get</span>(<span class='ident'>about_us</span>);
-    <span class='ident'>node</span>.<span class='ident'>path</span>(<span class='string'>&quot;users&quot;</span>).<span class='ident'>many</span>(<span class='op'>|</span><span class='kw-2'>mut</span> <span class='ident'>node</span><span class='op'>|</span> {
-        <span class='ident'>node</span>.<span class='ident'>then</span>().<span class='ident'>on_get</span>(<span class='ident'>list_users</span>);
-        <span class='ident'>node</span>.<span class='ident'>path</span>(<span class='string'>&quot;:id&quot;</span>).<span class='ident'>then</span>().<span class='ident'>on_get</span>(<span class='ident'>show_user</span>);
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">router</span> <span class="op">=</span> <span class="ident">DefaultRouter</span>::<span class="op">&lt;</span><span class="ident">ExampleHandler</span><span class="op">&gt;</span>::<span class="ident">new</span>();
+<span class="ident">router</span>.<span class="ident">build</span>().<span class="ident">many</span>(<span class="op">|</span><span class="kw-2">mut</span> <span class="ident">node</span><span class="op">|</span> {
+    <span class="ident">node</span>.<span class="ident">then</span>().<span class="ident">on_get</span>(<span class="ident">show_welcome</span>);
+    <span class="ident">node</span>.<span class="ident">path</span>(<span class="string">&quot;about&quot;</span>).<span class="ident">then</span>().<span class="ident">on_get</span>(<span class="ident">about_us</span>);
+    <span class="ident">node</span>.<span class="ident">path</span>(<span class="string">&quot;users&quot;</span>).<span class="ident">many</span>(<span class="op">|</span><span class="kw-2">mut</span> <span class="ident">node</span><span class="op">|</span> {
+        <span class="ident">node</span>.<span class="ident">then</span>().<span class="ident">on_get</span>(<span class="ident">list_users</span>);
+        <span class="ident">node</span>.<span class="ident">path</span>(<span class="string">&quot;:id&quot;</span>).<span class="ident">then</span>().<span class="ident">on_get</span>(<span class="ident">show_user</span>);
     });
-    <span class='ident'>node</span>.<span class='ident'>path</span>(<span class='string'>&quot;products&quot;</span>).<span class='ident'>many</span>(<span class='op'>|</span><span class='kw-2'>mut</span> <span class='ident'>node</span><span class='op'>|</span> {
-        <span class='ident'>node</span>.<span class='ident'>then</span>().<span class='ident'>on_get</span>(<span class='ident'>list_products</span>);
-        <span class='ident'>node</span>.<span class='ident'>path</span>(<span class='string'>&quot;:id&quot;</span>).<span class='ident'>then</span>().<span class='ident'>on_get</span>(<span class='ident'>show_product</span>);
+    <span class="ident">node</span>.<span class="ident">path</span>(<span class="string">&quot;products&quot;</span>).<span class="ident">many</span>(<span class="op">|</span><span class="kw-2">mut</span> <span class="ident">node</span><span class="op">|</span> {
+        <span class="ident">node</span>.<span class="ident">then</span>().<span class="ident">on_get</span>(<span class="ident">list_products</span>);
+        <span class="ident">node</span>.<span class="ident">path</span>(<span class="string">&quot;:id&quot;</span>).<span class="ident">then</span>().<span class="ident">on_get</span>(<span class="ident">show_product</span>);
     });
-    <span class='ident'>node</span>.<span class='ident'>path</span>(<span class='string'>&quot;*&quot;</span>).<span class='ident'>then</span>().<span class='ident'>on_get</span>(<span class='ident'>show_error</span>);
+    <span class="ident">node</span>.<span class="ident">path</span>(<span class="string">&quot;*&quot;</span>).<span class="ident">then</span>().<span class="ident">on_get</span>(<span class="ident">show_error</span>);
 });</pre>
 
 <h1 id='variables' class='section-header'><a href='#variables'>Variables</a></h1>
@@ -124,154 +124,150 @@ may be arranged in arbitrary directories: <code>&quot;downloads/*file_path&quot;
 don&#39;t care about the HTTP method? Maybe your handler takes care of that
 internally. Sure, no problem:</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>handler</span>::{<span class='ident'>Variables</span>, <span class='ident'>TreeRouter</span>};
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">rustful</span>::<span class="ident">handler</span>::{<span class="ident">Variables</span>, <span class="ident">TreeRouter</span>};
 
-<span class='kw'>let</span> <span class='ident'>my_router</span> <span class='op'>=</span> <span class='ident'>TreeRouter</span>::<span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Variables</span><span class='op'>&lt;</span><span class='ident'>ExampleHandler</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>::<span class='ident'>new</span>();</pre>
+<span class="kw">let</span> <span class="ident">my_router</span> <span class="op">=</span> <span class="ident">TreeRouter</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Variables</span><span class="op">&lt;</span><span class="ident">ExampleHandler</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>::<span class="ident">new</span>();</pre>
 
 <p>And what about those route variables? Not using them at all? Well, just
 remove them too, if you don&#39;t want them:</p>
 
-<pre class='rust rust-example-rendered'>
-<span class='kw'>use</span> <span class='ident'>rustful</span>::<span class='ident'>handler</span>::<span class='ident'>TreeRouter</span>;
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">rustful</span>::<span class="ident">handler</span>::<span class="ident">TreeRouter</span>;
 
-<span class='kw'>let</span> <span class='ident'>my_router</span> <span class='op'>=</span> <span class='ident'>TreeRouter</span>::<span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>ExampleHandler</span><span class='op'>&gt;&gt;</span>::<span class='ident'>new</span>();</pre>
+<span class="kw">let</span> <span class="ident">my_router</span> <span class="op">=</span> <span class="ident">TreeRouter</span>::<span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ExampleHandler</span><span class="op">&gt;&gt;</span>::<span class="ident">new</span>();</pre>
 
 <p>You can simply recombine and reorder the router types however you want, or
 why not make your own router?</p>
 </div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
-<table><tr><td><code>pub use self::<a class='mod'
-                                       href='./tree_router/index.html'>tree_router</a>::<a class='struct' href='../../rustful/handler/tree_router/struct.TreeRouter.html' title='rustful::handler::tree_router::TreeRouter'>TreeRouter</a>;</code></td></tr><tr><td><code>pub use self::<a class='mod'
-                                       href='./method_router/index.html'>method_router</a>::<a class='struct' href='../../rustful/handler/method_router/struct.MethodRouter.html' title='rustful::handler::method_router::MethodRouter'>MethodRouter</a>;</code></td></tr><tr><td><code>pub use self::<a class='mod'
-                                       href='./or_else/index.html'>or_else</a>::<a class='struct' href='../../rustful/handler/or_else/struct.OrElse.html' title='rustful::handler::or_else::OrElse'>OrElse</a>;</code></td></tr><tr><td><code>pub use self::<a class='mod'
-                                       href='./status_router/index.html'>status_router</a>::<a class='struct' href='../../rustful/handler/status_router/struct.StatusRouter.html' title='rustful::handler::status_router::StatusRouter'>StatusRouter</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table><tr><td><code>pub use self::<a class="mod" href="./tree_router/index.html">tree_router</a>::<a class="struct" href="../../rustful/handler/tree_router/struct.TreeRouter.html" title="struct rustful::handler::tree_router::TreeRouter">TreeRouter</a>;</code></td></tr><tr><td><code>pub use self::<a class="mod" href="./method_router/index.html">method_router</a>::<a class="struct" href="../../rustful/handler/method_router/struct.MethodRouter.html" title="struct rustful::handler::method_router::MethodRouter">MethodRouter</a>;</code></td></tr><tr><td><code>pub use self::<a class="mod" href="./or_else/index.html">or_else</a>::<a class="struct" href="../../rustful/handler/or_else/struct.OrElse.html" title="struct rustful::handler::or_else::OrElse">OrElse</a>;</code></td></tr><tr><td><code>pub use self::<a class="mod" href="./status_router/index.html">status_router</a>::<a class="struct" href="../../rustful/handler/status_router/struct.StatusRouter.html" title="struct rustful::handler::status_router::StatusRouter">StatusRouter</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='method_router/index.html'
-                                  title='rustful::handler::method_router'>method_router</a></td>
+                           <td><a class="mod" href="method_router/index.html"
+                                  title='mod rustful::handler::method_router'>method_router</a></td>
                            <td class='docblock-short'>
                                 <p>A router that selects a handler from an HTTP method.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='or_else/index.html'
-                                  title='rustful::handler::or_else'>or_else</a></td>
+                           <td><a class="mod" href="or_else/index.html"
+                                  title='mod rustful::handler::or_else'>or_else</a></td>
                            <td class='docblock-short'>
                                 <p>A router that selects a secondary handler on error.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='routing/index.html'
-                                  title='rustful::handler::routing'>routing</a></td>
+                           <td><a class="mod" href="routing/index.html"
+                                  title='mod rustful::handler::routing'>routing</a></td>
                            <td class='docblock-short'>
                                 <p>Routing related traits and types.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='status_router/index.html'
-                                  title='rustful::handler::status_router'>status_router</a></td>
+                           <td><a class="mod" href="status_router/index.html"
+                                  title='mod rustful::handler::status_router'>status_router</a></td>
                            <td class='docblock-short'>
                                 <p>A router that selects an item from an HTTP status code.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='mod' href='tree_router/index.html'
-                                  title='rustful::handler::tree_router'>tree_router</a></td>
+                           <td><a class="mod" href="tree_router/index.html"
+                                  title='mod rustful::handler::tree_router'>tree_router</a></td>
                            <td class='docblock-short'>
                                 <p>A tree shaped router that selects handlers using paths.</p>
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.ContentFactory.html'
-                                  title='rustful::handler::ContentFactory'>ContentFactory</a></td>
+                           <td><a class="struct" href="struct.ContentFactory.html"
+                                  title='struct rustful::handler::ContentFactory'>ContentFactory</a></td>
                            <td class='docblock-short'>
                                 <p>An adapter for simple content creation handlers.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Environment.html'
-                                  title='rustful::handler::Environment'>Environment</a></td>
+                           <td><a class="struct" href="struct.Environment.html"
+                                  title='struct rustful::handler::Environment'>Environment</a></td>
                            <td class='docblock-short'>
                                 <p>A request environment, containing the context, response and route state.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.VariableNames.html'
-                                  title='rustful::handler::VariableNames'>VariableNames</a></td>
+                           <td><a class="struct" href="struct.VariableNames.html"
+                                  title='struct rustful::handler::VariableNames'>VariableNames</a></td>
                            <td class='docblock-short'>
                                 <p>Context type for storing path variable names.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='struct' href='struct.Variables.html'
-                                  title='rustful::handler::Variables'>Variables</a></td>
+                           <td><a class="struct" href="struct.Variables.html"
+                                  title='struct rustful::handler::Variables'>Variables</a></td>
                            <td class='docblock-short'>
                                 <p>Assigns names to route variables.</p>
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='trait' href='trait.ApplyContext.html'
-                                  title='rustful::handler::ApplyContext'>ApplyContext</a></td>
+                           <td><a class="trait" href="trait.ApplyContext.html"
+                                  title='trait rustful::handler::ApplyContext'>ApplyContext</a></td>
                            <td class='docblock-short'>
                                 <p>Apply a <code>BuilderContext</code> in various ways.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='trait' href='trait.Build.html'
-                                  title='rustful::handler::Build'>Build</a></td>
+                           <td><a class="trait" href="trait.Build.html"
+                                  title='trait rustful::handler::Build'>Build</a></td>
                            <td class='docblock-short'>
                                 <p>A trait for handlers that can be build, using a chainable API.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='trait' href='trait.CreateContent.html'
-                                  title='rustful::handler::CreateContent'>CreateContent</a></td>
+                           <td><a class="trait" href="trait.CreateContent.html"
+                                  title='trait rustful::handler::CreateContent'>CreateContent</a></td>
                            <td class='docblock-short'>
                                 <p>A simplified handler that returns the response content.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='trait' href='trait.FromHandler.html'
-                                  title='rustful::handler::FromHandler'>FromHandler</a></td>
+                           <td><a class="trait" href="trait.FromHandler.html"
+                                  title='trait rustful::handler::FromHandler'>FromHandler</a></td>
                            <td class='docblock-short'>
                                 <p>Create a handler from another handler.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='trait' href='trait.HandleRequest.html'
-                                  title='rustful::handler::HandleRequest'>HandleRequest</a></td>
+                           <td><a class="trait" href="trait.HandleRequest.html"
+                                  title='trait rustful::handler::HandleRequest'>HandleRequest</a></td>
                            <td class='docblock-short'>
                                 <p>A low level request handler.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='trait' href='trait.Handler.html'
-                                  title='rustful::handler::Handler'>Handler</a></td>
+                           <td><a class="trait" href="trait.Handler.html"
+                                  title='trait rustful::handler::Handler'>Handler</a></td>
                            <td class='docblock-short'>
                                 <p>A trait for request handlers.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='trait' href='trait.Merge.html'
-                                  title='rustful::handler::Merge'>Merge</a></td>
+                           <td><a class="trait" href="trait.Merge.html"
+                                  title='trait rustful::handler::Merge'>Merge</a></td>
                            <td class='docblock-short'>
                                 <p>A trait for handlers that can be merged.</p>
                            </td>
                        </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
                        <tr class=' module-item'>
-                           <td><a class='type' href='type.BuilderContext.html'
-                                  title='rustful::handler::BuilderContext'>BuilderContext</a></td>
+                           <td><a class="type" href="type.BuilderContext.html"
+                                  title='type rustful::handler::BuilderContext'>BuilderContext</a></td>
                            <td class='docblock-short'>
                                 <p>A collection of information that can be passed to child handlers while
 building a handler.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
-                           <td><a class='type' href='type.DefaultRouter.html'
-                                  title='rustful::handler::DefaultRouter'>DefaultRouter</a></td>
+                           <td><a class="type" href="type.DefaultRouter.html"
+                                  title='type rustful::handler::DefaultRouter'>DefaultRouter</a></td>
                            <td class='docblock-short'>
                                 <p>Alias for <code>TreeRouter&lt;MethodRouter&lt;Variables&lt;T&gt;&gt;&gt;</code>.</p>
                            </td>

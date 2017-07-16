@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -210,10 +210,10 @@
 <span id="165">165</span>
 <span id="166">166</span>
 <span id="167">167</span>
-</pre><pre class='rust '>
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>cmp</span>;
+</pre><pre class="rust ">
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>;
 
-<span class='comment'>/*
+<span class="comment">/*
 /// Find one out of a set of bytes, max 4.
 pub fn set(text: &amp;[u8], set: &amp;[u8]) -&gt; Option&lt;usize&gt; {
     None
@@ -225,158 +225,158 @@ pub fn find2(text: &amp;[u8], a: u8, b: u8) -&gt; Option&lt;usize&gt; {
 }
 */</span>
 
-<span class='kw'>const</span> <span class='ident'>LO_U64</span>: <span class='ident'>u64</span> <span class='op'>=</span> <span class='number'>0x0101010101010101</span>;
-<span class='kw'>const</span> <span class='ident'>HI_U64</span>: <span class='ident'>u64</span> <span class='op'>=</span> <span class='number'>0x8080808080808080</span>;
+<span class="kw">const</span> <span class="ident">LO_U64</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">0x0101010101010101</span>;
+<span class="kw">const</span> <span class="ident">HI_U64</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">0x8080808080808080</span>;
 
-<span class='comment'>// use truncation</span>
-<span class='kw'>const</span> <span class='ident'>LO_USIZE</span>: <span class='ident'>usize</span> <span class='op'>=</span> <span class='ident'>LO_U64</span> <span class='kw'>as</span> <span class='ident'>usize</span>;
-<span class='kw'>const</span> <span class='ident'>HI_USIZE</span>: <span class='ident'>usize</span> <span class='op'>=</span> <span class='ident'>HI_U64</span> <span class='kw'>as</span> <span class='ident'>usize</span>;
+<span class="comment">// use truncation</span>
+<span class="kw">const</span> <span class="ident">LO_USIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="ident">LO_U64</span> <span class="kw">as</span> <span class="ident">usize</span>;
+<span class="kw">const</span> <span class="ident">HI_USIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="ident">HI_U64</span> <span class="kw">as</span> <span class="ident">usize</span>;
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_pointer_width</span> <span class='op'>=</span> <span class='string'>&quot;32&quot;</span>)]</span>
-<span class='kw'>const</span> <span class='ident'>USIZE_BYTES</span>: <span class='ident'>usize</span> <span class='op'>=</span> <span class='number'>4</span>;
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_pointer_width</span> <span class='op'>=</span> <span class='string'>&quot;64&quot;</span>)]</span>
-<span class='kw'>const</span> <span class='ident'>USIZE_BYTES</span>: <span class='ident'>usize</span> <span class='op'>=</span> <span class='number'>8</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)]</span>
+<span class="kw">const</span> <span class="ident">USIZE_BYTES</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">4</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)]</span>
+<span class="kw">const</span> <span class="ident">USIZE_BYTES</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">8</span>;
 
-<span class='doccomment'>/// Return `true` if `x` contains any zero byte.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// From *Matters Computational*, J. Arndt</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// &quot;The idea is to subtract one from each of the bytes and then look for</span>
-<span class='doccomment'>/// bytes where the borrow propagated all the way to the most significant</span>
-<span class='doccomment'>/// bit.&quot;</span>
-<span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>contains_zero_byte</span>(<span class='ident'>x</span>: <span class='ident'>usize</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-    <span class='ident'>x</span>.<span class='ident'>wrapping_sub</span>(<span class='ident'>LO_USIZE</span>) <span class='op'>&amp;</span> <span class='op'>!</span><span class='ident'>x</span> <span class='op'>&amp;</span> <span class='ident'>HI_USIZE</span> <span class='op'>!=</span> <span class='number'>0</span>
+<span class="doccomment">/// Return `true` if `x` contains any zero byte.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// From *Matters Computational*, J. Arndt</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// &quot;The idea is to subtract one from each of the bytes and then look for</span>
+<span class="doccomment">/// bytes where the borrow propagated all the way to the most significant</span>
+<span class="doccomment">/// bit.&quot;</span>
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">fn</span> <span class="ident">contains_zero_byte</span>(<span class="ident">x</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="ident">x</span>.<span class="ident">wrapping_sub</span>(<span class="ident">LO_USIZE</span>) <span class="op">&amp;</span> <span class="op">!</span><span class="ident">x</span> <span class="op">&amp;</span> <span class="ident">HI_USIZE</span> <span class="op">!=</span> <span class="number">0</span>
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_pointer_width</span> <span class='op'>=</span> <span class='string'>&quot;32&quot;</span>)]</span>
-<span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>repeat_byte</span>(<span class='ident'>b</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>rep</span> <span class='op'>=</span> (<span class='ident'>b</span> <span class='kw'>as</span> <span class='ident'>usize</span>) <span class='op'>&lt;&lt;</span> <span class='number'>8</span> <span class='op'>|</span> <span class='ident'>b</span> <span class='kw'>as</span> <span class='ident'>usize</span>;
-    <span class='ident'>rep</span> <span class='op'>=</span> <span class='ident'>rep</span> <span class='op'>&lt;&lt;</span> <span class='number'>16</span> <span class='op'>|</span> <span class='ident'>rep</span>;
-    <span class='ident'>rep</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">fn</span> <span class="ident">repeat_byte</span>(<span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rep</span> <span class="op">=</span> (<span class="ident">b</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&lt;&lt;</span> <span class="number">8</span> <span class="op">|</span> <span class="ident">b</span> <span class="kw">as</span> <span class="ident">usize</span>;
+    <span class="ident">rep</span> <span class="op">=</span> <span class="ident">rep</span> <span class="op">&lt;&lt;</span> <span class="number">16</span> <span class="op">|</span> <span class="ident">rep</span>;
+    <span class="ident">rep</span>
 }
 
-<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>target_pointer_width</span> <span class='op'>=</span> <span class='string'>&quot;64&quot;</span>)]</span>
-<span class='attribute'>#[<span class='ident'>inline</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>repeat_byte</span>(<span class='ident'>b</span>: <span class='ident'>u8</span>) <span class='op'>-&gt;</span> <span class='ident'>usize</span> {
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>rep</span> <span class='op'>=</span> (<span class='ident'>b</span> <span class='kw'>as</span> <span class='ident'>usize</span>) <span class='op'>&lt;&lt;</span> <span class='number'>8</span> <span class='op'>|</span> <span class='ident'>b</span> <span class='kw'>as</span> <span class='ident'>usize</span>;
-    <span class='ident'>rep</span> <span class='op'>=</span> <span class='ident'>rep</span> <span class='op'>&lt;&lt;</span> <span class='number'>16</span> <span class='op'>|</span> <span class='ident'>rep</span>;
-    <span class='ident'>rep</span> <span class='op'>=</span> <span class='ident'>rep</span> <span class='op'>&lt;&lt;</span> <span class='number'>32</span> <span class='op'>|</span> <span class='ident'>rep</span>;
-    <span class='ident'>rep</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">fn</span> <span class="ident">repeat_byte</span>(<span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rep</span> <span class="op">=</span> (<span class="ident">b</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&lt;&lt;</span> <span class="number">8</span> <span class="op">|</span> <span class="ident">b</span> <span class="kw">as</span> <span class="ident">usize</span>;
+    <span class="ident">rep</span> <span class="op">=</span> <span class="ident">rep</span> <span class="op">&lt;&lt;</span> <span class="number">16</span> <span class="op">|</span> <span class="ident">rep</span>;
+    <span class="ident">rep</span> <span class="op">=</span> <span class="ident">rep</span> <span class="op">&lt;&lt;</span> <span class="number">32</span> <span class="op">|</span> <span class="ident">rep</span>;
+    <span class="ident">rep</span>
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>find_byte</span>(<span class='ident'>x</span>: <span class='ident'>u8</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>len</span> <span class='op'>=</span> <span class='ident'>text</span>.<span class='ident'>len</span>();
-    <span class='kw'>let</span> <span class='ident'>ptr</span> <span class='op'>=</span> <span class='ident'>text</span>.<span class='ident'>as_ptr</span>();
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find_byte</span>(<span class="ident">x</span>: <span class="ident">u8</span>, <span class="ident">text</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">text</span>.<span class="ident">len</span>();
+    <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">text</span>.<span class="ident">as_ptr</span>();
 
-    <span class='comment'>// search up to an aligned boundary</span>
-    <span class='kw'>let</span> <span class='ident'>align</span> <span class='op'>=</span> (<span class='ident'>ptr</span> <span class='kw'>as</span> <span class='ident'>usize</span>) <span class='op'>&amp;</span> (<span class='ident'>USIZE_BYTES</span> <span class='op'>-</span> <span class='number'>1</span>);
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>offset</span>;
-    <span class='kw'>if</span> <span class='ident'>align</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-        <span class='ident'>offset</span> <span class='op'>=</span> <span class='ident'>cmp</span>::<span class='ident'>min</span>(<span class='ident'>USIZE_BYTES</span> <span class='op'>-</span> <span class='ident'>align</span>, <span class='ident'>len</span>);
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>index</span>) <span class='op'>=</span> <span class='ident'>text</span>[..<span class='ident'>offset</span>].<span class='ident'>iter</span>().<span class='ident'>position</span>(<span class='op'>|</span><span class='ident'>elt</span><span class='op'>|</span> <span class='kw-2'>*</span><span class='ident'>elt</span> <span class='op'>==</span> <span class='ident'>x</span>) {
-            <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>index</span>);
+    <span class="comment">// search up to an aligned boundary</span>
+    <span class="kw">let</span> <span class="ident">align</span> <span class="op">=</span> (<span class="ident">ptr</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">&amp;</span> (<span class="ident">USIZE_BYTES</span> <span class="op">-</span> <span class="number">1</span>);
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span>;
+    <span class="kw">if</span> <span class="ident">align</span> <span class="op">&gt;</span> <span class="number">0</span> {
+        <span class="ident">offset</span> <span class="op">=</span> <span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">USIZE_BYTES</span> <span class="op">-</span> <span class="ident">align</span>, <span class="ident">len</span>);
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">index</span>) <span class="op">=</span> <span class="ident">text</span>[..<span class="ident">offset</span>].<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="ident">elt</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">elt</span> <span class="op">==</span> <span class="ident">x</span>) {
+            <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">index</span>);
         }
-    } <span class='kw'>else</span> {
-        <span class='ident'>offset</span> <span class='op'>=</span> <span class='number'>0</span>;
+    } <span class="kw">else</span> {
+        <span class="ident">offset</span> <span class="op">=</span> <span class="number">0</span>;
     }
 
-    <span class='kw'>let</span> <span class='ident'>repeated_x</span> <span class='op'>=</span> <span class='ident'>repeat_byte</span>(<span class='ident'>x</span>);
+    <span class="kw">let</span> <span class="ident">repeated_x</span> <span class="op">=</span> <span class="ident">repeat_byte</span>(<span class="ident">x</span>);
 
-    <span class='kw'>if</span> <span class='ident'>len</span> <span class='op'>&gt;=</span> <span class='number'>2</span> <span class='op'>*</span> <span class='ident'>USIZE_BYTES</span> {
-        <span class='kw'>while</span> <span class='ident'>offset</span> <span class='op'>&lt;=</span> <span class='ident'>len</span> <span class='op'>-</span> <span class='number'>2</span> <span class='op'>*</span> <span class='ident'>USIZE_BYTES</span> {
-            <span class='kw'>unsafe</span> {
-                <span class='kw'>let</span> <span class='ident'>u</span> <span class='op'>=</span> <span class='kw-2'>*</span>(<span class='ident'>ptr</span>.<span class='ident'>offset</span>(<span class='ident'>offset</span> <span class='kw'>as</span> <span class='ident'>isize</span>) <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>usize</span>);
-                <span class='kw'>let</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='kw-2'>*</span>(<span class='ident'>ptr</span>.<span class='ident'>offset</span>((<span class='ident'>offset</span> <span class='op'>+</span> <span class='ident'>USIZE_BYTES</span>) <span class='kw'>as</span> <span class='ident'>isize</span>) <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>usize</span>);
+    <span class="kw">if</span> <span class="ident">len</span> <span class="op">&gt;=</span> <span class="number">2</span> <span class="op">*</span> <span class="ident">USIZE_BYTES</span> {
+        <span class="kw">while</span> <span class="ident">offset</span> <span class="op">&lt;=</span> <span class="ident">len</span> <span class="op">-</span> <span class="number">2</span> <span class="op">*</span> <span class="ident">USIZE_BYTES</span> {
+            <span class="kw">unsafe</span> {
+                <span class="kw">let</span> <span class="ident">u</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">offset</span> <span class="kw">as</span> <span class="ident">isize</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>);
+                <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">ptr</span>.<span class="ident">offset</span>((<span class="ident">offset</span> <span class="op">+</span> <span class="ident">USIZE_BYTES</span>) <span class="kw">as</span> <span class="ident">isize</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>);
 
-                <span class='comment'>// break if there is a matching byte</span>
-                <span class='kw'>let</span> <span class='ident'>zu</span> <span class='op'>=</span> <span class='ident'>contains_zero_byte</span>(<span class='ident'>u</span> <span class='op'>^</span> <span class='ident'>repeated_x</span>);
-                <span class='kw'>let</span> <span class='ident'>zv</span> <span class='op'>=</span> <span class='ident'>contains_zero_byte</span>(<span class='ident'>v</span> <span class='op'>^</span> <span class='ident'>repeated_x</span>);
-                <span class='kw'>if</span> <span class='ident'>zu</span> <span class='op'>||</span> <span class='ident'>zv</span> {
-                    <span class='kw'>break</span>;
+                <span class="comment">// break if there is a matching byte</span>
+                <span class="kw">let</span> <span class="ident">zu</span> <span class="op">=</span> <span class="ident">contains_zero_byte</span>(<span class="ident">u</span> <span class="op">^</span> <span class="ident">repeated_x</span>);
+                <span class="kw">let</span> <span class="ident">zv</span> <span class="op">=</span> <span class="ident">contains_zero_byte</span>(<span class="ident">v</span> <span class="op">^</span> <span class="ident">repeated_x</span>);
+                <span class="kw">if</span> <span class="ident">zu</span> <span class="op">||</span> <span class="ident">zv</span> {
+                    <span class="kw">break</span>;
                 }
             }
-            <span class='ident'>offset</span> <span class='op'>+=</span> <span class='ident'>USIZE_BYTES</span> <span class='op'>*</span> <span class='number'>2</span>;
+            <span class="ident">offset</span> <span class="op">+=</span> <span class="ident">USIZE_BYTES</span> <span class="op">*</span> <span class="number">2</span>;
         }
     }
 
-    <span class='comment'>// find the byte after the point the body loop stopped</span>
-    <span class='ident'>text</span>[<span class='ident'>offset</span>..].<span class='ident'>iter</span>().<span class='ident'>position</span>(<span class='op'>|</span><span class='ident'>elt</span><span class='op'>|</span> <span class='kw-2'>*</span><span class='ident'>elt</span> <span class='op'>==</span> <span class='ident'>x</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>i</span><span class='op'>|</span> <span class='ident'>offset</span> <span class='op'>+</span> <span class='ident'>i</span>)
+    <span class="comment">// find the byte after the point the body loop stopped</span>
+    <span class="ident">text</span>[<span class="ident">offset</span>..].<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="ident">elt</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">elt</span> <span class="op">==</span> <span class="ident">x</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="ident">offset</span> <span class="op">+</span> <span class="ident">i</span>)
 }
 
-<span class='attribute'>#[<span class='ident'>test</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>test_find_byte</span>() {
-    <span class='kw'>let</span> <span class='ident'>text</span> <span class='op'>=</span> <span class='string'>b&quot;abcb&quot;</span>;
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>find_byte</span>(<span class='string'>b&#39;d&#39;</span>, <span class='ident'>text</span>), <span class='prelude-val'>None</span>);
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>find_byte</span>(<span class='string'>b&#39;a&#39;</span>, <span class='ident'>text</span>), <span class='prelude-val'>Some</span>(<span class='number'>0</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>find_byte</span>(<span class='string'>b&#39;c&#39;</span>, <span class='ident'>text</span>), <span class='prelude-val'>Some</span>(<span class='number'>2</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>find_byte</span>(<span class='string'>b&#39;b&#39;</span>, <span class='ident'>text</span>), <span class='prelude-val'>Some</span>(<span class='number'>1</span>));
+<span class="attribute">#[<span class="ident">test</span>]</span>
+<span class="kw">fn</span> <span class="ident">test_find_byte</span>() {
+    <span class="kw">let</span> <span class="ident">text</span> <span class="op">=</span> <span class="string">b&quot;abcb&quot;</span>;
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">find_byte</span>(<span class="string">b&#39;d&#39;</span>, <span class="ident">text</span>), <span class="prelude-val">None</span>);
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">find_byte</span>(<span class="string">b&#39;a&#39;</span>, <span class="ident">text</span>), <span class="prelude-val">Some</span>(<span class="number">0</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">find_byte</span>(<span class="string">b&#39;c&#39;</span>, <span class="ident">text</span>), <span class="prelude-val">Some</span>(<span class="number">2</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">find_byte</span>(<span class="string">b&#39;b&#39;</span>, <span class="ident">text</span>), <span class="prelude-val">Some</span>(<span class="number">1</span>));
 
-    <span class='kw'>let</span> <span class='ident'>longer</span> <span class='op'>=</span> <span class='string'>&quot;longer text and so on, a bit zebras and zw&quot;</span>;
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>find_byte</span>(<span class='string'>b&#39;z&#39;</span>, <span class='ident'>longer</span>.<span class='ident'>as_bytes</span>()), <span class='ident'>longer</span>.<span class='ident'>find</span>(<span class='string'>&#39;z&#39;</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>find_byte</span>(<span class='string'>b&#39;w&#39;</span>, <span class='ident'>longer</span>.<span class='ident'>as_bytes</span>()), <span class='ident'>longer</span>.<span class='ident'>find</span>(<span class='string'>&#39;w&#39;</span>));
+    <span class="kw">let</span> <span class="ident">longer</span> <span class="op">=</span> <span class="string">&quot;longer text and so on, a bit zebras and zw&quot;</span>;
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">find_byte</span>(<span class="string">b&#39;z&#39;</span>, <span class="ident">longer</span>.<span class="ident">as_bytes</span>()), <span class="ident">longer</span>.<span class="ident">find</span>(<span class="string">&#39;z&#39;</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">find_byte</span>(<span class="string">b&#39;w&#39;</span>, <span class="ident">longer</span>.<span class="ident">as_bytes</span>()), <span class="ident">longer</span>.<span class="ident">find</span>(<span class="string">&#39;w&#39;</span>));
 }
 
-<span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>rfind_byte</span>(<span class='ident'>x</span>: <span class='ident'>u8</span>, <span class='ident'>text</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span> {
-    <span class='comment'>// Scan for a single byte value by reading two `usize` words at a time.</span>
-    <span class='comment'>//</span>
-    <span class='comment'>// Split `text` in three parts</span>
-    <span class='comment'>// - unaligned tail, after the last word aligned address in text</span>
-    <span class='comment'>// - body, scan by 2 words at a time</span>
-    <span class='comment'>// - the first remaining bytes, &lt; 2 word size</span>
-    <span class='kw'>let</span> <span class='ident'>len</span> <span class='op'>=</span> <span class='ident'>text</span>.<span class='ident'>len</span>();
-    <span class='kw'>let</span> <span class='ident'>ptr</span> <span class='op'>=</span> <span class='ident'>text</span>.<span class='ident'>as_ptr</span>();
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rfind_byte</span>(<span class="ident">x</span>: <span class="ident">u8</span>, <span class="ident">text</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
+    <span class="comment">// Scan for a single byte value by reading two `usize` words at a time.</span>
+    <span class="comment">//</span>
+    <span class="comment">// Split `text` in three parts</span>
+    <span class="comment">// - unaligned tail, after the last word aligned address in text</span>
+    <span class="comment">// - body, scan by 2 words at a time</span>
+    <span class="comment">// - the first remaining bytes, &lt; 2 word size</span>
+    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">text</span>.<span class="ident">len</span>();
+    <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">text</span>.<span class="ident">as_ptr</span>();
 
-    <span class='comment'>// search up to a 16 byte aligned boundary</span>
-    <span class='kw'>let</span> <span class='ident'>end_align</span> <span class='op'>=</span> (<span class='ident'>ptr</span> <span class='kw'>as</span> <span class='ident'>usize</span> <span class='op'>+</span> <span class='ident'>len</span>) <span class='op'>&amp;</span> (<span class='ident'>USIZE_BYTES</span> <span class='op'>-</span> <span class='number'>1</span>);
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>offset</span>;
-    <span class='kw'>if</span> <span class='ident'>end_align</span> <span class='op'>&gt;</span> <span class='number'>0</span> {
-        <span class='ident'>offset</span> <span class='op'>=</span> <span class='ident'>len</span> <span class='op'>-</span> <span class='ident'>cmp</span>::<span class='ident'>min</span>(<span class='ident'>USIZE_BYTES</span> <span class='op'>-</span> <span class='ident'>end_align</span>, <span class='ident'>len</span>);
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>index</span>) <span class='op'>=</span> <span class='ident'>text</span>[<span class='ident'>offset</span>..].<span class='ident'>iter</span>().<span class='ident'>rposition</span>(<span class='op'>|</span><span class='ident'>elt</span><span class='op'>|</span> <span class='kw-2'>*</span><span class='ident'>elt</span> <span class='op'>==</span> <span class='ident'>x</span>) {
-            <span class='kw'>return</span> <span class='prelude-val'>Some</span>(<span class='ident'>offset</span> <span class='op'>+</span> <span class='ident'>index</span>);
+    <span class="comment">// search up to a 16 byte aligned boundary</span>
+    <span class="kw">let</span> <span class="ident">end_align</span> <span class="op">=</span> (<span class="ident">ptr</span> <span class="kw">as</span> <span class="ident">usize</span> <span class="op">+</span> <span class="ident">len</span>) <span class="op">&amp;</span> (<span class="ident">USIZE_BYTES</span> <span class="op">-</span> <span class="number">1</span>);
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">offset</span>;
+    <span class="kw">if</span> <span class="ident">end_align</span> <span class="op">&gt;</span> <span class="number">0</span> {
+        <span class="ident">offset</span> <span class="op">=</span> <span class="ident">len</span> <span class="op">-</span> <span class="ident">cmp</span>::<span class="ident">min</span>(<span class="ident">USIZE_BYTES</span> <span class="op">-</span> <span class="ident">end_align</span>, <span class="ident">len</span>);
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">index</span>) <span class="op">=</span> <span class="ident">text</span>[<span class="ident">offset</span>..].<span class="ident">iter</span>().<span class="ident">rposition</span>(<span class="op">|</span><span class="ident">elt</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">elt</span> <span class="op">==</span> <span class="ident">x</span>) {
+            <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">offset</span> <span class="op">+</span> <span class="ident">index</span>);
         }
-    } <span class='kw'>else</span> {
-        <span class='ident'>offset</span> <span class='op'>=</span> <span class='ident'>len</span>;
+    } <span class="kw">else</span> {
+        <span class="ident">offset</span> <span class="op">=</span> <span class="ident">len</span>;
     }
 
-    <span class='comment'>// search the body of the text</span>
-    <span class='kw'>let</span> <span class='ident'>repeated_x</span> <span class='op'>=</span> <span class='ident'>repeat_byte</span>(<span class='ident'>x</span>);
+    <span class="comment">// search the body of the text</span>
+    <span class="kw">let</span> <span class="ident">repeated_x</span> <span class="op">=</span> <span class="ident">repeat_byte</span>(<span class="ident">x</span>);
 
-    <span class='kw'>while</span> <span class='ident'>offset</span> <span class='op'>&gt;=</span> <span class='number'>2</span> <span class='op'>*</span> <span class='ident'>USIZE_BYTES</span> {
-        <span class='kw'>unsafe</span> {
-            <span class='kw'>let</span> <span class='ident'>u</span> <span class='op'>=</span> <span class='kw-2'>*</span>(<span class='ident'>ptr</span>.<span class='ident'>offset</span>(<span class='ident'>offset</span> <span class='kw'>as</span> <span class='ident'>isize</span> <span class='op'>-</span> <span class='number'>2</span> <span class='op'>*</span> <span class='ident'>USIZE_BYTES</span> <span class='kw'>as</span> <span class='ident'>isize</span>) <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>usize</span>);
-            <span class='kw'>let</span> <span class='ident'>v</span> <span class='op'>=</span> <span class='kw-2'>*</span>(<span class='ident'>ptr</span>.<span class='ident'>offset</span>(<span class='ident'>offset</span> <span class='kw'>as</span> <span class='ident'>isize</span> <span class='op'>-</span> <span class='ident'>USIZE_BYTES</span> <span class='kw'>as</span> <span class='ident'>isize</span>) <span class='kw'>as</span> <span class='kw-2'>*</span><span class='kw'>const</span> <span class='ident'>usize</span>);
+    <span class="kw">while</span> <span class="ident">offset</span> <span class="op">&gt;=</span> <span class="number">2</span> <span class="op">*</span> <span class="ident">USIZE_BYTES</span> {
+        <span class="kw">unsafe</span> {
+            <span class="kw">let</span> <span class="ident">u</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">offset</span> <span class="kw">as</span> <span class="ident">isize</span> <span class="op">-</span> <span class="number">2</span> <span class="op">*</span> <span class="ident">USIZE_BYTES</span> <span class="kw">as</span> <span class="ident">isize</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>);
+            <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="kw-2">*</span>(<span class="ident">ptr</span>.<span class="ident">offset</span>(<span class="ident">offset</span> <span class="kw">as</span> <span class="ident">isize</span> <span class="op">-</span> <span class="ident">USIZE_BYTES</span> <span class="kw">as</span> <span class="ident">isize</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">usize</span>);
 
-            <span class='comment'>// break if there is a matching byte</span>
-            <span class='kw'>let</span> <span class='ident'>zu</span> <span class='op'>=</span> <span class='ident'>contains_zero_byte</span>(<span class='ident'>u</span> <span class='op'>^</span> <span class='ident'>repeated_x</span>);
-            <span class='kw'>let</span> <span class='ident'>zv</span> <span class='op'>=</span> <span class='ident'>contains_zero_byte</span>(<span class='ident'>v</span> <span class='op'>^</span> <span class='ident'>repeated_x</span>);
-            <span class='kw'>if</span> <span class='ident'>zu</span> <span class='op'>||</span> <span class='ident'>zv</span> {
-                <span class='kw'>break</span>;
+            <span class="comment">// break if there is a matching byte</span>
+            <span class="kw">let</span> <span class="ident">zu</span> <span class="op">=</span> <span class="ident">contains_zero_byte</span>(<span class="ident">u</span> <span class="op">^</span> <span class="ident">repeated_x</span>);
+            <span class="kw">let</span> <span class="ident">zv</span> <span class="op">=</span> <span class="ident">contains_zero_byte</span>(<span class="ident">v</span> <span class="op">^</span> <span class="ident">repeated_x</span>);
+            <span class="kw">if</span> <span class="ident">zu</span> <span class="op">||</span> <span class="ident">zv</span> {
+                <span class="kw">break</span>;
             }
         }
-        <span class='ident'>offset</span> <span class='op'>-=</span> <span class='number'>2</span> <span class='op'>*</span> <span class='ident'>USIZE_BYTES</span>;
+        <span class="ident">offset</span> <span class="op">-=</span> <span class="number">2</span> <span class="op">*</span> <span class="ident">USIZE_BYTES</span>;
     }
 
-    <span class='comment'>// find the byte after the point the body loop stopped</span>
-    <span class='ident'>text</span>[..<span class='ident'>offset</span>].<span class='ident'>iter</span>().<span class='ident'>rposition</span>(<span class='op'>|</span><span class='ident'>elt</span><span class='op'>|</span> <span class='kw-2'>*</span><span class='ident'>elt</span> <span class='op'>==</span> <span class='ident'>x</span>)
+    <span class="comment">// find the byte after the point the body loop stopped</span>
+    <span class="ident">text</span>[..<span class="ident">offset</span>].<span class="ident">iter</span>().<span class="ident">rposition</span>(<span class="op">|</span><span class="ident">elt</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">elt</span> <span class="op">==</span> <span class="ident">x</span>)
 }
 
-<span class='attribute'>#[<span class='ident'>test</span>]</span>
-<span class='kw'>fn</span> <span class='ident'>test_rfind_byte</span>() {
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rfind_byte</span>(<span class='string'>b&#39;x&#39;</span>, <span class='string'>b&quot;&quot;</span>), <span class='prelude-val'>None</span>);
+<span class="attribute">#[<span class="ident">test</span>]</span>
+<span class="kw">fn</span> <span class="ident">test_rfind_byte</span>() {
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rfind_byte</span>(<span class="string">b&#39;x&#39;</span>, <span class="string">b&quot;&quot;</span>), <span class="prelude-val">None</span>);
 
-    <span class='kw'>let</span> <span class='ident'>text</span> <span class='op'>=</span> <span class='string'>b&quot;abcb&quot;</span>;
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rfind_byte</span>(<span class='string'>b&#39;d&#39;</span>, <span class='ident'>text</span>), <span class='prelude-val'>None</span>);
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rfind_byte</span>(<span class='string'>b&#39;a&#39;</span>, <span class='ident'>text</span>), <span class='prelude-val'>Some</span>(<span class='number'>0</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rfind_byte</span>(<span class='string'>b&#39;c&#39;</span>, <span class='ident'>text</span>), <span class='prelude-val'>Some</span>(<span class='number'>2</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rfind_byte</span>(<span class='string'>b&#39;b&#39;</span>, <span class='ident'>text</span>), <span class='prelude-val'>Some</span>(<span class='number'>3</span>));
+    <span class="kw">let</span> <span class="ident">text</span> <span class="op">=</span> <span class="string">b&quot;abcb&quot;</span>;
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rfind_byte</span>(<span class="string">b&#39;d&#39;</span>, <span class="ident">text</span>), <span class="prelude-val">None</span>);
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rfind_byte</span>(<span class="string">b&#39;a&#39;</span>, <span class="ident">text</span>), <span class="prelude-val">Some</span>(<span class="number">0</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rfind_byte</span>(<span class="string">b&#39;c&#39;</span>, <span class="ident">text</span>), <span class="prelude-val">Some</span>(<span class="number">2</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rfind_byte</span>(<span class="string">b&#39;b&#39;</span>, <span class="ident">text</span>), <span class="prelude-val">Some</span>(<span class="number">3</span>));
 
-    <span class='kw'>let</span> <span class='ident'>longer</span> <span class='op'>=</span> <span class='string'>&quot;loAAer text and yo on, a bit zebras and zw&quot;</span>;
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rfind_byte</span>(<span class='string'>b&#39;z&#39;</span>, <span class='ident'>longer</span>.<span class='ident'>as_bytes</span>()), <span class='ident'>longer</span>.<span class='ident'>rfind</span>(<span class='string'>&#39;z&#39;</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rfind_byte</span>(<span class='string'>b&#39;w&#39;</span>, <span class='ident'>longer</span>.<span class='ident'>as_bytes</span>()), <span class='ident'>longer</span>.<span class='ident'>rfind</span>(<span class='string'>&#39;w&#39;</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rfind_byte</span>(<span class='string'>b&#39;y&#39;</span>, <span class='ident'>longer</span>.<span class='ident'>as_bytes</span>()), <span class='ident'>longer</span>.<span class='ident'>rfind</span>(<span class='string'>&#39;y&#39;</span>));
-    <span class='macro'>assert_eq</span><span class='macro'>!</span>(<span class='ident'>rfind_byte</span>(<span class='string'>b&#39;A&#39;</span>, <span class='ident'>longer</span>.<span class='ident'>as_bytes</span>()), <span class='ident'>longer</span>.<span class='ident'>rfind</span>(<span class='string'>&#39;A&#39;</span>));
+    <span class="kw">let</span> <span class="ident">longer</span> <span class="op">=</span> <span class="string">&quot;loAAer text and yo on, a bit zebras and zw&quot;</span>;
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rfind_byte</span>(<span class="string">b&#39;z&#39;</span>, <span class="ident">longer</span>.<span class="ident">as_bytes</span>()), <span class="ident">longer</span>.<span class="ident">rfind</span>(<span class="string">&#39;z&#39;</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rfind_byte</span>(<span class="string">b&#39;w&#39;</span>, <span class="ident">longer</span>.<span class="ident">as_bytes</span>()), <span class="ident">longer</span>.<span class="ident">rfind</span>(<span class="string">&#39;w&#39;</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rfind_byte</span>(<span class="string">b&#39;y&#39;</span>, <span class="ident">longer</span>.<span class="ident">as_bytes</span>()), <span class="ident">longer</span>.<span class="ident">rfind</span>(<span class="string">&#39;y&#39;</span>));
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rfind_byte</span>(<span class="string">b&#39;A&#39;</span>, <span class="ident">longer</span>.<span class="ident">as_bytes</span>()), <span class="ident">longer</span>.<span class="ident">rfind</span>(<span class="string">&#39;A&#39;</span>));
 }
 </pre>
 </section>

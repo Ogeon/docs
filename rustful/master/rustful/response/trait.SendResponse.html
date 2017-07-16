@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>response</a></p><script>window.sidebarCurrent = {name: 'SendResponse', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait SendResponse</p><div class="block items"><ul><li><a href="#associated-types">Associated Types</a></li><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>response</a></p><script>window.sidebarCurrent = {name: 'SendResponse', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,15 +43,15 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>response</a>::<wbr><a class='trait' href=''>SendResponse</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>response</a>::<wbr><a class="trait" href=''>SendResponse</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/rustful/response.rs.html#276-282' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait SendResponse&lt;'a, 'b&gt; {
-    type <a href='#associatedtype.Error' class='type'>Error</a>: <a class='trait' href='../../rustful/response/trait.ResponseError.html' title='rustful::response::ResponseError'>ResponseError</a>;
-    fn <a href='#tymethod.send_response' class='fnname'>send_response</a>(self,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; response: <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>&lt;'a, 'b&gt;)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, Self::<a class='trait' href='../../rustful/response/trait.SendResponse.html' title='rustful::response::SendResponse'>Error</a>&gt;;
+    type <a href='#associatedtype.Error' class="type">Error</a>: <a class="trait" href="../../rustful/response/trait.ResponseError.html" title="trait rustful::response::ResponseError">ResponseError</a>;
+    fn <a href='#tymethod.send_response' class='fnname'>send_response</a>(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;response: <a class="struct" href="../../rustful/response/struct.Response.html" title="struct rustful::response::Response">Response</a>&lt;'a, 'b&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, Self::<a class="trait" href="../../rustful/response/trait.SendResponse.html" title="trait rustful::response::SendResponse">Error</a>&gt;;
 }</pre><div class='docblock'><p>A trait for higher level types that can be sent as responses, like
 <code>Result</code>.</p>
 
@@ -63,21 +63,21 @@ appropriate, and otherwise not touch it at all.</p>
 </div>
             <h2 id='associated-types'>Associated Types</h2>
             <div class='methods'>
-        <h3 id='associatedtype.Error' class='method'><span id='Error.t' class='invisible'><code>type <a href='#associatedtype.Error' class='type'>Error</a>: <a class='trait' href='../../rustful/response/trait.ResponseError.html' title='rustful::response::ResponseError'>ResponseError</a></code></span></h3><div class='docblock'><p>Any error that may occur while sending the response.</p>
+        <h3 id='associatedtype.Error' class='method'><span id='Error.t' class='invisible'><code>type <a href='#associatedtype.Error' class="type">Error</a>: <a class="trait" href="../../rustful/response/trait.ResponseError.html" title="trait rustful::response::ResponseError">ResponseError</a></code></span></h3><div class='docblock'><p>Any error that may occur while sending the response.</p>
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.send_response' class='method'><span id='send_response.v' class='invisible'><code>fn <a href='#tymethod.send_response' class='fnname'>send_response</a>(self, response: <a class='struct' href='../../rustful/response/struct.Response.html' title='rustful::response::Response'>Response</a>&lt;'a, 'b&gt;) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>()</a>, Self::<a class='trait' href='../../rustful/response/trait.SendResponse.html' title='rustful::response::SendResponse'>Error</a>&gt;</code></span></h3><div class='docblock'><p>Send a response to the client.</p>
+        <h3 id='tymethod.send_response' class='method'><span id='send_response.v' class='invisible'><code>fn <a href='#tymethod.send_response' class='fnname'>send_response</a>(self, response: <a class="struct" href="../../rustful/response/struct.Response.html" title="struct rustful::response::Response">Response</a>&lt;'a, 'b&gt;) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, Self::<a class="trait" href="../../rustful/response/trait.SendResponse.html" title="trait rustful::response::SendResponse">Error</a>&gt;</code></span></h3><div class='docblock'><p>Send a response to the client.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;'a, 'b, 'd, T:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;<a class='enum' href='../../rustful/response/enum.Data.html' title='rustful::response::Data'>Data</a>&lt;'d&gt;&gt;&gt; SendResponse&lt;'a, 'b&gt; for T</code></li>
-<li><code>impl&lt;'a, 'b, T:&nbsp;<a class='trait' href='../../rustful/response/trait.SendResponse.html' title='rustful::response::SendResponse'>SendResponse</a>&lt;'a, 'b&gt;, U:&nbsp;<a class='trait' href='../../rustful/response/trait.SendResponse.html' title='rustful::response::SendResponse'>SendResponse</a>&lt;'a, 'b&gt;&gt; SendResponse&lt;'a, 'b&gt; for <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;T, U&gt; <span class='where fmt-newline'>where U::<a class='trait' href='../../rustful/response/trait.SendResponse.html' title='rustful::response::SendResponse'>Error</a>: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;T::<a class='trait' href='../../rustful/response/trait.SendResponse.html' title='rustful::response::SendResponse'>Error</a>&gt;</span></code></li>
-<li><code>impl&lt;'a, 'b, T:&nbsp;<a class='trait' href='../../rustful/response/trait.SendResponse.html' title='rustful::response::SendResponse'>SendResponse</a>&lt;'a, 'b&gt;&gt; SendResponse&lt;'a, 'b&gt; for <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;'a, 'b&gt; SendResponse&lt;'a, 'b&gt; for <a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a></code></li>
-<li><code>impl&lt;'d, 'a, 'b&gt; SendResponse&lt;'a, 'b&gt; for &amp;'d <a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.Path.html' title='std::path::Path'>Path</a></code></li>
-<li><code>impl&lt;'a, 'b&gt; SendResponse&lt;'a, 'b&gt; for <a class='struct' href='https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html' title='std::path::PathBuf'>PathBuf</a></code></li>
-<li><code>impl&lt;'a, 'b&gt; SendResponse&lt;'a, 'b&gt; for <a class='struct' href='https://doc.rust-lang.org/nightly/std/fs/struct.File.html' title='std::fs::File'>File</a></code></li>
+    <li><code>impl&lt;'a, 'b, 'd, T:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="enum" href="../../rustful/response/enum.Data.html" title="enum rustful::response::Data">Data</a>&lt;'d&gt;&gt;&gt; SendResponse&lt;'a, 'b&gt; for T</code></li>
+<li><code>impl&lt;'a, 'b, T:&nbsp;<a class="trait" href="../../rustful/response/trait.SendResponse.html" title="trait rustful::response::SendResponse">SendResponse</a>&lt;'a, 'b&gt;, U:&nbsp;<a class="trait" href="../../rustful/response/trait.SendResponse.html" title="trait rustful::response::SendResponse">SendResponse</a>&lt;'a, 'b&gt;&gt; SendResponse&lt;'a, 'b&gt; for <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;T, U&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;U::<a class="trait" href="../../rustful/response/trait.SendResponse.html" title="trait rustful::response::SendResponse">Error</a>: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;T::<a class="trait" href="../../rustful/response/trait.SendResponse.html" title="trait rustful::response::SendResponse">Error</a>&gt;,&nbsp;</span></code></li>
+<li><code>impl&lt;'a, 'b, T:&nbsp;<a class="trait" href="../../rustful/response/trait.SendResponse.html" title="trait rustful::response::SendResponse">SendResponse</a>&lt;'a, 'b&gt;&gt; SendResponse&lt;'a, 'b&gt; for <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;T&gt;</code></li>
+<li><code>impl&lt;'a, 'b&gt; SendResponse&lt;'a, 'b&gt; for <a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a></code></li>
+<li><code>impl&lt;'d, 'a, 'b&gt; SendResponse&lt;'a, 'b&gt; for &amp;'d <a class="struct" href="https://doc.rust-lang.org/nightly/std/path/struct.Path.html" title="struct std::path::Path">Path</a></code></li>
+<li><code>impl&lt;'a, 'b&gt; SendResponse&lt;'a, 'b&gt; for <a class="struct" href="https://doc.rust-lang.org/nightly/std/path/struct.PathBuf.html" title="struct std::path::PathBuf">PathBuf</a></code></li>
+<li><code>impl&lt;'a, 'b&gt; SendResponse&lt;'a, 'b&gt; for <a class="struct" href="https://doc.rust-lang.org/nightly/std/fs/struct.File.html" title="struct std::fs::File">File</a></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/rustful/response/trait.SendResponse.js">
                  </script></section>

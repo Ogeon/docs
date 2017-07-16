@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc enum">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../../index.html'>multipart</a>::<wbr><a href='../index.html'>server</a>::<wbr><a href='index.html'>save</a></p><script>window.sidebarCurrent = {name: 'SaveResult', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum SaveResult</p><div class="block items"><ul><li><a href="#variants">Variants</a></li><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../../index.html'>multipart</a>::<wbr><a href='../index.html'>server</a>::<wbr><a href='index.html'>save</a></p><script>window.sidebarCurrent = {name: 'SaveResult', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,33 +43,33 @@
         </form>
     </nav>
 
-    <section id='main' class="content enum">
-<h1 class='fqn'><span class='in-band'>Enum <a href='../../index.html'>multipart</a>::<wbr><a href='../index.html'>server</a>::<wbr><a href='index.html'>save</a>::<wbr><a class='enum' href=''>SaveResult</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../../index.html'>multipart</a>::<wbr><a href='../index.html'>server</a>::<wbr><a href='index.html'>save</a>::<wbr><a class="enum" href=''>SaveResult</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../../src/multipart/server/save.rs.html#595-603' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum SaveResult&lt;Success, Partial&gt; {
     Full(Success),
-    Partial(Partial,&nbsp;<a class='enum' href='../../../multipart/server/save/enum.PartialReason.html' title='multipart::server::save::PartialReason'>PartialReason</a>),
-    Error(<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>),
+    Partial(Partial,&nbsp;<a class="enum" href="../../../multipart/server/save/enum.PartialReason.html" title="enum multipart::server::save::PartialReason">PartialReason</a>),
+    Error(<a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>),
 }</pre><div class='docblock'><p>The ternary result type used for the <code>SaveBuilder&lt;_&gt;</code> API.</p>
-</div><h2 class='variants'>Variants</h2>
+</div><h2 id='variants' class='variants'>Variants</h2>
 <span id='variant.Full' class='variant'><span id='Full.v' class='invisible'><code>Full(Success)</code></span></span><div class='docblock'><p>The operation was a total success. Contained is the complete result.</p>
-</div><span id='variant.Partial' class='variant'><span id='Partial.v' class='invisible'><code>Partial(Partial,&nbsp;<a class='enum' href='../../../multipart/server/save/enum.PartialReason.html' title='multipart::server::save::PartialReason'>PartialReason</a>)</code></span></span><div class='docblock'><p>The operation quit partway through. Included is the partial
+</div><span id='variant.Partial' class='variant'><span id='Partial.v' class='invisible'><code>Partial(Partial,&nbsp;<a class="enum" href="../../../multipart/server/save/enum.PartialReason.html" title="enum multipart::server::save::PartialReason">PartialReason</a>)</code></span></span><div class='docblock'><p>The operation quit partway through. Included is the partial
 result along with the reason.</p>
-</div><span id='variant.Error' class='variant'><span id='Error.v' class='invisible'><code>Error(<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>)</code></span></span><div class='docblock'><p>An error occurred at the start of the operation, before anything was done.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;S, P&gt; <a class='enum' href='../../../multipart/server/save/enum.SaveResult.html' title='multipart::server::save::SaveResult'>SaveResult</a>&lt;S, P&gt; <span class='where fmt-newline'>where P: <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.Into.html' title='core::convert::Into'>Into</a>&lt;S&gt;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/multipart/server/save.rs.html#626-676' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.okish' class='method'><span id='okish.v' class='invisible'><code>fn <a href='#method.okish' class='fnname'>okish</a>(self) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;S&gt;</code></span></h4>
+</div><span id='variant.Error' class='variant'><span id='Error.v' class='invisible'><code>Error(<a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>)</code></span></span><div class='docblock'><p>An error occurred at the start of the operation, before anything was done.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;S, P&gt; <a class="enum" href="../../../multipart/server/save/enum.SaveResult.html" title="enum multipart::server::save::SaveResult">SaveResult</a>&lt;S, P&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;P: <a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;S&gt;,&nbsp;</span></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/multipart/server/save.rs.html#626-676' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.okish' class="method"><span id='okish.v' class='invisible'><code>fn <a href='#method.okish' class='fnname'>okish</a>(self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;S&gt;</code></span></h4>
 <div class='docblock'><p>Convert <code>self</code> to <code>Option&lt;S&gt;</code>; there may still have been an error.</p>
-</div><h4 id='method.map' class='method'><span id='map.v' class='invisible'><code>fn <a href='#method.map' class='fnname'>map</a>&lt;T, Map&gt;(self, map: Map) -&gt; <a class='enum' href='../../../multipart/server/save/enum.SaveResult.html' title='multipart::server::save::SaveResult'>SaveResult</a>&lt;T, T&gt; <span class='where fmt-newline'>where Map: <a class='trait' href='https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html' title='core::ops::FnOnce'>FnOnce</a>(S) -&gt; T</span></code></span></h4>
+</div><h4 id='method.map' class="method"><span id='map.v' class='invisible'><code>fn <a href='#method.map' class='fnname'>map</a>&lt;T, Map&gt;(self, map: Map) -&gt; <a class="enum" href="../../../multipart/server/save/enum.SaveResult.html" title="enum multipart::server::save::SaveResult">SaveResult</a>&lt;T, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Map: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.FnOnce.html" title="trait core::ops::FnOnce">FnOnce</a>(S) -&gt; T,&nbsp;</span></code></span></h4>
 <div class='docblock'><p>Map the <code>Full</code> or <code>Partial</code> values to a new type, retaining the reason
 in the <code>Partial</code> case.</p>
-</div><h4 id='method.into_opt_both' class='method'><span id='into_opt_both.v' class='invisible'><code>fn <a href='#method.into_opt_both' class='fnname'>into_opt_both</a>(self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>(</a><a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;S&gt;, <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html' title='std::io::error::Error'>Error</a>&gt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.tuple.html'>)</a></code></span></h4>
+</div><h4 id='method.into_opt_both' class="method"><span id='into_opt_both.v' class='invisible'><code>fn <a href='#method.into_opt_both' class='fnname'>into_opt_both</a>(self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a><a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;S&gt;, <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>&gt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a></code></span></h4>
 <div class='docblock'><p>Decompose <code>self</code> to <code>(Option&lt;S&gt;, Option&lt;io::Error&gt;)</code></p>
-</div><h4 id='method.into_result' class='method'><span id='into_result.v' class='invisible'><code>fn <a href='#method.into_result' class='fnname'>into_result</a>(self) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;S&gt;</code></span></h4>
+</div><h4 id='method.into_result' class="method"><span id='into_result.v' class='invisible'><code>fn <a href='#method.into_result' class='fnname'>into_result</a>(self) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;S&gt;</code></span></h4>
 <div class='docblock'><p>Map <code>self</code> to an <code>io::Result</code>, discarding the error in the <code>Partial</code> case.</p>
-</div><h4 id='method.into_result_strict' class='method'><span id='into_result_strict.v' class='invisible'><code>fn <a href='#method.into_result_strict' class='fnname'>into_result_strict</a>(self) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/std/io/error/type.Result.html' title='std::io::error::Result'>Result</a>&lt;S&gt;</code></span></h4>
+</div><h4 id='method.into_result_strict' class="method"><span id='into_result_strict.v' class='invisible'><code>fn <a href='#method.into_result_strict' class='fnname'>into_result_strict</a>(self) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;S&gt;</code></span></h4>
 <div class='docblock'><p>Pessimistic version of <code>into_result()</code> which will return an error even
 for the <code>Partial</code> case.</p>
 
@@ -78,8 +78,8 @@ for the <code>Partial</code> case.</p>
 partially written file on-disk. If you&#39;re not using a temporary directory
 (OS-managed or via <code>TempDir</code>) then partially written files will remain on-disk until
 explicitly removed which could result in excessive disk usage if not monitored closely.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;Success:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>, Partial:&nbsp;<a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a>&gt; <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../../multipart/server/save/enum.SaveResult.html' title='multipart::server::save::SaveResult'>SaveResult</a>&lt;Success, Partial&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/multipart/server/save.rs.html#594' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.fmt' class='method'><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></span></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;Success:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a>, Partial:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a>&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="enum" href="../../../multipart/server/save/enum.SaveResult.html" title="enum multipart::server::save::SaveResult">SaveResult</a>&lt;Success, Partial&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../../src/multipart/server/save.rs.html#594' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></h4>
 <div class='docblock'><p>Formats the value using the given formatter.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

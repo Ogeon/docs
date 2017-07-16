@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc trait">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>buf_redux</a>::<wbr><a href='index.html'>strategy</a></p><script>window.sidebarCurrent = {name: 'FlushStrategy', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait FlushStrategy</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#provided-methods">Provided Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>buf_redux</a>::<wbr><a href='index.html'>strategy</a></p><script>window.sidebarCurrent = {name: 'FlushStrategy', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,28 +43,28 @@
         </form>
     </nav>
 
-    <section id='main' class="content trait">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>buf_redux</a>::<wbr><a href='index.html'>strategy</a>::<wbr><a class='trait' href=''>FlushStrategy</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>buf_redux</a>::<wbr><a href='index.html'>strategy</a>::<wbr><a class="trait" href=''>FlushStrategy</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/buf_redux/strategy.rs.html#109-124' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait FlushStrategy: <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> + <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> {
-    fn <a href='#tymethod.flush_before' class='fnname'>flush_before</a>(&amp;self, _buf: &amp;<a class='struct' href='../../buf_redux/struct.Buffer.html' title='buf_redux::Buffer'>Buffer</a>, _incoming: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>;
+<pre class='rust trait'>pub trait FlushStrategy: <a class="trait" href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html" title="trait core::default::Default">Default</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> {
+    fn <a href='#tymethod.flush_before' class='fnname'>flush_before</a>(&amp;self, _buf: &amp;<a class="struct" href="../../buf_redux/struct.Buffer.html" title="struct buf_redux::Buffer">Buffer</a>, _incoming: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a>;
 
-    fn <a href='#method.flush_after' class='fnname'>flush_after</a>(&amp;self, _buf: &amp;<a class='struct' href='../../buf_redux/struct.Buffer.html' title='buf_redux::Buffer'>Buffer</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a> { ... }
+    fn <a href='#method.flush_after' class='fnname'>flush_after</a>(&amp;self, _buf: &amp;<a class="struct" href="../../buf_redux/struct.Buffer.html" title="struct buf_redux::Buffer">Buffer</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a> { ... }
 }</pre><div class='docblock'><p>A trait which tells <code>BufWriter</code> when to flush.</p>
 </div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.flush_before' class='method'><span id='flush_before.v' class='invisible'><code>fn <a href='#tymethod.flush_before' class='fnname'>flush_before</a>(&amp;self, _buf: &amp;<a class='struct' href='../../buf_redux/struct.Buffer.html' title='buf_redux::Buffer'>Buffer</a>, _incoming: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><div class='docblock'><p>Return <code>true</code> if the buffer should be flushed before reading into it.</p>
+        <h3 id='tymethod.flush_before' class='method'><span id='flush_before.v' class='invisible'><code>fn <a href='#tymethod.flush_before' class='fnname'>flush_before</a>(&amp;self, _buf: &amp;<a class="struct" href="../../buf_redux/struct.Buffer.html" title="struct buf_redux::Buffer">Buffer</a>, _incoming: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>Return <code>true</code> if the buffer should be flushed before reading into it.</p>
 
 <p>The buffer is provided, as well as <code>incoming</code> which is
 the size of the buffer that will be written to the <code>BufWriter</code>.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.flush_after' class='method'><span id='flush_after.v' class='invisible'><code>fn <a href='#method.flush_after' class='fnname'>flush_after</a>(&amp;self, _buf: &amp;<a class='struct' href='../../buf_redux/struct.Buffer.html' title='buf_redux::Buffer'>Buffer</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></span></h3><div class='docblock'><p>Return <code>true</code> if the buffer should be flushed after reading into it.</p>
+        <h3 id='method.flush_after' class='method'><span id='flush_after.v' class='invisible'><code>fn <a href='#method.flush_after' class='fnname'>flush_after</a>(&amp;self, _buf: &amp;<a class="struct" href="../../buf_redux/struct.Buffer.html" title="struct buf_redux::Buffer">Buffer</a>) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.bool.html">bool</a></code></span></h3><div class='docblock'><p>Return <code>true</code> if the buffer should be flushed after reading into it.</p>
 
 <p><code>buf</code> references the updated buffer after the read.</p>
 
@@ -72,11 +72,11 @@ the size of the buffer that will be written to the <code>BufWriter</code>.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl FlushStrategy for <a class='struct' href='../../buf_redux/strategy/struct.WhenFull.html' title='buf_redux::strategy::WhenFull'>WhenFull</a></code></li>
-<li><code>impl FlushStrategy for <a class='struct' href='../../buf_redux/strategy/struct.FlushAtLeast.html' title='buf_redux::strategy::FlushAtLeast'>FlushAtLeast</a></code></li>
-<li><code>impl FlushStrategy for <a class='struct' href='../../buf_redux/strategy/struct.FlushAtLeast8k.html' title='buf_redux::strategy::FlushAtLeast8k'>FlushAtLeast8k</a></code></li>
-<li><code>impl FlushStrategy for <a class='struct' href='../../buf_redux/strategy/struct.FlushOn.html' title='buf_redux::strategy::FlushOn'>FlushOn</a></code></li>
-<li><code>impl FlushStrategy for <a class='struct' href='../../buf_redux/strategy/struct.FlushOnNewline.html' title='buf_redux::strategy::FlushOnNewline'>FlushOnNewline</a></code></li>
+    <li><code>impl FlushStrategy for <a class="struct" href="../../buf_redux/strategy/struct.WhenFull.html" title="struct buf_redux::strategy::WhenFull">WhenFull</a></code></li>
+<li><code>impl FlushStrategy for <a class="struct" href="../../buf_redux/strategy/struct.FlushAtLeast.html" title="struct buf_redux::strategy::FlushAtLeast">FlushAtLeast</a></code></li>
+<li><code>impl FlushStrategy for <a class="struct" href="../../buf_redux/strategy/struct.FlushAtLeast8k.html" title="struct buf_redux::strategy::FlushAtLeast8k">FlushAtLeast8k</a></code></li>
+<li><code>impl FlushStrategy for <a class="struct" href="../../buf_redux/strategy/struct.FlushOn.html" title="struct buf_redux::strategy::FlushOn">FlushOn</a></code></li>
+<li><code>impl FlushStrategy for <a class="struct" href="../../buf_redux/strategy/struct.FlushOnNewline.html" title="struct buf_redux::strategy::FlushOnNewline">FlushOnNewline</a></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/buf_redux/strategy/trait.FlushStrategy.js">
                  </script></section>

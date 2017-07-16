@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc enum">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -29,7 +29,7 @@
 
     <nav class="sidebar">
         
-        <p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>filter</a></p><script>window.sidebarCurrent = {name: 'ContextAction', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum ContextAction</p><div class="block items"><ul><li><a href="#variants">Variants</a></li><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>filter</a></p><script>window.sidebarCurrent = {name: 'ContextAction', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
     <nav class="sub">
@@ -43,28 +43,28 @@
         </form>
     </nav>
 
-    <section id='main' class="content enum">
-<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>filter</a>::<wbr><a class='enum' href=''>ContextAction</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>filter</a>::<wbr><a class="enum" href=''>ContextAction</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/rustful/filter.rs.html#34-40' title='goto source code'>[src]</a></span></h1>
 <pre class='rust enum'>pub enum ContextAction {
     Next,
-    Abort(<a class='enum' href='../../rustful/enum.StatusCode.html' title='rustful::StatusCode'>StatusCode</a>),
+    Abort(<a class="enum" href="../../rustful/enum.StatusCode.html" title="enum rustful::StatusCode">StatusCode</a>),
 }</pre><div class='docblock'><p>The result from a context filter.</p>
-</div><h2 class='variants'>Variants</h2>
+</div><h2 id='variants' class='variants'>Variants</h2>
 <span id='variant.Next' class='variant'><span id='Next.v' class='invisible'><code>Next</code></span></span><div class='docblock'><p>Continue to the next filter in the stack.</p>
-</div><span id='variant.Abort' class='variant'><span id='Abort.v' class='invisible'><code>Abort(<a class='enum' href='../../rustful/enum.StatusCode.html' title='rustful::StatusCode'>StatusCode</a>)</code></span></span><div class='docblock'><p>Abort and set HTTP status.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/filter.rs.html#42-52' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.next' class='method'><span id='next.v' class='invisible'><code>fn <a href='#method.next' class='fnname'>next</a>() -&gt; <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></span></h4>
+</div><span id='variant.Abort' class='variant'><span id='Abort.v' class='invisible'><code>Abort(<a class="enum" href="../../rustful/enum.StatusCode.html" title="enum rustful::StatusCode">StatusCode</a>)</code></span></span><div class='docblock'><p>Abort and set HTTP status.</p>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="enum" href="../../rustful/filter/enum.ContextAction.html" title="enum rustful::filter::ContextAction">ContextAction</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/filter.rs.html#42-52' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.next' class="method"><span id='next.v' class='invisible'><code>fn <a href='#method.next' class='fnname'>next</a>() -&gt; <a class="enum" href="../../rustful/filter/enum.ContextAction.html" title="enum rustful::filter::ContextAction">ContextAction</a></code></span></h4>
 <div class='docblock'><p>Continue to the next filter in the stack.</p>
-</div><h4 id='method.abort' class='method'><span id='abort.v' class='invisible'><code>fn <a href='#method.abort' class='fnname'>abort</a>(status: <a class='enum' href='../../rustful/enum.StatusCode.html' title='rustful::StatusCode'>StatusCode</a>) -&gt; <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></span></h4>
+</div><h4 id='method.abort' class="method"><span id='abort.v' class='invisible'><code>fn <a href='#method.abort' class='fnname'>abort</a>(status: <a class="enum" href="../../rustful/enum.StatusCode.html" title="enum rustful::StatusCode">StatusCode</a>) -&gt; <a class="enum" href="../../rustful/filter/enum.ContextAction.html" title="enum rustful::filter::ContextAction">ContextAction</a></code></span></h4>
 <div class='docblock'><p>Abort and set HTTP status.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/filter.rs.html#33' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.clone' class='method'><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../../rustful/filter/enum.ContextAction.html' title='rustful::filter::ContextAction'>ContextAction</a></code></span></h4>
+</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="enum" href="../../rustful/filter/enum.ContextAction.html" title="enum rustful::filter::ContextAction">ContextAction</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/filter.rs.html#33' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="enum" href="../../rustful/filter/enum.ContextAction.html" title="enum rustful::filter::ContextAction">ContextAction</a></code></span></h4>
 <div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
-</div><h4 id='method.clone_from' class='method'><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
+</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></span></h4>
 <div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
 </div></div></section>
     <section id='search' class="content hidden"></section>

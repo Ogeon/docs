@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -465,429 +465,429 @@
 <span id="420">420</span>
 <span id="421">421</span>
 <span id="422">422</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//!Request handlers and routers.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!# Building Routers</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!Rustful provides a tree structured all-round router called `DefaultRouter`,</span>
-<span class='doccomment'>//!but any other type of router can be used, as long as it implements the</span>
-<span class='doccomment'>//![`HandleRequest`][handle_request] trait. Implementing the [`Build`][build]</span>
-<span class='doccomment'>//!trait will also make it compatible with router builders:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!```</span>
-<span class='doccomment'>//!extern crate rustful;</span>
-<span class='doccomment'>//!use rustful::DefaultRouter;</span>
-<span class='doccomment'>//!# use rustful::{Handler, Context, Response};</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!# struct ExampleHandler;</span>
-<span class='doccomment'>//!# impl Handler for ExampleHandler {</span>
-<span class='doccomment'>//!#     fn handle(&amp;self, _: Context, _: Response){}</span>
-<span class='doccomment'>//!# }</span>
-<span class='doccomment'>//!# fn main() {</span>
-<span class='doccomment'>//!# let about_us = ExampleHandler;</span>
-<span class='doccomment'>//!# let show_user = ExampleHandler;</span>
-<span class='doccomment'>//!# let list_users = ExampleHandler;</span>
-<span class='doccomment'>//!# let show_product = ExampleHandler;</span>
-<span class='doccomment'>//!# let list_products = ExampleHandler;</span>
-<span class='doccomment'>//!# let show_error = ExampleHandler;</span>
-<span class='doccomment'>//!# let show_welcome = ExampleHandler;</span>
-<span class='doccomment'>//!let mut router = DefaultRouter::&lt;ExampleHandler&gt;::new();</span>
-<span class='doccomment'>//!router.build().many(|mut node| {</span>
-<span class='doccomment'>//!    node.then().on_get(show_welcome);</span>
-<span class='doccomment'>//!    node.path(&quot;about&quot;).then().on_get(about_us);</span>
-<span class='doccomment'>//!    node.path(&quot;users&quot;).many(|mut node| {</span>
-<span class='doccomment'>//!        node.then().on_get(list_users);</span>
-<span class='doccomment'>//!        node.path(&quot;:id&quot;).then().on_get(show_user);</span>
-<span class='doccomment'>//!    });</span>
-<span class='doccomment'>//!    node.path(&quot;products&quot;).many(|mut node| {</span>
-<span class='doccomment'>//!        node.then().on_get(list_products);</span>
-<span class='doccomment'>//!        node.path(&quot;:id&quot;).then().on_get(show_product);</span>
-<span class='doccomment'>//!    });</span>
-<span class='doccomment'>//!    node.path(&quot;*&quot;).then().on_get(show_error);</span>
-<span class='doccomment'>//!});</span>
-<span class='doccomment'>//!# }</span>
-<span class='doccomment'>//!```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!#Variables</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!Routes in the [`TreeRouter`][tree_router] may contain variables, that are</span>
-<span class='doccomment'>//!useful for capturing parts of the requested path as input to the handler.</span>
-<span class='doccomment'>//!The syntax for a variable is simply an indicator character (`:` or `*`)</span>
-<span class='doccomment'>//!followed by a label. Variables without labels are also valid, but their</span>
-<span class='doccomment'>//!values will be discarded.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!##Variable Segments (:label)</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!A variable segment will match a single arbitrary segment. They are probably</span>
-<span class='doccomment'>//!the most commonly used variables and may, for example, be used to select a</span>
-<span class='doccomment'>//!blog post: `&quot;posts/:year/:month/:day/:title_slug&quot;`.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!```text</span>
-<span class='doccomment'>//!pattern = &quot;a/:v/b&quot;</span>
-<span class='doccomment'>//!&quot;a/c/b&quot; -&gt; v = &quot;c&quot;</span>
-<span class='doccomment'>//!&quot;a/c/d/b&quot; -&gt; no match</span>
-<span class='doccomment'>//!&quot;a/b&quot; -&gt; no match</span>
-<span class='doccomment'>//!&quot;a/c/b/d&quot; -&gt; no match</span>
-<span class='doccomment'>//!```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!##Variable Sequences (*label)</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!A variable sequence is similar to a variable segment, but with the</span>
-<span class='doccomment'>//!difference that it may consume multiple segments until the rest of the path</span>
-<span class='doccomment'>//!gives a match. An example use case is a route for downloadable files that</span>
-<span class='doccomment'>//!may be arranged in arbitrary directories: `&quot;downloads/*file_path&quot;`.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!```text</span>
-<span class='doccomment'>//!pattern = &quot;a/*v/b&quot;</span>
-<span class='doccomment'>//!&quot;a/c/b&quot; -&gt; v = &quot;c&quot;</span>
-<span class='doccomment'>//!&quot;a/c/d/b&quot; -&gt; v = &quot;c/d&quot;</span>
-<span class='doccomment'>//!&quot;a/b&quot; -&gt; no match</span>
-<span class='doccomment'>//!&quot;a/c/b/d&quot; -&gt; no match</span>
-<span class='doccomment'>//!```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!```text</span>
-<span class='doccomment'>//!pattern = &quot;a/b/*v&quot;</span>
-<span class='doccomment'>//!&quot;a/b/c&quot; -&gt; v = &quot;c&quot;</span>
-<span class='doccomment'>//!&quot;a/b/c/d&quot; -&gt; v = &quot;c/d&quot;</span>
-<span class='doccomment'>//!&quot;a/b&quot; -&gt; no match</span>
-<span class='doccomment'>//!```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!# Router Composition</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!The default router is actually a composition of three routers:</span>
-<span class='doccomment'>//![`TreeRouter`][tree_router], [`MethodRouter`][method_router] and</span>
-<span class='doccomment'>//![`Variables`][variables]. They come together as the type</span>
-<span class='doccomment'>//!`DefaultRouter&lt;T&gt;`, so no need to write it all out in most of the cases.</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!There may, however, be cases where you want something else. What if you</span>
-<span class='doccomment'>//!don&#39;t care about the HTTP method? Maybe your handler takes care of that</span>
-<span class='doccomment'>//!internally. Sure, no problem:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!```</span>
-<span class='doccomment'>//!use rustful::handler::{Variables, TreeRouter};</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!let my_router = TreeRouter::&lt;Option&lt;Variables&lt;ExampleHandler&gt;&gt;&gt;::new();</span>
-<span class='doccomment'>//!# struct ExampleHandler;</span>
-<span class='doccomment'>//!# impl rustful::Handler for ExampleHandler {</span>
-<span class='doccomment'>//!#     fn handle(&amp;self, _: rustful::Context, _: rustful::Response){}</span>
-<span class='doccomment'>//!# }</span>
-<span class='doccomment'>//!```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!And what about those route variables? Not using them at all? Well, just</span>
-<span class='doccomment'>//!remove them too, if you don&#39;t want them:</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!```</span>
-<span class='doccomment'>//!use rustful::handler::TreeRouter;</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!let my_router = TreeRouter::&lt;Option&lt;ExampleHandler&gt;&gt;::new();</span>
-<span class='doccomment'>//!# struct ExampleHandler;</span>
-<span class='doccomment'>//!# impl rustful::Handler for ExampleHandler {</span>
-<span class='doccomment'>//!#     fn handle(&amp;self, _: rustful::Context, _: rustful::Response){}</span>
-<span class='doccomment'>//!# }</span>
-<span class='doccomment'>//!```</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//!You can simply recombine and reorder the router types however you want, or</span>
-<span class='doccomment'>//!why not make your own router?</span>
-<span class='doccomment'>//!</span>
-<span class='doccomment'>//![tree_router]: struct.TreeRouter.html</span>
-<span class='doccomment'>//![method_router]: struct.MethodRouter.html</span>
-<span class='doccomment'>//![variables]: struct.Variables.html</span>
-<span class='doccomment'>//![handle_request]: trait.HandleRequest.html</span>
-<span class='doccomment'>//![build]: trait.Build.html</span>
+</pre><pre class="rust ">
+<span class="doccomment">//!Request handlers and routers.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!# Building Routers</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!Rustful provides a tree structured all-round router called `DefaultRouter`,</span>
+<span class="doccomment">//!but any other type of router can be used, as long as it implements the</span>
+<span class="doccomment">//![`HandleRequest`][handle_request] trait. Implementing the [`Build`][build]</span>
+<span class="doccomment">//!trait will also make it compatible with router builders:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!```</span>
+<span class="doccomment">//!extern crate rustful;</span>
+<span class="doccomment">//!use rustful::DefaultRouter;</span>
+<span class="doccomment">//!# use rustful::{Handler, Context, Response};</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!# struct ExampleHandler;</span>
+<span class="doccomment">//!# impl Handler for ExampleHandler {</span>
+<span class="doccomment">//!#     fn handle(&amp;self, _: Context, _: Response){}</span>
+<span class="doccomment">//!# }</span>
+<span class="doccomment">//!# fn main() {</span>
+<span class="doccomment">//!# let about_us = ExampleHandler;</span>
+<span class="doccomment">//!# let show_user = ExampleHandler;</span>
+<span class="doccomment">//!# let list_users = ExampleHandler;</span>
+<span class="doccomment">//!# let show_product = ExampleHandler;</span>
+<span class="doccomment">//!# let list_products = ExampleHandler;</span>
+<span class="doccomment">//!# let show_error = ExampleHandler;</span>
+<span class="doccomment">//!# let show_welcome = ExampleHandler;</span>
+<span class="doccomment">//!let mut router = DefaultRouter::&lt;ExampleHandler&gt;::new();</span>
+<span class="doccomment">//!router.build().many(|mut node| {</span>
+<span class="doccomment">//!    node.then().on_get(show_welcome);</span>
+<span class="doccomment">//!    node.path(&quot;about&quot;).then().on_get(about_us);</span>
+<span class="doccomment">//!    node.path(&quot;users&quot;).many(|mut node| {</span>
+<span class="doccomment">//!        node.then().on_get(list_users);</span>
+<span class="doccomment">//!        node.path(&quot;:id&quot;).then().on_get(show_user);</span>
+<span class="doccomment">//!    });</span>
+<span class="doccomment">//!    node.path(&quot;products&quot;).many(|mut node| {</span>
+<span class="doccomment">//!        node.then().on_get(list_products);</span>
+<span class="doccomment">//!        node.path(&quot;:id&quot;).then().on_get(show_product);</span>
+<span class="doccomment">//!    });</span>
+<span class="doccomment">//!    node.path(&quot;*&quot;).then().on_get(show_error);</span>
+<span class="doccomment">//!});</span>
+<span class="doccomment">//!# }</span>
+<span class="doccomment">//!```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!#Variables</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!Routes in the [`TreeRouter`][tree_router] may contain variables, that are</span>
+<span class="doccomment">//!useful for capturing parts of the requested path as input to the handler.</span>
+<span class="doccomment">//!The syntax for a variable is simply an indicator character (`:` or `*`)</span>
+<span class="doccomment">//!followed by a label. Variables without labels are also valid, but their</span>
+<span class="doccomment">//!values will be discarded.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!##Variable Segments (:label)</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!A variable segment will match a single arbitrary segment. They are probably</span>
+<span class="doccomment">//!the most commonly used variables and may, for example, be used to select a</span>
+<span class="doccomment">//!blog post: `&quot;posts/:year/:month/:day/:title_slug&quot;`.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!```text</span>
+<span class="doccomment">//!pattern = &quot;a/:v/b&quot;</span>
+<span class="doccomment">//!&quot;a/c/b&quot; -&gt; v = &quot;c&quot;</span>
+<span class="doccomment">//!&quot;a/c/d/b&quot; -&gt; no match</span>
+<span class="doccomment">//!&quot;a/b&quot; -&gt; no match</span>
+<span class="doccomment">//!&quot;a/c/b/d&quot; -&gt; no match</span>
+<span class="doccomment">//!```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!##Variable Sequences (*label)</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!A variable sequence is similar to a variable segment, but with the</span>
+<span class="doccomment">//!difference that it may consume multiple segments until the rest of the path</span>
+<span class="doccomment">//!gives a match. An example use case is a route for downloadable files that</span>
+<span class="doccomment">//!may be arranged in arbitrary directories: `&quot;downloads/*file_path&quot;`.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!```text</span>
+<span class="doccomment">//!pattern = &quot;a/*v/b&quot;</span>
+<span class="doccomment">//!&quot;a/c/b&quot; -&gt; v = &quot;c&quot;</span>
+<span class="doccomment">//!&quot;a/c/d/b&quot; -&gt; v = &quot;c/d&quot;</span>
+<span class="doccomment">//!&quot;a/b&quot; -&gt; no match</span>
+<span class="doccomment">//!&quot;a/c/b/d&quot; -&gt; no match</span>
+<span class="doccomment">//!```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!```text</span>
+<span class="doccomment">//!pattern = &quot;a/b/*v&quot;</span>
+<span class="doccomment">//!&quot;a/b/c&quot; -&gt; v = &quot;c&quot;</span>
+<span class="doccomment">//!&quot;a/b/c/d&quot; -&gt; v = &quot;c/d&quot;</span>
+<span class="doccomment">//!&quot;a/b&quot; -&gt; no match</span>
+<span class="doccomment">//!```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!# Router Composition</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!The default router is actually a composition of three routers:</span>
+<span class="doccomment">//![`TreeRouter`][tree_router], [`MethodRouter`][method_router] and</span>
+<span class="doccomment">//![`Variables`][variables]. They come together as the type</span>
+<span class="doccomment">//!`DefaultRouter&lt;T&gt;`, so no need to write it all out in most of the cases.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!There may, however, be cases where you want something else. What if you</span>
+<span class="doccomment">//!don&#39;t care about the HTTP method? Maybe your handler takes care of that</span>
+<span class="doccomment">//!internally. Sure, no problem:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!```</span>
+<span class="doccomment">//!use rustful::handler::{Variables, TreeRouter};</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!let my_router = TreeRouter::&lt;Option&lt;Variables&lt;ExampleHandler&gt;&gt;&gt;::new();</span>
+<span class="doccomment">//!# struct ExampleHandler;</span>
+<span class="doccomment">//!# impl rustful::Handler for ExampleHandler {</span>
+<span class="doccomment">//!#     fn handle(&amp;self, _: rustful::Context, _: rustful::Response){}</span>
+<span class="doccomment">//!# }</span>
+<span class="doccomment">//!```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!And what about those route variables? Not using them at all? Well, just</span>
+<span class="doccomment">//!remove them too, if you don&#39;t want them:</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!```</span>
+<span class="doccomment">//!use rustful::handler::TreeRouter;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!let my_router = TreeRouter::&lt;Option&lt;ExampleHandler&gt;&gt;::new();</span>
+<span class="doccomment">//!# struct ExampleHandler;</span>
+<span class="doccomment">//!# impl rustful::Handler for ExampleHandler {</span>
+<span class="doccomment">//!#     fn handle(&amp;self, _: rustful::Context, _: rustful::Response){}</span>
+<span class="doccomment">//!# }</span>
+<span class="doccomment">//!```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!You can simply recombine and reorder the router types however you want, or</span>
+<span class="doccomment">//!why not make your own router?</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//![tree_router]: struct.TreeRouter.html</span>
+<span class="doccomment">//![method_router]: struct.MethodRouter.html</span>
+<span class="doccomment">//![variables]: struct.Variables.html</span>
+<span class="doccomment">//![handle_request]: trait.HandleRequest.html</span>
+<span class="doccomment">//![build]: trait.Build.html</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>Cow</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>sync</span>::<span class='ident'>Arc</span>;
-<span class='kw'>use</span> <span class='ident'>anymap</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Cow</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
+<span class="kw">use</span> <span class="ident">anymap</span>;
 
-<span class='kw'>use</span> <span class='ident'>context</span>::{<span class='ident'>Context</span>, <span class='ident'>MaybeUtf8Owned</span>};
-<span class='kw'>use</span> <span class='ident'>context</span>::<span class='ident'>hypermedia</span>::<span class='ident'>Link</span>;
-<span class='kw'>use</span> <span class='ident'>response</span>::{<span class='ident'>Response</span>, <span class='ident'>SendResponse</span>};
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>routing</span>::<span class='ident'>RouteState</span>;
-<span class='kw'>use</span> <span class='ident'>StatusCode</span>;
+<span class="kw">use</span> <span class="ident">context</span>::{<span class="ident">Context</span>, <span class="ident">MaybeUtf8Owned</span>};
+<span class="kw">use</span> <span class="ident">context</span>::<span class="ident">hypermedia</span>::<span class="ident">Link</span>;
+<span class="kw">use</span> <span class="ident">response</span>::{<span class="ident">Response</span>, <span class="ident">SendResponse</span>};
+<span class="kw">use</span> <span class="self">self</span>::<span class="ident">routing</span>::<span class="ident">RouteState</span>;
+<span class="kw">use</span> <span class="ident">StatusCode</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>tree_router</span>::<span class='ident'>TreeRouter</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>method_router</span>::<span class='ident'>MethodRouter</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>variables</span>::<span class='ident'>Variables</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>or_else</span>::<span class='ident'>OrElse</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>status_router</span>::<span class='ident'>StatusRouter</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">tree_router</span>::<span class="ident">TreeRouter</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">method_router</span>::<span class="ident">MethodRouter</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">variables</span>::<span class="ident">Variables</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">or_else</span>::<span class="ident">OrElse</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">status_router</span>::<span class="ident">StatusRouter</span>;
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>routing</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">routing</span>;
 
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>tree_router</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>method_router</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>or_else</span>;
-<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>status_router</span>;
-<span class='kw'>mod</span> <span class='ident'>variables</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">tree_router</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">method_router</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">or_else</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">status_router</span>;
+<span class="kw">mod</span> <span class="ident">variables</span>;
 
-<span class='doccomment'>///Alias for `TreeRouter&lt;MethodRouter&lt;Variables&lt;T&gt;&gt;&gt;`.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///This is probably the most common composition, which will select handlers</span>
-<span class='doccomment'>///based on path and then HTTP method, and collect any variables on the way.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>DefaultRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>TreeRouter</span><span class='op'>&lt;</span><span class='ident'>MethodRouter</span><span class='op'>&lt;</span><span class='ident'>Variables</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>;
+<span class="doccomment">///Alias for `TreeRouter&lt;MethodRouter&lt;Variables&lt;T&gt;&gt;&gt;`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///This is probably the most common composition, which will select handlers</span>
+<span class="doccomment">///based on path and then HTTP method, and collect any variables on the way.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">DefaultRouter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">TreeRouter</span><span class="op">&lt;</span><span class="ident">MethodRouter</span><span class="op">&lt;</span><span class="ident">Variables</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>;
 
-<span class='doccomment'>///A trait for request handlers.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Handler</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
-    <span class='doccomment'>///Handle a request from the client. Panicking within this method is</span>
-    <span class='doccomment'>///discouraged, to allow the server to run smoothly.</span>
-    <span class='kw'>fn</span> <span class='ident'>handle</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span>);
+<span class="doccomment">///A trait for request handlers.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Handler</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> {
+    <span class="doccomment">///Handle a request from the client. Panicking within this method is</span>
+    <span class="doccomment">///discouraged, to allow the server to run smoothly.</span>
+    <span class="kw">fn</span> <span class="ident">handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">context</span>: <span class="ident">Context</span>, <span class="ident">response</span>: <span class="ident">Response</span>);
 
-    <span class='doccomment'>///Get a description for the handler.</span>
-    <span class='kw'>fn</span> <span class='ident'>description</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Cow</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span>, <span class='ident'>str</span><span class='op'>&gt;&gt;</span> {
-        <span class='prelude-val'>None</span>
+    <span class="doccomment">///Get a description for the handler.</span>
+    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;&gt;</span> {
+        <span class="prelude-val">None</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>Fn</span>(<span class='ident'>Context</span>, <span class='ident'>Response</span>) <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> <span class='ident'>Handler</span> <span class='kw'>for</span> <span class='ident'>F</span> {
-    <span class='kw'>fn</span> <span class='ident'>handle</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span>) {
-        <span class='self'>self</span>(<span class='ident'>context</span>, <span class='ident'>response</span>);
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Fn</span>(<span class="ident">Context</span>, <span class="ident">Response</span>) <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span> <span class="ident">Handler</span> <span class="kw">for</span> <span class="ident">F</span> {
+    <span class="kw">fn</span> <span class="ident">handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">context</span>: <span class="ident">Context</span>, <span class="ident">response</span>: <span class="ident">Response</span>) {
+        <span class="self">self</span>(<span class="ident">context</span>, <span class="ident">response</span>);
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Handler</span><span class='op'>&gt;</span> <span class='ident'>Handler</span> <span class='kw'>for</span> <span class='ident'>Arc</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>handle</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span>) {
-        (<span class='kw-2'>*</span><span class='kw-2'>*</span><span class='self'>self</span>).<span class='ident'>handle</span>(<span class='ident'>context</span>, <span class='ident'>response</span>);
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Handler</span><span class="op">&gt;</span> <span class="ident">Handler</span> <span class="kw">for</span> <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">context</span>: <span class="ident">Context</span>, <span class="ident">response</span>: <span class="ident">Response</span>) {
+        (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">handle</span>(<span class="ident">context</span>, <span class="ident">response</span>);
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>Handler</span> <span class='kw'>for</span> <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Handler</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>handle</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>Context</span>, <span class='ident'>response</span>: <span class='ident'>Response</span>) {
-        (<span class='kw-2'>*</span><span class='kw-2'>*</span><span class='self'>self</span>).<span class='ident'>handle</span>(<span class='ident'>context</span>, <span class='ident'>response</span>);
+<span class="kw">impl</span> <span class="ident">Handler</span> <span class="kw">for</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Handler</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">context</span>: <span class="ident">Context</span>, <span class="ident">response</span>: <span class="ident">Response</span>) {
+        (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">handle</span>(<span class="ident">context</span>, <span class="ident">response</span>);
     }
 }
 
-<span class='doccomment'>///A request environment, containing the context, response and route state.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Environment</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>: <span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>///The request context, containing the request parameters.</span>
-    <span class='kw'>pub</span> <span class='ident'>context</span>: <span class='ident'>Context</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span>,
+<span class="doccomment">///A request environment, containing the context, response and route state.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Environment</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span> {
+    <span class="doccomment">///The request context, containing the request parameters.</span>
+    <span class="kw">pub</span> <span class="ident">context</span>: <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span>,
 
-    <span class='doccomment'>///The response that will be sent to the client.</span>
-    <span class='kw'>pub</span> <span class='ident'>response</span>: <span class='ident'>Response</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span>,
+    <span class="doccomment">///The response that will be sent to the client.</span>
+    <span class="kw">pub</span> <span class="ident">response</span>: <span class="ident">Response</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span>,
 
-    <span class='doccomment'>///A representation of the current routing state.</span>
-    <span class='kw'>pub</span> <span class='ident'>route_state</span>: <span class='ident'>RouteState</span><span class='op'>&lt;</span><span class='lifetime'>&#39;g</span><span class='op'>&gt;</span>,
+    <span class="doccomment">///A representation of the current routing state.</span>
+    <span class="kw">pub</span> <span class="ident">route_state</span>: <span class="ident">RouteState</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span> <span class='ident'>Environment</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>///Replace the hyperlinks. This consumes the whole request environment and</span>
-    <span class='doccomment'>///returns a new one with a different lifetime, together with the old</span>
-    <span class='doccomment'>///hyperlinks.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>replace_hyperlinks</span><span class='op'>&lt;</span><span class='lifetime'>&#39;n</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>hyperlinks</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Link</span><span class='op'>&lt;</span><span class='lifetime'>&#39;n</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> (<span class='ident'>Environment</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;n</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span>, <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Link</span><span class='op'>&lt;</span><span class='lifetime'>&#39;l</span><span class='op'>&gt;&gt;</span>) {
-        <span class='kw'>let</span> (<span class='ident'>context</span>, <span class='ident'>old_hyperlinks</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>replace_hyperlinks</span>(<span class='ident'>hyperlinks</span>);
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span> <span class="ident">Environment</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span> {
+    <span class="doccomment">///Replace the hyperlinks. This consumes the whole request environment and</span>
+    <span class="doccomment">///returns a new one with a different lifetime, together with the old</span>
+    <span class="doccomment">///hyperlinks.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">replace_hyperlinks</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">hyperlinks</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Link</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> (<span class="ident">Environment</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;n</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Link</span><span class="op">&lt;</span><span class="lifetime">&#39;l</span><span class="op">&gt;&gt;</span>) {
+        <span class="kw">let</span> (<span class="ident">context</span>, <span class="ident">old_hyperlinks</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">context</span>.<span class="ident">replace_hyperlinks</span>(<span class="ident">hyperlinks</span>);
         (
-            <span class='ident'>Environment</span> {
-                <span class='ident'>context</span>: <span class='ident'>context</span>,
-                <span class='ident'>response</span>: <span class='self'>self</span>.<span class='ident'>response</span>,
-                <span class='ident'>route_state</span>: <span class='self'>self</span>.<span class='ident'>route_state</span>
+            <span class="ident">Environment</span> {
+                <span class="ident">context</span>: <span class="ident">context</span>,
+                <span class="ident">response</span>: <span class="self">self</span>.<span class="ident">response</span>,
+                <span class="ident">route_state</span>: <span class="self">self</span>.<span class="ident">route_state</span>
             },
-            <span class='ident'>old_hyperlinks</span>
+            <span class="ident">old_hyperlinks</span>
         )
     }
 }
 
-<span class='doccomment'>///A low level request handler.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///Suitable for implementing routers, since it has complete access to the</span>
-<span class='doccomment'>///routing environment and can reject the request.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>HandleRequest</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
-    <span class='doccomment'>///Try to handle an incoming request from the client, or return the</span>
-    <span class='doccomment'>///request environment to the parent handler.</span>
-    <span class='kw'>fn</span> <span class='ident'>handle_request</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>environment</span>: <span class='ident'>Environment</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Environment</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;&gt;</span>;
+<span class="doccomment">///A low level request handler.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///Suitable for implementing routers, since it has complete access to the</span>
+<span class="doccomment">///routing environment and can reject the request.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">HandleRequest</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> {
+    <span class="doccomment">///Try to handle an incoming request from the client, or return the</span>
+    <span class="doccomment">///request environment to the parent handler.</span>
+    <span class="kw">fn</span> <span class="ident">handle_request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">environment</span>: <span class="ident">Environment</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Environment</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;&gt;</span>;
 
-    <span class='doccomment'>///List all of the hyperlinks into this handler, based on the provided</span>
-    <span class='doccomment'>///base link. It&#39;s up to the handler implementation to decide how deep to</span>
-    <span class='doccomment'>///go.</span>
-    <span class='kw'>fn</span> <span class='ident'>hyperlinks</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>base_link</span>: <span class='ident'>Link</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Link</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>;
+    <span class="doccomment">///List all of the hyperlinks into this handler, based on the provided</span>
+    <span class="doccomment">///base link. It&#39;s up to the handler implementation to decide how deep to</span>
+    <span class="doccomment">///go.</span>
+    <span class="kw">fn</span> <span class="ident">hyperlinks</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">base_link</span>: <span class="ident">Link</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Link</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span>;
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>Handler</span><span class='op'>&gt;</span> <span class='ident'>HandleRequest</span> <span class='kw'>for</span> <span class='ident'>H</span> {
-    <span class='kw'>fn</span> <span class='ident'>handle_request</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>environment</span>: <span class='ident'>Environment</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Environment</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>handle</span>(<span class='ident'>environment</span>.<span class='ident'>context</span>, <span class='ident'>environment</span>.<span class='ident'>response</span>);
-        <span class='prelude-val'>Ok</span>(())
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Handler</span><span class="op">&gt;</span> <span class="ident">HandleRequest</span> <span class="kw">for</span> <span class="ident">H</span> {
+    <span class="kw">fn</span> <span class="ident">handle_request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">environment</span>: <span class="ident">Environment</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Environment</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;&gt;</span> {
+        <span class="self">self</span>.<span class="ident">handle</span>(<span class="ident">environment</span>.<span class="ident">context</span>, <span class="ident">environment</span>.<span class="ident">response</span>);
+        <span class="prelude-val">Ok</span>(())
     }
 
-    <span class='kw'>fn</span> <span class='ident'>hyperlinks</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>base_link</span>: <span class='ident'>Link</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Link</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>base_link</span>.<span class='ident'>handler</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='self'>self</span>);
-        <span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>base_link</span>]
+    <span class="kw">fn</span> <span class="ident">hyperlinks</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">base_link</span>: <span class="ident">Link</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Link</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span> {
+        <span class="ident">base_link</span>.<span class="ident">handler</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="self">self</span>);
+        <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">base_link</span>]
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>H</span>: <span class='ident'>HandleRequest</span><span class='op'>&gt;</span> <span class='ident'>HandleRequest</span> <span class='kw'>for</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>handle_request</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>environment</span>: <span class='ident'>Environment</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Environment</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>handler</span>) <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>handler</span>.<span class='ident'>handle_request</span>(<span class='ident'>environment</span>)
-        } <span class='kw'>else</span> {
-            <span class='ident'>environment</span>.<span class='ident'>response</span>.<span class='ident'>set_status</span>(<span class='ident'>StatusCode</span>::<span class='ident'>NotFound</span>);
-            <span class='prelude-val'>Err</span>(<span class='ident'>environment</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">HandleRequest</span><span class="op">&gt;</span> <span class="ident">HandleRequest</span> <span class="kw">for</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">handle_request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">environment</span>: <span class="ident">Environment</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Environment</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">handler</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">handler</span>.<span class="ident">handle_request</span>(<span class="ident">environment</span>)
+        } <span class="kw">else</span> {
+            <span class="ident">environment</span>.<span class="ident">response</span>.<span class="ident">set_status</span>(<span class="ident">StatusCode</span>::<span class="ident">NotFound</span>);
+            <span class="prelude-val">Err</span>(<span class="ident">environment</span>)
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>hyperlinks</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>base_link</span>: <span class='ident'>Link</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Link</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='ident'>handler</span>) <span class='op'>=</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>handler</span>.<span class='ident'>hyperlinks</span>(<span class='ident'>base_link</span>)
-        } <span class='kw'>else</span> {
-            <span class='macro'>vec</span><span class='macro'>!</span>[]
+    <span class="kw">fn</span> <span class="ident">hyperlinks</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">base_link</span>: <span class="ident">Link</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Link</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">handler</span>) <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">handler</span>.<span class="ident">hyperlinks</span>(<span class="ident">base_link</span>)
+        } <span class="kw">else</span> {
+            <span class="macro">vec</span><span class="macro">!</span>[]
         }
     }
 }
 
-<span class='doccomment'>///An adapter for simple content creation handlers.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///```</span>
-<span class='doccomment'>///use rustful::{DefaultRouter, Context, Server, ContentFactory};</span>
-<span class='doccomment'>///use rustful::Method::Get;</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///type Router&lt;T&gt; = DefaultRouter&lt;ContentFactory&lt;T&gt;&gt;;</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///let mut router = Router::new();</span>
-<span class='doccomment'>///router.build().path(&quot;*&quot;).then().on_get(|context: Context| format!(&quot;Visiting {}&quot;, context.uri_path));</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///let server = Server {</span>
-<span class='doccomment'>///    handlers: router,</span>
-<span class='doccomment'>///    ..Server::default()</span>
-<span class='doccomment'>///};</span>
-<span class='doccomment'>///```</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ContentFactory</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>CreateContent</span><span class='op'>&gt;</span>(<span class='kw'>pub</span> <span class='ident'>T</span>);
+<span class="doccomment">///An adapter for simple content creation handlers.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///```</span>
+<span class="doccomment">///use rustful::{DefaultRouter, Context, Server, ContentFactory};</span>
+<span class="doccomment">///use rustful::Method::Get;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///type Router&lt;T&gt; = DefaultRouter&lt;ContentFactory&lt;T&gt;&gt;;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///let mut router = Router::new();</span>
+<span class="doccomment">///router.build().path(&quot;*&quot;).then().on_get(|context: Context| format!(&quot;Visiting {}&quot;, context.uri_path));</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///let server = Server {</span>
+<span class="doccomment">///    handlers: router,</span>
+<span class="doccomment">///    ..Server::default()</span>
+<span class="doccomment">///};</span>
+<span class="doccomment">///```</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ContentFactory</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">CreateContent</span><span class="op">&gt;</span>(<span class="kw">pub</span> <span class="ident">T</span>);
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>CreateContent</span>, <span class='ident'>H</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>ContentFactory</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span> <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ContentFactory</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from_handler</span>(<span class='ident'>_context</span>: <span class='ident'>BuilderContext</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='op'>-&gt;</span> <span class='ident'>ContentFactory</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>handler</span>.<span class='ident'>into</span>()
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">CreateContent</span>, <span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">ContentFactory</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span> <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ContentFactory</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_handler</span>(<span class="ident">_context</span>: <span class="ident">BuilderContext</span>, <span class="ident">handler</span>: <span class="ident">H</span>) <span class="op">-&gt;</span> <span class="ident">ContentFactory</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">handler</span>.<span class="ident">into</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>CreateContent</span><span class='op'>&gt;</span> <span class='ident'>ApplyContext</span> <span class='kw'>for</span> <span class='ident'>ContentFactory</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>apply_context</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>_context</span>: <span class='ident'>BuilderContext</span>) {}
-    <span class='kw'>fn</span> <span class='ident'>prepend_context</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>_context</span>: <span class='ident'>BuilderContext</span>) {}
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">CreateContent</span><span class="op">&gt;</span> <span class="ident">ApplyContext</span> <span class="kw">for</span> <span class="ident">ContentFactory</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">apply_context</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_context</span>: <span class="ident">BuilderContext</span>) {}
+    <span class="kw">fn</span> <span class="ident">prepend_context</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_context</span>: <span class="ident">BuilderContext</span>) {}
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>CreateContent</span><span class='op'>&gt;</span> <span class='ident'>Merge</span> <span class='kw'>for</span> <span class='ident'>ContentFactory</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>merge</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>ContentFactory</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) {
-        <span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>=</span> <span class='ident'>other</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">CreateContent</span><span class="op">&gt;</span> <span class="ident">Merge</span> <span class="kw">for</span> <span class="ident">ContentFactory</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">merge</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="ident">ContentFactory</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) {
+        <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">other</span>;
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>CreateContent</span><span class='op'>&gt;</span> <span class='ident'>HandleRequest</span> <span class='kw'>for</span> <span class='ident'>ContentFactory</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>handle_request</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>environment</span>: <span class='ident'>Environment</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Environment</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;&gt;</span> {
-        <span class='ident'>environment</span>.<span class='ident'>response</span>.<span class='ident'>send</span>(<span class='self'>self</span>.<span class='number'>0</span>.<span class='ident'>create_content</span>(<span class='ident'>environment</span>.<span class='ident'>context</span>));
-        <span class='prelude-val'>Ok</span>(())
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">CreateContent</span><span class="op">&gt;</span> <span class="ident">HandleRequest</span> <span class="kw">for</span> <span class="ident">ContentFactory</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">handle_request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">environment</span>: <span class="ident">Environment</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Environment</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;&gt;</span> {
+        <span class="ident">environment</span>.<span class="ident">response</span>.<span class="ident">send</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">create_content</span>(<span class="ident">environment</span>.<span class="ident">context</span>));
+        <span class="prelude-val">Ok</span>(())
     }
 
-    <span class='kw'>fn</span> <span class='ident'>hyperlinks</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>base_link</span>: <span class='ident'>Link</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Link</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> {
-        <span class='macro'>vec</span><span class='macro'>!</span>[<span class='ident'>base_link</span>]
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>CreateContent</span><span class='op'>&gt;</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ContentFactory</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>factory</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>ContentFactory</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>ContentFactory</span>(<span class='ident'>factory</span>)
+    <span class="kw">fn</span> <span class="ident">hyperlinks</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">base_link</span>: <span class="ident">Link</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Link</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span> {
+        <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">base_link</span>]
     }
 }
 
-<span class='doccomment'>///A simplified handler that returns the response content.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///It&#39;s meant for situations where direct access to the `Response` is</span>
-<span class='doccomment'>///unnecessary. The benefit is that it can use early returns in a more</span>
-<span class='doccomment'>///convenient way.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>CreateContent</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span> {
-    <span class='doccomment'>///The type of content that is created.</span>
-    <span class='kw'>type</span> <span class='ident'>Output</span>: <span class='kw'>for</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>SendResponse</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>;
-
-    <span class='doccomment'>///Create content that will be sent to the client.</span>
-    <span class='kw'>fn</span> <span class='ident'>create_content</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>Context</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">CreateContent</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ContentFactory</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">factory</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">ContentFactory</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">ContentFactory</span>(<span class="ident">factory</span>)
+    }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>, <span class='ident'>R</span><span class='op'>&gt;</span> <span class='ident'>CreateContent</span> <span class='kw'>for</span> <span class='ident'>T</span> <span class='kw'>where</span>
-    <span class='ident'>T</span>: <span class='ident'>Fn</span>(<span class='ident'>Context</span>) <span class='op'>-&gt;</span> <span class='ident'>R</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span>,
-    <span class='ident'>R</span>: <span class='kw'>for</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span> <span class='ident'>SendResponse</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>
+<span class="doccomment">///A simplified handler that returns the response content.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///It&#39;s meant for situations where direct access to the `Response` is</span>
+<span class="doccomment">///unnecessary. The benefit is that it can use early returns in a more</span>
+<span class="doccomment">///convenient way.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">CreateContent</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> {
+    <span class="doccomment">///The type of content that is created.</span>
+    <span class="kw">type</span> <span class="ident">Output</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> <span class="ident">SendResponse</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>;
+
+    <span class="doccomment">///Create content that will be sent to the client.</span>
+    <span class="kw">fn</span> <span class="ident">create_content</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">context</span>: <span class="ident">Context</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span>;
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">R</span><span class="op">&gt;</span> <span class="ident">CreateContent</span> <span class="kw">for</span> <span class="ident">T</span> <span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Fn</span>(<span class="ident">Context</span>) <span class="op">-&gt;</span> <span class="ident">R</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
+    <span class="ident">R</span>: <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span> <span class="ident">SendResponse</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>
 {
-    <span class='kw'>type</span> <span class='ident'>Output</span> <span class='op'>=</span> <span class='ident'>R</span>;
+    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">R</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>create_content</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>Context</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Output</span> {
-        <span class='self'>self</span>(<span class='ident'>context</span>)
+    <span class="kw">fn</span> <span class="ident">create_content</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">context</span>: <span class="ident">Context</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
+        <span class="self">self</span>(<span class="ident">context</span>)
     }
 }
 
-<span class='doccomment'>/// A collection of information that can be passed to child handlers while</span>
-<span class='doccomment'>/// building a handler.</span>
-<span class='kw'>pub</span> <span class='kw'>type</span> <span class='ident'>BuilderContext</span> <span class='op'>=</span> <span class='ident'>anymap</span>::<span class='ident'>Map</span><span class='op'>&lt;</span><span class='ident'>anymap</span>::<span class='ident'>any</span>::<span class='ident'>CloneAny</span><span class='op'>&gt;</span>;
+<span class="doccomment">/// A collection of information that can be passed to child handlers while</span>
+<span class="doccomment">/// building a handler.</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">BuilderContext</span> <span class="op">=</span> <span class="ident">anymap</span>::<span class="ident">Map</span><span class="op">&lt;</span><span class="ident">anymap</span>::<span class="ident">any</span>::<span class="ident">CloneAny</span><span class="op">&gt;</span>;
 
-<span class='doccomment'>/// A trait for handlers that can be build, using a chainable API.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Build</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The type that provides the builder API.</span>
-    <span class='kw'>type</span> <span class='ident'>Builder</span>: <span class='lifetime'>&#39;a</span>;
+<span class="doccomment">/// A trait for handlers that can be build, using a chainable API.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Build</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The type that provides the builder API.</span>
+    <span class="kw">type</span> <span class="ident">Builder</span>: <span class="lifetime">&#39;a</span>;
 
-    <span class='doccomment'>/// Get the builder type for this type, and prepare it with a context.</span>
-    <span class='kw'>fn</span> <span class='ident'>get_builder</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>BuilderContext</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Builder</span>;
+    <span class="doccomment">/// Get the builder type for this type, and prepare it with a context.</span>
+    <span class="kw">fn</span> <span class="ident">get_builder</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">context</span>: <span class="ident">BuilderContext</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Builder</span>;
 }
 
-<span class='doccomment'>/// Create a handler from another handler.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Create a handler from another handler and a `BuilderContext`.</span>
-    <span class='kw'>fn</span> <span class='ident'>from_handler</span>(<span class='ident'>context</span>: <span class='ident'>BuilderContext</span>, <span class='ident'>handler</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>;
+<span class="doccomment">/// Create a handler from another handler.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Create a handler from another handler and a `BuilderContext`.</span>
+    <span class="kw">fn</span> <span class="ident">from_handler</span>(<span class="ident">context</span>: <span class="ident">BuilderContext</span>, <span class="ident">handler</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Handler</span><span class='op'>&gt;</span> <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>T</span> {
-    <span class='kw'>fn</span> <span class='ident'>from_handler</span>(<span class='ident'>_context</span>: <span class='ident'>BuilderContext</span>, <span class='ident'>handler</span>: <span class='ident'>T</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span> {
-        <span class='ident'>handler</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Handler</span><span class="op">&gt;</span> <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">from_handler</span>(<span class="ident">_context</span>: <span class="ident">BuilderContext</span>, <span class="ident">handler</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
+        <span class="ident">handler</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>, <span class='ident'>H</span><span class='op'>&gt;</span> <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>from_handler</span>(<span class='ident'>context</span>: <span class='ident'>BuilderContext</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='prelude-val'>Some</span>(<span class='ident'>T</span>::<span class='ident'>from_handler</span>(<span class='ident'>context</span>, <span class='ident'>handler</span>))
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>, <span class="ident">H</span><span class="op">&gt;</span> <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_handler</span>(<span class="ident">context</span>: <span class="ident">BuilderContext</span>, <span class="ident">handler</span>: <span class="ident">H</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="prelude-val">Some</span>(<span class="ident">T</span>::<span class="ident">from_handler</span>(<span class="ident">context</span>, <span class="ident">handler</span>))
     }
 }
 
-<span class='doccomment'>/// Apply a `BuilderContext` in various ways.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ApplyContext</span> {
-    <span class='doccomment'>/// Set properties, based on a given context.</span>
-    <span class='kw'>fn</span> <span class='ident'>apply_context</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>BuilderContext</span>);
+<span class="doccomment">/// Apply a `BuilderContext` in various ways.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ApplyContext</span> {
+    <span class="doccomment">/// Set properties, based on a given context.</span>
+    <span class="kw">fn</span> <span class="ident">apply_context</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">context</span>: <span class="ident">BuilderContext</span>);
 
-    <span class='doccomment'>/// Prepend existing properties, based on a given context.</span>
-    <span class='kw'>fn</span> <span class='ident'>prepend_context</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>BuilderContext</span>);
+    <span class="doccomment">/// Prepend existing properties, based on a given context.</span>
+    <span class="kw">fn</span> <span class="ident">prepend_context</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">context</span>: <span class="ident">BuilderContext</span>);
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Handler</span><span class='op'>&gt;</span> <span class='ident'>ApplyContext</span> <span class='kw'>for</span> <span class='ident'>T</span> {
-    <span class='kw'>fn</span> <span class='ident'>apply_context</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>_context</span>: <span class='ident'>BuilderContext</span>) {}
-    <span class='kw'>fn</span> <span class='ident'>prepend_context</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>_context</span>: <span class='ident'>BuilderContext</span>) {}
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Handler</span><span class="op">&gt;</span> <span class="ident">ApplyContext</span> <span class="kw">for</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">apply_context</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_context</span>: <span class="ident">BuilderContext</span>) {}
+    <span class="kw">fn</span> <span class="ident">prepend_context</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_context</span>: <span class="ident">BuilderContext</span>) {}
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>ApplyContext</span><span class='op'>&gt;</span> <span class='ident'>ApplyContext</span> <span class='kw'>for</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>apply_context</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>BuilderContext</span>) {
-        <span class='self'>self</span>.<span class='ident'>as_mut</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>handler</span><span class='op'>|</span> <span class='ident'>handler</span>.<span class='ident'>apply_context</span>(<span class='ident'>context</span>));
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ApplyContext</span><span class="op">&gt;</span> <span class="ident">ApplyContext</span> <span class="kw">for</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">apply_context</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">context</span>: <span class="ident">BuilderContext</span>) {
+        <span class="self">self</span>.<span class="ident">as_mut</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">handler</span><span class="op">|</span> <span class="ident">handler</span>.<span class="ident">apply_context</span>(<span class="ident">context</span>));
     }
-    <span class='kw'>fn</span> <span class='ident'>prepend_context</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>BuilderContext</span>) {
-        <span class='self'>self</span>.<span class='ident'>as_mut</span>().<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>handler</span><span class='op'>|</span> <span class='ident'>handler</span>.<span class='ident'>prepend_context</span>(<span class='ident'>context</span>));
-    }
-}
-
-<span class='doccomment'>/// A trait for handlers that can be merged.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>Merge</span> {
-    <span class='doccomment'>/// Combine this handler with another, overwriting conflicting properties.</span>
-    <span class='kw'>fn</span> <span class='ident'>merge</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='self'>Self</span>);
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Handler</span><span class='op'>&gt;</span> <span class='ident'>Merge</span> <span class='kw'>for</span> <span class='ident'>T</span> {
-    <span class='kw'>fn</span> <span class='ident'>merge</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>T</span>) {
-        <span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>=</span> <span class='ident'>other</span>;
+    <span class="kw">fn</span> <span class="ident">prepend_context</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">context</span>: <span class="ident">BuilderContext</span>) {
+        <span class="self">self</span>.<span class="ident">as_mut</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">handler</span><span class="op">|</span> <span class="ident">handler</span>.<span class="ident">prepend_context</span>(<span class="ident">context</span>));
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Merge</span><span class='op'>&gt;</span> <span class='ident'>Merge</span> <span class='kw'>for</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>merge</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) {
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>this_handler</span>) <span class='op'>=</span> <span class='self'>self</span> {
-            <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>other_handler</span>) <span class='op'>=</span> <span class='ident'>other</span> {
-                <span class='ident'>this_handler</span>.<span class='ident'>merge</span>(<span class='ident'>other_handler</span>);
+<span class="doccomment">/// A trait for handlers that can be merged.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Merge</span> {
+    <span class="doccomment">/// Combine this handler with another, overwriting conflicting properties.</span>
+    <span class="kw">fn</span> <span class="ident">merge</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>);
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Handler</span><span class="op">&gt;</span> <span class="ident">Merge</span> <span class="kw">for</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">merge</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="ident">T</span>) {
+        <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">other</span>;
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Merge</span><span class="op">&gt;</span> <span class="ident">Merge</span> <span class="kw">for</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">merge</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">this_handler</span>) <span class="op">=</span> <span class="self">self</span> {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">other_handler</span>) <span class="op">=</span> <span class="ident">other</span> {
+                <span class="ident">this_handler</span>.<span class="ident">merge</span>(<span class="ident">other_handler</span>);
             }
-        } <span class='kw'>else</span> {
-            <span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>=</span> <span class='ident'>other</span>;
+        } <span class="kw">else</span> {
+            <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">other</span>;
         }
     }
 }
 
-<span class='doccomment'>///Context type for storing path variable names.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>, <span class='ident'>Debug</span>, <span class='ident'>Default</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>VariableNames</span>(<span class='kw'>pub</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>MaybeUtf8Owned</span><span class='op'>&gt;</span>);
+<span class="doccomment">///Context type for storing path variable names.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">VariableNames</span>(<span class="kw">pub</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MaybeUtf8Owned</span><span class="op">&gt;</span>);
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

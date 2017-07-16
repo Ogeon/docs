@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -175,137 +175,137 @@
 <span id="130">130</span>
 <span id="131">131</span>
 <span id="132">132</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//!Server configuration and instance.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//!Server configuration and instance.</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>borrow</span>::<span class='ident'>ToOwned</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">ToOwned</span>;
 
-<span class='kw'>use</span> <span class='ident'>hyper</span>;
-<span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>mime</span>::<span class='ident'>Mime</span>;
+<span class="kw">use</span> <span class="ident">hyper</span>;
+<span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">mime</span>::<span class="ident">Mime</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>hyper</span>::<span class='ident'>server</span>::<span class='ident'>Listening</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hyper</span>::<span class="ident">server</span>::<span class="ident">Listening</span>;
 
-<span class='kw'>use</span> <span class='ident'>filter</span>::{<span class='ident'>ContextFilter</span>, <span class='ident'>ResponseFilter</span>};
-<span class='kw'>use</span> <span class='ident'>handler</span>::<span class='ident'>HandleRequest</span>;
-<span class='kw'>use</span> <span class='ident'>net</span>::<span class='ident'>SslServer</span>;
+<span class="kw">use</span> <span class="ident">filter</span>::{<span class="ident">ContextFilter</span>, <span class="ident">ResponseFilter</span>};
+<span class="kw">use</span> <span class="ident">handler</span>::<span class="ident">HandleRequest</span>;
+<span class="kw">use</span> <span class="ident">net</span>::<span class="ident">SslServer</span>;
 
-<span class='kw'>use</span> <span class='ident'>HttpResult</span>;
+<span class="kw">use</span> <span class="ident">HttpResult</span>;
 
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>instance</span>::<span class='ident'>ServerInstance</span>;
-<span class='kw'>pub</span> <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>config</span>::{<span class='ident'>Host</span>, <span class='ident'>Global</span>, <span class='ident'>KeepAlive</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">instance</span>::<span class="ident">ServerInstance</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">config</span>::{<span class="ident">Host</span>, <span class="ident">Global</span>, <span class="ident">KeepAlive</span>};
 
-<span class='kw'>mod</span> <span class='ident'>instance</span>;
-<span class='kw'>mod</span> <span class='ident'>config</span>;
+<span class="kw">mod</span> <span class="ident">instance</span>;
+<span class="kw">mod</span> <span class="ident">config</span>;
 
-<span class='doccomment'>///Used to set up and run a server.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///```no_run</span>
-<span class='doccomment'>///# use std::error::Error;</span>
-<span class='doccomment'>///# use rustful::{Server, Handler, Context, Response};</span>
-<span class='doccomment'>///# #[derive(Default)]</span>
-<span class='doccomment'>///# struct R;</span>
-<span class='doccomment'>///# impl Handler for R {</span>
-<span class='doccomment'>///#     fn handle(&amp;self, _context: Context, _response: Response) {}</span>
-<span class='doccomment'>///# }</span>
-<span class='doccomment'>///# let router = R;</span>
-<span class='doccomment'>///let server_result = Server {</span>
-<span class='doccomment'>///    host: 8080.into(),</span>
-<span class='doccomment'>///    handlers: router,</span>
-<span class='doccomment'>///    ..Server::default()</span>
-<span class='doccomment'>///}.run();</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///match server_result {</span>
-<span class='doccomment'>///    Ok(_server) =&gt; {},</span>
-<span class='doccomment'>///    Err(e) =&gt; println!(&quot;could not start server: {}&quot;, e.description())</span>
-<span class='doccomment'>///}</span>
-<span class='doccomment'>///```</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>///One or several response handlers.</span>
-    <span class='kw'>pub</span> <span class='ident'>handlers</span>: <span class='ident'>R</span>,
+<span class="doccomment">///Used to set up and run a server.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///```no_run</span>
+<span class="doccomment">///# use std::error::Error;</span>
+<span class="doccomment">///# use rustful::{Server, Handler, Context, Response};</span>
+<span class="doccomment">///# #[derive(Default)]</span>
+<span class="doccomment">///# struct R;</span>
+<span class="doccomment">///# impl Handler for R {</span>
+<span class="doccomment">///#     fn handle(&amp;self, _context: Context, _response: Response) {}</span>
+<span class="doccomment">///# }</span>
+<span class="doccomment">///# let router = R;</span>
+<span class="doccomment">///let server_result = Server {</span>
+<span class="doccomment">///    host: 8080.into(),</span>
+<span class="doccomment">///    handlers: router,</span>
+<span class="doccomment">///    ..Server::default()</span>
+<span class="doccomment">///}.run();</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///match server_result {</span>
+<span class="doccomment">///    Ok(_server) =&gt; {},</span>
+<span class="doccomment">///    Err(e) =&gt; println!(&quot;could not start server: {}&quot;, e.description())</span>
+<span class="doccomment">///}</span>
+<span class="doccomment">///```</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Server</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="doccomment">///One or several response handlers.</span>
+    <span class="kw">pub</span> <span class="ident">handlers</span>: <span class="ident">R</span>,
 
-    <span class='doccomment'>///The host address and port where the server will listen for requests.</span>
-    <span class='doccomment'>///Default is `0.0.0.0:80`.</span>
-    <span class='kw'>pub</span> <span class='ident'>host</span>: <span class='ident'>Host</span>,
+    <span class="doccomment">///The host address and port where the server will listen for requests.</span>
+    <span class="doccomment">///Default is `0.0.0.0:80`.</span>
+    <span class="kw">pub</span> <span class="ident">host</span>: <span class="ident">Host</span>,
 
-    <span class='doccomment'>///The number of threads to be used in the server thread pool. The default</span>
-    <span class='doccomment'>///(`None`) will cause the server to optimistically use the formula</span>
-    <span class='doccomment'>///`(num_cores * 5) / 4`.</span>
-    <span class='kw'>pub</span> <span class='ident'>threads</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>,
+    <span class="doccomment">///The number of threads to be used in the server thread pool. The default</span>
+    <span class="doccomment">///(`None`) will cause the server to optimistically use the formula</span>
+    <span class="doccomment">///`(num_cores * 5) / 4`.</span>
+    <span class="kw">pub</span> <span class="ident">threads</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>,
 
-    <span class='doccomment'>///The server&#39;s `keep-alive` policy. Setting this to `Some(...)` will</span>
-    <span class='doccomment'>///allow `keep-alive` connections with a timeout, and keeping it as `None`</span>
-    <span class='doccomment'>///will force connections to close after each request. Default is `None`.</span>
-    <span class='kw'>pub</span> <span class='ident'>keep_alive</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>KeepAlive</span><span class='op'>&gt;</span>,
+    <span class="doccomment">///The server&#39;s `keep-alive` policy. Setting this to `Some(...)` will</span>
+    <span class="doccomment">///allow `keep-alive` connections with a timeout, and keeping it as `None`</span>
+    <span class="doccomment">///will force connections to close after each request. Default is `None`.</span>
+    <span class="kw">pub</span> <span class="ident">keep_alive</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">KeepAlive</span><span class="op">&gt;</span>,
 
-    <span class='doccomment'>///The content of the server header. Default is `&quot;rustful&quot;`.</span>
-    <span class='kw'>pub</span> <span class='ident'>server</span>: <span class='ident'>String</span>,
+    <span class="doccomment">///The content of the server header. Default is `&quot;rustful&quot;`.</span>
+    <span class="kw">pub</span> <span class="ident">server</span>: <span class="ident">String</span>,
 
-    <span class='doccomment'>///The default media type. Default is `text/plain, charset: UTF-8`.</span>
-    <span class='kw'>pub</span> <span class='ident'>content_type</span>: <span class='ident'>Mime</span>,
+    <span class="doccomment">///The default media type. Default is `text/plain, charset: UTF-8`.</span>
+    <span class="kw">pub</span> <span class="ident">content_type</span>: <span class="ident">Mime</span>,
 
-    <span class='doccomment'>///Globally accessible data.</span>
-    <span class='kw'>pub</span> <span class='ident'>global</span>: <span class='ident'>Global</span>,
+    <span class="doccomment">///Globally accessible data.</span>
+    <span class="kw">pub</span> <span class="ident">global</span>: <span class="ident">Global</span>,
 
-    <span class='doccomment'>///The context filter stack.</span>
-    <span class='kw'>pub</span> <span class='ident'>context_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ContextFilter</span><span class='op'>&gt;&gt;</span>,
+    <span class="doccomment">///The context filter stack.</span>
+    <span class="kw">pub</span> <span class="ident">context_filters</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">ContextFilter</span><span class="op">&gt;&gt;</span>,
 
-    <span class='doccomment'>///The response filter stack.</span>
-    <span class='kw'>pub</span> <span class='ident'>response_filters</span>: <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>ResponseFilter</span><span class='op'>&gt;&gt;</span>
+    <span class="doccomment">///The response filter stack.</span>
+    <span class="kw">pub</span> <span class="ident">response_filters</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">ResponseFilter</span><span class="op">&gt;&gt;</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>HandleRequest</span><span class='op'>&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>///Set up a new standard server. This can be useful when `handlers`</span>
-    <span class='doccomment'>///doesn&#39;t implement `Default`:</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///```no_run</span>
-    <span class='doccomment'>///# use std::error::Error;</span>
-    <span class='doccomment'>///# use rustful::{Server, Handler, Context, Response};</span>
-    <span class='doccomment'>///let handler = |context: Context, response: Response| {</span>
-    <span class='doccomment'>///    //...</span>
-    <span class='doccomment'>///};</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>///let server_result = Server {</span>
-    <span class='doccomment'>///    host: 8080.into(),</span>
-    <span class='doccomment'>///    ..Server::new(handler)</span>
-    <span class='doccomment'>///};</span>
-    <span class='doccomment'>///```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>(<span class='ident'>handlers</span>: <span class='ident'>R</span>) <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
-        <span class='ident'>Server</span> {
-            <span class='ident'>handlers</span>: <span class='ident'>handlers</span>,
-            <span class='ident'>host</span>: <span class='number'>80</span>.<span class='ident'>into</span>(),
-            <span class='ident'>threads</span>: <span class='prelude-val'>None</span>,
-            <span class='ident'>keep_alive</span>: <span class='prelude-val'>None</span>,
-            <span class='ident'>server</span>: <span class='string'>&quot;rustful&quot;</span>.<span class='ident'>to_owned</span>(),
-            <span class='ident'>content_type</span>: <span class='ident'>Mime</span>(
-                <span class='ident'>hyper</span>::<span class='ident'>mime</span>::<span class='ident'>TopLevel</span>::<span class='ident'>Text</span>,
-                <span class='ident'>hyper</span>::<span class='ident'>mime</span>::<span class='ident'>SubLevel</span>::<span class='ident'>Html</span>,
-                <span class='macro'>vec</span><span class='macro'>!</span>[(<span class='ident'>hyper</span>::<span class='ident'>mime</span>::<span class='ident'>Attr</span>::<span class='ident'>Charset</span>, <span class='ident'>hyper</span>::<span class='ident'>mime</span>::<span class='ident'>Value</span>::<span class='ident'>Utf8</span>)]
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">HandleRequest</span><span class="op">&gt;</span> <span class="ident">Server</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="doccomment">///Set up a new standard server. This can be useful when `handlers`</span>
+    <span class="doccomment">///doesn&#39;t implement `Default`:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///```no_run</span>
+    <span class="doccomment">///# use std::error::Error;</span>
+    <span class="doccomment">///# use rustful::{Server, Handler, Context, Response};</span>
+    <span class="doccomment">///let handler = |context: Context, response: Response| {</span>
+    <span class="doccomment">///    //...</span>
+    <span class="doccomment">///};</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">///let server_result = Server {</span>
+    <span class="doccomment">///    host: 8080.into(),</span>
+    <span class="doccomment">///    ..Server::new(handler)</span>
+    <span class="doccomment">///};</span>
+    <span class="doccomment">///```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">handlers</span>: <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="ident">Server</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+        <span class="ident">Server</span> {
+            <span class="ident">handlers</span>: <span class="ident">handlers</span>,
+            <span class="ident">host</span>: <span class="number">80</span>.<span class="ident">into</span>(),
+            <span class="ident">threads</span>: <span class="prelude-val">None</span>,
+            <span class="ident">keep_alive</span>: <span class="prelude-val">None</span>,
+            <span class="ident">server</span>: <span class="string">&quot;rustful&quot;</span>.<span class="ident">to_owned</span>(),
+            <span class="ident">content_type</span>: <span class="ident">Mime</span>(
+                <span class="ident">hyper</span>::<span class="ident">mime</span>::<span class="ident">TopLevel</span>::<span class="ident">Text</span>,
+                <span class="ident">hyper</span>::<span class="ident">mime</span>::<span class="ident">SubLevel</span>::<span class="ident">Html</span>,
+                <span class="macro">vec</span><span class="macro">!</span>[(<span class="ident">hyper</span>::<span class="ident">mime</span>::<span class="ident">Attr</span>::<span class="ident">Charset</span>, <span class="ident">hyper</span>::<span class="ident">mime</span>::<span class="ident">Value</span>::<span class="ident">Utf8</span>)]
             ),
-            <span class='ident'>global</span>: <span class='ident'>Global</span>::<span class='ident'>default</span>(),
-            <span class='ident'>context_filters</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
-            <span class='ident'>response_filters</span>: <span class='ident'>Vec</span>::<span class='ident'>new</span>(),
+            <span class="ident">global</span>: <span class="ident">Global</span>::<span class="ident">default</span>(),
+            <span class="ident">context_filters</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
+            <span class="ident">response_filters</span>: <span class="ident">Vec</span>::<span class="ident">new</span>(),
         }
     }
 
-    <span class='doccomment'>///Start the server.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>build</span>().<span class='ident'>run</span>()
+    <span class="doccomment">///Start the server.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">HttpResult</span><span class="op">&lt;</span><span class="ident">Listening</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">build</span>().<span class="ident">run</span>()
     }
 
-    <span class='doccomment'>///Start the server with SSL.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>run_https</span><span class='op'>&lt;</span><span class='ident'>S</span>: <span class='ident'>SslServer</span> <span class='op'>+</span> <span class='ident'>Clone</span> <span class='op'>+</span> <span class='ident'>Send</span> <span class='op'>+</span> <span class='lifetime'>&#39;static</span><span class='op'>&gt;</span>(<span class='self'>self</span>, <span class='ident'>ssl</span>: <span class='ident'>S</span>) <span class='op'>-&gt;</span> <span class='ident'>HttpResult</span><span class='op'>&lt;</span><span class='ident'>Listening</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>build</span>().<span class='ident'>run_https</span>(<span class='ident'>ssl</span>)
+    <span class="doccomment">///Start the server with SSL.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run_https</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">SslServer</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">ssl</span>: <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="ident">HttpResult</span><span class="op">&lt;</span><span class="ident">Listening</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">build</span>().<span class="ident">run_https</span>(<span class="ident">ssl</span>)
     }
 
-    <span class='doccomment'>///Build a runnable instance of the server.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>build</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ServerInstance</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
-        <span class='ident'>ServerInstance</span>::<span class='ident'>new</span>(<span class='self'>self</span>)
+    <span class="doccomment">///Build a runnable instance of the server.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ServerInstance</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+        <span class="ident">ServerInstance</span>::<span class="ident">new</span>(<span class="self">self</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>Default</span> <span class='op'>+</span> <span class='ident'>HandleRequest</span><span class='op'>&gt;</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>Server</span><span class='op'>&lt;</span><span class='ident'>R</span><span class='op'>&gt;</span> {
-        <span class='ident'>Server</span>::<span class='ident'>new</span>(<span class='ident'>R</span>::<span class='ident'>default</span>())
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Default</span> <span class="op">+</span> <span class="ident">HandleRequest</span><span class="op">&gt;</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Server</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">Server</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+        <span class="ident">Server</span>::<span class="ident">new</span>(<span class="ident">R</span>::<span class="ident">default</span>())
     }
 }
 </pre>

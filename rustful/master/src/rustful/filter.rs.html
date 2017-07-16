@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1"> 1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1"> 1</span>
 <span id="2"> 2</span>
 <span id="3"> 3</span>
 <span id="4"> 4</span>
@@ -141,103 +141,103 @@
 <span id="96">96</span>
 <span id="97">97</span>
 <span id="98">98</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//!Request and context filters.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//!Request and context filters.</span>
 
-<span class='kw'>use</span> <span class='ident'>anymap</span>::<span class='ident'>AnyMap</span>;
+<span class="kw">use</span> <span class="ident">anymap</span>::<span class="ident">AnyMap</span>;
 
-<span class='kw'>use</span> <span class='ident'>StatusCode</span>;
-<span class='kw'>use</span> <span class='ident'>header</span>::<span class='ident'>Headers</span>;
+<span class="kw">use</span> <span class="ident">StatusCode</span>;
+<span class="kw">use</span> <span class="ident">header</span>::<span class="ident">Headers</span>;
 
-<span class='kw'>use</span> <span class='ident'>context</span>::<span class='ident'>Context</span>;
+<span class="kw">use</span> <span class="ident">context</span>::<span class="ident">Context</span>;
 
-<span class='kw'>use</span> <span class='ident'>response</span>::<span class='ident'>Data</span>;
-<span class='kw'>use</span> <span class='ident'>server</span>::<span class='ident'>Global</span>;
+<span class="kw">use</span> <span class="ident">response</span>::<span class="ident">Data</span>;
+<span class="kw">use</span> <span class="ident">server</span>::<span class="ident">Global</span>;
 
-<span class='doccomment'>///Contextual tools for filters.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>FilterContext</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>///Shared storage for filters. It is local to the current request and</span>
-    <span class='doccomment'>///accessible from the handler and all of the filters. It can be used to</span>
-    <span class='doccomment'>///send data between these units.</span>
-    <span class='kw'>pub</span> <span class='ident'>storage</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>AnyMap</span>,
+<span class="doccomment">///Contextual tools for filters.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FilterContext</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">///Shared storage for filters. It is local to the current request and</span>
+    <span class="doccomment">///accessible from the handler and all of the filters. It can be used to</span>
+    <span class="doccomment">///send data between these units.</span>
+    <span class="kw">pub</span> <span class="ident">storage</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">AnyMap</span>,
 
-    <span class='doccomment'>///Globally accessible data.</span>
-    <span class='kw'>pub</span> <span class='ident'>global</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>Global</span>,
+    <span class="doccomment">///Globally accessible data.</span>
+    <span class="kw">pub</span> <span class="ident">global</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Global</span>,
 }
 
-<span class='doccomment'>///A trait for context filters.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///They are able to modify and react to a `Context` before it&#39;s sent to the handler.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ContextFilter</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> {
-    <span class='doccomment'>///Try to modify the handler `Context`.</span>
-    <span class='kw'>fn</span> <span class='ident'>modify</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>FilterContext</span>, <span class='ident'>request_context</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Context</span>) <span class='op'>-&gt;</span> <span class='ident'>ContextAction</span>;
+<span class="doccomment">///A trait for context filters.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///They are able to modify and react to a `Context` before it&#39;s sent to the handler.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ContextFilter</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> {
+    <span class="doccomment">///Try to modify the handler `Context`.</span>
+    <span class="kw">fn</span> <span class="ident">modify</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">context</span>: <span class="ident">FilterContext</span>, <span class="ident">request_context</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span>) <span class="op">-&gt;</span> <span class="ident">ContextAction</span>;
 }
 
-<span class='doccomment'>///The result from a context filter.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ContextAction</span> {
-    <span class='doccomment'>///Continue to the next filter in the stack.</span>
-    <span class='ident'>Next</span>,
+<span class="doccomment">///The result from a context filter.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ContextAction</span> {
+    <span class="doccomment">///Continue to the next filter in the stack.</span>
+    <span class="ident">Next</span>,
 
-    <span class='doccomment'>///Abort and set HTTP status.</span>
-    <span class='ident'>Abort</span>(<span class='ident'>StatusCode</span>)
+    <span class="doccomment">///Abort and set HTTP status.</span>
+    <span class="ident">Abort</span>(<span class="ident">StatusCode</span>)
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>ContextAction</span> {
-    <span class='doccomment'>///Continue to the next filter in the stack.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>next</span>() <span class='op'>-&gt;</span> <span class='ident'>ContextAction</span> {
-        <span class='ident'>ContextAction</span>::<span class='ident'>Next</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ContextAction</span> {
+    <span class="doccomment">///Continue to the next filter in the stack.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">next</span>() <span class="op">-&gt;</span> <span class="ident">ContextAction</span> {
+        <span class="ident">ContextAction</span>::<span class="ident">Next</span>
     }
 
-    <span class='doccomment'>///Abort and set HTTP status.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>abort</span>(<span class='ident'>status</span>: <span class='ident'>StatusCode</span>) <span class='op'>-&gt;</span> <span class='ident'>ContextAction</span> {
-        <span class='ident'>ContextAction</span>::<span class='ident'>Abort</span>(<span class='ident'>status</span>)
+    <span class="doccomment">///Abort and set HTTP status.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">abort</span>(<span class="ident">status</span>: <span class="ident">StatusCode</span>) <span class="op">-&gt;</span> <span class="ident">ContextAction</span> {
+        <span class="ident">ContextAction</span>::<span class="ident">Abort</span>(<span class="ident">status</span>)
     }
 }
 
 
-<span class='doccomment'>///A trait for response filters.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>///They are able to modify headers and data before it gets written in the response.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ResponseFilter</span>: <span class='ident'>Send</span> <span class='op'>+</span> <span class='ident'>Sync</span> {
-    <span class='doccomment'>///Set or modify headers before they are sent to the client and maybe initiate the body.</span>
-    <span class='kw'>fn</span> <span class='ident'>begin</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>FilterContext</span>, <span class='ident'>status</span>: <span class='ident'>StatusCode</span>, <span class='ident'>headers</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Headers</span>) <span class='op'>-&gt;</span>
-        (<span class='ident'>StatusCode</span>, <span class='ident'>ResponseAction</span>);
+<span class="doccomment">///A trait for response filters.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">///They are able to modify headers and data before it gets written in the response.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ResponseFilter</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> {
+    <span class="doccomment">///Set or modify headers before they are sent to the client and maybe initiate the body.</span>
+    <span class="kw">fn</span> <span class="ident">begin</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">context</span>: <span class="ident">FilterContext</span>, <span class="ident">status</span>: <span class="ident">StatusCode</span>, <span class="ident">headers</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Headers</span>) <span class="op">-&gt;</span>
+        (<span class="ident">StatusCode</span>, <span class="ident">ResponseAction</span>);
 
-    <span class='doccomment'>///Handle content before writing it to the body.</span>
-    <span class='kw'>fn</span> <span class='ident'>write</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>FilterContext</span>, <span class='ident'>content</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Data</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseAction</span>;
+    <span class="doccomment">///Handle content before writing it to the body.</span>
+    <span class="kw">fn</span> <span class="ident">write</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">context</span>: <span class="ident">FilterContext</span>, <span class="ident">content</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Data</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span>) <span class="op">-&gt;</span> <span class="ident">ResponseAction</span>;
 
-    <span class='doccomment'>///End of body writing. Last chance to add content.</span>
-    <span class='kw'>fn</span> <span class='ident'>end</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>FilterContext</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseAction</span>;
+    <span class="doccomment">///End of body writing. Last chance to add content.</span>
+    <span class="kw">fn</span> <span class="ident">end</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">context</span>: <span class="ident">FilterContext</span>) <span class="op">-&gt;</span> <span class="ident">ResponseAction</span>;
 }
 
-<span class='doccomment'>///The result from a response filter.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ResponseAction</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>///Continue to the next filter and maybe write data.</span>
-    <span class='ident'>Next</span>(<span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Data</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span>),
+<span class="doccomment">///The result from a response filter.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ResponseAction</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">///Continue to the next filter and maybe write data.</span>
+    <span class="ident">Next</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Data</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span>),
 
-    <span class='doccomment'>///Do not continue to the next filter.</span>
-    <span class='ident'>SilentAbort</span>,
+    <span class="doccomment">///Do not continue to the next filter.</span>
+    <span class="ident">SilentAbort</span>,
 
-    <span class='doccomment'>///Abort with an error.</span>
-    <span class='ident'>Abort</span>(<span class='ident'>String</span>)
+    <span class="doccomment">///Abort with an error.</span>
+    <span class="ident">Abort</span>(<span class="ident">String</span>)
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>ResponseAction</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>///Continue to the next filter and maybe write data.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>next</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>Data</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span><span class='op'>&gt;</span>(<span class='ident'>data</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseAction</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>ResponseAction</span>::<span class='ident'>Next</span>(<span class='ident'>data</span>.<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>d</span><span class='op'>|</span> <span class='ident'>d</span>.<span class='ident'>into</span>()))
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">ResponseAction</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">///Continue to the next filter and maybe write data.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">next</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Data</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">ResponseAction</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">ResponseAction</span>::<span class="ident">Next</span>(<span class="ident">data</span>.<span class="ident">map</span>(<span class="op">|</span><span class="ident">d</span><span class="op">|</span> <span class="ident">d</span>.<span class="ident">into</span>()))
     }
 
-    <span class='doccomment'>///Do not continue to the next filter.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>silent_abort</span>() <span class='op'>-&gt;</span> <span class='ident'>ResponseAction</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>ResponseAction</span>::<span class='ident'>SilentAbort</span>
+    <span class="doccomment">///Do not continue to the next filter.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">silent_abort</span>() <span class="op">-&gt;</span> <span class="ident">ResponseAction</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">ResponseAction</span>::<span class="ident">SilentAbort</span>
     }
 
-    <span class='doccomment'>///Abort with an error.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>abort</span>(<span class='ident'>message</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='ident'>ResponseAction</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-        <span class='ident'>ResponseAction</span>::<span class='ident'>Abort</span>(<span class='ident'>message</span>)
+    <span class="doccomment">///Abort with an error.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">abort</span>(<span class="ident">message</span>: <span class="ident">String</span>) <span class="op">-&gt;</span> <span class="ident">ResponseAction</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+        <span class="ident">ResponseAction</span>::<span class="ident">Abort</span>(<span class="ident">message</span>)
     }
 }
 </pre>

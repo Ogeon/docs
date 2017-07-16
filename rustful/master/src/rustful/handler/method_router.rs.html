@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -372,334 +372,334 @@
 <span id="327">327</span>
 <span id="328">328</span>
 <span id="329">329</span>
-</pre><pre class='rust '>
-<span class='doccomment'>//! A router that selects a handler from an HTTP method.</span>
+</pre><pre class="rust ">
+<span class="doccomment">//! A router that selects a handler from an HTTP method.</span>
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>collections</span>::<span class='ident'>hash_map</span>::{<span class='ident'>HashMap</span>, <span class='ident'>Entry</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">hash_map</span>::{<span class="ident">HashMap</span>, <span class="ident">Entry</span>};
 
-<span class='kw'>use</span> {<span class='ident'>Method</span>, <span class='ident'>StatusCode</span>};
-<span class='kw'>use</span> <span class='ident'>context</span>::<span class='ident'>hypermedia</span>::<span class='ident'>Link</span>;
-<span class='kw'>use</span> <span class='ident'>handler</span>::{<span class='ident'>HandleRequest</span>, <span class='ident'>Environment</span>, <span class='ident'>Build</span>, <span class='ident'>FromHandler</span>, <span class='ident'>BuilderContext</span>, <span class='ident'>ApplyContext</span>, <span class='ident'>Merge</span>};
+<span class="kw">use</span> {<span class="ident">Method</span>, <span class="ident">StatusCode</span>};
+<span class="kw">use</span> <span class="ident">context</span>::<span class="ident">hypermedia</span>::<span class="ident">Link</span>;
+<span class="kw">use</span> <span class="ident">handler</span>::{<span class="ident">HandleRequest</span>, <span class="ident">Environment</span>, <span class="ident">Build</span>, <span class="ident">FromHandler</span>, <span class="ident">BuilderContext</span>, <span class="ident">ApplyContext</span>, <span class="ident">Merge</span>};
 
-<span class='doccomment'>/// A router that selects a handler from an HTTP method.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// It&#39;s a simple mapping between `Method` and a router `T`, while the</span>
-<span class='doccomment'>/// requested path is ignored. It&#39;s therefore a good idea to pair a</span>
-<span class='doccomment'>/// `MethodRouter` with an exhaustive path router of some sort.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Clone</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>MethodRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='ident'>handlers</span>: <span class='ident'>HashMap</span><span class='op'>&lt;</span><span class='ident'>Method</span>, <span class='ident'>T</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// A router that selects a handler from an HTTP method.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// It&#39;s a simple mapping between `Method` and a router `T`, while the</span>
+<span class="doccomment">/// requested path is ignored. It&#39;s therefore a good idea to pair a</span>
+<span class="doccomment">/// `MethodRouter` with an exhaustive path router of some sort.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MethodRouter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="ident">handlers</span>: <span class="ident">HashMap</span><span class="op">&lt;</span><span class="ident">Method</span>, <span class="ident">T</span><span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>MethodRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Create an empty `MethodRouter`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='ident'>MethodRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>MethodRouter</span>::<span class='ident'>default</span>()
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">MethodRouter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Create an empty `MethodRouter`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">MethodRouter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">MethodRouter</span>::<span class="ident">default</span>()
     }
 
-    <span class='doccomment'>/// Build the router and its children using a chaninable API.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// use rustful::{Context, Response};</span>
-    <span class='doccomment'>/// use rustful::handler::MethodRouter;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// fn get(_context: Context, response: Response) {</span>
-    <span class='doccomment'>///     response.send(&quot;A GET request.&quot;);</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// fn post(_context: Context, response: Response) {</span>
-    <span class='doccomment'>///     response.send(&quot;A POST request.&quot;);</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let mut method_router = MethodRouter::&lt;fn(Context, Response)&gt;::new();</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// method_router.build().many(|mut method_router|{</span>
-    <span class='doccomment'>///     method_router.on_get(get as fn(Context, Response));</span>
-    <span class='doccomment'>///     method_router.on_post(post);</span>
-    <span class='doccomment'>/// });</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>build</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Builder</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>get_builder</span>(<span class='ident'>BuilderContext</span>::<span class='ident'>new</span>())
+    <span class="doccomment">/// Build the router and its children using a chaninable API.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use rustful::{Context, Response};</span>
+    <span class="doccomment">/// use rustful::handler::MethodRouter;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn get(_context: Context, response: Response) {</span>
+    <span class="doccomment">///     response.send(&quot;A GET request.&quot;);</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn post(_context: Context, response: Response) {</span>
+    <span class="doccomment">///     response.send(&quot;A POST request.&quot;);</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut method_router = MethodRouter::&lt;fn(Context, Response)&gt;::new();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// method_router.build().many(|mut method_router|{</span>
+    <span class="doccomment">///     method_router.on_get(get as fn(Context, Response));</span>
+    <span class="doccomment">///     method_router.on_post(post);</span>
+    <span class="doccomment">/// });</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">build</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Builder</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">get_builder</span>(<span class="ident">BuilderContext</span>::<span class="ident">new</span>())
     }
 
-    <span class='doccomment'>/// Insert a handler that will listen for a specific status code.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// use rustful::{Context, Response, Method};</span>
-    <span class='doccomment'>/// use rustful::handler::{MethodRouter, TreeRouter};</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let route_tree = TreeRouter::&lt;Option&lt;fn(Context, Response)&gt;&gt;::new();</span>
-    <span class='doccomment'>/// //Fill route_tree with handlers...</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let mut method_router = MethodRouter::new();</span>
-    <span class='doccomment'>/// method_router.insert(Method::Get, route_tree);</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>insert</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>method</span>: <span class='ident'>Method</span>, <span class='ident'>handler</span>: <span class='ident'>T</span>) {
-        <span class='self'>self</span>.<span class='ident'>handlers</span>.<span class='ident'>insert</span>(<span class='ident'>method</span>, <span class='ident'>handler</span>);
+    <span class="doccomment">/// Insert a handler that will listen for a specific status code.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use rustful::{Context, Response, Method};</span>
+    <span class="doccomment">/// use rustful::handler::{MethodRouter, TreeRouter};</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let route_tree = TreeRouter::&lt;Option&lt;fn(Context, Response)&gt;&gt;::new();</span>
+    <span class="doccomment">/// //Fill route_tree with handlers...</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut method_router = MethodRouter::new();</span>
+    <span class="doccomment">/// method_router.insert(Method::Get, route_tree);</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insert</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">method</span>: <span class="ident">Method</span>, <span class="ident">handler</span>: <span class="ident">T</span>) {
+        <span class="self">self</span>.<span class="ident">handlers</span>.<span class="ident">insert</span>(<span class="ident">method</span>, <span class="ident">handler</span>);
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>HandleRequest</span><span class='op'>&gt;</span> <span class='ident'>HandleRequest</span> <span class='kw'>for</span> <span class='ident'>MethodRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>handle_request</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>environment</span>: <span class='ident'>Environment</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span>(), <span class='ident'>Environment</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;l</span>, <span class='lifetime'>&#39;g</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>handler</span>) <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>handlers</span>.<span class='ident'>get</span>(<span class='kw-2'>&amp;</span><span class='ident'>environment</span>.<span class='ident'>context</span>.<span class='ident'>method</span>) {
-            <span class='ident'>handler</span>.<span class='ident'>handle_request</span>(<span class='ident'>environment</span>)
-        } <span class='kw'>else</span> {
-            <span class='ident'>environment</span>.<span class='ident'>response</span>.<span class='ident'>set_status</span>(<span class='ident'>StatusCode</span>::<span class='ident'>MethodNotAllowed</span>);
-            <span class='prelude-val'>Err</span>(<span class='ident'>environment</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">HandleRequest</span><span class="op">&gt;</span> <span class="ident">HandleRequest</span> <span class="kw">for</span> <span class="ident">MethodRouter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">handle_request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">environment</span>: <span class="ident">Environment</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Environment</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;l</span>, <span class="lifetime">&#39;g</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">handler</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">handlers</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">environment</span>.<span class="ident">context</span>.<span class="ident">method</span>) {
+            <span class="ident">handler</span>.<span class="ident">handle_request</span>(<span class="ident">environment</span>)
+        } <span class="kw">else</span> {
+            <span class="ident">environment</span>.<span class="ident">response</span>.<span class="ident">set_status</span>(<span class="ident">StatusCode</span>::<span class="ident">MethodNotAllowed</span>);
+            <span class="prelude-val">Err</span>(<span class="ident">environment</span>)
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>hyperlinks</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='self'>self</span>, <span class='ident'>base</span>: <span class='ident'>Link</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>Link</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>handlers</span>.<span class='ident'>iter</span>().<span class='ident'>flat_map</span>(<span class='op'>|</span>(<span class='ident'>method</span>, <span class='ident'>handler</span>)<span class='op'>|</span> {
-            <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>link</span> <span class='op'>=</span> <span class='ident'>base</span>.<span class='ident'>clone</span>();
-            <span class='ident'>link</span>.<span class='ident'>method</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>method</span>.<span class='ident'>clone</span>());
-            <span class='ident'>handler</span>.<span class='ident'>hyperlinks</span>(<span class='ident'>link</span>)
-        }).<span class='ident'>collect</span>()
+    <span class="kw">fn</span> <span class="ident">hyperlinks</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">self</span>, <span class="ident">base</span>: <span class="ident">Link</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Link</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;&gt;</span> {
+        <span class="self">self</span>.<span class="ident">handlers</span>.<span class="ident">iter</span>().<span class="ident">flat_map</span>(<span class="op">|</span>(<span class="ident">method</span>, <span class="ident">handler</span>)<span class="op">|</span> {
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">link</span> <span class="op">=</span> <span class="ident">base</span>.<span class="ident">clone</span>();
+            <span class="ident">link</span>.<span class="ident">method</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">method</span>.<span class="ident">clone</span>());
+            <span class="ident">handler</span>.<span class="ident">hyperlinks</span>(<span class="ident">link</span>)
+        }).<span class="ident">collect</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Default</span> <span class='kw'>for</span> <span class='ident'>MethodRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>default</span>() <span class='op'>-&gt;</span> <span class='ident'>MethodRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>MethodRouter</span> {
-            <span class='ident'>handlers</span>: <span class='ident'>HashMap</span>::<span class='ident'>new</span>(),
-        }
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>: <span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='ident'>Build</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MethodRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Builder</span> <span class='op'>=</span> <span class='ident'>Builder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span>;
-
-    <span class='kw'>fn</span> <span class='ident'>get_builder</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>BuilderContext</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span>::<span class='ident'>Builder</span> {
-        <span class='ident'>Builder</span> {
-            <span class='ident'>router</span>: <span class='self'>self</span>,
-            <span class='ident'>context</span>: <span class='ident'>context</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">MethodRouter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">MethodRouter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">MethodRouter</span> {
+            <span class="ident">handlers</span>: <span class="ident">HashMap</span>::<span class="ident">new</span>(),
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>ApplyContext</span><span class='op'>&gt;</span> <span class='ident'>ApplyContext</span> <span class='kw'>for</span> <span class='ident'>MethodRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>apply_context</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>BuilderContext</span>) {
-        <span class='kw'>for</span> (_, <span class='ident'>handler</span>) <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>handlers</span> {
-            <span class='ident'>handler</span>.<span class='ident'>apply_context</span>(<span class='ident'>context</span>.<span class='ident'>clone</span>());
-        }
-    }
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Build</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MethodRouter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Builder</span> <span class="op">=</span> <span class="ident">Builder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>prepend_context</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>context</span>: <span class='ident'>BuilderContext</span>) {
-        <span class='kw'>for</span> (_, <span class='ident'>handler</span>) <span class='kw'>in</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>handlers</span> {
-            <span class='ident'>handler</span>.<span class='ident'>prepend_context</span>(<span class='ident'>context</span>.<span class='ident'>clone</span>());
+    <span class="kw">fn</span> <span class="ident">get_builder</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">context</span>: <span class="ident">BuilderContext</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Builder</span> {
+        <span class="ident">Builder</span> {
+            <span class="ident">router</span>: <span class="self">self</span>,
+            <span class="ident">context</span>: <span class="ident">context</span>
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span>: <span class='ident'>Merge</span><span class='op'>&gt;</span> <span class='ident'>Merge</span> <span class='kw'>for</span> <span class='ident'>MethodRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>merge</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>other</span>: <span class='ident'>MethodRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) {
-        <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;merging {:} methods with {:} methods&quot;</span>, <span class='self'>self</span>.<span class='ident'>handlers</span>.<span class='ident'>len</span>(), <span class='ident'>other</span>.<span class='ident'>handlers</span>.<span class='ident'>len</span>());
-        <span class='kw'>for</span> (<span class='ident'>method</span>, <span class='ident'>handler</span>) <span class='kw'>in</span> <span class='ident'>other</span>.<span class='ident'>handlers</span> {
-            <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;merging {:}&quot;</span>, <span class='ident'>method</span>);
-            <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>handlers</span>.<span class='ident'>entry</span>(<span class='ident'>method</span>) {
-                <span class='ident'>Entry</span>::<span class='ident'>Vacant</span>(<span class='ident'>entry</span>) <span class='op'>=&gt;</span> { <span class='ident'>entry</span>.<span class='ident'>insert</span>(<span class='ident'>handler</span>); },
-                <span class='ident'>Entry</span>::<span class='ident'>Occupied</span>(<span class='kw-2'>mut</span> <span class='ident'>entry</span>) <span class='op'>=&gt;</span> <span class='ident'>entry</span>.<span class='ident'>get_mut</span>().<span class='ident'>merge</span>(<span class='ident'>handler</span>),
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ApplyContext</span><span class="op">&gt;</span> <span class="ident">ApplyContext</span> <span class="kw">for</span> <span class="ident">MethodRouter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">apply_context</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">context</span>: <span class="ident">BuilderContext</span>) {
+        <span class="kw">for</span> (_, <span class="ident">handler</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">handlers</span> {
+            <span class="ident">handler</span>.<span class="ident">apply_context</span>(<span class="ident">context</span>.<span class="ident">clone</span>());
+        }
+    }
+
+    <span class="kw">fn</span> <span class="ident">prepend_context</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">context</span>: <span class="ident">BuilderContext</span>) {
+        <span class="kw">for</span> (_, <span class="ident">handler</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">handlers</span> {
+            <span class="ident">handler</span>.<span class="ident">prepend_context</span>(<span class="ident">context</span>.<span class="ident">clone</span>());
+        }
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Merge</span><span class="op">&gt;</span> <span class="ident">Merge</span> <span class="kw">for</span> <span class="ident">MethodRouter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">merge</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="ident">MethodRouter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) {
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;merging {:} methods with {:} methods&quot;</span>, <span class="self">self</span>.<span class="ident">handlers</span>.<span class="ident">len</span>(), <span class="ident">other</span>.<span class="ident">handlers</span>.<span class="ident">len</span>());
+        <span class="kw">for</span> (<span class="ident">method</span>, <span class="ident">handler</span>) <span class="kw">in</span> <span class="ident">other</span>.<span class="ident">handlers</span> {
+            <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;merging {:}&quot;</span>, <span class="ident">method</span>);
+            <span class="kw">match</span> <span class="self">self</span>.<span class="ident">handlers</span>.<span class="ident">entry</span>(<span class="ident">method</span>) {
+                <span class="ident">Entry</span>::<span class="ident">Vacant</span>(<span class="ident">entry</span>) <span class="op">=&gt;</span> { <span class="ident">entry</span>.<span class="ident">insert</span>(<span class="ident">handler</span>); },
+                <span class="ident">Entry</span>::<span class="ident">Occupied</span>(<span class="kw-2">mut</span> <span class="ident">entry</span>) <span class="op">=&gt;</span> <span class="ident">entry</span>.<span class="ident">get_mut</span>().<span class="ident">merge</span>(<span class="ident">handler</span>),
             }
         }
     }
 }
 
-<span class='doccomment'>/// A builder for a `MethodRouter`.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Builder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>: <span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>router</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>MethodRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>,
-    <span class='ident'>context</span>: <span class='ident'>BuilderContext</span>
+<span class="doccomment">/// A builder for a `MethodRouter`.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Builder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">router</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">MethodRouter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">context</span>: <span class="ident">BuilderContext</span>
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>Builder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Perform more than one operation on this builder.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// use rustful::{Context, Response};</span>
-    <span class='doccomment'>/// use rustful::handler::MethodRouter;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// fn get(_context: Context, response: Response) {</span>
-    <span class='doccomment'>///     response.send(&quot;A GET request.&quot;);</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// fn post(_context: Context, response: Response) {</span>
-    <span class='doccomment'>///     response.send(&quot;A POST request.&quot;);</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let mut method_router = MethodRouter::&lt;fn(Context, Response)&gt;::new();</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// method_router.build().many(|mut method_router|{</span>
-    <span class='doccomment'>///     method_router.on_get(get as fn(Context, Response));</span>
-    <span class='doccomment'>///     method_router.on_post(post);</span>
-    <span class='doccomment'>/// });</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>many</span><span class='op'>&lt;</span><span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Builder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span>)<span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>build</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Builder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>build</span>(<span class='self'>self</span>);
-        <span class='self'>self</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Builder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Perform more than one operation on this builder.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use rustful::{Context, Response};</span>
+    <span class="doccomment">/// use rustful::handler::MethodRouter;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn get(_context: Context, response: Response) {</span>
+    <span class="doccomment">///     response.send(&quot;A GET request.&quot;);</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn post(_context: Context, response: Response) {</span>
+    <span class="doccomment">///     response.send(&quot;A POST request.&quot;);</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut method_router = MethodRouter::&lt;fn(Context, Response)&gt;::new();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// method_router.build().many(|mut method_router|{</span>
+    <span class="doccomment">///     method_router.on_get(get as fn(Context, Response));</span>
+    <span class="doccomment">///     method_router.on_post(post);</span>
+    <span class="doccomment">/// });</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">many</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Builder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span>)<span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">build</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Builder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">build</span>(<span class="self">self</span>);
+        <span class="self">self</span>
     }
 
-    <span class='doccomment'>/// Insert a handler for GET requests.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// use rustful::{Context, Response};</span>
-    <span class='doccomment'>/// use rustful::handler::MethodRouter;</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// fn handler(_context: Context, response: Response) {</span>
-    <span class='doccomment'>///     response.send(&quot;Hello world!&quot;);</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let mut method_router = MethodRouter::&lt;fn(Context, Response)&gt;::new();</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// method_router.build().on_get(handler as fn(Context, Response));</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_get</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>on</span>(<span class='ident'>Method</span>::<span class='ident'>Get</span>, <span class='ident'>handler</span>);
+    <span class="doccomment">/// Insert a handler for GET requests.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use rustful::{Context, Response};</span>
+    <span class="doccomment">/// use rustful::handler::MethodRouter;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn handler(_context: Context, response: Response) {</span>
+    <span class="doccomment">///     response.send(&quot;Hello world!&quot;);</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut method_router = MethodRouter::&lt;fn(Context, Response)&gt;::new();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// method_router.build().on_get(handler as fn(Context, Response));</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_get</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handler</span>: <span class="ident">H</span>) <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">on</span>(<span class="ident">Method</span>::<span class="ident">Get</span>, <span class="ident">handler</span>);
     }
 
-    <span class='doccomment'>/// Insert a handler for POST requests. See `on_get` for an example.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_post</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>on</span>(<span class='ident'>Method</span>::<span class='ident'>Post</span>, <span class='ident'>handler</span>);
+    <span class="doccomment">/// Insert a handler for POST requests. See `on_get` for an example.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_post</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handler</span>: <span class="ident">H</span>) <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">on</span>(<span class="ident">Method</span>::<span class="ident">Post</span>, <span class="ident">handler</span>);
     }
 
-    <span class='doccomment'>/// Insert a handler for PATCH requests. See `on_get` for an example.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_patch</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>on</span>(<span class='ident'>Method</span>::<span class='ident'>Patch</span>, <span class='ident'>handler</span>);
+    <span class="doccomment">/// Insert a handler for PATCH requests. See `on_get` for an example.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_patch</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handler</span>: <span class="ident">H</span>) <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">on</span>(<span class="ident">Method</span>::<span class="ident">Patch</span>, <span class="ident">handler</span>);
     }
 
-    <span class='doccomment'>/// Insert a handler for PUT requests. See `on_get` for an example.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_put</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>on</span>(<span class='ident'>Method</span>::<span class='ident'>Put</span>, <span class='ident'>handler</span>);
+    <span class="doccomment">/// Insert a handler for PUT requests. See `on_get` for an example.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_put</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handler</span>: <span class="ident">H</span>) <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">on</span>(<span class="ident">Method</span>::<span class="ident">Put</span>, <span class="ident">handler</span>);
     }
 
-    <span class='doccomment'>/// Insert a handler for DELETE requests. See `on_get` for an example.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_delete</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>on</span>(<span class='ident'>Method</span>::<span class='ident'>Delete</span>, <span class='ident'>handler</span>);
+    <span class="doccomment">/// Insert a handler for DELETE requests. See `on_get` for an example.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_delete</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handler</span>: <span class="ident">H</span>) <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">on</span>(<span class="ident">Method</span>::<span class="ident">Delete</span>, <span class="ident">handler</span>);
     }
 
-    <span class='doccomment'>/// Insert a handler for OPTION requests. See `on_get` for an example.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_options</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>on</span>(<span class='ident'>Method</span>::<span class='ident'>Options</span>, <span class='ident'>handler</span>);
+    <span class="doccomment">/// Insert a handler for OPTION requests. See `on_get` for an example.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_options</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handler</span>: <span class="ident">H</span>) <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">on</span>(<span class="ident">Method</span>::<span class="ident">Options</span>, <span class="ident">handler</span>);
     }
 
-    <span class='doccomment'>/// Insert a handler for HEAD requests. See `on_get` for an example.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_head</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>on</span>(<span class='ident'>Method</span>::<span class='ident'>Head</span>, <span class='ident'>handler</span>);
+    <span class="doccomment">/// Insert a handler for HEAD requests. See `on_get` for an example.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_head</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handler</span>: <span class="ident">H</span>) <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">on</span>(<span class="ident">Method</span>::<span class="ident">Head</span>, <span class="ident">handler</span>);
     }
 
-    <span class='doccomment'>/// Insert a handler for CONNECT requests. See `on_get` for an example.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on_connect</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>on</span>(<span class='ident'>Method</span>::<span class='ident'>Connect</span>, <span class='ident'>handler</span>);
+    <span class="doccomment">/// Insert a handler for CONNECT requests. See `on_get` for an example.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on_connect</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">handler</span>: <span class="ident">H</span>) <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">on</span>(<span class="ident">Method</span>::<span class="ident">Connect</span>, <span class="ident">handler</span>);
     }
 
-    <span class='doccomment'>/// Insert a handler, similar to `on_get`, but for any HTTP method.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// use rustful::{Context, Response};</span>
-    <span class='doccomment'>/// use rustful::handler::MethodRouter;</span>
-    <span class='doccomment'>/// # fn choose_a_method() -&gt; rustful::Method { rustful::Method::Get }</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// fn handler(_context: Context, response: Response) {</span>
-    <span class='doccomment'>///     response.send(&quot;Hello world!&quot;);</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let mut method_router = MethodRouter::&lt;fn(Context, Response)&gt;::new();</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// method_router.build().on(choose_a_method(), handler as fn(Context, Response));</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>on</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>method</span>: <span class='ident'>Method</span>, <span class='ident'>handler</span>: <span class='ident'>H</span>) <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>router</span>.<span class='ident'>handlers</span>.<span class='ident'>insert</span>(<span class='ident'>method</span>, <span class='ident'>T</span>::<span class='ident'>from_handler</span>(<span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>clone</span>(), <span class='ident'>handler</span>));
+    <span class="doccomment">/// Insert a handler, similar to `on_get`, but for any HTTP method.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use rustful::{Context, Response};</span>
+    <span class="doccomment">/// use rustful::handler::MethodRouter;</span>
+    <span class="doccomment">/// # fn choose_a_method() -&gt; rustful::Method { rustful::Method::Get }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn handler(_context: Context, response: Response) {</span>
+    <span class="doccomment">///     response.send(&quot;Hello world!&quot;);</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut method_router = MethodRouter::&lt;fn(Context, Response)&gt;::new();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// method_router.build().on(choose_a_method(), handler as fn(Context, Response));</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">on</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">method</span>: <span class="ident">Method</span>, <span class="ident">handler</span>: <span class="ident">H</span>) <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">router</span>.<span class="ident">handlers</span>.<span class="ident">insert</span>(<span class="ident">method</span>, <span class="ident">T</span>::<span class="ident">from_handler</span>(<span class="self">self</span>.<span class="ident">context</span>.<span class="ident">clone</span>(), <span class="ident">handler</span>));
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>: <span class='lifetime'>&#39;b</span>, <span class='lifetime'>&#39;b</span>, <span class='ident'>T</span>: <span class='ident'>Default</span> <span class='op'>+</span> <span class='ident'>ApplyContext</span> <span class='op'>+</span> <span class='ident'>Build</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span> <span class='ident'>Builder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Build a handler and its children, for GET requests.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// use rustful::{Context, Response};</span>
-    <span class='doccomment'>/// use rustful::handler::{MethodRouter, TreeRouter};</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// fn handler(_context: Context, response: Response) {</span>
-    <span class='doccomment'>///     response.send(&quot;Hello world!&quot;);</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let mut method_router = MethodRouter::&lt;TreeRouter&lt;Option&lt;fn(Context, Response)&gt;&gt;&gt;::new();</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// method_router.build().get().on_path(&quot;hello/world&quot;, handler as fn(Context, Response));</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>get</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span>::<span class='ident'>Builder</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>method</span>(<span class='ident'>Method</span>::<span class='ident'>Get</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>: <span class="lifetime">&#39;b</span>, <span class="lifetime">&#39;b</span>, <span class="ident">T</span>: <span class="ident">Default</span> <span class="op">+</span> <span class="ident">ApplyContext</span> <span class="op">+</span> <span class="ident">Build</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;&gt;</span> <span class="ident">Builder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Build a handler and its children, for GET requests.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use rustful::{Context, Response};</span>
+    <span class="doccomment">/// use rustful::handler::{MethodRouter, TreeRouter};</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn handler(_context: Context, response: Response) {</span>
+    <span class="doccomment">///     response.send(&quot;Hello world!&quot;);</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut method_router = MethodRouter::&lt;TreeRouter&lt;Option&lt;fn(Context, Response)&gt;&gt;&gt;::new();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// method_router.build().get().on_path(&quot;hello/world&quot;, handler as fn(Context, Response));</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span>::<span class="ident">Builder</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">method</span>(<span class="ident">Method</span>::<span class="ident">Get</span>)
     }
 
-    <span class='doccomment'>/// Build a handler and its children, for POST requests. See `get` for an example.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>post</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span>::<span class='ident'>Builder</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>method</span>(<span class='ident'>Method</span>::<span class='ident'>Post</span>)
+    <span class="doccomment">/// Build a handler and its children, for POST requests. See `get` for an example.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">post</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span>::<span class="ident">Builder</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">method</span>(<span class="ident">Method</span>::<span class="ident">Post</span>)
     }
 
-    <span class='doccomment'>/// Build a handler and its children, for PATCH requests. See `get` for an example.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>patch</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span>::<span class='ident'>Builder</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>method</span>(<span class='ident'>Method</span>::<span class='ident'>Patch</span>)
+    <span class="doccomment">/// Build a handler and its children, for PATCH requests. See `get` for an example.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">patch</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span>::<span class="ident">Builder</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">method</span>(<span class="ident">Method</span>::<span class="ident">Patch</span>)
     }
 
-    <span class='doccomment'>/// Build a handler and its children, for PUT requests. See `get` for an example.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>put</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span>::<span class='ident'>Builder</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>method</span>(<span class='ident'>Method</span>::<span class='ident'>Put</span>)
+    <span class="doccomment">/// Build a handler and its children, for PUT requests. See `get` for an example.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">put</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span>::<span class="ident">Builder</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">method</span>(<span class="ident">Method</span>::<span class="ident">Put</span>)
     }
 
-    <span class='doccomment'>/// Build a handler and its children, for DELETE requests. See `get` for an example.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>delete</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span>::<span class='ident'>Builder</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>method</span>(<span class='ident'>Method</span>::<span class='ident'>Delete</span>)
+    <span class="doccomment">/// Build a handler and its children, for DELETE requests. See `get` for an example.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delete</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span>::<span class="ident">Builder</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">method</span>(<span class="ident">Method</span>::<span class="ident">Delete</span>)
     }
 
-    <span class='doccomment'>/// Build a handler and its children, for OPTIONS requests. See `get` for an example.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>options</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span>::<span class='ident'>Builder</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>method</span>(<span class='ident'>Method</span>::<span class='ident'>Options</span>)
+    <span class="doccomment">/// Build a handler and its children, for OPTIONS requests. See `get` for an example.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">options</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span>::<span class="ident">Builder</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">method</span>(<span class="ident">Method</span>::<span class="ident">Options</span>)
     }
 
-    <span class='doccomment'>/// Build a handler and its children, for HEAD requests. See `get` for an example.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>head</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span>::<span class='ident'>Builder</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>method</span>(<span class='ident'>Method</span>::<span class='ident'>Head</span>)
+    <span class="doccomment">/// Build a handler and its children, for HEAD requests. See `get` for an example.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">head</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span>::<span class="ident">Builder</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">method</span>(<span class="ident">Method</span>::<span class="ident">Head</span>)
     }
 
-    <span class='doccomment'>/// Build a handler and its children, for CONNECT requests. See `get` for an example.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>connect</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span>::<span class='ident'>Builder</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>method</span>(<span class='ident'>Method</span>::<span class='ident'>Connect</span>)
+    <span class="doccomment">/// Build a handler and its children, for CONNECT requests. See `get` for an example.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">connect</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span>::<span class="ident">Builder</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">method</span>(<span class="ident">Method</span>::<span class="ident">Connect</span>)
     }
 
-    <span class='doccomment'>/// Build a handler and its children, similar to `get`, but for any HTTP method.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='doccomment'>/// use rustful::{Context, Response};</span>
-    <span class='doccomment'>/// use rustful::handler::{MethodRouter, TreeRouter};</span>
-    <span class='doccomment'>/// # fn choose_a_method() -&gt; rustful::Method { rustful::Method::Get }</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// fn handler(_context: Context, response: Response) {</span>
-    <span class='doccomment'>///     response.send(&quot;Hello world!&quot;);</span>
-    <span class='doccomment'>/// }</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// let mut method_router = MethodRouter::&lt;TreeRouter&lt;Option&lt;fn(Context, Response)&gt;&gt;&gt;::new();</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// method_router.build()</span>
-    <span class='doccomment'>///     .method(choose_a_method())</span>
-    <span class='doccomment'>///     .on_path(&quot;hello/world&quot;, handler as fn(Context, Response));</span>
-    <span class='doccomment'>/// ```</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>method</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;b</span> <span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>method</span>: <span class='ident'>Method</span>) <span class='op'>-&gt;</span> <span class='ident'>T</span>::<span class='ident'>Builder</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>FromHandler</span><span class='op'>&lt;</span><span class='ident'>H</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>router</span>.<span class='ident'>handlers</span>.<span class='ident'>entry</span>(<span class='ident'>method</span>) {
-            <span class='ident'>Entry</span>::<span class='ident'>Occupied</span>(<span class='ident'>entry</span>) <span class='op'>=&gt;</span> <span class='ident'>entry</span>.<span class='ident'>into_mut</span>().<span class='ident'>get_builder</span>(<span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>clone</span>()),
-            <span class='ident'>Entry</span>::<span class='ident'>Vacant</span>(<span class='ident'>entry</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>handler</span> <span class='op'>=</span> <span class='ident'>T</span>::<span class='ident'>default</span>();
-                <span class='ident'>handler</span>.<span class='ident'>apply_context</span>(<span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>clone</span>());
-                <span class='ident'>entry</span>.<span class='ident'>insert</span>(<span class='ident'>handler</span>).<span class='ident'>get_builder</span>(<span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>clone</span>())
+    <span class="doccomment">/// Build a handler and its children, similar to `get`, but for any HTTP method.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use rustful::{Context, Response};</span>
+    <span class="doccomment">/// use rustful::handler::{MethodRouter, TreeRouter};</span>
+    <span class="doccomment">/// # fn choose_a_method() -&gt; rustful::Method { rustful::Method::Get }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// fn handler(_context: Context, response: Response) {</span>
+    <span class="doccomment">///     response.send(&quot;Hello world!&quot;);</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let mut method_router = MethodRouter::&lt;TreeRouter&lt;Option&lt;fn(Context, Response)&gt;&gt;&gt;::new();</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// method_router.build()</span>
+    <span class="doccomment">///     .method(choose_a_method())</span>
+    <span class="doccomment">///     .on_path(&quot;hello/world&quot;, handler as fn(Context, Response));</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">method</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">method</span>: <span class="ident">Method</span>) <span class="op">-&gt;</span> <span class="ident">T</span>::<span class="ident">Builder</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">FromHandler</span><span class="op">&lt;</span><span class="ident">H</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">router</span>.<span class="ident">handlers</span>.<span class="ident">entry</span>(<span class="ident">method</span>) {
+            <span class="ident">Entry</span>::<span class="ident">Occupied</span>(<span class="ident">entry</span>) <span class="op">=&gt;</span> <span class="ident">entry</span>.<span class="ident">into_mut</span>().<span class="ident">get_builder</span>(<span class="self">self</span>.<span class="ident">context</span>.<span class="ident">clone</span>()),
+            <span class="ident">Entry</span>::<span class="ident">Vacant</span>(<span class="ident">entry</span>) <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">handler</span> <span class="op">=</span> <span class="ident">T</span>::<span class="ident">default</span>();
+                <span class="ident">handler</span>.<span class="ident">apply_context</span>(<span class="self">self</span>.<span class="ident">context</span>.<span class="ident">clone</span>());
+                <span class="ident">entry</span>.<span class="ident">insert</span>(<span class="ident">handler</span>).<span class="ident">get_builder</span>(<span class="self">self</span>.<span class="ident">context</span>.<span class="ident">clone</span>())
             }
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>: <span class='ident'>Merge</span> <span class='op'>+</span> <span class='ident'>ApplyContext</span><span class='op'>&gt;</span> <span class='ident'>Builder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>///Move handlers from another router into this, overwriting conflicting handlers and properties.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>merge</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='kw-2'>mut</span> <span class='ident'>other</span>: <span class='ident'>MethodRouter</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>Builder</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span><span class='op'>&gt;</span> {
-        <span class='ident'>other</span>.<span class='ident'>apply_context</span>(<span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>clone</span>());
-        <span class='self'>self</span>.<span class='ident'>router</span>.<span class='ident'>merge</span>(<span class='ident'>other</span>);
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span>: <span class="ident">Merge</span> <span class="op">+</span> <span class="ident">ApplyContext</span><span class="op">&gt;</span> <span class="ident">Builder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="doccomment">///Move handlers from another router into this, overwriting conflicting handlers and properties.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">merge</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">other</span>: <span class="ident">MethodRouter</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Builder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">other</span>.<span class="ident">apply_context</span>(<span class="self">self</span>.<span class="ident">context</span>.<span class="ident">clone</span>());
+        <span class="self">self</span>.<span class="ident">router</span>.<span class="ident">merge</span>(<span class="ident">other</span>);
 
-        <span class='self'>self</span>
+        <span class="self">self</span>
     }
 }
 </pre>

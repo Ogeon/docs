@@ -17,7 +17,7 @@
     
     
 </head>
-<body class="rustdoc">
+<body class="rustdoc source">
     <!--[if lte IE 8]>
     <div class="warning">
         This old browser is unsupported and will most likely display funky
@@ -43,7 +43,7 @@
         </form>
     </nav>
 
-    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -784,746 +784,746 @@
 <span id="739">739</span>
 <span id="740">740</span>
 <span id="741">741</span>
-</pre><pre class='rust '>
-<span class='comment'>// Copyright 2016 `multipart` Crate Developers</span>
-<span class='comment'>//</span>
-<span class='comment'>// Licensed under the Apache License, Version 2.0, &lt;LICENSE-APACHE or</span>
-<span class='comment'>// http://apache.org/licenses/LICENSE-2.0&gt; or the MIT license &lt;LICENSE-MIT or</span>
-<span class='comment'>// http://opensource.org/licenses/MIT&gt;, at your option. This file may not be</span>
-<span class='comment'>// copied, modified, or distributed except according to those terms.</span>
+</pre><pre class="rust ">
+<span class="comment">// Copyright 2016 `multipart` Crate Developers</span>
+<span class="comment">//</span>
+<span class="comment">// Licensed under the Apache License, Version 2.0, &lt;LICENSE-APACHE or</span>
+<span class="comment">// http://apache.org/licenses/LICENSE-2.0&gt; or the MIT license &lt;LICENSE-MIT or</span>
+<span class="comment">// http://opensource.org/licenses/MIT&gt;, at your option. This file may not be</span>
+<span class="comment">// copied, modified, or distributed except according to those terms.</span>
 
-<span class='doccomment'>//! `multipart` field header parsing.</span>
+<span class="doccomment">//! `multipart` field header parsing.</span>
 
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>httparse</span>::{<span class='self'>self</span>, <span class='ident'>EMPTY_HEADER</span>, <span class='ident'>Header</span>, <span class='ident'>Status</span>};
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">httparse</span>::{<span class="self">self</span>, <span class="ident">EMPTY_HEADER</span>, <span class="ident">Header</span>, <span class="ident">Status</span>};
 
-<span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>ReadEntryResult</span>::<span class='kw-2'>*</span>;
+<span class="kw">use</span> <span class="self">self</span>::<span class="ident">ReadEntryResult</span>::<span class="kw-2">*</span>;
 
-<span class='kw'>use</span> <span class='kw'>super</span>::<span class='ident'>save</span>::{<span class='ident'>SaveBuilder</span>, <span class='ident'>SavedFile</span>};
+<span class="kw">use</span> <span class="kw">super</span>::<span class="ident">save</span>::{<span class="ident">SaveBuilder</span>, <span class="ident">SavedFile</span>};
 
-<span class='kw'>use</span> <span class='ident'>mime</span>::{<span class='ident'>TopLevel</span>, <span class='ident'>Mime</span>};
+<span class="kw">use</span> <span class="ident">mime</span>::{<span class="ident">TopLevel</span>, <span class="ident">Mime</span>};
 
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>io</span>::{<span class='self'>self</span>, <span class='ident'>Read</span>, <span class='ident'>BufRead</span>, <span class='ident'>Write</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::<span class='ident'>Deref</span>;
-<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>path</span>::{<span class='ident'>Path</span>, <span class='ident'>PathBuf</span>};
-<span class='kw'>use</span> <span class='ident'>std</span>::{<span class='ident'>str</span>, <span class='ident'>fmt</span>, <span class='ident'>error</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::{<span class="self">self</span>, <span class="ident">Read</span>, <span class="ident">BufRead</span>, <span class="ident">Write</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">Deref</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::{<span class="ident">Path</span>, <span class="ident">PathBuf</span>};
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">str</span>, <span class="ident">fmt</span>, <span class="ident">error</span>};
 
-<span class='kw'>const</span> <span class='ident'>EMPTY_STR_HEADER</span>: <span class='ident'>StrHeader</span><span class='op'>&lt;</span><span class='lifetime'>&#39;static</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>StrHeader</span> {
-    <span class='ident'>name</span>: <span class='string'>&quot;&quot;</span>,
-    <span class='ident'>val</span>: <span class='string'>&quot;&quot;</span>,
+<span class="kw">const</span> <span class="ident">EMPTY_STR_HEADER</span>: <span class="ident">StrHeader</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">StrHeader</span> {
+    <span class="ident">name</span>: <span class="string">&quot;&quot;</span>,
+    <span class="ident">val</span>: <span class="string">&quot;&quot;</span>,
 };
 
-<span class='doccomment'>/// Not exposed</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Copy</span>, <span class='ident'>Clone</span>, <span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>StrHeader</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> {
-    <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>,
-    <span class='ident'>val</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>,
+<span class="doccomment">/// Not exposed</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">StrHeader</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+    <span class="ident">val</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
 }
 
-<span class='kw'>const</span> <span class='ident'>MAX_ATTEMPTS</span>: <span class='ident'>usize</span> <span class='op'>=</span> <span class='number'>5</span>;
+<span class="kw">const</span> <span class="ident">MAX_ATTEMPTS</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">5</span>;
 
-<span class='kw'>fn</span> <span class='ident'>with_headers</span><span class='op'>&lt;</span><span class='ident'>R</span>, <span class='ident'>F</span>, <span class='ident'>Ret</span><span class='op'>&gt;</span>(<span class='ident'>r</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>R</span>, <span class='ident'>closure</span>: <span class='ident'>F</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Ret</span>, <span class='ident'>ParseHeaderError</span><span class='op'>&gt;</span>
-<span class='kw'>where</span> <span class='ident'>R</span>: <span class='ident'>BufRead</span>, <span class='ident'>F</span>: <span class='ident'>FnOnce</span>(<span class='kw-2'>&amp;</span>[<span class='ident'>StrHeader</span>]) <span class='op'>-&gt;</span> <span class='ident'>Ret</span> {
-    <span class='kw'>const</span> <span class='ident'>HEADER_LEN</span>: <span class='ident'>usize</span> <span class='op'>=</span> <span class='number'>4</span>;
+<span class="kw">fn</span> <span class="ident">with_headers</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">F</span>, <span class="ident">Ret</span><span class="op">&gt;</span>(<span class="ident">r</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>, <span class="ident">closure</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Ret</span>, <span class="ident">ParseHeaderError</span><span class="op">&gt;</span>
+<span class="kw">where</span> <span class="ident">R</span>: <span class="ident">BufRead</span>, <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="kw-2">&amp;</span>[<span class="ident">StrHeader</span>]) <span class="op">-&gt;</span> <span class="ident">Ret</span> {
+    <span class="kw">const</span> <span class="ident">HEADER_LEN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">4</span>;
 
-    <span class='comment'>// These are only written once so they don&#39;t need to be `mut` or initialized.</span>
-    <span class='kw'>let</span> <span class='ident'>consume</span>;
-    <span class='kw'>let</span> <span class='ident'>ret</span>;
+    <span class="comment">// These are only written once so they don&#39;t need to be `mut` or initialized.</span>
+    <span class="kw">let</span> <span class="ident">consume</span>;
+    <span class="kw">let</span> <span class="ident">ret</span>;
 
-    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>attempts</span> <span class='op'>=</span> <span class='number'>0</span>;
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">attempts</span> <span class="op">=</span> <span class="number">0</span>;
 
-    <span class='kw'>loop</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>raw_headers</span> <span class='op'>=</span> [<span class='ident'>EMPTY_HEADER</span>; <span class='ident'>HEADER_LEN</span>];
+    <span class="kw">loop</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">raw_headers</span> <span class="op">=</span> [<span class="ident">EMPTY_HEADER</span>; <span class="ident">HEADER_LEN</span>];
 
-        <span class='kw'>let</span> <span class='ident'>buf</span> <span class='op'>=</span> <span class='ident'>r</span>.<span class='ident'>fill_buf</span>()<span class='question-mark'>?</span>;
+        <span class="kw">let</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">r</span>.<span class="ident">fill_buf</span>()<span class="question-mark">?</span>;
 
-        <span class='kw'>if</span> <span class='ident'>attempts</span> <span class='op'>==</span> <span class='ident'>MAX_ATTEMPTS</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>ParseHeaderError</span>::<span class='ident'>Other</span>(<span class='string'>&quot;Could not read field headers&quot;</span>.<span class='ident'>to_string</span>()));
+        <span class="kw">if</span> <span class="ident">attempts</span> <span class="op">==</span> <span class="ident">MAX_ATTEMPTS</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseHeaderError</span>::<span class="ident">Other</span>(<span class="string">&quot;Could not read field headers&quot;</span>.<span class="ident">to_string</span>()));
         }
 
-        <span class='comment'>// FIXME: https://github.com/seanmonstar/httparse/issues/34</span>
-        <span class='kw'>match</span> <span class='ident'>httparse</span>::<span class='ident'>parse_headers</span>(<span class='ident'>buf</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>raw_headers</span>) {
-            <span class='prelude-val'>Ok</span>(<span class='ident'>Status</span>::<span class='ident'>Complete</span>((<span class='ident'>consume_</span>, <span class='ident'>raw_headers</span>))) <span class='op'>=&gt;</span>  {
-                <span class='ident'>consume</span> <span class='op'>=</span> <span class='ident'>consume_</span>;
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>headers</span> <span class='op'>=</span> [<span class='ident'>EMPTY_STR_HEADER</span>; <span class='ident'>HEADER_LEN</span>];
-                <span class='kw'>let</span> <span class='ident'>headers</span> <span class='op'>=</span> <span class='ident'>copy_headers</span>(<span class='ident'>raw_headers</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>headers</span>)<span class='question-mark'>?</span>;
-                <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;Parsed headers: {:?}&quot;</span>, <span class='ident'>headers</span>);
-                <span class='ident'>ret</span> <span class='op'>=</span> <span class='ident'>closure</span>(<span class='ident'>headers</span>);
-                <span class='kw'>break</span>;
+        <span class="comment">// FIXME: https://github.com/seanmonstar/httparse/issues/34</span>
+        <span class="kw">match</span> <span class="ident">httparse</span>::<span class="ident">parse_headers</span>(<span class="ident">buf</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">raw_headers</span>) {
+            <span class="prelude-val">Ok</span>(<span class="ident">Status</span>::<span class="ident">Complete</span>((<span class="ident">consume_</span>, <span class="ident">raw_headers</span>))) <span class="op">=&gt;</span>  {
+                <span class="ident">consume</span> <span class="op">=</span> <span class="ident">consume_</span>;
+                <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> [<span class="ident">EMPTY_STR_HEADER</span>; <span class="ident">HEADER_LEN</span>];
+                <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">copy_headers</span>(<span class="ident">raw_headers</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">headers</span>)<span class="question-mark">?</span>;
+                <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;Parsed headers: {:?}&quot;</span>, <span class="ident">headers</span>);
+                <span class="ident">ret</span> <span class="op">=</span> <span class="ident">closure</span>(<span class="ident">headers</span>);
+                <span class="kw">break</span>;
             },
-            <span class='prelude-val'>Ok</span>(<span class='ident'>Status</span>::<span class='ident'>Partial</span>) <span class='op'>=&gt;</span> {
-                <span class='ident'>attempts</span> <span class='op'>+=</span> <span class='number'>1</span>;
-                <span class='kw'>continue</span>;
+            <span class="prelude-val">Ok</span>(<span class="ident">Status</span>::<span class="ident">Partial</span>) <span class="op">=&gt;</span> {
+                <span class="ident">attempts</span> <span class="op">+=</span> <span class="number">1</span>;
+                <span class="kw">continue</span>;
             },
-            <span class='prelude-val'>Err</span>(<span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>ParseHeaderError</span>::<span class='ident'>from</span>(<span class='ident'>err</span>)),
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseHeaderError</span>::<span class="ident">from</span>(<span class="ident">err</span>)),
         };
     }
 
-    <span class='ident'>r</span>.<span class='ident'>consume</span>(<span class='ident'>consume</span>);
-    <span class='prelude-val'>Ok</span>(<span class='ident'>ret</span>)
+    <span class="ident">r</span>.<span class="ident">consume</span>(<span class="ident">consume</span>);
+    <span class="prelude-val">Ok</span>(<span class="ident">ret</span>)
 }
 
-<span class='kw'>fn</span> <span class='ident'>copy_headers</span><span class='op'>&lt;</span><span class='lifetime'>&#39;h</span>, <span class='lifetime'>&#39;b</span>: <span class='lifetime'>&#39;h</span><span class='op'>&gt;</span>(<span class='ident'>raw</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>Header</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>], <span class='ident'>headers</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;h</span> <span class='kw-2'>mut</span> [<span class='ident'>StrHeader</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>]) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;h</span> [<span class='ident'>StrHeader</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>]<span class='op'>&gt;</span> {
-    <span class='kw'>for</span> (<span class='ident'>raw</span>, <span class='ident'>header</span>) <span class='kw'>in</span> <span class='ident'>raw</span>.<span class='ident'>iter</span>().<span class='ident'>zip</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='kw-2'>*</span><span class='ident'>headers</span>) {
-        <span class='ident'>header</span>.<span class='ident'>name</span> <span class='op'>=</span> <span class='ident'>raw</span>.<span class='ident'>name</span>;
-        <span class='ident'>header</span>.<span class='ident'>val</span> <span class='op'>=</span> <span class='ident'>io_str_utf8</span>(<span class='ident'>raw</span>.<span class='ident'>value</span>)<span class='question-mark'>?</span>;
+<span class="kw">fn</span> <span class="ident">copy_headers</span><span class="op">&lt;</span><span class="lifetime">&#39;h</span>, <span class="lifetime">&#39;b</span>: <span class="lifetime">&#39;h</span><span class="op">&gt;</span>(<span class="ident">raw</span>: <span class="kw-2">&amp;</span>[<span class="ident">Header</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>], <span class="ident">headers</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;h</span> <span class="kw-2">mut</span> [<span class="ident">StrHeader</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;h</span> [<span class="ident">StrHeader</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>]<span class="op">&gt;</span> {
+    <span class="kw">for</span> (<span class="ident">raw</span>, <span class="ident">header</span>) <span class="kw">in</span> <span class="ident">raw</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="ident">headers</span>) {
+        <span class="ident">header</span>.<span class="ident">name</span> <span class="op">=</span> <span class="ident">raw</span>.<span class="ident">name</span>;
+        <span class="ident">header</span>.<span class="ident">val</span> <span class="op">=</span> <span class="ident">io_str_utf8</span>(<span class="ident">raw</span>.<span class="ident">value</span>)<span class="question-mark">?</span>;
     }
 
-    <span class='prelude-val'>Ok</span>(<span class='kw-2'>&amp;</span><span class='ident'>headers</span>[..<span class='ident'>raw</span>.<span class='ident'>len</span>()])
+    <span class="prelude-val">Ok</span>(<span class="kw-2">&amp;</span><span class="ident">headers</span>[..<span class="ident">raw</span>.<span class="ident">len</span>()])
 }
 
-<span class='doccomment'>/// The headers that (may) appear before a `multipart/form-data` field.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>FieldHeaders</span> {
-    <span class='doccomment'>/// The `Content-Disposition` header, required.</span>
-    <span class='ident'>cont_disp</span>: <span class='ident'>ContentDisp</span>,
-    <span class='doccomment'>/// The `Content-Type` header, optional.</span>
-    <span class='ident'>cont_type</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Mime</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// The headers that (may) appear before a `multipart/form-data` field.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FieldHeaders</span> {
+    <span class="doccomment">/// The `Content-Disposition` header, required.</span>
+    <span class="ident">cont_disp</span>: <span class="ident">ContentDisp</span>,
+    <span class="doccomment">/// The `Content-Type` header, optional.</span>
+    <span class="ident">cont_type</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>FieldHeaders</span> {
-    <span class='doccomment'>/// Parse the field headers from the passed `BufRead`, consuming the relevant bytes.</span>
-    <span class='kw'>fn</span> <span class='ident'>read_from</span><span class='op'>&lt;</span><span class='ident'>R</span>: <span class='ident'>BufRead</span><span class='op'>&gt;</span>(<span class='ident'>r</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>R</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='self'>Self</span>, <span class='ident'>ParseHeaderError</span><span class='op'>&gt;</span> {
-        <span class='ident'>with_headers</span>(<span class='ident'>r</span>, <span class='self'>Self</span>::<span class='ident'>parse</span>)<span class='question-mark'>?</span>
+<span class="kw">impl</span> <span class="ident">FieldHeaders</span> {
+    <span class="doccomment">/// Parse the field headers from the passed `BufRead`, consuming the relevant bytes.</span>
+    <span class="kw">fn</span> <span class="ident">read_from</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">BufRead</span><span class="op">&gt;</span>(<span class="ident">r</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ParseHeaderError</span><span class="op">&gt;</span> {
+        <span class="ident">with_headers</span>(<span class="ident">r</span>, <span class="self">Self</span>::<span class="ident">parse</span>)<span class="question-mark">?</span>
     }
 
-    <span class='kw'>fn</span> <span class='ident'>parse</span>(<span class='ident'>headers</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>StrHeader</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>FieldHeaders</span>, <span class='ident'>ParseHeaderError</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='ident'>cont_disp</span> <span class='op'>=</span> <span class='ident'>ContentDisp</span>::<span class='ident'>parse</span>(<span class='ident'>headers</span>)<span class='question-mark'>?</span>.<span class='ident'>ok_or</span>(<span class='ident'>ParseHeaderError</span>::<span class='ident'>MissingContentDisposition</span>)<span class='question-mark'>?</span>;
-        <span class='prelude-val'>Ok</span>(<span class='ident'>FieldHeaders</span> {
-            <span class='ident'>cont_disp</span>: <span class='ident'>cont_disp</span>,
-            <span class='ident'>cont_type</span>: <span class='ident'>parse_cont_type</span>(<span class='ident'>headers</span>)<span class='question-mark'>?</span>,
+    <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">headers</span>: <span class="kw-2">&amp;</span>[<span class="ident">StrHeader</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">FieldHeaders</span>, <span class="ident">ParseHeaderError</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">cont_disp</span> <span class="op">=</span> <span class="ident">ContentDisp</span>::<span class="ident">parse</span>(<span class="ident">headers</span>)<span class="question-mark">?</span>.<span class="ident">ok_or</span>(<span class="ident">ParseHeaderError</span>::<span class="ident">MissingContentDisposition</span>)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="ident">FieldHeaders</span> {
+            <span class="ident">cont_disp</span>: <span class="ident">cont_disp</span>,
+            <span class="ident">cont_type</span>: <span class="ident">parse_cont_type</span>(<span class="ident">headers</span>)<span class="question-mark">?</span>,
         })
     }
 }
 
-<span class='doccomment'>/// The `Content-Disposition` header.</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>ContentDisp</span> {
-    <span class='doccomment'>/// The name of the `multipart/form-data` field.</span>
-    <span class='ident'>field_name</span>: <span class='ident'>String</span>,
-    <span class='doccomment'>/// The optional filename for this field.</span>
-    <span class='ident'>filename</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// The `Content-Disposition` header.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ContentDisp</span> {
+    <span class="doccomment">/// The name of the `multipart/form-data` field.</span>
+    <span class="ident">field_name</span>: <span class="ident">String</span>,
+    <span class="doccomment">/// The optional filename for this field.</span>
+    <span class="ident">filename</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span> <span class='ident'>ContentDisp</span> {
-    <span class='kw'>fn</span> <span class='ident'>parse</span>(<span class='ident'>headers</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>StrHeader</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>ContentDisp</span><span class='op'>&gt;</span>, <span class='ident'>ParseHeaderError</span><span class='op'>&gt;</span> {
-        <span class='kw'>const</span> <span class='ident'>CONT_DISP</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span> <span class='op'>=</span> <span class='string'>&quot;Content-Disposition&quot;</span>;
-        <span class='kw'>let</span> <span class='ident'>header</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>header</span>) <span class='op'>=</span> <span class='ident'>find_header</span>(<span class='ident'>headers</span>, <span class='ident'>CONT_DISP</span>) {
-            <span class='ident'>header</span>
-        } <span class='kw'>else</span> {
-            <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(<span class='prelude-val'>None</span>);
+<span class="kw">impl</span> <span class="ident">ContentDisp</span> {
+    <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">headers</span>: <span class="kw-2">&amp;</span>[<span class="ident">StrHeader</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ContentDisp</span><span class="op">&gt;</span>, <span class="ident">ParseHeaderError</span><span class="op">&gt;</span> {
+        <span class="kw">const</span> <span class="ident">CONT_DISP</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;Content-Disposition&quot;</span>;
+        <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">header</span>) <span class="op">=</span> <span class="ident">find_header</span>(<span class="ident">headers</span>, <span class="ident">CONT_DISP</span>) {
+            <span class="ident">header</span>
+        } <span class="kw">else</span> {
+            <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>);
         };
 
-        <span class='kw'>const</span> <span class='ident'>NAME</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span> <span class='op'>=</span> <span class='string'>&quot;name=&quot;</span>;
-        <span class='kw'>const</span> <span class='ident'>FILENAME</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span> <span class='op'>=</span> <span class='string'>&quot;filename=&quot;</span>;
+        <span class="kw">const</span> <span class="ident">NAME</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;name=&quot;</span>;
+        <span class="kw">const</span> <span class="ident">FILENAME</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;filename=&quot;</span>;
 
-        <span class='kw'>let</span> <span class='ident'>after_disp_type</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>split_once</span>(<span class='ident'>header</span>.<span class='ident'>val</span>, <span class='string'>&#39;;&#39;</span>) {
-            <span class='prelude-val'>Some</span>((<span class='ident'>disp_type</span>, <span class='ident'>after_disp_type</span>)) <span class='op'>=&gt;</span> {
-                <span class='kw'>if</span> <span class='ident'>disp_type</span>.<span class='ident'>trim</span>() <span class='op'>!=</span> <span class='string'>&quot;form-data&quot;</span> {
-                    <span class='kw'>let</span> <span class='ident'>err</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Unexpected Content-Disposition value: {:?}&quot;</span>, <span class='ident'>disp_type</span>);
-                    <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>ParseHeaderError</span>::<span class='ident'>Invalid</span>(<span class='ident'>err</span>));
+        <span class="kw">let</span> <span class="ident">after_disp_type</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">split_once</span>(<span class="ident">header</span>.<span class="ident">val</span>, <span class="string">&#39;;&#39;</span>) {
+            <span class="prelude-val">Some</span>((<span class="ident">disp_type</span>, <span class="ident">after_disp_type</span>)) <span class="op">=&gt;</span> {
+                <span class="kw">if</span> <span class="ident">disp_type</span>.<span class="ident">trim</span>() <span class="op">!=</span> <span class="string">&quot;form-data&quot;</span> {
+                    <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Unexpected Content-Disposition value: {:?}&quot;</span>, <span class="ident">disp_type</span>);
+                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseHeaderError</span>::<span class="ident">Invalid</span>(<span class="ident">err</span>));
                 }
-                <span class='ident'>after_disp_type</span>
+                <span class="ident">after_disp_type</span>
             },
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>err</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Expected additional data after Content-Disposition type, got {:?}&quot;</span>, <span class='ident'>header</span>.<span class='ident'>val</span>);
-                <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>ParseHeaderError</span>::<span class='ident'>Invalid</span>(<span class='ident'>err</span>));
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Expected additional data after Content-Disposition type, got {:?}&quot;</span>, <span class="ident">header</span>.<span class="ident">val</span>);
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseHeaderError</span>::<span class="ident">Invalid</span>(<span class="ident">err</span>));
             }
         };
 
-        <span class='kw'>let</span> (<span class='ident'>field_name</span>, <span class='ident'>filename</span>) <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>get_str_after</span>(<span class='ident'>NAME</span>, <span class='string'>&#39;;&#39;</span>, <span class='ident'>after_disp_type</span>) {
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>err</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Expected field name and maybe filename, got {:?}&quot;</span>, <span class='ident'>after_disp_type</span>);
-                <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>ParseHeaderError</span>::<span class='ident'>Invalid</span>(<span class='ident'>err</span>));
+        <span class="kw">let</span> (<span class="ident">field_name</span>, <span class="ident">filename</span>) <span class="op">=</span> <span class="kw">match</span> <span class="ident">get_str_after</span>(<span class="ident">NAME</span>, <span class="string">&#39;;&#39;</span>, <span class="ident">after_disp_type</span>) {
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">err</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Expected field name and maybe filename, got {:?}&quot;</span>, <span class="ident">after_disp_type</span>);
+                <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseHeaderError</span>::<span class="ident">Invalid</span>(<span class="ident">err</span>));
             },
-            <span class='prelude-val'>Some</span>((<span class='ident'>field_name</span>, <span class='ident'>after_field_name</span>)) <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>field_name</span> <span class='op'>=</span> <span class='ident'>trim_quotes</span>(<span class='ident'>field_name</span>);
-                <span class='kw'>let</span> <span class='ident'>filename</span> <span class='op'>=</span> <span class='ident'>get_str_after</span>(<span class='ident'>FILENAME</span>, <span class='string'>&#39;;&#39;</span>, <span class='ident'>after_field_name</span>).<span class='ident'>map</span>(<span class='op'>|</span>(<span class='ident'>filename</span>, _)<span class='op'>|</span> <span class='ident'>trim_quotes</span>(<span class='ident'>filename</span>).<span class='ident'>to_owned</span>());
-                (<span class='ident'>field_name</span>, <span class='ident'>filename</span>)
+            <span class="prelude-val">Some</span>((<span class="ident">field_name</span>, <span class="ident">after_field_name</span>)) <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">field_name</span> <span class="op">=</span> <span class="ident">trim_quotes</span>(<span class="ident">field_name</span>);
+                <span class="kw">let</span> <span class="ident">filename</span> <span class="op">=</span> <span class="ident">get_str_after</span>(<span class="ident">FILENAME</span>, <span class="string">&#39;;&#39;</span>, <span class="ident">after_field_name</span>).<span class="ident">map</span>(<span class="op">|</span>(<span class="ident">filename</span>, _)<span class="op">|</span> <span class="ident">trim_quotes</span>(<span class="ident">filename</span>).<span class="ident">to_owned</span>());
+                (<span class="ident">field_name</span>, <span class="ident">filename</span>)
             },
         };
 
-        <span class='prelude-val'>Ok</span>(<span class='prelude-val'>Some</span>(<span class='ident'>ContentDisp</span> { <span class='ident'>field_name</span>: <span class='ident'>field_name</span>.<span class='ident'>to_owned</span>(), <span class='ident'>filename</span>: <span class='ident'>filename</span> }))
+        <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">ContentDisp</span> { <span class="ident">field_name</span>: <span class="ident">field_name</span>.<span class="ident">to_owned</span>(), <span class="ident">filename</span>: <span class="ident">filename</span> }))
     }
 }
 
-<span class='kw'>fn</span> <span class='ident'>parse_cont_type</span>(<span class='ident'>headers</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>StrHeader</span>]) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Mime</span><span class='op'>&gt;</span>, <span class='ident'>ParseHeaderError</span><span class='op'>&gt;</span> {
-    <span class='kw'>const</span> <span class='ident'>CONTENT_TYPE</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span> <span class='op'>=</span> <span class='string'>&quot;Content-Type&quot;</span>;
-    <span class='kw'>let</span> <span class='ident'>header</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='ident'>header</span>) <span class='op'>=</span> <span class='ident'>find_header</span>(<span class='ident'>headers</span>, <span class='ident'>CONTENT_TYPE</span>) {
-        <span class='ident'>header</span>
-    } <span class='kw'>else</span> {
-        <span class='kw'>return</span> <span class='prelude-val'>Ok</span>(<span class='prelude-val'>None</span>)
+<span class="kw">fn</span> <span class="ident">parse_cont_type</span>(<span class="ident">headers</span>: <span class="kw-2">&amp;</span>[<span class="ident">StrHeader</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Mime</span><span class="op">&gt;</span>, <span class="ident">ParseHeaderError</span><span class="op">&gt;</span> {
+    <span class="kw">const</span> <span class="ident">CONTENT_TYPE</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;Content-Type&quot;</span>;
+    <span class="kw">let</span> <span class="ident">header</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">header</span>) <span class="op">=</span> <span class="ident">find_header</span>(<span class="ident">headers</span>, <span class="ident">CONTENT_TYPE</span>) {
+        <span class="ident">header</span>
+    } <span class="kw">else</span> {
+        <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
     };
 
-    <span class='comment'>// Boundary parameter will be parsed into the `Mime`</span>
-    <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;Found Content-Type: {:?}&quot;</span>, <span class='ident'>header</span>.<span class='ident'>val</span>);
-    <span class='prelude-val'>Ok</span>(<span class='prelude-val'>Some</span>(<span class='ident'>read_content_type</span>(<span class='ident'>header</span>.<span class='ident'>val</span>.<span class='ident'>trim</span>())))
+    <span class="comment">// Boundary parameter will be parsed into the `Mime`</span>
+    <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;Found Content-Type: {:?}&quot;</span>, <span class="ident">header</span>.<span class="ident">val</span>);
+    <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">read_content_type</span>(<span class="ident">header</span>.<span class="ident">val</span>.<span class="ident">trim</span>())))
 }
 
-<span class='doccomment'>/// A field in a multipart request. May be either text or a binary stream (file).</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>MultipartField</span><span class='op'>&lt;</span><span class='ident'>M</span>: <span class='ident'>ReadEntry</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The field&#39;s name from the form</span>
-    <span class='kw'>pub</span> <span class='ident'>name</span>: <span class='ident'>String</span>,
-    <span class='doccomment'>/// The data of the field. Can be text or binary.</span>
-    <span class='kw'>pub</span> <span class='ident'>data</span>: <span class='ident'>MultipartData</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// A field in a multipart request. May be either text or a binary stream (file).</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MultipartField</span><span class="op">&lt;</span><span class="ident">M</span>: <span class="ident">ReadEntry</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The field&#39;s name from the form</span>
+    <span class="kw">pub</span> <span class="ident">name</span>: <span class="ident">String</span>,
+    <span class="doccomment">/// The data of the field. Can be text or binary.</span>
+    <span class="kw">pub</span> <span class="ident">data</span>: <span class="ident">MultipartData</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span>: <span class='ident'>ReadEntry</span><span class='op'>&gt;</span> <span class='ident'>MultipartField</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Read the next entry in the request.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>next_entry</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ReadEntryResult</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>into_inner</span>().<span class='ident'>read_entry</span>()
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">M</span>: <span class="ident">ReadEntry</span><span class="op">&gt;</span> <span class="ident">MultipartField</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Read the next entry in the request.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">next_entry</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ReadEntryResult</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">into_inner</span>().<span class="ident">read_entry</span>()
     }
 
-    <span class='doccomment'>/// Update `self` as the next entry.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Returns `Ok(Some(self))` if another entry was read, `Ok(None)` if the end of the body was</span>
-    <span class='doccomment'>/// reached, and `Err(e)` for any errors that occur.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>next_entry_inplace</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>Self</span><span class='op'>&gt;&gt;</span> <span class='kw'>where</span> <span class='kw'>for</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>M</span>: <span class='ident'>ReadEntry</span> {
-        <span class='kw'>let</span> <span class='ident'>multipart</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>take_inner</span>();
+    <span class="doccomment">/// Update `self` as the next entry.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns `Ok(Some(self))` if another entry was read, `Ok(None)` if the end of the body was</span>
+    <span class="doccomment">/// reached, and `Err(e)` for any errors that occur.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">next_entry_inplace</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;&gt;</span> <span class="kw">where</span> <span class="kw">for</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">M</span>: <span class="ident">ReadEntry</span> {
+        <span class="kw">let</span> <span class="ident">multipart</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">take_inner</span>();
 
-        <span class='kw'>match</span> <span class='ident'>multipart</span>.<span class='ident'>read_entry</span>() {
-            <span class='ident'>Entry</span>(<span class='ident'>entry</span>) <span class='op'>=&gt;</span> {
-                <span class='kw-2'>*</span><span class='self'>self</span> <span class='op'>=</span> <span class='ident'>entry</span>;
-                <span class='prelude-val'>Ok</span>(<span class='prelude-val'>Some</span>(<span class='self'>self</span>))
+        <span class="kw">match</span> <span class="ident">multipart</span>.<span class="ident">read_entry</span>() {
+            <span class="ident">Entry</span>(<span class="ident">entry</span>) <span class="op">=&gt;</span> {
+                <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">entry</span>;
+                <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="self">self</span>))
             },
-            <span class='ident'>End</span>(<span class='ident'>multipart</span>) <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>give_inner</span>(<span class='ident'>multipart</span>);
-                <span class='prelude-val'>Ok</span>(<span class='prelude-val'>None</span>)
+            <span class="ident">End</span>(<span class="ident">multipart</span>) <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">give_inner</span>(<span class="ident">multipart</span>);
+                <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
             },
-            <span class='ident'>Error</span>(<span class='ident'>multipart</span>, <span class='ident'>err</span>) <span class='op'>=&gt;</span> {
-                <span class='self'>self</span>.<span class='ident'>data</span>.<span class='ident'>give_inner</span>(<span class='ident'>multipart</span>);
-                <span class='prelude-val'>Err</span>(<span class='ident'>err</span>)
+            <span class="ident">Error</span>(<span class="ident">multipart</span>, <span class="ident">err</span>) <span class="op">=&gt;</span> {
+                <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">give_inner</span>(<span class="ident">multipart</span>);
+                <span class="prelude-val">Err</span>(<span class="ident">err</span>)
             }
         }
     }
 }
 
-<span class='doccomment'>/// The data of a field in a `multipart/form-data` request.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>MultipartData</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The field&#39;s payload is a text string.</span>
-    <span class='ident'>Text</span>(<span class='ident'>MultipartText</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>),
-    <span class='doccomment'>/// The field&#39;s payload is a binary stream (file).</span>
-    <span class='ident'>File</span>(<span class='ident'>MultipartFile</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>),
+<span class="doccomment">/// The data of a field in a `multipart/form-data` request.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">MultipartData</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The field&#39;s payload is a text string.</span>
+    <span class="ident">Text</span>(<span class="ident">MultipartText</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>),
+    <span class="doccomment">/// The field&#39;s payload is a binary stream (file).</span>
+    <span class="ident">File</span>(<span class="ident">MultipartFile</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>),
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span>: <span class='ident'>ReadEntry</span><span class='op'>&gt;</span> <span class='ident'>MultipartData</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Borrow this payload as a text field, if possible.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_text</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>MultipartData</span>::<span class='ident'>Text</span>(<span class='kw-2'>ref</span> <span class='ident'>text</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>text</span>.<span class='ident'>text</span>),
-            _ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">M</span>: <span class="ident">ReadEntry</span><span class="op">&gt;</span> <span class="ident">MultipartData</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Borrow this payload as a text field, if possible.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_text</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">MultipartData</span>::<span class="ident">Text</span>(<span class="kw-2">ref</span> <span class="ident">text</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">text</span>.<span class="ident">text</span>),
+            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 
-    <span class='doccomment'>/// Borrow this payload as a file field, if possible.</span>
-    <span class='doccomment'>/// Mutably borrows so the contents can be read.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>as_file</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>MultipartFile</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>MultipartData</span>::<span class='ident'>File</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>file</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>file</span>),
-            _ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
+    <span class="doccomment">/// Borrow this payload as a file field, if possible.</span>
+    <span class="doccomment">/// Mutably borrows so the contents can be read.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_file</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">MultipartFile</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">MultipartData</span>::<span class="ident">File</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">file</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">file</span>),
+            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 
-    <span class='doccomment'>/// Return the inner `Multipart`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>into_inner</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>M</span> {
-        <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>MultipartData</span>::<span class='kw-2'>*</span>;
+    <span class="doccomment">/// Return the inner `Multipart`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">M</span> {
+        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">MultipartData</span>::<span class="kw-2">*</span>;
 
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='ident'>Text</span>(<span class='ident'>text</span>) <span class='op'>=&gt;</span> <span class='ident'>text</span>.<span class='ident'>into_inner</span>(),
-            <span class='ident'>File</span>(<span class='ident'>file</span>) <span class='op'>=&gt;</span> <span class='ident'>file</span>.<span class='ident'>into_inner</span>(),
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">Text</span>(<span class="ident">text</span>) <span class="op">=&gt;</span> <span class="ident">text</span>.<span class="ident">into_inner</span>(),
+            <span class="ident">File</span>(<span class="ident">file</span>) <span class="op">=&gt;</span> <span class="ident">file</span>.<span class="ident">into_inner</span>(),
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>take_inner</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>M</span> {
-        <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>MultipartData</span>::<span class='kw-2'>*</span>;
+    <span class="kw">fn</span> <span class="ident">take_inner</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">M</span> {
+        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">MultipartData</span>::<span class="kw-2">*</span>;
 
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>Text</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>text</span>) <span class='op'>=&gt;</span> <span class='ident'>text</span>.<span class='ident'>take_inner</span>(),
-            <span class='ident'>File</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>file</span>) <span class='op'>=&gt;</span> <span class='ident'>file</span>.<span class='ident'>take_inner</span>(),
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">Text</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">text</span>) <span class="op">=&gt;</span> <span class="ident">text</span>.<span class="ident">take_inner</span>(),
+            <span class="ident">File</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">file</span>) <span class="op">=&gt;</span> <span class="ident">file</span>.<span class="ident">take_inner</span>(),
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>give_inner</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>inner</span>: <span class='ident'>M</span>) {
-        <span class='kw'>use</span> <span class='self'>self</span>::<span class='ident'>MultipartData</span>::<span class='kw-2'>*</span>;
+    <span class="kw">fn</span> <span class="ident">give_inner</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">inner</span>: <span class="ident">M</span>) {
+        <span class="kw">use</span> <span class="self">self</span>::<span class="ident">MultipartData</span>::<span class="kw-2">*</span>;
 
-        <span class='kw'>let</span> <span class='ident'>inner</span> <span class='op'>=</span> <span class='prelude-val'>Some</span>(<span class='ident'>inner</span>);
+        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">inner</span>);
 
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>Text</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>text</span>) <span class='op'>=&gt;</span> <span class='ident'>text</span>.<span class='ident'>inner</span> <span class='op'>=</span> <span class='ident'>inner</span>,
-            <span class='ident'>File</span>(<span class='kw-2'>ref</span> <span class='kw-2'>mut</span> <span class='ident'>file</span>) <span class='op'>=&gt;</span> <span class='ident'>file</span>.<span class='ident'>inner</span> <span class='op'>=</span> <span class='ident'>inner</span>,
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">Text</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">text</span>) <span class="op">=&gt;</span> <span class="ident">text</span>.<span class="ident">inner</span> <span class="op">=</span> <span class="ident">inner</span>,
+            <span class="ident">File</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">file</span>) <span class="op">=&gt;</span> <span class="ident">file</span>.<span class="ident">inner</span> <span class="op">=</span> <span class="ident">inner</span>,
         }
     }
 }
 
-<span class='doccomment'>/// A representation of a text field in a `multipart/form-data` body.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>MultipartText</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The text of this field.</span>
-    <span class='kw'>pub</span> <span class='ident'>text</span>: <span class='ident'>String</span>,
-    <span class='doccomment'>/// The `Multipart` this field was read from.</span>
-    <span class='ident'>inner</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>,
+<span class="doccomment">/// A representation of a text field in a `multipart/form-data` body.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MultipartText</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The text of this field.</span>
+    <span class="kw">pub</span> <span class="ident">text</span>: <span class="ident">String</span>,
+    <span class="doccomment">/// The `Multipart` this field was read from.</span>
+    <span class="ident">inner</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>,
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>Deref</span> <span class='kw'>for</span> <span class='ident'>MultipartText</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='kw'>type</span> <span class='ident'>Target</span> <span class='op'>=</span> <span class='ident'>str</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">MultipartText</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">str</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>deref</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='self'>Self</span>::<span class='ident'>Target</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>text</span>
-    }
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>MultipartText</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>into</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>String</span> {
-        <span class='self'>self</span>.<span class='ident'>text</span>
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Target</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">text</span>
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>MultipartText</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>take_inner</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>M</span> {
-        <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>take</span>().<span class='ident'>expect</span>(<span class='string'>&quot;MultipartText::inner already taken!&quot;</span>)
-    }
-
-    <span class='kw'>fn</span> <span class='ident'>into_inner</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>M</span> {
-        <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>expect</span>(<span class='string'>&quot;MultipartText::inner taken!&quot;</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MultipartText</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">String</span> {
+        <span class="self">self</span>.<span class="ident">text</span>
     }
 }
 
-<span class='doccomment'>/// A representation of a file in HTTP `multipart/form-data`.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// Note that the file is not yet saved to the local filesystem;</span>
-<span class='doccomment'>/// instead, this struct exposes `Read` and `BufRead` impls which point</span>
-<span class='doccomment'>/// to the beginning of the file&#39;s contents in the HTTP stream.</span>
-<span class='doccomment'>///</span>
-<span class='doccomment'>/// You can read it to EOF, or use one of the `save()` method</span>
-<span class='doccomment'>/// to save it to disk.</span>
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>MultipartFile</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// The filename of this entry, if supplied.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ### Warning: Client Provided / Untrustworthy</span>
-    <span class='doccomment'>/// You should treat this value as **untrustworthy** because it is an arbitrary string</span>
-    <span class='doccomment'>/// provided by the client.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// It is a serious security risk to create files or directories with paths based on user input.</span>
-    <span class='doccomment'>/// A malicious user could craft a path which can be used to overwrite important files, such as</span>
-    <span class='doccomment'>/// web templates, static assets, Javascript files, database files, configuration files, etc.,</span>
-    <span class='doccomment'>/// if they are writable by the server process.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This can be mitigated somewhat by setting filesystem permissions as</span>
-    <span class='doccomment'>/// conservatively as possible and running the server under its own user with restricted</span>
-    <span class='doccomment'>/// permissions, but you should still not use user input directly as filesystem paths.</span>
-    <span class='doccomment'>/// If it is truly necessary, you should sanitize filenames such that they cannot be</span>
-    <span class='doccomment'>/// misinterpreted by the OS. Such functionality is outside the scope of this crate.</span>
-    <span class='kw'>pub</span> <span class='ident'>filename</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span>,
-
-    <span class='doccomment'>/// The MIME type (`Content-Type` value) of this file, if supplied by the client,</span>
-    <span class='doccomment'>/// or `&quot;applicaton/octet-stream&quot;` otherwise.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ### Note: Client Provided</span>
-    <span class='doccomment'>/// Consider this value to be potentially untrustworthy, as it is provided by the client.</span>
-    <span class='doccomment'>/// It may be inaccurate or entirely wrong, depending on how the client determined it.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Some variants wrap arbitrary strings which could be abused by a malicious user if your</span>
-    <span class='doccomment'>/// application performs any non-idempotent operations based on their value, such as</span>
-    <span class='doccomment'>/// starting another program or querying/updating a database (web-search &quot;SQL injection&quot;).</span>
-    <span class='kw'>pub</span> <span class='ident'>content_type</span>: <span class='ident'>Mime</span>,
-
-    <span class='doccomment'>/// The `Multipart` this field was read from.</span>
-    <span class='ident'>inner</span>: <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span>,
-}
-
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>MultipartFile</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Get the filename of this entry, if supplied.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ### Warning: Client Provided / Untrustworthy</span>
-    <span class='doccomment'>/// You should treat this value as **untrustworthy** because it is an arbitrary string</span>
-    <span class='doccomment'>/// provided by the client.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// It is a serious security risk to create files or directories with paths based on user input.</span>
-    <span class='doccomment'>/// A malicious user could craft a path which can be used to overwrite important files, such as</span>
-    <span class='doccomment'>/// web templates, static assets, Javascript files, database files, configuration files, etc.,</span>
-    <span class='doccomment'>/// if they are writable by the server process.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// This can be mitigated somewhat by setting filesystem permissions as</span>
-    <span class='doccomment'>/// conservatively as possible and running the server under its own user with restricted</span>
-    <span class='doccomment'>/// permissions, but you should still not use user input directly as filesystem paths.</span>
-    <span class='doccomment'>/// If it is truly necessary, you should sanitize filenames such that they cannot be</span>
-    <span class='doccomment'>/// misinterpreted by the OS. Such functionality is outside the scope of this crate.</span>
-    <span class='attribute'>#[<span class='ident'>deprecated</span>(<span class='ident'>since</span> <span class='op'>=</span> <span class='string'>&quot;0.10.0&quot;</span>, <span class='ident'>note</span> <span class='op'>=</span> <span class='string'>&quot;`filename` field is now public&quot;</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>filename</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>filename</span>.<span class='ident'>as_ref</span>().<span class='ident'>map</span>(<span class='ident'>String</span>::<span class='ident'>as_ref</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> <span class="ident">MultipartText</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">take_inner</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">M</span> {
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">take</span>().<span class="ident">expect</span>(<span class="string">&quot;MultipartText::inner already taken!&quot;</span>)
     }
 
-    <span class='doccomment'>/// Get the MIME type (`Content-Type` value) of this file, if supplied by the client,</span>
-    <span class='doccomment'>/// or `&quot;applicaton/octet-stream&quot;` otherwise.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// ### Note: Client Provided</span>
-    <span class='doccomment'>/// Consider this value to be potentially untrustworthy, as it is provided by the client.</span>
-    <span class='doccomment'>/// It may be inaccurate or entirely wrong, depending on how the client determined it.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Some variants wrap arbitrary strings which could be abused by a malicious user if your</span>
-    <span class='doccomment'>/// application performs any non-idempotent operations based on their value, such as</span>
-    <span class='doccomment'>/// starting another program or querying/updating a database (web-search &quot;SQL injection&quot;).</span>
-    <span class='attribute'>#[<span class='ident'>deprecated</span>(<span class='ident'>since</span> <span class='op'>=</span> <span class='string'>&quot;0.10.0&quot;</span>, <span class='ident'>note</span> <span class='op'>=</span> <span class='string'>&quot;`content_type` field is now public&quot;</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>content_type</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>Mime</span> {
-        <span class='kw-2'>&amp;</span><span class='self'>self</span>.<span class='ident'>content_type</span>
-    }
-
-
-    <span class='kw'>fn</span> <span class='ident'>inner_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>M</span> {
-        <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>as_mut</span>().<span class='ident'>expect</span>(<span class='string'>&quot;MultipartFile::inner taken!&quot;</span>)
-    }
-
-    <span class='attribute'>#[<span class='ident'>doc</span>(<span class='ident'>hidden</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>take_inner</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>M</span> {
-        <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>take</span>().<span class='ident'>expect</span>(<span class='string'>&quot;MultipartFile::inner already taken!&quot;</span>)
-    }
-
-    <span class='kw'>fn</span> <span class='ident'>into_inner</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>M</span> {
-        <span class='self'>self</span>.<span class='ident'>inner</span>.<span class='ident'>expect</span>(<span class='string'>&quot;MultipartFile::inner taken!&quot;</span>)
+    <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">M</span> {
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">expect</span>(<span class="string">&quot;MultipartText::inner taken!&quot;</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> <span class='ident'>MultipartFile</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> <span class='kw'>where</span> <span class='ident'>M</span>: <span class='ident'>ReadEntry</span> {
-    <span class='doccomment'>/// Get a builder type which can save the file with or without a size limit.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>save</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>SaveBuilder</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>SaveBuilder</span>::<span class='ident'>new</span>(<span class='self'>self</span>)
+<span class="doccomment">/// A representation of a file in HTTP `multipart/form-data`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Note that the file is not yet saved to the local filesystem;</span>
+<span class="doccomment">/// instead, this struct exposes `Read` and `BufRead` impls which point</span>
+<span class="doccomment">/// to the beginning of the file&#39;s contents in the HTTP stream.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// You can read it to EOF, or use one of the `save()` method</span>
+<span class="doccomment">/// to save it to disk.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">MultipartFile</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The filename of this entry, if supplied.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ### Warning: Client Provided / Untrustworthy</span>
+    <span class="doccomment">/// You should treat this value as **untrustworthy** because it is an arbitrary string</span>
+    <span class="doccomment">/// provided by the client.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// It is a serious security risk to create files or directories with paths based on user input.</span>
+    <span class="doccomment">/// A malicious user could craft a path which can be used to overwrite important files, such as</span>
+    <span class="doccomment">/// web templates, static assets, Javascript files, database files, configuration files, etc.,</span>
+    <span class="doccomment">/// if they are writable by the server process.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This can be mitigated somewhat by setting filesystem permissions as</span>
+    <span class="doccomment">/// conservatively as possible and running the server under its own user with restricted</span>
+    <span class="doccomment">/// permissions, but you should still not use user input directly as filesystem paths.</span>
+    <span class="doccomment">/// If it is truly necessary, you should sanitize filenames such that they cannot be</span>
+    <span class="doccomment">/// misinterpreted by the OS. Such functionality is outside the scope of this crate.</span>
+    <span class="kw">pub</span> <span class="ident">filename</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+
+    <span class="doccomment">/// The MIME type (`Content-Type` value) of this file, if supplied by the client,</span>
+    <span class="doccomment">/// or `&quot;applicaton/octet-stream&quot;` otherwise.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ### Note: Client Provided</span>
+    <span class="doccomment">/// Consider this value to be potentially untrustworthy, as it is provided by the client.</span>
+    <span class="doccomment">/// It may be inaccurate or entirely wrong, depending on how the client determined it.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Some variants wrap arbitrary strings which could be abused by a malicious user if your</span>
+    <span class="doccomment">/// application performs any non-idempotent operations based on their value, such as</span>
+    <span class="doccomment">/// starting another program or querying/updating a database (web-search &quot;SQL injection&quot;).</span>
+    <span class="kw">pub</span> <span class="ident">content_type</span>: <span class="ident">Mime</span>,
+
+    <span class="doccomment">/// The `Multipart` this field was read from.</span>
+    <span class="ident">inner</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> <span class="ident">MultipartFile</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Get the filename of this entry, if supplied.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ### Warning: Client Provided / Untrustworthy</span>
+    <span class="doccomment">/// You should treat this value as **untrustworthy** because it is an arbitrary string</span>
+    <span class="doccomment">/// provided by the client.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// It is a serious security risk to create files or directories with paths based on user input.</span>
+    <span class="doccomment">/// A malicious user could craft a path which can be used to overwrite important files, such as</span>
+    <span class="doccomment">/// web templates, static assets, Javascript files, database files, configuration files, etc.,</span>
+    <span class="doccomment">/// if they are writable by the server process.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This can be mitigated somewhat by setting filesystem permissions as</span>
+    <span class="doccomment">/// conservatively as possible and running the server under its own user with restricted</span>
+    <span class="doccomment">/// permissions, but you should still not use user input directly as filesystem paths.</span>
+    <span class="doccomment">/// If it is truly necessary, you should sanitize filenames such that they cannot be</span>
+    <span class="doccomment">/// misinterpreted by the OS. Such functionality is outside the scope of this crate.</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.10.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;`filename` field is now public&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">filename</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">filename</span>.<span class="ident">as_ref</span>().<span class="ident">map</span>(<span class="ident">String</span>::<span class="ident">as_ref</span>)
     }
 
-    <span class='doccomment'>/// Save this file to the given output stream.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If successful, returns the number of bytes written.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Retries when `io::Error::kind() == io::ErrorKind::Interrupted`.</span>
-    <span class='attribute'>#[<span class='ident'>deprecated</span>(<span class='ident'>since</span> <span class='op'>=</span> <span class='string'>&quot;0.10.0&quot;</span>, <span class='ident'>note</span> <span class='op'>=</span> <span class='string'>&quot;use `.save().write_to()` instead&quot;</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>save_to</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>out</span>: <span class='ident'>W</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>u64</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>save</span>().<span class='ident'>write_to</span>(<span class='ident'>out</span>).<span class='ident'>into_result_strict</span>()
+    <span class="doccomment">/// Get the MIME type (`Content-Type` value) of this file, if supplied by the client,</span>
+    <span class="doccomment">/// or `&quot;applicaton/octet-stream&quot;` otherwise.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ### Note: Client Provided</span>
+    <span class="doccomment">/// Consider this value to be potentially untrustworthy, as it is provided by the client.</span>
+    <span class="doccomment">/// It may be inaccurate or entirely wrong, depending on how the client determined it.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Some variants wrap arbitrary strings which could be abused by a malicious user if your</span>
+    <span class="doccomment">/// application performs any non-idempotent operations based on their value, such as</span>
+    <span class="doccomment">/// starting another program or querying/updating a database (web-search &quot;SQL injection&quot;).</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.10.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;`content_type` field is now public&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">content_type</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Mime</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">content_type</span>
     }
 
-    <span class='doccomment'>/// Save this file to the given output stream, **truncated** to `limit`</span>
-    <span class='doccomment'>/// (no more than `limit` bytes will be written out).</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// If successful, returns the number of bytes written.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Retries when `io::Error::kind() == io::ErrorKind::Interrupted`.</span>
-    <span class='attribute'>#[<span class='ident'>deprecated</span>(<span class='ident'>since</span> <span class='op'>=</span> <span class='string'>&quot;0.10.0&quot;</span>, <span class='ident'>note</span> <span class='op'>=</span> <span class='string'>&quot;use `.save().size_limit(limit).write_to(out)` instead&quot;</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>save_to_limited</span><span class='op'>&lt;</span><span class='ident'>W</span>: <span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>out</span>: <span class='ident'>W</span>, <span class='ident'>limit</span>: <span class='ident'>u64</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>u64</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>save</span>().<span class='ident'>size_limit</span>(<span class='ident'>limit</span>).<span class='ident'>write_to</span>(<span class='ident'>out</span>).<span class='ident'>into_result_strict</span>()
+
+    <span class="kw">fn</span> <span class="ident">inner_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">M</span> {
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_mut</span>().<span class="ident">expect</span>(<span class="string">&quot;MultipartFile::inner taken!&quot;</span>)
     }
 
-    <span class='doccomment'>/// Save this file to `path`.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Returns the saved file info on success, or any errors otherwise.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Retries when `io::Error::kind() == io::ErrorKind::Interrupted`.</span>
-    <span class='attribute'>#[<span class='ident'>deprecated</span>(<span class='ident'>since</span> <span class='op'>=</span> <span class='string'>&quot;0.10.0&quot;</span>, <span class='ident'>note</span> <span class='op'>=</span> <span class='string'>&quot;use `.save().with_path(path)` instead&quot;</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>save_as</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>PathBuf</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>path</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>SavedFile</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>save</span>().<span class='ident'>with_path</span>(<span class='ident'>path</span>).<span class='ident'>into_result_strict</span>()
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">take_inner</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">M</span> {
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">take</span>().<span class="ident">expect</span>(<span class="string">&quot;MultipartFile::inner already taken!&quot;</span>)
     }
 
-    <span class='doccomment'>/// Save this file in the directory pointed at by `dir`,</span>
-    <span class='doccomment'>/// using a random alphanumeric string as the filename.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Any missing directories in the `dir` path will be created.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Returns the saved file&#39;s info on success, or any errors otherwise.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Retries when `io::Error::kind() == io::ErrorKind::Interrupted`.</span>
-    <span class='attribute'>#[<span class='ident'>deprecated</span>(<span class='ident'>since</span> <span class='op'>=</span> <span class='string'>&quot;0.10.0&quot;</span>, <span class='ident'>note</span> <span class='op'>=</span> <span class='string'>&quot;use `.save().with_dir(dir)` instead&quot;</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>save_in</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>dir</span>: <span class='ident'>P</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>SavedFile</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>save</span>().<span class='ident'>with_dir</span>(<span class='ident'>dir</span>.<span class='ident'>as_ref</span>()).<span class='ident'>into_result_strict</span>()
-    }
-
-    <span class='doccomment'>/// Save this file to `path`, **truncated** to `limit` (no more than `limit` bytes will be written out).</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Any missing directories in the `dir` path will be created.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Returns the saved file&#39;s info on success, or any errors otherwise.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Retries when `io::Error::kind() == io::ErrorKind::Interrupted`.</span>
-    <span class='attribute'>#[<span class='ident'>deprecated</span>(<span class='ident'>since</span> <span class='op'>=</span> <span class='string'>&quot;0.10.0&quot;</span>, <span class='ident'>note</span> <span class='op'>=</span> <span class='string'>&quot;use `.save().size_limit(limit).with_path(path)` instead&quot;</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>save_as_limited</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>Into</span><span class='op'>&lt;</span><span class='ident'>PathBuf</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>path</span>: <span class='ident'>P</span>, <span class='ident'>limit</span>: <span class='ident'>u64</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>SavedFile</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>save</span>().<span class='ident'>size_limit</span>(<span class='ident'>limit</span>).<span class='ident'>with_path</span>(<span class='ident'>path</span>).<span class='ident'>into_result_strict</span>()
-    }
-
-    <span class='doccomment'>/// Save this file in the directory pointed at by `dir`,</span>
-    <span class='doccomment'>/// using a random alphanumeric string as the filename.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// **Truncates** file to `limit` (no more than `limit` bytes will be written out).</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Any missing directories in the `dir` path will be created.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Returns the saved file&#39;s info on success, or any errors otherwise.</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// Retries when `io::Error::kind() == io::ErrorKind::Interrupted`.</span>
-    <span class='attribute'>#[<span class='ident'>deprecated</span>(<span class='ident'>since</span> <span class='op'>=</span> <span class='string'>&quot;0.10.0&quot;</span>, <span class='ident'>note</span> <span class='op'>=</span> <span class='string'>&quot;use `.save().size_limit(limit).with_dir(dir)` instead&quot;</span>)]</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>save_in_limited</span><span class='op'>&lt;</span><span class='ident'>P</span>: <span class='ident'>AsRef</span><span class='op'>&lt;</span><span class='ident'>Path</span><span class='op'>&gt;&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>dir</span>: <span class='ident'>P</span>, <span class='ident'>limit</span>: <span class='ident'>u64</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>SavedFile</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>save</span>().<span class='ident'>size_limit</span>(<span class='ident'>limit</span>).<span class='ident'>with_dir</span>(<span class='ident'>dir</span>).<span class='ident'>into_result_strict</span>()
+    <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">M</span> {
+        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">expect</span>(<span class="string">&quot;MultipartFile::inner taken!&quot;</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span>: <span class='ident'>ReadEntry</span><span class='op'>&gt;</span> <span class='ident'>Read</span> <span class='kw'>for</span> <span class='ident'>MultipartFile</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>buf</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> [<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>usize</span><span class='op'>&gt;</span>{
-        <span class='self'>self</span>.<span class='ident'>inner_mut</span>().<span class='ident'>source</span>().<span class='ident'>read</span>(<span class='ident'>buf</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> <span class="ident">MultipartFile</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> <span class="kw">where</span> <span class="ident">M</span>: <span class="ident">ReadEntry</span> {
+    <span class="doccomment">/// Get a builder type which can save the file with or without a size limit.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">SaveBuilder</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">SaveBuilder</span>::<span class="ident">new</span>(<span class="self">self</span>)
+    }
+
+    <span class="doccomment">/// Save this file to the given output stream.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If successful, returns the number of bytes written.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Retries when `io::Error::kind() == io::ErrorKind::Interrupted`.</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.10.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use `.save().write_to()` instead&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">save_to</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">out</span>: <span class="ident">W</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">save</span>().<span class="ident">write_to</span>(<span class="ident">out</span>).<span class="ident">into_result_strict</span>()
+    }
+
+    <span class="doccomment">/// Save this file to the given output stream, **truncated** to `limit`</span>
+    <span class="doccomment">/// (no more than `limit` bytes will be written out).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// If successful, returns the number of bytes written.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Retries when `io::Error::kind() == io::ErrorKind::Interrupted`.</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.10.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use `.save().size_limit(limit).write_to(out)` instead&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">save_to_limited</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">out</span>: <span class="ident">W</span>, <span class="ident">limit</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">save</span>().<span class="ident">size_limit</span>(<span class="ident">limit</span>).<span class="ident">write_to</span>(<span class="ident">out</span>).<span class="ident">into_result_strict</span>()
+    }
+
+    <span class="doccomment">/// Save this file to `path`.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns the saved file info on success, or any errors otherwise.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Retries when `io::Error::kind() == io::ErrorKind::Interrupted`.</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.10.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use `.save().with_path(path)` instead&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">save_as</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">PathBuf</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">path</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SavedFile</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">save</span>().<span class="ident">with_path</span>(<span class="ident">path</span>).<span class="ident">into_result_strict</span>()
+    }
+
+    <span class="doccomment">/// Save this file in the directory pointed at by `dir`,</span>
+    <span class="doccomment">/// using a random alphanumeric string as the filename.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Any missing directories in the `dir` path will be created.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns the saved file&#39;s info on success, or any errors otherwise.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Retries when `io::Error::kind() == io::ErrorKind::Interrupted`.</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.10.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use `.save().with_dir(dir)` instead&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">save_in</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dir</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SavedFile</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">save</span>().<span class="ident">with_dir</span>(<span class="ident">dir</span>.<span class="ident">as_ref</span>()).<span class="ident">into_result_strict</span>()
+    }
+
+    <span class="doccomment">/// Save this file to `path`, **truncated** to `limit` (no more than `limit` bytes will be written out).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Any missing directories in the `dir` path will be created.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns the saved file&#39;s info on success, or any errors otherwise.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Retries when `io::Error::kind() == io::ErrorKind::Interrupted`.</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.10.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use `.save().size_limit(limit).with_path(path)` instead&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">save_as_limited</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">PathBuf</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">path</span>: <span class="ident">P</span>, <span class="ident">limit</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SavedFile</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">save</span>().<span class="ident">size_limit</span>(<span class="ident">limit</span>).<span class="ident">with_path</span>(<span class="ident">path</span>).<span class="ident">into_result_strict</span>()
+    }
+
+    <span class="doccomment">/// Save this file in the directory pointed at by `dir`,</span>
+    <span class="doccomment">/// using a random alphanumeric string as the filename.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **Truncates** file to `limit` (no more than `limit` bytes will be written out).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Any missing directories in the `dir` path will be created.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Returns the saved file&#39;s info on success, or any errors otherwise.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Retries when `io::Error::kind() == io::ErrorKind::Interrupted`.</span>
+    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.10.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use `.save().size_limit(limit).with_dir(dir)` instead&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">save_in_limited</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dir</span>: <span class="ident">P</span>, <span class="ident">limit</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">SavedFile</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">save</span>().<span class="ident">size_limit</span>(<span class="ident">limit</span>).<span class="ident">with_dir</span>(<span class="ident">dir</span>).<span class="ident">into_result_strict</span>()
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span>: <span class='ident'>ReadEntry</span><span class='op'>&gt;</span> <span class='ident'>BufRead</span> <span class='kw'>for</span> <span class='ident'>MultipartFile</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;</span> {
-    <span class='kw'>fn</span> <span class='ident'>fill_buf</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]<span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>inner_mut</span>().<span class='ident'>source</span>().<span class='ident'>fill_buf</span>()
-    }
-
-    <span class='kw'>fn</span> <span class='ident'>consume</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>amt</span>: <span class='ident'>usize</span>) {
-        <span class='self'>self</span>.<span class='ident'>inner_mut</span>().<span class='ident'>source</span>().<span class='ident'>consume</span>(<span class='ident'>amt</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">M</span>: <span class="ident">ReadEntry</span><span class="op">&gt;</span> <span class="ident">Read</span> <span class="kw">for</span> <span class="ident">MultipartFile</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>{
+        <span class="self">self</span>.<span class="ident">inner_mut</span>().<span class="ident">source</span>().<span class="ident">read</span>(<span class="ident">buf</span>)
     }
 }
 
-<span class='kw'>fn</span> <span class='ident'>read_content_type</span>(<span class='ident'>cont_type</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Mime</span> {
-    <span class='ident'>cont_type</span>.<span class='ident'>parse</span>().<span class='ident'>ok</span>().<span class='ident'>unwrap_or_else</span>(::<span class='ident'>mime_guess</span>::<span class='ident'>octet_stream</span>)
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">M</span>: <span class="ident">ReadEntry</span><span class="op">&gt;</span> <span class="ident">BufRead</span> <span class="kw">for</span> <span class="ident">MultipartFile</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fill_buf</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">inner_mut</span>().<span class="ident">source</span>().<span class="ident">fill_buf</span>()
+    }
+
+    <span class="kw">fn</span> <span class="ident">consume</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">amt</span>: <span class="ident">usize</span>) {
+        <span class="self">self</span>.<span class="ident">inner_mut</span>().<span class="ident">source</span>().<span class="ident">consume</span>(<span class="ident">amt</span>)
+    }
 }
 
-<span class='kw'>fn</span> <span class='ident'>split_once</span>(<span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>delim</span>: <span class='ident'>char</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='kw-2'>&amp;</span><span class='ident'>str</span>)<span class='op'>&gt;</span> {
-    <span class='ident'>s</span>.<span class='ident'>find</span>(<span class='ident'>delim</span>).<span class='ident'>map</span>(<span class='op'>|</span><span class='ident'>idx</span><span class='op'>|</span> <span class='ident'>s</span>.<span class='ident'>split_at</span>(<span class='ident'>idx</span>))
+<span class="kw">fn</span> <span class="ident">read_content_type</span>(<span class="ident">cont_type</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Mime</span> {
+    <span class="ident">cont_type</span>.<span class="ident">parse</span>().<span class="ident">ok</span>().<span class="ident">unwrap_or_else</span>(::<span class="ident">mime_guess</span>::<span class="ident">octet_stream</span>)
 }
 
-<span class='kw'>fn</span> <span class='ident'>trim_quotes</span>(<span class='ident'>s</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-    <span class='ident'>s</span>.<span class='ident'>trim_matches</span>(<span class='string'>&#39;&quot;&#39;</span>)
+<span class="kw">fn</span> <span class="ident">split_once</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">delim</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>)<span class="op">&gt;</span> {
+    <span class="ident">s</span>.<span class="ident">find</span>(<span class="ident">delim</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">idx</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">split_at</span>(<span class="ident">idx</span>))
 }
 
-<span class='doccomment'>/// Get the string after `needle` in `haystack`, stopping before `end_val_delim`</span>
-<span class='kw'>fn</span> <span class='ident'>get_str_after</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span><span class='op'>&gt;</span>(<span class='ident'>needle</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>end_val_delim</span>: <span class='ident'>char</span>, <span class='ident'>haystack</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span>(<span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>, <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>str</span>)<span class='op'>&gt;</span> {
-    <span class='kw'>let</span> <span class='ident'>val_start_idx</span> <span class='op'>=</span> <span class='macro'>try_opt</span><span class='macro'>!</span>(<span class='ident'>haystack</span>.<span class='ident'>find</span>(<span class='ident'>needle</span>)) <span class='op'>+</span> <span class='ident'>needle</span>.<span class='ident'>len</span>();
-    <span class='kw'>let</span> <span class='ident'>val_end_idx</span> <span class='op'>=</span> <span class='ident'>haystack</span>[<span class='ident'>val_start_idx</span>..].<span class='ident'>find</span>(<span class='ident'>end_val_delim</span>)
-        .<span class='ident'>map_or</span>(<span class='ident'>haystack</span>.<span class='ident'>len</span>(), <span class='op'>|</span><span class='ident'>end_idx</span><span class='op'>|</span> <span class='ident'>end_idx</span> <span class='op'>+</span> <span class='ident'>val_start_idx</span>);
-    <span class='prelude-val'>Some</span>((<span class='kw-2'>&amp;</span><span class='ident'>haystack</span>[<span class='ident'>val_start_idx</span>..<span class='ident'>val_end_idx</span>], <span class='kw-2'>&amp;</span><span class='ident'>haystack</span>[<span class='ident'>val_end_idx</span>..]))
+<span class="kw">fn</span> <span class="ident">trim_quotes</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="ident">s</span>.<span class="ident">trim_matches</span>(<span class="string">&#39;&quot;&#39;</span>)
 }
 
-<span class='kw'>fn</span> <span class='ident'>io_str_utf8</span>(<span class='ident'>buf</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>]) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>str</span><span class='op'>&gt;</span> {
-    <span class='ident'>str</span>::<span class='ident'>from_utf8</span>(<span class='ident'>buf</span>).<span class='ident'>map_err</span>(<span class='op'>|</span><span class='ident'>e</span><span class='op'>|</span> <span class='ident'>io</span>::<span class='ident'>Error</span>::<span class='ident'>new</span>(<span class='ident'>io</span>::<span class='ident'>ErrorKind</span>::<span class='ident'>InvalidData</span>, <span class='ident'>e</span>))
+<span class="doccomment">/// Get the string after `needle` in `haystack`, stopping before `end_val_delim`</span>
+<span class="kw">fn</span> <span class="ident">get_str_after</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">needle</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">end_val_delim</span>: <span class="ident">char</span>, <span class="ident">haystack</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>)<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">val_start_idx</span> <span class="op">=</span> <span class="macro">try_opt</span><span class="macro">!</span>(<span class="ident">haystack</span>.<span class="ident">find</span>(<span class="ident">needle</span>)) <span class="op">+</span> <span class="ident">needle</span>.<span class="ident">len</span>();
+    <span class="kw">let</span> <span class="ident">val_end_idx</span> <span class="op">=</span> <span class="ident">haystack</span>[<span class="ident">val_start_idx</span>..].<span class="ident">find</span>(<span class="ident">end_val_delim</span>)
+        .<span class="ident">map_or</span>(<span class="ident">haystack</span>.<span class="ident">len</span>(), <span class="op">|</span><span class="ident">end_idx</span><span class="op">|</span> <span class="ident">end_idx</span> <span class="op">+</span> <span class="ident">val_start_idx</span>);
+    <span class="prelude-val">Some</span>((<span class="kw-2">&amp;</span><span class="ident">haystack</span>[<span class="ident">val_start_idx</span>..<span class="ident">val_end_idx</span>], <span class="kw-2">&amp;</span><span class="ident">haystack</span>[<span class="ident">val_end_idx</span>..]))
 }
 
-<span class='kw'>fn</span> <span class='ident'>find_header</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>(<span class='ident'>headers</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> [<span class='ident'>StrHeader</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;</span>], <span class='ident'>name</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='ident'>StrHeader</span><span class='op'>&lt;</span><span class='lifetime'>&#39;b</span><span class='op'>&gt;&gt;</span> {
-    <span class='ident'>headers</span>.<span class='ident'>iter</span>().<span class='ident'>find</span>(<span class='op'>|</span><span class='ident'>header</span><span class='op'>|</span> <span class='ident'>header</span>.<span class='ident'>name</span> <span class='op'>==</span> <span class='ident'>name</span>)
+<span class="kw">fn</span> <span class="ident">io_str_utf8</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span><span class="op">&gt;</span> {
+    <span class="ident">str</span>::<span class="ident">from_utf8</span>(<span class="ident">buf</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">InvalidData</span>, <span class="ident">e</span>))
 }
 
-<span class='doccomment'>/// Common trait for `Multipart` and `&amp;mut Multipart`</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>ReadEntry</span>: <span class='ident'>PrivReadEntry</span> <span class='op'>+</span> <span class='ident'>Sized</span> {
-    <span class='doccomment'>/// Attempt to read the next entry in the multipart stream.</span>
-    <span class='kw'>fn</span> <span class='ident'>read_entry</span>(<span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ReadEntryResult</span><span class='op'>&lt;</span><span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='macro'>debug</span><span class='macro'>!</span>(<span class='string'>&quot;ReadEntry::read_entry()&quot;</span>);
+<span class="kw">fn</span> <span class="ident">find_header</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="lifetime">&#39;b</span><span class="op">&gt;</span>(<span class="ident">headers</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">StrHeader</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;</span>], <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">StrHeader</span><span class="op">&lt;</span><span class="lifetime">&#39;b</span><span class="op">&gt;&gt;</span> {
+    <span class="ident">headers</span>.<span class="ident">iter</span>().<span class="ident">find</span>(<span class="op">|</span><span class="ident">header</span><span class="op">|</span> <span class="ident">header</span>.<span class="ident">name</span> <span class="op">==</span> <span class="ident">name</span>)
+}
 
-        <span class='kw'>if</span> <span class='macro'>try_read_entry</span><span class='macro'>!</span>(<span class='self'>self</span>; <span class='self'>self</span>.<span class='ident'>consume_boundary</span>()) {
-            <span class='kw'>return</span> <span class='ident'>End</span>(<span class='self'>self</span>);
+<span class="doccomment">/// Common trait for `Multipart` and `&amp;mut Multipart`</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ReadEntry</span>: <span class="ident">PrivReadEntry</span> <span class="op">+</span> <span class="ident">Sized</span> {
+    <span class="doccomment">/// Attempt to read the next entry in the multipart stream.</span>
+    <span class="kw">fn</span> <span class="ident">read_entry</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ReadEntryResult</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;ReadEntry::read_entry()&quot;</span>);
+
+        <span class="kw">if</span> <span class="macro">try_read_entry</span><span class="macro">!</span>(<span class="self">self</span>; <span class="self">self</span>.<span class="ident">consume_boundary</span>()) {
+            <span class="kw">return</span> <span class="ident">End</span>(<span class="self">self</span>);
         }
 
-        <span class='kw'>let</span> <span class='ident'>field_headers</span> <span class='op'>=</span> <span class='macro'>try_read_entry</span><span class='macro'>!</span>(<span class='self'>self</span>; <span class='self'>self</span>.<span class='ident'>read_headers</span>());
+        <span class="kw">let</span> <span class="ident">field_headers</span> <span class="op">=</span> <span class="macro">try_read_entry</span><span class="macro">!</span>(<span class="self">self</span>; <span class="self">self</span>.<span class="ident">read_headers</span>());
 
-        <span class='kw'>let</span> <span class='ident'>data</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>field_headers</span>.<span class='ident'>cont_type</span> {
-            <span class='prelude-val'>Some</span>(<span class='ident'>cont_type</span>) <span class='op'>=&gt;</span> {
-                <span class='kw'>match</span> <span class='ident'>cont_type</span>.<span class='number'>0</span> {
-                    <span class='ident'>TopLevel</span>::<span class='ident'>Multipart</span> <span class='op'>=&gt;</span> {
-                        <span class='kw'>let</span> <span class='ident'>msg</span> <span class='op'>=</span> <span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;Error on field {:?}: nested multipart fields are \
+        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">field_headers</span>.<span class="ident">cont_type</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">cont_type</span>) <span class="op">=&gt;</span> {
+                <span class="kw">match</span> <span class="ident">cont_type</span>.<span class="number">0</span> {
+                    <span class="ident">TopLevel</span>::<span class="ident">Multipart</span> <span class="op">=&gt;</span> {
+                        <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;Error on field {:?}: nested multipart fields are \
                                            not supported. However, reports of clients sending \
                                            requests like this are welcome at \
                                            https://github.com/abonander/multipart/issues/56&quot;</span>,
-                                          <span class='ident'>field_headers</span>.<span class='ident'>cont_disp</span>.<span class='ident'>field_name</span>);
+                                          <span class="ident">field_headers</span>.<span class="ident">cont_disp</span>.<span class="ident">field_name</span>);
 
-                        <span class='kw'>return</span> <span class='ident'>ReadEntryResult</span>::<span class='ident'>invalid_data</span>(<span class='self'>self</span>, <span class='ident'>msg</span>);
+                        <span class="kw">return</span> <span class="ident">ReadEntryResult</span>::<span class="ident">invalid_data</span>(<span class="self">self</span>, <span class="ident">msg</span>);
                     },
-                    _ <span class='op'>=&gt;</span> {
-                        <span class='ident'>MultipartData</span>::<span class='ident'>File</span>(
-                            <span class='ident'>MultipartFile</span> {
-                                <span class='ident'>filename</span>: <span class='ident'>field_headers</span>.<span class='ident'>cont_disp</span>.<span class='ident'>filename</span>,
-                                <span class='ident'>content_type</span>: <span class='ident'>cont_type</span>,
-                                <span class='ident'>inner</span>: <span class='prelude-val'>Some</span>(<span class='self'>self</span>)
+                    _ <span class="op">=&gt;</span> {
+                        <span class="ident">MultipartData</span>::<span class="ident">File</span>(
+                            <span class="ident">MultipartFile</span> {
+                                <span class="ident">filename</span>: <span class="ident">field_headers</span>.<span class="ident">cont_disp</span>.<span class="ident">filename</span>,
+                                <span class="ident">content_type</span>: <span class="ident">cont_type</span>,
+                                <span class="ident">inner</span>: <span class="prelude-val">Some</span>(<span class="self">self</span>)
                             }
                         )
                     }
                 }
             },
-            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='ident'>text</span> <span class='op'>=</span> <span class='macro'>try_read_entry</span><span class='macro'>!</span>(<span class='self'>self</span>; <span class='self'>self</span>.<span class='ident'>read_to_string</span>());
-                <span class='ident'>MultipartData</span>::<span class='ident'>Text</span>(<span class='ident'>MultipartText</span> {
-                    <span class='ident'>text</span>: <span class='ident'>text</span>,
-                    <span class='ident'>inner</span>: <span class='prelude-val'>Some</span>(<span class='self'>self</span>),
+            <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
+                <span class="kw">let</span> <span class="ident">text</span> <span class="op">=</span> <span class="macro">try_read_entry</span><span class="macro">!</span>(<span class="self">self</span>; <span class="self">self</span>.<span class="ident">read_to_string</span>());
+                <span class="ident">MultipartData</span>::<span class="ident">Text</span>(<span class="ident">MultipartText</span> {
+                    <span class="ident">text</span>: <span class="ident">text</span>,
+                    <span class="ident">inner</span>: <span class="prelude-val">Some</span>(<span class="self">self</span>),
                 })
             },
         };
 
-        <span class='ident'>Entry</span>(
-            <span class='ident'>MultipartField</span> {
-                <span class='ident'>name</span>: <span class='ident'>field_headers</span>.<span class='ident'>cont_disp</span>.<span class='ident'>field_name</span>,
-                <span class='ident'>data</span>: <span class='ident'>data</span>,
+        <span class="ident">Entry</span>(
+            <span class="ident">MultipartField</span> {
+                <span class="ident">name</span>: <span class="ident">field_headers</span>.<span class="ident">cont_disp</span>.<span class="ident">field_name</span>,
+                <span class="ident">data</span>: <span class="ident">data</span>,
             }
         )
     }
 
-    <span class='doccomment'>/// Equivalent to `read_entry()` but takes `&amp;mut self`</span>
-    <span class='kw'>fn</span> <span class='ident'>read_entry_mut</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ReadEntryResult</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>Self</span><span class='op'>&gt;</span> {
-        <span class='ident'>ReadEntry</span>::<span class='ident'>read_entry</span>(<span class='self'>self</span>)
+    <span class="doccomment">/// Equivalent to `read_entry()` but takes `&amp;mut self`</span>
+    <span class="kw">fn</span> <span class="ident">read_entry_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ReadEntryResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="ident">ReadEntry</span>::<span class="ident">read_entry</span>(<span class="self">self</span>)
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>T</span><span class='op'>&gt;</span> <span class='ident'>ReadEntry</span> <span class='kw'>for</span> <span class='ident'>T</span> <span class='kw'>where</span> <span class='ident'>T</span>: <span class='ident'>PrivReadEntry</span> {}
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">ReadEntry</span> <span class="kw">for</span> <span class="ident">T</span> <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">PrivReadEntry</span> {}
 
-<span class='doccomment'>/// Public trait but not re-exported.</span>
-<span class='kw'>pub</span> <span class='kw'>trait</span> <span class='ident'>PrivReadEntry</span> {
-    <span class='kw'>type</span> <span class='ident'>Source</span>: <span class='ident'>BufRead</span>;
+<span class="doccomment">/// Public trait but not re-exported.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">PrivReadEntry</span> {
+    <span class="kw">type</span> <span class="ident">Source</span>: <span class="ident">BufRead</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>source</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>Self</span>::<span class='ident'>Source</span>;
+    <span class="kw">fn</span> <span class="ident">source</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>::<span class="ident">Source</span>;
 
-    <span class='doccomment'>/// Consume the next boundary.</span>
-    <span class='doccomment'>/// Returns `true` if the last boundary was read, `false` otherwise.</span>
-    <span class='kw'>fn</span> <span class='ident'>consume_boundary</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span>;
+    <span class="doccomment">/// Consume the next boundary.</span>
+    <span class="doccomment">/// Returns `true` if the last boundary was read, `false` otherwise.</span>
+    <span class="kw">fn</span> <span class="ident">consume_boundary</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>read_headers</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>FieldHeaders</span>, <span class='ident'>io</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='ident'>FieldHeaders</span>::<span class='ident'>read_from</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>source</span>())
-            .<span class='ident'>map_err</span>(<span class='op'>|</span><span class='ident'>e</span><span class='op'>|</span> <span class='ident'>io</span>::<span class='ident'>Error</span>::<span class='ident'>new</span>(<span class='ident'>io</span>::<span class='ident'>ErrorKind</span>::<span class='ident'>InvalidData</span>, <span class='ident'>e</span>))
+    <span class="kw">fn</span> <span class="ident">read_headers</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">FieldHeaders</span>, <span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="ident">FieldHeaders</span>::<span class="ident">read_from</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">source</span>())
+            .<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">InvalidData</span>, <span class="ident">e</span>))
     }
 
-    <span class='kw'>fn</span> <span class='ident'>read_to_string</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>String</span><span class='op'>&gt;</span> {
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>buf</span> <span class='op'>=</span> <span class='ident'>String</span>::<span class='ident'>new</span>();
+    <span class="kw">fn</span> <span class="ident">read_to_string</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="ident">String</span>::<span class="ident">new</span>();
 
-        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>source</span>().<span class='ident'>read_to_string</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>buf</span>) {
-            <span class='prelude-val'>Ok</span>(_) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='ident'>buf</span>),
-            <span class='prelude-val'>Err</span>(<span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>err</span>),
+        <span class="kw">match</span> <span class="self">self</span>.<span class="ident">source</span>().<span class="ident">read_to_string</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>) {
+            <span class="prelude-val">Ok</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">buf</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>),
         }
     }
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>M</span>: <span class='ident'>ReadEntry</span><span class='op'>&gt;</span> <span class='ident'>PrivReadEntry</span> <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>M</span> {
-    <span class='kw'>type</span> <span class='ident'>Source</span> <span class='op'>=</span> <span class='ident'>M</span>::<span class='ident'>Source</span>;
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">M</span>: <span class="ident">ReadEntry</span><span class="op">&gt;</span> <span class="ident">PrivReadEntry</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">M</span> {
+    <span class="kw">type</span> <span class="ident">Source</span> <span class="op">=</span> <span class="ident">M</span>::<span class="ident">Source</span>;
 
-    <span class='kw'>fn</span> <span class='ident'>source</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>M</span>::<span class='ident'>Source</span> {
-        (<span class='kw-2'>*</span><span class='kw-2'>*</span><span class='self'>self</span>).<span class='ident'>source</span>()
+    <span class="kw">fn</span> <span class="ident">source</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">M</span>::<span class="ident">Source</span> {
+        (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">source</span>()
     }
 
-    <span class='kw'>fn</span> <span class='ident'>consume_boundary</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>bool</span><span class='op'>&gt;</span> {
-        (<span class='kw-2'>*</span><span class='kw-2'>*</span><span class='self'>self</span>).<span class='ident'>consume_boundary</span>()
+    <span class="kw">fn</span> <span class="ident">consume_boundary</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+        (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">consume_boundary</span>()
     }
 }
 
-<span class='doccomment'>/// Ternary result type returned by `ReadEntry::next_entry()`,</span>
-<span class='doccomment'>/// `Multipart::into_entry()` and `MultipartField::next_entry()`.</span>
-<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ReadEntryResult</span><span class='op'>&lt;</span><span class='ident'>M</span>: <span class='ident'>ReadEntry</span>, <span class='ident'>Entry</span> <span class='op'>=</span> <span class='ident'>MultipartField</span><span class='op'>&lt;</span><span class='ident'>M</span><span class='op'>&gt;&gt;</span> {
-    <span class='doccomment'>/// The next entry was found.</span>
-    <span class='ident'>Entry</span>(<span class='ident'>Entry</span>),
-    <span class='doccomment'>/// No  more entries could be read.</span>
-    <span class='ident'>End</span>(<span class='ident'>M</span>),
-    <span class='doccomment'>/// An error occurred.</span>
-    <span class='ident'>Error</span>(<span class='ident'>M</span>, <span class='ident'>io</span>::<span class='ident'>Error</span>),
+<span class="doccomment">/// Ternary result type returned by `ReadEntry::next_entry()`,</span>
+<span class="doccomment">/// `Multipart::into_entry()` and `MultipartField::next_entry()`.</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ReadEntryResult</span><span class="op">&lt;</span><span class="ident">M</span>: <span class="ident">ReadEntry</span>, <span class="ident">Entry</span> <span class="op">=</span> <span class="ident">MultipartField</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;&gt;</span> {
+    <span class="doccomment">/// The next entry was found.</span>
+    <span class="ident">Entry</span>(<span class="ident">Entry</span>),
+    <span class="doccomment">/// No  more entries could be read.</span>
+    <span class="ident">End</span>(<span class="ident">M</span>),
+    <span class="doccomment">/// An error occurred.</span>
+    <span class="ident">Error</span>(<span class="ident">M</span>, <span class="ident">io</span>::<span class="ident">Error</span>),
 }
 
-<span class='kw'>impl</span><span class='op'>&lt;</span><span class='ident'>M</span>: <span class='ident'>ReadEntry</span>, <span class='ident'>Entry</span><span class='op'>&gt;</span> <span class='ident'>ReadEntryResult</span><span class='op'>&lt;</span><span class='ident'>M</span>, <span class='ident'>Entry</span><span class='op'>&gt;</span> {
-    <span class='doccomment'>/// Convert `self` into `Result&lt;Option&lt;Entry&gt;&gt;` as follows:</span>
-    <span class='doccomment'>///</span>
-    <span class='doccomment'>/// * `Entry(entry) -&gt; Ok(Some(entry))`</span>
-    <span class='doccomment'>/// * `End(_) -&gt; Ok(None)`</span>
-    <span class='doccomment'>/// * `Error(_, err) -&gt; Err(err)`</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>into_result</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>io</span>::<span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Entry</span><span class='op'>&gt;&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='ident'>ReadEntryResult</span>::<span class='ident'>Entry</span>(<span class='ident'>entry</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='prelude-val'>Some</span>(<span class='ident'>entry</span>)),
-            <span class='ident'>ReadEntryResult</span>::<span class='ident'>End</span>(_) <span class='op'>=&gt;</span> <span class='prelude-val'>Ok</span>(<span class='prelude-val'>None</span>),
-            <span class='ident'>ReadEntryResult</span>::<span class='ident'>Error</span>(_, <span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Err</span>(<span class='ident'>err</span>),
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">M</span>: <span class="ident">ReadEntry</span>, <span class="ident">Entry</span><span class="op">&gt;</span> <span class="ident">ReadEntryResult</span><span class="op">&lt;</span><span class="ident">M</span>, <span class="ident">Entry</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Convert `self` into `Result&lt;Option&lt;Entry&gt;&gt;` as follows:</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// * `Entry(entry) -&gt; Ok(Some(entry))`</span>
+    <span class="doccomment">/// * `End(_) -&gt; Ok(None)`</span>
+    <span class="doccomment">/// * `Error(_, err) -&gt; Err(err)`</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_result</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">ReadEntryResult</span>::<span class="ident">Entry</span>(<span class="ident">entry</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">entry</span>)),
+            <span class="ident">ReadEntryResult</span>::<span class="ident">End</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>),
+            <span class="ident">ReadEntryResult</span>::<span class="ident">Error</span>(_, <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">err</span>),
         }
     }
 
-    <span class='doccomment'>/// Attempt to unwrap `Entry`, panicking if this is `End` or `Error`.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unwrap</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Entry</span> {
-        <span class='self'>self</span>.<span class='ident'>expect_alt</span>(<span class='string'>&quot;`ReadEntryResult::unwrap()` called on `End` value&quot;</span>,
-                        <span class='string'>&quot;`ReadEntryResult::unwrap()` called on `Error` value: {:?}&quot;</span>)
+    <span class="doccomment">/// Attempt to unwrap `Entry`, panicking if this is `End` or `Error`.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unwrap</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Entry</span> {
+        <span class="self">self</span>.<span class="ident">expect_alt</span>(<span class="string">&quot;`ReadEntryResult::unwrap()` called on `End` value&quot;</span>,
+                        <span class="string">&quot;`ReadEntryResult::unwrap()` called on `Error` value: {:?}&quot;</span>)
     }
 
-    <span class='doccomment'>/// Attempt to unwrap `Entry`, panicking if this is `End` or `Error`</span>
-    <span class='doccomment'>/// with the given message. Adds the error&#39;s message in the `Error` case.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>expect</span>(<span class='self'>self</span>, <span class='ident'>msg</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Entry</span> {
-        <span class='self'>self</span>.<span class='ident'>expect_alt</span>(<span class='ident'>msg</span>, <span class='ident'>msg</span>)
+    <span class="doccomment">/// Attempt to unwrap `Entry`, panicking if this is `End` or `Error`</span>
+    <span class="doccomment">/// with the given message. Adds the error&#39;s message in the `Error` case.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">expect</span>(<span class="self">self</span>, <span class="ident">msg</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Entry</span> {
+        <span class="self">self</span>.<span class="ident">expect_alt</span>(<span class="ident">msg</span>, <span class="ident">msg</span>)
     }
 
-    <span class='doccomment'>/// Attempt to unwrap `Entry`, panicking if this is `End` or `Error`.</span>
-    <span class='doccomment'>/// If this is `End`, panics with `end_msg`; if `Error`, panics with `err_msg`</span>
-    <span class='doccomment'>/// as well as the error&#39;s message.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>expect_alt</span>(<span class='self'>self</span>, <span class='ident'>end_msg</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>, <span class='ident'>err_msg</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='ident'>Entry</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='ident'>Entry</span>(<span class='ident'>entry</span>) <span class='op'>=&gt;</span> <span class='ident'>entry</span>,
-            <span class='ident'>End</span>(_) <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>end_msg</span>),
-            <span class='ident'>Error</span>(_, <span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;{}: {:?}&quot;</span>, <span class='ident'>err_msg</span>, <span class='ident'>err</span>),
+    <span class="doccomment">/// Attempt to unwrap `Entry`, panicking if this is `End` or `Error`.</span>
+    <span class="doccomment">/// If this is `End`, panics with `end_msg`; if `Error`, panics with `err_msg`</span>
+    <span class="doccomment">/// as well as the error&#39;s message.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">expect_alt</span>(<span class="self">self</span>, <span class="ident">end_msg</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">err_msg</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="ident">Entry</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">Entry</span>(<span class="ident">entry</span>) <span class="op">=&gt;</span> <span class="ident">entry</span>,
+            <span class="ident">End</span>(_) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">end_msg</span>),
+            <span class="ident">Error</span>(_, <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;{}: {:?}&quot;</span>, <span class="ident">err_msg</span>, <span class="ident">err</span>),
         }
     }
 
-    <span class='doccomment'>/// Attempt to unwrap as `Option&lt;Entry&gt;`, panicking in the `Error` case.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>unwrap_opt</span>(<span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Entry</span><span class='op'>&gt;</span> {
-        <span class='self'>self</span>.<span class='ident'>expect_opt</span>(<span class='string'>&quot;`ReadEntryResult::unwrap_opt()` called on `Error` value&quot;</span>)
+    <span class="doccomment">/// Attempt to unwrap as `Option&lt;Entry&gt;`, panicking in the `Error` case.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">unwrap_opt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">expect_opt</span>(<span class="string">&quot;`ReadEntryResult::unwrap_opt()` called on `Error` value&quot;</span>)
     }
 
-    <span class='doccomment'>/// Attempt to unwrap as `Option&lt;Entry&gt;`, panicking in the `Error` case</span>
-    <span class='doccomment'>/// with the given message as well as the error&#39;s message.</span>
-    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>expect_opt</span>(<span class='self'>self</span>, <span class='ident'>msg</span>: <span class='kw-2'>&amp;</span><span class='ident'>str</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Entry</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='self'>self</span> {
-            <span class='ident'>Entry</span>(<span class='ident'>entry</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>entry</span>),
-            <span class='ident'>End</span>(_) <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
-            <span class='ident'>Error</span>(_, <span class='ident'>err</span>) <span class='op'>=&gt;</span> <span class='macro'>panic</span><span class='macro'>!</span>(<span class='string'>&quot;{}: {:?}&quot;</span>, <span class='ident'>msg</span>, <span class='ident'>err</span>),
+    <span class="doccomment">/// Attempt to unwrap as `Option&lt;Entry&gt;`, panicking in the `Error` case</span>
+    <span class="doccomment">/// with the given message as well as the error&#39;s message.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">expect_opt</span>(<span class="self">self</span>, <span class="ident">msg</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">Entry</span>(<span class="ident">entry</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">entry</span>),
+            <span class="ident">End</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="ident">Error</span>(_, <span class="ident">err</span>) <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;{}: {:?}&quot;</span>, <span class="ident">msg</span>, <span class="ident">err</span>),
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>invalid_data</span>(<span class='ident'>multipart</span>: <span class='ident'>M</span>, <span class='ident'>msg</span>: <span class='ident'>String</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
-        <span class='ident'>ReadEntryResult</span>::<span class='ident'>Error</span> (
-            <span class='ident'>multipart</span>,
-            <span class='ident'>io</span>::<span class='ident'>Error</span>::<span class='ident'>new</span>(<span class='ident'>io</span>::<span class='ident'>ErrorKind</span>::<span class='ident'>InvalidData</span>, <span class='ident'>msg</span>),
+    <span class="kw">fn</span> <span class="ident">invalid_data</span>(<span class="ident">multipart</span>: <span class="ident">M</span>, <span class="ident">msg</span>: <span class="ident">String</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">ReadEntryResult</span>::<span class="ident">Error</span> (
+            <span class="ident">multipart</span>,
+            <span class="ident">io</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">io</span>::<span class="ident">ErrorKind</span>::<span class="ident">InvalidData</span>, <span class="ident">msg</span>),
         )
     }
 }
 
 
-<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>)]</span>
-<span class='kw'>enum</span> <span class='ident'>ParseHeaderError</span> {
-    <span class='doccomment'>/// The `Content-Disposition` header was not found</span>
-    <span class='ident'>MissingContentDisposition</span>,
-    <span class='doccomment'>/// The header was found but could not be parsed</span>
-    <span class='ident'>Invalid</span>(<span class='ident'>String</span>),
-    <span class='doccomment'>/// IO error</span>
-    <span class='ident'>Io</span>(<span class='ident'>io</span>::<span class='ident'>Error</span>),
-    <span class='ident'>Other</span>(<span class='ident'>String</span>),
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">enum</span> <span class="ident">ParseHeaderError</span> {
+    <span class="doccomment">/// The `Content-Disposition` header was not found</span>
+    <span class="ident">MissingContentDisposition</span>,
+    <span class="doccomment">/// The header was found but could not be parsed</span>
+    <span class="ident">Invalid</span>(<span class="ident">String</span>),
+    <span class="doccomment">/// IO error</span>
+    <span class="ident">Io</span>(<span class="ident">io</span>::<span class="ident">Error</span>),
+    <span class="ident">Other</span>(<span class="ident">String</span>),
 }
 
-<span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>ParseHeaderError</span> {
-    <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>f</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>ParseHeaderError</span>::<span class='ident'>MissingContentDisposition</span> <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;\&quot;Content-Disposition\&quot; header not found (ParseHeaderError::MissingContentDisposition)&quot;</span>),
-            <span class='ident'>ParseHeaderError</span>::<span class='ident'>Invalid</span>(<span class='kw-2'>ref</span> <span class='ident'>msg</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;invalid header (ParseHeaderError::Invalid({}))&quot;</span>, <span class='ident'>msg</span>),
-            <span class='ident'>ParseHeaderError</span>::<span class='ident'>Io</span>(_) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;could not read header (ParseHeaderError::Io)&quot;</span>),
-            <span class='ident'>ParseHeaderError</span>::<span class='ident'>Other</span>(<span class='kw-2'>ref</span> <span class='ident'>reason</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>f</span>, <span class='string'>&quot;unknown parsing error (ParseHeaderError::Other(\&quot;{}\&quot;))&quot;</span>, <span class='ident'>reason</span>),
+<span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Display</span> <span class="kw">for</span> <span class="ident">ParseHeaderError</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">ParseHeaderError</span>::<span class="ident">MissingContentDisposition</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;\&quot;Content-Disposition\&quot; header not found (ParseHeaderError::MissingContentDisposition)&quot;</span>),
+            <span class="ident">ParseHeaderError</span>::<span class="ident">Invalid</span>(<span class="kw-2">ref</span> <span class="ident">msg</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;invalid header (ParseHeaderError::Invalid({}))&quot;</span>, <span class="ident">msg</span>),
+            <span class="ident">ParseHeaderError</span>::<span class="ident">Io</span>(_) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;could not read header (ParseHeaderError::Io)&quot;</span>),
+            <span class="ident">ParseHeaderError</span>::<span class="ident">Other</span>(<span class="kw-2">ref</span> <span class="ident">reason</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">f</span>, <span class="string">&quot;unknown parsing error (ParseHeaderError::Other(\&quot;{}\&quot;))&quot;</span>, <span class="ident">reason</span>),
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>error</span>::<span class='ident'>Error</span> <span class='kw'>for</span> <span class='ident'>ParseHeaderError</span> {
-    <span class='kw'>fn</span> <span class='ident'>description</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='kw-2'>&amp;</span><span class='ident'>str</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>ParseHeaderError</span>::<span class='ident'>MissingContentDisposition</span> <span class='op'>=&gt;</span> <span class='string'>&quot;\&quot;Content-Disposition\&quot; header not found&quot;</span>,
-            <span class='ident'>ParseHeaderError</span>::<span class='ident'>Invalid</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;the header is not formatted correctly&quot;</span>,
-            <span class='ident'>ParseHeaderError</span>::<span class='ident'>Io</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;failed to read the header&quot;</span>,
-            <span class='ident'>ParseHeaderError</span>::<span class='ident'>Other</span>(_) <span class='op'>=&gt;</span> <span class='string'>&quot;unknown parsing error&quot;</span>,
+<span class="kw">impl</span> <span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">for</span> <span class="ident">ParseHeaderError</span> {
+    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">ParseHeaderError</span>::<span class="ident">MissingContentDisposition</span> <span class="op">=&gt;</span> <span class="string">&quot;\&quot;Content-Disposition\&quot; header not found&quot;</span>,
+            <span class="ident">ParseHeaderError</span>::<span class="ident">Invalid</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;the header is not formatted correctly&quot;</span>,
+            <span class="ident">ParseHeaderError</span>::<span class="ident">Io</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;failed to read the header&quot;</span>,
+            <span class="ident">ParseHeaderError</span>::<span class="ident">Other</span>(_) <span class="op">=&gt;</span> <span class="string">&quot;unknown parsing error&quot;</span>,
         }
     }
 
-    <span class='kw'>fn</span> <span class='ident'>cause</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='kw-2'>&amp;</span><span class='ident'>error</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> {
-        <span class='kw'>match</span> <span class='kw-2'>*</span><span class='self'>self</span> {
-            <span class='ident'>ParseHeaderError</span>::<span class='ident'>Io</span>(<span class='kw-2'>ref</span> <span class='ident'>e</span>) <span class='op'>=&gt;</span> <span class='prelude-val'>Some</span>(<span class='ident'>e</span>),
-            _ <span class='op'>=&gt;</span> <span class='prelude-val'>None</span>,
+    <span class="kw">fn</span> <span class="ident">cause</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">error</span>::<span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">ParseHeaderError</span>::<span class="ident">Io</span>(<span class="kw-2">ref</span> <span class="ident">e</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">e</span>),
+            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>io</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ParseHeaderError</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>err</span>: <span class='ident'>io</span>::<span class='ident'>Error</span>) <span class='op'>-&gt;</span> <span class='ident'>ParseHeaderError</span> {
-        <span class='ident'>ParseHeaderError</span>::<span class='ident'>Io</span>(<span class='ident'>err</span>)
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">io</span>::<span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ParseHeaderError</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">io</span>::<span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="ident">ParseHeaderError</span> {
+        <span class="ident">ParseHeaderError</span>::<span class="ident">Io</span>(<span class="ident">err</span>)
     }
 }
 
-<span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>httparse</span>::<span class='ident'>Error</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>ParseHeaderError</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>err</span>: <span class='ident'>httparse</span>::<span class='ident'>Error</span>) <span class='op'>-&gt;</span> <span class='ident'>ParseHeaderError</span> {
-        <span class='ident'>ParseHeaderError</span>::<span class='ident'>Invalid</span>(<span class='macro'>format</span><span class='macro'>!</span>(<span class='string'>&quot;{}&quot;</span>, <span class='ident'>err</span>))
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">httparse</span>::<span class="ident">Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ParseHeaderError</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">httparse</span>::<span class="ident">Error</span>) <span class="op">-&gt;</span> <span class="ident">ParseHeaderError</span> {
+        <span class="ident">ParseHeaderError</span>::<span class="ident">Invalid</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">err</span>))
     }
 }
 </pre>
