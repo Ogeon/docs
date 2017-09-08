@@ -51,9 +51,9 @@
                </span><a class='srclink' href='../src/palette/lib.rs.html#669-680' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait Saturate: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> {
     type <a href='#associatedtype.Scalar' class="type">Scalar</a>: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>;
-    fn <a href='#tymethod.saturate' class='fnname'>saturate</a>(&amp;self, factor: Self::<a class="trait" href="../palette/trait.Saturate.html" title="trait palette::Saturate">Scalar</a>) -&gt; Self;
+    fn <a href='#tymethod.saturate' class='fnname'>saturate</a>(&amp;self, factor: Self::<a class="type" href="../palette/trait.Saturate.html#associatedtype.Scalar" title="type palette::Saturate::Scalar">Scalar</a>) -&gt; Self;
 
-    fn <a href='#method.desaturate' class='fnname'>desaturate</a>(&amp;self, factor: Self::<a class="trait" href="../palette/trait.Saturate.html" title="trait palette::Saturate">Scalar</a>) -&gt; Self { ... }
+    fn <a href='#method.desaturate' class='fnname'>desaturate</a>(&amp;self, factor: Self::<a class="type" href="../palette/trait.Saturate.html#associatedtype.Scalar" title="type palette::Saturate::Scalar">Scalar</a>) -&gt; Self { ... }
 }</pre><div class='docblock'><p>A trait for colors where the saturation (or chroma) can be manipulated
 without conversion.</p>
 
@@ -71,15 +71,15 @@ without conversion.</p>
 </div></div>
             <h2 id='required-methods'>Required Methods</h2>
             <div class='methods'>
-        <h3 id='tymethod.saturate' class='method'><span id='saturate.v' class='invisible'><code>fn <a href='#tymethod.saturate' class='fnname'>saturate</a>(&amp;self, factor: Self::<a class="trait" href="../palette/trait.Saturate.html" title="trait palette::Saturate">Scalar</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Increase the saturation by <code>factor</code>.</p>
+        <h3 id='tymethod.saturate' class='method'><span id='saturate.v' class='invisible'><code>fn <a href='#tymethod.saturate' class='fnname'>saturate</a>(&amp;self, factor: Self::<a class="type" href="../palette/trait.Saturate.html#associatedtype.Scalar" title="type palette::Saturate::Scalar">Scalar</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Increase the saturation by <code>factor</code>.</p>
 </div></div>
             <h2 id='provided-methods'>Provided Methods</h2>
             <div class='methods'>
-        <h3 id='method.desaturate' class='method'><span id='desaturate.v' class='invisible'><code>fn <a href='#method.desaturate' class='fnname'>desaturate</a>(&amp;self, factor: Self::<a class="trait" href="../palette/trait.Saturate.html" title="trait palette::Saturate">Scalar</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Decrease the saturation by <code>factor</code>.</p>
+        <h3 id='method.desaturate' class='method'><span id='desaturate.v' class='invisible'><code>fn <a href='#method.desaturate' class='fnname'>desaturate</a>(&amp;self, factor: Self::<a class="type" href="../palette/trait.Saturate.html#associatedtype.Scalar" title="type palette::Saturate::Scalar">Scalar</a>) -&gt; Self</code></span></h3><div class='docblock'><p>Decrease the saturation by <code>factor</code>.</p>
 </div></div>
         <h2 id='implementors'>Implementors</h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;C:&nbsp;<a class="trait" href="../palette/trait.Saturate.html" title="trait palette::Saturate">Saturate</a>&gt; Saturate for <a class="struct" href="../palette/struct.Alpha.html" title="struct palette::Alpha">Alpha</a>&lt;C, C::<a class="trait" href="../palette/trait.Saturate.html" title="trait palette::Saturate">Scalar</a>&gt;</code></li>
+    <li><code>impl&lt;C:&nbsp;<a class="trait" href="../palette/trait.Saturate.html" title="trait palette::Saturate">Saturate</a>&gt; Saturate for <a class="struct" href="../palette/struct.Alpha.html" title="struct palette::Alpha">Alpha</a>&lt;C, C::<a class="type" href="../palette/trait.Saturate.html#associatedtype.Scalar" title="type palette::Saturate::Scalar">Scalar</a>&gt;</code></li>
 <li><code>impl&lt;Wp, T&gt; Saturate for <a class="struct" href="../palette/struct.Lch.html" title="struct palette::Lch">Lch</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
 <li><code>impl&lt;Wp, T&gt; Saturate for <a class="struct" href="../palette/struct.Hsv.html" title="struct palette::Hsv">Hsv</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
 <li><code>impl&lt;Wp, T&gt; Saturate for <a class="struct" href="../palette/struct.Hsl.html" title="struct palette::Hsl">Hsl</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code></li>
