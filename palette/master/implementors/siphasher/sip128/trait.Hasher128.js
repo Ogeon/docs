@@ -1,5 +1,4 @@
 (function() {var implementors = {};
-implementors["phf"] = [];
 implementors["siphasher"] = [];
 
             if (window.register_implementors) {

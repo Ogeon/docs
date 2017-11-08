@@ -1,5 +1,4 @@
 (function() {var implementors = {};
-implementors["num"] = [];
 implementors["rand"] = [];
 
             if (window.register_implementors) {
