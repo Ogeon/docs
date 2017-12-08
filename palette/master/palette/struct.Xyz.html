@@ -63,23 +63,27 @@ illuminant and a standard observer to be defined.</p>
 
 <p>Conversions and operations on this color space depend on the defined white point</p>
 </div><h2 id='fields' class='fields small-section-header'>
-                       Fields<a href='#fields' class='anchor'></a></h2><span id='structfield.x' class="structfield">
-                           <span id='x.v' class='invisible'>
+                       Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.x" class="structfield small-section-header">
+                           <a href="#structfield.x" class="anchor field"></a>
+                           <span id="x.v" class='invisible'>
                            <code>x: T</code>
                            </span></span><div class='docblock'><p>X is the scale of what can be seen as a response curve for the cone
 cells in the human eye. Its range depends
 on the white point and goes from 0.0 to 0.95047 for the default D65.</p>
-</div><span id='structfield.y' class="structfield">
-                           <span id='y.v' class='invisible'>
+</div><span id="structfield.y" class="structfield small-section-header">
+                           <a href="#structfield.y" class="anchor field"></a>
+                           <span id="y.v" class='invisible'>
                            <code>y: T</code>
                            </span></span><div class='docblock'><p>Y is the luminance of the color, where 0.0 is black and 1.0 is white.</p>
-</div><span id='structfield.z' class="structfield">
-                           <span id='z.v' class='invisible'>
+</div><span id="structfield.z" class="structfield small-section-header">
+                           <a href="#structfield.z" class="anchor field"></a>
+                           <span id="z.v" class='invisible'>
                            <code>z: T</code>
                            </span></span><div class='docblock'><p>Z is the scale of what can be seen as the blue stimulation. Its range depends
 on the white point and goes from 0.0 to 1.08883 for the defautl D65.</p>
-</div><span id='structfield.white_point' class="structfield">
-                           <span id='white_point.v' class='invisible'>
+</div><span id="structfield.white_point" class="structfield small-section-header">
+                           <a href="#structfield.white_point" class="anchor field"></a>
+                           <span id="white_point.v" class='invisible'>
                            <code>white_point: <a class="struct" href="https://doc.rust-lang.org/nightly/core/marker/struct.PhantomData.html" title="struct core::marker::PhantomData">PhantomData</a>&lt;Wp&gt;</code>
                            </span></span><div class='docblock'><p>The white point associated with the color&#39;s illuminant and observer.
 D65 for 2 degree observer is used by default.</p>
@@ -88,10 +92,10 @@ D65 for 2 degree observer is used by default.</p>
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class="struct" href="../palette/struct.Xyz.html" title="struct palette::Xyz">Xyz</a>&lt;<a class="struct" href="../palette/white_point/struct.D65.html" title="struct palette::white_point::D65">D65</a>, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,&nbsp;</span></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/palette/xyz.rs.html#58-70' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(x: T, y: T, z: T) -&gt; <a class="struct" href="../palette/struct.Xyz.html" title="struct palette::Xyz">Xyz</a>&lt;<a class="struct" href="../palette/white_point/struct.D65.html" title="struct palette::white_point::D65">D65</a>, T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/palette/xyz.rs.html#62-69' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(x: T, y: T, z: T) -&gt; <a class="struct" href="../palette/struct.Xyz.html" title="struct palette::Xyz">Xyz</a>&lt;<a class="struct" href="../palette/white_point/struct.D65.html" title="struct palette::white_point::D65">D65</a>, T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/palette/xyz.rs.html#62-69' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>CIE XYZ with whtie point D65.</p>
 </div></div><h3 id='impl-1' class='impl'><span class='in-band'><code>impl&lt;Wp, T&gt; <a class="struct" href="../palette/struct.Xyz.html" title="struct palette::Xyz">Xyz</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code><a href='#impl-1' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/palette/xyz.rs.html#72-85' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.with_wp' class="method"><span id='with_wp.v' class='invisible'><code>fn <a href='#method.with_wp' class='fnname'>with_wp</a>(x: T, y: T, z: T) -&gt; <a class="struct" href="../palette/struct.Xyz.html" title="struct palette::Xyz">Xyz</a>&lt;Wp, T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/palette/xyz.rs.html#77-84' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.with_wp' class="method"><span id='with_wp.v' class='invisible'><code>pub fn <a href='#method.with_wp' class='fnname'>with_wp</a>(x: T, y: T, z: T) -&gt; <a class="struct" href="../palette/struct.Xyz.html" title="struct palette::Xyz">Xyz</a>&lt;Wp, T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/palette/xyz.rs.html#77-84' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>CIE XYZ.</p>
 </div></div>
             <h2 id='implementations' class='small-section-header'>

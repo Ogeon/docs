@@ -65,23 +65,27 @@ more gray, or making it darker.</p>
 
 <p>See <a href="struct.Hsv.html">HSV</a> for a very similar color space, with brightness instead of lightness.</p>
 </div><h2 id='fields' class='fields small-section-header'>
-                       Fields<a href='#fields' class='anchor'></a></h2><span id='structfield.hue' class="structfield">
-                           <span id='hue.v' class='invisible'>
+                       Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.hue" class="structfield small-section-header">
+                           <a href="#structfield.hue" class="anchor field"></a>
+                           <span id="hue.v" class='invisible'>
                            <code>hue: <a class="struct" href="../palette/struct.RgbHue.html" title="struct palette::RgbHue">RgbHue</a>&lt;T&gt;</code>
                            </span></span><div class='docblock'><p>The hue of the color, in degrees. Decides if it&#39;s red, blue, purple,
 etc.</p>
-</div><span id='structfield.saturation' class="structfield">
-                           <span id='saturation.v' class='invisible'>
+</div><span id="structfield.saturation" class="structfield small-section-header">
+                           <a href="#structfield.saturation" class="anchor field"></a>
+                           <span id="saturation.v" class='invisible'>
                            <code>saturation: T</code>
                            </span></span><div class='docblock'><p>The colorfulness of the color. 0.0 gives gray scale colors and 1.0 will
 give absolutely clear colors.</p>
-</div><span id='structfield.lightness' class="structfield">
-                           <span id='lightness.v' class='invisible'>
+</div><span id="structfield.lightness" class="structfield small-section-header">
+                           <a href="#structfield.lightness" class="anchor field"></a>
+                           <span id="lightness.v" class='invisible'>
                            <code>lightness: T</code>
                            </span></span><div class='docblock'><p>Decides how light the color will look. 0.0 will be black, 0.5 will give
 a clear color, and 1.0 will give white.</p>
-</div><span id='structfield.white_point' class="structfield">
-                           <span id='white_point.v' class='invisible'>
+</div><span id="structfield.white_point" class="structfield small-section-header">
+                           <a href="#structfield.white_point" class="anchor field"></a>
+                           <span id="white_point.v" class='invisible'>
                            <code>white_point: <a class="struct" href="https://doc.rust-lang.org/nightly/core/marker/struct.PhantomData.html" title="struct core::marker::PhantomData">PhantomData</a>&lt;Wp&gt;</code>
                            </span></span><div class='docblock'><p>The white point associated with the color&#39;s illuminant and observer.
 D65 for 2 degree observer is used by default.</p>
@@ -90,10 +94,10 @@ D65 for 2 degree observer is used by default.</p>
                       Methods<a href='#methods' class='anchor'></a>
                     </h2>
                 <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;T&gt; <a class="struct" href="../palette/struct.Hsl.html" title="struct palette::Hsl">Hsl</a>&lt;<a class="struct" href="../palette/white_point/struct.D65.html" title="struct palette::white_point::D65">D65</a>, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,&nbsp;</span></code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/palette/hsl.rs.html#58-70' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(hue: <a class="struct" href="../palette/struct.RgbHue.html" title="struct palette::RgbHue">RgbHue</a>&lt;T&gt;, saturation: T, lightness: T) -&gt; <a class="struct" href="../palette/struct.Hsl.html" title="struct palette::Hsl">Hsl</a>&lt;<a class="struct" href="../palette/white_point/struct.D65.html" title="struct palette::white_point::D65">D65</a>, T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/palette/hsl.rs.html#62-69' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(hue: <a class="struct" href="../palette/struct.RgbHue.html" title="struct palette::RgbHue">RgbHue</a>&lt;T&gt;, saturation: T, lightness: T) -&gt; <a class="struct" href="../palette/struct.Hsl.html" title="struct palette::Hsl">Hsl</a>&lt;<a class="struct" href="../palette/white_point/struct.D65.html" title="struct palette::white_point::D65">D65</a>, T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/palette/hsl.rs.html#62-69' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Linear HSL with white point D65.</p>
 </div></div><h3 id='impl-1' class='impl'><span class='in-band'><code>impl&lt;Wp, T&gt; <a class="struct" href="../palette/struct.Hsl.html" title="struct palette::Hsl">Hsl</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span></code><a href='#impl-1' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/palette/hsl.rs.html#72-85' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.with_wp' class="method"><span id='with_wp.v' class='invisible'><code>fn <a href='#method.with_wp' class='fnname'>with_wp</a>(hue: <a class="struct" href="../palette/struct.RgbHue.html" title="struct palette::RgbHue">RgbHue</a>&lt;T&gt;, saturation: T, lightness: T) -&gt; <a class="struct" href="../palette/struct.Hsl.html" title="struct palette::Hsl">Hsl</a>&lt;Wp, T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/palette/hsl.rs.html#77-84' title='goto source code'>[src]</a></span></h4>
+<div class='impl-items'><h4 id='method.with_wp' class="method"><span id='with_wp.v' class='invisible'><code>pub fn <a href='#method.with_wp' class='fnname'>with_wp</a>(hue: <a class="struct" href="../palette/struct.RgbHue.html" title="struct palette::RgbHue">RgbHue</a>&lt;T&gt;, saturation: T, lightness: T) -&gt; <a class="struct" href="../palette/struct.Hsl.html" title="struct palette::Hsl">Hsl</a>&lt;Wp, T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/palette/hsl.rs.html#77-84' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Linear HSL.</p>
 </div></div>
             <h2 id='implementations' class='small-section-header'>
