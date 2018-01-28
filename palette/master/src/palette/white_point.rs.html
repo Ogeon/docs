@@ -240,7 +240,7 @@
 <span class="doccomment">//!unacceptable results when attempting to color-correct a photograph taken with incandescent lighting.</span>
 
 
-<span class="kw">use</span> <span class="ident">num</span>::<span class="ident">Float</span>;
+<span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">Float</span>;
 
 <span class="kw">use</span> {<span class="ident">Xyz</span>, <span class="ident">flt</span>};
 
@@ -251,7 +251,7 @@
 <span class="doccomment">///&quot;white&quot; in image capture, encoding, or reproduction.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///Custom white points can be easily defined on an empty struct with the tristimulus values</span>
-<span class="doccomment">///and can be used in place of the ones defined in this library. </span>
+<span class="doccomment">///and can be used in place of the ones defined in this library.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>: <span class="ident">Sized</span> {
     <span class="doccomment">///Get the Xyz chromacity co-ordinates for the white point.</span>
     <span class="kw">fn</span> <span class="ident">get_xyz</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">T</span><span class="op">&gt;</span>;

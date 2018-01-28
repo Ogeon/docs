@@ -789,12 +789,12 @@
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">macro_use</span>)]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">approx</span>;
 
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num_traits</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;phf&quot;</span>)]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">phf</span>;
 
-<span class="kw">use</span> <span class="ident">num</span>::{<span class="ident">Float</span>, <span class="ident">ToPrimitive</span>, <span class="ident">NumCast</span>};
+<span class="kw">use</span> <span class="ident">num_traits</span>::{<span class="ident">Float</span>, <span class="ident">ToPrimitive</span>, <span class="ident">NumCast</span>};
 
 <span class="kw">use</span> <span class="ident">approx</span>::<span class="ident">ApproxEq</span>;
 
@@ -1435,7 +1435,7 @@
 }
 
 <span class="doccomment">///A convenience function to convert a constant number to Float Type</span>
-<span class="kw">fn</span> <span class="ident">flt</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">num</span>::<span class="ident">Float</span>, <span class="ident">P</span>: <span class="ident">ToPrimitive</span><span class="op">&gt;</span>(<span class="ident">prim</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
+<span class="kw">fn</span> <span class="ident">flt</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">num_traits</span>::<span class="ident">Float</span>, <span class="ident">P</span>: <span class="ident">ToPrimitive</span><span class="op">&gt;</span>(<span class="ident">prim</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
     <span class="ident">NumCast</span>::<span class="ident">from</span>(<span class="ident">prim</span>).<span class="ident">unwrap</span>()
 }
 </pre>
