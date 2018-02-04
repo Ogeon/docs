@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `SoftPwmPin` struct in crate `wiringpi`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, SoftPwmPin">
+
+    <title>wiringpi::pin::SoftPwmPin - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct SoftPwmPin</p><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.number">number</a><a href="#method.pwm_write">pwm_write</a><a href="#method.pwm_stop">pwm_stop</a><a href="#method.into_input">into_input</a><a href="#method.into_output">into_output</a><a href="#method.into_pwm">into_pwm</a><a href="#method.into_clock">into_clock</a></div></div><p class='location'><a href='../index.html'>wiringpi</a>::<wbr><a href='index.html'>pin</a></p><script>window.sidebarCurrent = {name: 'SoftPwmPin', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>wiringpi</a>::<wbr><a href='index.html'>pin</a>::<wbr><a class="struct" href=''>SoftPwmPin</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/wiringpi/lib.rs.html#246' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct SoftPwmPin&lt;Pin&gt;(_, _);</pre><div class='docblock'><p>A pin with software controlled PWM output.</p>
+
+<p>Due to limitations of the chip only one pin is able to do
+hardware-controlled PWM output. The <code>SoftPwmPin</code>s on the
+other hand allow for all GPIOs to output PWM signals.</p>
+
+<p>The pulse width of the signal will be 100μs with a value range
+of [0,100] (where <code>0</code> is a constant low and <code>100</code> is a
+constant high) resulting in a frequenzy of 100 Hz.</p>
+
+<p><strong>Important</strong>: In order to use software PWM pins <em>wiringPi</em>
+has to be setup in GPIO mode via <code>setup_gpio()</code>.</p>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;P:&nbsp;<a class="trait" href="../../wiringpi/pin/trait.Pin.html" title="trait wiringpi::pin::Pin">Pin</a> + <a class="trait" href="../../wiringpi/pin/trait.RequiresRoot.html" title="trait wiringpi::pin::RequiresRoot">RequiresRoot</a>&gt; <a class="struct" href="../../wiringpi/pin/struct.SoftPwmPin.html" title="struct wiringpi::pin::SoftPwmPin">SoftPwmPin</a>&lt;P&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#248-296' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(pin: <a class="type" href="../../libc/type.c_int.html" title="type libc::c_int">c_int</a>) -&gt; <a class="struct" href="../../wiringpi/pin/struct.SoftPwmPin.html" title="struct wiringpi::pin::SoftPwmPin">SoftPwmPin</a>&lt;P&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#251-257' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Configures the given <code>pin</code> to output a software controlled PWM
+signal.</p>
+</div><h4 id='method.number' class="method"><span id='number.v' class='invisible'><code>pub fn <a href='#method.number' class='fnname'>number</a>(&amp;self) -&gt; <a class="type" href="../../libc/type.c_int.html" title="type libc::c_int">c_int</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#260-263' title='goto source code'>[src]</a></span></h4>
+<h4 id='method.pwm_write' class="method"><span id='pwm_write.v' class='invisible'><code>pub fn <a href='#method.pwm_write' class='fnname'>pwm_write</a>(&amp;self, value: <a class="type" href="../../libc/type.c_int.html" title="type libc::c_int">c_int</a>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#268-272' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Sets the duty cycle.</p>
+
+<p><code>value</code> has to be in the interval [0,100].</p>
+</div><h4 id='method.pwm_stop' class="method"><span id='pwm_stop.v' class='invisible'><code>pub fn <a href='#method.pwm_stop' class='fnname'>pwm_stop</a>(self)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#278-282' title='goto source code'>[src]</a></span></h4>
+<div class='docblock'><p>Stops the software handling of this pin.</p>
+
+<p><em>Note</em>: In order to control this pin via software PWM again
+it will need to be recreated using <code>new()</code>.</p>
+</div><h4 id='method.into_input' class="method"><span id='into_input.v' class='invisible'><code>pub fn <a href='#method.into_input' class='fnname'>into_input</a>(self) -&gt; <a class="struct" href="../../wiringpi/pin/struct.InputPin.html" title="struct wiringpi::pin::InputPin">InputPin</a>&lt;P&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#284-288' title='goto source code'>[src]</a></span></h4>
+<h4 id='method.into_output' class="method"><span id='into_output.v' class='invisible'><code>pub fn <a href='#method.into_output' class='fnname'>into_output</a>(self) -&gt; <a class="struct" href="../../wiringpi/pin/struct.OutputPin.html" title="struct wiringpi::pin::OutputPin">OutputPin</a>&lt;P&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#290-294' title='goto source code'>[src]</a></span></h4>
+</div><h3 id='impl-1' class='impl'><span class='in-band'><code>impl&lt;P:&nbsp;<a class="trait" href="../../wiringpi/pin/trait.Pin.html" title="trait wiringpi::pin::Pin">Pin</a> + <a class="trait" href="../../wiringpi/pin/trait.Pwm.html" title="trait wiringpi::pin::Pwm">Pwm</a>&gt; <a class="struct" href="../../wiringpi/pin/struct.SoftPwmPin.html" title="struct wiringpi::pin::SoftPwmPin">SoftPwmPin</a>&lt;P&gt;</code><a href='#impl-1' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#298-304' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.into_pwm' class="method"><span id='into_pwm.v' class='invisible'><code>pub fn <a href='#method.into_pwm' class='fnname'>into_pwm</a>(self) -&gt; <a class="struct" href="../../wiringpi/pin/struct.PwmPin.html" title="struct wiringpi::pin::PwmPin">PwmPin</a>&lt;P&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#299-303' title='goto source code'>[src]</a></span></h4>
+</div><h3 id='impl-2' class='impl'><span class='in-band'><code>impl&lt;P:&nbsp;<a class="trait" href="../../wiringpi/pin/trait.Pin.html" title="trait wiringpi::pin::Pin">Pin</a> + <a class="trait" href="../../wiringpi/pin/trait.GpioClock.html" title="trait wiringpi::pin::GpioClock">GpioClock</a>&gt; <a class="struct" href="../../wiringpi/pin/struct.SoftPwmPin.html" title="struct wiringpi::pin::SoftPwmPin">SoftPwmPin</a>&lt;P&gt;</code><a href='#impl-2' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#306-312' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.into_clock' class="method"><span id='into_clock.v' class='invisible'><code>pub fn <a href='#method.into_clock' class='fnname'>into_clock</a>(self) -&gt; <a class="struct" href="../../wiringpi/pin/struct.ClockPin.html" title="struct wiringpi::pin::ClockPin">ClockPin</a>&lt;P&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#307-311' title='goto source code'>[src]</a></span></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>↑</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>↓</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>↹</dt>
+                    <dd>Switch tab</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "wiringpi";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>
