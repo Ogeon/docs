@@ -1,1 +1,1 @@
-initSidebarItems({"struct":[["GammaRgb","A gamma encoded color."],["Srgb","An sRGB encoded color."]],"trait":[["RgbPixel","A conversion trait for RGB pixel formats."]]});
+initSidebarItems({"trait":[["RgbPixel","A conversion trait for RGB pixel formats."],["TransferFn","A transfer function to and from linear space."]]});

@@ -28,6 +28,7 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
@@ -420,7 +421,6 @@
 <span id="375">375</span>
 <span id="376">376</span>
 <span id="377">377</span>
-<span id="378">378</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">num_traits</span>::{<span class="ident">Float</span>, <span class="ident">One</span>, <span class="ident">Zero</span>};
 
@@ -450,21 +450,20 @@
     <span class="doccomment">///acceptable, including functions and closures.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">///```</span>
-    <span class="doccomment">///use palette::{Rgb, Rgba, Blend};</span>
+    <span class="doccomment">///use palette::{LinSrgb, LinSrgba, Blend};</span>
     <span class="doccomment">///use palette::blend::PreAlpha;</span>
-    <span class="doccomment">///use palette::white_point::D65;</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///type PreRgba = PreAlpha&lt;Rgb&lt;D65, f32&gt;, f32&gt;;</span>
+    <span class="doccomment">///type PreRgba = PreAlpha&lt;LinSrgb&lt;f32&gt;, f32&gt;;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">///fn blend_mode(a: PreRgba, b: PreRgba) -&gt; PreRgba {</span>
     <span class="doccomment">///    PreAlpha {</span>
-    <span class="doccomment">///        color: Rgb::new(a.red * b.green, a.green * b.blue, a.blue * b.red),</span>
+    <span class="doccomment">///        color: LinSrgb::new(a.red * b.green, a.green * b.blue, a.blue * b.red),</span>
     <span class="doccomment">///        alpha: a.alpha * b.alpha,</span>
     <span class="doccomment">///    }</span>
     <span class="doccomment">///}</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///let a = Rgba::new(0.2, 0.5, 0.1, 0.8);</span>
-    <span class="doccomment">///let b = Rgba::new(0.6, 0.3, 0.5, 0.1);</span>
+    <span class="doccomment">///let a = LinSrgba::new(0.2, 0.5, 0.1, 0.8);</span>
+    <span class="doccomment">///let b = LinSrgba::new(0.6, 0.3, 0.5, 0.1);</span>
     <span class="doccomment">///let c = a.blend(b, blend_mode);</span>
     <span class="doccomment">///```</span>
     <span class="kw">fn</span> <span class="ident">blend</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">destination</span>: <span class="self">Self</span>, <span class="ident">blend_function</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span> <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">BlendFunction</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Color</span><span class="op">&gt;</span> {

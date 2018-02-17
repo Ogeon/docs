@@ -28,6 +28,7 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
@@ -303,14 +304,14 @@
 <span class="doccomment">///computations in composition chains.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///```</span>
-<span class="doccomment">///use palette::{Blend, Rgb, Rgba};</span>
+<span class="doccomment">///use palette::{Blend, LinSrgb, LinSrgba};</span>
 <span class="doccomment">///use palette::blend::PreAlpha;</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///let a = PreAlpha::from(Rgba::new(0.4, 0.5, 0.5, 0.3));</span>
-<span class="doccomment">///let b = PreAlpha::from(Rgba::new(0.3, 0.8, 0.4, 0.4));</span>
-<span class="doccomment">///let c = PreAlpha::from(Rgba::new(0.7, 0.1, 0.8, 0.8));</span>
+<span class="doccomment">///let a = PreAlpha::from(LinSrgba::new(0.4, 0.5, 0.5, 0.3));</span>
+<span class="doccomment">///let b = PreAlpha::from(LinSrgba::new(0.3, 0.8, 0.4, 0.4));</span>
+<span class="doccomment">///let c = PreAlpha::from(LinSrgba::new(0.7, 0.1, 0.8, 0.8));</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///let res = Rgb::from_premultiplied(a.screen(b).overlay(c));</span>
+<span class="doccomment">///let res = LinSrgb::from_premultiplied(a.screen(b).overlay(c));</span>
 <span class="doccomment">///```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///Note that converting to and from premultiplied alpha will cause the alpha</span>

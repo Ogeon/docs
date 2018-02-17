@@ -28,8 +28,9 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Trait AdaptInto</p><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.adapt_into_using">adapt_into_using</a></div><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.adapt_into">adapt_into</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a></p><script>window.sidebarCurrent = {name: 'AdaptInto', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait AdaptInto</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.adapt_into_using">adapt_into_using</a></div><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.adapt_into">adapt_into</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a></p><script>window.sidebarCurrent = {name: 'AdaptInto', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
     <nav class="sub">
@@ -49,7 +50,7 @@
                        [<span class='inner'>&#x2212;</span>]
                    </a>
                </span><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#163-174' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait AdaptInto&lt;D, Swp, Dwp, T&gt;: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,&nbsp;</span>{
+<pre class='rust trait'>pub trait AdaptInto&lt;D, Swp, Dwp, T&gt;: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span>{
     fn <a href='#tymethod.adapt_into_using' class='fnname'>adapt_into_using</a>&lt;M:&nbsp;<a class="trait" href="../../palette/chromatic_adaptation/trait.TransformMatrix.html" title="trait palette::chromatic_adaptation::TransformMatrix">TransformMatrix</a>&lt;Swp, Dwp, T&gt;&gt;(self, method: M) -&gt; D;
 
     fn <a href='#method.adapt_into' class='fnname'>adapt_into</a>(self) -&gt; D { ... }
@@ -74,7 +75,7 @@ Uses the bradford method for conversion by default.</p>
           Implementors<a href='#implementors' class='anchor'></a>
         </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;S, D, Swp, Dwp, T&gt; AdaptInto&lt;D, Swp, Dwp, T&gt; for S <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>&lt;T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;D: <a class="trait" href="../../palette/chromatic_adaptation/trait.AdaptFrom.html" title="trait palette::chromatic_adaptation::AdaptFrom">AdaptFrom</a>&lt;S, Swp, Dwp, T&gt;,&nbsp;</span></code></li>
+    <li><code>impl&lt;S, D, Swp, Dwp, T&gt; AdaptInto&lt;D, Swp, Dwp, T&gt; for S <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;D: <a class="trait" href="../../palette/chromatic_adaptation/trait.AdaptFrom.html" title="trait palette::chromatic_adaptation::AdaptFrom">AdaptFrom</a>&lt;S, Swp, Dwp, T&gt;,&nbsp;</span></code></li>
 </ul><script type="text/javascript" async
                          src="../../implementors/palette/chromatic_adaptation/trait.AdaptInto.js">
                  </script></section>

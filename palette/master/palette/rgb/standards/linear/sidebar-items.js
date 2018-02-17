@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Linear","A generic RGB standard with linear components."],["LinearFn","Linear color component encoding."]]});

@@ -28,6 +28,7 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
@@ -74,7 +75,6 @@
 <span id="29">29</span>
 <span id="30">30</span>
 <span id="31">31</span>
-<span id="32">32</span>
 </pre><pre class="rust ">
 <span class="doccomment">//!A collection of named color constants. Can be toggled with the `&quot;named&quot;`</span>
 <span class="doccomment">//!Cargo feature.</span>
@@ -84,16 +84,15 @@
 <span class="doccomment">//!CSS3) and they can be used as if they were pixel values:</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!```</span>
-<span class="doccomment">//!use palette::Rgb;</span>
-<span class="doccomment">//!use palette::pixel::Srgb;</span>
+<span class="doccomment">//!use palette::Srgb;</span>
 <span class="doccomment">//!use palette::named;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!//From constant</span>
-<span class="doccomment">//!let from_const: Rgb = Srgb::from_pixel(&amp;named::OLIVE).into();</span>
+<span class="doccomment">//!let from_const = Srgb::&lt;f32&gt;::from_pixel(&amp;named::OLIVE).into_linear();</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!//From name string</span>
 <span class="doccomment">//!let olive = named::from_str(&quot;olive&quot;).expect(&quot;unknown color&quot;);</span>
-<span class="doccomment">//!let from_str: Rgb = Srgb::from_pixel(&amp;olive).into();</span>
+<span class="doccomment">//!let from_str = Srgb::from_pixel(&amp;olive).into_linear();</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!assert_eq!(from_const, from_str);</span>
 <span class="doccomment">//!```</span>

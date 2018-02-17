@@ -28,8 +28,9 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module blend</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'blend', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module blend</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'blend', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
     <nav class="sub">
@@ -58,10 +59,10 @@ composition operators are all implemented in the
 color type:</p>
 
 <pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">palette</span>::{<span class="ident">Rgba</span>, <span class="ident">Blend</span>};
+<span class="kw">use</span> <span class="ident">palette</span>::{<span class="ident">LinSrgba</span>, <span class="ident">Blend</span>};
 
-<span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Rgba</span>::<span class="ident">new</span>(<span class="number">0.2</span>, <span class="number">0.5</span>, <span class="number">0.1</span>, <span class="number">0.8</span>);
-<span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Rgba</span>::<span class="ident">new</span>(<span class="number">0.6</span>, <span class="number">0.3</span>, <span class="number">0.5</span>, <span class="number">0.1</span>);
+<span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">LinSrgba</span>::<span class="ident">new</span>(<span class="number">0.2</span>, <span class="number">0.5</span>, <span class="number">0.1</span>, <span class="number">0.8</span>);
+<span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">LinSrgba</span>::<span class="ident">new</span>(<span class="number">0.6</span>, <span class="number">0.3</span>, <span class="number">0.5</span>, <span class="number">0.1</span>);
 <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">overlay</span>(<span class="ident">b</span>);</pre>
 
 <p>Blending equations can be defined using the
@@ -69,7 +70,7 @@ color type:</p>
 <code>blend</code> function, from the <code>Blend</code> trait:</p>
 
 <pre class="rust rust-example-rendered">
-<span class="kw">use</span> <span class="ident">palette</span>::{<span class="ident">Rgba</span>, <span class="ident">Blend</span>};
+<span class="kw">use</span> <span class="ident">palette</span>::{<span class="ident">LinSrgba</span>, <span class="ident">Blend</span>};
 <span class="kw">use</span> <span class="ident">palette</span>::<span class="ident">blend</span>::{<span class="ident">Equations</span>, <span class="ident">Parameter</span>};
 
 <span class="kw">let</span> <span class="ident">blend_mode</span> <span class="op">=</span> <span class="ident">Equations</span>::<span class="ident">from_parameters</span>(
@@ -77,8 +78,8 @@ color type:</p>
     <span class="ident">Parameter</span>::<span class="ident">OneMinusSourceAlpha</span>
 );
 
-<span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Rgba</span>::<span class="ident">new</span>(<span class="number">0.2</span>, <span class="number">0.5</span>, <span class="number">0.1</span>, <span class="number">0.8</span>);
-<span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Rgba</span>::<span class="ident">new</span>(<span class="number">0.6</span>, <span class="number">0.3</span>, <span class="number">0.5</span>, <span class="number">0.1</span>);
+<span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">LinSrgba</span>::<span class="ident">new</span>(<span class="number">0.2</span>, <span class="number">0.5</span>, <span class="number">0.1</span>, <span class="number">0.8</span>);
+<span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">LinSrgba</span>::<span class="ident">new</span>(<span class="number">0.6</span>, <span class="number">0.3</span>, <span class="number">0.5</span>, <span class="number">0.1</span>);
 <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">a</span>.<span class="ident">blend</span>(<span class="ident">b</span>, <span class="ident">blend_mode</span>);</pre>
 
 <p>Note that blending will use <a href="struct.PreAlpha.html">premultiplied alpha</a>,

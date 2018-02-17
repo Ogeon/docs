@@ -28,6 +28,7 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
@@ -240,6 +241,9 @@
 <span id="195">195</span>
 <span id="196">196</span>
 <span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
 </pre><pre class="rust ">
 <span class="doccomment">//!Pixel encodings and pixel format conversion.</span>
 
@@ -247,11 +251,14 @@
 
 <span class="kw">use</span> {<span class="ident">clamp</span>, <span class="ident">flt</span>};
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">srgb</span>::<span class="ident">Srgb</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">gamma_rgb</span>::<span class="ident">GammaRgb</span>;
+<span class="doccomment">///A transfer function to and from linear space.</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">TransferFn</span> {
+    <span class="doccomment">///Convert the color component `x` from linear space.</span>
+    <span class="kw">fn</span> <span class="ident">from_linear</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">T</span>;
 
-<span class="kw">mod</span> <span class="ident">srgb</span>;
-<span class="kw">mod</span> <span class="ident">gamma_rgb</span>;
+    <span class="doccomment">///Convert the color component `x` into linear space.</span>
+    <span class="kw">fn</span> <span class="ident">into_linear</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">T</span>;
+}
 
 <span class="doccomment">///A conversion trait for RGB pixel formats.</span>
 <span class="doccomment">///</span>

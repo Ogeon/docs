@@ -28,6 +28,7 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
@@ -382,41 +383,69 @@
 <span id="337">337</span>
 <span id="338">338</span>
 <span id="339">339</span>
+<span id="340">340</span>
+<span id="341">341</span>
+<span id="342">342</span>
+<span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
+<span id="358">358</span>
+<span id="359">359</span>
+<span id="360">360</span>
+<span id="361">361</span>
+<span id="362">362</span>
+<span id="363">363</span>
+<span id="364">364</span>
+<span id="365">365</span>
+<span id="366">366</span>
+<span id="367">367</span>
+<span id="368">368</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">Float</span>;
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">Sub</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 
-<span class="kw">use</span> {<span class="ident">Alpha</span>, <span class="ident">Xyz</span>, <span class="ident">Lab</span>, <span class="ident">LabHue</span>, <span class="ident">Hue</span>};
-<span class="kw">use</span> {<span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Shade</span>, <span class="ident">GetHue</span>, <span class="ident">FromColor</span>, <span class="ident">IntoColor</span>, <span class="ident">Saturate</span>};
+<span class="kw">use</span> {<span class="ident">Alpha</span>, <span class="ident">Hue</span>, <span class="ident">Lab</span>, <span class="ident">LabHue</span>, <span class="ident">Xyz</span>};
+<span class="kw">use</span> {<span class="ident">FromColor</span>, <span class="ident">GetHue</span>, <span class="ident">IntoColor</span>, <span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Saturate</span>, <span class="ident">Shade</span>};
 <span class="kw">use</span> {<span class="ident">clamp</span>, <span class="ident">flt</span>};
-<span class="kw">use</span> <span class="ident">white_point</span>::{<span class="ident">WhitePoint</span>, <span class="ident">D65</span>};
+<span class="kw">use</span> <span class="ident">white_point</span>::{<span class="ident">D65</span>, <span class="ident">WhitePoint</span>};
 
-<span class="doccomment">///CIE L*C*h° with an alpha component. See the [`Lcha` implementation in `Alpha`](struct.Alpha.html#Lcha).</span>
+<span class="doccomment">///CIE L\*C\*h° with an alpha component. See the [`Lcha` implementation in `Alpha`](struct.Alpha.html#Lcha).</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Lcha</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
-
-
-<span class="doccomment">///CIE L*C*h°, a polar version of [CIE L*a*b*](struct.Lab.html).</span>
+<span class="doccomment">///CIE L\*C\*h°, a polar version of [CIE L\*a\*b\*](struct.Lab.html).</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///L*C*h° shares its range and perceptual uniformity with L*a*b*, but it&#39;s a</span>
+<span class="doccomment">///L\*C\*h° shares its range and perceptual uniformity with L\*a\*b\*, but it&#39;s a</span>
 <span class="doccomment">///cylindrical color space, like [HSL](struct.Hsl.html) and</span>
 <span class="doccomment">///[HSV](struct.Hsv.html). This gives it the same ability to directly change</span>
 <span class="doccomment">///the hue and colorfulness of a color, while preserving other visual aspects.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span> <span class="op">=</span> <span class="ident">D65</span>, <span class="ident">T</span>: <span class="ident">Float</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="doccomment">///L* is the lightness of the color. 0.0 gives absolute black and 100.0</span>
+    <span class="doccomment">///L\* is the lightness of the color. 0.0 gives absolute black and 100.0</span>
     <span class="doccomment">///gives the brightest white.</span>
     <span class="kw">pub</span> <span class="ident">l</span>: <span class="ident">T</span>,
 
-    <span class="doccomment">///C* is the colorfulness of the color. It&#39;s similar to saturation. 0.0</span>
+    <span class="doccomment">///C\* is the colorfulness of the color. It&#39;s similar to saturation. 0.0</span>
     <span class="doccomment">///gives gray scale colors, and numbers around 128-181 gives fully</span>
     <span class="doccomment">///saturated colors. The upper limit of 128 should</span>
-    <span class="doccomment">///include the whole L*a*b* space and some more.</span>
+    <span class="doccomment">///include the whole L\*a\*b\* space and some more.</span>
     <span class="kw">pub</span> <span class="ident">chroma</span>: <span class="ident">T</span>,
 
     <span class="doccomment">///The hue of the color, in degrees. Decides if it&#39;s red, blue, purple,</span>
@@ -429,21 +458,27 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Copy</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
-{}
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
+{
+}
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> { <span class="kw-2">*</span><span class="self">self</span> }
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw-2">*</span><span class="self">self</span>
+    }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
 {
-    <span class="doccomment">///CIE L*C*h° with white point D65.</span>
+    <span class="doccomment">///CIE L\*C\*h° with white point D65.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">l</span>: <span class="ident">T</span>, <span class="ident">chroma</span>: <span class="ident">T</span>, <span class="ident">hue</span>: <span class="ident">LabHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Lch</span> {
             <span class="ident">l</span>: <span class="ident">l</span>,
@@ -455,10 +490,11 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="doccomment">///CIE L*C*h°.</span>
+    <span class="doccomment">///CIE L\*C\*h°.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_wp</span>(<span class="ident">l</span>: <span class="ident">T</span>, <span class="ident">chroma</span>: <span class="ident">T</span>, <span class="ident">hue</span>: <span class="ident">LabHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Lch</span> {
             <span class="ident">l</span>: <span class="ident">l</span>,
@@ -471,9 +507,10 @@
 
 <span class="doccomment">///&lt;span id=&quot;Lcha&quot;&gt;&lt;/span&gt;[`Lcha`](type.Lcha.html) implementations.</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
 {
-    <span class="doccomment">///CIE L*C*h° and transparency with white point D65.</span>
+    <span class="doccomment">///CIE L\*C\*h° and transparency with white point D65.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">l</span>: <span class="ident">T</span>, <span class="ident">chroma</span>: <span class="ident">T</span>, <span class="ident">hue</span>: <span class="ident">LabHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">alpha</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Lcha</span><span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Alpha</span> {
             <span class="ident">color</span>: <span class="ident">Lch</span>::<span class="ident">new</span>(<span class="ident">l</span>, <span class="ident">chroma</span>, <span class="ident">hue</span>),
@@ -484,10 +521,11 @@
 
 <span class="doccomment">///&lt;span id=&quot;Lcha&quot;&gt;&lt;/span&gt;[`Lcha`](type.Lcha.html) implementations.</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="doccomment">///CIE L*C*h° and transparency.</span>
+    <span class="doccomment">///CIE L\*C\*h° and transparency.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_wp</span>(<span class="ident">l</span>: <span class="ident">T</span>, <span class="ident">chroma</span>: <span class="ident">T</span>, <span class="ident">hue</span>: <span class="ident">LabHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">alpha</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Lcha</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Alpha</span> {
             <span class="ident">color</span>: <span class="ident">Lch</span>::<span class="ident">with_wp</span>(<span class="ident">l</span>, <span class="ident">chroma</span>, <span class="ident">hue</span>),
@@ -497,8 +535,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">FromColor</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
     <span class="kw">fn</span> <span class="ident">from_xyz</span>(<span class="ident">xyz</span>: <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">lab</span>: <span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">xyz</span>.<span class="ident">into_lab</span>();
@@ -517,16 +556,15 @@
     <span class="kw">fn</span> <span class="ident">from_lch</span>(<span class="ident">lch</span>: <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">lch</span>
     }
-
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Limited</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
     <span class="kw">fn</span> <span class="ident">is_valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">l</span> <span class="op">&gt;=</span> <span class="ident">T</span>::<span class="ident">zero</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">l</span> <span class="op">&lt;=</span> <span class="ident">flt</span>(<span class="number">100.0</span>) <span class="op">&amp;&amp;</span>
-        <span class="self">self</span>.<span class="ident">chroma</span> <span class="op">&gt;=</span> <span class="ident">T</span>::<span class="ident">zero</span>()
+        <span class="self">self</span>.<span class="ident">l</span> <span class="op">&gt;=</span> <span class="ident">T</span>::<span class="ident">zero</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">l</span> <span class="op">&lt;=</span> <span class="ident">flt</span>(<span class="number">100.0</span>) <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">chroma</span> <span class="op">&gt;=</span> <span class="ident">T</span>::<span class="ident">zero</span>()
     }
 
     <span class="kw">fn</span> <span class="ident">clamp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
@@ -542,8 +580,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Mix</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
     <span class="kw">type</span> <span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">T</span>;
 
@@ -560,8 +599,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Shade</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
     <span class="kw">type</span> <span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">T</span>;
 
@@ -576,8 +616,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">GetHue</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
     <span class="kw">type</span> <span class="ident">Hue</span> <span class="op">=</span> <span class="ident">LabHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>;
 
@@ -591,8 +632,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Hue</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
     <span class="kw">fn</span> <span class="ident">with_hue</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hue</span>: <span class="ident">LabHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Lch</span> {
@@ -614,8 +656,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Saturate</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
     <span class="kw">type</span> <span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">T</span>;
 
@@ -630,8 +673,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Lch</span>::<span class="ident">with_wp</span>(<span class="ident">T</span>::<span class="ident">zero</span>(), <span class="ident">T</span>::<span class="ident">zero</span>(), <span class="ident">LabHue</span>::<span class="ident">from</span>(<span class="ident">T</span>::<span class="ident">zero</span>()))
@@ -639,8 +683,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
@@ -655,8 +700,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
@@ -671,8 +717,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
@@ -687,8 +734,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
@@ -702,14 +750,25 @@
     }
 }
 
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
+{
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">color</span>.<span class="ident">color</span>
+    }
+}
+
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
     <span class="kw">use</span> <span class="ident">Lch</span>;
+    <span class="kw">use</span> <span class="ident">white_point</span>::<span class="ident">D65</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">ranges</span>() {
         <span class="macro">assert_ranges</span><span class="macro">!</span>{
-            <span class="ident">Lch</span>;
+            <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">f64</span><span class="op">&gt;</span>;
             <span class="ident">limited</span> {
                 <span class="ident">l</span>: <span class="number">0.0</span> <span class="op">=&gt;</span> <span class="number">100.0</span>
             }
