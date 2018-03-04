@@ -10,8 +10,11 @@
     <title>wiringpi::pin::PwmPin - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Struct PwmPin</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.number">number</a><a href="#method.into_input">into_input</a><a href="#method.into_output">into_output</a><a href="#method.into_soft_pwm">into_soft_pwm</a><a href="#method.write">write</a><a href="#method.set_mode">set_mode</a><a href="#method.set_range">set_range</a><a href="#method.set_clock">set_clock</a></div></div><p class='location'><a href='../index.html'>wiringpi</a>::<wbr><a href='index.html'>pin</a></p><script>window.sidebarCurrent = {name: 'PwmPin', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -63,11 +73,9 @@
 <h4 id='method.into_soft_pwm' class="method"><span id='into_soft_pwm.v' class='invisible'><code>pub fn <a href='#method.into_soft_pwm' class='fnname'>into_soft_pwm</a>(self) -&gt; <a class="struct" href="../../wiringpi/pin/struct.SoftPwmPin.html" title="struct wiringpi::pin::SoftPwmPin">SoftPwmPin</a>&lt;P&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#405-408' title='goto source code'>[src]</a></span></h4>
 <h4 id='method.write' class="method"><span id='write.v' class='invisible'><code>pub fn <a href='#method.write' class='fnname'>write</a>(&amp;self, value: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#413-417' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Writes the value to the PWM register for the given pin.</p>
-
 <p>The value must be between 0 and 1024.</p>
 </div><h4 id='method.set_mode' class="method"><span id='set_mode.v' class='invisible'><code>pub fn <a href='#method.set_mode' class='fnname'>set_mode</a>(&amp;self, mode: <a class="enum" href="../../wiringpi/pin/enum.PwmMode.html" title="enum wiringpi::pin::PwmMode">PwmMode</a>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#424-428' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>The PWM generator can run in 2 modes – &quot;balanced&quot; and &quot;mark:space&quot;.</p>
-
 <p>The mark:space mode is traditional, however the default mode in the
 Pi is &quot;balanced&quot;. You can switch modes by supplying the parameter:
 <code>Balanced</code> or <code>MarkSpace</code>.</p>
@@ -88,20 +96,22 @@ Pi is &quot;balanced&quot;. You can switch modes by supplying the parameter:
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

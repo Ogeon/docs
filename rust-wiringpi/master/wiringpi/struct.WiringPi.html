@@ -10,8 +10,11 @@
     <title>wiringpi::WiringPi - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Struct WiringPi</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.input_pin">input_pin</a><a href="#method.output_pin">output_pin</a><a href="#method.millis">millis</a><a href="#method.micros">micros</a><a href="#method.digital_write_byte">digital_write_byte</a><a href="#method.pwm_pin">pwm_pin</a><a href="#method.clock_pin">clock_pin</a><a href="#method.soft_pwm_pin">soft_pwm_pin</a></div></div><p class='location'><a href='index.html'>wiringpi</a></p><script>window.sidebarCurrent = {name: 'WiringPi', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -60,12 +70,10 @@
 <h4 id='method.millis' class="method"><span id='millis.v' class='invisible'><code>pub fn <a href='#method.millis' class='fnname'>millis</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/wiringpi/lib.rs.html#566-570' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This returns a number representing the number if milliseconds since
 your program called one of the setup functions.</p>
-
 <p>It returns an unsigned 32-bit number which wraps after 49 days.</p>
 </div><h4 id='method.micros' class="method"><span id='micros.v' class='invisible'><code>pub fn <a href='#method.micros' class='fnname'>micros</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/wiringpi/lib.rs.html#576-580' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This returns a number representing the number if microseconds since
 your program called one of the setup functions.</p>
-
 <p>It returns an unsigned 32-bit number which wraps after 71 minutes.</p>
 </div><h4 id='method.digital_write_byte' class="method"><span id='digital_write_byte.v' class='invisible'><code>pub fn <a href='#method.digital_write_byte' class='fnname'>digital_write_byte</a>(&amp;self, byte: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/wiringpi/lib.rs.html#585-589' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This writes the 8-bit byte supplied to the first 8 GPIO pins. It’s the
@@ -90,20 +98,22 @@ it still takes two write operations to the Pi’s GPIO hardware.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
