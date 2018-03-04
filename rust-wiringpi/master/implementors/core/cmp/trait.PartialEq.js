@@ -1,5 +1,5 @@
 (function() {var implementors = {};
-implementors["wiringpi"] = ["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html\" title=\"trait core::cmp::PartialEq\">PartialEq</a> for <a class=\"enum\" href=\"wiringpi/pin/enum.Value.html\" title=\"enum wiringpi::pin::Value\">Value</a>",];
+implementors["wiringpi"] = [{text:"impl <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html\" title=\"trait core::cmp::PartialEq\">PartialEq</a> for <a class=\"enum\" href=\"wiringpi/pin/enum.Value.html\" title=\"enum wiringpi::pin::Value\">Value</a>",synthetic:false,types:["wiringpi::pin::Value"]},];
 
             if (window.register_implementors) {
                 window.register_implementors(implementors);
