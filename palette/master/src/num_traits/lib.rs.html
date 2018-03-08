@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/num-traits-0.2.0/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/num-traits-0.2.1/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
@@ -512,6 +512,10 @@
 <span id="466">466</span>
 <span id="467">467</span>
 <span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2013-2014 The Rust Project Developers. See the COPYRIGHT</span>
 <span class="comment">// file at the top-level directory of this distribution and at</span>
@@ -546,15 +550,19 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">float</span>::<span class="ident">FloatConst</span>;
-<span class="comment">// pub use real::Real; // NOTE: Don&#39;t do this, it breaks `use num_traits::*;`.</span>
+<span class="comment">// pub use real::{FloatCore, Real}; // NOTE: Don&#39;t do this, it breaks `use num_traits::*;`.</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">identities</span>::{<span class="ident">Zero</span>, <span class="ident">One</span>, <span class="ident">zero</span>, <span class="ident">one</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ops</span>::<span class="ident">inv</span>::<span class="ident">Inv</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ops</span>::<span class="ident">checked</span>::{<span class="ident">CheckedAdd</span>, <span class="ident">CheckedSub</span>, <span class="ident">CheckedMul</span>, <span class="ident">CheckedDiv</span>, <span class="ident">CheckedShl</span>, <span class="ident">CheckedShr</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ops</span>::<span class="ident">wrapping</span>::{<span class="ident">WrappingAdd</span>, <span class="ident">WrappingMul</span>, <span class="ident">WrappingSub</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ops</span>::<span class="ident">saturating</span>::<span class="ident">Saturating</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">sign</span>::{<span class="ident">Signed</span>, <span class="ident">Unsigned</span>, <span class="ident">abs</span>, <span class="ident">abs_sub</span>, <span class="ident">signum</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">cast</span>::{<span class="ident">AsPrimitive</span>, <span class="ident">FromPrimitive</span>, <span class="ident">ToPrimitive</span>, <span class="ident">NumCast</span>, <span class="ident">cast</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">int</span>::<span class="ident">PrimInt</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">pow</span>::{<span class="ident">pow</span>, <span class="ident">checked_pow</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">pow</span>::{<span class="ident">Pow</span>, <span class="ident">pow</span>, <span class="ident">checked_pow</span>};
+
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">mod</span> <span class="ident">macros</span>;
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">identities</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">sign</span>;
