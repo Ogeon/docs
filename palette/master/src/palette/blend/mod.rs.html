@@ -109,6 +109,21 @@
 <span id="63">63</span>
 <span id="64">64</span>
 <span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
+<span id="70">70</span>
+<span id="71">71</span>
+<span id="72">72</span>
+<span id="73">73</span>
+<span id="74">74</span>
+<span id="75">75</span>
+<span id="76">76</span>
+<span id="77">77</span>
+<span id="78">78</span>
+<span id="79">79</span>
+<span id="80">80</span>
 </pre><pre class="rust ">
 <span class="doccomment">//!Color blending and blending equations.</span>
 <span class="doccomment">//!</span>
@@ -148,9 +163,11 @@
 <span class="doccomment">//!which may result in loss of some color information in some cases. One such</span>
 <span class="doccomment">//!case is that a completely transparent resultant color will become black.</span>
 
+<span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">Float</span>;
+
 <span class="kw">use</span> <span class="ident">ComponentWise</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">equations</span>::{<span class="ident">Equations</span>, <span class="ident">Equation</span>, <span class="ident">Parameters</span>, <span class="ident">Parameter</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">equations</span>::{<span class="ident">Equation</span>, <span class="ident">Equations</span>, <span class="ident">Parameter</span>, <span class="ident">Parameters</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">pre_alpha</span>::<span class="ident">PreAlpha</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">blend</span>::<span class="ident">Blend</span>;
 
@@ -162,16 +179,29 @@
 <span class="kw">mod</span> <span class="ident">test</span>;
 
 <span class="doccomment">///A trait for custom blend functions.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">BlendFunction</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Blend</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">=</span><span class="ident">C</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">BlendFunction</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Blend</span><span class="op">&lt;</span><span class="ident">Color</span> <span class="op">=</span> <span class="ident">C</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">C</span>::<span class="ident">Scalar</span>: <span class="ident">Float</span>,
+{
     <span class="doccomment">///Apply this blend function to a pair of colors.</span>
-    <span class="kw">fn</span> <span class="ident">apply_to</span>(<span class="self">self</span>, <span class="ident">source</span>: <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>, <span class="ident">destination</span>: <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">apply_to</span>(
+        <span class="self">self</span>,
+        <span class="ident">source</span>: <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>,
+        <span class="ident">destination</span>: <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>,
+    ) <span class="op">-&gt;</span> <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>;
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="ident">BlendFunction</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">F</span> <span class="kw">where</span>
-    <span class="ident">C</span>: <span class="ident">Blend</span><span class="op">&lt;</span><span class="ident">Color</span><span class="op">=</span><span class="ident">C</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">ComponentWise</span>,
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="ident">BlendFunction</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">F</span>
+<span class="kw">where</span>
+    <span class="ident">C</span>: <span class="ident">Blend</span><span class="op">&lt;</span><span class="ident">Color</span> <span class="op">=</span> <span class="ident">C</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">ComponentWise</span>,
+    <span class="ident">C</span>::<span class="ident">Scalar</span>: <span class="ident">Float</span>,
     <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>, <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">apply_to</span>(<span class="self">self</span>, <span class="ident">source</span>: <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>, <span class="ident">destination</span>: <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">apply_to</span>(
+        <span class="self">self</span>,
+        <span class="ident">source</span>: <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>,
+        <span class="ident">destination</span>: <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>,
+    ) <span class="op">-&gt;</span> <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span> {
         (<span class="self">self</span>)(<span class="ident">source</span>, <span class="ident">destination</span>)
     }
 }

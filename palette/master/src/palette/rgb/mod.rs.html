@@ -116,38 +116,36 @@
 <span id="70">70</span>
 <span id="71">71</span>
 <span id="72">72</span>
-<span id="73">73</span>
 </pre><pre class="rust ">
 <span class="doccomment">//!RGB types, spaces and standards.</span>
 
 <span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">Float</span>;
-
-<span class="kw">use</span> <span class="ident">Yxy</span>;
-<span class="kw">use</span> <span class="ident">white_point</span>::<span class="ident">WhitePoint</span>;
-<span class="kw">use</span> <span class="ident">pixel</span>::<span class="ident">TransferFn</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::<span class="ident">Any</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">rgb</span>::{<span class="ident">Rgb</span>, <span class="ident">Rgba</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">standards</span>::{<span class="ident">Linear</span>};
+<span class="kw">use</span> {<span class="ident">Component</span>, <span class="ident">Yxy</span>};
+<span class="kw">use</span> <span class="ident">white_point</span>::<span class="ident">WhitePoint</span>;
 
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">standards</span>;
+<span class="kw">use</span> <span class="ident">encoding</span>::{<span class="ident">Linear</span>, <span class="ident">TransferFn</span>};
+
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">rgb</span>::{<span class="ident">Rgb</span>, <span class="ident">Rgba</span>};
+
 <span class="comment">//mod linear;</span>
 <span class="kw">mod</span> <span class="ident">rgb</span>;
 
 <span class="doccomment">///Nonlinear sRGB.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Srgb</span><span class="op">&lt;</span><span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">standards</span>::<span class="ident">Srgb</span>, <span class="ident">T</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Srgb</span><span class="op">&lt;</span><span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Rgb</span><span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 <span class="doccomment">///Nonlinear sRGB with an alpha component.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Srgba</span><span class="op">&lt;</span><span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Rgba</span><span class="op">&lt;</span><span class="ident">standards</span>::<span class="ident">Srgb</span>, <span class="ident">T</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Srgba</span><span class="op">&lt;</span><span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Rgba</span><span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
 <span class="doccomment">///Linear sRGB.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">LinSrgb</span><span class="op">&lt;</span><span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">Linear</span>, <span class="ident">T</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">LinSrgb</span><span class="op">&lt;</span><span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 <span class="doccomment">///Linear sRGB with an alpha component.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">LinSrgba</span><span class="op">&lt;</span><span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Rgba</span><span class="op">&lt;</span><span class="ident">Linear</span>, <span class="ident">T</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">LinSrgba</span><span class="op">&lt;</span><span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Rgba</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
 <span class="doccomment">/// Gamma 2.2 encoded sRGB.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">GammaSrgb</span><span class="op">&lt;</span><span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">standards</span>::<span class="ident">Gamma</span>, <span class="ident">T</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">GammaSrgb</span><span class="op">&lt;</span><span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Rgb</span><span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Gamma</span><span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 <span class="doccomment">/// Gamma 2.2 encoded sRGB with an alpha component.</span>
-<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">GammaSrgba</span><span class="op">&lt;</span><span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Rgba</span><span class="op">&lt;</span><span class="ident">standards</span>::<span class="ident">Gamma</span>, <span class="ident">T</span><span class="op">&gt;</span>;
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">GammaSrgba</span><span class="op">&lt;</span><span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Rgba</span><span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Gamma</span><span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
 <span class="doccomment">///An RGB space and a transfer function.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">RgbStandard</span> {
@@ -185,11 +183,11 @@
 <span class="doccomment">///Represents the red, green and blue primaries of an RGB space.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Primaries</span>: <span class="ident">Any</span> {
     <span class="doccomment">///Primary red.</span>
-    <span class="kw">fn</span> <span class="ident">red</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">red</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
     <span class="doccomment">///Primary green.</span>
-    <span class="kw">fn</span> <span class="ident">green</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">green</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
     <span class="doccomment">///Primary blue.</span>
-    <span class="kw">fn</span> <span class="ident">blue</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">blue</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 }
 </pre>
 </section>

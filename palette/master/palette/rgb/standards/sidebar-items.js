@@ -1,1 +1,0 @@
-initSidebarItems({"mod":[["gamma","Gamma encoded RGB."],["linear","Linear RGB"],["srgb","The sRGB standard."]]});

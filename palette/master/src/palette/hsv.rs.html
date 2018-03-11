@@ -559,6 +559,72 @@
 <span id="513">513</span>
 <span id="514">514</span>
 <span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">Float</span>;
 <span class="kw">use</span> <span class="ident">approx</span>::<span class="ident">ApproxEq</span>;
@@ -567,14 +633,16 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::<span class="ident">TypeId</span>;
 
-<span class="kw">use</span> {<span class="ident">Alpha</span>, <span class="ident">Xyz</span>, <span class="ident">Hsl</span>, <span class="ident">Hwb</span>};
-<span class="kw">use</span> {<span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Shade</span>, <span class="ident">GetHue</span>, <span class="ident">Hue</span>, <span class="ident">Saturate</span>, <span class="ident">RgbHue</span>, <span class="ident">FromColor</span>};
-<span class="kw">use</span> {<span class="ident">clamp</span>, <span class="ident">flt</span>};
+<span class="kw">use</span> {<span class="ident">Alpha</span>, <span class="ident">Hsl</span>, <span class="ident">Hwb</span>, <span class="ident">Xyz</span>};
+<span class="kw">use</span> {<span class="ident">Component</span>, <span class="ident">FromColor</span>, <span class="ident">GetHue</span>, <span class="ident">Hue</span>, <span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">RgbHue</span>, <span class="ident">Saturate</span>, <span class="ident">Shade</span>};
+<span class="kw">use</span> {<span class="ident">cast</span>, <span class="ident">clamp</span>};
 <span class="kw">use</span> <span class="ident">white_point</span>::<span class="ident">WhitePoint</span>;
-<span class="kw">use</span> <span class="ident">rgb</span>::{<span class="ident">RgbSpace</span>, <span class="ident">Rgb</span>, <span class="ident">Linear</span>};
-<span class="kw">use</span> <span class="ident">rgb</span>::<span class="ident">standards</span>::<span class="ident">Srgb</span>;
+<span class="kw">use</span> <span class="ident">rgb</span>::{<span class="ident">Rgb</span>, <span class="ident">RgbSpace</span>};
+<span class="kw">use</span> <span class="ident">encoding</span>::{<span class="ident">Linear</span>, <span class="ident">Srgb</span>};
+<span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">pixel</span>::<span class="ident">RawPixel</span>;
 
-<span class="doccomment">///Linear HSV with an alpha component. See the [`Hsva` implementation in `Alpha`](struct.Alpha.html#Hsva).</span>
+<span class="doccomment">/// Linear HSV with an alpha component. See the [`Hsva` implementation in</span>
+<span class="doccomment">/// `Alpha`](struct.Alpha.html#Hsva).</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Hsva</span><span class="op">&lt;</span><span class="ident">S</span> <span class="op">=</span> <span class="ident">Srgb</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
 <span class="doccomment">///Linear HSV color space.</span>
@@ -586,9 +654,11 @@
 <span class="doccomment">///and white (100% R, 100% G, 100% B) has the same brightness (or value), but</span>
 <span class="doccomment">///not the same lightness.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span> <span class="op">=</span> <span class="ident">Srgb</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
     <span class="doccomment">///The hue of the color, in degrees. Decides if it&#39;s red, blue, purple,</span>
     <span class="doccomment">///etc.</span>
@@ -609,25 +679,34 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Copy</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
-{}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> { <span class="kw-2">*</span><span class="self">self</span> }
 }
 
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
+{
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw-2">*</span><span class="self">self</span>
+    }
+}
+
+<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">RgbSpace</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span> <span class="ident">Pixel</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">const</span> <span class="ident">CHANNELS</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">3</span>;
+}
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
 {
     <span class="doccomment">///HSV for linear sRGB.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">hue</span>: <span class="ident">RgbHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">saturation</span>: <span class="ident">T</span>, <span class="ident">value</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">RgbHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>(<span class="ident">hue</span>: <span class="ident">H</span>, <span class="ident">saturation</span>: <span class="ident">T</span>, <span class="ident">value</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Hsv</span> {
-            <span class="ident">hue</span>: <span class="ident">hue</span>,
+            <span class="ident">hue</span>: <span class="ident">hue</span>.<span class="ident">into</span>(),
             <span class="ident">saturation</span>: <span class="ident">saturation</span>,
             <span class="ident">value</span>: <span class="ident">value</span>,
             <span class="ident">space</span>: <span class="ident">PhantomData</span>,
@@ -636,13 +715,14 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
     <span class="doccomment">///Linear HSV.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_wp</span>(<span class="ident">hue</span>: <span class="ident">RgbHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">saturation</span>: <span class="ident">T</span>, <span class="ident">value</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_wp</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">RgbHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>(<span class="ident">hue</span>: <span class="ident">H</span>, <span class="ident">saturation</span>: <span class="ident">T</span>, <span class="ident">value</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Hsv</span> {
-            <span class="ident">hue</span>: <span class="ident">hue</span>,
+            <span class="ident">hue</span>: <span class="ident">hue</span>.<span class="ident">into</span>(),
             <span class="ident">saturation</span>: <span class="ident">saturation</span>,
             <span class="ident">value</span>: <span class="ident">value</span>,
             <span class="ident">space</span>: <span class="ident">PhantomData</span>,
@@ -662,10 +742,11 @@
 
 <span class="doccomment">///&lt;span id=&quot;Hsva&quot;&gt;&lt;/span&gt;[`Hsva`](type.Hsva.html) implementations.</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
 {
     <span class="doccomment">///HSV and transparency for linear sRGB.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">hue</span>: <span class="ident">RgbHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">saturation</span>: <span class="ident">T</span>, <span class="ident">value</span>: <span class="ident">T</span>, <span class="ident">alpha</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Hsva</span><span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">RgbHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>(<span class="ident">hue</span>: <span class="ident">H</span>, <span class="ident">saturation</span>: <span class="ident">T</span>, <span class="ident">value</span>: <span class="ident">T</span>, <span class="ident">alpha</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Hsva</span><span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Alpha</span> {
             <span class="ident">color</span>: <span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="ident">hue</span>, <span class="ident">saturation</span>, <span class="ident">value</span>),
             <span class="ident">alpha</span>: <span class="ident">alpha</span>,
@@ -675,11 +756,12 @@
 
 <span class="doccomment">///&lt;span id=&quot;Hsva&quot;&gt;&lt;/span&gt;[`Hsva`](type.Hsva.html) implementations.</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
     <span class="doccomment">///Linear HSV and transparency.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_wp</span>(<span class="ident">hue</span>: <span class="ident">RgbHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">saturation</span>: <span class="ident">T</span>, <span class="ident">value</span>: <span class="ident">T</span>, <span class="ident">alpha</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Hsva</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_wp</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">RgbHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span>(<span class="ident">hue</span>: <span class="ident">H</span>, <span class="ident">saturation</span>: <span class="ident">T</span>, <span class="ident">value</span>: <span class="ident">T</span>, <span class="ident">alpha</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Hsva</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Alpha</span> {
             <span class="ident">color</span>: <span class="ident">Hsv</span>::<span class="ident">with_wp</span>(<span class="ident">hue</span>, <span class="ident">saturation</span>, <span class="ident">value</span>),
             <span class="ident">alpha</span>: <span class="ident">alpha</span>,
@@ -688,29 +770,34 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">FromColor</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span><span class="op">=</span><span class="ident">Wp</span><span class="op">&gt;</span>,
-        <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
     <span class="kw">fn</span> <span class="ident">from_xyz</span>(<span class="ident">xyz</span>: <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">rgb</span>: <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Rgb</span>::<span class="ident">from_xyz</span>(<span class="ident">xyz</span>);
         <span class="self">Self</span>::<span class="ident">from_rgb</span>(<span class="ident">rgb</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">from_rgb</span><span class="op">&lt;</span><span class="ident">Sp</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span><span class="op">=</span><span class="ident">Wp</span><span class="op">&gt;&gt;</span>(<span class="ident">rgb</span>: <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">Sp</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_rgb</span><span class="op">&lt;</span><span class="ident">Sp</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;&gt;</span>(<span class="ident">rgb</span>: <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">Sp</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">rgb</span> <span class="op">=</span> <span class="ident">Rgb</span>::<span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>::<span class="ident">from_rgb</span>(<span class="ident">rgb</span>);
 
-        <span class="kw">let</span> ( <span class="ident">max</span>, <span class="ident">min</span>, <span class="ident">sep</span> , <span class="ident">coeff</span>) <span class="op">=</span> {
-            <span class="kw">let</span> (<span class="ident">max</span>, <span class="ident">min</span> , <span class="ident">sep</span>, <span class="ident">coeff</span>) <span class="op">=</span> <span class="kw">if</span> <span class="ident">rgb</span>.<span class="ident">red</span> <span class="op">&gt;</span> <span class="ident">rgb</span>.<span class="ident">green</span> {
-                (<span class="ident">rgb</span>.<span class="ident">red</span>, <span class="ident">rgb</span>.<span class="ident">green</span>, <span class="ident">rgb</span>.<span class="ident">green</span> <span class="op">-</span> <span class="ident">rgb</span>.<span class="ident">blue</span>, <span class="ident">T</span>::<span class="ident">zero</span>() )
+        <span class="kw">let</span> (<span class="ident">max</span>, <span class="ident">min</span>, <span class="ident">sep</span>, <span class="ident">coeff</span>) <span class="op">=</span> {
+            <span class="kw">let</span> (<span class="ident">max</span>, <span class="ident">min</span>, <span class="ident">sep</span>, <span class="ident">coeff</span>) <span class="op">=</span> <span class="kw">if</span> <span class="ident">rgb</span>.<span class="ident">red</span> <span class="op">&gt;</span> <span class="ident">rgb</span>.<span class="ident">green</span> {
+                (<span class="ident">rgb</span>.<span class="ident">red</span>, <span class="ident">rgb</span>.<span class="ident">green</span>, <span class="ident">rgb</span>.<span class="ident">green</span> <span class="op">-</span> <span class="ident">rgb</span>.<span class="ident">blue</span>, <span class="ident">T</span>::<span class="ident">zero</span>())
             } <span class="kw">else</span> {
-                (<span class="ident">rgb</span>.<span class="ident">green</span>, <span class="ident">rgb</span>.<span class="ident">red</span>, <span class="ident">rgb</span>.<span class="ident">blue</span> <span class="op">-</span> <span class="ident">rgb</span>.<span class="ident">red</span>, <span class="ident">flt</span>(<span class="number">2.0</span>))
+                (<span class="ident">rgb</span>.<span class="ident">green</span>, <span class="ident">rgb</span>.<span class="ident">red</span>, <span class="ident">rgb</span>.<span class="ident">blue</span> <span class="op">-</span> <span class="ident">rgb</span>.<span class="ident">red</span>, <span class="ident">cast</span>(<span class="number">2.0</span>))
             };
             <span class="kw">if</span> <span class="ident">rgb</span>.<span class="ident">blue</span> <span class="op">&gt;</span> <span class="ident">max</span> {
-                ( <span class="ident">rgb</span>.<span class="ident">blue</span>, <span class="ident">min</span>, <span class="ident">rgb</span>.<span class="ident">red</span> <span class="op">-</span> <span class="ident">rgb</span>.<span class="ident">green</span>, <span class="ident">flt</span>(<span class="number">4.0</span>))
+                (<span class="ident">rgb</span>.<span class="ident">blue</span>, <span class="ident">min</span>, <span class="ident">rgb</span>.<span class="ident">red</span> <span class="op">-</span> <span class="ident">rgb</span>.<span class="ident">green</span>, <span class="ident">cast</span>(<span class="number">4.0</span>))
             } <span class="kw">else</span> {
-                <span class="kw">let</span> <span class="ident">min_val</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">rgb</span>.<span class="ident">blue</span> <span class="op">&lt;</span> <span class="ident">min</span> { <span class="ident">rgb</span>.<span class="ident">blue</span> } <span class="kw">else</span> { <span class="ident">min</span> };
-                (<span class="ident">max</span> , <span class="ident">min_val</span> , <span class="ident">sep</span>, <span class="ident">coeff</span>)
+                <span class="kw">let</span> <span class="ident">min_val</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">rgb</span>.<span class="ident">blue</span> <span class="op">&lt;</span> <span class="ident">min</span> {
+                    <span class="ident">rgb</span>.<span class="ident">blue</span>
+                } <span class="kw">else</span> {
+                    <span class="ident">min</span>
+                };
+                (<span class="ident">max</span>, <span class="ident">min_val</span>, <span class="ident">sep</span>, <span class="ident">coeff</span>)
             }
         };
 
@@ -721,7 +808,7 @@
         <span class="kw">if</span> <span class="ident">max</span> <span class="op">!=</span> <span class="ident">min</span> {
             <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="ident">max</span> <span class="op">-</span> <span class="ident">min</span>;
             <span class="ident">s</span> <span class="op">=</span> <span class="ident">d</span> <span class="op">/</span> <span class="ident">max</span>;
-            <span class="ident">h</span> <span class="op">=</span> (( <span class="ident">sep</span> <span class="op">/</span> <span class="ident">d</span> ) <span class="op">+</span> <span class="ident">coeff</span>) <span class="op">*</span>  <span class="ident">flt</span>(<span class="number">60.0</span>);
+            <span class="ident">h</span> <span class="op">=</span> ((<span class="ident">sep</span> <span class="op">/</span> <span class="ident">d</span>) <span class="op">+</span> <span class="ident">coeff</span>) <span class="op">*</span> <span class="ident">cast</span>(<span class="number">60.0</span>);
         };
 
         <span class="ident">Hsv</span> {
@@ -732,10 +819,10 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">from_hsl</span><span class="op">&lt;</span><span class="ident">Sp</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span><span class="op">=</span><span class="ident">Wp</span><span class="op">&gt;&gt;</span>(<span class="ident">hsl</span>: <span class="ident">Hsl</span><span class="op">&lt;</span><span class="ident">Sp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_hsl</span><span class="op">&lt;</span><span class="ident">Sp</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;&gt;</span>(<span class="ident">hsl</span>: <span class="ident">Hsl</span><span class="op">&lt;</span><span class="ident">Sp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">hsl</span> <span class="op">=</span> <span class="ident">Hsl</span>::<span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>::<span class="ident">from_hsl</span>(<span class="ident">hsl</span>);
 
-        <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">hsl</span>.<span class="ident">saturation</span> <span class="op">*</span> <span class="kw">if</span> <span class="ident">hsl</span>.<span class="ident">lightness</span> <span class="op">&lt;</span> <span class="ident">flt</span>(<span class="number">0.5</span>) {
+        <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">hsl</span>.<span class="ident">saturation</span> <span class="op">*</span> <span class="kw">if</span> <span class="ident">hsl</span>.<span class="ident">lightness</span> <span class="op">&lt;</span> <span class="ident">cast</span>(<span class="number">0.5</span>) {
             <span class="ident">hsl</span>.<span class="ident">lightness</span>
         } <span class="kw">else</span> {
             <span class="ident">T</span>::<span class="ident">one</span>() <span class="op">-</span> <span class="ident">hsl</span>.<span class="ident">lightness</span>
@@ -745,7 +832,7 @@
         <span class="comment">// avoid divide by zero</span>
         <span class="kw">let</span> <span class="ident">denom</span> <span class="op">=</span> <span class="ident">hsl</span>.<span class="ident">lightness</span> <span class="op">+</span> <span class="ident">x</span>;
         <span class="kw">if</span> <span class="ident">denom</span>.<span class="ident">is_normal</span>() {
-            <span class="ident">s</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">*</span> <span class="ident">flt</span>(<span class="number">2.0</span>) <span class="op">/</span> <span class="ident">denom</span>;
+            <span class="ident">s</span> <span class="op">=</span> <span class="ident">x</span> <span class="op">*</span> <span class="ident">cast</span>(<span class="number">2.0</span>) <span class="op">/</span> <span class="ident">denom</span>;
         }
         <span class="ident">Hsv</span> {
             <span class="ident">hue</span>: <span class="ident">hsl</span>.<span class="ident">hue</span>,
@@ -755,7 +842,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">from_hsv</span><span class="op">&lt;</span><span class="ident">Sp</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span><span class="op">=</span><span class="ident">Wp</span><span class="op">&gt;&gt;</span>(<span class="ident">hsv</span>: <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">Sp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_hsv</span><span class="op">&lt;</span><span class="ident">Sp</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;&gt;</span>(<span class="ident">hsv</span>: <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">Sp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">if</span> <span class="ident">TypeId</span>::<span class="ident">of</span>::<span class="op">&lt;</span><span class="ident">Sp</span>::<span class="ident">Primaries</span><span class="op">&gt;</span>() <span class="op">==</span> <span class="ident">TypeId</span>::<span class="ident">of</span>::<span class="op">&lt;</span><span class="ident">S</span>::<span class="ident">Primaries</span><span class="op">&gt;</span>() {
             <span class="ident">hsv</span>.<span class="ident">reinterpret_as</span>()
         } <span class="kw">else</span> {
@@ -763,13 +850,13 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">from_hwb</span><span class="op">&lt;</span><span class="ident">Sp</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span><span class="op">=</span><span class="ident">Wp</span><span class="op">&gt;&gt;</span>(<span class="ident">hwb</span>: <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">Sp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_hwb</span><span class="op">&lt;</span><span class="ident">Sp</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;&gt;</span>(<span class="ident">hwb</span>: <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">Sp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">hwb</span> <span class="op">=</span> <span class="ident">Hwb</span>::<span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>::<span class="ident">from_hwb</span>(<span class="ident">hwb</span>);
 
         <span class="kw">let</span> <span class="ident">inv</span> <span class="op">=</span> <span class="ident">T</span>::<span class="ident">one</span>() <span class="op">-</span> <span class="ident">hwb</span>.<span class="ident">blackness</span>;
         <span class="comment">// avoid divide by zero</span>
         <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">inv</span>.<span class="ident">is_normal</span>() {
-            <span class="ident">T</span>::<span class="ident">one</span>() <span class="op">-</span> ( <span class="ident">hwb</span>.<span class="ident">whiteness</span> <span class="op">/</span> <span class="ident">inv</span> )
+            <span class="ident">T</span>::<span class="ident">one</span>() <span class="op">-</span> (<span class="ident">hwb</span>.<span class="ident">whiteness</span> <span class="op">/</span> <span class="ident">inv</span>)
         } <span class="kw">else</span> {
             <span class="ident">T</span>::<span class="ident">zero</span>()
         };
@@ -780,13 +867,14 @@
             <span class="ident">space</span>: <span class="ident">PhantomData</span>,
         }
     }
-
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Limited</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">rustfmt</span>, <span class="ident">rustfmt_skip</span>)]</span>
     <span class="kw">fn</span> <span class="ident">is_valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">saturation</span> <span class="op">&gt;=</span> <span class="ident">T</span>::<span class="ident">zero</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">saturation</span> <span class="op">&lt;=</span> <span class="ident">T</span>::<span class="ident">one</span>() <span class="op">&amp;&amp;</span>
         <span class="self">self</span>.<span class="ident">value</span> <span class="op">&gt;=</span> <span class="ident">T</span>::<span class="ident">zero</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">value</span> <span class="op">&lt;=</span> <span class="ident">T</span>::<span class="ident">one</span>()
@@ -805,8 +893,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Mix</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
     <span class="kw">type</span> <span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">T</span>;
 
@@ -824,8 +913,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Shade</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
     <span class="kw">type</span> <span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">T</span>;
 
@@ -840,8 +930,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">GetHue</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
     <span class="kw">type</span> <span class="ident">Hue</span> <span class="op">=</span> <span class="ident">RgbHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>;
 
@@ -855,21 +946,22 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Hue</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
-    <span class="kw">fn</span> <span class="ident">with_hue</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hue</span>: <span class="ident">RgbHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">with_hue</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Hue</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hue</span>: <span class="ident">H</span>) <span class="op">-&gt;</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Hsv</span> {
-            <span class="ident">hue</span>: <span class="ident">hue</span>,
+            <span class="ident">hue</span>: <span class="ident">hue</span>.<span class="ident">into</span>(),
             <span class="ident">saturation</span>: <span class="self">self</span>.<span class="ident">saturation</span>,
             <span class="ident">value</span>: <span class="self">self</span>.<span class="ident">value</span>,
             <span class="ident">space</span>: <span class="ident">PhantomData</span>,
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">shift_hue</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">amount</span>: <span class="ident">RgbHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">shift_hue</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Hue</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">amount</span>: <span class="ident">H</span>) <span class="op">-&gt;</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Hsv</span> {
-            <span class="ident">hue</span>: <span class="self">self</span>.<span class="ident">hue</span> <span class="op">+</span> <span class="ident">amount</span>,
+            <span class="ident">hue</span>: <span class="self">self</span>.<span class="ident">hue</span> <span class="op">+</span> <span class="ident">amount</span>.<span class="ident">into</span>(),
             <span class="ident">saturation</span>: <span class="self">self</span>.<span class="ident">saturation</span>,
             <span class="ident">value</span>: <span class="self">self</span>.<span class="ident">value</span>,
             <span class="ident">space</span>: <span class="ident">PhantomData</span>,
@@ -878,8 +970,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Saturate</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
     <span class="kw">type</span> <span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">T</span>;
 
@@ -894,8 +987,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
     <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Hsv</span>::<span class="ident">with_wp</span>(<span class="ident">RgbHue</span>::<span class="ident">from</span>(<span class="ident">T</span>::<span class="ident">zero</span>()), <span class="ident">T</span>::<span class="ident">zero</span>(), <span class="ident">T</span>::<span class="ident">zero</span>())
@@ -903,8 +997,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
@@ -919,8 +1014,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
@@ -935,8 +1031,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
@@ -951,8 +1048,9 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
@@ -966,9 +1064,32 @@
     }
 }
 
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span>, <span class="ident">P</span><span class="op">&gt;</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
+    <span class="ident">P</span>: <span class="ident">RawPixel</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span>,
+{
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">P</span> {
+        <span class="self">self</span>.<span class="ident">as_raw</span>()
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span>, <span class="ident">P</span><span class="op">&gt;</span> <span class="ident">AsMut</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
+    <span class="ident">P</span>: <span class="ident">RawPixel</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span>,
+{
+    <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">P</span> {
+        <span class="self">self</span>.<span class="ident">as_raw_mut</span>()
+    }
+}
+
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">color</span>.<span class="ident">color</span>
@@ -976,9 +1097,10 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">ApproxEq</span> <span class="kw">for</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-    <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">ApproxEq</span>,
-        <span class="ident">T</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Float</span>,
-        <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span> <span class="op">+</span> <span class="ident">ApproxEq</span>,
+    <span class="ident">T</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
 {
     <span class="kw">type</span> <span class="ident">Epsilon</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">ApproxEq</span><span class="op">&gt;</span>::<span class="ident">Epsilon</span>;
 
@@ -991,13 +1113,20 @@
     <span class="kw">fn</span> <span class="ident">default_max_ulps</span>() <span class="op">-&gt;</span> <span class="ident">u32</span> {
         <span class="ident">T</span>::<span class="ident">default_max_ulps</span>()
     }
-    <span class="kw">fn</span> <span class="ident">relative_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>, <span class="ident">max_relative</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">rustfmt</span>, <span class="ident">rustfmt_skip</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">relative_eq</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>,
+        <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>,
+        <span class="ident">max_relative</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>,
+    ) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">hue</span>.<span class="ident">relative_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">hue</span>, <span class="ident">epsilon</span>, <span class="ident">max_relative</span>) <span class="op">&amp;&amp;</span>
         <span class="self">self</span>.<span class="ident">saturation</span>.<span class="ident">relative_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">saturation</span>, <span class="ident">epsilon</span>, <span class="ident">max_relative</span>) <span class="op">&amp;&amp;</span>
         <span class="self">self</span>.<span class="ident">value</span>.<span class="ident">relative_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">value</span>, <span class="ident">epsilon</span>, <span class="ident">max_relative</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>, <span class="ident">max_ulps</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>{
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">rustfmt</span>, <span class="ident">rustfmt_skip</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>, <span class="ident">max_ulps</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">hue</span>.<span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">hue</span>, <span class="ident">epsilon</span>, <span class="ident">max_ulps</span>) <span class="op">&amp;&amp;</span>
         <span class="self">self</span>.<span class="ident">saturation</span>.<span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">saturation</span>, <span class="ident">epsilon</span>, <span class="ident">max_ulps</span>) <span class="op">&amp;&amp;</span>
         <span class="self">self</span>.<span class="ident">value</span>.<span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">value</span>, <span class="ident">epsilon</span>, <span class="ident">max_ulps</span>)
@@ -1007,14 +1136,14 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Hsv</span>;
-    <span class="kw">use</span> {<span class="ident">LinSrgb</span>, <span class="ident">Hsl</span>};
-    <span class="kw">use</span> <span class="ident">rgb</span>::<span class="ident">standards</span>::<span class="ident">Srgb</span>;
+    <span class="kw">use</span> {<span class="ident">Hsl</span>, <span class="ident">LinSrgb</span>};
+    <span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">Srgb</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">red</span>() {
         <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from</span>(<span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>));
-        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="number">0.0</span>.<span class="ident">into</span>(), <span class="number">1.0</span>, <span class="number">1.0</span>);
-        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from</span>(<span class="ident">Hsl</span>::<span class="ident">new</span>(<span class="number">0.0</span>.<span class="ident">into</span>(), <span class="number">1.0</span>, <span class="number">0.5</span>));
+        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>);
+        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from</span>(<span class="ident">Hsl</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">0.5</span>));
 
         <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">b</span>);
         <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">c</span>);
@@ -1023,8 +1152,8 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">orange</span>() {
         <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from</span>(<span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">1.0</span>, <span class="number">0.5</span>, <span class="number">0.0</span>));
-        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="number">30.0</span>.<span class="ident">into</span>(), <span class="number">1.0</span>, <span class="number">1.0</span>);
-        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from</span>(<span class="ident">Hsl</span>::<span class="ident">new</span>(<span class="number">30.0</span>.<span class="ident">into</span>(), <span class="number">1.0</span>, <span class="number">0.5</span>));
+        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="number">30.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>);
+        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from</span>(<span class="ident">Hsl</span>::<span class="ident">new</span>(<span class="number">30.0</span>, <span class="number">1.0</span>, <span class="number">0.5</span>));
 
         <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">b</span>);
         <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">c</span>);
@@ -1033,8 +1162,8 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">green</span>() {
         <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from</span>(<span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>));
-        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="number">120.0</span>.<span class="ident">into</span>(), <span class="number">1.0</span>, <span class="number">1.0</span>);
-        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from</span>(<span class="ident">Hsl</span>::<span class="ident">new</span>(<span class="number">120.0</span>.<span class="ident">into</span>(), <span class="number">1.0</span>, <span class="number">0.5</span>));
+        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="number">120.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>);
+        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from</span>(<span class="ident">Hsl</span>::<span class="ident">new</span>(<span class="number">120.0</span>, <span class="number">1.0</span>, <span class="number">0.5</span>));
 
         <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">b</span>);
         <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">c</span>);
@@ -1043,8 +1172,8 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">blue</span>() {
         <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from</span>(<span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>));
-        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="number">240.0</span>.<span class="ident">into</span>(), <span class="number">1.0</span>, <span class="number">1.0</span>);
-        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from</span>(<span class="ident">Hsl</span>::<span class="ident">new</span>(<span class="number">240.0</span>.<span class="ident">into</span>(), <span class="number">1.0</span>, <span class="number">0.5</span>));
+        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="number">240.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>);
+        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from</span>(<span class="ident">Hsl</span>::<span class="ident">new</span>(<span class="number">240.0</span>, <span class="number">1.0</span>, <span class="number">0.5</span>));
 
         <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">b</span>);
         <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">c</span>);
@@ -1053,8 +1182,8 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">purple</span>() {
         <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from</span>(<span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">0.5</span>, <span class="number">0.0</span>, <span class="number">1.0</span>));
-        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="number">270.0</span>.<span class="ident">into</span>(), <span class="number">1.0</span>, <span class="number">1.0</span>);
-        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from</span>(<span class="ident">Hsl</span>::<span class="ident">new</span>(<span class="number">270.0</span>.<span class="ident">into</span>(), <span class="number">1.0</span>, <span class="number">0.5</span>));
+        <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="number">270.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>);
+        <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from</span>(<span class="ident">Hsl</span>::<span class="ident">new</span>(<span class="number">270.0</span>, <span class="number">1.0</span>, <span class="number">0.5</span>));
 
         <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">b</span>);
         <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">c</span>);
@@ -1074,6 +1203,9 @@
             }
         }
     }
+
+    <span class="macro">raw_pixel_conversion_tests</span><span class="macro">!</span>(<span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">Srgb</span><span class="op">&gt;</span>: <span class="ident">hue</span>, <span class="ident">saturation</span>, <span class="ident">value</span>);
+    <span class="macro">raw_pixel_conversion_fail_tests</span><span class="macro">!</span>(<span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">Srgb</span><span class="op">&gt;</span>: <span class="ident">hue</span>, <span class="ident">saturation</span>, <span class="ident">value</span>);
 }
 </pre>
 </section>

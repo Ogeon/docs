@@ -138,19 +138,17 @@
 <span id="92">92</span>
 <span id="93">93</span>
 <span id="94">94</span>
-<span id="95">95</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">Float</span>;
 <span class="kw">use</span> <span class="ident">approx</span>::<span class="ident">ApproxEq</span>;
 
-<span class="kw">use</span> {<span class="ident">Xyz</span>, <span class="ident">Yxy</span>, <span class="ident">Lab</span>, <span class="ident">Lch</span>, <span class="ident">Luma</span>, <span class="ident">LabHue</span>, <span class="ident">RgbHue</span>, <span class="ident">flt</span>};
+<span class="kw">use</span> {<span class="ident">cast</span>, <span class="ident">Component</span>, <span class="ident">Lab</span>, <span class="ident">LabHue</span>, <span class="ident">Lch</span>, <span class="ident">RgbHue</span>, <span class="ident">Xyz</span>, <span class="ident">Yxy</span>};
 <span class="kw">use</span> <span class="ident">white_point</span>::<span class="ident">WhitePoint</span>;
-
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_eq</span> {
     (  <span class="macro-nonterminal">$</span><span class="macro-nonterminal">self_ty</span>: <span class="ident">ident</span> , [$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">element</span>: <span class="ident">ident</span>),<span class="op">+</span>]) <span class="op">=&gt;</span> {
         <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">ApproxEq</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">self_ty</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-        <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">ApproxEq</span>,
+        <span class="kw">where</span> <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span> <span class="op">+</span> <span class="ident">ApproxEq</span>,
             <span class="ident">T</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Float</span>,
             <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>
         {
@@ -182,19 +180,19 @@
     }
 }
 
-<span class="macro">impl_eq</span><span class="macro">!</span>( <span class="ident">Xyz</span>, [<span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">z</span>] );
-<span class="macro">impl_eq</span><span class="macro">!</span>( <span class="ident">Yxy</span>, [<span class="ident">y</span>, <span class="ident">x</span>, <span class="ident">luma</span>] );
-<span class="macro">impl_eq</span><span class="macro">!</span>( <span class="ident">Lab</span>, [<span class="ident">l</span>, <span class="ident">a</span>, <span class="ident">b</span>] );
-<span class="macro">impl_eq</span><span class="macro">!</span>( <span class="ident">Luma</span>, [<span class="ident">luma</span>] );
-<span class="macro">impl_eq</span><span class="macro">!</span>( <span class="ident">Lch</span>, [<span class="ident">l</span>, <span class="ident">chroma</span>, <span class="ident">hue</span>] );
+<span class="macro">impl_eq</span><span class="macro">!</span>(<span class="ident">Xyz</span>, [<span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">z</span>]);
+<span class="macro">impl_eq</span><span class="macro">!</span>(<span class="ident">Yxy</span>, [<span class="ident">y</span>, <span class="ident">x</span>, <span class="ident">luma</span>]);
+<span class="macro">impl_eq</span><span class="macro">!</span>(<span class="ident">Lab</span>, [<span class="ident">l</span>, <span class="ident">a</span>, <span class="ident">b</span>]);
+<span class="macro">impl_eq</span><span class="macro">!</span>(<span class="ident">Lch</span>, [<span class="ident">l</span>, <span class="ident">chroma</span>, <span class="ident">hue</span>]);
 
-<span class="comment">// For hues diffence is calculated and compared to zero. However due to the way floating point&#39;s</span>
-<span class="comment">// work this is not so simple</span>
-<span class="comment">// reference</span>
+<span class="comment">// For hues, the difference is calculated and compared to zero. However due to</span>
+<span class="comment">// the way floating point&#39;s work this is not so simple.</span>
+<span class="comment">//</span>
+<span class="comment">// Reference:</span>
 <span class="comment">// https://randomascii.wordpress.com/2012/02/25/comparing-floating-point-numbers-2012-edition/</span>
 <span class="comment">//</span>
-<span class="comment">// The recommendation is use 180 * epsilon as the epsilon and do not compare by ulps.</span>
-<span class="comment">// Because of this we loose some precision for values close to 0.0.</span>
+<span class="comment">// The recommendation is use 180 * epsilon as the epsilon and do not compare by</span>
+<span class="comment">// ulps. Because of this we loose some precision for values close to 0.0.</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_eq_hue</span> {
     (  <span class="macro-nonterminal">$</span><span class="macro-nonterminal">self_ty</span>: <span class="ident">ident</span> ) <span class="op">=&gt;</span> {
         <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">ApproxEq</span><span class="op">&gt;</span> <span class="ident">ApproxEq</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">self_ty</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>
@@ -203,10 +201,10 @@
             <span class="kw">type</span> <span class="ident">Epsilon</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">ApproxEq</span><span class="op">&gt;</span>::<span class="ident">Epsilon</span>;
 
             <span class="kw">fn</span> <span class="ident">default_epsilon</span>() <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
-                <span class="ident">T</span>::<span class="ident">default_epsilon</span>() <span class="op">*</span> <span class="ident">flt</span>(<span class="number">180.0</span>)
+                <span class="ident">T</span>::<span class="ident">default_epsilon</span>() <span class="op">*</span> <span class="ident">cast</span>(<span class="number">180.0</span>)
             }
             <span class="kw">fn</span> <span class="ident">default_max_relative</span>() <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
-                <span class="ident">T</span>::<span class="ident">default_max_relative</span>() <span class="op">*</span> <span class="ident">flt</span>(<span class="number">180.0</span>)
+                <span class="ident">T</span>::<span class="ident">default_max_relative</span>() <span class="op">*</span> <span class="ident">cast</span>(<span class="number">180.0</span>)
             }
             <span class="kw">fn</span> <span class="ident">default_max_ulps</span>() <span class="op">-&gt;</span> <span class="ident">u32</span> {
                 <span class="ident">T</span>::<span class="ident">default_max_ulps</span>() <span class="op">*</span> <span class="number">180</span>
@@ -233,8 +231,8 @@
     }
 }
 
-<span class="macro">impl_eq_hue</span><span class="macro">!</span>( <span class="ident">LabHue</span>);
-<span class="macro">impl_eq_hue</span><span class="macro">!</span>( <span class="ident">RgbHue</span>);
+<span class="macro">impl_eq_hue</span><span class="macro">!</span>(<span class="ident">LabHue</span>);
+<span class="macro">impl_eq_hue</span><span class="macro">!</span>(<span class="ident">RgbHue</span>);
 </pre>
 </section>
     <section id='search' class="content hidden"></section>

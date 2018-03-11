@@ -287,6 +287,7 @@
 <span id="241">241</span>
 <span id="242">242</span>
 <span id="243">243</span>
+<span id="244">244</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">Float</span>;
 
@@ -294,7 +295,7 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">PartialEq</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">Sub</span>};
 
-<span class="kw">use</span> <span class="ident">flt</span>;
+<span class="kw">use</span> <span class="ident">cast</span>;
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">make_hues</span> {
     ($($(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc</span>:<span class="ident">meta</span>]</span>)<span class="op">+</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>;)<span class="op">+</span>) <span class="op">=&gt;</span> ($(
@@ -306,12 +307,13 @@
         <span class="doccomment">///also have some surprising effects if it&#39;s expected to act as a</span>
         <span class="doccomment">///linear number.</span>
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
+        <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
         <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span>(<span class="ident">T</span>);
 
         <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
             <span class="doccomment">///Create a new hue from radians, instead of degrees.</span>
             <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_radians</span>(<span class="ident">radians</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">radians</span> <span class="op">*</span> <span class="ident">flt</span>(<span class="number">180.0</span>) <span class="op">/</span> <span class="ident">flt</span>(<span class="ident">PI</span>))
+                <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>(<span class="ident">radians</span> <span class="op">*</span> <span class="ident">cast</span>(<span class="number">180.0</span>) <span class="op">/</span> <span class="ident">cast</span>(<span class="ident">PI</span>))
             }
 
             <span class="doccomment">///Get the hue as degrees, in the range `(-180, 180]`.</span>
@@ -321,7 +323,7 @@
 
             <span class="doccomment">///Convert the hue to radians, in the range `(-π, π]`.</span>
             <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_radians</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
-                <span class="ident">normalize_angle</span>(<span class="self">self</span>.<span class="number">0</span>) <span class="op">*</span> <span class="ident">flt</span>(<span class="ident">PI</span>) <span class="op">/</span> <span class="ident">flt</span>(<span class="number">180.0</span>)
+                <span class="ident">normalize_angle</span>(<span class="self">self</span>.<span class="number">0</span>) <span class="op">*</span> <span class="ident">cast</span>(<span class="ident">PI</span>) <span class="op">/</span> <span class="ident">cast</span>(<span class="number">180.0</span>)
             }
 
             <span class="doccomment">///Convert the hue to positive degrees, in the range `[0, 360)`.</span>
@@ -331,7 +333,7 @@
 
             <span class="doccomment">///Convert the hue to positive radians, in the range `[0, 2π)`.</span>
             <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_positive_radians</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
-                <span class="ident">normalize_angle_positive</span>(<span class="self">self</span>.<span class="number">0</span>) <span class="op">*</span> <span class="ident">flt</span>(<span class="ident">PI</span>) <span class="op">/</span> <span class="ident">flt</span>(<span class="number">180.0</span>)
+                <span class="ident">normalize_angle_positive</span>(<span class="self">self</span>.<span class="number">0</span>) <span class="op">*</span> <span class="ident">cast</span>(<span class="ident">PI</span>) <span class="op">/</span> <span class="ident">cast</span>(<span class="number">180.0</span>)
             }
         }
 
@@ -423,13 +425,13 @@
 }
 
 <span class="kw">fn</span> <span class="ident">normalize_angle</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">deg</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
-    <span class="kw">let</span> <span class="ident">c360</span> <span class="op">=</span> <span class="ident">flt</span>(<span class="number">360.0</span>);
-    <span class="kw">let</span> <span class="ident">c180</span> <span class="op">=</span> <span class="ident">flt</span>(<span class="number">180.0</span>);
+    <span class="kw">let</span> <span class="ident">c360</span> <span class="op">=</span> <span class="ident">cast</span>(<span class="number">360.0</span>);
+    <span class="kw">let</span> <span class="ident">c180</span> <span class="op">=</span> <span class="ident">cast</span>(<span class="number">180.0</span>);
     <span class="ident">deg</span> <span class="op">-</span> (((<span class="ident">deg</span> <span class="op">+</span> <span class="ident">c180</span>) <span class="op">/</span> <span class="ident">c360</span>) <span class="op">-</span> <span class="ident">T</span>::<span class="ident">one</span>()).<span class="ident">ceil</span>() <span class="op">*</span> <span class="ident">c360</span>
 }
 
 <span class="kw">fn</span> <span class="ident">normalize_angle_positive</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">deg</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
-    <span class="kw">let</span> <span class="ident">c360</span> <span class="op">=</span> <span class="ident">flt</span>(<span class="number">360.0</span>);
+    <span class="kw">let</span> <span class="ident">c360</span> <span class="op">=</span> <span class="ident">cast</span>(<span class="number">360.0</span>);
     <span class="ident">deg</span> <span class="op">-</span> ((<span class="ident">deg</span> <span class="op">/</span> <span class="ident">c360</span>).<span class="ident">floor</span>() <span class="op">*</span> <span class="ident">c360</span>)
 }
 

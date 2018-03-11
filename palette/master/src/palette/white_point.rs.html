@@ -233,17 +233,17 @@
 <span id="187">187</span>
 <span id="188">188</span>
 </pre><pre class="rust ">
-<span class="doccomment">//!Defines the tristimulus values of the CIE Illuminants.</span>
+<span class="doccomment">//! Defines the tristimulus values of the CIE Illuminants.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!White point is the reference white or target white as seen by a standard observer under a</span>
-<span class="doccomment">//!standard illuminant. For example, photographs taken indoors may be lit by incandescent lights,</span>
-<span class="doccomment">//!which are relatively orange compared to daylight. Defining &quot;white&quot; as daylight will give</span>
-<span class="doccomment">//!unacceptable results when attempting to color-correct a photograph taken with incandescent lighting.</span>
-
+<span class="doccomment">//! White point is the reference white or target white as seen by a standard observer under a</span>
+<span class="doccomment">//! standard illuminant. For example, photographs taken indoors may be lit by incandescent lights,</span>
+<span class="doccomment">//! which are relatively orange compared to daylight. Defining &quot;white&quot; as daylight will give</span>
+<span class="doccomment">//! unacceptable results when attempting to color-correct a photograph taken with incandescent</span>
+<span class="doccomment">//! lighting.</span>
 
 <span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">Float</span>;
 
-<span class="kw">use</span> {<span class="ident">Xyz</span>, <span class="ident">flt</span>};
+<span class="kw">use</span> {<span class="ident">cast</span>, <span class="ident">Component</span>, <span class="ident">Xyz</span>};
 
 <span class="doccomment">///WhitePoint defines the Xyz color co-ordinates for a given white point.</span>
 <span class="doccomment">///</span>
@@ -255,30 +255,30 @@
 <span class="doccomment">///and can be used in place of the ones defined in this library.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">WhitePoint</span> {
     <span class="doccomment">///Get the Xyz chromacity co-ordinates for the white point.</span>
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 }
 
-<span class="doccomment">///CIE standard illuminant A</span>
+<span class="doccomment">/// CIE standard illuminant A</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///CIE standard illuminant A is intended to represent typical, domestic, tungsten-filament lighting.</span>
-<span class="doccomment">///Its relative spectral power distribution is that of a Planckian radiator at a temperature of approximately 2856 K.</span>
-<span class="doccomment">///Uses the CIE 1932 2° Standard Observer</span>
+<span class="doccomment">/// CIE standard illuminant A is intended to represent typical, domestic, tungsten-filament</span>
+<span class="doccomment">/// lighting. Its relative spectral power distribution is that of a Planckian radiator at a</span>
+<span class="doccomment">/// temperature of approximately 2856 K. Uses the CIE 1932 2° Standard Observer</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">A</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">A</span> {
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">flt</span>(<span class="number">1.09850</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">flt</span>(<span class="number">0.35585</span>))
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">1.09850</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">cast</span>(<span class="number">0.35585</span>))
     }
 }
-<span class="doccomment">///CIE standard illuminant B</span>
+<span class="doccomment">/// CIE standard illuminant B</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///CIE standard illuminant B represents noon sunlight, with a correlated color temperature (CCT) of 4874 K</span>
-<span class="doccomment">///Uses the CIE 1932 2° Standard Observer</span>
+<span class="doccomment">/// CIE standard illuminant B represents noon sunlight, with a correlated color temperature (CCT)</span>
+<span class="doccomment">/// of 4874 K Uses the CIE 1932 2° Standard Observer</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">B</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">B</span> {
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">flt</span>(<span class="number">0.99072</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">flt</span>(<span class="number">0.85223</span>))
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">0.99072</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">cast</span>(<span class="number">0.85223</span>))
     }
 }
 <span class="doccomment">///CIE standard illuminant C</span>
@@ -288,8 +288,8 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">C</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">C</span> {
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">flt</span>(<span class="number">0.98074</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">flt</span>(<span class="number">1.18232</span>))
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">0.98074</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">cast</span>(<span class="number">1.18232</span>))
     }
 }
 <span class="doccomment">///CIE D series standard illuminant - D50</span>
@@ -299,8 +299,8 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D50</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D50</span> {
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">flt</span>(<span class="number">0.96422</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">flt</span>(<span class="number">0.82521</span>))
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">0.96422</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">cast</span>(<span class="number">0.82521</span>))
     }
 }
 <span class="doccomment">///CIE D series standard illuminant - D55</span>
@@ -310,8 +310,8 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D55</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D55</span> {
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">flt</span>(<span class="number">0.95682</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">flt</span>(<span class="number">0.92149</span>))
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">0.95682</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">cast</span>(<span class="number">0.92149</span>))
     }
 }
 <span class="doccomment">///CIE D series standard illuminant - D65</span>
@@ -321,8 +321,8 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D65</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D65</span> {
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">flt</span>(<span class="number">0.95047</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">flt</span>(<span class="number">1.08883</span>))
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">0.95047</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">cast</span>(<span class="number">1.08883</span>))
     }
 }
 <span class="doccomment">///CIE D series standard illuminant - D75</span>
@@ -332,8 +332,8 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D75</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D75</span> {
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">flt</span>(<span class="number">0.94972</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">flt</span>(<span class="number">1.22638</span>))
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">0.94972</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">cast</span>(<span class="number">1.22638</span>))
     }
 }
 <span class="doccomment">///CIE standard illuminant E</span>
@@ -343,8 +343,8 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">E</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">E</span> {
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">T</span>::<span class="ident">one</span>(),  <span class="ident">T</span>::<span class="ident">one</span>())
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">T</span>::<span class="ident">one</span>())
     }
 }
 <span class="doccomment">///CIE fluorescent illuminant series - F2</span>
@@ -353,8 +353,8 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">F2</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">F2</span> {
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">flt</span>(<span class="number">0.99186</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">flt</span>(<span class="number">0.67393</span>))
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">0.99186</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">cast</span>(<span class="number">0.67393</span>))
     }
 }
 <span class="doccomment">///CIE fluorescent illuminant series - F7</span>
@@ -363,8 +363,8 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">F7</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">F7</span> {
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">flt</span>(<span class="number">0.95041</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">flt</span>(<span class="number">1.08747</span>))
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">0.95041</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">cast</span>(<span class="number">1.08747</span>))
     }
 }
 <span class="doccomment">///CIE fluorescent illuminant series - F11</span>
@@ -373,8 +373,8 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">F11</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">F11</span> {
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">flt</span>(<span class="number">1.00962</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">flt</span>(<span class="number">0.64350</span>))
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">1.00962</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">cast</span>(<span class="number">0.64350</span>))
     }
 }
 <span class="doccomment">///CIE D series standard illuminant - D50</span>
@@ -384,8 +384,8 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D50Degree10</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D50Degree10</span> {
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">flt</span>(<span class="number">0.9672</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">flt</span>(<span class="number">0.8143</span>))
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">0.9672</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">cast</span>(<span class="number">0.8143</span>))
     }
 }
 <span class="doccomment">///CIE D series standard illuminant - D55</span>
@@ -395,8 +395,8 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D55Degree10</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D55Degree10</span> {
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">flt</span>(<span class="number">0.958</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">flt</span>(<span class="number">0.9093</span>))
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">0.958</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">cast</span>(<span class="number">0.9093</span>))
     }
 }
 <span class="doccomment">///CIE D series standard illuminant - D65</span>
@@ -406,8 +406,8 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D65Degree10</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D65Degree10</span> {
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">flt</span>(<span class="number">0.9481</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">flt</span>(<span class="number">1.073</span>))
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">0.9481</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">cast</span>(<span class="number">1.073</span>))
     }
 }
 <span class="doccomment">///CIE D series standard illuminant - D75</span>
@@ -417,8 +417,8 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D75Degree10</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D75Degree10</span> {
-    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">flt</span>(<span class="number">0.94416</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">flt</span>(<span class="number">1.2064</span>))
+    <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">0.94416</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">cast</span>(<span class="number">1.2064</span>))
     }
 }
 </pre>
