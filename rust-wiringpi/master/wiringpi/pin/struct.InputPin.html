@@ -10,11 +10,8 @@
     <title>wiringpi::pin::InputPin - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
-    
-    <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
-    <script src="../../storage.js"></script>
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
     
 
     
@@ -33,16 +30,9 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct InputPin</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.number">number</a><a href="#method.digital_read">digital_read</a><a href="#method.analog_read">analog_read</a><a href="#method.pull_up_dn_control">pull_up_dn_control</a><a href="#method.into_output">into_output</a><a href="#method.into_soft_pwm">into_soft_pwm</a><a href="#method.into_pwm">into_pwm</a><a href="#method.into_clock">into_clock</a></div><a class="sidebar-title" href="#synthetic-implementations">Auto Trait Implementations</a><div class="sidebar-links"><a href="#impl-Send">Send</a><a href="#impl-Sync">Sync</a></div></div><p class='location'><a href='../index.html'>wiringpi</a>::<wbr><a href='index.html'>pin</a></p><script>window.sidebarCurrent = {name: 'InputPin', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
+        <p class='location'>Struct InputPin</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.number">number</a><a href="#method.digital_read">digital_read</a><a href="#method.analog_read">analog_read</a><a href="#method.pull_up_dn_control">pull_up_dn_control</a><a href="#method.into_output">into_output</a><a href="#method.into_soft_pwm">into_soft_pwm</a><a href="#method.into_pwm">into_pwm</a><a href="#method.into_clock">into_clock</a></div></div><p class='location'><a href='../index.html'>wiringpi</a>::<wbr><a href='index.html'>pin</a></p><script>window.sidebarCurrent = {name: 'InputPin', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
-    <div class="theme-picker">
-        <button id="theme-picker" aria-label="Pick another theme!">
-            <img src="../../brush.svg" width="18" alt="Pick another theme!">
-        </button>
-        <div id="theme-choices"></div>
-    </div>
-    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -69,6 +59,7 @@
 <h4 id='method.number' class="method"><span id='number.v' class='invisible'><code>pub fn <a href='#method.number' class='fnname'>number</a>(&amp;self) -&gt; <a class="type" href="../../libc/type.c_int.html" title="type libc::c_int">c_int</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#166-169' title='goto source code'>[src]</a></span></h4>
 <h4 id='method.digital_read' class="method"><span id='digital_read.v' class='invisible'><code>pub fn <a href='#method.digital_read' class='fnname'>digital_read</a>(&amp;self) -&gt; <a class="enum" href="../../wiringpi/pin/enum.Value.html" title="enum wiringpi::pin::Value">Value</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#174-184' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This function returns the value read at the given pin.</p>
+
 <p>It will be <code>High</code> or <code>Low</code> (1 or 0) depending on the logic level at the pin.</p>
 </div><h4 id='method.analog_read' class="method"><span id='analog_read.v' class='invisible'><code>pub fn <a href='#method.analog_read' class='fnname'>analog_read</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#190-194' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This returns the value read on the supplied analog input pin. You
@@ -78,6 +69,7 @@ board, etc.</p>
 </div></div><h3 id='impl-1' class='impl'><span class='in-band'><code>impl&lt;P:&nbsp;<a class="trait" href="../../wiringpi/pin/trait.Pin.html" title="trait wiringpi::pin::Pin">Pin</a> + <a class="trait" href="../../wiringpi/pin/trait.RequiresRoot.html" title="trait wiringpi::pin::RequiresRoot">RequiresRoot</a>&gt; <a class="struct" href="../../wiringpi/pin/struct.InputPin.html" title="struct wiringpi::pin::InputPin">InputPin</a>&lt;P&gt;</code><a href='#impl-1' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#197-218' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.pull_up_dn_control' class="method"><span id='pull_up_dn_control.v' class='invisible'><code>pub fn <a href='#method.pull_up_dn_control' class='fnname'>pull_up_dn_control</a>(&amp;self, pud: <a class="enum" href="../../wiringpi/pin/enum.Pull.html" title="enum wiringpi::pin::Pull">Pull</a>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#203-207' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>This sets the pull-up or pull-down resistor mode on the given pin.</p>
+
 <p>Unlike the Arduino, the BCM2835 has both pull-up an down internal
 resistors. The parameter pud should be; <code>Off</code>, (no pull up/down),
 <code>Down</code> (pull to ground) or <code>Up</code> (pull to 3.3v)</p>
@@ -87,19 +79,7 @@ resistors. The parameter pud should be; <code>Off</code>, (no pull up/down),
 <div class='impl-items'><h4 id='method.into_pwm' class="method"><span id='into_pwm.v' class='invisible'><code>pub fn <a href='#method.into_pwm' class='fnname'>into_pwm</a>(self) -&gt; <a class="struct" href="../../wiringpi/pin/struct.PwmPin.html" title="struct wiringpi::pin::PwmPin">PwmPin</a>&lt;P&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#221-224' title='goto source code'>[src]</a></span></h4>
 </div><h3 id='impl-3' class='impl'><span class='in-band'><code>impl&lt;P:&nbsp;<a class="trait" href="../../wiringpi/pin/trait.Pin.html" title="trait wiringpi::pin::Pin">Pin</a> + <a class="trait" href="../../wiringpi/pin/trait.GpioClock.html" title="trait wiringpi::pin::GpioClock">GpioClock</a>&gt; <a class="struct" href="../../wiringpi/pin/struct.InputPin.html" title="struct wiringpi::pin::InputPin">InputPin</a>&lt;P&gt;</code><a href='#impl-3' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#227-232' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.into_clock' class="method"><span id='into_clock.v' class='invisible'><code>pub fn <a href='#method.into_clock' class='fnname'>into_clock</a>(self) -&gt; <a class="struct" href="../../wiringpi/pin/struct.ClockPin.html" title="struct wiringpi::pin::ClockPin">ClockPin</a>&lt;P&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#228-231' title='goto source code'>[src]</a></span></h4>
-</div>
-            <h2 id='implementations' class='small-section-header'>
-              Trait Implementations<a href='#implementations' class='anchor'></a>
-            </h2>
-            <div id='implementations-list'>
-        </div>
-            <h2 id='synthetic-implementations' class='small-section-header'>
-              Auto Trait Implementations<a href='#synthetic-implementations' class='anchor'></a>
-            </h2>
-            <div id='synthetic-implementations-list'>
-        <h3 id='impl-Send' class='impl'><span class='in-band'><code>impl&lt;Pin&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> for <a class="struct" href="../../wiringpi/pin/struct.InputPin.html" title="struct wiringpi::pin::InputPin">InputPin</a>&lt;Pin&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Pin: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>,&nbsp;</span></code><a href='#impl-Send' class='anchor'></a></span><span class='out-of-band'></span></h3>
-<div class='impl-items'></div><h3 id='impl-Sync' class='impl'><span class='in-band'><code>impl&lt;Pin&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> for <a class="struct" href="../../wiringpi/pin/struct.InputPin.html" title="struct wiringpi::pin::InputPin">InputPin</a>&lt;Pin&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Pin: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a>,&nbsp;</span></code><a href='#impl-Sync' class='anchor'></a></span><span class='out-of-band'></span></h3>
-<div class='impl-items'></div></div></section>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -112,22 +92,20 @@ resistors. The parameter pud should be; <code>Off</code>, (no pull up/down),
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt><kbd>?</kbd></dt>
+                    <dt>?</dt>
                     <dd>Show this help dialog</dd>
-                    <dt><kbd>S</kbd></dt>
+                    <dt>S</dt>
                     <dd>Focus the search field</dd>
-                    <dt><kbd>↑</kbd></dt>
+                    <dt>↑</dt>
                     <dd>Move up in search results</dd>
-                    <dt><kbd>↓</kbd></dt>
+                    <dt>↓</dt>
                     <dd>Move down in search results</dd>
-                    <dt><kbd>↹</kbd></dt>
+                    <dt>↹</dt>
                     <dd>Switch tab</dd>
-                    <dt><kbd>&#9166;</kbd></dt>
+                    <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
-                    <dt><kbd>+</kbd></dt>
-                    <dd>Expand all sections</dd>
-                    <dt><kbd>-</kbd></dt>
-                    <dd>Collapse all sections</dd>
+                    <dt style="width:31px;">+ / -</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
