@@ -10,8 +10,11 @@
     <title>wiringpi::pin::SoftPwmPin - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Struct SoftPwmPin</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.number">number</a><a href="#method.pwm_write">pwm_write</a><a href="#method.pwm_stop">pwm_stop</a><a href="#method.into_input">into_input</a><a href="#method.into_output">into_output</a><a href="#method.into_pwm">into_pwm</a><a href="#method.into_clock">into_clock</a></div></div><p class='location'><a href='../index.html'>wiringpi</a>::<wbr><a href='index.html'>pin</a></p><script>window.sidebarCurrent = {name: 'SoftPwmPin', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -51,15 +61,12 @@
                    </a>
                </span><a class='srclink' href='../../src/wiringpi/lib.rs.html#246' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct SoftPwmPin&lt;Pin&gt;(_, _);</pre><div class='docblock'><p>A pin with software controlled PWM output.</p>
-
 <p>Due to limitations of the chip only one pin is able to do
 hardware-controlled PWM output. The <code>SoftPwmPin</code>s on the
 other hand allow for all GPIOs to output PWM signals.</p>
-
 <p>The pulse width of the signal will be 100μs with a value range
 of [0,100] (where <code>0</code> is a constant low and <code>100</code> is a
 constant high) resulting in a frequenzy of 100 Hz.</p>
-
 <p><strong>Important</strong>: In order to use software PWM pins <em>wiringPi</em>
 has to be setup in GPIO mode via <code>setup_gpio()</code>.</p>
 </div>
@@ -73,11 +80,9 @@ signal.</p>
 </div><h4 id='method.number' class="method"><span id='number.v' class='invisible'><code>pub fn <a href='#method.number' class='fnname'>number</a>(&amp;self) -&gt; <a class="type" href="../../libc/type.c_int.html" title="type libc::c_int">c_int</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#260-263' title='goto source code'>[src]</a></span></h4>
 <h4 id='method.pwm_write' class="method"><span id='pwm_write.v' class='invisible'><code>pub fn <a href='#method.pwm_write' class='fnname'>pwm_write</a>(&amp;self, value: <a class="type" href="../../libc/type.c_int.html" title="type libc::c_int">c_int</a>)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#268-272' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Sets the duty cycle.</p>
-
 <p><code>value</code> has to be in the interval [0,100].</p>
 </div><h4 id='method.pwm_stop' class="method"><span id='pwm_stop.v' class='invisible'><code>pub fn <a href='#method.pwm_stop' class='fnname'>pwm_stop</a>(self)</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#278-282' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Stops the software handling of this pin.</p>
-
 <p><em>Note</em>: In order to control this pin via software PWM again
 it will need to be recreated using <code>new()</code>.</p>
 </div><h4 id='method.into_input' class="method"><span id='into_input.v' class='invisible'><code>pub fn <a href='#method.into_input' class='fnname'>into_input</a>(self) -&gt; <a class="struct" href="../../wiringpi/pin/struct.InputPin.html" title="struct wiringpi::pin::InputPin">InputPin</a>&lt;P&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/wiringpi/lib.rs.html#284-288' title='goto source code'>[src]</a></span></h4>
@@ -99,20 +104,22 @@ it will need to be recreated using <code>new()</code>.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
