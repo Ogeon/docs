@@ -10,7 +10,8 @@
     <title>wiringpi::WiringPi - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../dark.css">
     <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
@@ -33,7 +34,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct WiringPi</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.input_pin">input_pin</a><a href="#method.output_pin">output_pin</a><a href="#method.millis">millis</a><a href="#method.micros">micros</a><a href="#method.digital_write_byte">digital_write_byte</a><a href="#method.pwm_pin">pwm_pin</a><a href="#method.clock_pin">clock_pin</a><a href="#method.soft_pwm_pin">soft_pwm_pin</a></div></div><p class='location'><a href='index.html'>wiringpi</a></p><script>window.sidebarCurrent = {name: 'WiringPi', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
+        <p class='location'>Struct WiringPi</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.input_pin">input_pin</a><a href="#method.output_pin">output_pin</a><a href="#method.millis">millis</a><a href="#method.micros">micros</a><a href="#method.digital_write_byte">digital_write_byte</a><a href="#method.pwm_pin">pwm_pin</a><a href="#method.clock_pin">clock_pin</a><a href="#method.soft_pwm_pin">soft_pwm_pin</a></div><a class="sidebar-title" href="#synthetic-implementations">Auto Trait Implementations</a><div class="sidebar-links"><a href="#impl-Send">Send</a><a href="#impl-Sync">Sync</a></div></div><p class='location'><a href='index.html'>wiringpi</a></p><script>window.sidebarCurrent = {name: 'WiringPi', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -85,7 +86,19 @@ it still takes two write operations to the Pi’s GPIO hardware.</p>
 <div class='impl-items'><h4 id='method.clock_pin' class="method"><span id='clock_pin.v' class='invisible'><code>pub fn <a href='#method.clock_pin' class='fnname'>clock_pin</a>(&amp;self) -&gt; <a class="struct" href="../wiringpi/pin/struct.ClockPin.html" title="struct wiringpi::pin::ClockPin">ClockPin</a>&lt;P&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/wiringpi/lib.rs.html#599-601' title='goto source code'>[src]</a></span></h4>
 </div><h3 id='impl-3' class='impl'><span class='in-band'><code>impl&lt;P:&nbsp;<a class="trait" href="../wiringpi/pin/trait.Pin.html" title="trait wiringpi::pin::Pin">Pin</a> + <a class="trait" href="../wiringpi/pin/trait.RequiresRoot.html" title="trait wiringpi::pin::RequiresRoot">RequiresRoot</a>&gt; <a class="struct" href="../wiringpi/struct.WiringPi.html" title="struct wiringpi::WiringPi">WiringPi</a>&lt;P&gt;</code><a href='#impl-3' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/wiringpi/lib.rs.html#604-609' title='goto source code'>[src]</a></span></h3>
 <div class='impl-items'><h4 id='method.soft_pwm_pin' class="method"><span id='soft_pwm_pin.v' class='invisible'><code>pub fn <a href='#method.soft_pwm_pin' class='fnname'>soft_pwm_pin</a>(&amp;self, pin: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>) -&gt; <a class="struct" href="../wiringpi/pin/struct.SoftPwmPin.html" title="struct wiringpi::pin::SoftPwmPin">SoftPwmPin</a>&lt;P&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/wiringpi/lib.rs.html#605-608' title='goto source code'>[src]</a></span></h4>
-</div></section>
+</div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+            <div id='implementations-list'>
+        </div>
+                <h2 id='synthetic-implementations' class='small-section-header'>
+                  Auto Trait Implementations<a href='#synthetic-implementations' class='anchor'></a>
+                </h2>
+                <div id='synthetic-implementations-list'>
+            <h3 id='impl-Send' class='impl'><span class='in-band'><code>impl&lt;Pin&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> for <a class="struct" href="../wiringpi/struct.WiringPi.html" title="struct wiringpi::WiringPi">WiringPi</a>&lt;Pin&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Pin: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>,&nbsp;</span></code><a href='#impl-Send' class='anchor'></a></span><span class='out-of-band'></span></h3>
+<div class='impl-items'></div><h3 id='impl-Sync' class='impl'><span class='in-band'><code>impl&lt;Pin&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> for <a class="struct" href="../wiringpi/struct.WiringPi.html" title="struct wiringpi::WiringPi">WiringPi</a>&lt;Pin&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Pin: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a>,&nbsp;</span></code><a href='#impl-Sync' class='anchor'></a></span><span class='out-of-band'></span></h3>
+<div class='impl-items'></div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
