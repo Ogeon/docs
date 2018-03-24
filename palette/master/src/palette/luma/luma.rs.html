@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `src/luma/luma.rs`.">
+    <meta name="description" content="Source to the Rust file `palette/src/luma/luma.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>luma.rs.html -- source</title>
@@ -599,11 +599,6 @@
 <span id="553">553</span>
 <span id="554">554</span>
 <span id="555">555</span>
-<span id="556">556</span>
-<span id="557">557</span>
-<span id="558">558</span>
-<span id="559">559</span>
-<span id="560">560</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">approx</span>::<span class="ident">ApproxEq</span>;
 
@@ -633,7 +628,11 @@
 <span class="doccomment">///perceived to be. It&#39;s basically the `Y` component of [CIE</span>
 <span class="doccomment">///XYZ](struct.Xyz.html). The lack of any form of hue representation limits</span>
 <span class="doccomment">///the set of operations that can be performed on it.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">FromColor</span>)]</span>
+<span class="attribute">#[<span class="ident">palette_internal</span>]</span>
+<span class="attribute">#[<span class="ident">palette_white_point</span> <span class="op">=</span> <span class="string">&quot;S::WhitePoint&quot;</span>]</span>
+<span class="attribute">#[<span class="ident">palette_component</span> <span class="op">=</span> <span class="string">&quot;T&quot;</span>]</span>
+<span class="attribute">#[<span class="ident">palette_manual_from</span>(<span class="ident">Xyz</span>, <span class="ident">Yxy</span>, <span class="ident">Luma</span> <span class="op">=</span> <span class="string">&quot;from_linear&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">S</span> <span class="op">=</span> <span class="ident">Srgb</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span>
 <span class="kw">where</span>
@@ -787,28 +786,29 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">FromColor</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="ident">WhitePoint</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">S</span>: <span class="ident">LumaStandard</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;</span>,
+    <span class="ident">S</span>: <span class="ident">LumaStandard</span>,
     <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
-    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="kw">fn</span> <span class="ident">from_xyz</span>(<span class="ident">xyz</span>: <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="ident">WhitePoint</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from_linear</span>(<span class="ident">Luma</span> {
-            <span class="ident">luma</span>: <span class="ident">xyz</span>.<span class="ident">y</span>,
+            <span class="ident">luma</span>: <span class="ident">color</span>.<span class="ident">y</span>,
             <span class="ident">standard</span>: <span class="ident">PhantomData</span>,
         })
     }
+}
 
-    <span class="kw">fn</span> <span class="ident">from_yxy</span>(<span class="ident">yxy</span>: <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="ident">WhitePoint</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">S</span>: <span class="ident">LumaStandard</span>,
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+{
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="ident">WhitePoint</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from_linear</span>(<span class="ident">Luma</span> {
-            <span class="ident">luma</span>: <span class="ident">yxy</span>.<span class="ident">luma</span>,
+            <span class="ident">luma</span>: <span class="ident">color</span>.<span class="ident">luma</span>,
             <span class="ident">standard</span>: <span class="ident">PhantomData</span>,
         })
-    }
-
-    <span class="kw">fn</span> <span class="ident">from_luma</span>(<span class="ident">luma</span>: <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">Wp</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span>::<span class="ident">from_linear</span>(<span class="ident">luma</span>)
     }
 }
 
@@ -1101,16 +1101,6 @@
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">P</span> {
         <span class="self">self</span>.<span class="ident">as_raw_mut</span>()
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">Component</span>,
-    <span class="ident">S</span>: <span class="ident">LumaStandard</span>,
-{
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">color</span>.<span class="ident">color</span>
     }
 }
 

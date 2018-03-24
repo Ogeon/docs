@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `src/xyz.rs`.">
+    <meta name="description" content="Source to the Rust file `palette/src/xyz.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>xyz.rs.html -- source</title>
@@ -549,6 +549,17 @@
 <span id="503">503</span>
 <span id="504">504</span>
 <span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">Float</span>;
 
@@ -556,10 +567,10 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 
 <span class="kw">use</span> {<span class="ident">Alpha</span>, <span class="ident">Lab</span>, <span class="ident">Luma</span>, <span class="ident">Yxy</span>};
-<span class="kw">use</span> {<span class="ident">Component</span>, <span class="ident">ComponentWise</span>, <span class="ident">FromColor</span>, <span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">Shade</span>};
+<span class="kw">use</span> {<span class="ident">Component</span>, <span class="ident">ComponentWise</span>, <span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">Shade</span>};
 <span class="kw">use</span> <span class="ident">white_point</span>::{<span class="ident">D65</span>, <span class="ident">WhitePoint</span>};
-<span class="kw">use</span> <span class="ident">rgb</span>::{<span class="ident">Rgb</span>, <span class="ident">RgbSpace</span>};
-<span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">Linear</span>;
+<span class="kw">use</span> <span class="ident">rgb</span>::{<span class="ident">Rgb</span>, <span class="ident">RgbSpace</span>, <span class="ident">RgbStandard</span>};
+<span class="kw">use</span> <span class="ident">luma</span>::<span class="ident">LumaStandard</span>;
 <span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">pixel</span>::<span class="ident">RawPixel</span>;
 <span class="kw">use</span> <span class="ident">matrix</span>::{<span class="ident">multiply_rgb_to_xyz</span>, <span class="ident">rgb_to_xyz_matrix</span>};
 <span class="kw">use</span> {<span class="ident">cast</span>, <span class="ident">clamp</span>};
@@ -576,7 +587,11 @@
 <span class="doccomment">///illuminant and a standard observer to be defined.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///Conversions and operations on this color space depend on the defined white point</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">FromColor</span>)]</span>
+<span class="attribute">#[<span class="ident">palette_internal</span>]</span>
+<span class="attribute">#[<span class="ident">palette_white_point</span> <span class="op">=</span> <span class="string">&quot;Wp&quot;</span>]</span>
+<span class="attribute">#[<span class="ident">palette_component</span> <span class="op">=</span> <span class="string">&quot;T&quot;</span>]</span>
+<span class="attribute">#[<span class="ident">palette_manual_from</span>(<span class="ident">Xyz</span>, <span class="ident">Rgb</span>, <span class="ident">Lab</span>, <span class="ident">Yxy</span>, <span class="ident">Luma</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span> <span class="op">=</span> <span class="ident">D65</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span>
 <span class="kw">where</span>
@@ -681,37 +696,47 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">FromColor</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
+    <span class="ident">S</span>: <span class="ident">RgbStandard</span>,
+    <span class="ident">S</span>::<span class="ident">Space</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;</span>,
+{
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="ident">transform_matrix</span> <span class="op">=</span> <span class="ident">rgb_to_xyz_matrix</span>::<span class="op">&lt;</span><span class="ident">S</span>::<span class="ident">Space</span>, <span class="ident">T</span><span class="op">&gt;</span>();
+        <span class="ident">multiply_rgb_to_xyz</span>(<span class="kw-2">&amp;</span><span class="ident">transform_matrix</span>, <span class="kw-2">&amp;</span><span class="ident">color</span>.<span class="ident">into_linear</span>())
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
     <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="kw">fn</span> <span class="ident">from_xyz</span>(<span class="ident">xyz</span>: <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="ident">xyz</span>
-    }
-
-    <span class="kw">fn</span> <span class="ident">from_rgb</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;&gt;</span>(<span class="ident">rgb</span>: <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">transform_matrix</span> <span class="op">=</span> <span class="ident">rgb_to_xyz_matrix</span>::<span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>();
-        <span class="ident">multiply_rgb_to_xyz</span>(<span class="kw-2">&amp;</span><span class="ident">transform_matrix</span>, <span class="kw-2">&amp;</span><span class="ident">rgb</span>)
-    }
-
-    <span class="kw">fn</span> <span class="ident">from_yxy</span>(<span class="ident">yxy</span>: <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">xyz</span> <span class="op">=</span> <span class="ident">Xyz</span> {
-            <span class="ident">y</span>: <span class="ident">yxy</span>.<span class="ident">luma</span>,
+            <span class="ident">y</span>: <span class="ident">color</span>.<span class="ident">luma</span>,
             ..<span class="ident">Default</span>::<span class="ident">default</span>()
         };
         <span class="comment">// If denominator is zero, NAN or INFINITE leave x and z at the default 0</span>
-        <span class="kw">if</span> <span class="ident">yxy</span>.<span class="ident">y</span>.<span class="ident">is_normal</span>() {
-            <span class="ident">xyz</span>.<span class="ident">x</span> <span class="op">=</span> <span class="ident">yxy</span>.<span class="ident">luma</span> <span class="op">*</span> <span class="ident">yxy</span>.<span class="ident">x</span> <span class="op">/</span> <span class="ident">yxy</span>.<span class="ident">y</span>;
-            <span class="ident">xyz</span>.<span class="ident">z</span> <span class="op">=</span> <span class="ident">yxy</span>.<span class="ident">luma</span> <span class="op">*</span> (<span class="ident">T</span>::<span class="ident">one</span>() <span class="op">-</span> <span class="ident">yxy</span>.<span class="ident">x</span> <span class="op">-</span> <span class="ident">yxy</span>.<span class="ident">y</span>) <span class="op">/</span> <span class="ident">yxy</span>.<span class="ident">y</span>;
+        <span class="kw">if</span> <span class="ident">color</span>.<span class="ident">y</span>.<span class="ident">is_normal</span>() {
+            <span class="ident">xyz</span>.<span class="ident">x</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">luma</span> <span class="op">*</span> <span class="ident">color</span>.<span class="ident">x</span> <span class="op">/</span> <span class="ident">color</span>.<span class="ident">y</span>;
+            <span class="ident">xyz</span>.<span class="ident">z</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">luma</span> <span class="op">*</span> (<span class="ident">T</span>::<span class="ident">one</span>() <span class="op">-</span> <span class="ident">color</span>.<span class="ident">x</span> <span class="op">-</span> <span class="ident">color</span>.<span class="ident">y</span>) <span class="op">/</span> <span class="ident">color</span>.<span class="ident">y</span>;
         }
         <span class="ident">xyz</span>
     }
+}
 
-    <span class="kw">fn</span> <span class="ident">from_lab</span>(<span class="ident">lab</span>: <span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">y</span> <span class="op">=</span> (<span class="ident">lab</span>.<span class="ident">l</span> <span class="op">+</span> <span class="ident">cast</span>(<span class="number">16.0</span>)) <span class="op">/</span> <span class="ident">cast</span>(<span class="number">116.0</span>);
-        <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">y</span> <span class="op">+</span> (<span class="ident">lab</span>.<span class="ident">a</span> <span class="op">/</span> <span class="ident">cast</span>(<span class="number">500.0</span>));
-        <span class="kw">let</span> <span class="ident">z</span> <span class="op">=</span> <span class="ident">y</span> <span class="op">-</span> (<span class="ident">lab</span>.<span class="ident">b</span> <span class="op">/</span> <span class="ident">cast</span>(<span class="number">200.0</span>));
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
+{
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="ident">y</span> <span class="op">=</span> (<span class="ident">color</span>.<span class="ident">l</span> <span class="op">+</span> <span class="ident">cast</span>(<span class="number">16.0</span>)) <span class="op">/</span> <span class="ident">cast</span>(<span class="number">116.0</span>);
+        <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">y</span> <span class="op">+</span> (<span class="ident">color</span>.<span class="ident">a</span> <span class="op">/</span> <span class="ident">cast</span>(<span class="number">500.0</span>));
+        <span class="kw">let</span> <span class="ident">z</span> <span class="op">=</span> <span class="ident">y</span> <span class="op">-</span> (<span class="ident">color</span>.<span class="ident">b</span> <span class="op">/</span> <span class="ident">cast</span>(<span class="number">200.0</span>));
 
         <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">c</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
             <span class="kw">let</span> <span class="ident">epsilon</span>: <span class="ident">T</span> <span class="op">=</span> <span class="ident">cast</span>(<span class="number">6.0</span> <span class="op">/</span> <span class="number">29.0</span>);
@@ -727,9 +752,16 @@
 
         <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">convert</span>(<span class="ident">x</span>), <span class="ident">convert</span>(<span class="ident">y</span>), <span class="ident">convert</span>(<span class="ident">z</span>)) <span class="op">*</span> <span class="ident">Wp</span>::<span class="ident">get_xyz</span>()
     }
+}
 
-    <span class="kw">fn</span> <span class="ident">from_luma</span>(<span class="ident">luma</span>: <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">Wp</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
-        <span class="ident">Wp</span>::<span class="ident">get_xyz</span>() <span class="op">*</span> <span class="ident">luma</span>.<span class="ident">luma</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
+    <span class="ident">S</span>: <span class="ident">LumaStandard</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;</span>,
+{
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="ident">Wp</span>::<span class="ident">get_xyz</span>() <span class="op">*</span> <span class="ident">color</span>.<span class="ident">luma</span>
     }
 }
 
@@ -987,16 +1019,6 @@
 {
     <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">P</span> {
         <span class="self">self</span>.<span class="ident">as_raw_mut</span>()
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
-    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
-{
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="ident">color</span>.<span class="ident">color</span>
     }
 }
 

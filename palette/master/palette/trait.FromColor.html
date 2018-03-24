@@ -49,7 +49,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/palette/convert.rs.html#17-64' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/palette/convert.rs.html#156-203' title='goto source code'>[src]</a></span></h1>
 <pre class='rust trait'>pub trait FromColor&lt;Wp&nbsp;=&nbsp;<a class="struct" href="../palette/white_point/struct.D65.html" title="struct palette::white_point::D65">D65</a>, T&nbsp;=&nbsp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span>{
     fn <a href='#tymethod.from_xyz' class='fnname'>from_xyz</a>(_: <a class="struct" href="../palette/struct.Xyz.html" title="struct palette::Xyz">Xyz</a>&lt;Wp, T&gt;) -&gt; Self;
 
@@ -61,14 +61,147 @@
 <div class='item-spacer'></div>    fn <a href='#method.from_hsv' class='fnname'>from_hsv</a>&lt;S:&nbsp;<a class="trait" href="../palette/rgb/trait.RgbSpace.html" title="trait palette::rgb::RgbSpace">RgbSpace</a>&lt;WhitePoint = Wp&gt;&gt;(inp: <a class="struct" href="../palette/struct.Hsv.html" title="struct palette::Hsv">Hsv</a>&lt;S, T&gt;) -&gt; Self { ... }
 <div class='item-spacer'></div>    fn <a href='#method.from_hwb' class='fnname'>from_hwb</a>&lt;S:&nbsp;<a class="trait" href="../palette/rgb/trait.RgbSpace.html" title="trait palette::rgb::RgbSpace">RgbSpace</a>&lt;WhitePoint = Wp&gt;&gt;(inp: <a class="struct" href="../palette/struct.Hwb.html" title="struct palette::Hwb">Hwb</a>&lt;S, T&gt;) -&gt; Self { ... }
 <div class='item-spacer'></div>    fn <a href='#method.from_luma' class='fnname'>from_luma</a>(inp: <a class="struct" href="../palette/luma/struct.Luma.html" title="struct palette::luma::Luma">Luma</a>&lt;<a class="struct" href="../palette/encoding/linear/struct.Linear.html" title="struct palette::encoding::linear::Linear">Linear</a>&lt;Wp&gt;, T&gt;) -&gt; Self { ... }
-}</pre><div class='docblock'><p>FromColor provides conversion between the colors.</p>
+}</pre><div class='docblock'><p>FromColor provides conversion from the colors.</p>
 
-<p>It requires from_xyz and derives conversion to other colors as a default from this.
-These defaults must be overridden when direct conversion exists between colors.
-For example, Luma has direct conversion to LinRgb. So from_rgb conversion for Luma and
+<p>It requires from_xyz, when implemented manually, and derives conversion to other colors as a
+default from this. These defaults must be overridden when direct conversion exists between
+colors. For example, Luma has direct conversion to LinRgb. So from_rgb conversion for Luma and
 from_luma for LinRgb is implemented directly. The from for the same color must override
 the default. For example, from_rgb for LinRgb will convert via Xyz which needs to be overridden
-with self to avoid the unnecessary converison.</p>
+with self to avoid the unnecessary conversion.</p>
+
+<h1 id='deriving' class='section-header'><a href='#deriving'>Deriving</a></h1>
+<p><code>FromColor</code> can be derived in a mostly automatic way. The strength of deriving it is that it
+will also derive <code>From</code> implementations for all of the <code>palette</code> color types. The minimum
+requirement is to implement <code>From&lt;Xyz&gt;</code>, but it can also be customized to make use of generics
+and have other manual implementations.</p>
+
+<h2 id='attributes' class='section-header'><a href='#attributes'>Attributes</a></h2>
+<ul>
+<li><p><code>#[palette_manual_from(Luma, Rgb = &quot;from_rgb_internal&quot;)]</code>: Specifies the color types that
+the the custom color type already has <code>From</code> implementations for. Adding <code>= &quot;function_name&quot;</code>
+tells it to use that function instead of a <code>From</code> implementation. The default, when omitted,
+is to require <code>From&lt;Xyz&gt;</code> to be implemented.</p></li>
+<li><p><code>#[palette_white_point = &quot;some::white_point::Type&quot;]</code>: Sets the white point type that should
+be used when deriving. The default is <code>D65</code>, but it may be any other type, including
+type parameters.</p></li>
+<li><p><code>#[palette_component = &quot;some::component::Type&quot;]</code>: Sets the color component type that should
+be used when deriving. The default is <code>f32</code>, but it may be any other type, including
+type parameters.</p></li>
+<li><p><code>#[palette_rgb_space = &quot;some::rgb_space::Type&quot;]</code>: Sets the RGB space type that should
+be used when deriving. The default is to either use <code>Srgb</code> or a best effort to convert between
+spaces, so sometimes it has to be set to a specific type. This does also accept type parameters.</p></li>
+</ul>
+
+<h2 id='examples' class='section-header'><a href='#examples'>Examples</a></h2>
+<p>Minimum requirements implementation:</p>
+
+<pre class="rust rust-example-rendered">
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">palette_derive</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">palette</span>;
+
+<span class="kw">use</span> <span class="ident">palette</span>::{<span class="ident">Xyz</span>, <span class="ident">Srgb</span>};
+
+<span class="doccomment">/// A custom version of Xyz that stores integer values from 0 to 100.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">FromColor</span>)]</span>
+<span class="kw">struct</span> <span class="ident">Xyz100</span> {
+    <span class="ident">x</span>: <span class="ident">u8</span>,
+    <span class="ident">y</span>: <span class="ident">u8</span>,
+    <span class="ident">z</span>: <span class="ident">u8</span>,
+}
+
+<span class="comment">// We have to at least implement conversion from Xyz if we don&#39;t</span>
+<span class="comment">// specify anything else, using the `palette_manual_from` attribute.</span>
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Xyz</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Xyz100</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">Xyz</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="ident">color</span> <span class="op">*</span> <span class="number">100.0</span>;
+        <span class="ident">Xyz100</span> {
+            <span class="ident">x</span>: <span class="ident">scaled</span>.<span class="ident">x</span>.<span class="ident">max</span>(<span class="number">0.0</span>).<span class="ident">min</span>(<span class="number">100.0</span>) <span class="kw">as</span> <span class="ident">u8</span>,
+            <span class="ident">y</span>: <span class="ident">scaled</span>.<span class="ident">y</span>.<span class="ident">max</span>(<span class="number">0.0</span>).<span class="ident">min</span>(<span class="number">100.0</span>) <span class="kw">as</span> <span class="ident">u8</span>,
+            <span class="ident">z</span>: <span class="ident">scaled</span>.<span class="ident">z</span>.<span class="ident">max</span>(<span class="number">0.0</span>).<span class="ident">min</span>(<span class="number">100.0</span>) <span class="kw">as</span> <span class="ident">u8</span>,
+        }
+    }
+}
+
+
+<span class="kw">fn</span> <span class="ident">main</span>() {
+    <span class="comment">// Start with an sRGB color and convert it from u8 to f32,</span>
+    <span class="comment">// which is the default component type.</span>
+    <span class="kw">let</span> <span class="ident">rgb</span> <span class="op">=</span> <span class="ident">Srgb</span>::<span class="ident">new</span>(<span class="number">196u8</span>, <span class="number">238</span>, <span class="number">155</span>).<span class="ident">into_format</span>();
+
+    <span class="comment">// Convert the rgb color to our own format.</span>
+    <span class="kw">let</span> <span class="ident">xyz</span> <span class="op">=</span> <span class="ident">Xyz100</span>::<span class="ident">from</span>(<span class="ident">rgb</span>);
+
+    <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">xyz</span>, <span class="ident">Xyz100</span> {<span class="ident">x</span>: <span class="number">59</span>, <span class="ident">y</span>: <span class="number">75</span>, <span class="ident">z</span>: <span class="number">42</span>});
+}</pre>
+
+<p>With generic components:</p>
+
+<pre class="rust rust-example-rendered">
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">palette_derive</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">palette</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">num_traits</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">approx</span>;
+
+<span class="kw">use</span> <span class="ident">palette</span>::{<span class="ident">Srgb</span>, <span class="ident">Hsv</span>, <span class="ident">Pixel</span>, <span class="ident">Component</span>, <span class="ident">FromColor</span>};
+<span class="kw">use</span> <span class="ident">palette</span>::<span class="ident">rgb</span>::{<span class="ident">Rgb</span>, <span class="ident">RgbSpace</span>};
+<span class="kw">use</span> <span class="ident">palette</span>::<span class="ident">encoding</span>::<span class="ident">Linear</span>;
+<span class="kw">use</span> <span class="ident">palette</span>::<span class="ident">white_point</span>::<span class="ident">D65</span>;
+<span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">Float</span>;
+
+<span class="doccomment">/// sRGB, but with a reversed memory layout.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Debug</span>, <span class="ident">FromColor</span>)]</span>
+<span class="attribute">#[<span class="ident">palette_manual_from</span>(<span class="ident">Rgb</span> <span class="op">=</span> <span class="string">&quot;from_rgb_internal&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">palette_component</span> <span class="op">=</span> <span class="string">&quot;T&quot;</span>]</span>
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span> <span class="comment">// Makes sure the memory layout is as we want it.</span>
+<span class="kw">struct</span> <span class="ident">Bgr</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="ident">blue</span>: <span class="ident">T</span>,
+    <span class="ident">green</span>: <span class="ident">T</span>,
+    <span class="ident">red</span>: <span class="ident">T</span>,
+}
+
+<span class="comment">// Careful with this one! It requires `#[repr(C)]`.</span>
+<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Pixel</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Bgr</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">const</span> <span class="ident">CHANNELS</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">3</span>;
+}
+
+<span class="comment">// Rgb is a bit more complex than other colors, so we are</span>
+<span class="comment">// implementing a private conversion function and letting it</span>
+<span class="comment">// derive `From` automatically. It will take a round trip</span>
+<span class="comment">// through linear format, but that&#39;s fine in this case.</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span> <span class="ident">Bgr</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+
+    <span class="comment">// It converts from any linear Rgb type that has the D65</span>
+    <span class="comment">// white point, which is the default if we don&#39;t specify</span>
+    <span class="comment">// anything else with the `palette_white_point` attribute.</span>
+    <span class="kw">fn</span> <span class="ident">from_rgb_internal</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">color</span>: <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
+    <span class="kw">where</span>
+        <span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">D65</span><span class="op">&gt;</span>,
+    {
+        <span class="kw">let</span> <span class="ident">srgb</span> <span class="op">=</span> <span class="ident">Srgb</span>::<span class="ident">from_rgb</span>(<span class="ident">color</span>);
+
+        <span class="ident">Bgr</span> {
+            <span class="ident">blue</span>: <span class="ident">srgb</span>.<span class="ident">blue</span>,
+            <span class="ident">green</span>: <span class="ident">srgb</span>.<span class="ident">green</span>,
+            <span class="ident">red</span>: <span class="ident">srgb</span>.<span class="ident">red</span>
+        }
+    }
+}
+
+<span class="kw">fn</span> <span class="ident">main</span>() {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0.0f64</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>];
+    {
+        <span class="kw">let</span> <span class="ident">bgr_buffer</span> <span class="op">=</span> <span class="ident">Bgr</span>::<span class="ident">from_raw_slice_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buffer</span>);
+        <span class="ident">bgr_buffer</span>[<span class="number">1</span>] <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="number">90.0</span>, <span class="number">1.0</span>, <span class="number">0.5</span>).<span class="ident">into</span>();
+    }
+
+    <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">buffer</span>[<span class="number">3</span>], <span class="number">0.0</span>);
+    <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">buffer</span>[<span class="number">4</span>], <span class="number">0.7353569830524495</span>);
+    <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">buffer</span>[<span class="number">5</span>], <span class="number">0.5370987304831942</span>);
+}</pre>
 </div>
             <h2 id='required-methods' class='small-section-header'>
               Required Methods<a href='#required-methods' class='anchor'></a>
@@ -93,15 +226,15 @@ with self to avoid the unnecessary converison.</p>
           Implementors<a href='#implementors' class='anchor'></a>
         </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><div class='out-of-band'><a class='srclink' href='../src/palette/rgb/rgb.rs.html#494-582' title='goto source code'>[src]</a></div><code>impl&lt;S, Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/rgb/struct.Rgb.html" title="struct palette::rgb::Rgb">Rgb</a>&lt;S, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../palette/rgb/trait.RgbStandard.html" title="trait palette::rgb::RgbStandard">RgbStandard</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;S::<a class="type" href="../palette/rgb/trait.RgbStandard.html#associatedtype.Space" title="type palette::rgb::RgbStandard::Space">Space</a>: <a class="trait" href="../palette/rgb/trait.RgbSpace.html" title="trait palette::rgb::RgbSpace">RgbSpace</a>&lt;WhitePoint = Wp&gt;,&nbsp;</span></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../src/palette/luma/luma.rs.html#183-206' title='goto source code'>[src]</a></div><code>impl&lt;S, Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/luma/struct.Luma.html" title="struct palette::luma::Luma">Luma</a>&lt;S, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../palette/luma/trait.LumaStandard.html" title="trait palette::luma::LumaStandard">LumaStandard</a>&lt;WhitePoint = Wp&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../src/palette/yxy.rs.html#128-160' title='goto source code'>[src]</a></div><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Yxy.html" title="struct palette::Yxy">Yxy</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../src/palette/xyz.rs.html#132-182' title='goto source code'>[src]</a></div><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Xyz.html" title="struct palette::Xyz">Xyz</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../src/palette/lab.rs.html#130-178' title='goto source code'>[src]</a></div><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Lab.html" title="struct palette::Lab">Lab</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../src/palette/lch.rs.html#129-151' title='goto source code'>[src]</a></div><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Lch.html" title="struct palette::Lch">Lch</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../src/palette/hsv.rs.html#144-242' title='goto source code'>[src]</a></div><code>impl&lt;S, Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Hsv.html" title="struct palette::Hsv">Hsv</a>&lt;S, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../palette/rgb/trait.RgbSpace.html" title="trait palette::rgb::RgbSpace">RgbSpace</a>&lt;WhitePoint = Wp&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../src/palette/hsl.rs.html#149-240' title='goto source code'>[src]</a></div><code>impl&lt;S, Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Hsl.html" title="struct palette::Hsl">Hsl</a>&lt;S, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../palette/rgb/trait.RgbSpace.html" title="trait palette::rgb::RgbSpace">RgbSpace</a>&lt;WhitePoint = Wp&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code></li>
-<li><div class='out-of-band'><a class='srclink' href='../src/palette/hwb.rs.html#145-174' title='goto source code'>[src]</a></div><code>impl&lt;S, Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Hwb.html" title="struct palette::Hwb">Hwb</a>&lt;S, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../palette/rgb/trait.RgbSpace.html" title="trait palette::rgb::RgbSpace">RgbSpace</a>&lt;WhitePoint = Wp&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code></li>
+    <li><div class='out-of-band'><a class='srclink' href='../src/palette/rgb/rgb.rs.html#37' title='goto source code'>[src]</a></div><code>impl&lt;S:&nbsp;<a class="trait" href="../palette/rgb/trait.RgbStandard.html" title="trait palette::rgb::RgbStandard">RgbStandard</a>, T:&nbsp;<a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a>&gt; FromColor&lt;&lt;S::<a class="type" href="../palette/rgb/trait.RgbStandard.html#associatedtype.Space" title="type palette::rgb::RgbStandard::Space">Space</a> as <a class="trait" href="../palette/rgb/trait.RgbSpace.html" title="trait palette::rgb::RgbSpace">RgbSpace</a>&gt;::<a class="type" href="../palette/rgb/trait.RgbSpace.html#associatedtype.WhitePoint" title="type palette::rgb::RgbSpace::WhitePoint">WhitePoint</a>, T&gt; for <a class="struct" href="../palette/rgb/struct.Rgb.html" title="struct palette::rgb::Rgb">Rgb</a>&lt;S, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,&nbsp;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/palette/luma/luma.rs.html#29' title='goto source code'>[src]</a></div><code>impl&lt;S, T&gt; FromColor&lt;S::<a class="type" href="../palette/luma/trait.LumaStandard.html#associatedtype.WhitePoint" title="type palette::luma::LumaStandard::WhitePoint">WhitePoint</a>, T&gt; for <a class="struct" href="../palette/luma/struct.Luma.html" title="struct palette::luma::Luma">Luma</a>&lt;S, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../palette/luma/trait.LumaStandard.html" title="trait palette::luma::LumaStandard">LumaStandard</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,&nbsp;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/palette/yxy.rs.html#24' title='goto source code'>[src]</a></div><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Yxy.html" title="struct palette::Yxy">Yxy</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/palette/xyz.rs.html#27' title='goto source code'>[src]</a></div><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Xyz.html" title="struct palette::Xyz">Xyz</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/palette/lab.rs.html#27' title='goto source code'>[src]</a></div><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Lab.html" title="struct palette::Lab">Lab</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/palette/lch.rs.html#22' title='goto source code'>[src]</a></div><code>impl&lt;Wp, T&gt; FromColor&lt;Wp, T&gt; for <a class="struct" href="../palette/struct.Lch.html" title="struct palette::Lch">Lch</a>&lt;Wp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Wp: <a class="trait" href="../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/palette/hsv.rs.html#27' title='goto source code'>[src]</a></div><code>impl&lt;S, T&gt; FromColor&lt;S::<a class="type" href="../palette/rgb/trait.RgbSpace.html#associatedtype.WhitePoint" title="type palette::rgb::RgbSpace::WhitePoint">WhitePoint</a>, T&gt; for <a class="struct" href="../palette/struct.Hsv.html" title="struct palette::Hsv">Hsv</a>&lt;S, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../palette/rgb/trait.RgbSpace.html" title="trait palette::rgb::RgbSpace">RgbSpace</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,&nbsp;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/palette/hsl.rs.html#28' title='goto source code'>[src]</a></div><code>impl&lt;S, T&gt; FromColor&lt;S::<a class="type" href="../palette/rgb/trait.RgbSpace.html#associatedtype.WhitePoint" title="type palette::rgb::RgbSpace::WhitePoint">WhitePoint</a>, T&gt; for <a class="struct" href="../palette/struct.Hsl.html" title="struct palette::Hsl">Hsl</a>&lt;S, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../palette/rgb/trait.RgbSpace.html" title="trait palette::rgb::RgbSpace">RgbSpace</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,&nbsp;</span></code></li>
+<li><div class='out-of-band'><a class='srclink' href='../src/palette/hwb.rs.html#25' title='goto source code'>[src]</a></div><code>impl&lt;S, T&gt; FromColor&lt;S::<a class="type" href="../palette/rgb/trait.RgbSpace.html#associatedtype.WhitePoint" title="type palette::rgb::RgbSpace::WhitePoint">WhitePoint</a>, T&gt; for <a class="struct" href="../palette/struct.Hwb.html" title="struct palette::Hwb">Hwb</a>&lt;S, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../palette/rgb/trait.RgbSpace.html" title="trait palette::rgb::RgbSpace">RgbSpace</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,&nbsp;</span></code></li>
 </ul><script type="text/javascript" async
                          src="../implementors/palette/trait.FromColor.js">
                  </script></section>

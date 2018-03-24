@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["derive_from_color",""],["derive_into_color",""]]});
