@@ -10,8 +10,11 @@
     <title>palette - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -30,9 +33,16 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Crate palette</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Reexports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'palette', ty: 'mod', relpath: '../'};</script></div>
+        <p class='location'>Crate palette</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'palette', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -54,17 +64,15 @@
 accessible for anyone. It provides both precision tools that lets you work
 in exactly the color space you want to, as well as a general color type
 that abstracts away some of the technical details.</p>
-
-<h1 id='linear' class='section-header'><a href='#linear'>Linear?</a></h1>
+<h1 id="linear" class="section-header"><a href="#linear">Linear?</a></h1>
 <p>Colors in, for example, images are often &quot;gamma corrected&quot; or stored in
 sRGB format as a compression method and to prevent banding. This is also a
 bit of a legacy from the ages of the CRT monitors, where the output from
-the electron guns was nonlinear. The problem is that these formats doesn&#39;t
+the electron guns was nonlinear. The problem is that these formats doesn't
 represent the actual intensities, and the compression has to be reverted to
 make sure that any operations on the colors are accurate. This library uses
 a completely linear work flow, and comes with the tools for transitioning
 between linear and non-linear RGB.</p>
-
 <p>For example, this does not work:</p>
 
 <pre class="rust rust-example-rendered">
@@ -74,7 +82,6 @@ between linear and non-linear RGB.</p>
 <span class="kw">let</span> <span class="ident">orangeish</span> <span class="op">=</span> <span class="ident">Srgb</span>::<span class="ident">new</span>(<span class="number">1.0</span>, <span class="number">0.6</span>, <span class="number">0.0</span>);
 <span class="kw">let</span> <span class="ident">blueish</span> <span class="op">=</span> <span class="ident">Srgb</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">0.2</span>, <span class="number">1.0</span>);
 <span class="comment">// let whateve_it_becomes = orangeish + blueish;</span></pre>
-
 <p>Instead, they have to be made linear before adding:</p>
 
 <pre class="rust rust-example-rendered">
@@ -89,15 +96,13 @@ between linear and non-linear RGB.</p>
 <span class="kw">let</span> <span class="ident">pixel</span>: [<span class="ident">u8</span>;<span class="number">3</span>] <span class="op">=</span> <span class="ident">Srgb</span>::<span class="ident">from_linear</span>(<span class="ident">whateve_it_becomes</span>)
     .<span class="ident">into_format</span>()
     .<span class="ident">into_raw</span>();</pre>
-
-<h1 id='transparency' class='section-header'><a href='#transparency'>Transparency</a></h1>
+<h1 id="transparency" class="section-header"><a href="#transparency">Transparency</a></h1>
 <p>There are many cases where pixel transparency is important, but there are
-also many cases where it becomes a dead weight, if it&#39;s always stored
+also many cases where it becomes a dead weight, if it's always stored
 together with the color, but not used. Palette has therefore adopted a
 structure where the transparency component (alpha) is attachable using the
 <a href="struct.Alpha.html"><code>Alpha</code></a> type, instead of having copies of each color
 space.</p>
-
 <p>This approach comes with the extra benefit of allowing operations to
 selectively affect the alpha component:</p>
 
@@ -110,7 +115,7 @@ selectively affect the alpha component:</p>
 <span class="ident">c1</span>.<span class="ident">color</span> <span class="op">=</span> <span class="ident">c1</span>.<span class="ident">color</span> <span class="op">*</span> <span class="ident">c2</span>; <span class="comment">//Leave the alpha as it is</span>
 <span class="ident">c1</span>.<span class="ident">blue</span> <span class="op">+=</span> <span class="number">0.2</span>; <span class="comment">//The color components can easily be accessed</span>
 <span class="ident">c1</span> <span class="op">=</span> <span class="ident">c1</span> <span class="op">*</span> <span class="number">0.5</span>; <span class="comment">//Scale both the color and the alpha</span></pre>
-</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
 <table><tr><td><code>pub use gradient::<a class="struct" href="../palette/gradient/struct.Gradient.html" title="struct palette::gradient::Gradient">Gradient</a>;</code></td></tr><tr><td><code>pub use rgb::<a class="type" href="../palette/rgb/type.GammaSrgb.html" title="type palette::rgb::GammaSrgb">GammaSrgb</a>;</code></td></tr><tr><td><code>pub use rgb::<a class="type" href="../palette/rgb/type.GammaSrgba.html" title="type palette::rgb::GammaSrgba">GammaSrgba</a>;</code></td></tr><tr><td><code>pub use rgb::<a class="type" href="../palette/rgb/type.LinSrgb.html" title="type palette::rgb::LinSrgb">LinSrgb</a>;</code></td></tr><tr><td><code>pub use rgb::<a class="type" href="../palette/rgb/type.LinSrgba.html" title="type palette::rgb::LinSrgba">LinSrgba</a>;</code></td></tr><tr><td><code>pub use rgb::<a class="type" href="../palette/rgb/type.Srgb.html" title="type palette::rgb::Srgb">Srgb</a>;</code></td></tr><tr><td><code>pub use rgb::<a class="type" href="../palette/rgb/type.Srgba.html" title="type palette::rgb::Srgba">Srgba</a>;</code></td></tr><tr><td><code>pub use luma::<a class="type" href="../palette/luma/type.GammaLuma.html" title="type palette::luma::GammaLuma">GammaLuma</a>;</code></td></tr><tr><td><code>pub use luma::<a class="type" href="../palette/luma/type.GammaLumaa.html" title="type palette::luma::GammaLumaa">GammaLumaa</a>;</code></td></tr><tr><td><code>pub use luma::<a class="type" href="../palette/luma/type.LinLuma.html" title="type palette::luma::LinLuma">LinLuma</a>;</code></td></tr><tr><td><code>pub use luma::<a class="type" href="../palette/luma/type.LinLumaa.html" title="type palette::luma::LinLumaa">LinLumaa</a>;</code></td></tr><tr><td><code>pub use luma::<a class="type" href="../palette/luma/type.SrgbLuma.html" title="type palette::luma::SrgbLuma">SrgbLuma</a>;</code></td></tr><tr><td><code>pub use luma::<a class="type" href="../palette/luma/type.SrgbLumaa.html" title="type palette::luma::SrgbLumaa">SrgbLumaa</a>;</code></td></tr><tr><td><code>pub use encoding::pixel::<a class="trait" href="../palette/encoding/pixel/trait.Pixel.html" title="trait palette::encoding::pixel::Pixel">Pixel</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
@@ -118,6 +123,7 @@ selectively affect the alpha component:</p>
                                   title='mod palette::blend'>blend</a></td>
                            <td class='docblock-short'>
                                 <p>Color blending and blending equations.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -125,6 +131,7 @@ selectively affect the alpha component:</p>
                                   title='mod palette::chromatic_adaptation'>chromatic_adaptation</a></td>
                            <td class='docblock-short'>
                                 <p>Convert colors from one reference white point to another</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -132,6 +139,7 @@ selectively affect the alpha component:</p>
                                   title='mod palette::encoding'>encoding</a></td>
                            <td class='docblock-short'>
                                 <p>Various encoding traits, types and standards.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -139,6 +147,7 @@ selectively affect the alpha component:</p>
                                   title='mod palette::gradient'>gradient</a></td>
                            <td class='docblock-short'>
                                 <p>Types for interpolation between multiple colors.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -146,6 +155,7 @@ selectively affect the alpha component:</p>
                                   title='mod palette::luma'>luma</a></td>
                            <td class='docblock-short'>
                                 <p>Luminance types.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -154,6 +164,7 @@ selectively affect the alpha component:</p>
                            <td class='docblock-short'>
                                 <p>A collection of named color constants. Can be toggled with the <code>&quot;named&quot;</code>
 Cargo feature.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -161,6 +172,7 @@ Cargo feature.</p>
                                   title='mod palette::rgb'>rgb</a></td>
                            <td class='docblock-short'>
                                 <p>RGB types, spaces and standards.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -168,6 +180,7 @@ Cargo feature.</p>
                                   title='mod palette::white_point'>white_point</a></td>
                            <td class='docblock-short'>
                                 <p>Defines the tristimulus values of the CIE Illuminants.</p>
+
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
@@ -176,6 +189,7 @@ Cargo feature.</p>
                                   title='struct palette::Alpha'>Alpha</a></td>
                            <td class='docblock-short'>
                                 <p>An alpha component wrapper for colors.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -183,6 +197,7 @@ Cargo feature.</p>
                                   title='struct palette::Hsl'>Hsl</a></td>
                            <td class='docblock-short'>
                                 <p>Linear HSL color space.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -190,6 +205,7 @@ Cargo feature.</p>
                                   title='struct palette::Hsv'>Hsv</a></td>
                            <td class='docblock-short'>
                                 <p>Linear HSV color space.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -197,6 +213,7 @@ Cargo feature.</p>
                                   title='struct palette::Hwb'>Hwb</a></td>
                            <td class='docblock-short'>
                                 <p>Linear HWB color space.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -204,6 +221,7 @@ Cargo feature.</p>
                                   title='struct palette::Lab'>Lab</a></td>
                            <td class='docblock-short'>
                                 <p>The CIE L*a*b* (CIELAB) color space.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -211,6 +229,7 @@ Cargo feature.</p>
                                   title='struct palette::LabHue'>LabHue</a></td>
                            <td class='docblock-short'>
                                 <p>A hue type for the CIE L*a*b* family of color spaces.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -218,6 +237,7 @@ Cargo feature.</p>
                                   title='struct palette::Lch'>Lch</a></td>
                            <td class='docblock-short'>
                                 <p>CIE L*C*h°, a polar version of <a href="struct.Lab.html">CIE L*a*b*</a>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -225,6 +245,7 @@ Cargo feature.</p>
                                   title='struct palette::RgbHue'>RgbHue</a></td>
                            <td class='docblock-short'>
                                 <p>A hue type for the RGB family of color spaces.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -232,6 +253,7 @@ Cargo feature.</p>
                                   title='struct palette::Xyz'>Xyz</a></td>
                            <td class='docblock-short'>
                                 <p>The CIE 1931 XYZ color space.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -239,6 +261,7 @@ Cargo feature.</p>
                                   title='struct palette::Yxy'>Yxy</a></td>
                            <td class='docblock-short'>
                                 <p>The CIE 1931 Yxy (xyY)  color space.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -247,6 +270,7 @@ Cargo feature.</p>
                                   title='enum palette::Color'>Color</a></td>
                            <td class='docblock-short'>
                                 <p>A generic color type.</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -255,6 +279,7 @@ Cargo feature.</p>
                                   title='trait palette::Blend'>Blend</a></td>
                            <td class='docblock-short'>
                                 <p>A trait for colors that can be blended together.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -262,6 +287,7 @@ Cargo feature.</p>
                                   title='trait palette::Component'>Component</a></td>
                            <td class='docblock-short'>
                                 <p>Common trait for color components.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -269,6 +295,7 @@ Cargo feature.</p>
                                   title='trait palette::ComponentWise'>ComponentWise</a></td>
                            <td class='docblock-short'>
                                 <p>Perform a unary or binary operation on each component of a color.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -276,6 +303,7 @@ Cargo feature.</p>
                                   title='trait palette::FromColor'>FromColor</a></td>
                            <td class='docblock-short'>
                                 <p>FromColor provides conversion from the colors.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -283,6 +311,7 @@ Cargo feature.</p>
                                   title='trait palette::GetHue'>GetHue</a></td>
                            <td class='docblock-short'>
                                 <p>A trait for colors where a hue may be calculated.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -290,6 +319,7 @@ Cargo feature.</p>
                                   title='trait palette::Hue'>Hue</a></td>
                            <td class='docblock-short'>
                                 <p>A trait for colors where the hue can be manipulated without conversion.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -297,6 +327,7 @@ Cargo feature.</p>
                                   title='trait palette::IntoColor'>IntoColor</a></td>
                            <td class='docblock-short'>
                                 <p>IntoColor provides conversion to the colors.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -304,6 +335,7 @@ Cargo feature.</p>
                                   title='trait palette::Limited'>Limited</a></td>
                            <td class='docblock-short'>
                                 <p>A trait for clamping and checking if colors are within their ranges.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -311,6 +343,7 @@ Cargo feature.</p>
                                   title='trait palette::Mix'>Mix</a></td>
                            <td class='docblock-short'>
                                 <p>A trait for linear color interpolation.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -319,6 +352,7 @@ Cargo feature.</p>
                            <td class='docblock-short'>
                                 <p>A trait for colors where the saturation (or chroma) can be manipulated
 without conversion.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -326,6 +360,7 @@ without conversion.</p>
                                   title='trait palette::Shade'>Shade</a></td>
                            <td class='docblock-short'>
                                 <p>The <code>Shade</code> trait allows a color to be lightened or darkened.</p>
+
                            </td>
                        </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
@@ -334,6 +369,7 @@ without conversion.</p>
                                   title='type palette::Colora'>Colora</a></td>
                            <td class='docblock-short'>
                                 <p>Generic color with an alpha component. See the <a href="struct.Alpha.html#Colora"><code>Colora</code> implementation in <code>Alpha</code></a>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -342,6 +378,7 @@ without conversion.</p>
                            <td class='docblock-short'>
                                 <p>Linear HSL with an alpha component. See the <a href="struct.Alpha.html#Hsla"><code>Hsla</code> implementation in
 <code>Alpha</code></a>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -350,6 +387,7 @@ without conversion.</p>
                            <td class='docblock-short'>
                                 <p>Linear HSV with an alpha component. See the <a href="struct.Alpha.html#Hsva"><code>Hsva</code> implementation in
 <code>Alpha</code></a>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -358,6 +396,7 @@ without conversion.</p>
                            <td class='docblock-short'>
                                 <p>Linear HWB with an alpha component. See the <a href="struct.Alpha.html#Hwba"><code>Hwba</code> implementation in
 <code>Alpha</code></a>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -366,6 +405,7 @@ without conversion.</p>
                            <td class='docblock-short'>
                                 <p>CIE L*a*b* (CIELAB) with an alpha component. See the <a href="struct.Alpha.html#Laba"><code>Laba</code>
 implementation in <code>Alpha</code></a>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -374,6 +414,7 @@ implementation in <code>Alpha</code></a>.</p>
                            <td class='docblock-short'>
                                 <p>CIE L*C*h° with an alpha component. See the <a href="struct.Alpha.html#Lcha"><code>Lcha</code> implementation in
 <code>Alpha</code></a>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -381,6 +422,7 @@ implementation in <code>Alpha</code></a>.</p>
                                   title='type palette::Mat3'>Mat3</a></td>
                            <td class='docblock-short'>
                                 <p>A 9 element array representing a 3x3 matrix</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -389,6 +431,7 @@ implementation in <code>Alpha</code></a>.</p>
                            <td class='docblock-short'>
                                 <p>CIE 1931 XYZ with an alpha component. See the <a href="struct.Alpha.html#Xyza"><code>Xyza</code> implementation in
 <code>Alpha</code></a>.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -397,6 +440,7 @@ implementation in <code>Alpha</code></a>.</p>
                            <td class='docblock-short'>
                                 <p>CIE 1931 Yxy (xyY) with an alpha component. See the <a href="struct.Alpha.html#Yxya"><code>Yxya</code> implementation
 in <code>Alpha</code></a>.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -411,20 +455,22 @@ in <code>Alpha</code></a>.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

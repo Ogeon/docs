@@ -10,8 +10,11 @@
     <title>palette::IntoColor - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Trait IntoColor</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.into_xyz">into_xyz</a></div><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.into_yxy">into_yxy</a><a href="#method.into_lab">into_lab</a><a href="#method.into_lch">into_lch</a><a href="#method.into_rgb">into_rgb</a><a href="#method.into_hsl">into_hsl</a><a href="#method.into_hsv">into_hsv</a><a href="#method.into_hwb">into_hwb</a><a href="#method.into_luma">into_luma</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'IntoColor', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -62,35 +72,39 @@
 <div class='item-spacer'></div>    fn <a href='#method.into_hwb' class='fnname'>into_hwb</a>&lt;S:&nbsp;<a class="trait" href="../palette/rgb/trait.RgbSpace.html" title="trait palette::rgb::RgbSpace">RgbSpace</a>&lt;WhitePoint = Wp&gt;&gt;(self) -&gt; <a class="struct" href="../palette/struct.Hwb.html" title="struct palette::Hwb">Hwb</a>&lt;S, T&gt; { ... }
 <div class='item-spacer'></div>    fn <a href='#method.into_luma' class='fnname'>into_luma</a>(self) -&gt; <a class="struct" href="../palette/luma/struct.Luma.html" title="struct palette::luma::Luma">Luma</a>&lt;<a class="struct" href="../palette/encoding/linear/struct.Linear.html" title="struct palette::encoding::linear::Linear">Linear</a>&lt;Wp&gt;, T&gt; { ... }
 }</pre><div class='docblock'><p>IntoColor provides conversion to the colors.</p>
-
 <p>It requires into_xyz, when implemented manually, and derives conversion to other colors as a
 default from this. These defaults must be overridden when direct conversion exists between
 colors.</p>
-
-<h1 id='deriving' class='section-header'><a href='#deriving'>Deriving</a></h1>
+<h1 id="deriving" class="section-header"><a href="#deriving">Deriving</a></h1>
 <p><code>IntoColor</code> can be derived in a mostly automatic way. The strength of deriving it is that it
 will also derive <code>Into</code> implementations for all of the <code>palette</code> color types. The minimum
 requirement is to implement <code>Into&lt;Xyz&gt;</code>, but it can also be customized to make use of generics
 and have other manual implementations.</p>
-
-<h2 id='attributes' class='section-header'><a href='#attributes'>Attributes</a></h2>
+<h2 id="attributes" class="section-header"><a href="#attributes">Attributes</a></h2>
 <ul>
-<li><p><code>#[palette_manual_into(Luma, Rgb = &quot;into_rgb_internal&quot;)]</code>: Specifies the color types that
+<li>
+<p><code>#[palette_manual_into(Luma, Rgb = &quot;into_rgb_internal&quot;)]</code>: Specifies the color types that
 the the custom color type already has <code>Into</code> implementations for. Adding <code>= &quot;function_name&quot;</code>
 tells it to use that function instead of an <code>Into</code> implementation. The default, when omitted,
-is to require <code>Into&lt;Xyz&gt;</code> to be implemented.</p></li>
-<li><p><code>#[palette_white_point = &quot;some::white_point::Type&quot;]</code>: Sets the white point type that should
+is to require <code>Into&lt;Xyz&gt;</code> to be implemented.</p>
+</li>
+<li>
+<p><code>#[palette_white_point = &quot;some::white_point::Type&quot;]</code>: Sets the white point type that should
 be used when deriving. The default is <code>D65</code>, but it may be any other type, including
-type parameters.</p></li>
-<li><p><code>#[palette_component = &quot;some::component::Type&quot;]</code>: Sets the color component type that should
+type parameters.</p>
+</li>
+<li>
+<p><code>#[palette_component = &quot;some::component::Type&quot;]</code>: Sets the color component type that should
 be used when deriving. The default is <code>f32</code>, but it may be any other type, including
-type parameters.</p></li>
-<li><p><code>#[palette_rgb_space = &quot;some::rgb_space::Type&quot;]</code>: Sets the RGB space type that should
+type parameters.</p>
+</li>
+<li>
+<p><code>#[palette_rgb_space = &quot;some::rgb_space::Type&quot;]</code>: Sets the RGB space type that should
 be used when deriving. The default is to either use <code>Srgb</code> or a best effort to convert between
-spaces, so sometimes it has to be set to a specific type. This does also accept type parameters.</p></li>
+spaces, so sometimes it has to be set to a specific type. This does also accept type parameters.</p>
+</li>
 </ul>
-
-<h2 id='examples' class='section-header'><a href='#examples'>Examples</a></h2>
+<h2 id="examples" class="section-header"><a href="#examples">Examples</a></h2>
 <p>Minimum requirements implementation:</p>
 
 <pre class="rust rust-example-rendered">
@@ -130,7 +144,6 @@ spaces, so sometimes it has to be set to a specific type. This does also accept 
 
     <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">rgb</span>.<span class="ident">into_format</span>(), <span class="ident">Srgb</span>::<span class="ident">new</span>(<span class="number">195u8</span>, <span class="number">237</span>, <span class="number">154</span>));
 }</pre>
-
 <p>With generic components:</p>
 
 <pre class="rust rust-example-rendered">
@@ -233,20 +246,22 @@ spaces, so sometimes it has to be set to a specific type. This does also accept 
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

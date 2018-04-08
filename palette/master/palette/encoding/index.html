@@ -10,8 +10,11 @@
     <title>palette::encoding - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -30,9 +33,16 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module encoding</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Reexports</a></li><li><a href="#modules">Modules</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'encoding', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
+        <p class='location'>Module encoding</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../index.html'>palette</a></p><script>window.sidebarCurrent = {name: 'encoding', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -51,7 +61,7 @@
                    </a>
                </span><a class='srclink' href='../../src/palette/encoding/mod.rs.html#1-21' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Various encoding traits, types and standards.</p>
-</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
 <table><tr><td><code>pub use self::srgb::<a class="struct" href="../../palette/encoding/srgb/struct.Srgb.html" title="struct palette::encoding::srgb::Srgb">Srgb</a>;</code></td></tr><tr><td><code>pub use self::gamma::<a class="struct" href="../../palette/encoding/gamma/struct.F2p2.html" title="struct palette::encoding::gamma::F2p2">F2p2</a>;</code></td></tr><tr><td><code>pub use self::gamma::<a class="struct" href="../../palette/encoding/gamma/struct.Gamma.html" title="struct palette::encoding::gamma::Gamma">Gamma</a>;</code></td></tr><tr><td><code>pub use self::linear::<a class="struct" href="../../palette/encoding/linear/struct.Linear.html" title="struct palette::encoding::linear::Linear">Linear</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
@@ -59,6 +69,7 @@
                                   title='mod palette::encoding::gamma'>gamma</a></td>
                            <td class='docblock-short'>
                                 <p>Gamma encoding.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -66,6 +77,7 @@
                                   title='mod palette::encoding::linear'>linear</a></td>
                            <td class='docblock-short'>
                                 <p>Linear encoding</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -73,6 +85,7 @@
                                   title='mod palette::encoding::pixel'>pixel</a></td>
                            <td class='docblock-short'>
                                 <p>Pixel encodings and pixel format conversion.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -80,6 +93,7 @@
                                   title='mod palette::encoding::srgb'>srgb</a></td>
                            <td class='docblock-short'>
                                 <p>The sRGB standard.</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -88,6 +102,7 @@
                                   title='trait palette::encoding::TransferFn'>TransferFn</a></td>
                            <td class='docblock-short'>
                                 <p>A transfer function to and from linear space.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -102,20 +117,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

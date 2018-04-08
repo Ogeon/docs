@@ -10,8 +10,11 @@
     <title>palette::blend::Blend - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -33,6 +36,13 @@
         <p class='location'>Trait Blend</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#associated-types">Associated Types</a><div class="sidebar-links"><a href="#associatedtype.Color">Color</a></div><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.into_premultiplied">into_premultiplied</a><a href="#tymethod.from_premultiplied">from_premultiplied</a></div><a class="sidebar-title" href="#provided-methods">Provided Methods</a><div class="sidebar-links"><a href="#method.blend">blend</a><a href="#method.over">over</a><a href="#method.inside">inside</a><a href="#method.outside">outside</a><a href="#method.atop">atop</a><a href="#method.xor">xor</a><a href="#method.plus">plus</a><a href="#method.multiply">multiply</a><a href="#method.screen">screen</a><a href="#method.overlay">overlay</a><a href="#method.darken">darken</a><a href="#method.lighten">lighten</a><a href="#method.dodge">dodge</a><a href="#method.burn">burn</a><a href="#method.hard_light">hard_light</a><a href="#method.soft_light">soft_light</a><a href="#method.difference">difference</a><a href="#method.exclusion">exclusion</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>palette</a>::<wbr><a href='index.html'>blend</a></p><script>window.sidebarCurrent = {name: 'Blend', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -75,10 +85,8 @@
 <div class='item-spacer'></div>    fn <a href='#method.difference' class='fnname'>difference</a>(self, other: Self) -&gt; Self { ... }
 <div class='item-spacer'></div>    fn <a href='#method.exclusion' class='fnname'>exclusion</a>(self, other: Self) -&gt; Self { ... }
 }</pre><div class='docblock'><p>A trait for colors that can be blended together.</p>
-
 <p>Blending can either be performed through the predefined blend modes, or a
 custom blend functions.</p>
-
 <p><em>Note: The default implementations of the blend modes are meant for color
 components in the range [0.0, 1.0] and may otherwise produce strange
 results.</em></p>
@@ -129,9 +137,9 @@ composition equation.</p>
 </div><h3 id='method.atop' class='method'><span id='atop.v' class='invisible'><code>fn <a href='#method.atop' class='fnname'>atop</a>(self, other: Self) -&gt; Self</code></span></h3><div class='docblock'><p>Place <code>self</code> over only the visible parts of <code>other</code>.</p>
 </div><h3 id='method.xor' class='method'><span id='xor.v' class='invisible'><code>fn <a href='#method.xor' class='fnname'>xor</a>(self, other: Self) -&gt; Self</code></span></h3><div class='docblock'><p>Results in either <code>self</code> or <code>other</code>, where they do not overlap.</p>
 </div><h3 id='method.plus' class='method'><span id='plus.v' class='invisible'><code>fn <a href='#method.plus' class='fnname'>plus</a>(self, other: Self) -&gt; Self</code></span></h3><div class='docblock'><p>Add <code>self</code> and <code>other</code>. This uses the alpha component to regulate the
-effect, so it&#39;s not just plain component wise addition.</p>
+effect, so it's not just plain component wise addition.</p>
 </div><h3 id='method.multiply' class='method'><span id='multiply.v' class='invisible'><code>fn <a href='#method.multiply' class='fnname'>multiply</a>(self, other: Self) -&gt; Self</code></span></h3><div class='docblock'><p>Multiply <code>self</code> with <code>other</code>. This uses the alpha component to regulate
-the effect, so it&#39;s not just plain component wise multiplication.</p>
+the effect, so it's not just plain component wise multiplication.</p>
 </div><h3 id='method.screen' class='method'><span id='screen.v' class='invisible'><code>fn <a href='#method.screen' class='fnname'>screen</a>(self, other: Self) -&gt; Self</code></span></h3><div class='docblock'><p>Make a color which is at least as light as <code>self</code> or <code>other</code>.</p>
 </div><h3 id='method.overlay' class='method'><span id='overlay.v' class='invisible'><code>fn <a href='#method.overlay' class='fnname'>overlay</a>(self, other: Self) -&gt; Self</code></span></h3><div class='docblock'><p>Multiply <code>self</code> or <code>other</code> if other is dark, or screen them if <code>other</code>
 is light. This results in an S curve.</p>
@@ -144,10 +152,10 @@ white.</p>
 </div><h3 id='method.hard_light' class='method'><span id='hard_light.v' class='invisible'><code>fn <a href='#method.hard_light' class='fnname'>hard_light</a>(self, other: Self) -&gt; Self</code></span></h3><div class='docblock'><p>Multiply <code>self</code> or <code>other</code> if other is dark, or screen them if <code>self</code>
 is light. This is similar to <code>overlay</code>, but depends on <code>self</code> instead
 of <code>other</code>.</p>
-</div><h3 id='method.soft_light' class='method'><span id='soft_light.v' class='invisible'><code>fn <a href='#method.soft_light' class='fnname'>soft_light</a>(self, other: Self) -&gt; Self</code></span></h3><div class='docblock'><p>Lighten <code>other</code> if <code>self</code> is light, or darken <code>other</code> as if it&#39;s burned
+</div><h3 id='method.soft_light' class='method'><span id='soft_light.v' class='invisible'><code>fn <a href='#method.soft_light' class='fnname'>soft_light</a>(self, other: Self) -&gt; Self</code></span></h3><div class='docblock'><p>Lighten <code>other</code> if <code>self</code> is light, or darken <code>other</code> as if it's burned
 if <code>self</code> is dark. The effect is increased if the components of <code>self</code>
 is further from 0.5.</p>
-</div><h3 id='method.difference' class='method'><span id='difference.v' class='invisible'><code>fn <a href='#method.difference' class='fnname'>difference</a>(self, other: Self) -&gt; Self</code></span></h3><div class='docblock'><p>Return the absolute difference between <code>self</code> and <code>other</code>. It&#39;s
+</div><h3 id='method.difference' class='method'><span id='difference.v' class='invisible'><code>fn <a href='#method.difference' class='fnname'>difference</a>(self, other: Self) -&gt; Self</code></span></h3><div class='docblock'><p>Return the absolute difference between <code>self</code> and <code>other</code>. It's
 basically <code>abs(self - other)</code>, but regulated by the alpha component.</p>
 </div><h3 id='method.exclusion' class='method'><span id='exclusion.v' class='invisible'><code>fn <a href='#method.exclusion' class='fnname'>exclusion</a>(self, other: Self) -&gt; Self</code></span></h3><div class='docblock'><p>Similar to <code>difference</code>, but appears to result in a lower contrast.
 <code>other</code> is inverted if <code>self</code> is white, and preserved if <code>self</code> is
@@ -177,20 +185,22 @@ black.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>↑</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>↓</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>↹</dt>
+                    <dt><kbd>↹</kbd></dt>
                     <dd>Switch tab</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt style="width:31px;">+ / -</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
