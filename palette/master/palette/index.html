@@ -59,7 +59,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/palette/lib.rs.html#1-842' title='goto source code'>[src]</a></span></h1>
+               </span><a class='srclink' href='../src/palette/lib.rs.html#1-844' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>A library that makes linear color calculations and conversion easy and
 accessible for anyone. It provides both precision tools that lets you work
 in exactly the color space you want to, as well as a general color type
@@ -86,14 +86,14 @@ between linear and non-linear RGB.</p>
 
 <pre class="rust rust-example-rendered">
 <span class="comment">// An alias for Rgb&lt;Srgb&gt;, which is what most pictures store.</span>
-<span class="kw">use</span> <span class="ident">palette</span>::{<span class="ident">Srgb</span>, <span class="ident">Pixel</span>};
+<span class="kw">use</span> <span class="ident">palette</span>::{<span class="ident">Pixel</span>, <span class="ident">Srgb</span>};
 
 <span class="kw">let</span> <span class="ident">orangeish</span> <span class="op">=</span> <span class="ident">Srgb</span>::<span class="ident">new</span>(<span class="number">1.0</span>, <span class="number">0.6</span>, <span class="number">0.0</span>).<span class="ident">into_linear</span>();
 <span class="kw">let</span> <span class="ident">blueish</span> <span class="op">=</span> <span class="ident">Srgb</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">0.2</span>, <span class="number">1.0</span>).<span class="ident">into_linear</span>();
 <span class="kw">let</span> <span class="ident">whateve_it_becomes</span> <span class="op">=</span> <span class="ident">orangeish</span> <span class="op">+</span> <span class="ident">blueish</span>;
 
 <span class="comment">// Encode the result back into sRGB and create a byte array</span>
-<span class="kw">let</span> <span class="ident">pixel</span>: [<span class="ident">u8</span>;<span class="number">3</span>] <span class="op">=</span> <span class="ident">Srgb</span>::<span class="ident">from_linear</span>(<span class="ident">whateve_it_becomes</span>)
+<span class="kw">let</span> <span class="ident">pixel</span>: [<span class="ident">u8</span>; <span class="number">3</span>] <span class="op">=</span> <span class="ident">Srgb</span>::<span class="ident">from_linear</span>(<span class="ident">whateve_it_becomes</span>)
     .<span class="ident">into_format</span>()
     .<span class="ident">into_raw</span>();</pre>
 <h1 id="transparency" class="section-header"><a href="#transparency">Transparency</a></h1>
