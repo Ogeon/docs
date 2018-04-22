@@ -644,6 +644,24 @@
 <span id="588">588</span>
 <span id="589">589</span>
 <span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">Float</span>;
 <span class="kw">use</span> <span class="ident">approx</span>::<span class="ident">ApproxEq</span>;
@@ -672,6 +690,7 @@
 <span class="doccomment">///and white (100% R, 100% G, 100% B) has the same brightness (or value), but</span>
 <span class="doccomment">///not the same lightness.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">FromColor</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
 <span class="attribute">#[<span class="ident">palette_internal</span>]</span>
 <span class="attribute">#[<span class="ident">palette_white_point</span> <span class="op">=</span> <span class="string">&quot;S::WhitePoint&quot;</span>]</span>
 <span class="attribute">#[<span class="ident">palette_rgb_space</span> <span class="op">=</span> <span class="string">&quot;S&quot;</span>]</span>
@@ -698,6 +717,7 @@
 
     <span class="doccomment">///The white point and RGB primaries this color is adapted to. The default</span>
     <span class="doccomment">///is the sRGB standard.</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">serde</span>(<span class="ident">skip</span>))]</span>
     <span class="kw">pub</span> <span class="ident">space</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>,
 }
 
@@ -1234,6 +1254,22 @@
 
     <span class="macro">raw_pixel_conversion_tests</span><span class="macro">!</span>(<span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">Srgb</span><span class="op">&gt;</span>: <span class="ident">hue</span>, <span class="ident">saturation</span>, <span class="ident">value</span>);
     <span class="macro">raw_pixel_conversion_fail_tests</span><span class="macro">!</span>(<span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">Srgb</span><span class="op">&gt;</span>: <span class="ident">hue</span>, <span class="ident">saturation</span>, <span class="ident">value</span>);
+
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">serialize</span>() {
+        <span class="kw">let</span> <span class="ident">serialized</span> <span class="op">=</span> ::<span class="ident">serde_json</span>::<span class="ident">to_string</span>(<span class="kw-2">&amp;</span><span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="number">0.3</span>, <span class="number">0.8</span>, <span class="number">0.1</span>)).<span class="ident">unwrap</span>();
+
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">serialized</span>, <span class="string">r#&quot;{&quot;hue&quot;:0.3,&quot;saturation&quot;:0.8,&quot;value&quot;:0.1}&quot;#</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">deserialize</span>() {
+        <span class="kw">let</span> <span class="ident">deserialized</span>: <span class="ident">Hsv</span> <span class="op">=</span> ::<span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="string">r#&quot;{&quot;hue&quot;:0.3,&quot;saturation&quot;:0.8,&quot;value&quot;:0.1}&quot;#</span>).<span class="ident">unwrap</span>();
+
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">deserialized</span>, <span class="ident">Hsv</span>::<span class="ident">new</span>(<span class="number">0.3</span>, <span class="number">0.8</span>, <span class="number">0.1</span>));
+    }
 }
 </pre>
 </section>
