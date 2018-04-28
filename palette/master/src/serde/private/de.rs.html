@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.42/src/private/de.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.43/src/private/de.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>de.rs.html -- source</title>
@@ -2831,6 +2831,16 @@
 <span id="2775">2775</span>
 <span id="2776">2776</span>
 <span id="2777">2777</span>
+<span id="2778">2778</span>
+<span id="2779">2779</span>
+<span id="2780">2780</span>
+<span id="2781">2781</span>
+<span id="2782">2782</span>
+<span id="2783">2783</span>
+<span id="2784">2784</span>
+<span id="2785">2785</span>
+<span id="2786">2786</span>
+<span id="2787">2787</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2017 Serde Developers</span>
 <span class="comment">//</span>
@@ -4144,7 +4154,12 @@
         <span class="kw">where</span>
             <span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
         {
-            <span class="ident">visitor</span>.<span class="ident">visit_newtype_struct</span>(<span class="self">self</span>)
+            <span class="kw">match</span> <span class="self">self</span>.<span class="ident">content</span> {
+                <span class="ident">Content</span>::<span class="ident">Newtype</span>(<span class="ident">v</span>) <span class="op">=&gt;</span> {
+                    <span class="ident">visitor</span>.<span class="ident">visit_newtype_struct</span>(<span class="ident">ContentDeserializer</span>::<span class="ident">new</span>(<span class="kw-2">*</span><span class="ident">v</span>))
+                }
+                _ <span class="op">=&gt;</span> <span class="ident">visitor</span>.<span class="ident">visit_newtype_struct</span>(<span class="self">self</span>),
+            }
         }
 
         <span class="kw">fn</span> <span class="ident">deserialize_seq</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">visitor</span>: <span class="ident">V</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
@@ -4835,7 +4850,12 @@
         <span class="kw">where</span>
             <span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
         {
-            <span class="ident">visitor</span>.<span class="ident">visit_newtype_struct</span>(<span class="self">self</span>)
+            <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span>.<span class="ident">content</span> {
+                <span class="ident">Content</span>::<span class="ident">Newtype</span>(<span class="kw-2">ref</span> <span class="ident">v</span>) <span class="op">=&gt;</span> {
+                    <span class="ident">visitor</span>.<span class="ident">visit_newtype_struct</span>(<span class="ident">ContentRefDeserializer</span>::<span class="ident">new</span>(<span class="ident">v</span>))
+                }
+                _ <span class="op">=&gt;</span> <span class="ident">visitor</span>.<span class="ident">visit_newtype_struct</span>(<span class="self">self</span>),
+            }
         }
 
         <span class="kw">fn</span> <span class="ident">deserialize_seq</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">visitor</span>: <span class="ident">V</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>

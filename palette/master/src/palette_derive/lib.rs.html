@@ -95,8 +95,8 @@
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;strict&quot;</span>, <span class="ident">deny</span>(<span class="ident">warnings</span>))]</span>
 <span class="attribute">#![<span class="ident">recursion_limit</span> <span class="op">=</span> <span class="string">&quot;128&quot;</span>]</span>
 
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">proc_macro2</span>;
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">proc_macro</span>;
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">proc_macro2</span>;
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">quote</span>;
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
@@ -114,14 +114,14 @@
 
 <span class="attribute">#[<span class="ident">proc_macro_derive</span>(<span class="ident">FromColor</span>,
                     <span class="ident">attributes</span>(<span class="ident">palette_internal</span>, <span class="ident">palette_white_point</span>, <span class="ident">palette_component</span>,
-                               <span class="ident">palette_manual_from</span>, <span class="ident">palette_rgb_space</span>))]</span>
+                               <span class="ident">palette_manual_from</span>, <span class="ident">palette_rgb_space</span>, <span class="ident">palette_alpha</span>))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">derive_from_color</span>(<span class="ident">tokens</span>: <span class="ident">TokenStream</span>) <span class="op">-&gt;</span> <span class="ident">TokenStream</span> {
     <span class="ident">convert</span>::<span class="ident">derive_from_color</span>(<span class="ident">tokens</span>)
 }
 
 <span class="attribute">#[<span class="ident">proc_macro_derive</span>(<span class="ident">IntoColor</span>,
                     <span class="ident">attributes</span>(<span class="ident">palette_internal</span>, <span class="ident">palette_white_point</span>, <span class="ident">palette_component</span>,
-                               <span class="ident">palette_manual_into</span>, <span class="ident">palette_rgb_space</span>))]</span>
+                               <span class="ident">palette_manual_into</span>, <span class="ident">palette_rgb_space</span>, <span class="ident">palette_alpha</span>))]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">derive_into_color</span>(<span class="ident">tokens</span>: <span class="ident">TokenStream</span>) <span class="op">-&gt;</span> <span class="ident">TokenStream</span> {
     <span class="ident">convert</span>::<span class="ident">derive_into_color</span>(<span class="ident">tokens</span>)
 }
