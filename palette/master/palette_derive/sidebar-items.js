@@ -1,1 +1,1 @@
-initSidebarItems({"fn":[["derive_from_color",""],["derive_into_color",""]]});
+initSidebarItems({"fn":[["derive_from_color",""],["derive_into_color",""],["derive_pixel",""]]});

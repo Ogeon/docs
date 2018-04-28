@@ -824,16 +824,6 @@
 <span id="768">768</span>
 <span id="769">769</span>
 <span id="770">770</span>
-<span id="771">771</span>
-<span id="772">772</span>
-<span id="773">773</span>
-<span id="774">774</span>
-<span id="775">775</span>
-<span id="776">776</span>
-<span id="777">777</span>
-<span id="778">778</span>
-<span id="779">779</span>
-<span id="780">780</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">Float</span>;
 
@@ -950,7 +940,7 @@
 <span class="doccomment">/// use num_traits::Float;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// /// sRGB, but with a reversed memory layout.</span>
-<span class="doccomment">/// #[derive(PartialEq, Debug, FromColor)]</span>
+<span class="doccomment">/// #[derive(PartialEq, Debug, FromColor, Pixel)]</span>
 <span class="doccomment">/// #[palette_manual_from(Rgb = &quot;from_rgb_internal&quot;)]</span>
 <span class="doccomment">/// #[palette_component = &quot;T&quot;]</span>
 <span class="doccomment">/// #[repr(C)] // Makes sure the memory layout is as we want it.</span>
@@ -958,11 +948,6 @@
 <span class="doccomment">///     blue: T,</span>
 <span class="doccomment">///     green: T,</span>
 <span class="doccomment">///     red: T,</span>
-<span class="doccomment">/// }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// // Careful with this one! It requires `#[repr(C)]`.</span>
-<span class="doccomment">/// unsafe impl&lt;T&gt; Pixel&lt;T&gt; for Bgr&lt;T&gt; {</span>
-<span class="doccomment">///     const CHANNELS: usize = 3;</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Rgb is a bit more complex than other colors, so we are</span>
@@ -1205,7 +1190,7 @@
 <span class="doccomment">/// use num_traits::Float;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// /// sRGB, but with a reversed memory layout.</span>
-<span class="doccomment">/// #[derive(Copy, Clone, IntoColor)]</span>
+<span class="doccomment">/// #[derive(Copy, Clone, IntoColor, Pixel)]</span>
 <span class="doccomment">/// #[palette_manual_into(Rgb = &quot;into_rgb_internal&quot;)]</span>
 <span class="doccomment">/// #[palette_component = &quot;T&quot;]</span>
 <span class="doccomment">/// #[repr(C)] // Makes sure the memory layout is as we want it.</span>
@@ -1213,11 +1198,6 @@
 <span class="doccomment">///     blue: T,</span>
 <span class="doccomment">///     green: T,</span>
 <span class="doccomment">///     red: T,</span>
-<span class="doccomment">/// }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// // Careful with this one! It requires `#[repr(C)]`.</span>
-<span class="doccomment">/// unsafe impl&lt;T&gt; Pixel&lt;T&gt; for Bgr&lt;T&gt; {</span>
-<span class="doccomment">///     const CHANNELS: usize = 3;</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// // Rgb is a bit more complex than other colors, so we are</span>

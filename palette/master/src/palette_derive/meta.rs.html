@@ -276,6 +276,33 @@
 <span id="220">220</span>
 <span id="221">221</span>
 <span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">syn</span>::{<span class="ident">Attribute</span>, <span class="ident">Data</span>, <span class="ident">Field</span>, <span class="ident">Fields</span>, <span class="ident">Ident</span>, <span class="ident">Index</span>, <span class="ident">LitStr</span>, <span class="ident">Type</span>};
 <span class="kw">use</span> <span class="ident">syn</span>::<span class="ident">token</span>::{<span class="ident">Comma</span>, <span class="ident">Eq</span>};
@@ -289,16 +316,18 @@
 
     <span class="kw">for</span> <span class="ident">attribute</span> <span class="kw">in</span> <span class="ident">attributes</span> {
         <span class="kw">let</span> <span class="ident">attribute_name</span> <span class="op">=</span> <span class="ident">attribute</span>.<span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">first</span>().<span class="ident">unwrap</span>().<span class="ident">into_value</span>().<span class="ident">ident</span>;
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">attribute_name</span>.<span class="ident">as_ref</span>().<span class="ident">starts_with</span>(<span class="string">&quot;palette_&quot;</span>) {
-            <span class="kw">continue</span>;
-        }
+        <span class="kw">let</span> <span class="ident">is_palette_attribute</span> <span class="op">=</span> <span class="ident">attribute_name</span>.<span class="ident">as_ref</span>().<span class="ident">starts_with</span>(<span class="string">&quot;palette_&quot;</span>);
 
         <span class="kw">if</span> <span class="ident">attribute</span>.<span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">1</span> {
-            <span class="macro">panic</span><span class="macro">!</span>(
-                <span class="string">&quot;expected `{}`, but found `{}`&quot;</span>,
-                <span class="ident">attribute_name</span>,
-                <span class="ident">attribute</span>.<span class="ident">path</span>.<span class="ident">into_tokens</span>()
-            );
+            <span class="kw">if</span> <span class="ident">is_palette_attribute</span> {
+                <span class="macro">panic</span><span class="macro">!</span>(
+                    <span class="string">&quot;expected `{}`, but found `{}`&quot;</span>,
+                    <span class="ident">attribute_name</span>,
+                    <span class="ident">attribute</span>.<span class="ident">path</span>.<span class="ident">into_tokens</span>()
+                );
+            } <span class="kw">else</span> {
+                <span class="kw">continue</span>;
+            }
         }
 
         <span class="kw">if</span> <span class="ident">attribute_name</span> <span class="op">==</span> <span class="string">&quot;palette_internal&quot;</span> {
@@ -376,7 +405,7 @@
     }
 }
 
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse_type_tuple_attribute</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Synom</span><span class="op">&gt;</span>(
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse_tuple_attribute</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Synom</span><span class="op">&gt;</span>(
     <span class="ident">attribute_name</span>: <span class="kw-2">&amp;</span><span class="ident">Ident</span>,
     <span class="ident">tts</span>: <span class="ident">TokenStream</span>,
 ) <span class="op">-&gt;</span> <span class="ident">Punctuated</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Comma</span><span class="op">&gt;</span> {
@@ -474,6 +503,31 @@
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">IdentOrIndex</span> {
     <span class="ident">Index</span>(<span class="ident">Index</span>),
     <span class="ident">Ident</span>(<span class="ident">Ident</span>),
+}
+
+<span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">IdentOrIndex</span> {
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">IdentOrIndex</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">match</span> (<span class="self">self</span>, <span class="ident">other</span>) {
+            (<span class="kw-2">&amp;</span><span class="ident">IdentOrIndex</span>::<span class="ident">Index</span>(<span class="kw-2">ref</span> <span class="ident">this</span>), <span class="kw-2">&amp;</span><span class="ident">IdentOrIndex</span>::<span class="ident">Index</span>(<span class="kw-2">ref</span> <span class="ident">other</span>)) <span class="op">=&gt;</span> {
+                <span class="ident">this</span>.<span class="ident">index</span> <span class="op">==</span> <span class="ident">other</span>.<span class="ident">index</span>
+            }
+            (<span class="kw-2">&amp;</span><span class="ident">IdentOrIndex</span>::<span class="ident">Ident</span>(<span class="kw-2">ref</span> <span class="ident">this</span>), <span class="kw-2">&amp;</span><span class="ident">IdentOrIndex</span>::<span class="ident">Ident</span>(<span class="kw-2">ref</span> <span class="ident">other</span>)) <span class="op">=&gt;</span> <span class="ident">this</span> <span class="op">==</span> <span class="ident">other</span>,
+            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+        }
+    }
+}
+
+<span class="kw">impl</span> ::<span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">Eq</span> <span class="kw">for</span> <span class="ident">IdentOrIndex</span> {}
+
+<span class="kw">impl</span> ::<span class="ident">std</span>::<span class="ident">hash</span>::<span class="ident">Hash</span> <span class="kw">for</span> <span class="ident">IdentOrIndex</span> {
+    <span class="kw">fn</span> <span class="ident">hash</span><span class="op">&lt;</span><span class="ident">H</span>: ::<span class="ident">std</span>::<span class="ident">hash</span>::<span class="ident">Hasher</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">hasher</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">H</span>) {
+        ::<span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">discriminant</span>(<span class="self">self</span>).<span class="ident">hash</span>(<span class="ident">hasher</span>);
+
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
+            <span class="ident">IdentOrIndex</span>::<span class="ident">Index</span>(<span class="kw-2">ref</span> <span class="ident">index</span>) <span class="op">=&gt;</span> <span class="ident">index</span>.<span class="ident">index</span>.<span class="ident">hash</span>(<span class="ident">hasher</span>),
+            <span class="ident">IdentOrIndex</span>::<span class="ident">Ident</span>(<span class="kw-2">ref</span> <span class="ident">ident</span>) <span class="op">=&gt;</span> <span class="ident">ident</span>.<span class="ident">hash</span>(<span class="ident">hasher</span>),
+        }
+    }
 }
 
 <span class="kw">impl</span> ::<span class="ident">quote</span>::<span class="ident">ToTokens</span> <span class="kw">for</span> <span class="ident">IdentOrIndex</span> {
