@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.43/src/ser/impossible.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.50/src/ser/impossible.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>impossible.rs.html -- source</title>
@@ -281,6 +281,8 @@
 <span id="225">225</span>
 <span id="226">226</span>
 <span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2017 Serde Developers</span>
 <span class="comment">//</span>
@@ -294,8 +296,10 @@
 
 <span class="kw">use</span> <span class="ident">lib</span>::<span class="kw-2">*</span>;
 
-<span class="kw">use</span> <span class="ident">ser</span>::{<span class="self">self</span>, <span class="ident">Serialize</span>, <span class="ident">SerializeMap</span>, <span class="ident">SerializeSeq</span>, <span class="ident">SerializeStruct</span>, <span class="ident">SerializeStructVariant</span>,
-          <span class="ident">SerializeTuple</span>, <span class="ident">SerializeTupleStruct</span>, <span class="ident">SerializeTupleVariant</span>};
+<span class="kw">use</span> <span class="ident">ser</span>::{
+    <span class="self">self</span>, <span class="ident">Serialize</span>, <span class="ident">SerializeMap</span>, <span class="ident">SerializeSeq</span>, <span class="ident">SerializeStruct</span>, <span class="ident">SerializeStructVariant</span>,
+    <span class="ident">SerializeTuple</span>, <span class="ident">SerializeTupleStruct</span>, <span class="ident">SerializeTupleVariant</span>,
+};
 
 <span class="doccomment">/// Helper type for implementing a `Serializer` that does not support</span>
 <span class="doccomment">/// serializing one of the compound types.</span>

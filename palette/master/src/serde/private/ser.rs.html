@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.43/src/private/ser.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.50/src/private/ser.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>ser.rs.html -- source</title>
@@ -1389,6 +1389,7 @@
 <span id="1333">1333</span>
 <span id="1334">1334</span>
 <span id="1335">1335</span>
+<span id="1336">1336</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2017 Serde Developers</span>
 <span class="comment">//</span>
@@ -1403,8 +1404,9 @@
 <span class="kw">use</span> <span class="ident">ser</span>::{<span class="self">self</span>, <span class="ident">Impossible</span>, <span class="ident">Serialize</span>, <span class="ident">SerializeMap</span>, <span class="ident">SerializeStruct</span>, <span class="ident">Serializer</span>};
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>))]</span>
-<span class="kw">use</span> <span class="self">self</span>::<span class="ident">content</span>::{<span class="ident">Content</span>, <span class="ident">ContentSerializer</span>, <span class="ident">SerializeStructVariantAsMapValue</span>,
-                    <span class="ident">SerializeTupleVariantAsMapValue</span>};
+<span class="kw">use</span> <span class="self">self</span>::<span class="ident">content</span>::{
+    <span class="ident">Content</span>, <span class="ident">ContentSerializer</span>, <span class="ident">SerializeStructVariantAsMapValue</span>, <span class="ident">SerializeTupleVariantAsMapValue</span>,
+};
 
 <span class="doccomment">/// Used to check that serde(getter) attributes return the expected type.</span>
 <span class="doccomment">/// Not public API.</span>

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.43/src/macros.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.50/src/macros.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>macros.rs.html -- source</title>
@@ -296,6 +296,10 @@
 <span id="240">240</span>
 <span id="241">241</span>
 <span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2017 Serde Developers</span>
 <span class="comment">//</span>
@@ -330,14 +334,16 @@
 <span class="doccomment">/// #     type Error = value::Error;</span>
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// #     fn deserialize_any&lt;V&gt;(self, _: V) -&gt; Result&lt;V::Value, Self::Error&gt;</span>
-<span class="doccomment">/// #         where V: Visitor&lt;&#39;de&gt;</span>
+<span class="doccomment">/// #     where</span>
+<span class="doccomment">/// #         V: Visitor&lt;&#39;de&gt;,</span>
 <span class="doccomment">/// #     {</span>
 <span class="doccomment">/// #         unimplemented!()</span>
 <span class="doccomment">/// #     }</span>
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// #[inline]</span>
 <span class="doccomment">/// fn deserialize_bool&lt;V&gt;(self, visitor: V) -&gt; Result&lt;V::Value, Self::Error&gt;</span>
-<span class="doccomment">///     where V: Visitor&lt;&#39;de&gt;</span>
+<span class="doccomment">/// where</span>
+<span class="doccomment">///     V: Visitor&lt;&#39;de&gt;,</span>
 <span class="doccomment">/// {</span>
 <span class="doccomment">///     self.deserialize_any(visitor)</span>
 <span class="doccomment">/// }</span>
@@ -368,7 +374,8 @@
 <span class="doccomment">/// #   type Error = value::Error;</span>
 <span class="doccomment">/// #</span>
 <span class="doccomment">///     fn deserialize_any&lt;V&gt;(self, visitor: V) -&gt; Result&lt;V::Value, Self::Error&gt;</span>
-<span class="doccomment">///         where V: Visitor&lt;&#39;de&gt;</span>
+<span class="doccomment">///     where</span>
+<span class="doccomment">///         V: Visitor&lt;&#39;de&gt;,</span>
 <span class="doccomment">///     {</span>
 <span class="doccomment">///         /* ... */</span>
 <span class="doccomment">/// #       let _ = visitor;</span>
@@ -404,7 +411,8 @@
 <span class="doccomment">/// #     type Error = value::Error;</span>
 <span class="doccomment">/// #</span>
 <span class="doccomment">/// #     fn deserialize_any&lt;W&gt;(self, visitor: W) -&gt; Result&lt;W::Value, Self::Error&gt;</span>
-<span class="doccomment">/// #         where W: Visitor&lt;&#39;q&gt;</span>
+<span class="doccomment">/// #     where</span>
+<span class="doccomment">/// #         W: Visitor&lt;&#39;q&gt;,</span>
 <span class="doccomment">/// #     {</span>
 <span class="doccomment">/// #         unimplemented!()</span>
 <span class="doccomment">/// #     }</span>
