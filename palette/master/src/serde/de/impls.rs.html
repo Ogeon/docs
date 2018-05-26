@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.60/src/de/impls.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.61/src/de/impls.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>impls.rs.html -- source</title>
@@ -2880,7 +2880,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unstable&quot;</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">de_boxed_c_str</span>))]</span>
 <span class="macro">forwarded_impl</span><span class="macro">!</span>((), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">CStr</span><span class="op">&gt;</span>, <span class="ident">CString</span>::<span class="ident">into_boxed_c_str</span>);
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////</span>
@@ -3835,7 +3835,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>))]</span>
 <span class="macro">forwarded_impl</span><span class="macro">!</span>((), <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>, <span class="ident">String</span>::<span class="ident">into_boxed_str</span>);
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unstable&quot;</span>), <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rc&quot;</span>, <span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">not</span>(<span class="ident">de_rc_dst</span>), <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rc&quot;</span>, <span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
 <span class="macro">forwarded_impl</span><span class="macro">!</span> {
     <span class="doccomment">/// This impl requires the [`&quot;rc&quot;`] Cargo feature of Serde.</span>
     <span class="doccomment">///</span>
@@ -3847,7 +3847,7 @@
     (<span class="ident">T</span>), <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">Arc</span>::<span class="ident">new</span>
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unstable&quot;</span>), <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rc&quot;</span>, <span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">not</span>(<span class="ident">de_rc_dst</span>), <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rc&quot;</span>, <span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
 <span class="macro">forwarded_impl</span><span class="macro">!</span> {
     <span class="doccomment">/// This impl requires the [`&quot;rc&quot;`] Cargo feature of Serde.</span>
     <span class="doccomment">///</span>
@@ -3914,7 +3914,7 @@
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////</span>
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unstable&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rc&quot;</span>, <span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">de_rc_dst</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rc&quot;</span>, <span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">box_forwarded_impl</span> {
     (
         $(<span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc</span>:<span class="ident">tt</span>]</span>)<span class="op">*</span>
@@ -3935,7 +3935,7 @@
     };
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unstable&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rc&quot;</span>, <span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">de_rc_dst</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rc&quot;</span>, <span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
 <span class="macro">box_forwarded_impl</span><span class="macro">!</span> {
     <span class="doccomment">/// This impl requires the [`&quot;rc&quot;`] Cargo feature of Serde.</span>
     <span class="doccomment">///</span>
@@ -3947,7 +3947,7 @@
     <span class="ident">Rc</span>
 }
 
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;unstable&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rc&quot;</span>, <span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">de_rc_dst</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rc&quot;</span>, <span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;alloc&quot;</span>)))]</span>
 <span class="macro">box_forwarded_impl</span><span class="macro">!</span> {
     <span class="doccomment">/// This impl requires the [`&quot;rc&quot;`] Cargo feature of Serde.</span>
     <span class="doccomment">///</span>

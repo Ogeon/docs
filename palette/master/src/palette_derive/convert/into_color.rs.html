@@ -512,7 +512,6 @@
 <span id="455">455</span>
 <span id="456">456</span>
 <span id="457">457</span>
-<span id="458">458</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">proc_macro</span>::<span class="ident">TokenStream</span>;
 <span class="kw">use</span> <span class="ident">proc_macro2</span>::{<span class="ident">Span</span>, <span class="ident">TokenStream</span> <span class="kw">as</span> <span class="ident">TokenStream2</span>};
@@ -881,9 +880,8 @@
             <span class="ident">rgb_space</span>.<span class="ident">clone</span>()
         } <span class="kw">else</span> {
             <span class="kw">let</span> <span class="ident">rgb_space_path</span> <span class="op">=</span> <span class="ident">util</span>::<span class="ident">path</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;rgb&quot;</span>, <span class="string">&quot;RgbSpace&quot;</span>], <span class="ident">meta</span>.<span class="ident">internal</span>);
-            <span class="ident">util</span>::<span class="ident">add_missing_where_clause</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">generics</span>);
-            <span class="kw">let</span> <span class="ident">where_clause</span> <span class="op">=</span> <span class="ident">generics</span>.<span class="ident">where_clause</span>.<span class="ident">as_mut</span>().<span class="ident">unwrap</span>();
-            <span class="ident">where_clause</span>
+            <span class="ident">generics</span>
+                .<span class="ident">make_where_clause</span>()
                 .<span class="ident">predicates</span>
                 .<span class="ident">push</span>(<span class="macro">parse_quote</span><span class="macro">!</span>(<span class="ident">_S</span>: #<span class="ident">rgb_space_path</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> #<span class="ident">white_point</span><span class="op">&gt;</span>));
 
