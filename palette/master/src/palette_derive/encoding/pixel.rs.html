@@ -205,19 +205,13 @@
 <span id="148">148</span>
 <span id="149">149</span>
 <span id="150">150</span>
-<span id="151">151</span>
-<span id="152">152</span>
-<span id="153">153</span>
-<span id="154">154</span>
-<span id="155">155</span>
-<span id="156">156</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::{<span class="ident">HashMap</span>, <span class="ident">HashSet</span>};
 
 <span class="kw">use</span> <span class="ident">proc_macro</span>::<span class="ident">TokenStream</span>;
 <span class="kw">use</span> <span class="ident">proc_macro2</span>::<span class="ident">TokenStream</span> <span class="kw">as</span> <span class="ident">TokenStream2</span>;
-<span class="kw">use</span> <span class="ident">syn</span>::{<span class="self">self</span>, <span class="ident">Data</span>, <span class="ident">DeriveInput</span>, <span class="ident">Fields</span>, <span class="ident">Ident</span>, <span class="ident">Type</span>};
 <span class="kw">use</span> <span class="ident">quote</span>::<span class="ident">ToTokens</span>;
+<span class="kw">use</span> <span class="ident">syn</span>::{<span class="self">self</span>, <span class="ident">Data</span>, <span class="ident">DeriveInput</span>, <span class="ident">Fields</span>, <span class="ident">Ident</span>, <span class="ident">Type</span>};
 
 <span class="kw">use</span> <span class="ident">meta</span>::{<span class="self">self</span>, <span class="ident">DataMetaParser</span>, <span class="ident">IdentOrIndex</span>, <span class="ident">MetaParser</span>};
 <span class="kw">use</span> <span class="ident">util</span>;
@@ -270,15 +264,12 @@
         <span class="ident">number_of_channels</span> <span class="op">+=</span> <span class="number">1</span>;
 
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">field_type</span>) <span class="op">=</span> <span class="ident">field_type</span>.<span class="ident">clone</span>() {
-            <span class="kw">let</span> <span class="ident">ty</span> <span class="op">=</span> <span class="ident">ty</span>.<span class="ident">into_tokens</span>();
-            <span class="kw">let</span> <span class="ident">field_type</span> <span class="op">=</span> <span class="ident">field_type</span>.<span class="ident">into_tokens</span>();
-
             <span class="kw">if</span> <span class="ident">field_type</span> <span class="op">!=</span> <span class="ident">ty</span> {
                 <span class="macro">panic</span><span class="macro">!</span>(
                     <span class="string">&quot;expected fields to be of type `{}`, but `{}` is of type `{}`&quot;</span>,
-                    <span class="ident">field_type</span>,
-                    <span class="ident">field</span>.<span class="ident">into_tokens</span>(),
-                    <span class="ident">ty</span>
+                    <span class="ident">field_type</span>.<span class="ident">into_token_stream</span>(),
+                    <span class="ident">field</span>.<span class="ident">into_token_stream</span>(),
+                    <span class="ident">ty</span>.<span class="ident">into_token_stream</span>()
                 );
             }
         } <span class="kw">else</span> {
@@ -324,13 +315,10 @@
     }
 
     <span class="kw">fn</span> <span class="ident">parse_attribute</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">attribute_name</span>: <span class="ident">Ident</span>, <span class="ident">attribute_tts</span>: <span class="ident">TokenStream2</span>) {
-        <span class="kw">match</span> <span class="ident">attribute_name</span>.<span class="ident">as_ref</span>() {
+        <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">attribute_name</span>.<span class="ident">to_string</span>() {
             <span class="string">&quot;repr&quot;</span> <span class="op">=&gt;</span> {
                 <span class="kw">let</span> <span class="ident">items</span> <span class="op">=</span> <span class="ident">meta</span>::<span class="ident">parse_tuple_attribute</span>(<span class="kw-2">&amp;</span><span class="ident">attribute_name</span>, <span class="ident">attribute_tts</span>);
-                <span class="kw">let</span> <span class="ident">contains_c</span> <span class="op">=</span> <span class="ident">items</span>
-                    .<span class="ident">into_iter</span>()
-                    .<span class="ident">find</span>(<span class="op">|</span><span class="ident">item</span>: <span class="kw-2">&amp;</span><span class="ident">Ident</span><span class="op">|</span> <span class="ident">item</span>.<span class="ident">as_ref</span>() <span class="op">==</span> <span class="string">&quot;C&quot;</span>)
-                    .<span class="ident">is_some</span>();
+                <span class="kw">let</span> <span class="ident">contains_c</span> <span class="op">=</span> <span class="ident">items</span>.<span class="ident">into_iter</span>().<span class="ident">find</span>(<span class="op">|</span><span class="ident">item</span>: <span class="kw-2">&amp;</span><span class="ident">Ident</span><span class="op">|</span> <span class="ident">item</span> <span class="op">==</span> <span class="string">&quot;C&quot;</span>).<span class="ident">is_some</span>();
 
                 <span class="kw">if</span> <span class="ident">contains_c</span> {
                     <span class="self">self</span>.<span class="ident">repr_c</span> <span class="op">=</span> <span class="bool-val">true</span>;
@@ -355,7 +343,7 @@
         <span class="ident">attribute_name</span>: <span class="ident">Ident</span>,
         <span class="ident">attribute_tts</span>: <span class="ident">TokenStream2</span>,
     ) {
-        <span class="kw">match</span> <span class="ident">attribute_name</span>.<span class="ident">as_ref</span>() {
+        <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">attribute_name</span>.<span class="ident">to_string</span>() {
             <span class="string">&quot;palette_unsafe_same_layout_as&quot;</span> <span class="op">=&gt;</span> {
                 <span class="kw">let</span> <span class="ident">substitute</span> <span class="op">=</span> <span class="ident">meta</span>::<span class="ident">parse_equal_attribute</span>(<span class="kw-2">&amp;</span><span class="ident">attribute_name</span>, <span class="ident">attribute_tts</span>);
                 <span class="self">self</span>.<span class="ident">type_substitutes</span>.<span class="ident">insert</span>(<span class="ident">field_name</span>, <span class="ident">substitute</span>);
