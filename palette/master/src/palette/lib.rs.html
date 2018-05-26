@@ -10,10 +10,11 @@
     <title>lib.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
     <script src="../../storage.js"></script>
     
 
@@ -1278,7 +1279,7 @@
                 $(
                     <span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ctor_comment</span>]</span>
                     <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ctor_name</span>$(<span class="op">&lt;</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty_params</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty_param_traits</span>$( <span class="op">&lt;</span>$( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty_inner_traits</span> ),<span class="kw-2">*</span><span class="op">&gt;</span> )<span class="kw-2">*</span>),<span class="kw-2">*</span><span class="op">&gt;</span>)<span class="kw-2">*</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ctor_field</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ctor_ty</span>,)<span class="op">*</span> <span class="ident">alpha</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">alpha_ty</span>) <span class="op">-&gt;</span> <span class="ident">Colora</span><span class="op">&lt;</span><span class="ident">encoding</span>::<span class="ident">Srgb</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-                        <span class="ident">Alpha</span>::<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">variant</span><span class="op">&lt;</span>_, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ctor_original</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ctor_field</span>,)<span class="op">*</span> <span class="ident">alpha</span>).<span class="ident">into</span>()
+                        <span class="ident">Alpha</span>::<span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">variant</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ctor_original</span>($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ctor_field</span>,)<span class="op">*</span> <span class="ident">alpha</span>).<span class="ident">into</span>()
                     }
                 )<span class="op">+</span>
             )<span class="op">+</span>
@@ -1378,14 +1379,14 @@
             <span class="kw">fn</span> <span class="ident">relative_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>, <span class="ident">max_relative</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
                 <span class="kw">match</span> (<span class="kw-2">*</span><span class="self">self</span>, <span class="kw-2">*</span><span class="ident">other</span>) {
                     $((<span class="ident">Color</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">variant</span>(<span class="kw-2">ref</span> <span class="ident">s</span>), <span class="ident">Color</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">variant</span>(<span class="kw-2">ref</span> <span class="ident">o</span>)) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">relative_eq</span>(<span class="ident">o</span>, <span class="ident">epsilon</span>, <span class="ident">max_relative</span>),)<span class="op">+</span>
-                    _ <span class="op">=&gt;</span> <span class="bool-val">false</span>
+                    <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>
                 }
             }
 
             <span class="kw">fn</span> <span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>, <span class="ident">max_ulps</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">bool</span>{
                 <span class="kw">match</span> (<span class="kw-2">*</span><span class="self">self</span>, <span class="kw-2">*</span><span class="ident">other</span>) {
                     $((<span class="ident">Color</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">variant</span>(<span class="kw-2">ref</span> <span class="ident">s</span>), <span class="ident">Color</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">variant</span>(<span class="kw-2">ref</span> <span class="ident">o</span>)) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">ulps_eq</span>(<span class="ident">o</span>, <span class="ident">epsilon</span>, <span class="ident">max_ulps</span>),)<span class="op">+</span>
-                    _ <span class="op">=&gt;</span> <span class="bool-val">false</span>
+                    <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>
                 }
             }
         }
@@ -1652,7 +1653,7 @@
     }
 
     <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
-        <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f32</span>, _<span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>());
+        <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f32</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>());
 
         <span class="kw">if</span> <span class="ident">T</span>::<span class="ident">LIMITED</span> {
             <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">scaled</span>, <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
@@ -1670,7 +1671,7 @@
     }
 
     <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
-        <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, _<span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>());
+        <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>());
 
         <span class="kw">if</span> <span class="ident">T</span>::<span class="ident">LIMITED</span> {
             <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">scaled</span>, <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
@@ -1688,8 +1689,8 @@
     }
 
     <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
-        <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, _<span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())
-            <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, _<span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, _<span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
+        <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())
+            <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
 
         <span class="kw">if</span> <span class="ident">T</span>::<span class="ident">LIMITED</span> {
             <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">scaled</span>, <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
@@ -1707,8 +1708,8 @@
     }
 
     <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
-        <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, _<span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())
-            <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, _<span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, _<span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
+        <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())
+            <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
 
         <span class="kw">if</span> <span class="ident">T</span>::<span class="ident">LIMITED</span> {
             <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">scaled</span>, <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
@@ -1726,8 +1727,8 @@
     }
 
     <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
-        <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, _<span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())
-            <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, _<span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, _<span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
+        <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())
+            <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
 
         <span class="kw">if</span> <span class="ident">T</span>::<span class="ident">LIMITED</span> {
             <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">scaled</span>, <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
@@ -1745,8 +1746,8 @@
     }
 
     <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
-        <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, _<span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())
-            <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, _<span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, _<span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
+        <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())
+            <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
 
         <span class="kw">if</span> <span class="ident">T</span>::<span class="ident">LIMITED</span> {
             <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">scaled</span>, <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))

@@ -10,10 +10,11 @@
     <title>palette::chromatic_adaptation::Method - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
     <script src="../../storage.js"></script>
     
 
@@ -33,7 +34,7 @@
     <nav class="sidebar">
         <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Enum Method</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#variants">Variants</a><div class="sidebar-links"><a href="#variant.Bradford">Bradford</a><a href="#variant.VonKries">VonKries</a><a href="#variant.XyzScaling">XyzScaling</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-TransformMatrix%3CSwp%2C%20Dwp%2C%20T%3E">TransformMatrix&lt;Swp, Dwp, T&gt;</a></div></div><p class='location'><a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a></p><script>window.sidebarCurrent = {name: 'Method', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
+        <p class='location'>Enum Method</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#variants">Variants</a><div class="sidebar-links"><a href="#variant.Bradford">Bradford</a><a href="#variant.VonKries">VonKries</a><a href="#variant.XyzScaling">XyzScaling</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-TransformMatrix%3CSwp%2C%20Dwp%2C%20T%3E">TransformMatrix&lt;Swp, Dwp, T&gt;</a></div><a class="sidebar-title" href="#synthetic-implementations">Auto Trait Implementations</a><div class="sidebar-links"><a href="#impl-Send">Send</a><a href="#impl-Sync">Sync</a></div></div><p class='location'><a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a></p><script>window.sidebarCurrent = {name: 'Method', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
     <div class="theme-picker">
@@ -54,17 +55,15 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a>::<wbr><a class="enum" href=''>Method</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a>::<wbr><a class="enum" href=''>Method</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#32-39' title='goto source code'>[src]</a></span></h1>
-<pre class='rust enum'>pub enum Method {
+               </span><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#32-39' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class='rust enum'>pub enum Method {
     Bradford,
     VonKries,
     XyzScaling,
-}</pre><div class='docblock'><p>Chromatic adaptation methods implemented in the library</p>
+}</pre></div><div class='docblock'><p>Chromatic adaptation methods implemented in the library</p>
 </div><h2 id='variants' class='variants small-section-header'>
                    Variants<a href='#variants' class='anchor'></a></h2>
 <span id="variant.Bradford" class="variant small-section-header"><a href="#variant.Bradford" class="anchor field"></a><span id='Bradford.v' class='invisible'><code>Bradford</code></span></span><div class='docblock'><p>Bradford chromatic adaptation method</p>
@@ -74,12 +73,15 @@
             <h2 id='implementations' class='small-section-header'>
               Trait Implementations<a href='#implementations' class='anchor'></a>
             </h2>
-        <h3 id='impl-TransformMatrix%3CSwp%2C%20Dwp%2C%20T%3E' class='impl'><span class='in-band'><code>impl&lt;Swp, Dwp, T&gt; <a class="trait" href="../../palette/chromatic_adaptation/trait.TransformMatrix.html" title="trait palette::chromatic_adaptation::TransformMatrix">TransformMatrix</a>&lt;Swp, Dwp, T&gt; for <a class="enum" href="../../palette/chromatic_adaptation/enum.Method.html" title="enum palette::chromatic_adaptation::Method">Method</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code><a href='#impl-TransformMatrix%3CSwp%2C%20Dwp%2C%20T%3E' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#87-134' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.get_cone_response' class="method"><span id='get_cone_response.v' class='invisible'><code>fn <a href='../../palette/chromatic_adaptation/trait.TransformMatrix.html#tymethod.get_cone_response' class='fnname'>get_cone_response</a>(&amp;self) -&gt; <a class="struct" href="../../palette/chromatic_adaptation/struct.ConeResponseMatrices.html" title="struct palette::chromatic_adaptation::ConeResponseMatrices">ConeResponseMatrices</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#94-133' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Get the cone response functions for the chromatic adaptation method</p>
-</div><h4 id='method.generate_transform_matrix' class="method"><span id='generate_transform_matrix.v' class='invisible'><code>fn <a href='../../palette/chromatic_adaptation/trait.TransformMatrix.html#method.generate_transform_matrix' class='fnname'>generate_transform_matrix</a>(&amp;self) -&gt; <a class="type" href="../../palette/type.Mat3.html" title="type palette::Mat3">Mat3</a>&lt;T&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#62-84' title='goto source code'>[src]</a></span></h4>
-<div class='docblock'><p>Generates a 3x3 transformation matrix to convert color from one reference white point to another with the given cone_response <a href="../../palette/chromatic_adaptation/trait.TransformMatrix.html#method.generate_transform_matrix">Read more</a></p>
-</div></div></section>
+            <div id='implementations-list'>
+        <h3 id='impl-TransformMatrix%3CSwp%2C%20Dwp%2C%20T%3E' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;Swp, Dwp, T&gt; <a class="trait" href="../../palette/chromatic_adaptation/trait.TransformMatrix.html" title="trait palette::chromatic_adaptation::TransformMatrix">TransformMatrix</a>&lt;Swp, Dwp, T&gt; for <a class="enum" href="../../palette/chromatic_adaptation/enum.Method.html" title="enum palette::chromatic_adaptation::Method">Method</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code><a href='#impl-TransformMatrix%3CSwp%2C%20Dwp%2C%20T%3E' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#87-134' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.get_cone_response' class="method"><span id='get_cone_response.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='../../palette/chromatic_adaptation/trait.TransformMatrix.html#tymethod.get_cone_response' class='fnname'>get_cone_response</a>(&amp;self) -&gt; <a class="struct" href="../../palette/chromatic_adaptation/struct.ConeResponseMatrices.html" title="struct palette::chromatic_adaptation::ConeResponseMatrices">ConeResponseMatrices</a>&lt;T&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#94-133' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Get the cone response functions for the chromatic adaptation method</p>
+</div><h4 id='method.generate_transform_matrix' class="method"><span id='generate_transform_matrix.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='../../palette/chromatic_adaptation/trait.TransformMatrix.html#method.generate_transform_matrix' class='fnname'>generate_transform_matrix</a>(&amp;self) -&gt; <a class="type" href="../../palette/type.Mat3.html" title="type palette::Mat3">Mat3</a>&lt;T&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#62-84' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Generates a 3x3 transformation matrix to convert color from one reference white point to another with the given cone_response <a href="../../palette/chromatic_adaptation/trait.TransformMatrix.html#method.generate_transform_matrix">Read more</a></p>
+</div></div></div>
+                <h2 id='synthetic-implementations' class='small-section-header'>
+                  Auto Trait Implementations<a href='#synthetic-implementations' class='anchor'></a>
+                </h2>
+                <div id='synthetic-implementations-list'>
+            <h3 id='impl-Send' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> for <a class="enum" href="../../palette/chromatic_adaptation/enum.Method.html" title="enum palette::chromatic_adaptation::Method">Method</a></code><a href='#impl-Send' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div><h3 id='impl-Sync' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> for <a class="enum" href="../../palette/chromatic_adaptation/enum.Method.html" title="enum palette::chromatic_adaptation::Method">Method</a></code><a href='#impl-Sync' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

@@ -10,10 +10,11 @@
     <title>palette::chromatic_adaptation::AdaptFrom - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
     <script src="../../storage.js"></script>
     
 
@@ -54,17 +55,15 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a>::<wbr><a class="trait" href=''>AdaptFrom</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a>::<wbr><a class="trait" href=''>AdaptFrom</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#140-154' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait AdaptFrom&lt;S, Swp, Dwp, T&gt;: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span>{
+               </span><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#140-154' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class='rust trait'>pub trait AdaptFrom&lt;S, Swp, Dwp, T&gt;: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sized.html" title="trait core::marker::Sized">Sized</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span>{
     fn <a href='#tymethod.adapt_from_using' class='fnname'>adapt_from_using</a>&lt;M:&nbsp;<a class="trait" href="../../palette/chromatic_adaptation/trait.TransformMatrix.html" title="trait palette::chromatic_adaptation::TransformMatrix">TransformMatrix</a>&lt;Swp, Dwp, T&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color: S, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;method: M<br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; Self;
 
     fn <a href='#method.adapt_from' class='fnname'>adapt_from</a>(color: S) -&gt; Self { ... }
-}</pre><div class='docblock'><p>Trait to convert color from one reference white point to another</p>
+}</pre></div><div class='docblock'><p>Trait to convert color from one reference white point to another</p>
 <p>Converts a color from the source white point (Swp) to the destination white point (Dwp).
 Uses the bradford method for conversion by default.</p>
 </div>
@@ -86,8 +85,8 @@ method by default</p>
           Implementors<a href='#implementors' class='anchor'></a>
         </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><div class='out-of-band'><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#156-170' title='goto source code'>[src]</a></div><code>impl&lt;S, D, Swp, Dwp, T&gt; AdaptFrom&lt;S, Swp, Dwp, T&gt; for D <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../../palette/trait.IntoColor.html" title="trait palette::IntoColor">IntoColor</a>&lt;Swp, T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;D: <a class="trait" href="../../palette/trait.FromColor.html" title="trait palette::FromColor">FromColor</a>&lt;Dwp, T&gt;,&nbsp;</span></code></li>
-</ul><script type="text/javascript" async
+    <li><table class='table-display'><tbody><tr><td><code>impl&lt;S, D, Swp, Dwp, T&gt; AdaptFrom&lt;S, Swp, Dwp, T&gt; for D <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;S: <a class="trait" href="../../palette/trait.IntoColor.html" title="trait palette::IntoColor">IntoColor</a>&lt;Swp, T&gt;,<br>&nbsp;&nbsp;&nbsp;&nbsp;D: <a class="trait" href="../../palette/trait.FromColor.html" title="trait palette::FromColor">FromColor</a>&lt;Dwp, T&gt;,&nbsp;</span></code><td><div class='out-of-band'><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#156-170' title='goto source code'>[src]</a></div></td></tr></tbody></table></li>
+</ul><script type="text/javascript">window.inlined_types=new Set([]);</script><script type="text/javascript" async
                          src="../../implementors/palette/chromatic_adaptation/trait.AdaptFrom.js">
                  </script></section>
     <section id='search' class="content hidden"></section>

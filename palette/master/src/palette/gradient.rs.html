@@ -10,10 +10,11 @@
     <title>gradient.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
     <script src="../../storage.js"></script>
     
 
@@ -481,12 +482,12 @@
     <span class="doccomment">///Create a gradient of evenly spaced colors with the domain [0.0, 1.0].</span>
     <span class="doccomment">///There must be at least one color.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">C</span><span class="op">&gt;&gt;</span>(<span class="ident">colors</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">Gradient</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">points</span>: <span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">colors</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> (<span class="ident">C</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>(), <span class="ident">c</span>)).<span class="ident">collect</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">points</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">colors</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">c</span><span class="op">|</span> (<span class="ident">C</span>::<span class="ident">Scalar</span>::<span class="ident">zero</span>(), <span class="ident">c</span>)).<span class="ident">collect</span>();
         <span class="macro">assert</span><span class="macro">!</span>(<span class="ident">points</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="number">0</span>);
         <span class="kw">let</span> <span class="ident">step_size</span> <span class="op">=</span> <span class="ident">C</span>::<span class="ident">Scalar</span>::<span class="ident">one</span>() <span class="op">/</span> <span class="ident">cast</span>(<span class="ident">max</span>(<span class="ident">points</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span>, <span class="number">1</span>) <span class="kw">as</span> <span class="ident">f64</span>);
 
-        <span class="kw">for</span> (<span class="ident">i</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> (<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">p</span>, _)) <span class="kw">in</span> <span class="ident">points</span>.<span class="ident">iter_mut</span>().<span class="ident">enumerate</span>() {
-            <span class="kw-2">*</span><span class="ident">p</span> <span class="op">=</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">C</span>::<span class="ident">Scalar</span>, _<span class="op">&gt;</span>(<span class="ident">i</span>) <span class="op">*</span> <span class="ident">step_size</span>;
+        <span class="kw">for</span> (<span class="ident">i</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> (<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">p</span>, <span class="kw">_</span>)) <span class="kw">in</span> <span class="ident">points</span>.<span class="ident">iter_mut</span>().<span class="ident">enumerate</span>() {
+            <span class="kw-2">*</span><span class="ident">p</span> <span class="op">=</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">i</span>) <span class="op">*</span> <span class="ident">step_size</span>;
         }
 
         <span class="ident">Gradient</span>(<span class="ident">points</span>)
@@ -569,10 +570,10 @@
 
     <span class="doccomment">///Get the limits of this gradient&#39;s domain.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">domain</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> (<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>::<span class="ident">Scalar</span>) {
-        <span class="kw">let</span> <span class="kw-2">&amp;</span>(<span class="ident">min</span>, _) <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>
+        <span class="kw">let</span> <span class="kw-2">&amp;</span>(<span class="ident">min</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>
             .<span class="ident">get</span>(<span class="number">0</span>)
             .<span class="ident">expect</span>(<span class="string">&quot;a Gradient must contain at least one color&quot;</span>);
-        <span class="kw">let</span> <span class="kw-2">&amp;</span>(<span class="ident">max</span>, _) <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>
+        <span class="kw">let</span> <span class="kw-2">&amp;</span>(<span class="ident">max</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>
             .<span class="ident">last</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;a Gradient must contain at least one color&quot;</span>);
         (<span class="ident">min</span>, <span class="ident">max</span>)
@@ -773,13 +774,13 @@
         <span class="kw">let</span> <span class="ident">from</span> <span class="op">=</span> <span class="kw">match</span> (<span class="self">self</span>.<span class="ident">from</span>, <span class="ident">other</span>.<span class="ident">from</span>) {
             (<span class="prelude-val">Some</span>(<span class="ident">s</span>), <span class="prelude-val">Some</span>(<span class="ident">o</span>)) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">relative_eq</span>(<span class="kw-2">&amp;</span><span class="ident">o</span>, <span class="ident">epsilon</span>, <span class="ident">max_relative</span>),
             (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         };
 
         <span class="kw">let</span> <span class="ident">to</span> <span class="op">=</span> <span class="kw">match</span> (<span class="self">self</span>.<span class="ident">to</span>, <span class="ident">other</span>.<span class="ident">to</span>) {
             (<span class="prelude-val">Some</span>(<span class="ident">s</span>), <span class="prelude-val">Some</span>(<span class="ident">o</span>)) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">relative_eq</span>(<span class="kw-2">&amp;</span><span class="ident">o</span>, <span class="ident">epsilon</span>, <span class="ident">max_relative</span>),
             (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         };
 
         <span class="ident">from</span> <span class="op">&amp;&amp;</span> <span class="ident">to</span>
@@ -789,13 +790,13 @@
         <span class="kw">let</span> <span class="ident">from</span> <span class="op">=</span> <span class="kw">match</span> (<span class="self">self</span>.<span class="ident">from</span>, <span class="ident">other</span>.<span class="ident">from</span>) {
             (<span class="prelude-val">Some</span>(<span class="ident">s</span>), <span class="prelude-val">Some</span>(<span class="ident">o</span>)) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="ident">o</span>, <span class="ident">epsilon</span>, <span class="ident">max_ulps</span>),
             (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         };
 
         <span class="kw">let</span> <span class="ident">to</span> <span class="op">=</span> <span class="kw">match</span> (<span class="self">self</span>.<span class="ident">to</span>, <span class="ident">other</span>.<span class="ident">to</span>) {
             (<span class="prelude-val">Some</span>(<span class="ident">s</span>), <span class="prelude-val">Some</span>(<span class="ident">o</span>)) <span class="op">=&gt;</span> <span class="ident">s</span>.<span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="ident">o</span>, <span class="ident">epsilon</span>, <span class="ident">max_ulps</span>),
             (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            _ <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
         };
 
         <span class="ident">from</span> <span class="op">&amp;&amp;</span> <span class="ident">to</span>
@@ -850,8 +851,8 @@
         ]);
         <span class="kw">let</span> <span class="ident">g2</span> <span class="op">=</span> <span class="ident">g1</span>.<span class="ident">slice</span>(..<span class="number">0.5</span>);
 
-        <span class="kw">let</span> <span class="ident">v1</span>: <span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">g1</span>.<span class="ident">take</span>(<span class="number">10</span>).<span class="ident">take</span>(<span class="number">5</span>).<span class="ident">collect</span>();
-        <span class="kw">let</span> <span class="ident">v2</span>: <span class="ident">Vec</span><span class="op">&lt;</span>_<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">g2</span>.<span class="ident">take</span>(<span class="number">5</span>).<span class="ident">collect</span>();
+        <span class="kw">let</span> <span class="ident">v1</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">g1</span>.<span class="ident">take</span>(<span class="number">10</span>).<span class="ident">take</span>(<span class="number">5</span>).<span class="ident">collect</span>();
+        <span class="kw">let</span> <span class="ident">v2</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">g2</span>.<span class="ident">take</span>(<span class="number">5</span>).<span class="ident">collect</span>();
         <span class="kw">for</span> (<span class="ident">t1</span>, <span class="ident">t2</span>) <span class="kw">in</span> <span class="ident">v1</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">v2</span>.<span class="ident">iter</span>()) {
             <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">t1</span>, <span class="ident">t2</span>);
         }

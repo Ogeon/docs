@@ -10,10 +10,11 @@
     <title>palette::chromatic_adaptation::TransformMatrix - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
     <script src="../../storage.js"></script>
     
 
@@ -54,17 +55,15 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a>::<wbr><a class="trait" href=''>TransformMatrix</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>palette</a>::<wbr><a href='index.html'>chromatic_adaptation</a>::<wbr><a class="trait" href=''>TransformMatrix</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#51-85' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait TransformMatrix&lt;Swp, Dwp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span>{
+               </span><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#51-85' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class='rust trait'>pub trait TransformMatrix&lt;Swp, Dwp, T&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span>{
     fn <a href='#tymethod.get_cone_response' class='fnname'>get_cone_response</a>(&amp;self) -&gt; <a class="struct" href="../../palette/chromatic_adaptation/struct.ConeResponseMatrices.html" title="struct palette::chromatic_adaptation::ConeResponseMatrices">ConeResponseMatrices</a>&lt;T&gt;;
 
     fn <a href='#method.generate_transform_matrix' class='fnname'>generate_transform_matrix</a>(&amp;self) -&gt; <a class="type" href="../../palette/type.Mat3.html" title="type palette::Mat3">Mat3</a>&lt;T&gt; { ... }
-}</pre><div class='docblock'><p>Generates a conversion matrix to convert the Xyz trisitmilus values from
+}</pre></div><div class='docblock'><p>Generates a conversion matrix to convert the Xyz trisitmilus values from
 one illuminant to another (Swp -&gt; Dwp)</p>
 </div>
             <h2 id='required-methods' class='small-section-header'>
@@ -84,8 +83,8 @@ to another with the given cone_response</p>
           Implementors<a href='#implementors' class='anchor'></a>
         </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><div class='out-of-band'><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#87-134' title='goto source code'>[src]</a></div><code>impl&lt;Swp, Dwp, T&gt; TransformMatrix&lt;Swp, Dwp, T&gt; for <a class="enum" href="../../palette/chromatic_adaptation/enum.Method.html" title="enum palette::chromatic_adaptation::Method">Method</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code></li>
-</ul><script type="text/javascript" async
+    <li><table class='table-display'><tbody><tr><td><code>impl&lt;Swp, Dwp, T&gt; TransformMatrix&lt;Swp, Dwp, T&gt; for <a class="enum" href="../../palette/chromatic_adaptation/enum.Method.html" title="enum palette::chromatic_adaptation::Method">Method</a> <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="../../palette/trait.Component.html" title="trait palette::Component">Component</a> + <a class="trait" href="../../num_traits/float/trait.Float.html" title="trait num_traits::float::Float">Float</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Swp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;Dwp: <a class="trait" href="../../palette/white_point/trait.WhitePoint.html" title="trait palette::white_point::WhitePoint">WhitePoint</a>,&nbsp;</span></code><td><div class='out-of-band'><a class='srclink' href='../../src/palette/chromatic_adaptation.rs.html#87-134' title='goto source code'>[src]</a></div></td></tr></tbody></table></li>
+</ul><script type="text/javascript">window.inlined_types=new Set([]);</script><script type="text/javascript" async
                          src="../../implementors/palette/chromatic_adaptation/trait.TransformMatrix.js">
                  </script></section>
     <section id='search' class="content hidden"></section>

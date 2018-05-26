@@ -4,16 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.50/src/de/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.60/src/de/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css"
+          id="mainThemeStyle">
     
     <link rel="stylesheet" type="text/css" href="../../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css" id="themeStyle">
+    <link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle">
     <script src="../../../storage.js"></script>
     
 
@@ -2149,6 +2150,57 @@
 <span id="2093">2093</span>
 <span id="2094">2094</span>
 <span id="2095">2095</span>
+<span id="2096">2096</span>
+<span id="2097">2097</span>
+<span id="2098">2098</span>
+<span id="2099">2099</span>
+<span id="2100">2100</span>
+<span id="2101">2101</span>
+<span id="2102">2102</span>
+<span id="2103">2103</span>
+<span id="2104">2104</span>
+<span id="2105">2105</span>
+<span id="2106">2106</span>
+<span id="2107">2107</span>
+<span id="2108">2108</span>
+<span id="2109">2109</span>
+<span id="2110">2110</span>
+<span id="2111">2111</span>
+<span id="2112">2112</span>
+<span id="2113">2113</span>
+<span id="2114">2114</span>
+<span id="2115">2115</span>
+<span id="2116">2116</span>
+<span id="2117">2117</span>
+<span id="2118">2118</span>
+<span id="2119">2119</span>
+<span id="2120">2120</span>
+<span id="2121">2121</span>
+<span id="2122">2122</span>
+<span id="2123">2123</span>
+<span id="2124">2124</span>
+<span id="2125">2125</span>
+<span id="2126">2126</span>
+<span id="2127">2127</span>
+<span id="2128">2128</span>
+<span id="2129">2129</span>
+<span id="2130">2130</span>
+<span id="2131">2131</span>
+<span id="2132">2132</span>
+<span id="2133">2133</span>
+<span id="2134">2134</span>
+<span id="2135">2135</span>
+<span id="2136">2136</span>
+<span id="2137">2137</span>
+<span id="2138">2138</span>
+<span id="2139">2139</span>
+<span id="2140">2140</span>
+<span id="2141">2141</span>
+<span id="2142">2142</span>
+<span id="2143">2143</span>
+<span id="2144">2144</span>
+<span id="2145">2145</span>
+<span id="2146">2146</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2017 Serde Developers</span>
 <span class="comment">//</span>
@@ -2204,8 +2256,8 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//!  - **Primitive types**:</span>
 <span class="doccomment">//!    - bool</span>
-<span class="doccomment">//!    - i8, i16, i32, i64, isize</span>
-<span class="doccomment">//!    - u8, u16, u32, u64, usize</span>
+<span class="doccomment">//!    - i8, i16, i32, i64, i128, isize</span>
+<span class="doccomment">//!    - u8, u16, u32, u64, u128, usize</span>
 <span class="doccomment">//!    - f32, f64</span>
 <span class="doccomment">//!    - char</span>
 <span class="doccomment">//!  - **Compound types**:</span>
@@ -2236,7 +2288,6 @@
 <span class="doccomment">//!    - LinkedList\&lt;T\&gt;</span>
 <span class="doccomment">//!    - VecDeque\&lt;T\&gt;</span>
 <span class="doccomment">//!    - Vec\&lt;T\&gt;</span>
-<span class="doccomment">//!    - EnumSet\&lt;T\&gt; (unstable)</span>
 <span class="doccomment">//!  - **Zero-copy types**:</span>
 <span class="doccomment">//!    - &amp;str</span>
 <span class="doccomment">//!    - &amp;[u8]</span>
@@ -2250,7 +2301,6 @@
 <span class="doccomment">//!    - Path</span>
 <span class="doccomment">//!    - PathBuf</span>
 <span class="doccomment">//!    - Range\&lt;T\&gt;</span>
-<span class="doccomment">//!    - NonZero\&lt;T\&gt; (unstable, deprecated)</span>
 <span class="doccomment">//!    - num::NonZero* (unstable)</span>
 <span class="doccomment">//!  - **Net types**:</span>
 <span class="doccomment">//!    - IpAddr</span>
@@ -2540,7 +2590,7 @@
             <span class="ident">Float</span>(<span class="ident">f</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">formatter</span>, <span class="string">&quot;floating point `{}`&quot;</span>, <span class="ident">f</span>),
             <span class="ident">Char</span>(<span class="ident">c</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">formatter</span>, <span class="string">&quot;character `{}`&quot;</span>, <span class="ident">c</span>),
             <span class="ident">Str</span>(<span class="ident">s</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">formatter</span>, <span class="string">&quot;string {:?}&quot;</span>, <span class="ident">s</span>),
-            <span class="ident">Bytes</span>(_) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">formatter</span>, <span class="string">&quot;byte array&quot;</span>),
+            <span class="ident">Bytes</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">formatter</span>, <span class="string">&quot;byte array&quot;</span>),
             <span class="ident">Unit</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">formatter</span>, <span class="string">&quot;unit value&quot;</span>),
             <span class="prelude-ty">Option</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">formatter</span>, <span class="string">&quot;Option value&quot;</span>),
             <span class="ident">NewtypeStruct</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">formatter</span>, <span class="string">&quot;newtype struct&quot;</span>),
@@ -2911,7 +2961,7 @@
 <span class="doccomment">/// Serde.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The role of this trait is to define the deserialization half of the Serde</span>
-<span class="doccomment">/// data model, which is a way to categorize every Rust data type into one of 27</span>
+<span class="doccomment">/// data model, which is a way to categorize every Rust data type into one of 29</span>
 <span class="doccomment">/// possible types. Each method of the `Serializer` trait corresponds to one of</span>
 <span class="doccomment">/// the types of the data model.</span>
 <span class="doccomment">///</span>
@@ -2921,10 +2971,10 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// The types that make up the Serde data model are:</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///  - **12 primitive types**</span>
+<span class="doccomment">///  - **14 primitive types**</span>
 <span class="doccomment">///    - bool</span>
-<span class="doccomment">///    - i8, i16, i32, i64</span>
-<span class="doccomment">///    - u8, u16, u32, u64</span>
+<span class="doccomment">///    - i8, i16, i32, i64, i128</span>
+<span class="doccomment">///    - u8, u16, u32, u64, u128</span>
 <span class="doccomment">///    - f32, f64</span>
 <span class="doccomment">///    - char</span>
 <span class="doccomment">///  - **string**</span>
@@ -3038,6 +3088,20 @@
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>;
 
+    <span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+        <span class="doccomment">/// Hint that the `Deserialize` type is expecting an `i128` value.</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">/// This method is available only on Rust compiler versions &gt;=1.26. The</span>
+        <span class="doccomment">/// default behavior unconditionally returns an error.</span>
+        <span class="kw">fn</span> <span class="ident">deserialize_i128</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">visitor</span>: <span class="ident">V</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+        <span class="kw">where</span>
+            <span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>
+        {
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">visitor</span>;
+            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">custom</span>(<span class="string">&quot;i128 is not supported&quot;</span>))
+        }
+    }
+
     <span class="doccomment">/// Hint that the `Deserialize` type is expecting a `u8` value.</span>
     <span class="kw">fn</span> <span class="ident">deserialize_u8</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">visitor</span>: <span class="ident">V</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
@@ -3057,6 +3121,20 @@
     <span class="kw">fn</span> <span class="ident">deserialize_u64</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">visitor</span>: <span class="ident">V</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>;
+
+    <span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+        <span class="doccomment">/// Hint that the `Deserialize` type is expecting an `u128` value.</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">/// This method is available only on Rust compiler versions &gt;=1.26. The</span>
+        <span class="doccomment">/// default behavior unconditionally returns an error.</span>
+        <span class="kw">fn</span> <span class="ident">deserialize_u128</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">visitor</span>: <span class="ident">V</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
+        <span class="kw">where</span>
+            <span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>
+        {
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">visitor</span>;
+            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">custom</span>(<span class="string">&quot;u128 is not supported&quot;</span>))
+        }
+    }
 
     <span class="doccomment">/// Hint that the `Deserialize` type is expecting a `f32` value.</span>
     <span class="kw">fn</span> <span class="ident">deserialize_f32</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">visitor</span>: <span class="ident">V</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
@@ -3284,18 +3362,6 @@
     <span class="kw">fn</span> <span class="ident">is_human_readable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="bool-val">true</span>
     }
-
-    <span class="comment">// Not public API.</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">private_deserialize_internally_tagged_enum</span><span class="op">&lt;</span><span class="ident">V</span><span class="op">&gt;</span>(
-        <span class="self">self</span>,
-        <span class="ident">visitor</span>: <span class="ident">V</span>,
-    ) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">V</span>::<span class="ident">Value</span>, <span class="self">Self</span>::<span class="ident">Error</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">V</span>: <span class="ident">Visitor</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
-    {
-        <span class="self">self</span>.<span class="ident">deserialize_any</span>(<span class="ident">visitor</span>)
-    }
 }
 
 <span class="comment">////////////////////////////////////////////////////////////////////////////////</span>
@@ -3416,6 +3482,20 @@
         <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">invalid_type</span>(<span class="ident">Unexpected</span>::<span class="ident">Signed</span>(<span class="ident">v</span>), <span class="kw-2">&amp;</span><span class="self">self</span>))
     }
 
+    <span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+        <span class="doccomment">/// The input contains a `i128`.</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">/// This method is available only on Rust compiler versions &gt;=1.26. The</span>
+        <span class="doccomment">/// default implementation fails with a type error.</span>
+        <span class="kw">fn</span> <span class="ident">visit_i128</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">i128</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+        <span class="kw">where</span>
+            <span class="ident">E</span>: <span class="ident">Error</span>,
+        {
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">v</span>;
+            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">invalid_type</span>(<span class="ident">Unexpected</span>::<span class="ident">Other</span>(<span class="string">&quot;i128&quot;</span>), <span class="kw-2">&amp;</span><span class="self">self</span>))
+        }
+    }
+
     <span class="doccomment">/// The input contains a `u8`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The default implementation forwards to [`visit_u64`].</span>
@@ -3460,6 +3540,20 @@
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
         <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">invalid_type</span>(<span class="ident">Unexpected</span>::<span class="ident">Unsigned</span>(<span class="ident">v</span>), <span class="kw-2">&amp;</span><span class="self">self</span>))
+    }
+
+    <span class="macro">serde_if_integer128</span><span class="macro">!</span> {
+        <span class="doccomment">/// The input contains a `u128`.</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">/// This method is available only on Rust compiler versions &gt;=1.26. The</span>
+        <span class="doccomment">/// default implementation fails with a type error.</span>
+        <span class="kw">fn</span> <span class="ident">visit_u128</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">u128</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+        <span class="kw">where</span>
+            <span class="ident">E</span>: <span class="ident">Error</span>,
+        {
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">v</span>;
+            <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">invalid_type</span>(<span class="ident">Unexpected</span>::<span class="ident">Other</span>(<span class="string">&quot;u128&quot;</span>), <span class="kw-2">&amp;</span><span class="self">self</span>))
+        }
     }
 
     <span class="doccomment">/// The input contains an `f32`.</span>
@@ -3572,7 +3666,7 @@
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
-        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">v</span>;
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">v</span>;
         <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">invalid_type</span>(<span class="ident">Unexpected</span>::<span class="ident">Bytes</span>(<span class="ident">v</span>), <span class="kw-2">&amp;</span><span class="self">self</span>))
     }
 
@@ -3633,7 +3727,7 @@
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
     {
-        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">deserializer</span>;
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">deserializer</span>;
         <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">invalid_type</span>(<span class="ident">Unexpected</span>::<span class="prelude-ty">Option</span>, <span class="kw-2">&amp;</span><span class="self">self</span>))
     }
 
@@ -3657,7 +3751,7 @@
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
     {
-        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">deserializer</span>;
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">deserializer</span>;
         <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">invalid_type</span>(<span class="ident">Unexpected</span>::<span class="ident">NewtypeStruct</span>, <span class="kw-2">&amp;</span><span class="self">self</span>))
     }
 
@@ -3668,7 +3762,7 @@
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
     {
-        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">seq</span>;
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">seq</span>;
         <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">invalid_type</span>(<span class="ident">Unexpected</span>::<span class="ident">Seq</span>, <span class="kw-2">&amp;</span><span class="self">self</span>))
     }
 
@@ -3679,7 +3773,7 @@
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">MapAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
     {
-        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">map</span>;
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">map</span>;
         <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">invalid_type</span>(<span class="ident">Unexpected</span>::<span class="ident">Map</span>, <span class="kw-2">&amp;</span><span class="self">self</span>))
     }
 
@@ -3690,8 +3784,17 @@
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">EnumAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
     {
-        <span class="kw">let</span> _ <span class="op">=</span> <span class="ident">data</span>;
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">data</span>;
         <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">invalid_type</span>(<span class="ident">Unexpected</span>::<span class="ident">Enum</span>, <span class="kw-2">&amp;</span><span class="self">self</span>))
+    }
+
+    <span class="comment">// Used when deserializing a flattened Option field. Not public API.</span>
+    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+    <span class="kw">fn</span> <span class="ident">__private_visit_untagged_option</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw">_</span>: <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Value</span>, ()<span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
+    {
+        <span class="prelude-val">Err</span>(())
     }
 }
 
@@ -4232,7 +4335,7 @@
             <span class="number">0</span> <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(), <span class="comment">// special case elsewhere</span>
             <span class="number">1</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">formatter</span>, <span class="string">&quot;`{}`&quot;</span>, <span class="self">self</span>.<span class="ident">names</span>[<span class="number">0</span>]),
             <span class="number">2</span> <span class="op">=&gt;</span> <span class="macro">write</span><span class="macro">!</span>(<span class="ident">formatter</span>, <span class="string">&quot;`{}` or `{}`&quot;</span>, <span class="self">self</span>.<span class="ident">names</span>[<span class="number">0</span>], <span class="self">self</span>.<span class="ident">names</span>[<span class="number">1</span>]),
-            _ <span class="op">=&gt;</span> {
+            <span class="kw">_</span> <span class="op">=&gt;</span> {
                 <span class="macro">try</span><span class="macro">!</span>(<span class="macro">write</span><span class="macro">!</span>(<span class="ident">formatter</span>, <span class="string">&quot;one of &quot;</span>));
                 <span class="kw">for</span> (<span class="ident">i</span>, <span class="ident">alt</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="ident">names</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
                     <span class="kw">if</span> <span class="ident">i</span> <span class="op">&gt;</span> <span class="number">0</span> {
