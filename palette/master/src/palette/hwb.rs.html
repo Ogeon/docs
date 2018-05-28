@@ -655,8 +655,48 @@
 <span id="598">598</span>
 <span id="599">599</span>
 <span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
+<span id="625">625</span>
+<span id="626">626</span>
+<span id="627">627</span>
+<span id="628">628</span>
+<span id="629">629</span>
+<span id="630">630</span>
+<span id="631">631</span>
+<span id="632">632</span>
+<span id="633">633</span>
+<span id="634">634</span>
+<span id="635">635</span>
+<span id="636">636</span>
+<span id="637">637</span>
+<span id="638">638</span>
+<span id="639">639</span>
+<span id="640">640</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="ident">approx</span>::<span class="ident">ApproxEq</span>;
+<span class="kw">use</span> <span class="ident">approx</span>::{<span class="ident">AbsDiffEq</span>, <span class="ident">RelativeEq</span>, <span class="ident">UlpsEq</span>};
 <span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">Float</span>;
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">any</span>::<span class="ident">TypeId</span>;
@@ -1104,23 +1144,48 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">ApproxEq</span> <span class="kw">for</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">AbsDiffEq</span> <span class="kw">for</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span> <span class="op">+</span> <span class="ident">ApproxEq</span>,
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span> <span class="op">+</span> <span class="ident">AbsDiffEq</span>,
     <span class="ident">T</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Float</span>,
-    <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span> <span class="op">+</span> <span class="ident">PartialEq</span>,
 {
-    <span class="kw">type</span> <span class="ident">Epsilon</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">ApproxEq</span><span class="op">&gt;</span>::<span class="ident">Epsilon</span>;
+    <span class="kw">type</span> <span class="ident">Epsilon</span> <span class="op">=</span> <span class="ident">T</span>::<span class="ident">Epsilon</span>;
 
     <span class="kw">fn</span> <span class="ident">default_epsilon</span>() <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
         <span class="ident">T</span>::<span class="ident">default_epsilon</span>()
     }
+
+    <span class="kw">fn</span> <span class="ident">abs_diff_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">let</span> <span class="ident">equal_shade</span> <span class="op">=</span> <span class="self">self</span>
+            .<span class="ident">whiteness</span>
+            .<span class="ident">abs_diff_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">whiteness</span>, <span class="ident">epsilon</span>)
+            <span class="op">&amp;&amp;</span> <span class="self">self</span>
+            .<span class="ident">blackness</span>
+            .<span class="ident">abs_diff_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">blackness</span>, <span class="ident">epsilon</span>);
+
+        <span class="comment">// The hue doesn&#39;t matter that much when the color is gray, and may fluctuate</span>
+        <span class="comment">// due to precision errors. This is a blunt tool, but works for now.</span>
+        <span class="kw">let</span> <span class="ident">is_gray</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">blackness</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">whiteness</span> <span class="op">&gt;=</span> <span class="ident">T</span>::<span class="ident">one</span>()
+            <span class="op">||</span> <span class="ident">other</span>.<span class="ident">blackness</span> <span class="op">+</span> <span class="ident">other</span>.<span class="ident">whiteness</span> <span class="op">&gt;=</span> <span class="ident">T</span>::<span class="ident">one</span>();
+        <span class="kw">if</span> <span class="ident">is_gray</span> {
+            <span class="ident">equal_shade</span>
+        } <span class="kw">else</span> {
+            <span class="self">self</span>.<span class="ident">hue</span>.<span class="ident">abs_diff_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">hue</span>, <span class="ident">epsilon</span>) <span class="op">&amp;&amp;</span> <span class="ident">equal_shade</span>
+        }
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">RelativeEq</span> <span class="kw">for</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span> <span class="op">+</span> <span class="ident">RelativeEq</span>,
+    <span class="ident">T</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span> <span class="op">+</span> <span class="ident">PartialEq</span>,
+{
     <span class="kw">fn</span> <span class="ident">default_max_relative</span>() <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Epsilon</span> {
         <span class="ident">T</span>::<span class="ident">default_max_relative</span>()
     }
-    <span class="kw">fn</span> <span class="ident">default_max_ulps</span>() <span class="op">-&gt;</span> <span class="ident">u32</span> {
-        <span class="ident">T</span>::<span class="ident">default_max_ulps</span>()
-    }
+
     <span class="kw">fn</span> <span class="ident">relative_eq</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>,
@@ -1131,8 +1196,8 @@
             .<span class="ident">whiteness</span>
             .<span class="ident">relative_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">whiteness</span>, <span class="ident">epsilon</span>, <span class="ident">max_relative</span>)
             <span class="op">&amp;&amp;</span> <span class="self">self</span>
-                .<span class="ident">blackness</span>
-                .<span class="ident">relative_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">blackness</span>, <span class="ident">epsilon</span>, <span class="ident">max_relative</span>);
+            .<span class="ident">blackness</span>
+            .<span class="ident">relative_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">blackness</span>, <span class="ident">epsilon</span>, <span class="ident">max_relative</span>);
 
         <span class="comment">// The hue doesn&#39;t matter that much when the color is gray, and may fluctuate</span>
         <span class="comment">// due to precision errors. This is a blunt tool, but works for now.</span>
@@ -1144,10 +1209,25 @@
             <span class="self">self</span>.<span class="ident">hue</span>.<span class="ident">relative_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">hue</span>, <span class="ident">epsilon</span>, <span class="ident">max_relative</span>) <span class="op">&amp;&amp;</span> <span class="ident">equal_shade</span>
         }
     }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">UlpsEq</span> <span class="kw">for</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span> <span class="op">+</span> <span class="ident">UlpsEq</span>,
+    <span class="ident">T</span>::<span class="ident">Epsilon</span>: <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">S</span>: <span class="ident">RgbSpace</span> <span class="op">+</span> <span class="ident">PartialEq</span>,
+{
+    <span class="kw">fn</span> <span class="ident">default_max_ulps</span>() <span class="op">-&gt;</span> <span class="ident">u32</span> {
+        <span class="ident">T</span>::<span class="ident">default_max_ulps</span>()
+    }
 
     <span class="kw">fn</span> <span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>, <span class="ident">epsilon</span>: <span class="self">Self</span>::<span class="ident">Epsilon</span>, <span class="ident">max_ulps</span>: <span class="ident">u32</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="kw">let</span> <span class="ident">equal_shade</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">whiteness</span>.<span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">whiteness</span>, <span class="ident">epsilon</span>, <span class="ident">max_ulps</span>)
-            <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">blackness</span>.<span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">blackness</span>, <span class="ident">epsilon</span>, <span class="ident">max_ulps</span>);
+        <span class="kw">let</span> <span class="ident">equal_shade</span> <span class="op">=</span> <span class="self">self</span>
+            .<span class="ident">whiteness</span>
+            .<span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">whiteness</span>, <span class="ident">epsilon</span>, <span class="ident">max_ulps</span>)
+            <span class="op">&amp;&amp;</span> <span class="self">self</span>
+            .<span class="ident">blackness</span>
+            .<span class="ident">ulps_eq</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">blackness</span>, <span class="ident">epsilon</span>, <span class="ident">max_ulps</span>);
 
         <span class="comment">// The hue doesn&#39;t matter that much when the color is gray, and may fluctuate</span>
         <span class="comment">// due to precision errors. This is a blunt tool, but works for now.</span>
