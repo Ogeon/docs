@@ -10,8 +10,12 @@
     <title>multipart::server::ReadEntryResult - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +32,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Enum ReadEntryResult</p><div class="block items"><ul><li><a href="#variants">Variants</a></li><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='../index.html'>multipart</a>::<wbr><a href='index.html'>server</a></p><script>window.sidebarCurrent = {name: 'ReadEntryResult', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Enum ReadEntryResult</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#variants">Variants</a><div class="sidebar-links"><a href="#variant.Entry">Entry</a><a href="#variant.End">End</a><a href="#variant.Error">Error</a></div><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.into_result">into_result</a><a href="#method.unwrap">unwrap</a><a href="#method.expect">expect</a><a href="#method.expect_alt">expect_alt</a><a href="#method.unwrap_opt">unwrap_opt</a><a href="#method.expect_opt">expect_opt</a></div><a class="sidebar-title" href="#synthetic-implementations">Auto Trait Implementations</a><div class="sidebar-links"><a href="#impl-Send">Send</a><a href="#impl-Sync">Sync</a></div></div><p class='location'><a href='../index.html'>multipart</a>::<wbr><a href='index.html'>server</a></p><script>window.sidebarCurrent = {name: 'ReadEntryResult', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,46 +55,51 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>multipart</a>::<wbr><a href='index.html'>server</a>::<wbr><a class="enum" href=''>ReadEntryResult</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>multipart</a>::<wbr><a href='index.html'>server</a>::<wbr><a class="enum" href=''>ReadEntryResult</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/multipart/server/field.rs.html#621-628' title='goto source code'>[src]</a></span></h1>
-<pre class='rust enum'>pub enum ReadEntryResult&lt;M:&nbsp;<a class="trait" href="../../multipart/server/trait.ReadEntry.html" title="trait multipart::server::ReadEntry">ReadEntry</a>, Entry&nbsp;=&nbsp;<a class="struct" href="../../multipart/server/struct.MultipartField.html" title="struct multipart::server::MultipartField">MultipartField</a>&lt;M&gt;&gt; {
+               </span><a class='srclink' href='../../src/multipart/server/field.rs.html#446-453' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class='rust enum'>pub enum ReadEntryResult&lt;M:&nbsp;<a class="trait" href="../../multipart/server/trait.ReadEntry.html" title="trait multipart::server::ReadEntry">ReadEntry</a>, Entry&nbsp;=&nbsp;<a class="struct" href="../../multipart/server/struct.MultipartField.html" title="struct multipart::server::MultipartField">MultipartField</a>&lt;M&gt;&gt; {
     Entry(Entry),
     End(M),
     Error(M,&nbsp;<a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>),
-}</pre><div class='docblock'><p>Ternary result type returned by <code>ReadEntry::next_entry()</code>,
+}</pre></div><div class='docblock'><p>Ternary result type returned by <code>ReadEntry::next_entry()</code>,
 <code>Multipart::into_entry()</code> and <code>MultipartField::next_entry()</code>.</p>
-</div><h2 id='variants' class='variants'>Variants</h2>
-<span id='variant.Entry' class='variant'><span id='Entry.v' class='invisible'><code>Entry(Entry)</code></span></span><div class='docblock'><p>The next entry was found.</p>
-</div><span id='variant.End' class='variant'><span id='End.v' class='invisible'><code>End(M)</code></span></span><div class='docblock'><p>No  more entries could be read.</p>
-</div><span id='variant.Error' class='variant'><span id='Error.v' class='invisible'><code>Error(M,&nbsp;<a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>)</code></span></span><div class='docblock'><p>An error occurred.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;M:&nbsp;<a class="trait" href="../../multipart/server/trait.ReadEntry.html" title="trait multipart::server::ReadEntry">ReadEntry</a>, Entry&gt; <a class="enum" href="../../multipart/server/enum.ReadEntryResult.html" title="enum multipart::server::ReadEntryResult">ReadEntryResult</a>&lt;M, Entry&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#630-688' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.into_result' class="method"><span id='into_result.v' class='invisible'><code>fn <a href='#method.into_result' class='fnname'>into_result</a>(self) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Entry&gt;&gt;</code></span></h4>
-<div class='docblock'><p>Convert <code>self</code> into <code>Result&lt;Option&lt;Entry&gt;&gt;</code> as follows:</p>
-
+</div><h2 id='variants' class='variants small-section-header'>
+                   Variants<a href='#variants' class='anchor'></a></h2>
+<span id="variant.Entry" class="variant small-section-header"><a href="#variant.Entry" class="anchor field"></a><span id='Entry.v' class='invisible'><code>Entry(Entry)</code></span></span><div class='docblock'><p>The next entry was found.</p>
+</div><span id="variant.End" class="variant small-section-header"><a href="#variant.End" class="anchor field"></a><span id='End.v' class='invisible'><code>End(M)</code></span></span><div class='docblock'><p>No  more entries could be read.</p>
+</div><span id="variant.Error" class="variant small-section-header"><a href="#variant.Error" class="anchor field"></a><span id='Error.v' class='invisible'><code>Error(M,&nbsp;<a class="struct" href="https://doc.rust-lang.org/nightly/std/io/error/struct.Error.html" title="struct std::io::error::Error">Error</a>)</code></span></span><div class='docblock'><p>An error occurred.</p>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;M:&nbsp;<a class="trait" href="../../multipart/server/trait.ReadEntry.html" title="trait multipart::server::ReadEntry">ReadEntry</a>, Entry&gt; <a class="enum" href="../../multipart/server/enum.ReadEntryResult.html" title="enum multipart::server::ReadEntryResult">ReadEntryResult</a>&lt;M, Entry&gt;</code><a href='#impl' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#455-513' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.into_result' class="method"><span id='into_result.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.into_result' class='fnname'>into_result</a>(self) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Entry&gt;&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#461-467' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Convert <code>self</code> into <code>Result&lt;Option&lt;Entry&gt;&gt;</code> as follows:</p>
 <ul>
 <li><code>Entry(entry) -&gt; Ok(Some(entry))</code></li>
 <li><code>End(_) -&gt; Ok(None)</code></li>
 <li><code>Error(_, err) -&gt; Err(err)</code></li>
 </ul>
-</div><h4 id='method.unwrap' class="method"><span id='unwrap.v' class='invisible'><code>fn <a href='#method.unwrap' class='fnname'>unwrap</a>(self) -&gt; Entry</code></span></h4>
-<div class='docblock'><p>Attempt to unwrap <code>Entry</code>, panicking if this is <code>End</code> or <code>Error</code>.</p>
-</div><h4 id='method.expect' class="method"><span id='expect.v' class='invisible'><code>fn <a href='#method.expect' class='fnname'>expect</a>(self, msg: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; Entry</code></span></h4>
-<div class='docblock'><p>Attempt to unwrap <code>Entry</code>, panicking if this is <code>End</code> or <code>Error</code>
-with the given message. Adds the error&#39;s message in the <code>Error</code> case.</p>
-</div><h4 id='method.expect_alt' class="method"><span id='expect_alt.v' class='invisible'><code>fn <a href='#method.expect_alt' class='fnname'>expect_alt</a>(self, end_msg: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, err_msg: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; Entry</code></span></h4>
-<div class='docblock'><p>Attempt to unwrap <code>Entry</code>, panicking if this is <code>End</code> or <code>Error</code>.
+</div><h4 id='method.unwrap' class="method"><span id='unwrap.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.unwrap' class='fnname'>unwrap</a>(self) -&gt; Entry</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#470-473' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Attempt to unwrap <code>Entry</code>, panicking if this is <code>End</code> or <code>Error</code>.</p>
+</div><h4 id='method.expect' class="method"><span id='expect.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.expect' class='fnname'>expect</a>(self, msg: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; Entry</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#477-479' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Attempt to unwrap <code>Entry</code>, panicking if this is <code>End</code> or <code>Error</code>
+with the given message. Adds the error's message in the <code>Error</code> case.</p>
+</div><h4 id='method.expect_alt' class="method"><span id='expect_alt.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.expect_alt' class='fnname'>expect_alt</a>(self, end_msg: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>, err_msg: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; Entry</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#484-490' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Attempt to unwrap <code>Entry</code>, panicking if this is <code>End</code> or <code>Error</code>.
 If this is <code>End</code>, panics with <code>end_msg</code>; if <code>Error</code>, panics with <code>err_msg</code>
-as well as the error&#39;s message.</p>
-</div><h4 id='method.unwrap_opt' class="method"><span id='unwrap_opt.v' class='invisible'><code>fn <a href='#method.unwrap_opt' class='fnname'>unwrap_opt</a>(self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Entry&gt;</code></span></h4>
-<div class='docblock'><p>Attempt to unwrap as <code>Option&lt;Entry&gt;</code>, panicking in the <code>Error</code> case.</p>
-</div><h4 id='method.expect_opt' class="method"><span id='expect_opt.v' class='invisible'><code>fn <a href='#method.expect_opt' class='fnname'>expect_opt</a>(self, msg: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Entry&gt;</code></span></h4>
-<div class='docblock'><p>Attempt to unwrap as <code>Option&lt;Entry&gt;</code>, panicking in the <code>Error</code> case
-with the given message as well as the error&#39;s message.</p>
-</div></div></section>
+as well as the error's message.</p>
+</div><h4 id='method.unwrap_opt' class="method"><span id='unwrap_opt.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.unwrap_opt' class='fnname'>unwrap_opt</a>(self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Entry&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#493-495' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Attempt to unwrap as <code>Option&lt;Entry&gt;</code>, panicking in the <code>Error</code> case.</p>
+</div><h4 id='method.expect_opt' class="method"><span id='expect_opt.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.expect_opt' class='fnname'>expect_opt</a>(self, msg: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;Entry&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/multipart/server/field.rs.html#499-505' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Attempt to unwrap as <code>Option&lt;Entry&gt;</code>, panicking in the <code>Error</code> case
+with the given message as well as the error's message.</p>
+</div></div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+            <div id='implementations-list'>
+        </div>
+                <h2 id='synthetic-implementations' class='small-section-header'>
+                  Auto Trait Implementations<a href='#synthetic-implementations' class='anchor'></a>
+                </h2>
+                <div id='synthetic-implementations-list'>
+            <h3 id='impl-Send' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;M, Entry&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> for <a class="enum" href="../../multipart/server/enum.ReadEntryResult.html" title="enum multipart::server::ReadEntryResult">ReadEntryResult</a>&lt;M, Entry&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Entry: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;M: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>,&nbsp;</span></code><a href='#impl-Send' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div><h3 id='impl-Sync' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;M, Entry&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> for <a class="enum" href="../../multipart/server/enum.ReadEntryResult.html" title="enum multipart::server::ReadEntryResult">ReadEntryResult</a>&lt;M, Entry&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;Entry: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a>,<br>&nbsp;&nbsp;&nbsp;&nbsp;M: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a>,&nbsp;</span></code><a href='#impl-Sync' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -95,18 +112,22 @@ with the given message as well as the error&#39;s message.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -139,7 +160,6 @@ with the given message as well as the error&#39;s message.</p>
         window.rootPath = "../../";
         window.currentCrate = "multipart";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

@@ -1,6 +1,4 @@
 (function() {var implementors = {};
-implementors["hyper"] = [];
-implementors["rustful"] = [];
 implementors["url"] = [];
 
             if (window.register_implementors) {

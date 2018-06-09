@@ -4,14 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/multipart-0.12.0/src/lib.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/multipart-0.14.2/src/lib.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>lib.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +32,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -152,6 +164,18 @@
 <span id="107">107</span>
 <span id="108">108</span>
 <span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2016 `multipart` Crate Developers</span>
 <span class="comment">//</span>
@@ -161,7 +185,7 @@
 <span class="comment">// copied, modified, or distributed except according to those terms.</span>
 <span class="doccomment">//! Client- and server-side abstractions for HTTP `multipart/form-data` requests.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ###Features:</span>
+<span class="doccomment">//! ### Features:</span>
 <span class="doccomment">//! This documentation is built with all features enabled.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! * `client`: The client-side abstractions for generating multipart requests.</span>
@@ -171,29 +195,34 @@
 <span class="doccomment">//! * `mock`: Provides mock implementations of core `client` and `server` traits for debugging</span>
 <span class="doccomment">//! or non-standard use.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! * `hyper`: Integration with the [Hyper](https://github.com/hyperium/hyper) HTTP library</span>
+<span class="doccomment">//! * `hyper`: Integration with the [Hyper](https://crates.io/crates/hyper) HTTP library</span>
 <span class="doccomment">//! for client and/or server depending on which other feature flags are set.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! * `iron`: Integration with the [Iron](http://ironframework.io) web application</span>
+<span class="doccomment">//! * `iron`: Integration with the [Iron](http://crates.io/crates/iron) web application</span>
 <span class="doccomment">//! framework. See the [`server::iron`](server/iron/index.html) module for more information.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! * `tiny_http`: Integration with the [`tiny_http`](https://github.com/frewsxcv/tiny-http)</span>
+<span class="doccomment">//! * `nickel` (returning in 0.14!): Integration with the [Nickel](https://crates.io/crates/nickel)</span>
+<span class="doccomment">//! web application framework. See the [`server::nickel`](server/nickel/index.html) module for more</span>
+<span class="doccomment">//! information.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! * `tiny_http`: Integration with the [`tiny_http`](https://crates.io/crates/tiny_http)</span>
 <span class="doccomment">//! crate. See the [`server::tiny_http`](server/tiny_http/index.html) module for more information.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! **Note**: in-crate integration for Nickel was removed in 0.11.0;</span>
-<span class="doccomment">//! integration will be provided in the</span>
-<span class="doccomment">//! [`multipart-nickel`](https://crates.io/crates/multipart-nickel)</span>
-<span class="doccomment">//! crate for the foreseeable future.</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;clippy&quot;</span>, <span class="ident">feature</span>(<span class="ident">plugin</span>))]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;clippy&quot;</span>, <span class="ident">plugin</span>(<span class="ident">clippy</span>))]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">cfg_attr</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;clippy&quot;</span>, <span class="ident">deny</span>(<span class="ident">clippy</span>))]</span>
-<span class="attribute">#<span class="op">!</span>[<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
+<span class="doccomment">//! ### Note: Work in Progress</span>
+<span class="doccomment">//! I have left a number of Request-for-Comments (RFC) questions on various APIs and other places</span>
+<span class="doccomment">//! in the code as there are some cases where I&#39;m not sure what the desirable behavior is.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! I have opened an issue as a place to collect responses and discussions for these questions</span>
+<span class="doccomment">//! [on Github](https://github.com/abonander/multipart/issues/96). Please quote the RFC-statement</span>
+<span class="doccomment">//! (and/or link to its source line) and provide your feedback there.</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;clippy&quot;</span>, <span class="ident">feature</span>(<span class="ident">plugin</span>))]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;clippy&quot;</span>, <span class="ident">plugin</span>(<span class="ident">clippy</span>))]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span><span class="op">=</span><span class="string">&quot;clippy&quot;</span>, <span class="ident">deny</span>(<span class="ident">clippy</span>))]</span>
+<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;bench&quot;</span>, <span class="ident">feature</span>(<span class="ident">test</span>))]</span>
+<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">missing_docs</span>)]</span>
 
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">log</span>;
-
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">env_logger</span>;
 
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">macro_use</span>)]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">mime</span>;
@@ -201,6 +230,13 @@
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">mime_guess</span>;
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">rand</span>;
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">tempdir</span>;
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;quick-error&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">quick_error</span>;
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;server&quot;</span>)]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">safemem</span>;
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;hyper&quot;</span>)]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">hyper</span>;
@@ -244,7 +280,7 @@
 <span class="attribute">#[<span class="ident">macro_export</span>]</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">chain_result</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_expr</span>:<span class="ident">expr</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">try_expr</span>:<span class="ident">expr</span>),<span class="kw-2">*</span>) <span class="op">=&gt;</span> (
-        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_expr</span> $(.<span class="ident">and_then</span>(<span class="op">|</span>_<span class="op">|</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">try_expr</span>))<span class="op">*</span>
+        <span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_expr</span> $(.<span class="ident">and_then</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">try_expr</span>))<span class="op">*</span>
     );
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_expr</span>:<span class="ident">expr</span>, $($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>:<span class="ident">ident</span>),<span class="op">+</span> <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">try_expr</span>:<span class="ident">expr</span>),<span class="kw-2">*</span>) <span class="op">=&gt;</span> (
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">first_expr</span> $(.<span class="ident">and_then</span>(<span class="op">|</span>$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>),<span class="op">+</span><span class="op">|</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">try_expr</span>))<span class="op">*</span>
@@ -276,18 +312,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -320,7 +360,6 @@
         window.rootPath = "../../";
         window.currentCrate = "multipart";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

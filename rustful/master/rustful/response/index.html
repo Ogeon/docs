@@ -10,8 +10,12 @@
     <title>rustful::response - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +32,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module response</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../index.html'>rustful</a></p><script>window.sidebarCurrent = {name: 'response', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module response</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../index.html'>rustful</a></p><script>window.sidebarCurrent = {name: 'response', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,68 +55,36 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>rustful</a>::<wbr><a class="mod" href=''>response</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>rustful</a>::<wbr><a class="mod" href=''>response</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/rustful/response.rs.html#1-1247' title='goto source code'>[src]</a></span></h1>
-<div class='docblock'><p>Response writers.</p>
-
+               </span><a class='srclink' href='../../src/rustful/response.rs.html#1-1247' title='goto source code'>[src]</a></span></h1><div class='docblock'><p>Response writers.</p>
 <p>The response writers are the output channel from the handlers to the
 client. These are used to set the response headers, as well as writing the
 response body. Rustful provides three different types of response writers
 with different purposes:</p>
-
 <ul>
-<li><a href="struct.Response.html"><code>Response</code></a> - It&#39;s used to write data with a known, fixed size,
+<li><a href="struct.Response.html"><code>Response</code></a> - It's used to write data with a known, fixed size,
 that is already stored in some kind of buffer.</li>
 <li><a href="struct.Chunked.html"><code>Chunked</code></a> - A chunked response is a streaming response, where the final
 size can be unknown.</li>
 <li><a href="struct.Raw.html"><code>Raw</code></a> - This is also a streaming response, but with a fixed size. It is
 unsafe to create because of the risk of sending too short responses, but it
-can be very useful in cases where it&#39;s impractical to buffer the data, such as when
+can be very useful in cases where it's impractical to buffer the data, such as when
 sending large files.</li>
 </ul>
-
 <p>You will always start out with a <code>Response</code>, where you can set the status
 code and all the headers, and then transform it into one of the other
 types, if necessary. It is usually recommended to stick to <code>Response</code> as
 much as possible, since it has lower HTTP overhead than <code>Chunked</code> and has a
 builtin size check that guarantees that the <code>content-length</code> field is
 correct.</p>
-
-<table>
-<thead>
-<tr>
-<th></th>
-<th>No extra overhead</th>
-<th>Guaranteed correct <code>content-length</code></th>
-<th>Streaming</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td><code>Response</code></td>
-<td>&check;</td>
-<td>&check;</td>
-<td>&cross;</td>
-</tr>
-<tr>
-<td><code>Raw</code></td>
-<td>&check;</td>
-<td>&cross;</td>
-<td>&check;</td>
-</tr>
-<tr>
-<td><code>Chunked</code></td>
-<td>&cross;</td>
-<td>&check;</td>
-<td>&check;</td>
-</tr>
-</tbody>
-</table>
+<table><thead><tr><th>            </th><th> No extra overhead </th><th> Guaranteed correct <code>content-length</code> </th><th> Streaming </th></tr></thead><tbody>
+<tr><td> <code>Response</code> </td><td> ✓           </td><td> ✓                             </td><td> ✗   </td></tr>
+<tr><td> <code>Raw</code>      </td><td> ✓           </td><td> ✗                             </td><td> ✓   </td></tr>
+<tr><td> <code>Chunked</code>  </td><td> ✗           </td><td> ✓                             </td><td> ✓   </td></tr>
+</tbody></table>
 </div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
@@ -112,6 +92,7 @@ correct.</p>
                                   title='struct rustful::response::Chunked'>Chunked</a></td>
                            <td class='docblock-short'>
                                 <p>An interface for writing a chunked response body.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -119,6 +100,7 @@ correct.</p>
                                   title='struct rustful::response::Raw'>Raw</a></td>
                            <td class='docblock-short'>
                                 <p>A streaming fixed-size response.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -126,6 +108,7 @@ correct.</p>
                                   title='struct rustful::response::Response'>Response</a></td>
                            <td class='docblock-short'>
                                 <p>An interface for sending data to the client.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -134,6 +117,7 @@ correct.</p>
                                   title='enum rustful::response::Data'>Data</a></td>
                            <td class='docblock-short'>
                                 <p>A unified representation of response data.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -141,6 +125,7 @@ correct.</p>
                                   title='enum rustful::response::Error'>Error</a></td>
                            <td class='docblock-short'>
                                 <p>The result of a response action.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -148,6 +133,7 @@ correct.</p>
                                   title='enum rustful::response::FileError'>FileError</a></td>
                            <td class='docblock-short'>
                                 <p>Error that may occure while sending a file.</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -157,6 +143,7 @@ correct.</p>
                            <td class='docblock-short'>
                                 <p>Helper trait for dealing with errors that may occur while sending a
 response. It provides a default method of handling the error.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -165,6 +152,7 @@ response. It provides a default method of handling the error.</p>
                            <td class='docblock-short'>
                                 <p>A trait for higher level types that can be sent as responses, like
 <code>Result</code>.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -179,18 +167,22 @@ response. It provides a default method of handling the error.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -223,7 +215,6 @@ response. It provides a default method of handling the error.</p>
         window.rootPath = "../../";
         window.currentCrate = "rustful";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

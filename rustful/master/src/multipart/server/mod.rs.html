@@ -4,14 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/multipart-0.12.0/src/server/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/multipart-0.14.2/src/server/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css"
+          id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
@@ -28,10 +32,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -262,27 +274,6 @@
 <span id="217">217</span>
 <span id="218">218</span>
 <span id="219">219</span>
-<span id="220">220</span>
-<span id="221">221</span>
-<span id="222">222</span>
-<span id="223">223</span>
-<span id="224">224</span>
-<span id="225">225</span>
-<span id="226">226</span>
-<span id="227">227</span>
-<span id="228">228</span>
-<span id="229">229</span>
-<span id="230">230</span>
-<span id="231">231</span>
-<span id="232">232</span>
-<span id="233">233</span>
-<span id="234">234</span>
-<span id="235">235</span>
-<span id="236">236</span>
-<span id="237">237</span>
-<span id="238">238</span>
-<span id="239">239</span>
-<span id="240">240</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2016 `multipart` Crate Developers</span>
 <span class="comment">//</span>
@@ -297,14 +288,14 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! See the `Multipart` struct for more info.</span>
 
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">buf_redux</span>;
+<span class="kw">pub</span> <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">buf_redux</span>;
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">httparse</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">safemem</span>;
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">twoway</span>;
 
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">borrow</span>::<span class="ident">Borrow</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>::<span class="ident">prelude</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">path</span>::<span class="ident">Path</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
 
 <span class="kw">use</span> <span class="ident">tempdir</span>::<span class="ident">TempDir</span>;
@@ -313,13 +304,27 @@
 
 <span class="kw">use</span> <span class="self">self</span>::<span class="ident">field</span>::<span class="ident">PrivReadEntry</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">field</span>::{<span class="ident">MultipartField</span>, <span class="ident">MultipartFile</span>, <span class="ident">MultipartData</span>, <span class="ident">ReadEntry</span>, <span class="ident">ReadEntryResult</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">field</span>::{<span class="ident">FieldHeaders</span>, <span class="ident">MultipartField</span>, <span class="ident">MultipartData</span>, <span class="ident">ReadEntry</span>, <span class="ident">ReadEntryResult</span>};
 
 <span class="kw">use</span> <span class="self">self</span>::<span class="ident">save</span>::<span class="ident">SaveBuilder</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">save</span>::{<span class="ident">Entries</span>, <span class="ident">SaveResult</span>, <span class="ident">SavedFile</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">save</span>::{<span class="ident">Entries</span>, <span class="ident">SaveResult</span>, <span class="ident">SavedField</span>};
 
 <span class="kw">use</span> <span class="self">self</span>::<span class="ident">save</span>::<span class="ident">EntriesSaveResult</span>;
+
+<span class="doccomment">/// Default typedef for shared strings.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Enable the `use_arc_str` feature to use `Arc&lt;str&gt;` instead, which saves an indirection but</span>
+<span class="doccomment">/// cannot be constructed in Rust versions older than 1.21 (the `From&lt;String&gt;` impl was stabilized</span>
+<span class="doccomment">/// in that release).</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_arc_str&quot;</span>))]</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">ArcStr</span> <span class="op">=</span> <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>;
+
+<span class="doccomment">/// Optimized typedef for shared strings, replacing `Arc&lt;String&gt;`.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Enabled with the `use_arc_str` feature.</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;use_arc_str&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">ArcStr</span> <span class="op">=</span> <span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span>;
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">try_opt</span> (
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">expr</span>:<span class="ident">expr</span>) <span class="op">=&gt;</span> (
@@ -360,6 +365,9 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tiny_http&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">tiny_http</span>;
 
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;nickel&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">nickel</span>;
+
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">save</span>;
 
 <span class="doccomment">/// The server-side implementation of `multipart/form-data` requests.</span>
@@ -386,6 +394,14 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span> <span class="ident">Multipart</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Construct a new `Multipart` with the given body reader and boundary.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ## Note: `boundary`</span>
+    <span class="doccomment">/// This will prepend the requisite `--` to the boundary string as documented in</span>
+    <span class="doccomment">/// [IETF RFC 1341, Section 7.2.1: &quot;Multipart: the common syntax&quot;][rfc1341-7.2.1].</span>
+    <span class="doccomment">/// Simply pass the value of the `boundary` key from the `Content-Type` header in the</span>
+    <span class="doccomment">/// request (or use `Multipart::from_request()`, if supported).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [rfc1341-7.2.1]: https://tools.ietf.org/html/rfc1341#page-30</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_body</span><span class="op">&lt;</span><span class="ident">Bnd</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;&gt;</span>(<span class="ident">body</span>: <span class="ident">R</span>, <span class="ident">boundary</span>: <span class="ident">Bnd</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">boundary</span> <span class="op">=</span> <span class="ident">boundary</span>.<span class="ident">into</span>();
 
@@ -399,7 +415,7 @@
     <span class="doccomment">/// Read the next entry from this multipart request, returning a struct with the field&#39;s name and</span>
     <span class="doccomment">/// data. See `MultipartField` for more info.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ##Warning: Risk of Data Loss</span>
+    <span class="doccomment">/// ## Warning: Risk of Data Loss</span>
     <span class="doccomment">/// If the previously returned entry had contents of type `MultipartField::File`,</span>
     <span class="doccomment">/// calling this again will discard any unread contents of that entry.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_entry</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">MultipartField</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;&gt;</span><span class="op">&gt;</span> {
@@ -434,56 +450,6 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">save</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">SaveBuilder</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">SaveBuilder</span>::<span class="ident">new</span>(<span class="self">self</span>)
     }
-
-    <span class="doccomment">/// Read the request fully, parsing all fields and saving all files in a new temporary</span>
-    <span class="doccomment">/// directory under the OS temporary directory. </span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If there is an error in reading the request, returns the partial result along with the</span>
-    <span class="doccomment">/// error. See [`SaveResult`](save/enum.SaveResult.html) for more information.</span>
-    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.10.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use `.save().temp()` instead&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">save_all</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">EntriesSaveResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">save</span>().<span class="ident">temp</span>()
-    }
-
-    <span class="doccomment">/// Read the request fully, parsing all fields and saving all files in a new temporary</span>
-    <span class="doccomment">/// directory under `dir`. </span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If there is an error in reading the request, returns the partial result along with the</span>
-    <span class="doccomment">/// error. See [`SaveResult`](save/enum.SaveResult.html) for more information.</span>
-    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.10.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use `.save().with_temp_dir()` instead&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">save_all_under</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dir</span>: <span class="ident">P</span>) <span class="op">-&gt;</span> <span class="ident">EntriesSaveResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="ident">TempDir</span>::<span class="ident">new_in</span>(<span class="ident">dir</span>, <span class="string">&quot;multipart&quot;</span>) {
-            <span class="prelude-val">Ok</span>(<span class="ident">temp_dir</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">save</span>().<span class="ident">with_temp_dir</span>(<span class="ident">temp_dir</span>),
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="ident">SaveResult</span>::<span class="ident">Error</span>(<span class="ident">err</span>),
-        }
-    }
-
-    <span class="doccomment">/// Read the request fully, parsing all fields and saving all fields in a new temporary</span>
-    <span class="doccomment">/// directory under the OS temporary directory.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Files larger than `limit` will be truncated to `limit`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If there is an error in reading the request, returns the partial result along with the</span>
-    <span class="doccomment">/// error. See [`SaveResult`](save/enum.SaveResult.html) for more information.</span>
-    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.10.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use `.save().size_limit(limit)` instead&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">save_all_limited</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">limit</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">EntriesSaveResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="self">self</span>.<span class="ident">save</span>().<span class="ident">size_limit</span>(<span class="ident">limit</span>).<span class="ident">temp</span>()
-    }
-
-    <span class="doccomment">/// Read the request fully, parsing all fields and saving all files in a new temporary</span>
-    <span class="doccomment">/// directory under `dir`. </span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Files larger than `limit` will be truncated to `limit`.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// If there is an error in reading the request, returns the partial result along with the</span>
-    <span class="doccomment">/// error. See [`SaveResult`](save/enum.SaveResult.html) for more information.</span>
-    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.10.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use `.save().size_limit(limit).with_temp_dir()` instead&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">save_all_under_limited</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">Path</span><span class="op">&gt;&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">dir</span>: <span class="ident">P</span>, <span class="ident">limit</span>: <span class="ident">u64</span>) <span class="op">-&gt;</span> <span class="ident">EntriesSaveResult</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="ident">TempDir</span>::<span class="ident">new_in</span>(<span class="ident">dir</span>, <span class="string">&quot;multipart&quot;</span>) {
-            <span class="prelude-val">Ok</span>(<span class="ident">temp_dir</span>) <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">save</span>().<span class="ident">size_limit</span>(<span class="ident">limit</span>).<span class="ident">with_temp_dir</span>(<span class="ident">temp_dir</span>),
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> <span class="ident">SaveResult</span>::<span class="ident">Error</span>(<span class="ident">err</span>),
-        }
-    }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> <span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Multipart</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
@@ -495,8 +461,12 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span> <span class="ident">PrivReadEntry</span> <span class="kw">for</span> <span class="ident">Multipart</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Source</span> <span class="op">=</span> <span class="ident">BoundaryReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">source</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">BoundaryReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">source_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">BoundaryReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">reader</span>
+    }
+
+    <span class="kw">fn</span> <span class="ident">set_min_buf_size</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">min_buf_size</span>: <span class="ident">usize</span>) {
+        <span class="self">self</span>.<span class="ident">reader</span>.<span class="ident">set_min_buf_size</span>(<span class="ident">min_buf_size</span>)
     }
 
     <span class="doccomment">/// Consume the next boundary.</span>
@@ -538,18 +508,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -582,7 +556,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "multipart";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>

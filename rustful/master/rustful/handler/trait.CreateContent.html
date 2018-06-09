@@ -10,8 +10,12 @@
     <title>rustful::handler::CreateContent - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +32,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Trait CreateContent</p><div class="block items"><ul><li><a href="#associated-types">Associated Types</a></li><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>handler</a></p><script>window.sidebarCurrent = {name: 'CreateContent', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait CreateContent</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#associated-types">Associated Types</a><div class="sidebar-links"><a href="#associatedtype.Output">Output</a></div><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.create_content">create_content</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>handler</a></p><script>window.sidebarCurrent = {name: 'CreateContent', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,33 +55,36 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>handler</a>::<wbr><a class="trait" href=''>CreateContent</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>handler</a>::<wbr><a class="trait" href=''>CreateContent</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/rustful/handler/mod.rs.html#323-329' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait CreateContent: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> + 'static {
+               </span><a class='srclink' href='../../src/rustful/handler/mod.rs.html#323-329' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class='rust trait'>pub trait CreateContent: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> + 'static {
     type <a href='#associatedtype.Output' class="type">Output</a>: for&lt;'a, 'b&gt; <a class="trait" href="../../rustful/response/trait.SendResponse.html" title="trait rustful::response::SendResponse">SendResponse</a>&lt;'a, 'b&gt;;
-    fn <a href='#tymethod.create_content' class='fnname'>create_content</a>(&amp;self, context: <a class="struct" href="../../rustful/context/struct.Context.html" title="struct rustful::context::Context">Context</a>) -&gt; Self::<a class="trait" href="../../rustful/handler/trait.CreateContent.html" title="trait rustful::handler::CreateContent">Output</a>;
-}</pre><div class='docblock'><p>A simplified handler that returns the response content.</p>
-
-<p>It&#39;s meant for situations where direct access to the <code>Response</code> is
+    fn <a href='#tymethod.create_content' class='fnname'>create_content</a>(&amp;self, context: <a class="struct" href="../../rustful/context/struct.Context.html" title="struct rustful::context::Context">Context</a>) -&gt; Self::<a class="type" href="../../rustful/handler/trait.CreateContent.html#associatedtype.Output" title="type rustful::handler::CreateContent::Output">Output</a>;
+}</pre></div><div class='docblock'><p>A simplified handler that returns the response content.</p>
+<p>It's meant for situations where direct access to the <code>Response</code> is
 unnecessary. The benefit is that it can use early returns in a more
 convenient way.</p>
 </div>
-            <h2 id='associated-types'>Associated Types</h2>
+            <h2 id='associated-types' class='small-section-header'>
+              Associated Types<a href='#associated-types' class='anchor'></a>
+            </h2>
             <div class='methods'>
         <h3 id='associatedtype.Output' class='method'><span id='Output.t' class='invisible'><code>type <a href='#associatedtype.Output' class="type">Output</a>: for&lt;'a, 'b&gt; <a class="trait" href="../../rustful/response/trait.SendResponse.html" title="trait rustful::response::SendResponse">SendResponse</a>&lt;'a, 'b&gt;</code></span></h3><div class='docblock'><p>The type of content that is created.</p>
 </div></div>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
-        <h3 id='tymethod.create_content' class='method'><span id='create_content.v' class='invisible'><code>fn <a href='#tymethod.create_content' class='fnname'>create_content</a>(&amp;self, context: <a class="struct" href="../../rustful/context/struct.Context.html" title="struct rustful::context::Context">Context</a>) -&gt; Self::<a class="trait" href="../../rustful/handler/trait.CreateContent.html" title="trait rustful::handler::CreateContent">Output</a></code></span></h3><div class='docblock'><p>Create content that will be sent to the client.</p>
+        <h3 id='tymethod.create_content' class='method'><span id='create_content.v' class='invisible'><code>fn <a href='#tymethod.create_content' class='fnname'>create_content</a>(&amp;self, context: <a class="struct" href="../../rustful/context/struct.Context.html" title="struct rustful::context::Context">Context</a>) -&gt; Self::<a class="type" href="../../rustful/handler/trait.CreateContent.html#associatedtype.Output" title="type rustful::handler::CreateContent::Output">Output</a></code></span></h3><div class='docblock'><p>Create content that will be sent to the client.</p>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;T, R&gt; CreateContent for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/trait.Fn.html" title="trait core::ops::Fn">Fn</a>(<a class="struct" href="../../rustful/context/struct.Context.html" title="struct rustful::context::Context">Context</a>) -&gt; R + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;R: for&lt;'a, 'b&gt; <a class="trait" href="../../rustful/response/trait.SendResponse.html" title="trait rustful::response::SendResponse">SendResponse</a>&lt;'a, 'b&gt;,&nbsp;</span></code></li>
-</ul><script type="text/javascript" async
+    <li><table class='table-display'><tbody><tr><td><code>impl&lt;T, R&gt; CreateContent for T <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;T: <a class="trait" href="https://doc.rust-lang.org/nightly/core/ops/function/trait.Fn.html" title="trait core::ops::function::Fn">Fn</a>(<a class="struct" href="../../rustful/context/struct.Context.html" title="struct rustful::context::Context">Context</a>) -&gt; R + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> + 'static,<br>&nbsp;&nbsp;&nbsp;&nbsp;R: for&lt;'a, 'b&gt; <a class="trait" href="../../rustful/response/trait.SendResponse.html" title="trait rustful::response::SendResponse">SendResponse</a>&lt;'a, 'b&gt;,&nbsp;</span><span class="where fmt-newline">  type <a href='#associatedtype.Output' class="type">Output</a> = R;</span></code><td><div class='out-of-band'><a class='srclink' href='../../src/rustful/handler/mod.rs.html#331-340' title='goto source code'>[src]</a></div></td></tr></tbody></table></li>
+</ul><script type="text/javascript">window.inlined_types=new Set([]);</script><script type="text/javascript" async
                          src="../../implementors/rustful/handler/trait.CreateContent.js">
                  </script></section>
     <section id='search' class="content hidden"></section>
@@ -84,18 +99,22 @@ convenient way.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -128,7 +147,6 @@ convenient way.</p>
         window.rootPath = "../../";
         window.currentCrate = "rustful";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

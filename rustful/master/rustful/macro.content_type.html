@@ -10,8 +10,12 @@
     <title>rustful::content_type - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css"
+          id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +32,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'><a href='index.html'>rustful</a></p><script>window.sidebarCurrent = {name: 'content_type', ty: 'macro', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <div class="sidebar-elems"><p class='location'><a href='index.html'>rustful</a></p><script>window.sidebarCurrent = {name: 'content_type', ty: 'macro', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,20 +55,17 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Macro <a href='index.html'>rustful</a>::<wbr><a class="macro" href=''>content_type</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Macro <a href='index.html'>rustful</a>::<wbr><a class="macro" href=''>content_type</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/rustful/macros.rs.html#58-102' title='goto source code'>[src]</a></span></h1>
-<pre class="rust macro">
+               </span><a class='srclink' href='../src/rustful/macros.rs.html#58-102' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class="rust macro">
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">content_type</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">main_type</span>:<span class="ident">tt</span> <span class="op">/</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">sub_type</span>:<span class="ident">tt</span>) <span class="op">=&gt;</span> { ... };
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">main_type</span>:<span class="ident">tt</span> <span class="op">/</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">sub_type</span>:<span class="ident">tt</span>; $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">param</span>:<span class="ident">tt</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">value</span>:<span class="ident">tt</span>);<span class="op">+</span>) <span class="op">=&gt;</span> { ... };
     (@<span class="ident">__rustful_to_expr</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">e</span>: <span class="ident">expr</span>) <span class="op">=&gt;</span> { ... };
 }</pre>
-<div class='docblock'><p>A macro for making content types.</p>
-
+</div><div class='docblock'><p>A macro for making content types.</p>
 <p>It takes a main type, a sub type and a parameter list. Instead of this:</p>
 
 <pre class="rust rust-example-rendered">
@@ -70,7 +79,6 @@
         <span class="macro">vec</span><span class="macro">!</span>[(<span class="ident">Attr</span>::<span class="ident">Charset</span>, <span class="ident">Value</span>::<span class="ident">Utf8</span>)]
     )
 );</pre>
-
 <p>it can be written like this:</p>
 
 <pre class="rust rust-example-rendered">
@@ -79,7 +87,6 @@
 <span class="kw">use</span> <span class="ident">rustful</span>::<span class="ident">header</span>::<span class="ident">ContentType</span>;
 
 <span class="ident">ContentType</span>(<span class="macro">content_type</span><span class="macro">!</span>(<span class="ident">Text</span> <span class="op">/</span> <span class="ident">Html</span>; <span class="ident">Charset</span> <span class="op">=</span> <span class="ident">Utf8</span>));</pre>
-
 <p>The <code>Charset = Utf8</code> part defines the parameter list for the content type and
 may contain more than one parameter, or be omitted. Here are some more
 examples showing that and how strings can be used for more exotic values:</p>
@@ -110,18 +117,22 @@ examples showing that and how strings can be used for more exotic values:</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -154,7 +165,6 @@ examples showing that and how strings can be used for more exotic values:</p>
         window.rootPath = "../";
         window.currentCrate = "rustful";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

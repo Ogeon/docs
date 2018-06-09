@@ -10,8 +10,12 @@
     <title>multipart::server - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +32,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Module server</p><div class="block items"><ul><li><a href="#reexports">Reexports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li></ul></div><p class='location'><a href='../index.html'>multipart</a></p><script>window.sidebarCurrent = {name: 'server', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script>
+        <p class='location'>Module server</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'><a href='../index.html'>multipart</a></p><script>window.sidebarCurrent = {name: 'server', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,64 +55,66 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>multipart</a>::<wbr><a class="mod" href=''>server</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Module <a href='../index.html'>multipart</a>::<wbr><a class="mod" href=''>server</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/multipart/server/mod.rs.html#7-240' title='goto source code'>[src]</a></span></h1>
-<div class='docblock'><p>The server-side abstraction for multipart requests. Enabled with the <code>server</code> feature.</p>
-
+               </span><a class='srclink' href='../../src/multipart/server/mod.rs.html#7-219' title='goto source code'>[src]</a></span></h1><div class='docblock'><p>The server-side abstraction for multipart requests. Enabled with the <code>server</code> feature.</p>
 <p>Use this when you are implementing an HTTP server and want to
 to accept, parse, and serve HTTP <code>multipart/form-data</code> requests (file uploads).</p>
-
 <p>See the <code>Multipart</code> struct for more info.</p>
-</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
-<table><tr><td><code>pub use self::<a class="mod" href="./save/index.html">save</a>::<a class="struct" href="../../multipart/server/save/struct.Entries.html" title="struct multipart::server::save::Entries">Entries</a>;</code></td></tr><tr><td><code>pub use self::<a class="mod" href="./save/index.html">save</a>::<a class="enum" href="../../multipart/server/save/enum.SaveResult.html" title="enum multipart::server::save::SaveResult">SaveResult</a>;</code></td></tr><tr><td><code>pub use self::<a class="mod" href="./save/index.html">save</a>::<a class="struct" href="../../multipart/server/save/struct.SavedFile.html" title="struct multipart::server::save::SavedFile">SavedFile</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
+<table><tr><td><code>pub extern crate <a class="mod" href="../../buf_redux/index.html" title="mod buf_redux">buf_redux</a>;</code></td></tr><tr><td><code>pub use self::save::<a class="struct" href="../../multipart/server/save/struct.Entries.html" title="struct multipart::server::save::Entries">Entries</a>;</code></td></tr><tr><td><code>pub use self::save::<a class="enum" href="../../multipart/server/save/enum.SaveResult.html" title="enum multipart::server::save::SaveResult">SaveResult</a>;</code></td></tr><tr><td><code>pub use self::save::<a class="struct" href="../../multipart/server/save/struct.SavedField.html" title="struct multipart::server::save::SavedField">SavedField</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class="mod" href="save/index.html"
                                   title='mod multipart::server::save'>save</a></td>
                            <td class='docblock-short'>
                                 <p>Utilities for saving request entries to the filesystem.</p>
+
                            </td>
                        </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.FieldHeaders.html"
+                                  title='struct multipart::server::FieldHeaders'>FieldHeaders</a></td>
+                           <td class='docblock-short'>
+                                <p>The headers that (may) appear before a <code>multipart/form-data</code> field.</p>
+
+                           </td>
+                       </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.Multipart.html"
                                   title='struct multipart::server::Multipart'>Multipart</a></td>
                            <td class='docblock-short'>
                                 <p>The server-side implementation of <code>multipart/form-data</code> requests.</p>
+
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.MultipartData.html"
+                                  title='struct multipart::server::MultipartData'>MultipartData</a></td>
+                           <td class='docblock-short'>
+                                <p>The data of a field in a <code>multipart/form-data</code> request.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.MultipartField.html"
                                   title='struct multipart::server::MultipartField'>MultipartField</a></td>
                            <td class='docblock-short'>
-                                <p>A field in a multipart request. May be either text or a binary stream (file).</p>
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.MultipartFile.html"
-                                  title='struct multipart::server::MultipartFile'>MultipartFile</a></td>
-                           <td class='docblock-short'>
-                                <p>A representation of a file in HTTP <code>multipart/form-data</code>.</p>
+                                <p>A field in a multipart request with its associated headers and data.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
-                       <tr class=' module-item'>
-                           <td><a class="enum" href="enum.MultipartData.html"
-                                  title='enum multipart::server::MultipartData'>MultipartData</a></td>
-                           <td class='docblock-short'>
-                                <p>The data of a field in a <code>multipart/form-data</code> request.</p>
-                           </td>
-                       </tr>
                        <tr class=' module-item'>
                            <td><a class="enum" href="enum.ReadEntryResult.html"
                                   title='enum multipart::server::ReadEntryResult'>ReadEntryResult</a></td>
                            <td class='docblock-short'>
                                 <p>Ternary result type returned by <code>ReadEntry::next_entry()</code>,
 <code>Multipart::into_entry()</code> and <code>MultipartField::next_entry()</code>.</p>
+
                            </td>
                        </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
 <table>
@@ -109,6 +123,7 @@ to accept, parse, and serve HTTP <code>multipart/form-data</code> requests (file
                                   title='trait multipart::server::HttpRequest'>HttpRequest</a></td>
                            <td class='docblock-short'>
                                 <p>A server-side HTTP request that may or may not be multipart.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -116,6 +131,16 @@ to accept, parse, and serve HTTP <code>multipart/form-data</code> requests (file
                                   title='trait multipart::server::ReadEntry'>ReadEntry</a></td>
                            <td class='docblock-short'>
                                 <p>Common trait for <code>Multipart</code> and <code>&amp;mut Multipart</code></p>
+
+                           </td>
+                       </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="type" href="type.ArcStr.html"
+                                  title='type multipart::server::ArcStr'>ArcStr</a></td>
+                           <td class='docblock-short'>
+                                <p>Default typedef for shared strings.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -130,18 +155,22 @@ to accept, parse, and serve HTTP <code>multipart/form-data</code> requests (file
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -174,7 +203,6 @@ to accept, parse, and serve HTTP <code>multipart/form-data</code> requests (file
         window.rootPath = "../../";
         window.currentCrate = "multipart";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

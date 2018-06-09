@@ -10,8 +10,12 @@
     <title>rustful::handler::HandleRequest - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +32,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Trait HandleRequest</p><div class="block items"><ul><li><a href="#required-methods">Required Methods</a></li><li><a href="#implementors">Implementors</a></li></ul></div><p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>handler</a></p><script>window.sidebarCurrent = {name: 'HandleRequest', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Trait HandleRequest</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#required-methods">Required Methods</a><div class="sidebar-links"><a href="#tymethod.handle_request">handle_request</a><a href="#tymethod.hyperlinks">hyperlinks</a></div><a class="sidebar-title" href="#foreign-impls">Implementations on Foreign Types</a><div class="sidebar-links"><a href="#impl-HandleRequest">Option&lt;H&gt;</a></div><a class="sidebar-title" href="#implementors">Implementors</a></div><p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>handler</a></p><script>window.sidebarCurrent = {name: 'HandleRequest', ty: 'trait', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,39 +55,43 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>handler</a>::<wbr><a class="trait" href=''>HandleRequest</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Trait <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>handler</a>::<wbr><a class="trait" href=''>HandleRequest</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/rustful/handler/mod.rs.html#224-233' title='goto source code'>[src]</a></span></h1>
-<pre class='rust trait'>pub trait HandleRequest: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> + 'static {
-    fn <a href='#tymethod.handle_request' class='fnname'>handle_request</a>&lt;'a, 'b, 'l, 'g&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;environment: <a class="struct" href="../../rustful/handler/struct.Environment.html" title="struct rustful::handler::Environment">Environment</a>&lt;'a, 'b, 'l, 'g&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../rustful/handler/struct.Environment.html" title="struct rustful::handler::Environment">Environment</a>&lt;'a, 'b, 'l, 'g&gt;&gt;;
-    fn <a href='#tymethod.hyperlinks' class='fnname'>hyperlinks</a>&lt;'a&gt;(&amp;'a self, base_link: <a class="struct" href="../../rustful/context/hypermedia/struct.Link.html" title="struct rustful::context::hypermedia::Link">Link</a>&lt;'a&gt;) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="../../rustful/context/hypermedia/struct.Link.html" title="struct rustful::context::hypermedia::Link">Link</a>&lt;'a&gt;&gt;;
-}</pre><div class='docblock'><p>A low level request handler.</p>
-
+               </span><a class='srclink' href='../../src/rustful/handler/mod.rs.html#224-233' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class='rust trait'>pub trait HandleRequest: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> + 'static {
+    fn <a href='#tymethod.handle_request' class='fnname'>handle_request</a>&lt;'a, 'b, 'l, 'g&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;environment: <a class="struct" href="../../rustful/handler/struct.Environment.html" title="struct rustful::handler::Environment">Environment</a>&lt;'a, 'b, 'l, 'g&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="../../rustful/handler/struct.Environment.html" title="struct rustful::handler::Environment">Environment</a>&lt;'a, 'b, 'l, 'g&gt;&gt;;
+<div class='item-spacer'></div>    fn <a href='#tymethod.hyperlinks' class='fnname'>hyperlinks</a>&lt;'a&gt;(&amp;'a self, base_link: <a class="struct" href="../../rustful/context/hypermedia/struct.Link.html" title="struct rustful::context::hypermedia::Link">Link</a>&lt;'a&gt;) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../../rustful/context/hypermedia/struct.Link.html" title="struct rustful::context::hypermedia::Link">Link</a>&lt;'a&gt;&gt;;
+}</pre></div><div class='docblock'><p>A low level request handler.</p>
 <p>Suitable for implementing routers, since it has complete access to the
 routing environment and can reject the request.</p>
 </div>
-            <h2 id='required-methods'>Required Methods</h2>
+            <h2 id='required-methods' class='small-section-header'>
+              Required Methods<a href='#required-methods' class='anchor'></a>
+            </h2>
             <div class='methods'>
-        <h3 id='tymethod.handle_request' class='method'><span id='handle_request.v' class='invisible'><code>fn <a href='#tymethod.handle_request' class='fnname'>handle_request</a>&lt;'a, 'b, 'l, 'g&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;environment: <a class="struct" href="../../rustful/handler/struct.Environment.html" title="struct rustful::handler::Environment">Environment</a>&lt;'a, 'b, 'l, 'g&gt;<br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="struct" href="../../rustful/handler/struct.Environment.html" title="struct rustful::handler::Environment">Environment</a>&lt;'a, 'b, 'l, 'g&gt;&gt;</code></span></h3><div class='docblock'><p>Try to handle an incoming request from the client, or return the
+        <h3 id='tymethod.handle_request' class='method'><span id='handle_request.v' class='invisible'><code>fn <a href='#tymethod.handle_request' class='fnname'>handle_request</a>&lt;'a, 'b, 'l, 'g&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;environment: <a class="struct" href="../../rustful/handler/struct.Environment.html" title="struct rustful::handler::Environment">Environment</a>&lt;'a, 'b, 'l, 'g&gt;<br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="../../rustful/handler/struct.Environment.html" title="struct rustful::handler::Environment">Environment</a>&lt;'a, 'b, 'l, 'g&gt;&gt;</code></span></h3><div class='docblock'><p>Try to handle an incoming request from the client, or return the
 request environment to the parent handler.</p>
-</div><h3 id='tymethod.hyperlinks' class='method'><span id='hyperlinks.v' class='invisible'><code>fn <a href='#tymethod.hyperlinks' class='fnname'>hyperlinks</a>&lt;'a&gt;(&amp;'a self, base_link: <a class="struct" href="../../rustful/context/hypermedia/struct.Link.html" title="struct rustful::context::hypermedia::Link">Link</a>&lt;'a&gt;) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html" title="struct collections::vec::Vec">Vec</a>&lt;<a class="struct" href="../../rustful/context/hypermedia/struct.Link.html" title="struct rustful::context::hypermedia::Link">Link</a>&lt;'a&gt;&gt;</code></span></h3><div class='docblock'><p>List all of the hyperlinks into this handler, based on the provided
-base link. It&#39;s up to the handler implementation to decide how deep to
+</div><div class="important-traits"><div class='tooltip'>ⓘ<span class='tooltiptext'>Important traits for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</span></div><div class="content hidden"><h3 class="important">Important traits for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</h3><code class="content"><span class="where fmt-newline">impl <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a> for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</span></code></div></div><h3 id='tymethod.hyperlinks' class='method'><span id='hyperlinks.v' class='invisible'><code>fn <a href='#tymethod.hyperlinks' class='fnname'>hyperlinks</a>&lt;'a&gt;(&amp;'a self, base_link: <a class="struct" href="../../rustful/context/hypermedia/struct.Link.html" title="struct rustful::context::hypermedia::Link">Link</a>&lt;'a&gt;) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../../rustful/context/hypermedia/struct.Link.html" title="struct rustful::context::hypermedia::Link">Link</a>&lt;'a&gt;&gt;</code></span></h3><div class='docblock'><p>List all of the hyperlinks into this handler, based on the provided
+base link. It's up to the handler implementation to decide how deep to
 go.</p>
 </div></div>
-        <h2 id='implementors'>Implementors</h2>
+                <h2 id='foreign-impls' class='small-section-header'>
+                  Implementations on Foreign Types<a href='#foreign-impls' class='anchor'></a>
+                </h2>
+            <h3 id='impl-HandleRequest' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;H:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a>&gt; <a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a> for <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;H&gt;</code><a href='#impl-HandleRequest' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/handler/mod.rs.html#247-264' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><span class='docblock autohide'><div class='impl-items'><h4 id='method.handle_request' class="method"><span id='handle_request.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='#method.handle_request' class='fnname'>handle_request</a>&lt;'a, 'b, 'l, 'g&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;environment: <a class="struct" href="../../rustful/handler/struct.Environment.html" title="struct rustful::handler::Environment">Environment</a>&lt;'a, 'b, 'l, 'g&gt;<br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="struct" href="../../rustful/handler/struct.Environment.html" title="struct rustful::handler::Environment">Environment</a>&lt;'a, 'b, 'l, 'g&gt;&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/handler/mod.rs.html#248-255' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><h4 id='method.hyperlinks' class="method"><div class="important-traits"><div class='tooltip'>ⓘ<span class='tooltiptext'>Important traits for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</span></div><div class="content hidden"><h3 class="important">Important traits for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</h3><code class="content"><span class="where fmt-newline">impl <a class="trait" href="https://doc.rust-lang.org/nightly/std/io/trait.Write.html" title="trait std::io::Write">Write</a> for <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>&gt;</span></code></div></div><span id='hyperlinks.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='#method.hyperlinks' class='fnname'>hyperlinks</a>&lt;'a&gt;(&amp;'a self, base_link: <a class="struct" href="../../rustful/context/hypermedia/struct.Link.html" title="struct rustful::context::hypermedia::Link">Link</a>&lt;'a&gt;) -&gt; <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../../rustful/context/hypermedia/struct.Link.html" title="struct rustful::context::hypermedia::Link">Link</a>&lt;'a&gt;&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/handler/mod.rs.html#257-263' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4></div></span>
+        <h2 id='implementors' class='small-section-header'>
+          Implementors<a href='#implementors' class='anchor'></a>
+        </h2>
         <ul class='item-list' id='implementors-list'>
-    <li><code>impl&lt;T:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a>&gt; HandleRequest for <a class="struct" href="../../rustful/handler/tree_router/struct.TreeRouter.html" title="struct rustful::handler::tree_router::TreeRouter">TreeRouter</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;T:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a>&gt; HandleRequest for <a class="struct" href="../../rustful/handler/method_router/struct.MethodRouter.html" title="struct rustful::handler::method_router::MethodRouter">MethodRouter</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;A:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a>, B:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a>&gt; HandleRequest for <a class="struct" href="../../rustful/handler/or_else/struct.OrElse.html" title="struct rustful::handler::or_else::OrElse">OrElse</a>&lt;A, B&gt;</code></li>
-<li><code>impl&lt;T:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a>&gt; HandleRequest for <a class="struct" href="../../rustful/handler/status_router/struct.StatusRouter.html" title="struct rustful::handler::status_router::StatusRouter">StatusRouter</a>&lt;T&gt;</code></li>
-<li><code>impl&lt;H:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a>&gt; HandleRequest for <a class="struct" href="../../rustful/handler/struct.Variables.html" title="struct rustful::handler::Variables">Variables</a>&lt;H&gt;</code></li>
-<li><code>impl&lt;H:&nbsp;<a class="trait" href="../../rustful/handler/trait.Handler.html" title="trait rustful::handler::Handler">Handler</a>&gt; HandleRequest for H</code></li>
-<li><code>impl&lt;H:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a>&gt; HandleRequest for <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;H&gt;</code></li>
-<li><code>impl&lt;T:&nbsp;<a class="trait" href="../../rustful/handler/trait.CreateContent.html" title="trait rustful::handler::CreateContent">CreateContent</a>&gt; HandleRequest for <a class="struct" href="../../rustful/handler/struct.ContentFactory.html" title="struct rustful::handler::ContentFactory">ContentFactory</a>&lt;T&gt;</code></li>
-</ul><script type="text/javascript" async
+    <li><table class='table-display'><tbody><tr><td><code>impl&lt;T:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a>&gt; HandleRequest for <a class="struct" href="../../rustful/handler/tree_router/struct.TreeRouter.html" title="struct rustful::handler::tree_router::TreeRouter">TreeRouter</a>&lt;T&gt;</code><td><div class='out-of-band'><a class='srclink' href='../../src/rustful/handler/tree_router.rs.html#160-322' title='goto source code'>[src]</a></div></td></tr></tbody></table></li>
+<li><table class='table-display'><tbody><tr><td><code>impl&lt;T:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a>&gt; HandleRequest for <a class="struct" href="../../rustful/handler/method_router/struct.MethodRouter.html" title="struct rustful::handler::method_router::MethodRouter">MethodRouter</a>&lt;T&gt;</code><td><div class='out-of-band'><a class='srclink' href='../../src/rustful/handler/method_router.rs.html#67-84' title='goto source code'>[src]</a></div></td></tr></tbody></table></li>
+<li><table class='table-display'><tbody><tr><td><code>impl&lt;A:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a>, B:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a>&gt; HandleRequest for <a class="struct" href="../../rustful/handler/or_else/struct.OrElse.html" title="struct rustful::handler::or_else::OrElse">OrElse</a>&lt;A, B&gt;</code><td><div class='out-of-band'><a class='srclink' href='../../src/rustful/handler/or_else.rs.html#91-101' title='goto source code'>[src]</a></div></td></tr></tbody></table></li>
+<li><table class='table-display'><tbody><tr><td><code>impl&lt;T:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a>&gt; HandleRequest for <a class="struct" href="../../rustful/handler/status_router/struct.StatusRouter.html" title="struct rustful::handler::status_router::StatusRouter">StatusRouter</a>&lt;T&gt;</code><td><div class='out-of-band'><a class='srclink' href='../../src/rustful/handler/status_router.rs.html#63-77' title='goto source code'>[src]</a></div></td></tr></tbody></table></li>
+<li><table class='table-display'><tbody><tr><td><code>impl&lt;H:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a>&gt; HandleRequest for <a class="struct" href="../../rustful/handler/struct.Variables.html" title="struct rustful::handler::Variables">Variables</a>&lt;H&gt;</code><td><div class='out-of-band'><a class='srclink' href='../../src/rustful/handler/variables.rs.html#62-71' title='goto source code'>[src]</a></div></td></tr></tbody></table></li>
+<li><table class='table-display'><tbody><tr><td><code>impl&lt;H:&nbsp;<a class="trait" href="../../rustful/handler/trait.Handler.html" title="trait rustful::handler::Handler">Handler</a>&gt; HandleRequest for H</code><td><div class='out-of-band'><a class='srclink' href='../../src/rustful/handler/mod.rs.html#235-245' title='goto source code'>[src]</a></div></td></tr></tbody></table></li>
+<li><table class='table-display'><tbody><tr><td><code>impl&lt;T:&nbsp;<a class="trait" href="../../rustful/handler/trait.CreateContent.html" title="trait rustful::handler::CreateContent">CreateContent</a>&gt; HandleRequest for <a class="struct" href="../../rustful/handler/struct.ContentFactory.html" title="struct rustful::handler::ContentFactory">ContentFactory</a>&lt;T&gt;</code><td><div class='out-of-band'><a class='srclink' href='../../src/rustful/handler/mod.rs.html#301-310' title='goto source code'>[src]</a></div></td></tr></tbody></table></li>
+</ul><script type="text/javascript">window.inlined_types=new Set([]);</script><script type="text/javascript" async
                          src="../../implementors/rustful/handler/trait.HandleRequest.js">
                  </script></section>
     <section id='search' class="content hidden"></section>
@@ -90,18 +106,22 @@ go.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -134,7 +154,6 @@ go.</p>
         window.rootPath = "../../";
         window.currentCrate = "rustful";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

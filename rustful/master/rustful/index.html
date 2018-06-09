@@ -10,8 +10,12 @@
     <title>rustful - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css"
+          id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +32,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Crate rustful</p><div class="block items"><ul><li><a href="#reexports">Reexports</a></li><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#enums">Enums</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'rustful', ty: 'mod', relpath: '../'};</script>
+        <p class='location'>Crate rustful</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#macros">Macros</a></li><li><a href="#enums">Enums</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'rustful', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,17 +55,14 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>rustful</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>rustful</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/rustful/lib.rs.html#1-113' title='goto source code'>[src]</a></span></h1>
-<div class='docblock'><p>A light HTTP framework with REST-like features. The main purpose of Rustful
+               </span><a class='srclink' href='../src/rustful/lib.rs.html#1-113' title='goto source code'>[src]</a></span></h1><div class='docblock'><p>A light HTTP framework with REST-like features. The main purpose of Rustful
 is to create a simple, modular and non-intrusive foundation for HTTP
 applications. It has a mainly stateless structure, which naturally allows
 it to run both as one single server and as multiple instances in a cluster.</p>
-
 <p>A new server is created using the <a href="server/struct.Server.html"><code>Server</code></a> type, which contains
 all the necessary settings as fields:</p>
 
@@ -98,14 +107,15 @@ all the necessary settings as fields:</p>
     <span class="comment">//Fill out everything else with default values.</span>
     ..<span class="ident">Server</span>::<span class="ident">default</span>()
 }.<span class="ident">run</span>();</pre>
-</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
-<table><tr><td><code>pub use self::<a class="mod" href="./server/index.html">server</a>::<a class="struct" href="../rustful/server/struct.Server.html" title="struct rustful::server::Server">Server</a>;</code></td></tr><tr><td><code>pub use self::<a class="mod" href="./context/index.html">context</a>::<a class="struct" href="../rustful/context/struct.Context.html" title="struct rustful::context::Context">Context</a>;</code></td></tr><tr><td><code>pub use self::<a class="mod" href="./response/index.html">response</a>::<a class="struct" href="../rustful/response/struct.Response.html" title="struct rustful::response::Response">Response</a>;</code></td></tr><tr><td><code>pub use self::<a class="mod" href="./response/index.html">response</a>::<a class="enum" href="../rustful/response/enum.Error.html" title="enum rustful::response::Error">Error</a>;</code></td></tr><tr><td><code>pub use self::<a class="mod" href="./response/index.html">response</a>::<a class="trait" href="../rustful/response/trait.SendResponse.html" title="trait rustful::response::SendResponse">SendResponse</a>;</code></td></tr><tr><td><code>pub use self::<a class="mod" href="./handler/index.html">handler</a>::<a class="trait" href="../rustful/handler/trait.Handler.html" title="trait rustful::handler::Handler">Handler</a>;</code></td></tr><tr><td><code>pub use self::<a class="mod" href="./handler/index.html">handler</a>::<a class="type" href="../rustful/handler/type.DefaultRouter.html" title="type rustful::handler::DefaultRouter">DefaultRouter</a>;</code></td></tr><tr><td><code>pub use self::<a class="mod" href="./handler/index.html">handler</a>::<a class="struct" href="../rustful/handler/struct.ContentFactory.html" title="struct rustful::handler::ContentFactory">ContentFactory</a>;</code></td></tr><tr><td><code>pub use self::<a class="mod" href="./handler/index.html">handler</a>::<a class="trait" href="../rustful/handler/trait.CreateContent.html" title="trait rustful::handler::CreateContent">CreateContent</a>;</code></td></tr><tr><td><code>pub use self::<a class="mod" href="./handler/index.html">handler</a>::<a class="struct" href="../rustful/handler/or_else/struct.OrElse.html" title="struct rustful::handler::or_else::OrElse">OrElse</a>;</code></td></tr><tr><td><code>pub use self::<a class="mod" href="./handler/index.html">handler</a>::<a class="struct" href="../rustful/handler/status_router/struct.StatusRouter.html" title="struct rustful::handler::status_router::StatusRouter">StatusRouter</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
+<table><tr><td><code>pub use self::server::<a class="struct" href="../rustful/server/struct.Server.html" title="struct rustful::server::Server">Server</a>;</code></td></tr><tr><td><code>pub use self::context::<a class="struct" href="../rustful/context/struct.Context.html" title="struct rustful::context::Context">Context</a>;</code></td></tr><tr><td><code>pub use self::response::<a class="struct" href="../rustful/response/struct.Response.html" title="struct rustful::response::Response">Response</a>;</code></td></tr><tr><td><code>pub use self::response::<a class="enum" href="../rustful/response/enum.Error.html" title="enum rustful::response::Error">Error</a>;</code></td></tr><tr><td><code>pub use self::response::<a class="trait" href="../rustful/response/trait.SendResponse.html" title="trait rustful::response::SendResponse">SendResponse</a>;</code></td></tr><tr><td><code>pub use self::handler::<a class="trait" href="../rustful/handler/trait.Handler.html" title="trait rustful::handler::Handler">Handler</a>;</code></td></tr><tr><td><code>pub use self::handler::<a class="type" href="../rustful/handler/type.DefaultRouter.html" title="type rustful::handler::DefaultRouter">DefaultRouter</a>;</code></td></tr><tr><td><code>pub use self::handler::<a class="struct" href="../rustful/handler/struct.ContentFactory.html" title="struct rustful::handler::ContentFactory">ContentFactory</a>;</code></td></tr><tr><td><code>pub use self::handler::<a class="trait" href="../rustful/handler/trait.CreateContent.html" title="trait rustful::handler::CreateContent">CreateContent</a>;</code></td></tr><tr><td><code>pub use self::handler::<a class="struct" href="../rustful/handler/or_else/struct.OrElse.html" title="struct rustful::handler::or_else::OrElse">OrElse</a>;</code></td></tr><tr><td><code>pub use self::handler::<a class="struct" href="../rustful/handler/status_router/struct.StatusRouter.html" title="struct rustful::handler::status_router::StatusRouter">StatusRouter</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class="mod" href="context/index.html"
                                   title='mod rustful::context'>context</a></td>
                            <td class='docblock-short'>
                                 <p>Handler context and request body reading extensions.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -113,6 +123,7 @@ all the necessary settings as fields:</p>
                                   title='mod rustful::file'>file</a></td>
                            <td class='docblock-short'>
                                 <p>File related utilities.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -120,6 +131,7 @@ all the necessary settings as fields:</p>
                                   title='mod rustful::filter'>filter</a></td>
                            <td class='docblock-short'>
                                 <p>Request and context filters.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -127,6 +139,7 @@ all the necessary settings as fields:</p>
                                   title='mod rustful::handler'>handler</a></td>
                            <td class='docblock-short'>
                                 <p>Request handlers and routers.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -134,6 +147,7 @@ all the necessary settings as fields:</p>
                                   title='mod rustful::header'>header</a></td>
                            <td class='docblock-short'>
                                 <p>Headers container, and common header fields.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -141,6 +155,7 @@ all the necessary settings as fields:</p>
                                   title='mod rustful::mime'>mime</a></td>
                            <td class='docblock-short'>
                                 <p>Re-exporting the mime crate, for convenience.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -148,6 +163,7 @@ all the necessary settings as fields:</p>
                                   title='mod rustful::net'>net</a></td>
                            <td class='docblock-short'>
                                 <p>Network related types and traits, reexported from Hyper.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -155,6 +171,7 @@ all the necessary settings as fields:</p>
                                   title='mod rustful::response'>response</a></td>
                            <td class='docblock-short'>
                                 <p>Response writers.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -162,6 +179,7 @@ all the necessary settings as fields:</p>
                                   title='mod rustful::server'>server</a></td>
                            <td class='docblock-short'>
                                 <p>Server configuration and instance.</p>
+
                            </td>
                        </tr></table><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
 <table>
@@ -170,6 +188,7 @@ all the necessary settings as fields:</p>
                                   title='macro rustful::content_type'>content_type</a></td>
                            <td class='docblock-short'>
                                 <p>A macro for making content types.</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -178,6 +197,7 @@ all the necessary settings as fields:</p>
                                   title='enum rustful::HttpError'>HttpError</a></td>
                            <td class='docblock-short'>
                                 <p>A set of errors that can occur parsing HTTP streams.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -185,6 +205,7 @@ all the necessary settings as fields:</p>
                                   title='enum rustful::HttpVersion'>HttpVersion</a></td>
                            <td class='docblock-short'>
                                 <p>Represents a version of the HTTP spec.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -192,6 +213,7 @@ all the necessary settings as fields:</p>
                                   title='enum rustful::Method'>Method</a></td>
                            <td class='docblock-short'>
                                 <p>The Request Method (VERB)</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -199,6 +221,7 @@ all the necessary settings as fields:</p>
                                   title='enum rustful::StatusCode'>StatusCode</a></td>
                            <td class='docblock-short'>
                                 <p>An HTTP status code (<code>status-code</code> in RFC 7230 et al.).</p>
+
                            </td>
                        </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
 <table>
@@ -207,6 +230,7 @@ all the necessary settings as fields:</p>
                                   title='type rustful::HttpResult'>HttpResult</a></td>
                            <td class='docblock-short'>
                                 <p>Result type often returned from methods that can have hyper <code>Error</code>s.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -221,18 +245,22 @@ all the necessary settings as fields:</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -265,7 +293,6 @@ all the necessary settings as fields:</p>
         window.rootPath = "../";
         window.currentCrate = "rustful";
     </script>
-    <script src="../jquery.js"></script>
     <script src="../main.js"></script>
     <script defer src="../search-index.js"></script>
 </body>

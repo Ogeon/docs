@@ -10,8 +10,12 @@
     <title>rustful::server::ServerInstance - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +32,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct ServerInstance</p><div class="block items"><ul><li><a href="#methods">Methods</a></li><li><a href="#implementations">Trait Implementations</a></li></ul></div><p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>server</a></p><script>window.sidebarCurrent = {name: 'ServerInstance', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct ServerInstance</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.run">run</a><a href="#method.run_https">run_https</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-HyperHandler">HyperHandler</a></div><a class="sidebar-title" href="#synthetic-implementations">Auto Trait Implementations</a><div class="sidebar-links"><a href="#impl-Send">Send</a><a href="#impl-Sync">Sync</a></div></div><p class='location'><a href='../index.html'>rustful</a>::<wbr><a href='index.html'>server</a></p><script>window.sidebarCurrent = {name: 'ServerInstance', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -43,15 +55,12 @@
         </form>
     </nav>
 
-    <section id='main' class="content">
-<h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>server</a>::<wbr><a class="struct" href=''>ServerInstance</a></span><span class='out-of-band'><span id='render-detail'>
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>rustful</a>::<wbr><a href='index.html'>server</a>::<wbr><a class="struct" href=''>ServerInstance</a></span><span class='out-of-band'><span id='render-detail'>
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../../src/rustful/server/instance.rs.html#55-71' title='goto source code'>[src]</a></span></h1>
-<pre class='rust struct'>pub struct ServerInstance&lt;R&gt; { /* fields omitted */ }</pre><div class='docblock'><p>A runnable instance of a server.</p>
-
-<p>It&#39;s not meant to be used directly,
+               </span><a class='srclink' href='../../src/rustful/server/instance.rs.html#55-71' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class='rust struct'>pub struct ServerInstance&lt;R&gt; { /* fields omitted */ }</pre></div><div class='docblock'><p>A runnable instance of a server.</p>
+<p>It's not meant to be used directly,
 unless additional control is required.</p>
 
 <pre class="rust rust-example-rendered">
@@ -60,24 +69,29 @@ unless additional control is required.</p>
     <span class="ident">handlers</span>: <span class="ident">router</span>,
     ..<span class="ident">Server</span>::<span class="ident">default</span>()
 }.<span class="ident">build</span>();</pre>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a> + 'static&gt; <a class="struct" href="../../rustful/server/struct.ServerInstance.html" title="struct rustful::server::ServerInstance">ServerInstance</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/server/instance.rs.html#73-128' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(config: <a class="struct" href="../../rustful/server/struct.Server.html" title="struct rustful::server::Server">Server</a>&lt;R&gt;) -&gt; <a class="struct" href="../../rustful/server/struct.ServerInstance.html" title="struct rustful::server::ServerInstance">ServerInstance</a>&lt;R&gt;</code></span></h4>
-<div class='docblock'><p>Create a new server instance, with the provided configuration. This is
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;R:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a> + 'static&gt; <a class="struct" href="../../rustful/server/struct.ServerInstance.html" title="struct rustful::server::ServerInstance">ServerInstance</a>&lt;R&gt;</code><a href='#impl' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/server/instance.rs.html#73-128' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.new' class='fnname'>new</a>(config: <a class="struct" href="../../rustful/server/struct.Server.html" title="struct rustful::server::Server">Server</a>&lt;R&gt;) -&gt; <a class="struct" href="../../rustful/server/struct.ServerInstance.html" title="struct rustful::server::ServerInstance">ServerInstance</a>&lt;R&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/server/instance.rs.html#76-89' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Create a new server instance, with the provided configuration. This is
 the same as <code>Server{...}.build()</code>.</p>
-</div><h4 id='method.run' class="method"><span id='run.v' class='invisible'><code>fn <a href='#method.run' class='fnname'>run</a>(self) -&gt; <a class="type" href="../../rustful/type.HttpResult.html" title="type rustful::HttpResult">HttpResult</a>&lt;<a class="struct" href="../../rustful/server/struct.Listening.html" title="struct rustful::server::Listening">Listening</a>&gt;</code></span></h4>
-<div class='docblock'><p>Start the server.</p>
-</div><h4 id='method.run_https' class="method"><span id='run_https.v' class='invisible'><code>fn <a href='#method.run_https' class='fnname'>run_https</a>&lt;S:&nbsp;<a class="trait" href="../../rustful/net/trait.SslServer.html" title="trait rustful::net::SslServer">SslServer</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'static&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;ssl: S<br>) -&gt; <a class="type" href="../../rustful/type.HttpResult.html" title="type rustful::HttpResult">HttpResult</a>&lt;<a class="struct" href="../../rustful/server/struct.Listening.html" title="struct rustful::server::Listening">Listening</a>&gt;</code></span></h4>
-<div class='docblock'><p>Start the server with SSL.</p>
-</div></div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl&lt;R:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a> + 'static&gt; <a class="trait" href="../../hyper/server/trait.Handler.html" title="trait hyper::server::Handler">HyperHandler</a> for <a class="struct" href="../../rustful/server/struct.ServerInstance.html" title="struct rustful::server::ServerInstance">ServerInstance</a>&lt;R&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/server/instance.rs.html#137-238' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.handle' class="method"><span id='handle.v' class='invisible'><code>fn <a href='../../hyper/server/trait.Handler.html#tymethod.handle' class='fnname'>handle</a>&lt;'a, 'b&gt;(&amp;'a self, request: <a class="struct" href="../../hyper/server/request/struct.Request.html" title="struct hyper::server::request::Request">Request</a>&lt;'a, 'b&gt;, writer: <a class="struct" href="../../hyper/server/response/struct.Response.html" title="struct hyper::server::response::Response">Response</a>&lt;'a&gt;)</code></span></h4>
-<div class='docblock'><p>Receives a <code>Request</code>/<code>Response</code> pair, and should perform some action on them. <a href="../../hyper/server/trait.Handler.html#tymethod.handle">Read more</a></p>
-</div><h4 id='method.on_connection_start' class="method"><span id='on_connection_start.v' class='invisible'><code>fn <a href='../../hyper/server/trait.Handler.html#method.on_connection_start' class='fnname'>on_connection_start</a>(&amp;self)</code></span></h4>
-<div class='docblock'><p>This is run after a connection is received, on a per-connection basis (not a per-request basis, as a connection with keep-alive may handle multiple requests) <a href="../../hyper/server/trait.Handler.html#method.on_connection_start">Read more</a></p>
-</div><h4 id='method.on_connection_end' class="method"><span id='on_connection_end.v' class='invisible'><code>fn <a href='../../hyper/server/trait.Handler.html#method.on_connection_end' class='fnname'>on_connection_end</a>(&amp;self)</code></span></h4>
-<div class='docblock'><p>This is run before a connection is closed, on a per-connection basis (not a per-request basis, as a connection with keep-alive may handle multiple requests) <a href="../../hyper/server/trait.Handler.html#method.on_connection_end">Read more</a></p>
-</div><h4 id='method.check_continue' class="method"><span id='check_continue.v' class='invisible'><code>fn <a href='../../hyper/server/trait.Handler.html#method.check_continue' class='fnname'>check_continue</a>(&amp;self, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a>&amp;<a class="enum" href="../../rustful/enum.Method.html" title="enum rustful::Method">Method</a>, &amp;<a class="enum" href="../../hyper/uri/enum.RequestUri.html" title="enum hyper::uri::RequestUri">RequestUri</a>, &amp;<a class="struct" href="../../rustful/header/struct.Headers.html" title="struct rustful::header::Headers">Headers</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>) -&gt; <a class="enum" href="../../rustful/enum.StatusCode.html" title="enum rustful::StatusCode">StatusCode</a></code></span></h4>
-<div class='docblock'><p>Called when a Request includes a <code>Expect: 100-continue</code> header. <a href="../../hyper/server/trait.Handler.html#method.check_continue">Read more</a></p>
-</div></div></section>
+</div><h4 id='method.run' class="method"><span id='run.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.run' class='fnname'>run</a>(self) -&gt; <a class="type" href="../../rustful/type.HttpResult.html" title="type rustful::HttpResult">HttpResult</a>&lt;<a class="struct" href="../../rustful/server/struct.Listening.html" title="struct rustful::server::Listening">Listening</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/server/instance.rs.html#92-98' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Start the server.</p>
+</div><h4 id='method.run_https' class="method"><span id='run_https.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.run_https' class='fnname'>run_https</a>&lt;S:&nbsp;<a class="trait" href="../../rustful/net/trait.SslServer.html" title="trait rustful::net::SslServer">SslServer</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> + <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + 'static&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;ssl: S<br>) -&gt; <a class="type" href="../../rustful/type.HttpResult.html" title="type rustful::HttpResult">HttpResult</a>&lt;<a class="struct" href="../../rustful/server/struct.Listening.html" title="struct rustful::server::Listening">Listening</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/server/instance.rs.html#101-107' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Start the server with SSL.</p>
+</div></div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+            <div id='implementations-list'>
+        <h3 id='impl-HyperHandler' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;R:&nbsp;<a class="trait" href="../../rustful/handler/trait.HandleRequest.html" title="trait rustful::handler::HandleRequest">HandleRequest</a> + 'static&gt; <a class="trait" href="../../hyper/server/trait.Handler.html" title="trait hyper::server::Handler">HyperHandler</a> for <a class="struct" href="../../rustful/server/struct.ServerInstance.html" title="struct rustful::server::ServerInstance">ServerInstance</a>&lt;R&gt;</code><a href='#impl-HyperHandler' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/server/instance.rs.html#137-238' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.handle' class="method"><span id='handle.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='../../hyper/server/trait.Handler.html#tymethod.handle' class='fnname'>handle</a>&lt;'a, 'b&gt;(&amp;'a self, request: <a class="struct" href="../../hyper/server/request/struct.Request.html" title="struct hyper::server::request::Request">Request</a>&lt;'a, 'b&gt;, writer: <a class="struct" href="../../hyper/server/response/struct.Response.html" title="struct hyper::server::response::Response">Response</a>&lt;'a&gt;)</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/server/instance.rs.html#138-229' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Receives a <code>Request</code>/<code>Response</code> pair, and should perform some action on them. <a href="../../hyper/server/trait.Handler.html#tymethod.handle">Read more</a></p>
+</div><h4 id='method.on_connection_start' class="method"><span id='on_connection_start.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='../../hyper/server/trait.Handler.html#method.on_connection_start' class='fnname'>on_connection_start</a>(&amp;self)</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/server/instance.rs.html#231-233' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>This is run after a connection is received, on a per-connection basis (not a per-request basis, as a connection with keep-alive may handle multiple requests) <a href="../../hyper/server/trait.Handler.html#method.on_connection_start">Read more</a></p>
+</div><h4 id='method.on_connection_end' class="method"><span id='on_connection_end.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='../../hyper/server/trait.Handler.html#method.on_connection_end' class='fnname'>on_connection_end</a>(&amp;self)</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/rustful/server/instance.rs.html#235-237' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>This is run before a connection is closed, on a per-connection basis (not a per-request basis, as a connection with keep-alive may handle multiple requests) <a href="../../hyper/server/trait.Handler.html#method.on_connection_end">Read more</a></p>
+</div><h4 id='method.check_continue' class="method"><span id='check_continue.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='../../hyper/server/trait.Handler.html#method.check_continue' class='fnname'>check_continue</a>(&amp;self, <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">(</a>&amp;<a class="enum" href="../../rustful/enum.Method.html" title="enum rustful::Method">Method</a>, &amp;<a class="enum" href="../../hyper/uri/enum.RequestUri.html" title="enum hyper::uri::RequestUri">RequestUri</a>, &amp;<a class="struct" href="../../rustful/header/struct.Headers.html" title="struct rustful::header::Headers">Headers</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">)</a>) -&gt; <a class="enum" href="../../rustful/enum.StatusCode.html" title="enum rustful::StatusCode">StatusCode</a></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/hyper/server/mod.rs.html#413-415' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Called when a Request includes a <code>Expect: 100-continue</code> header. <a href="../../hyper/server/trait.Handler.html#method.check_continue">Read more</a></p>
+</div></div></div>
+                <h2 id='synthetic-implementations' class='small-section-header'>
+                  Auto Trait Implementations<a href='#synthetic-implementations' class='anchor'></a>
+                </h2>
+                <div id='synthetic-implementations-list'>
+            <h3 id='impl-Send' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;R&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> for <a class="struct" href="../../rustful/server/struct.ServerInstance.html" title="struct rustful::server::ServerInstance">ServerInstance</a>&lt;R&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;R: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a>,&nbsp;</span></code><a href='#impl-Send' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div><h3 id='impl-Sync' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl&lt;R&gt; <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> for <a class="struct" href="../../rustful/server/struct.ServerInstance.html" title="struct rustful::server::ServerInstance">ServerInstance</a>&lt;R&gt; <span class="where fmt-newline">where<br>&nbsp;&nbsp;&nbsp;&nbsp;R: <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a>,&nbsp;</span></code><a href='#impl-Sync' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div></div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>
@@ -90,18 +104,22 @@ the same as <code>Server{...}.build()</code>.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -134,7 +152,6 @@ the same as <code>Server{...}.build()</code>.</p>
         window.rootPath = "../../";
         window.currentCrate = "rustful";
     </script>
-    <script src="../../jquery.js"></script>
     <script src="../../main.js"></script>
     <script defer src="../../search-index.js"></script>
 </body>

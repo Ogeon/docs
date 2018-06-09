@@ -4,14 +4,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.12/src/client/mod.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/hyper-0.10.13/src/client/mod.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>mod.rs.html -- source</title>
 
     <link rel="stylesheet" type="text/css" href="../../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css"
+          id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle">
+    <script src="../../../storage.js"></script>
     
 
     
@@ -28,10 +32,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -1062,7 +1074,7 @@
     <span class="doccomment">/// Add an individual new header to the request.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">header</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Header</span> <span class="op">+</span> <span class="ident">HeaderFormat</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">header</span>: <span class="ident">H</span>) <span class="op">-&gt;</span> <span class="ident">RequestBuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">headers</span> {
+            <span class="kw">let</span> <span class="ident">headers</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span>.<span class="ident">headers</span> {
                 <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">h</span>) <span class="op">=&gt;</span> <span class="ident">h</span>,
                 <span class="prelude-val">None</span> <span class="op">=&gt;</span> {
                     <span class="self">self</span>.<span class="ident">headers</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">Headers</span>::<span class="ident">new</span>());
@@ -1083,7 +1095,7 @@
 
         <span class="kw">let</span> <span class="ident">can_have_body</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">method</span> {
             <span class="ident">Method</span>::<span class="ident">Get</span> <span class="op">|</span> <span class="ident">Method</span>::<span class="ident">Head</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
-            _ <span class="op">=&gt;</span> <span class="bool-val">true</span>
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>
         };
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">can_have_body</span> {
@@ -1121,7 +1133,7 @@
                     <span class="prelude-val">None</span> <span class="op">=&gt;</span> (), <span class="comment">// chunked, Request will add it automatically</span>
                 },
                 (<span class="bool-val">true</span>, <span class="prelude-val">None</span>) <span class="op">=&gt;</span> <span class="ident">req</span>.<span class="ident">headers_mut</span>().<span class="ident">set</span>(<span class="ident">ContentLength</span>(<span class="number">0</span>)),
-                _ <span class="op">=&gt;</span> () <span class="comment">// neither</span>
+                <span class="kw">_</span> <span class="op">=&gt;</span> () <span class="comment">// neither</span>
             }
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">streaming</span> <span class="op">=</span> <span class="macro">try</span><span class="macro">!</span>(<span class="ident">req</span>.<span class="ident">start</span>());
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">rdr</span>) <span class="op">=</span> <span class="ident">body</span>.<span class="ident">take</span>() {
@@ -1161,7 +1173,7 @@
                 <span class="comment">// separate branches because they can&#39;t be one</span>
                 <span class="ident">RedirectPolicy</span>::<span class="ident">FollowAll</span> <span class="op">=&gt;</span> (), <span class="comment">//continue</span>
                 <span class="ident">RedirectPolicy</span>::<span class="ident">FollowIf</span>(<span class="ident">cond</span>) <span class="kw">if</span> <span class="ident">cond</span>(<span class="kw-2">&amp;</span><span class="ident">url</span>) <span class="op">=&gt;</span> (), <span class="comment">//continue</span>
-                _ <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">res</span>),
+                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">res</span>),
             }
         }
     }
@@ -1180,9 +1192,9 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Body</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Body</span>::<span class="ident">SizedBody</span>(_, <span class="ident">len</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">len</span>),
-            <span class="ident">Body</span>::<span class="ident">BufBody</span>(_, <span class="ident">len</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">u64</span>),
-            _ <span class="op">=&gt;</span> <span class="prelude-val">None</span>
+            <span class="ident">Body</span>::<span class="ident">SizedBody</span>(<span class="kw">_</span>, <span class="ident">len</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">len</span>),
+            <span class="ident">Body</span>::<span class="ident">BufBody</span>(<span class="kw">_</span>, <span class="ident">len</span>) <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">u64</span>),
+            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>
         }
     }
 }
@@ -1192,8 +1204,8 @@
     <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">Body</span>::<span class="ident">ChunkedBody</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">r</span>) <span class="op">=&gt;</span> <span class="ident">r</span>.<span class="ident">read</span>(<span class="ident">buf</span>),
-            <span class="ident">Body</span>::<span class="ident">SizedBody</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">r</span>, _) <span class="op">=&gt;</span> <span class="ident">r</span>.<span class="ident">read</span>(<span class="ident">buf</span>),
-            <span class="ident">Body</span>::<span class="ident">BufBody</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">r</span>, _) <span class="op">=&gt;</span> <span class="ident">Read</span>::<span class="ident">read</span>(<span class="ident">r</span>, <span class="ident">buf</span>),
+            <span class="ident">Body</span>::<span class="ident">SizedBody</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">r</span>, <span class="kw">_</span>) <span class="op">=&gt;</span> <span class="ident">r</span>.<span class="ident">read</span>(<span class="ident">buf</span>),
+            <span class="ident">Body</span>::<span class="ident">BufBody</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">r</span>, <span class="kw">_</span>) <span class="op">=&gt;</span> <span class="ident">Read</span>::<span class="ident">read</span>(<span class="ident">r</span>, <span class="ident">buf</span>),
         }
     }
 }
@@ -1307,7 +1319,7 @@
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">RedirectPolicy</span>::<span class="ident">FollowNone</span> <span class="op">=&gt;</span> <span class="ident">fmt</span>.<span class="ident">write_str</span>(<span class="string">&quot;FollowNone&quot;</span>),
             <span class="ident">RedirectPolicy</span>::<span class="ident">FollowAll</span> <span class="op">=&gt;</span> <span class="ident">fmt</span>.<span class="ident">write_str</span>(<span class="string">&quot;FollowAll&quot;</span>),
-            <span class="ident">RedirectPolicy</span>::<span class="ident">FollowIf</span>(_) <span class="op">=&gt;</span> <span class="ident">fmt</span>.<span class="ident">write_str</span>(<span class="string">&quot;FollowIf&quot;</span>),
+            <span class="ident">RedirectPolicy</span>::<span class="ident">FollowIf</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="ident">fmt</span>.<span class="ident">write_str</span>(<span class="string">&quot;FollowIf&quot;</span>),
         }
     }
 }
@@ -1550,18 +1562,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
@@ -1594,7 +1610,6 @@
         window.rootPath = "../../../";
         window.currentCrate = "hyper";
     </script>
-    <script src="../../../jquery.js"></script>
     <script src="../../../main.js"></script>
     <script defer src="../../../search-index.js"></script>
 </body>
