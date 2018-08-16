@@ -607,6 +607,59 @@
 <span id="607">607</span>
 <span id="608">608</span>
 <span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
+<span id="622">622</span>
+<span id="623">623</span>
+<span id="624">624</span>
+<span id="625">625</span>
+<span id="626">626</span>
+<span id="627">627</span>
+<span id="628">628</span>
+<span id="629">629</span>
+<span id="630">630</span>
+<span id="631">631</span>
+<span id="632">632</span>
+<span id="633">633</span>
+<span id="634">634</span>
+<span id="635">635</span>
+<span id="636">636</span>
+<span id="637">637</span>
+<span id="638">638</span>
+<span id="639">639</span>
+<span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
+<span id="651">651</span>
+<span id="652">652</span>
+<span id="653">653</span>
+<span id="654">654</span>
+<span id="655">655</span>
+<span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
+<span id="661">661</span>
+<span id="662">662</span>
 </pre><pre class="rust ">
 <span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;http://ogeon.github.io/docs/rust-wiringpi/master/&quot;</span>)]</span>
 
@@ -748,6 +801,15 @@
         <span class="ident">High</span>
     }
 
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Edge</span> {
+        <span class="doccomment">///No setup is performed, it is assumed the trigger has already been set up previosuly</span>
+        <span class="ident">Setup</span> <span class="op">=</span> <span class="number">0</span>,
+        <span class="ident">Falling</span> <span class="op">=</span> <span class="number">1</span>,
+        <span class="ident">Rising</span> <span class="op">=</span> <span class="number">2</span>,
+        <span class="ident">Both</span> <span class="op">=</span> <span class="number">3</span>
+    }
+
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
     <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Pull</span> {
         <span class="ident">Off</span> <span class="op">=</span> <span class="number">0</span>,
@@ -800,6 +862,50 @@
         <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">analog_read</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u16</span> {
             <span class="kw">unsafe</span> {
                 <span class="ident">bindings</span>::<span class="ident">analogRead</span>(<span class="self">self</span>.<span class="ident">number</span>()) <span class="kw">as</span> <span class="ident">u16</span>
+            }
+        }
+
+        <span class="doccomment">/// This will register an &quot;Interrupt&quot; to be called when the pin changes state</span>
+        <span class="doccomment">/// Note the quotes around Interrupt, because the current implementation in the C</span>
+        <span class="doccomment">/// library seems to be a dedicated thread that polls the gpio device driver,</span>
+        <span class="doccomment">/// and this callback is called from that thread synchronously, so it&#39;s not something that</span>
+        <span class="doccomment">/// you would call a real interrupt in an embedded environement.</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">/// The callback function does not need to be reentrant.</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">/// The callback must be an actual function (not a closure!), and must be using</span>
+        <span class="doccomment">/// the extern &quot;C&quot; modifier so that it can be passed to the wiringpi library,</span>
+        <span class="doccomment">/// and called from C code.</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">/// Unfortunately the C implementation does not allow userdata to be passed around,</span>
+        <span class="doccomment">/// so the callback must be able to determine what caused the interrupt just by the</span>
+        <span class="doccomment">/// function that was invoked.</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">/// See https://github.com/Ogeon/rust-wiringpi/pull/28 for</span>
+        <span class="doccomment">/// ideas on how to work around these limitations if you find them too constraining.</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">/// ```</span>
+        <span class="doccomment">/// use wiringpi;</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">/// extern &quot;C&quot; fn change_state() {</span>
+        <span class="doccomment">///   println!(&quot;Look ma, I&#39;m being called from an another thread&quot;);</span>
+        <span class="doccomment">/// }</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">/// fn main() {</span>
+        <span class="doccomment">///    let pi = wiringpi::setup();</span>
+        <span class="doccomment">///    let pin = pi.output_pin(0);</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">///    pin.register_isr(Edge::Falling, Some(change_state));</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">///    thread::sleep(60000);</span>
+        <span class="doccomment">/// }</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">/// ```</span>
+        <span class="doccomment">///</span>
+        <span class="doccomment">///</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register_isr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">edge</span>: <span class="ident">Edge</span>, <span class="ident">f</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>) {
+            <span class="kw">unsafe</span> {
+                <span class="ident">bindings</span>::<span class="ident">wiringPiISR</span>(<span class="self">self</span>.<span class="ident">number</span>(), <span class="ident">edge</span> <span class="kw">as</span> <span class="ident">i32</span>, <span class="ident">f</span>);
             }
         }
     }
