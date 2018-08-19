@@ -795,7 +795,7 @@
 
     <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">RequiresRoot</span>: <span class="ident">Pin</span> {}
 
-    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
     <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Value</span> {
         <span class="ident">Low</span> <span class="op">=</span> <span class="number">0</span>,
         <span class="ident">High</span>
@@ -810,14 +810,14 @@
         <span class="ident">Both</span> <span class="op">=</span> <span class="number">3</span>
     }
 
-    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
     <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Pull</span> {
         <span class="ident">Off</span> <span class="op">=</span> <span class="number">0</span>,
         <span class="ident">Down</span>,
         <span class="ident">Up</span>
     }
 
-    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
     <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PwmMode</span> {
         <span class="ident">MarkSpace</span> <span class="op">=</span> <span class="number">0</span>,
         <span class="ident">Balanced</span>
