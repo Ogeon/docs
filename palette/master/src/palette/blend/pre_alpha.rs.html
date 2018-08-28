@@ -352,9 +352,9 @@
 <span id="352">352</span>
 <span id="353">353</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">Deref</span>, <span class="ident">DerefMut</span>, <span class="ident">Div</span>, <span class="ident">Mul</span>, <span class="ident">Sub</span>};
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">Deref</span>, <span class="ident">DerefMut</span>, <span class="ident">Div</span>, <span class="ident">Mul</span>, <span class="ident">Sub</span>};
 <span class="kw">use</span> <span class="ident">approx</span>::{<span class="ident">AbsDiffEq</span>, <span class="ident">RelativeEq</span>, <span class="ident">UlpsEq</span>};
-<span class="kw">use</span> <span class="ident">num_traits</span>::<span class="ident">Float</span>;
+<span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
 
 <span class="kw">use</span> {<span class="ident">clamp</span>, <span class="ident">Alpha</span>, <span class="ident">Blend</span>, <span class="ident">ComponentWise</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>};
 <span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">pixel</span>::<span class="ident">RawPixel</span>;
@@ -381,11 +381,11 @@
 <span class="doccomment">///Note that converting to and from premultiplied alpha will cause the alpha</span>
 <span class="doccomment">///component to be clamped to [0.0, 1.0].</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Debug</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span> {
     <span class="doccomment">///The premultiplied color components (`original.color * original.alpha`).</span>
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>, <span class="ident">serde</span>(<span class="ident">flatten</span>))]</span>
+    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>, <span class="ident">serde</span>(<span class="ident">flatten</span>))]</span>
     <span class="kw">pub</span> <span class="ident">color</span>: <span class="ident">C</span>,
 
     <span class="doccomment">///The transparency component. 0.0 is fully transparent and 1.0 is fully</span>
@@ -673,13 +673,13 @@
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">PreAlpha</span>;
     <span class="kw">use</span> <span class="ident">rgb</span>::<span class="ident">Rgb</span>;
     <span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">Srgb</span>;
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">serialize</span>() {
         <span class="kw">let</span> <span class="ident">color</span> <span class="op">=</span> <span class="ident">PreAlpha</span> {
@@ -692,7 +692,7 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">serialized</span>, <span class="string">r#&quot;{&quot;red&quot;:0.3,&quot;green&quot;:0.8,&quot;blue&quot;:0.1,&quot;alpha&quot;:0.5}&quot;#</span>);
     }
 
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serde&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">deserialize</span>() {
         <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="ident">PreAlpha</span> {
