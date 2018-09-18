@@ -638,13 +638,62 @@
 <span id="638">638</span>
 <span id="639">639</span>
 <span id="640">640</span>
+<span id="641">641</span>
+<span id="642">642</span>
+<span id="643">643</span>
+<span id="644">644</span>
+<span id="645">645</span>
+<span id="646">646</span>
+<span id="647">647</span>
+<span id="648">648</span>
+<span id="649">649</span>
+<span id="650">650</span>
+<span id="651">651</span>
+<span id="652">652</span>
+<span id="653">653</span>
+<span id="654">654</span>
+<span id="655">655</span>
+<span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
+<span id="661">661</span>
+<span id="662">662</span>
+<span id="663">663</span>
+<span id="664">664</span>
+<span id="665">665</span>
+<span id="666">666</span>
+<span id="667">667</span>
+<span id="668">668</span>
+<span id="669">669</span>
+<span id="670">670</span>
+<span id="671">671</span>
+<span id="672">672</span>
+<span id="673">673</span>
+<span id="674">674</span>
+<span id="675">675</span>
+<span id="676">676</span>
+<span id="677">677</span>
+<span id="678">678</span>
+<span id="679">679</span>
+<span id="680">680</span>
+<span id="681">681</span>
+<span id="682">682</span>
+<span id="683">683</span>
+<span id="684">684</span>
+<span id="685">685</span>
+<span id="686">686</span>
+<span id="687">687</span>
+<span id="688">688</span>
+<span id="689">689</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">approx</span>::{<span class="ident">AbsDiffEq</span>, <span class="ident">RelativeEq</span>, <span class="ident">UlpsEq</span>};
 <span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
 
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">any</span>::<span class="ident">TypeId</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">Sub</span>};
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
 
 <span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">pixel</span>::<span class="ident">RawPixel</span>;
 <span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">Srgb</span>;
@@ -1004,7 +1053,7 @@
 {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
         <span class="ident">Hwb</span> {
             <span class="ident">hue</span>: <span class="self">self</span>.<span class="ident">hue</span> <span class="op">+</span> <span class="ident">other</span>.<span class="ident">hue</span>,
             <span class="ident">whiteness</span>: <span class="self">self</span>.<span class="ident">whiteness</span> <span class="op">+</span> <span class="ident">other</span>.<span class="ident">whiteness</span>,
@@ -1021,13 +1070,37 @@
 {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">c</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">c</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
         <span class="ident">Hwb</span> {
             <span class="ident">hue</span>: <span class="self">self</span>.<span class="ident">hue</span> <span class="op">+</span> <span class="ident">c</span>,
             <span class="ident">whiteness</span>: <span class="self">self</span>.<span class="ident">whiteness</span> <span class="op">+</span> <span class="ident">c</span>,
             <span class="ident">blackness</span>: <span class="self">self</span>.<span class="ident">blackness</span> <span class="op">+</span> <span class="ident">c</span>,
             <span class="ident">space</span>: <span class="ident">PhantomData</span>,
         }
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span> <span class="op">+</span> <span class="ident">AddAssign</span>,
+        <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
+{
+    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">hue</span> <span class="op">+=</span> <span class="ident">other</span>.<span class="ident">hue</span>;
+        <span class="self">self</span>.<span class="ident">whiteness</span> <span class="op">+=</span> <span class="ident">other</span>.<span class="ident">whiteness</span>;
+        <span class="self">self</span>.<span class="ident">blackness</span> <span class="op">+=</span> <span class="ident">other</span>.<span class="ident">blackness</span>;
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span> <span class="op">+</span> <span class="ident">AddAssign</span>,
+        <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
+{
+    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">c</span>: <span class="ident">T</span>) {
+        <span class="self">self</span>.<span class="ident">hue</span> <span class="op">+=</span> <span class="ident">c</span>;
+        <span class="self">self</span>.<span class="ident">whiteness</span> <span class="op">+=</span> <span class="ident">c</span>;
+        <span class="self">self</span>.<span class="ident">blackness</span> <span class="op">+=</span> <span class="ident">c</span>;
     }
 }
 
@@ -1038,7 +1111,7 @@
 {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
         <span class="ident">Hwb</span> {
             <span class="ident">hue</span>: <span class="self">self</span>.<span class="ident">hue</span> <span class="op">-</span> <span class="ident">other</span>.<span class="ident">hue</span>,
             <span class="ident">whiteness</span>: <span class="self">self</span>.<span class="ident">whiteness</span> <span class="op">-</span> <span class="ident">other</span>.<span class="ident">whiteness</span>,
@@ -1055,13 +1128,38 @@
 {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">c</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">c</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
         <span class="ident">Hwb</span> {
             <span class="ident">hue</span>: <span class="self">self</span>.<span class="ident">hue</span> <span class="op">-</span> <span class="ident">c</span>,
             <span class="ident">whiteness</span>: <span class="self">self</span>.<span class="ident">whiteness</span> <span class="op">-</span> <span class="ident">c</span>,
             <span class="ident">blackness</span>: <span class="self">self</span>.<span class="ident">blackness</span> <span class="op">-</span> <span class="ident">c</span>,
             <span class="ident">space</span>: <span class="ident">PhantomData</span>,
         }
+    }
+}
+
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">SubAssign</span><span class="op">&lt;</span><span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="kw">for</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span> <span class="op">+</span> <span class="ident">SubAssign</span>,
+        <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
+{
+    <span class="kw">fn</span> <span class="ident">sub_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">hue</span> <span class="op">-=</span> <span class="ident">other</span>.<span class="ident">hue</span>;
+        <span class="self">self</span>.<span class="ident">whiteness</span> <span class="op">-=</span> <span class="ident">other</span>.<span class="ident">whiteness</span>;
+        <span class="self">self</span>.<span class="ident">blackness</span> <span class="op">-=</span> <span class="ident">other</span>.<span class="ident">blackness</span>;
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">SubAssign</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span> <span class="op">+</span> <span class="ident">SubAssign</span>,
+        <span class="ident">S</span>: <span class="ident">RgbSpace</span>,
+{
+    <span class="kw">fn</span> <span class="ident">sub_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">c</span>: <span class="ident">T</span>) {
+        <span class="self">self</span>.<span class="ident">hue</span> <span class="op">-=</span> <span class="ident">c</span>;
+        <span class="self">self</span>.<span class="ident">whiteness</span> <span class="op">-=</span> <span class="ident">c</span>;
+        <span class="self">self</span>.<span class="ident">blackness</span> <span class="op">-=</span> <span class="ident">c</span>;
     }
 }
 

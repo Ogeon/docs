@@ -487,8 +487,64 @@
 <span id="487">487</span>
 <span id="488">488</span>
 <span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
+<span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
 </pre><pre class="rust ">
-<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">Deref</span>, <span class="ident">DerefMut</span>, <span class="ident">Div</span>, <span class="ident">Mul</span>, <span class="ident">Sub</span>};
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Deref</span>, <span class="ident">DerefMut</span>, <span class="ident">Div</span>, <span class="ident">DivAssign</span>, <span class="ident">Mul</span>, <span class="ident">MulAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
 
 <span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
@@ -727,6 +783,20 @@
     }
 }
 
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">AddAssign</span>, <span class="ident">T</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">AddAssign</span><span class="op">&gt;</span> <span class="ident">AddAssign</span> <span class="kw">for</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">color</span> <span class="op">+=</span> <span class="ident">other</span>.<span class="ident">color</span>;
+        <span class="self">self</span>.<span class="ident">alpha</span> <span class="op">+=</span> <span class="ident">other</span>.<span class="ident">alpha</span>;
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">AddAssign</span> <span class="op">+</span> <span class="ident">Copy</span>, <span class="ident">C</span>: <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">c</span>: <span class="ident">T</span>) {
+        <span class="self">self</span>.<span class="ident">color</span> <span class="op">+=</span> <span class="ident">c</span>;
+        <span class="self">self</span>.<span class="ident">alpha</span> <span class="op">+=</span> <span class="ident">c</span>;
+    }
+}
+
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Sub</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span> <span class="ident">Sub</span> <span class="kw">for</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>::<span class="ident">Output</span>, <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Sub</span><span class="op">&gt;</span>::<span class="ident">Output</span><span class="op">&gt;</span>;
 
@@ -746,6 +816,20 @@
             <span class="ident">color</span>: <span class="self">self</span>.<span class="ident">color</span> <span class="op">-</span> <span class="ident">c</span>.<span class="ident">clone</span>(),
             <span class="ident">alpha</span>: <span class="self">self</span>.<span class="ident">alpha</span> <span class="op">-</span> <span class="ident">c</span>,
         }
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">SubAssign</span>, <span class="ident">T</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">SubAssign</span><span class="op">&gt;</span> <span class="ident">SubAssign</span> <span class="kw">for</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">sub_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">color</span> <span class="op">-=</span> <span class="ident">other</span>.<span class="ident">color</span>;
+        <span class="self">self</span>.<span class="ident">alpha</span> <span class="op">-=</span> <span class="ident">other</span>.<span class="ident">alpha</span>;
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">SubAssign</span> <span class="op">+</span> <span class="ident">Copy</span>, <span class="ident">C</span>: <span class="ident">SubAssign</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="ident">SubAssign</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">sub_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">c</span>: <span class="ident">T</span>) {
+        <span class="self">self</span>.<span class="ident">color</span> <span class="op">-=</span> <span class="ident">c</span>;
+        <span class="self">self</span>.<span class="ident">alpha</span> <span class="op">-=</span> <span class="ident">c</span>;
     }
 }
 
@@ -771,6 +855,20 @@
     }
 }
 
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">MulAssign</span>, <span class="ident">T</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">MulAssign</span><span class="op">&gt;</span> <span class="ident">MulAssign</span> <span class="kw">for</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">mul_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">color</span> <span class="op">*=</span> <span class="ident">other</span>.<span class="ident">color</span>;
+        <span class="self">self</span>.<span class="ident">alpha</span> <span class="op">*=</span> <span class="ident">other</span>.<span class="ident">alpha</span>;
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">MulAssign</span> <span class="op">+</span> <span class="ident">Copy</span>, <span class="ident">C</span>: <span class="ident">MulAssign</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="ident">MulAssign</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">mul_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">c</span>: <span class="ident">T</span>) {
+        <span class="self">self</span>.<span class="ident">color</span> <span class="op">*=</span> <span class="ident">c</span>;
+        <span class="self">self</span>.<span class="ident">alpha</span> <span class="op">*=</span> <span class="ident">c</span>;
+    }
+}
+
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Div</span>, <span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span> <span class="ident">Div</span> <span class="kw">for</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>::<span class="ident">Output</span>, <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Div</span><span class="op">&gt;</span>::<span class="ident">Output</span><span class="op">&gt;</span>;
 
@@ -790,6 +888,20 @@
             <span class="ident">color</span>: <span class="self">self</span>.<span class="ident">color</span> <span class="op">/</span> <span class="ident">c</span>.<span class="ident">clone</span>(),
             <span class="ident">alpha</span>: <span class="self">self</span>.<span class="ident">alpha</span> <span class="op">/</span> <span class="ident">c</span>,
         }
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">DivAssign</span>, <span class="ident">T</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">DivAssign</span><span class="op">&gt;</span> <span class="ident">DivAssign</span> <span class="kw">for</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>) {
+        <span class="self">self</span>.<span class="ident">color</span> <span class="op">/=</span> <span class="ident">other</span>.<span class="ident">color</span>;
+        <span class="self">self</span>.<span class="ident">alpha</span> <span class="op">/=</span> <span class="ident">other</span>.<span class="ident">alpha</span>;
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">DivAssign</span> <span class="op">+</span> <span class="ident">Copy</span>, <span class="ident">C</span>: <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;&gt;</span> <span class="ident">DivAssign</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">div_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">c</span>: <span class="ident">T</span>) {
+        <span class="self">self</span>.<span class="ident">color</span> <span class="op">/=</span> <span class="ident">c</span>;
+        <span class="self">self</span>.<span class="ident">alpha</span> <span class="op">/=</span> <span class="ident">c</span>;
     }
 }
 
