@@ -918,15 +918,6 @@
 <span id="918">918</span>
 <span id="919">919</span>
 <span id="920">920</span>
-<span id="921">921</span>
-<span id="922">922</span>
-<span id="923">923</span>
-<span id="924">924</span>
-<span id="925">925</span>
-<span id="926">926</span>
-<span id="927">927</span>
-<span id="928">928</span>
-<span id="929">929</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
 
@@ -1486,7 +1477,6 @@
     <span class="doccomment">///let rgb: Srgb = Lch::new(50.0, 100.0, -175.0).convert_unclamped_into();</span>
     <span class="doccomment">///assert!(!rgb.is_valid());</span>
     <span class="doccomment">///```</span>
-    <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">convert_unclamped_into</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span>;
 
     <span class="doccomment">///Convert into T, returning ok if the color is inside of its defined range,</span>
@@ -1692,10 +1682,10 @@
     <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
     <span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
     <span class="kw">use</span> <span class="ident">Component</span>;
-    <span class="kw">use</span> <span class="ident">Linear</span>;
+    <span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">linear</span>::<span class="ident">Linear</span>;
     <span class="kw">use</span> <span class="ident">rgb</span>::{<span class="ident">Rgb</span>, <span class="ident">RgbSpace</span>};
     <span class="kw">use</span> <span class="ident">luma</span>::<span class="ident">Luma</span>;
-    <span class="kw">use</span> {<span class="ident">Color</span>, <span class="ident">Hsl</span>, <span class="ident">Hsv</span>, <span class="ident">Hwb</span>, <span class="ident">Lab</span>, <span class="ident">Lch</span>, <span class="ident">Xyz</span>, <span class="ident">Yxy</span>};
+    <span class="kw">use</span> {<span class="ident">Hsl</span>, <span class="ident">Hsv</span>, <span class="ident">Hwb</span>, <span class="ident">Lab</span>, <span class="ident">Lch</span>, <span class="ident">Xyz</span>, <span class="ident">Yxy</span>};
 
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">FromColor</span>, <span class="ident">IntoColor</span>)]</span>
     <span class="attribute">#[<span class="ident">palette_manual_from</span>(<span class="ident">Xyz</span>, <span class="ident">Luma</span> <span class="op">=</span> <span class="string">&quot;from_luma_internal&quot;</span>)]</span>
@@ -1787,9 +1777,6 @@
 
         <span class="kw">let</span> <span class="ident">luma</span>: <span class="ident">Luma</span><span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
         <span class="ident">WithXyz</span>::<span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">luma</span>);
-
-        <span class="kw">let</span> <span class="ident">color</span>: <span class="ident">Color</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
-        <span class="ident">WithXyz</span>::<span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">color</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1805,7 +1792,6 @@
         <span class="kw">let</span> <span class="ident">_hsv</span>: <span class="ident">Hsv</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">_hwb</span>: <span class="ident">Hwb</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">_luma</span>: <span class="ident">Luma</span><span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="ident">_color</span>: <span class="ident">Color</span><span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1836,9 +1822,6 @@
 
         <span class="kw">let</span> <span class="ident">luma</span>: <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span><span class="op">&gt;</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
         <span class="ident">WithoutXyz</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">luma</span>);
-
-        <span class="kw">let</span> <span class="ident">color</span>: <span class="ident">Color</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
-        <span class="ident">WithoutXyz</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">color</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1854,7 +1837,6 @@
         <span class="kw">let</span> <span class="ident">_hsv</span>: <span class="ident">Hsv</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">_hwb</span>: <span class="ident">Hwb</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">_luma</span>: <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span><span class="op">&gt;</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="ident">_color</span>: <span class="ident">Color</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
     }
 }
 </pre>
