@@ -14,16 +14,16 @@ between linear and non-linear RGB.</p>
 enough, this turns RGB into one of the most complex color spaces.</p>
 <p>For example, this does not work:</p>
 
-<pre class="rust rust-example-rendered">
+<div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="comment">// An alias for Rgb&lt;Srgb&gt;, which is what most pictures store.</span>
 <span class="kw">use</span> <span class="ident">palette</span>::<span class="ident">Srgb</span>;
 
 <span class="kw">let</span> <span class="ident">orangeish</span> <span class="op">=</span> <span class="ident">Srgb</span>::<span class="ident">new</span>(<span class="number">1.0</span>, <span class="number">0.6</span>, <span class="number">0.0</span>);
 <span class="kw">let</span> <span class="ident">blueish</span> <span class="op">=</span> <span class="ident">Srgb</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">0.2</span>, <span class="number">1.0</span>);
-<span class="comment">// let whateve_it_becomes = orangeish + blueish;</span></pre>
+<span class="comment">// let whateve_it_becomes = orangeish + blueish;</span></pre></div>
 <p>Instead, they have to be made linear before adding:</p>
 
-<pre class="rust rust-example-rendered">
+<div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="comment">// An alias for Rgb&lt;Srgb&gt;, which is what most pictures store.</span>
 <span class="kw">use</span> <span class="ident">palette</span>::{<span class="ident">Pixel</span>, <span class="ident">Srgb</span>};
 
@@ -34,7 +34,7 @@ enough, this turns RGB into one of the most complex color spaces.</p>
 <span class="comment">// Encode the result back into sRGB and create a byte array</span>
 <span class="kw">let</span> <span class="ident">pixel</span>: [<span class="ident">u8</span>; <span class="number">3</span>] <span class="op">=</span> <span class="ident">Srgb</span>::<span class="ident">from_linear</span>(<span class="ident">whateve_it_becomes</span>)
     .<span class="ident">into_format</span>()
-    .<span class="ident">into_raw</span>();</pre>
+    .<span class="ident">into_raw</span>();</pre></div>
 <h1 id="transparency" class="section-header"><a href="#transparency">Transparency</a></h1>
 <p>There are many cases where pixel transparency is important, but there are
 also many cases where it becomes a dead weight, if it's always stored
@@ -45,7 +45,7 @@ space.</p>
 <p>This approach comes with the extra benefit of allowing operations to
 selectively affect the alpha component:</p>
 
-<pre class="rust rust-example-rendered">
+<div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">palette</span>::{<span class="ident">LinSrgb</span>, <span class="ident">LinSrgba</span>};
 
 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c1</span> <span class="op">=</span> <span class="ident">LinSrgba</span>::<span class="ident">new</span>(<span class="number">1.0</span>, <span class="number">0.5</span>, <span class="number">0.5</span>, <span class="number">0.8</span>);
@@ -53,7 +53,7 @@ selectively affect the alpha component:</p>
 
 <span class="ident">c1</span>.<span class="ident">color</span> <span class="op">=</span> <span class="ident">c1</span>.<span class="ident">color</span> <span class="op">*</span> <span class="ident">c2</span>; <span class="comment">//Leave the alpha as it is</span>
 <span class="ident">c1</span>.<span class="ident">blue</span> <span class="op">+=</span> <span class="number">0.2</span>; <span class="comment">//The color components can easily be accessed</span>
-<span class="ident">c1</span> <span class="op">=</span> <span class="ident">c1</span> <span class="op">*</span> <span class="number">0.5</span>; <span class="comment">//Scale both the color and the alpha</span></pre>
+<span class="ident">c1</span> <span class="op">=</span> <span class="ident">c1</span> <span class="op">*</span> <span class="number">0.5</span>; <span class="comment">//Scale both the color and the alpha</span></pre></div>
 <h1 id="a-basic-workflow" class="section-header"><a href="#a-basic-workflow">A Basic Workflow</a></h1>
 <p>The overall workflow can be divided into three steps, where the first and
 last may be taken care of by other parts of the application:</p>
@@ -77,12 +77,12 @@ converted to Palette colors:</p>
 </li>
 </ul>
 
-<pre class="rust rust-example-rendered">
+<div class="example-wrap"><pre class="rust rust-example-rendered">
 <span class="kw">use</span> <span class="ident">palette</span>::{<span class="ident">Srgb</span>, <span class="ident">Pixel</span>};
 
 <span class="comment">// This works for any (even non-RGB) color type that can have the</span>
 <span class="comment">// buffer element type as component.</span>
-<span class="kw">let</span> <span class="ident">color_buffer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">Srgb</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>] <span class="op">=</span> <span class="ident">Pixel</span>::<span class="ident">from_raw_slice_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">image_buffer</span>);</pre>
+<span class="kw">let</span> <span class="ident">color_buffer</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">Srgb</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>] <span class="op">=</span> <span class="ident">Pixel</span>::<span class="ident">from_raw_slice_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">image_buffer</span>);</pre></div>
 <ul>
 <li>If you are getting your colors from the GPU, in a game or other graphical
 application, or if they are otherwise generated by the application, then
@@ -118,344 +118,57 @@ into some image format. The same rules applies as for the decoding, but the
 process reversed.</p>
 </div><h2 id='reexports' class='section-header'><a href="#reexports">Re-exports</a></h2>
 <table><tr><td><code>pub use gradient::<a class="struct" href="../palette/gradient/struct.Gradient.html" title="struct palette::gradient::Gradient">Gradient</a>;</code></td></tr><tr><td><code>pub use luma::<a class="type" href="../palette/luma/type.GammaLuma.html" title="type palette::luma::GammaLuma">GammaLuma</a>;</code></td></tr><tr><td><code>pub use luma::<a class="type" href="../palette/luma/type.GammaLumaa.html" title="type palette::luma::GammaLumaa">GammaLumaa</a>;</code></td></tr><tr><td><code>pub use luma::<a class="type" href="../palette/luma/type.LinLuma.html" title="type palette::luma::LinLuma">LinLuma</a>;</code></td></tr><tr><td><code>pub use luma::<a class="type" href="../palette/luma/type.LinLumaa.html" title="type palette::luma::LinLumaa">LinLumaa</a>;</code></td></tr><tr><td><code>pub use luma::<a class="type" href="../palette/luma/type.SrgbLuma.html" title="type palette::luma::SrgbLuma">SrgbLuma</a>;</code></td></tr><tr><td><code>pub use luma::<a class="type" href="../palette/luma/type.SrgbLumaa.html" title="type palette::luma::SrgbLumaa">SrgbLumaa</a>;</code></td></tr><tr><td><code>pub use rgb::<a class="type" href="../palette/rgb/type.GammaSrgb.html" title="type palette::rgb::GammaSrgb">GammaSrgb</a>;</code></td></tr><tr><td><code>pub use rgb::<a class="type" href="../palette/rgb/type.GammaSrgba.html" title="type palette::rgb::GammaSrgba">GammaSrgba</a>;</code></td></tr><tr><td><code>pub use rgb::<a class="type" href="../palette/rgb/type.LinSrgb.html" title="type palette::rgb::LinSrgb">LinSrgb</a>;</code></td></tr><tr><td><code>pub use rgb::<a class="type" href="../palette/rgb/type.LinSrgba.html" title="type palette::rgb::LinSrgba">LinSrgba</a>;</code></td></tr><tr><td><code>pub use rgb::<a class="type" href="../palette/rgb/type.Srgb.html" title="type palette::rgb::Srgb">Srgb</a>;</code></td></tr><tr><td><code>pub use rgb::<a class="type" href="../palette/rgb/type.Srgba.html" title="type palette::rgb::Srgba">Srgba</a>;</code></td></tr><tr><td><code>pub use encoding::pixel::<a class="trait" href="../palette/encoding/pixel/trait.Pixel.html" title="trait palette::encoding::pixel::Pixel">Pixel</a>;</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="blend/index.html"
-                                  title='mod palette::blend'>blend</a></td>
-                           <td class='docblock-short'>
-                                <p>Color blending and blending equations.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="chromatic_adaptation/index.html"
-                                  title='mod palette::chromatic_adaptation'>chromatic_adaptation</a></td>
-                           <td class='docblock-short'>
-                                <p>Convert colors from one reference white point to another</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="encoding/index.html"
-                                  title='mod palette::encoding'>encoding</a></td>
-                           <td class='docblock-short'>
-                                <p>Various encoding traits, types and standards.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="float/index.html"
-                                  title='mod palette::float'>float</a></td>
-                           <td class='docblock-short'>
-                                <p>Floating point traits</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="gradient/index.html"
-                                  title='mod palette::gradient'>gradient</a></td>
-                           <td class='docblock-short'>
-                                <p>Types for interpolation between multiple colors.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="luma/index.html"
-                                  title='mod palette::luma'>luma</a></td>
-                           <td class='docblock-short'>
-                                <p>Luminance types.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="named/index.html"
-                                  title='mod palette::named'>named</a></td>
-                           <td class='docblock-short'>
-                                <p>A collection of named color constants. Can be toggled with the <code>&quot;named&quot;</code> and <code>&quot;named_from_str&quot;</code>
+<table><tr class='module-item'><td><a class="mod" href="blend/index.html" title='palette::blend mod'>blend</a></td><td class='docblock-short'><p>Color blending and blending equations.</p>
+</td></tr><tr class='module-item'><td><a class="mod" href="chromatic_adaptation/index.html" title='palette::chromatic_adaptation mod'>chromatic_adaptation</a></td><td class='docblock-short'><p>Convert colors from one reference white point to another</p>
+</td></tr><tr class='module-item'><td><a class="mod" href="encoding/index.html" title='palette::encoding mod'>encoding</a></td><td class='docblock-short'><p>Various encoding traits, types and standards.</p>
+</td></tr><tr class='module-item'><td><a class="mod" href="float/index.html" title='palette::float mod'>float</a></td><td class='docblock-short'><p>Floating point traits</p>
+</td></tr><tr class='module-item'><td><a class="mod" href="gradient/index.html" title='palette::gradient mod'>gradient</a></td><td class='docblock-short'><p>Types for interpolation between multiple colors.</p>
+</td></tr><tr class='module-item'><td><a class="mod" href="luma/index.html" title='palette::luma mod'>luma</a></td><td class='docblock-short'><p>Luminance types.</p>
+</td></tr><tr class='module-item'><td><a class="mod" href="named/index.html" title='palette::named mod'>named</a></td><td class='docblock-short'><p>A collection of named color constants. Can be toggled with the <code>&quot;named&quot;</code> and <code>&quot;named_from_str&quot;</code>
 Cargo features.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="rgb/index.html"
-                                  title='mod palette::rgb'>rgb</a></td>
-                           <td class='docblock-short'>
-                                <p>RGB types, spaces and standards.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="mod" href="white_point/index.html"
-                                  title='mod palette::white_point'>white_point</a></td>
-                           <td class='docblock-short'>
-                                <p>Defines the tristimulus values of the CIE Illuminants.</p>
-
-                           </td>
-                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Alpha.html"
-                                  title='struct palette::Alpha'>Alpha</a></td>
-                           <td class='docblock-short'>
-                                <p>An alpha component wrapper for colors.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Hsl.html"
-                                  title='struct palette::Hsl'>Hsl</a></td>
-                           <td class='docblock-short'>
-                                <p>Linear HSL color space.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Hsv.html"
-                                  title='struct palette::Hsv'>Hsv</a></td>
-                           <td class='docblock-short'>
-                                <p>Linear HSV color space.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Hwb.html"
-                                  title='struct palette::Hwb'>Hwb</a></td>
-                           <td class='docblock-short'>
-                                <p>Linear HWB color space.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Lab.html"
-                                  title='struct palette::Lab'>Lab</a></td>
-                           <td class='docblock-short'>
-                                <p>The CIE L*a*b* (CIELAB) color space.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.LabHue.html"
-                                  title='struct palette::LabHue'>LabHue</a></td>
-                           <td class='docblock-short'>
-                                <p>A hue type for the CIE L*a*b* family of color spaces.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Lch.html"
-                                  title='struct palette::Lch'>Lch</a></td>
-                           <td class='docblock-short'>
-                                <p>CIE L*C*h°, a polar version of <a href="struct.Lab.html">CIE L*a*b*</a>.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.OutOfBounds.html"
-                                  title='struct palette::OutOfBounds'>OutOfBounds</a></td>
-                           <td class='docblock-short'>
-                                <p>The error type for a color conversion that converted a color into a color with invalid values.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.RgbHue.html"
-                                  title='struct palette::RgbHue'>RgbHue</a></td>
-                           <td class='docblock-short'>
-                                <p>A hue type for the RGB family of color spaces.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Xyz.html"
-                                  title='struct palette::Xyz'>Xyz</a></td>
-                           <td class='docblock-short'>
-                                <p>The CIE 1931 XYZ color space.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="struct" href="struct.Yxy.html"
-                                  title='struct palette::Yxy'>Yxy</a></td>
-                           <td class='docblock-short'>
-                                <p>The CIE 1931 Yxy (xyY)  color space.</p>
-
-                           </td>
-                       </tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.Blend.html"
-                                  title='trait palette::Blend'>Blend</a></td>
-                           <td class='docblock-short'>
-                                <p>A trait for colors that can be blended together.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.Component.html"
-                                  title='trait palette::Component'>Component</a></td>
-                           <td class='docblock-short'>
-                                <p>Common trait for color components.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.ComponentWise.html"
-                                  title='trait palette::ComponentWise'>ComponentWise</a></td>
-                           <td class='docblock-short'>
-                                <p>Perform a unary or binary operation on each component of a color.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.ConvertFrom.html"
-                                  title='trait palette::ConvertFrom'>ConvertFrom</a></td>
-                           <td class='docblock-short'>
-                                <p>A trait for converting one color from another.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.ConvertInto.html"
-                                  title='trait palette::ConvertInto'>ConvertInto</a></td>
-                           <td class='docblock-short'>
-                                <p>A trait for converting a color into another.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.FromColor.html"
-                                  title='trait palette::FromColor'>FromColor</a></td>
-                           <td class='docblock-short'>
-                                <p>FromColor provides conversion from the colors.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.GetHue.html"
-                                  title='trait palette::GetHue'>GetHue</a></td>
-                           <td class='docblock-short'>
-                                <p>A trait for colors where a hue may be calculated.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.Hue.html"
-                                  title='trait palette::Hue'>Hue</a></td>
-                           <td class='docblock-short'>
-                                <p>A trait for colors where the hue can be manipulated without conversion.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.IntoColor.html"
-                                  title='trait palette::IntoColor'>IntoColor</a></td>
-                           <td class='docblock-short'>
-                                <p>IntoColor provides conversion to the colors.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.Limited.html"
-                                  title='trait palette::Limited'>Limited</a></td>
-                           <td class='docblock-short'>
-                                <p>A trait for clamping and checking if colors are within their ranges.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.Mix.html"
-                                  title='trait palette::Mix'>Mix</a></td>
-                           <td class='docblock-short'>
-                                <p>A trait for linear color interpolation.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.Saturate.html"
-                                  title='trait palette::Saturate'>Saturate</a></td>
-                           <td class='docblock-short'>
-                                <p>A trait for colors where the saturation (or chroma) can be manipulated
+</td></tr><tr class='module-item'><td><a class="mod" href="rgb/index.html" title='palette::rgb mod'>rgb</a></td><td class='docblock-short'><p>RGB types, spaces and standards.</p>
+</td></tr><tr class='module-item'><td><a class="mod" href="white_point/index.html" title='palette::white_point mod'>white_point</a></td><td class='docblock-short'><p>Defines the tristimulus values of the CIE Illuminants.</p>
+</td></tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table><tr class='module-item'><td><a class="struct" href="struct.Alpha.html" title='palette::Alpha struct'>Alpha</a></td><td class='docblock-short'><p>An alpha component wrapper for colors.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Hsl.html" title='palette::Hsl struct'>Hsl</a></td><td class='docblock-short'><p>Linear HSL color space.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Hsv.html" title='palette::Hsv struct'>Hsv</a></td><td class='docblock-short'><p>Linear HSV color space.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Hwb.html" title='palette::Hwb struct'>Hwb</a></td><td class='docblock-short'><p>Linear HWB color space.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Lab.html" title='palette::Lab struct'>Lab</a></td><td class='docblock-short'><p>The CIE L*a*b* (CIELAB) color space.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.LabHue.html" title='palette::LabHue struct'>LabHue</a></td><td class='docblock-short'><p>A hue type for the CIE L*a*b* family of color spaces.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Lch.html" title='palette::Lch struct'>Lch</a></td><td class='docblock-short'><p>CIE L*C*h°, a polar version of <a href="struct.Lab.html">CIE L*a*b*</a>.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.OutOfBounds.html" title='palette::OutOfBounds struct'>OutOfBounds</a></td><td class='docblock-short'><p>The error type for a color conversion that converted a color into a color with invalid values.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.RgbHue.html" title='palette::RgbHue struct'>RgbHue</a></td><td class='docblock-short'><p>A hue type for the RGB family of color spaces.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Xyz.html" title='palette::Xyz struct'>Xyz</a></td><td class='docblock-short'><p>The CIE 1931 XYZ color space.</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Yxy.html" title='palette::Yxy struct'>Yxy</a></td><td class='docblock-short'><p>The CIE 1931 Yxy (xyY)  color space.</p>
+</td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table><tr class='module-item'><td><a class="trait" href="trait.Blend.html" title='palette::Blend trait'>Blend</a></td><td class='docblock-short'><p>A trait for colors that can be blended together.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.Component.html" title='palette::Component trait'>Component</a></td><td class='docblock-short'><p>Common trait for color components.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.ComponentWise.html" title='palette::ComponentWise trait'>ComponentWise</a></td><td class='docblock-short'><p>Perform a unary or binary operation on each component of a color.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.ConvertFrom.html" title='palette::ConvertFrom trait'>ConvertFrom</a></td><td class='docblock-short'><p>A trait for converting one color from another.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.ConvertInto.html" title='palette::ConvertInto trait'>ConvertInto</a></td><td class='docblock-short'><p>A trait for converting a color into another.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.FromColor.html" title='palette::FromColor trait'>FromColor</a></td><td class='docblock-short'><p>FromColor provides conversion from the colors.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.GetHue.html" title='palette::GetHue trait'>GetHue</a></td><td class='docblock-short'><p>A trait for colors where a hue may be calculated.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.Hue.html" title='palette::Hue trait'>Hue</a></td><td class='docblock-short'><p>A trait for colors where the hue can be manipulated without conversion.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.IntoColor.html" title='palette::IntoColor trait'>IntoColor</a></td><td class='docblock-short'><p>IntoColor provides conversion to the colors.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.Limited.html" title='palette::Limited trait'>Limited</a></td><td class='docblock-short'><p>A trait for clamping and checking if colors are within their ranges.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.Mix.html" title='palette::Mix trait'>Mix</a></td><td class='docblock-short'><p>A trait for linear color interpolation.</p>
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.Saturate.html" title='palette::Saturate trait'>Saturate</a></td><td class='docblock-short'><p>A trait for colors where the saturation (or chroma) can be manipulated
 without conversion.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="trait" href="trait.Shade.html"
-                                  title='trait palette::Shade'>Shade</a></td>
-                           <td class='docblock-short'>
-                                <p>The <code>Shade</code> trait allows a color to be lightened or darkened.</p>
-
-                           </td>
-                       </tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
-<table>
-                       <tr class=' module-item'>
-                           <td><a class="type" href="type.Hsla.html"
-                                  title='type palette::Hsla'>Hsla</a></td>
-                           <td class='docblock-short'>
-                                <p>Linear HSL with an alpha component. See the <a href="struct.Alpha.html#Hsla"><code>Hsla</code> implementation in
+</td></tr><tr class='module-item'><td><a class="trait" href="trait.Shade.html" title='palette::Shade trait'>Shade</a></td><td class='docblock-short'><p>The <code>Shade</code> trait allows a color to be lightened or darkened.</p>
+</td></tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
+<table><tr class='module-item'><td><a class="type" href="type.Hsla.html" title='palette::Hsla type'>Hsla</a></td><td class='docblock-short'><p>Linear HSL with an alpha component. See the <a href="struct.Alpha.html#Hsla"><code>Hsla</code> implementation in
 <code>Alpha</code></a>.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="type" href="type.Hsva.html"
-                                  title='type palette::Hsva'>Hsva</a></td>
-                           <td class='docblock-short'>
-                                <p>Linear HSV with an alpha component. See the <a href="struct.Alpha.html#Hsva"><code>Hsva</code> implementation in
+</td></tr><tr class='module-item'><td><a class="type" href="type.Hsva.html" title='palette::Hsva type'>Hsva</a></td><td class='docblock-short'><p>Linear HSV with an alpha component. See the <a href="struct.Alpha.html#Hsva"><code>Hsva</code> implementation in
 <code>Alpha</code></a>.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="type" href="type.Hwba.html"
-                                  title='type palette::Hwba'>Hwba</a></td>
-                           <td class='docblock-short'>
-                                <p>Linear HWB with an alpha component. See the <a href="struct.Alpha.html#Hwba"><code>Hwba</code> implementation in
+</td></tr><tr class='module-item'><td><a class="type" href="type.Hwba.html" title='palette::Hwba type'>Hwba</a></td><td class='docblock-short'><p>Linear HWB with an alpha component. See the <a href="struct.Alpha.html#Hwba"><code>Hwba</code> implementation in
 <code>Alpha</code></a>.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="type" href="type.Laba.html"
-                                  title='type palette::Laba'>Laba</a></td>
-                           <td class='docblock-short'>
-                                <p>CIE L*a*b* (CIELAB) with an alpha component. See the <a href="struct.Alpha.html#Laba"><code>Laba</code>
+</td></tr><tr class='module-item'><td><a class="type" href="type.Laba.html" title='palette::Laba type'>Laba</a></td><td class='docblock-short'><p>CIE L*a*b* (CIELAB) with an alpha component. See the <a href="struct.Alpha.html#Laba"><code>Laba</code>
 implementation in <code>Alpha</code></a>.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="type" href="type.Lcha.html"
-                                  title='type palette::Lcha'>Lcha</a></td>
-                           <td class='docblock-short'>
-                                <p>CIE L*C*h° with an alpha component. See the <a href="struct.Alpha.html#Lcha"><code>Lcha</code> implementation in
+</td></tr><tr class='module-item'><td><a class="type" href="type.Lcha.html" title='palette::Lcha type'>Lcha</a></td><td class='docblock-short'><p>CIE L*C*h° with an alpha component. See the <a href="struct.Alpha.html#Lcha"><code>Lcha</code> implementation in
 <code>Alpha</code></a>.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="type" href="type.Mat3.html"
-                                  title='type palette::Mat3'>Mat3</a></td>
-                           <td class='docblock-short'>
-                                <p>A 9 element array representing a 3x3 matrix</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="type" href="type.Xyza.html"
-                                  title='type palette::Xyza'>Xyza</a></td>
-                           <td class='docblock-short'>
-                                <p>CIE 1931 XYZ with an alpha component. See the <a href="struct.Alpha.html#Xyza"><code>Xyza</code> implementation in
+</td></tr><tr class='module-item'><td><a class="type" href="type.Mat3.html" title='palette::Mat3 type'>Mat3</a></td><td class='docblock-short'><p>A 9 element array representing a 3x3 matrix</p>
+</td></tr><tr class='module-item'><td><a class="type" href="type.Xyza.html" title='palette::Xyza type'>Xyza</a></td><td class='docblock-short'><p>CIE 1931 XYZ with an alpha component. See the <a href="struct.Alpha.html#Xyza"><code>Xyza</code> implementation in
 <code>Alpha</code></a>.</p>
-
-                           </td>
-                       </tr>
-                       <tr class=' module-item'>
-                           <td><a class="type" href="type.Yxya.html"
-                                  title='type palette::Yxya'>Yxya</a></td>
-                           <td class='docblock-short'>
-                                <p>CIE 1931 Yxy (xyY) with an alpha component. See the <a href="struct.Alpha.html#Yxya"><code>Yxya</code> implementation
+</td></tr><tr class='module-item'><td><a class="type" href="type.Yxya.html" title='palette::Yxya type'>Yxya</a></td><td class='docblock-short'><p>CIE 1931 Yxy (xyY) with an alpha component. See the <a href="struct.Alpha.html#Yxya"><code>Yxya</code> implementation
 in <code>Alpha</code></a>.</p>
-
-                           </td>
-                       </tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../";window.currentCrate = "palette";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../";window.currentCrate = "palette";</script><script src="../aliases.js"></script><script src="../main.js"></script><script defer src="../search-index.js"></script></body></html>
