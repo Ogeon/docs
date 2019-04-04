@@ -918,6 +918,8 @@
 <span id="918">918</span>
 <span id="919">919</span>
 <span id="920">920</span>
+<span id="921">921</span>
+<span id="922">922</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
 
@@ -1273,9 +1275,11 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// use palette::{Component, Hsv, IntoColor, Pixel, Srgb};</span>
 <span class="doccomment">/// use palette::rgb::{Rgb, RgbSpace};</span>
-<span class="doccomment">/// use palette::encoding::Linear;</span>
+<span class="doccomment">/// use palette::encoding::{Linear, self};</span>
 <span class="doccomment">/// use palette::white_point::D65;</span>
 <span class="doccomment">/// use palette::float::Float;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// type Hsv64 = Hsv&lt;encoding::Srgb, f64&gt;;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// /// sRGB, but with a reversed memory layout.</span>
 <span class="doccomment">/// #[derive(Copy, Clone, IntoColor, Pixel)]</span>
@@ -1312,7 +1316,7 @@
 <span class="doccomment">///         0.7353569830524495,</span>
 <span class="doccomment">///         0.5370987304831942,</span>
 <span class="doccomment">///     ];</span>
-<span class="doccomment">///     let hsv = Bgr::from_raw_slice(&amp;buffer)[1].into();</span>
+<span class="doccomment">///     let hsv: Hsv64 = Bgr::from_raw_slice(&amp;buffer)[1].into();</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///     assert_relative_eq!(hsv, Hsv::new(90.0, 1.0, 0.5));</span>
 <span class="doccomment">/// }</span>
@@ -1362,7 +1366,7 @@
 <span class="doccomment">///         blue: 255,</span>
 <span class="doccomment">///         alpha: 0.3,</span>
 <span class="doccomment">///     };</span>
-<span class="doccomment">///     let color = css_color.into();</span>
+<span class="doccomment">///     let color: LinSrgba = css_color.into();</span>
 <span class="doccomment">///</span>
 <span class="doccomment">///     assert_relative_eq!(color, LinSrgba::new(0.496933, 0.0, 1.0, 0.3));</span>
 <span class="doccomment">/// }</span>
