@@ -1209,7 +1209,7 @@
         <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f32</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>());
 
         <span class="kw">if</span> <span class="ident">T</span>::<span class="ident">LIMITED</span> {
-            <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">scaled</span>.<span class="ident">round</span>(), <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
+            <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">Float</span>::<span class="ident">round</span>(<span class="ident">scaled</span>), <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
         } <span class="kw">else</span> {
             <span class="ident">cast</span>(<span class="ident">scaled</span>)
         }
@@ -1227,7 +1227,7 @@
         <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span> <span class="op">*</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>());
 
         <span class="kw">if</span> <span class="ident">T</span>::<span class="ident">LIMITED</span> {
-            <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">scaled</span>.<span class="ident">round</span>(), <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
+            <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">Float</span>::<span class="ident">round</span>(<span class="ident">scaled</span>), <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
         } <span class="kw">else</span> {
             <span class="ident">cast</span>(<span class="ident">scaled</span>)
         }
@@ -1246,7 +1246,7 @@
             <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
 
         <span class="kw">if</span> <span class="ident">T</span>::<span class="ident">LIMITED</span> {
-            <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">scaled</span>.<span class="ident">round</span>(), <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
+            <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">Float</span>::<span class="ident">round</span>(<span class="ident">scaled</span>), <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
         } <span class="kw">else</span> {
             <span class="ident">cast</span>(<span class="ident">scaled</span>)
         }
@@ -1265,7 +1265,7 @@
             <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
 
         <span class="kw">if</span> <span class="ident">T</span>::<span class="ident">LIMITED</span> {
-            <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">scaled</span>.<span class="ident">round</span>(), <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
+            <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">Float</span>::<span class="ident">round</span>(<span class="ident">scaled</span>), <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
         } <span class="kw">else</span> {
             <span class="ident">cast</span>(<span class="ident">scaled</span>)
         }
@@ -1284,7 +1284,7 @@
             <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
 
         <span class="kw">if</span> <span class="ident">T</span>::<span class="ident">LIMITED</span> {
-            <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">scaled</span>.<span class="ident">round</span>(), <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
+            <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">Float</span>::<span class="ident">round</span>(<span class="ident">scaled</span>), <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
         } <span class="kw">else</span> {
             <span class="ident">cast</span>(<span class="ident">scaled</span>)
         }
@@ -1303,7 +1303,7 @@
             <span class="op">*</span> (<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">*</span><span class="self">self</span>) <span class="op">/</span> <span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">f64</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="self">Self</span>::<span class="ident">max_intensity</span>()));
 
         <span class="kw">if</span> <span class="ident">T</span>::<span class="ident">LIMITED</span> {
-            <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">scaled</span>.<span class="ident">round</span>(), <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
+            <span class="ident">cast</span>(<span class="ident">clamp</span>(<span class="ident">Float</span>::<span class="ident">round</span>(<span class="ident">scaled</span>), <span class="number">0.0</span>, <span class="ident">cast</span>(<span class="ident">T</span>::<span class="ident">max_intensity</span>())))
         } <span class="kw">else</span> {
             <span class="ident">cast</span>(<span class="ident">scaled</span>)
         }
