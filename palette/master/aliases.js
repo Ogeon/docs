@@ -1,6 +1,5 @@
 var ALIASES = {};
 ALIASES["approx"] = {};
-ALIASES["libm"] = {};
 ALIASES["num_traits"] = {};
 ALIASES["palette"] = {};
 ALIASES["palette_derive"] = {};
