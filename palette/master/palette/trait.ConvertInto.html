@@ -31,8 +31,8 @@ otherwise an <code>OutOfBounds</code> error is returned which contains the uncla
 <span class="kw">use</span> <span class="ident">palette</span>::{<span class="ident">Srgb</span>, <span class="ident">Hsl</span>};
 
 <span class="kw">let</span> <span class="ident">rgb</span>: <span class="ident">Srgb</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">Hsl</span>::<span class="ident">new</span>(<span class="number">150.0</span>, <span class="number">1.0</span>, <span class="number">1.1</span>).<span class="ident">try_convert_into</span>() {
-    <span class="prelude-val">Ok</span>(<span class="ident">color</span>) <span class="op">=&gt;</span> <span class="ident">color</span>,
-    <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> {
+    <span class="prelude-val">Ok</span>(<span class="ident">color</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">color</span>,
+    <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;Color is out of bounds&quot;</span>);
         <span class="ident">err</span>.<span class="ident">color</span>()
     },

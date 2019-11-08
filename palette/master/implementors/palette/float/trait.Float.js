@@ -6,5 +6,4 @@ implementors["palette"] = [];
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

@@ -6,5 +6,4 @@ implementors["phf_shared"] = [];
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

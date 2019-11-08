@@ -66,21 +66,21 @@
 <span class="attribute">#[<span class="ident">proc_macro_derive</span>(<span class="ident">FromColor</span>,
                     <span class="ident">attributes</span>(<span class="ident">palette_internal</span>, <span class="ident">palette_white_point</span>, <span class="ident">palette_component</span>,
                                <span class="ident">palette_manual_from</span>, <span class="ident">palette_rgb_space</span>, <span class="ident">palette_alpha</span>))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">derive_from_color</span>(<span class="ident">tokens</span>: <span class="ident">TokenStream</span>) <span class="op">-&gt;</span> <span class="ident">TokenStream</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">derive_from_color</span>(<span class="ident">tokens</span>: <span class="ident">TokenStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenStream</span> {
     <span class="ident">convert</span>::<span class="ident">derive_from_color</span>(<span class="ident">tokens</span>)
 }
 
 <span class="attribute">#[<span class="ident">proc_macro_derive</span>(<span class="ident">IntoColor</span>,
                     <span class="ident">attributes</span>(<span class="ident">palette_internal</span>, <span class="ident">palette_white_point</span>, <span class="ident">palette_component</span>,
                                <span class="ident">palette_manual_into</span>, <span class="ident">palette_rgb_space</span>, <span class="ident">palette_alpha</span>))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">derive_into_color</span>(<span class="ident">tokens</span>: <span class="ident">TokenStream</span>) <span class="op">-&gt;</span> <span class="ident">TokenStream</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">derive_into_color</span>(<span class="ident">tokens</span>: <span class="ident">TokenStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenStream</span> {
     <span class="ident">convert</span>::<span class="ident">derive_into_color</span>(<span class="ident">tokens</span>)
 }
 
 <span class="attribute">#[<span class="ident">proc_macro_derive</span>(<span class="ident">Pixel</span>,
                     <span class="ident">attributes</span>(<span class="ident">palette_internal</span>, <span class="ident">palette_unsafe_same_layout_as</span>,
                                <span class="ident">palette_unsafe_zero_sized</span>))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">derive_pixel</span>(<span class="ident">tokens</span>: <span class="ident">TokenStream</span>) <span class="op">-&gt;</span> <span class="ident">TokenStream</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">derive_pixel</span>(<span class="ident">tokens</span>: <span class="ident">TokenStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenStream</span> {
     <span class="ident">encoding</span>::<span class="ident">derive_pixel</span>(<span class="ident">tokens</span>)
 }
 </pre></div>

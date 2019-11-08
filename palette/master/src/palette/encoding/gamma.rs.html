@@ -105,11 +105,11 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">GammaFn</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Number</span> <span class="op">=</span> <span class="ident">F2p2</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">N</span>: <span class="ident">Number</span><span class="op">&gt;</span> <span class="ident">TransferFn</span> <span class="kw">for</span> <span class="ident">GammaFn</span><span class="op">&lt;</span><span class="ident">N</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">into_linear</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">into_linear</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
         <span class="ident">x</span>.<span class="ident">powf</span>(<span class="ident">T</span>::<span class="ident">one</span>() <span class="op">/</span> <span class="ident">cast</span>(<span class="ident">N</span>::<span class="ident">VALUE</span>))
     }
 
-    <span class="kw">fn</span> <span class="ident">from_linear</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">from_linear</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
         <span class="ident">x</span>.<span class="ident">powf</span>(<span class="ident">cast</span>(<span class="ident">N</span>::<span class="ident">VALUE</span>))
     }
 }

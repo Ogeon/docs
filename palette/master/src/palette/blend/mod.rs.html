@@ -142,20 +142,20 @@
         <span class="self">self</span>,
         <span class="ident">source</span>: <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>,
         <span class="ident">destination</span>: <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>;
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>;
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="ident">BlendFunction</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">F</span>
 <span class="kw">where</span>
     <span class="ident">C</span>: <span class="ident">Blend</span><span class="op">&lt;</span><span class="ident">Color</span> <span class="op">=</span> <span class="ident">C</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">ComponentWise</span>,
     <span class="ident">C</span>::<span class="ident">Scalar</span>: <span class="ident">Float</span>,
-    <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>, <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>,
+    <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>, <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>,
 {
     <span class="kw">fn</span> <span class="ident">apply_to</span>(
         <span class="self">self</span>,
         <span class="ident">source</span>: <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>,
         <span class="ident">destination</span>: <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span> {
         (<span class="self">self</span>)(<span class="ident">source</span>, <span class="ident">destination</span>)
     }
 }

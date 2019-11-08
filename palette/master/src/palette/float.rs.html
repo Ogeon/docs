@@ -216,118 +216,118 @@
     <span class="doccomment">/// [module]: index.html</span>
     <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Float</span>: <span class="ident">FloatCore</span> {
         <span class="doccomment">/// `x.sqrt()` computes the square root of `x`.</span>
-        <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+        <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
         <span class="doccomment">/// `x.cbrt()` computes the cube root of `x`.</span>
-        <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+        <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
         <span class="doccomment">/// `x.powf(y)` computes `x` to the power of `y`.</span>
-        <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+        <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
         <span class="doccomment">/// `x.sin()` computes the sine of `x` radians.</span>
-        <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+        <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
         <span class="doccomment">/// `x.cos()` computes the cosine of `x` radians.</span>
-        <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+        <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
         <span class="doccomment">/// `y.atan2(x)` computes the inverse tangent of `y / x`, in the</span>
         <span class="doccomment">/// corresponding quadrant</span>
-        <span class="kw">fn</span> <span class="ident">atan2</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+        <span class="kw">fn</span> <span class="ident">atan2</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
         <span class="doccomment">/// `x.round()` returns the nearest integer to a number. Round half-way cases away from 0.0.</span>
-        <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+        <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;libm&quot;</span>)]</span>
     <span class="kw">impl</span> <span class="ident">Float</span> <span class="kw">for</span> <span class="ident">f32</span> {
-        <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
             <span class="ident">F32Ext</span>::<span class="ident">cbrt</span>(<span class="self">self</span>)
         }
-        <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
             <span class="ident">F32Ext</span>::<span class="ident">sqrt</span>(<span class="self">self</span>)
         }
-        <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
             <span class="ident">F32Ext</span>::<span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">other</span>)
         }
-        <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
             <span class="ident">F32Ext</span>::<span class="ident">sin</span>(<span class="self">self</span>)
         }
-        <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
             <span class="ident">F32Ext</span>::<span class="ident">cos</span>(<span class="self">self</span>)
         }
-        <span class="kw">fn</span> <span class="ident">atan2</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">atan2</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
             <span class="ident">F32Ext</span>::<span class="ident">atan2</span>(<span class="self">self</span>, <span class="ident">other</span>)
         }
-        <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
             <span class="ident">F32Ext</span>::<span class="ident">round</span>(<span class="self">self</span>)
         }
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;libm&quot;</span>)]</span>
     <span class="kw">impl</span> <span class="ident">Float</span> <span class="kw">for</span> <span class="ident">f64</span> {
-        <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
             <span class="ident">F64Ext</span>::<span class="ident">sqrt</span>(<span class="self">self</span>)
         }
-        <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
             <span class="ident">F64Ext</span>::<span class="ident">cbrt</span>(<span class="self">self</span>)
         }
-        <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
             <span class="ident">F64Ext</span>::<span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">other</span>)
         }
-        <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
             <span class="ident">F64Ext</span>::<span class="ident">sin</span>(<span class="self">self</span>)
         }
-        <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
             <span class="ident">F64Ext</span>::<span class="ident">cos</span>(<span class="self">self</span>)
         }
-        <span class="kw">fn</span> <span class="ident">atan2</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">fn</span> <span class="ident">atan2</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
             <span class="ident">F64Ext</span>::<span class="ident">atan2</span>(<span class="self">self</span>, <span class="ident">other</span>)
         }
-        <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
             <span class="ident">F64Ext</span>::<span class="ident">round</span>(<span class="self">self</span>)
         }
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;libm&quot;</span>))]</span>
     <span class="kw">impl</span> <span class="ident">Float</span> <span class="kw">for</span> <span class="ident">f32</span> {
-        <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;need to select a float library for palette&quot;</span>)
         }
-        <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;need to select a float library for palette&quot;</span>)
         }
-        <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;need to select a float library for palette&quot;</span>)
         }
-        <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;need to select a float library for palette&quot;</span>)
         }
-        <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;need to select a float library for palette&quot;</span>)
         }
-        <span class="kw">fn</span> <span class="ident">atan2</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f32</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">atan2</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;need to select a float library for palette&quot;</span>)
         }
-        <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;need to select a float library for palette&quot;</span>)
         }
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;libm&quot;</span>))]</span>
     <span class="kw">impl</span> <span class="ident">Float</span> <span class="kw">for</span> <span class="ident">f64</span> {
-        <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;need to select a float library for palette&quot;</span>)
         }
-        <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;need to select a float library for palette&quot;</span>)
         }
-        <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;need to select a float library for palette&quot;</span>)
         }
-        <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;need to select a float library for palette&quot;</span>)
         }
-        <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;need to select a float library for palette&quot;</span>)
         }
-        <span class="kw">fn</span> <span class="ident">atan2</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f64</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">fn</span> <span class="ident">atan2</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;need to select a float library for palette&quot;</span>)
         }
-        <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">fn</span> <span class="ident">round</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;need to select a float library for palette&quot;</span>)
         }
     }

@@ -6,5 +6,4 @@ implementors["siphasher"] = [];
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

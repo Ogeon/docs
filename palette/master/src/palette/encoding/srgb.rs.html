@@ -72,13 +72,13 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Srgb</span>;
 
 <span class="kw">impl</span> <span class="ident">Primaries</span> <span class="kw">for</span> <span class="ident">Srgb</span> {
-    <span class="kw">fn</span> <span class="ident">red</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">red</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Yxy</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">0.6400</span>), <span class="ident">cast</span>(<span class="number">0.3300</span>), <span class="ident">cast</span>(<span class="number">0.212656</span>))
     }
-    <span class="kw">fn</span> <span class="ident">green</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">green</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Yxy</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">0.3000</span>), <span class="ident">cast</span>(<span class="number">0.6000</span>), <span class="ident">cast</span>(<span class="number">0.715158</span>))
     }
-    <span class="kw">fn</span> <span class="ident">blue</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">blue</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span><span class="op">&gt;</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Yxy</span>::<span class="ident">with_wp</span>(<span class="ident">cast</span>(<span class="number">0.1500</span>), <span class="ident">cast</span>(<span class="number">0.0600</span>), <span class="ident">cast</span>(<span class="number">0.072186</span>))
     }
 }
@@ -99,16 +99,16 @@
 }
 
 <span class="kw">impl</span> <span class="ident">TransferFn</span> <span class="kw">for</span> <span class="ident">Srgb</span> {
-    <span class="kw">fn</span> <span class="ident">into_linear</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
-        <span class="kw">if</span> <span class="ident">x</span> <span class="op">&lt;=</span> <span class="ident">cast</span>(<span class="number">0.04045</span>) {
+    <span class="kw">fn</span> <span class="ident">into_linear</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="kw">if</span> <span class="ident">x</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">cast</span>(<span class="number">0.04045</span>) {
             <span class="ident">x</span> <span class="op">/</span> <span class="ident">cast</span>(<span class="number">12.92</span>)
         } <span class="kw">else</span> {
             ((<span class="ident">x</span> <span class="op">+</span> <span class="ident">cast</span>(<span class="number">0.055</span>)) <span class="op">/</span> <span class="ident">cast</span>(<span class="number">1.055</span>)).<span class="ident">powf</span>(<span class="ident">cast</span>(<span class="number">2.4</span>))
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">from_linear</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
-        <span class="kw">if</span> <span class="ident">x</span> <span class="op">&lt;=</span> <span class="ident">cast</span>(<span class="number">0.0031308</span>) {
+    <span class="kw">fn</span> <span class="ident">from_linear</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="kw">if</span> <span class="ident">x</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">cast</span>(<span class="number">0.0031308</span>) {
             <span class="ident">x</span> <span class="op">*</span> <span class="ident">cast</span>(<span class="number">12.92</span>)
         } <span class="kw">else</span> {
             <span class="ident">x</span>.<span class="ident">powf</span>(<span class="ident">T</span>::<span class="ident">one</span>() <span class="op">/</span> <span class="ident">cast</span>(<span class="number">2.4</span>)) <span class="op">*</span> <span class="ident">cast</span>(<span class="number">1.055</span>) <span class="op">-</span> <span class="ident">cast</span>(<span class="number">0.055</span>)

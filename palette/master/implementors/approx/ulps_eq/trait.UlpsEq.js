@@ -6,5 +6,4 @@ implementors["palette"] = [{text:"impl&lt;C, T&gt; <a class=\"trait\" href=\"app
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()
