@@ -431,6 +431,33 @@
 <span id="431">431</span>
 <span id="432">432</span>
 <span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
+<span id="449">449</span>
+<span id="450">450</span>
+<span id="451">451</span>
+<span id="452">452</span>
+<span id="453">453</span>
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//!Types for interpolation between multiple colors.</span>
 <span class="doccomment">//!</span>
@@ -535,7 +562,8 @@
             <span class="ident">from</span>: <span class="ident">min</span>,
             <span class="ident">diff</span>: <span class="ident">max</span> <span class="op">-</span> <span class="ident">min</span>,
             <span class="ident">len</span>: <span class="ident">n</span>,
-            <span class="ident">current</span>: <span class="number">0</span>,
+            <span class="ident">from_head</span>: <span class="number">0</span>,
+            <span class="ident">from_end</span>: <span class="number">0</span>,
         }
     }
 
@@ -566,16 +594,17 @@
     <span class="ident">from</span>: <span class="ident">C</span>::<span class="ident">Scalar</span>,
     <span class="ident">diff</span>: <span class="ident">C</span>::<span class="ident">Scalar</span>,
     <span class="ident">len</span>: <span class="ident">usize</span>,
-    <span class="ident">current</span>: <span class="ident">usize</span>,
+    <span class="ident">from_head</span>: <span class="ident">usize</span>,
+    <span class="ident">from_end</span>: <span class="ident">usize</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>: <span class="ident">Mix</span> <span class="op">+</span> <span class="ident">Clone</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">Take</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">C</span>;
 
     <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">current</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">len</span> {
-            <span class="kw">let</span> <span class="ident">i</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">from</span> <span class="op">+</span> (<span class="self">self</span>.<span class="ident">diff</span> <span class="op">/</span> <span class="ident">cast</span>(<span class="self">self</span>.<span class="ident">len</span>)) <span class="op">*</span> <span class="ident">cast</span>(<span class="self">self</span>.<span class="ident">current</span>);
-            <span class="self">self</span>.<span class="ident">current</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">from_head</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">from_end</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">len</span> {
+            <span class="kw">let</span> <span class="ident">i</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">from</span> <span class="op">+</span> (<span class="self">self</span>.<span class="ident">diff</span> <span class="op">/</span> <span class="ident">cast</span>(<span class="self">self</span>.<span class="ident">len</span>)) <span class="op">*</span> <span class="ident">cast</span>(<span class="self">self</span>.<span class="ident">from_head</span>);
+            <span class="self">self</span>.<span class="ident">from_head</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">gradient</span>.<span class="ident">get</span>(<span class="ident">i</span>))
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
@@ -583,11 +612,23 @@
     }
 
     <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>) {
-        (<span class="self">self</span>.<span class="ident">len</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">current</span>, <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">len</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">current</span>))
+        (<span class="self">self</span>.<span class="ident">len</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">from_head</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">from_end</span>, <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">len</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">from_head</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">from_end</span>))
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>: <span class="ident">Mix</span> <span class="op">+</span> <span class="ident">Clone</span><span class="op">&gt;</span> <span class="ident">ExactSizeIterator</span> <span class="kw">for</span> <span class="ident">Take</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span><span class="op">&gt;</span> {}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>: <span class="ident">Mix</span> <span class="op">+</span> <span class="ident">Clone</span><span class="op">&gt;</span> <span class="ident">DoubleEndedIterator</span> <span class="kw">for</span> <span class="ident">Take</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">from_head</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">from_end</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">len</span> {
+            <span class="kw">let</span> <span class="ident">i</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">from</span> <span class="op">+</span> (<span class="self">self</span>.<span class="ident">diff</span> <span class="op">/</span> <span class="ident">cast</span>(<span class="self">self</span>.<span class="ident">len</span>)) <span class="op">*</span> <span class="ident">cast</span>(<span class="self">self</span>.<span class="ident">len</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">from_end</span> <span class="op">-</span> <span class="number">1</span>);
+            <span class="self">self</span>.<span class="ident">from_end</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">gradient</span>.<span class="ident">get</span>(<span class="ident">i</span>))
+        } <span class="kw">else</span> {
+            <span class="prelude-val">None</span>
+        }
+    }
+}
 
 <span class="doccomment">///A slice of a Gradient that limits its domain.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
@@ -612,7 +653,8 @@
             <span class="ident">from</span>: <span class="ident">min</span>,
             <span class="ident">diff</span>: <span class="ident">max</span> <span class="op">-</span> <span class="ident">min</span>,
             <span class="ident">len</span>: <span class="ident">n</span>,
-            <span class="ident">current</span>: <span class="number">0</span>,
+            <span class="ident">from_head</span>: <span class="number">0</span>,
+            <span class="ident">from_end</span>: <span class="number">0</span>,
         }
     }
 
@@ -863,6 +905,18 @@
         <span class="kw">for</span> (<span class="ident">t1</span>, <span class="ident">t2</span>) <span class="kw">in</span> <span class="ident">v1</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">v2</span>.<span class="ident">iter</span>()) {
             <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">t1</span>, <span class="ident">t2</span>);
         }
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">iter_rev_eq_rev_iter</span>() {
+        <span class="kw">let</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">Gradient</span>::<span class="ident">new</span>(<span class="macro">vec</span><span class="macro">!</span>[
+            <span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>),
+            <span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>),
+        ]);
+
+        <span class="kw">let</span> <span class="ident">v1</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">g</span>.<span class="ident">take</span>(<span class="number">10</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>().<span class="ident">iter</span>().<span class="ident">rev</span>().<span class="ident">cloned</span>().<span class="ident">collect</span>();
+        <span class="kw">let</span> <span class="ident">v2</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">g</span>.<span class="ident">take</span>(<span class="number">10</span>).<span class="ident">rev</span>().<span class="ident">collect</span>();
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v1</span>, <span class="ident">v2</span>);
     }
 }
 </pre></div>
