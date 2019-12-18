@@ -519,6 +519,9 @@
 <span id="519">519</span>
 <span id="520">520</span>
 <span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//!Types for interpolation between multiple colors.</span>
 <span class="doccomment">//!</span>
@@ -973,21 +976,21 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">range_clamp</span>() {
         <span class="kw">let</span> <span class="ident">range</span>: <span class="ident">Range</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> (<span class="number">0.0</span>..<span class="number">1.0</span>).<span class="ident">into</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">clamp</span>(<span class="op">-</span><span class="number">1.0</span>), <span class="number">0.0</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">clamp</span>(<span class="number">2.0</span>), <span class="number">1.0</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">clamp</span>(<span class="number">0.5</span>), <span class="number">0.5</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">clamp</span>(<span class="op">-</span><span class="number">1.0</span>), <span class="number">0.0</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">clamp</span>(<span class="number">2.0</span>), <span class="number">1.0</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">clamp</span>(<span class="number">0.5</span>), <span class="number">0.5</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">range_constrain</span>() {
         <span class="kw">let</span> <span class="ident">range</span>: <span class="ident">Range</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> (<span class="number">0.0</span>..<span class="number">1.0</span>).<span class="ident">into</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">constrain</span>(<span class="kw-2">&amp;</span>(<span class="op">-</span><span class="number">3.0</span>..<span class="op">-</span><span class="number">5.0</span>).<span class="ident">into</span>()), (<span class="number">0.0</span>..<span class="number">0.0</span>).<span class="ident">into</span>());
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">constrain</span>(<span class="kw-2">&amp;</span>(<span class="op">-</span><span class="number">3.0</span>..<span class="number">0.8</span>).<span class="ident">into</span>()), (<span class="number">0.0</span>..<span class="number">0.8</span>).<span class="ident">into</span>());
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">constrain</span>(<span class="kw-2">&amp;</span>(<span class="op">-</span><span class="number">3.0</span>..<span class="op">-</span><span class="number">5.0</span>).<span class="ident">into</span>()), (<span class="number">0.0</span>..<span class="number">0.0</span>).<span class="ident">into</span>());
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">constrain</span>(<span class="kw-2">&amp;</span>(<span class="op">-</span><span class="number">3.0</span>..<span class="number">0.8</span>).<span class="ident">into</span>()), (<span class="number">0.0</span>..<span class="number">0.8</span>).<span class="ident">into</span>());
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">constrain</span>(<span class="kw-2">&amp;</span>(<span class="number">3.0</span>..<span class="number">5.0</span>).<span class="ident">into</span>()), (<span class="number">1.0</span>..<span class="number">1.0</span>).<span class="ident">into</span>());
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">constrain</span>(<span class="kw-2">&amp;</span>(<span class="number">0.2</span>..<span class="number">5.0</span>).<span class="ident">into</span>()), (<span class="number">0.2</span>..<span class="number">1.0</span>).<span class="ident">into</span>());
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">constrain</span>(<span class="kw-2">&amp;</span>(<span class="number">3.0</span>..<span class="number">5.0</span>).<span class="ident">into</span>()), (<span class="number">1.0</span>..<span class="number">1.0</span>).<span class="ident">into</span>());
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">constrain</span>(<span class="kw-2">&amp;</span>(<span class="number">0.2</span>..<span class="number">5.0</span>).<span class="ident">into</span>()), (<span class="number">0.2</span>..<span class="number">1.0</span>).<span class="ident">into</span>());
 
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">constrain</span>(<span class="kw-2">&amp;</span>(<span class="number">0.2</span>..<span class="number">0.8</span>).<span class="ident">into</span>()), (<span class="number">0.2</span>..<span class="number">0.8</span>).<span class="ident">into</span>());
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">range</span>.<span class="ident">constrain</span>(<span class="kw-2">&amp;</span>(<span class="number">0.2</span>..<span class="number">0.8</span>).<span class="ident">into</span>()), (<span class="number">0.2</span>..<span class="number">0.8</span>).<span class="ident">into</span>());
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1014,12 +1017,15 @@
 
         <span class="kw">let</span> <span class="ident">v1</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">g</span>.<span class="ident">take</span>(<span class="number">10</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>().<span class="ident">iter</span>().<span class="ident">rev</span>().<span class="ident">cloned</span>().<span class="ident">collect</span>();
         <span class="kw">let</span> <span class="ident">v2</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">g</span>.<span class="ident">take</span>(<span class="number">10</span>).<span class="ident">rev</span>().<span class="ident">collect</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v1</span>, <span class="ident">v2</span>);
-
+        <span class="kw">for</span> (<span class="ident">t1</span>, <span class="ident">t2</span>) <span class="kw">in</span> <span class="ident">v1</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">v2</span>.<span class="ident">iter</span>()) {
+            <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">t1</span>, <span class="ident">t2</span>);
+        }
         <span class="comment">//make sure `take(1).rev()` doesn&#39;t produce NaN results</span>
         <span class="kw">let</span> <span class="ident">v1</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">g</span>.<span class="ident">take</span>(<span class="number">1</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>().<span class="ident">iter</span>().<span class="ident">rev</span>().<span class="ident">cloned</span>().<span class="ident">collect</span>();
         <span class="kw">let</span> <span class="ident">v2</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">g</span>.<span class="ident">take</span>(<span class="number">1</span>).<span class="ident">rev</span>().<span class="ident">collect</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v1</span>, <span class="ident">v2</span>);
+        <span class="kw">for</span> (<span class="ident">t1</span>, <span class="ident">t2</span>) <span class="kw">in</span> <span class="ident">v1</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">v2</span>.<span class="ident">iter</span>()) {
+            <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">t1</span>, <span class="ident">t2</span>);
+        }
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -1034,11 +1040,11 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v1</span>.<span class="ident">len</span>(), <span class="number">0</span>);
         <span class="comment">//`Take` produces minimum gradient boundary for n=1</span>
         <span class="kw">let</span> <span class="ident">v1</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">g</span>.<span class="ident">take</span>(<span class="number">1</span>).<span class="ident">collect</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v1</span>[<span class="number">0</span>], <span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>));
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">v1</span>[<span class="number">0</span>], <span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>));
         <span class="comment">//`Take` includes the maximum gradient color</span>
         <span class="kw">let</span> <span class="ident">v1</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">g</span>.<span class="ident">take</span>(<span class="number">5</span>).<span class="ident">collect</span>();
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v1</span>[<span class="number">0</span>], <span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>));
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">v1</span>[<span class="number">4</span>], <span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>));
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">v1</span>[<span class="number">0</span>], <span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">1.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>));
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">v1</span>[<span class="number">4</span>], <span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>));
     }
 }
 </pre></div>

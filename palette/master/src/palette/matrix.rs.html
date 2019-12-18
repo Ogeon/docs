@@ -208,6 +208,12 @@
 <span id="208">208</span>
 <span id="209">209</span>
 <span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//!This module provides simple matrix operations on 3x3 matrix to aid in chromatic adaptation and</span>
 <span class="doccomment">//!conversion calculations.</span>
@@ -359,7 +365,9 @@
         <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> [<span class="number">28.0</span>, <span class="number">33.0</span>, <span class="number">29.0</span>, <span class="number">28.0</span>, <span class="number">31.0</span>, <span class="number">31.0</span>, <span class="number">26.0</span>, <span class="number">33.0</span>, <span class="number">31.0</span>];
 
         <span class="kw">let</span> <span class="ident">computed</span> <span class="op">=</span> <span class="ident">multiply_3x3</span>(<span class="kw-2">&amp;</span><span class="ident">inp1</span>, <span class="kw-2">&amp;</span><span class="ident">inp2</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">expected</span>, <span class="ident">computed</span>)
+        <span class="kw">for</span> (<span class="ident">t1</span>, <span class="ident">t2</span>) <span class="kw">in</span> <span class="ident">expected</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">computed</span>.<span class="ident">iter</span>()) {
+            <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">t1</span>, <span class="ident">t2</span>);
+        }
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -379,7 +387,9 @@
 
         <span class="kw">let</span> <span class="ident">expected</span>: [<span class="ident">f64</span>; <span class="number">9</span>] <span class="op">=</span> [<span class="number">0.2</span>, <span class="number">0.2</span>, <span class="number">0.0</span>, <span class="op">-</span><span class="number">0.2</span>, <span class="number">0.3</span>, <span class="number">1.0</span>, <span class="number">0.2</span>, <span class="op">-</span><span class="number">0.3</span>, <span class="number">0.0</span>];
         <span class="kw">let</span> <span class="ident">computed</span> <span class="op">=</span> <span class="ident">matrix_inverse</span>(<span class="kw-2">&amp;</span><span class="ident">input</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">expected</span>, <span class="ident">computed</span>);
+        <span class="kw">for</span> (<span class="ident">t1</span>, <span class="ident">t2</span>) <span class="kw">in</span> <span class="ident">expected</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">computed</span>.<span class="ident">iter</span>()) {
+            <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">t1</span>, <span class="ident">t2</span>);
+        }
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">matrix_inverse_check_2</span>() {
@@ -387,7 +397,9 @@
 
         <span class="kw">let</span> <span class="ident">expected</span>: [<span class="ident">f64</span>; <span class="number">9</span>] <span class="op">=</span> [<span class="op">-</span><span class="number">1.0</span>, <span class="op">-</span><span class="number">1.0</span>, <span class="number">2.0</span>, <span class="op">-</span><span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">2.0</span>, <span class="number">1.0</span>, <span class="op">-</span><span class="number">2.0</span>];
         <span class="kw">let</span> <span class="ident">computed</span> <span class="op">=</span> <span class="ident">matrix_inverse</span>(<span class="kw-2">&amp;</span><span class="ident">input</span>);
-        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">expected</span>, <span class="ident">computed</span>);
+        <span class="kw">for</span> (<span class="ident">t1</span>, <span class="ident">t2</span>) <span class="kw">in</span> <span class="ident">expected</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">computed</span>.<span class="ident">iter</span>()) {
+            <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">t1</span>, <span class="ident">t2</span>);
+        }
     }
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="attribute">#[<span class="ident">should_panic</span>]</span>
