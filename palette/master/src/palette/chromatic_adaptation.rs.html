@@ -281,6 +281,13 @@
 <span id="281">281</span>
 <span id="282">282</span>
 <span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
+<span id="287">287</span>
+<span id="288">288</span>
+<span id="289">289</span>
+<span id="290">290</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//!Convert colors from one reference white point to another</span>
 <span class="doccomment">//!</span>
@@ -308,9 +315,10 @@
 <span class="doccomment">//!```</span>
 <span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
 
-<span class="kw">use</span> {<span class="ident">cast</span>, <span class="ident">Component</span>, <span class="ident">FromColor</span>, <span class="ident">IntoColor</span>, <span class="ident">Xyz</span>};
+<span class="kw">use</span> <span class="ident">from_f64</span>;
+<span class="kw">use</span> <span class="ident">matrix</span>::{<span class="ident">multiply_3x3</span>, <span class="ident">multiply_xyz</span>, <span class="ident">Mat3</span>};
 <span class="kw">use</span> <span class="ident">white_point</span>::<span class="ident">WhitePoint</span>;
-<span class="kw">use</span> <span class="ident">matrix</span>::{<span class="ident">multiply_xyz</span>, <span class="ident">Mat3</span>, <span class="ident">multiply_3x3</span>};
+<span class="kw">use</span> {<span class="ident">FloatComponent</span>, <span class="ident">FromColor</span>, <span class="ident">IntoColor</span>, <span class="ident">Xyz</span>};
 
 <span class="doccomment">///Chromatic adaptation methods implemented in the library</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Method</span> {
@@ -334,7 +342,7 @@
 <span class="doccomment">///one illuminant to another (Swp -&gt; Dwp)</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">TransformMatrix</span><span class="op">&lt;</span><span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Swp</span>: <span class="ident">WhitePoint</span>,
     <span class="ident">Dwp</span>: <span class="ident">WhitePoint</span>,
 {
@@ -370,7 +378,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">TransformMatrix</span><span class="op">&lt;</span><span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Method</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Swp</span>: <span class="ident">WhitePoint</span>,
     <span class="ident">Dwp</span>: <span class="ident">WhitePoint</span>,
 {
@@ -379,38 +387,44 @@
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
              <span class="ident">Method</span>::<span class="ident">Bradford</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">ConeResponseMatrices</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-                    <span class="ident">ma</span>: [<span class="ident">cast</span>(<span class="number">0.8951000</span>), <span class="ident">cast</span>(<span class="number">0.2664000</span>), <span class="ident">cast</span>(<span class="op">-</span><span class="number">0.1614000</span>),
-                         <span class="ident">cast</span>(<span class="op">-</span><span class="number">0.7502000</span>), <span class="ident">cast</span>(<span class="number">1.7135000</span>), <span class="ident">cast</span>(<span class="number">0.0367000</span>),
-                         <span class="ident">cast</span>(<span class="number">0.0389000</span>), <span class="ident">cast</span>(<span class="op">-</span><span class="number">0.0685000</span>), <span class="ident">cast</span>(<span class="number">1.0296000</span>)
-                         ],
-                    <span class="ident">inv_ma</span>: [<span class="ident">cast</span>(<span class="number">0.9869929</span>), <span class="ident">cast</span>(<span class="op">-</span><span class="number">0.1470543</span>), <span class="ident">cast</span>(<span class="number">0.1599627</span>),
-                             <span class="ident">cast</span>(<span class="number">0.4323053</span>), <span class="ident">cast</span>(<span class="number">0.5183603</span>), <span class="ident">cast</span>(<span class="number">0.0492912</span>),
-                             <span class="ident">cast</span>(<span class="op">-</span><span class="number">0.0085287</span>), <span class="ident">cast</span>(<span class="number">0.0400428</span>), <span class="ident">cast</span>(<span class="number">0.9684867</span>)
-                            ],
+                    <span class="ident">ma</span>: [
+                        <span class="ident">from_f64</span>(<span class="number">0.8951000</span>), <span class="ident">from_f64</span>(<span class="number">0.2664000</span>), <span class="ident">from_f64</span>(<span class="op">-</span><span class="number">0.1614000</span>),
+                        <span class="ident">from_f64</span>(<span class="op">-</span><span class="number">0.7502000</span>), <span class="ident">from_f64</span>(<span class="number">1.7135000</span>), <span class="ident">from_f64</span>(<span class="number">0.0367000</span>),
+                        <span class="ident">from_f64</span>(<span class="number">0.0389000</span>), <span class="ident">from_f64</span>(<span class="op">-</span><span class="number">0.0685000</span>), <span class="ident">from_f64</span>(<span class="number">1.0296000</span>)
+                    ],
+                    <span class="ident">inv_ma</span>: [
+                        <span class="ident">from_f64</span>(<span class="number">0.9869929</span>), <span class="ident">from_f64</span>(<span class="op">-</span><span class="number">0.1470543</span>), <span class="ident">from_f64</span>(<span class="number">0.1599627</span>),
+                        <span class="ident">from_f64</span>(<span class="number">0.4323053</span>), <span class="ident">from_f64</span>(<span class="number">0.5183603</span>), <span class="ident">from_f64</span>(<span class="number">0.0492912</span>),
+                        <span class="ident">from_f64</span>(<span class="op">-</span><span class="number">0.0085287</span>), <span class="ident">from_f64</span>(<span class="number">0.0400428</span>), <span class="ident">from_f64</span>(<span class="number">0.9684867</span>)
+                    ],
                 }
             }
              <span class="ident">Method</span>::<span class="ident">VonKries</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">ConeResponseMatrices</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-                    <span class="ident">ma</span>: [<span class="ident">cast</span>(<span class="number">0.4002400</span>), <span class="ident">cast</span>(<span class="number">0.7076000</span>), <span class="ident">cast</span>(<span class="op">-</span><span class="number">0.0808100</span>),
-                         <span class="ident">cast</span>(<span class="op">-</span><span class="number">0.2263000</span>), <span class="ident">cast</span>(<span class="number">1.1653200</span>), <span class="ident">cast</span>(<span class="number">0.0457000</span>),
-                         <span class="ident">cast</span>(<span class="number">0.0000000</span>), <span class="ident">cast</span>(<span class="number">0.0000000</span>), <span class="ident">cast</span>(<span class="number">0.9182200</span>)
-                         ],
-                    <span class="ident">inv_ma</span>: [<span class="ident">cast</span>(<span class="number">1.8599364</span>), <span class="ident">cast</span>(<span class="op">-</span><span class="number">1.1293816</span>), <span class="ident">cast</span>(<span class="number">0.2198974</span>),
-                             <span class="ident">cast</span>(<span class="number">0.3611914</span>), <span class="ident">cast</span>(<span class="number">0.6388125</span>), <span class="ident">cast</span>(<span class="op">-</span><span class="number">0.0000064</span>),
-                             <span class="ident">cast</span>(<span class="number">0.0000000</span>), <span class="ident">cast</span>(<span class="number">0.0000000</span>), <span class="ident">cast</span>(<span class="number">1.0890636</span>)
-                             ],
+                    <span class="ident">ma</span>: [
+                        <span class="ident">from_f64</span>(<span class="number">0.4002400</span>), <span class="ident">from_f64</span>(<span class="number">0.7076000</span>), <span class="ident">from_f64</span>(<span class="op">-</span><span class="number">0.0808100</span>),
+                        <span class="ident">from_f64</span>(<span class="op">-</span><span class="number">0.2263000</span>), <span class="ident">from_f64</span>(<span class="number">1.1653200</span>), <span class="ident">from_f64</span>(<span class="number">0.0457000</span>),
+                        <span class="ident">from_f64</span>(<span class="number">0.0000000</span>), <span class="ident">from_f64</span>(<span class="number">0.0000000</span>), <span class="ident">from_f64</span>(<span class="number">0.9182200</span>)
+                    ],
+                    <span class="ident">inv_ma</span>: [
+                        <span class="ident">from_f64</span>(<span class="number">1.8599364</span>), <span class="ident">from_f64</span>(<span class="op">-</span><span class="number">1.1293816</span>), <span class="ident">from_f64</span>(<span class="number">0.2198974</span>),
+                        <span class="ident">from_f64</span>(<span class="number">0.3611914</span>), <span class="ident">from_f64</span>(<span class="number">0.6388125</span>), <span class="ident">from_f64</span>(<span class="op">-</span><span class="number">0.0000064</span>),
+                        <span class="ident">from_f64</span>(<span class="number">0.0000000</span>), <span class="ident">from_f64</span>(<span class="number">0.0000000</span>), <span class="ident">from_f64</span>(<span class="number">1.0890636</span>)
+                    ],
                 }
             }
              <span class="ident">Method</span>::<span class="ident">XyzScaling</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">ConeResponseMatrices</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-                    <span class="ident">ma</span>: [<span class="ident">cast</span>(<span class="number">1.0000000</span>), <span class="ident">cast</span>(<span class="number">0.0000000</span>), <span class="ident">cast</span>(<span class="number">0.0000000</span>),
-                         <span class="ident">cast</span>(<span class="number">0.0000000</span>), <span class="ident">cast</span>(<span class="number">1.0000000</span>), <span class="ident">cast</span>(<span class="number">0.0000000</span>),
-                         <span class="ident">cast</span>(<span class="number">0.0000000</span>), <span class="ident">cast</span>(<span class="number">0.0000000</span>), <span class="ident">cast</span>(<span class="number">1.0000000</span>)
-                         ],
-                    <span class="ident">inv_ma</span>: [<span class="ident">cast</span>(<span class="number">1.0000000</span>), <span class="ident">cast</span>(<span class="number">0.0000000</span>), <span class="ident">cast</span>(<span class="number">0.0000000</span>),
-                             <span class="ident">cast</span>(<span class="number">0.0000000</span>), <span class="ident">cast</span>(<span class="number">1.0000000</span>), <span class="ident">cast</span>(<span class="number">0.0000000</span>),
-                             <span class="ident">cast</span>(<span class="number">0.0000000</span>), <span class="ident">cast</span>(<span class="number">0.0000000</span>), <span class="ident">cast</span>(<span class="number">1.0000000</span>)
-                             ],
+                    <span class="ident">ma</span>: [
+                        <span class="ident">from_f64</span>(<span class="number">1.0000000</span>), <span class="ident">from_f64</span>(<span class="number">0.0000000</span>), <span class="ident">from_f64</span>(<span class="number">0.0000000</span>),
+                        <span class="ident">from_f64</span>(<span class="number">0.0000000</span>), <span class="ident">from_f64</span>(<span class="number">1.0000000</span>), <span class="ident">from_f64</span>(<span class="number">0.0000000</span>),
+                        <span class="ident">from_f64</span>(<span class="number">0.0000000</span>), <span class="ident">from_f64</span>(<span class="number">0.0000000</span>), <span class="ident">from_f64</span>(<span class="number">1.0000000</span>)
+                    ],
+                    <span class="ident">inv_ma</span>: [
+                        <span class="ident">from_f64</span>(<span class="number">1.0000000</span>), <span class="ident">from_f64</span>(<span class="number">0.0000000</span>), <span class="ident">from_f64</span>(<span class="number">0.0000000</span>),
+                        <span class="ident">from_f64</span>(<span class="number">0.0000000</span>), <span class="ident">from_f64</span>(<span class="number">1.0000000</span>), <span class="ident">from_f64</span>(<span class="number">0.0000000</span>),
+                        <span class="ident">from_f64</span>(<span class="number">0.0000000</span>), <span class="ident">from_f64</span>(<span class="number">0.0000000</span>), <span class="ident">from_f64</span>(<span class="number">1.0000000</span>)
+                    ],
                 }
             }
         }
@@ -423,7 +437,7 @@
 <span class="doccomment">///Uses the bradford method for conversion by default.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">AdaptFrom</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span>: <span class="ident">Sized</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Swp</span>: <span class="ident">WhitePoint</span>,
     <span class="ident">Dwp</span>: <span class="ident">WhitePoint</span>,
 {
@@ -439,7 +453,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">D</span>, <span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">AdaptFrom</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">D</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Swp</span>: <span class="ident">WhitePoint</span>,
     <span class="ident">Dwp</span>: <span class="ident">WhitePoint</span>,
     <span class="ident">S</span>: <span class="ident">IntoColor</span><span class="op">&lt;</span><span class="ident">Swp</span>, <span class="ident">T</span><span class="op">&gt;</span>,
@@ -459,7 +473,7 @@
 <span class="doccomment">///Uses the bradford method for conversion by default.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">AdaptInto</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span>: <span class="ident">Sized</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Swp</span>: <span class="ident">WhitePoint</span>,
     <span class="ident">Dwp</span>: <span class="ident">WhitePoint</span>,
 {
@@ -475,7 +489,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">D</span>, <span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">AdaptInto</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">S</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span>,
+    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Swp</span>: <span class="ident">WhitePoint</span>,
     <span class="ident">Dwp</span>: <span class="ident">WhitePoint</span>,
     <span class="ident">D</span>: <span class="ident">AdaptFrom</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span>,
@@ -488,9 +502,9 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
 
-    <span class="kw">use</span> <span class="ident">Xyz</span>;
-    <span class="kw">use</span> <span class="ident">white_point</span>::{<span class="ident">D50</span>, <span class="ident">D65</span>, <span class="ident">A</span>, <span class="ident">C</span>};
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">AdaptFrom</span>, <span class="ident">AdaptInto</span>, <span class="ident">Method</span>, <span class="ident">TransformMatrix</span>};
+    <span class="kw">use</span> <span class="ident">white_point</span>::{<span class="ident">A</span>, <span class="ident">C</span>, <span class="ident">D50</span>, <span class="ident">D65</span>};
+    <span class="kw">use</span> <span class="ident">Xyz</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">d65_to_d50_matrix_xyz_scaling</span>() {

@@ -19,27 +19,29 @@
 <span id="19">19</span>
 <span id="20">20</span>
 <span id="21">21</span>
+<span id="22">22</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Various encoding traits, types and standards.</span>
 
 <span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
+<span class="kw">use</span> <span class="ident">FromF64</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">srgb</span>::<span class="ident">Srgb</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">gamma</span>::{<span class="ident">F2p2</span>, <span class="ident">Gamma</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">linear</span>::<span class="ident">Linear</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">srgb</span>::<span class="ident">Srgb</span>;
 
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">srgb</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">gamma</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">linear</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">pixel</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">srgb</span>;
 
 <span class="doccomment">/// A transfer function to and from linear space.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">TransferFn</span> {
     <span class="doccomment">/// Convert the color component `x` from linear space.</span>
-    <span class="kw">fn</span> <span class="ident">from_linear</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>;
+    <span class="kw">fn</span> <span class="ident">from_linear</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">FromF64</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>;
 
     <span class="doccomment">/// Convert the color component `x` into linear space.</span>
-    <span class="kw">fn</span> <span class="ident">into_linear</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>;
+    <span class="kw">fn</span> <span class="ident">into_linear</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">FromF64</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>;
 }
 </pre></div>
 </section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "palette";</script><script src="../../../aliases.js"></script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
