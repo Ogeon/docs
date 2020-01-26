@@ -81,7 +81,7 @@
     );
 
     <span class="kw">if</span> <span class="ident">internal</span> {
-        <span class="macro">quote</span><span class="macro">!</span>{
+        <span class="macro">quote</span><span class="macro">!</span> {
             <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_snake_case</span>, <span class="ident">unused_attributes</span>, <span class="ident">unused_qualifications</span>, <span class="ident">unused_imports</span>)]</span>
             <span class="kw">mod</span> #<span class="ident">const_name</span> {
                 <span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span> <span class="kw">as</span> <span class="ident">_FloatTrait</span>;
@@ -90,7 +90,7 @@
             }
         }
     } <span class="kw">else</span> {
-        <span class="macro">quote</span><span class="macro">!</span>{
+        <span class="macro">quote</span><span class="macro">!</span> {
             <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_snake_case</span>, <span class="ident">unused_attributes</span>, <span class="ident">unused_qualifications</span>, <span class="ident">unused_imports</span>)]</span>
             <span class="kw">mod</span> #<span class="ident">const_name</span> {
                 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">palette</span> <span class="kw">as</span> <span class="ident">_palette</span>;
@@ -108,9 +108,9 @@
         .<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">ident</span><span class="op">|</span> <span class="ident">Ident</span>::<span class="ident">new</span>(<span class="ident">ident</span>, <span class="ident">Span</span>::<span class="ident">call_site</span>()));
 
     <span class="kw">if</span> <span class="ident">internal</span> {
-        <span class="macro">quote</span><span class="macro">!</span>{::#(#<span class="ident">path</span>)::<span class="kw-2">*</span>}
+        <span class="macro">quote</span><span class="macro">!</span> {::#(#<span class="ident">path</span>)::<span class="kw-2">*</span>}
     } <span class="kw">else</span> {
-        <span class="macro">quote</span><span class="macro">!</span>{<span class="self">self</span>::<span class="ident">_palette</span>::#(#<span class="ident">path</span>)::<span class="kw-2">*</span>}
+        <span class="macro">quote</span><span class="macro">!</span> {<span class="self">self</span>::<span class="ident">_palette</span>::#(#<span class="ident">path</span>)::<span class="kw-2">*</span>}
     }
 }
 
@@ -120,9 +120,9 @@
         .<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">ident</span><span class="op">|</span> <span class="ident">Ident</span>::<span class="ident">new</span>(<span class="ident">ident</span>, <span class="ident">Span</span>::<span class="ident">call_site</span>()));
 
     <span class="kw">if</span> <span class="ident">internal</span> {
-        <span class="macro">parse_quote</span><span class="macro">!</span>{::#(#<span class="ident">path</span>)::<span class="kw-2">*</span>}
+        <span class="macro">parse_quote</span><span class="macro">!</span> {::#(#<span class="ident">path</span>)::<span class="kw-2">*</span>}
     } <span class="kw">else</span> {
-        <span class="macro">parse_quote</span><span class="macro">!</span>{<span class="self">self</span>::<span class="ident">_palette</span>::#(#<span class="ident">path</span>)::<span class="kw-2">*</span>}
+        <span class="macro">parse_quote</span><span class="macro">!</span> {<span class="self">self</span>::<span class="ident">_palette</span>::#(#<span class="ident">path</span>)::<span class="kw-2">*</span>}
     }
 }
 
