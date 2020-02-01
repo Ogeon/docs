@@ -102,8 +102,8 @@
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">/// A contiguous sequence of pixel channels with a known length.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// It&#39;s used when converting to and from raw pixel data and should only be implemented for types</span>
-<span class="doccomment">/// with either a suitable in-memory representation.</span>
+<span class="doccomment">/// It&#39;s used when converting to and from raw pixel data and should only be</span>
+<span class="doccomment">/// implemented for types with either a suitable in-memory representation.</span>
 <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">trait</span> <span class="ident">RawPixelSized</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>: <span class="ident">Sized</span> {
     <span class="doccomment">/// The guaranteed number of channels in the sequence.</span>
     <span class="kw">const</span> <span class="ident">CHANNELS</span>: <span class="ident">usize</span>;
@@ -127,8 +127,8 @@
 
 <span class="doccomment">/// A contiguous sequence of pixel channels.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// It&#39;s used when converting to and from raw pixel data and should only be implemented for types</span>
-<span class="doccomment">/// with a suitable in-memory representation.</span>
+<span class="doccomment">/// It&#39;s used when converting to and from raw pixel data and should only be</span>
+<span class="doccomment">/// implemented for types with a suitable in-memory representation.</span>
 <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">trait</span> <span class="ident">RawPixel</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="doccomment">/// The length of the sequence.</span>
     <span class="kw">fn</span> <span class="ident">channels</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span>;

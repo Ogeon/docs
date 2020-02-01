@@ -385,11 +385,11 @@
 <span id="385">385</span>
 <span id="386">386</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
-
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">PartialEq</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
-<span class="kw">use</span> {<span class="ident">from_f64</span>, <span class="ident">FromF64</span>};
+
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">float</span>::<span class="ident">Float</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">from_f64</span>, <span class="ident">FromF64</span>};
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">make_hues</span> {
     ($($(<span class="attribute">#[<span class="macro-nonterminal">$</span><span class="macro-nonterminal">doc</span>:<span class="ident">meta</span>]</span>)<span class="op">+</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>;)<span class="op">+</span>) <span class="op">=</span><span class="op">&gt;</span> ($(
@@ -660,7 +660,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">normalize_angle</span>, <span class="ident">normalize_angle_positive</span>};
-    <span class="kw">use</span> <span class="ident">RgbHue</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">RgbHue</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">normalize_angle_0_360</span>() {

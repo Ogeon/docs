@@ -234,37 +234,47 @@
 <span id="234">234</span>
 <span id="235">235</span>
 <span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//!Pixel encodings and pixel format conversion.</span>
+<span class="doccomment">//! Pixel encodings and pixel format conversion.</span>
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">raw</span>::<span class="kw-2">*</span>;
 <span class="kw">mod</span> <span class="ident">raw</span>;
 
-<span class="doccomment">/// Represents colors that can be serialized and deserialized from raw color components.</span>
+<span class="doccomment">/// Represents colors that can be serialized and deserialized from raw color</span>
+<span class="doccomment">/// components.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// This uses bit by bit conversion, so make sure that anything that implements it can be</span>
-<span class="doccomment">/// represented as a contiguous sequence of a single type `T`. This is most safely done using</span>
-<span class="doccomment">/// `#[derive(Pixel)]`.</span>
+<span class="doccomment">/// This uses bit by bit conversion, so make sure that anything that implements</span>
+<span class="doccomment">/// it can be represented as a contiguous sequence of a single type `T`. This is</span>
+<span class="doccomment">/// most safely done using `#[derive(Pixel)]`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Deriving</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// `Pixel` can be automatically derived. The only requirements are that the type is a `struct`,</span>
-<span class="doccomment">/// that it has a `#[repr(C)]` attribute, and that all of its fields have the same types. It stays</span>
-<span class="doccomment">/// on the conservative side and will show an error if any of those requirements are not fulfilled.</span>
-<span class="doccomment">/// If some fields have different types, but the same memory layout, or are zero-sized, they can be</span>
-<span class="doccomment">/// marked with attributes to show that their types are safe to use.</span>
+<span class="doccomment">/// `Pixel` can be automatically derived. The only requirements are that the</span>
+<span class="doccomment">/// type is a `struct`, that it has a `#[repr(C)]` attribute, and that all of</span>
+<span class="doccomment">/// its fields have the same types. It stays on the conservative side and will</span>
+<span class="doccomment">/// show an error if any of those requirements are not fulfilled. If some fields</span>
+<span class="doccomment">/// have different types, but the same memory layout, or are zero-sized, they</span>
+<span class="doccomment">/// can be marked with attributes to show that their types are safe to use.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Field Attributes</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// * `#[palette_unsafe_same_layout_as = &quot;SomeType&quot;]`: Mark the field as having the same memory</span>
+<span class="doccomment">/// * `#[palette_unsafe_same_layout_as = &quot;SomeType&quot;]`: Mark the field as having</span>
+<span class="doccomment">///   the same memory</span>
 <span class="doccomment">/// layout as `SomeType`.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///   **Unsafety:** corrupt data and undefined behavior may occur if this is not true!</span>
+<span class="doccomment">///   **Unsafety:** corrupt data and undefined behavior may occur if this is not</span>
+<span class="doccomment">/// true!</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// * `#[palette_unsafe_zero_sized]`: Mark the field as being zero-sized, and thus not taking up</span>
+<span class="doccomment">/// * `#[palette_unsafe_zero_sized]`: Mark the field as being zero-sized, and</span>
+<span class="doccomment">///   thus not taking up</span>
 <span class="doccomment">/// any memory space. This means that it can be ignored.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///   **Unsafety:** corrupt data and undefined behavior may occur if this is not true!</span>
+<span class="doccomment">///   **Unsafety:** corrupt data and undefined behavior may occur if this is not</span>
+<span class="doccomment">/// true!</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Examples</span>
 <span class="doccomment">///</span>
@@ -282,20 +292,18 @@
 <span class="doccomment">///     key: f32,</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// fn main() {</span>
-<span class="doccomment">///     let buffer = [0.1, 0.2, 0.3, 0.4];</span>
-<span class="doccomment">///     let color = MyCmyk::from_raw(&amp;buffer);</span>
+<span class="doccomment">/// let buffer = [0.1, 0.2, 0.3, 0.4];</span>
+<span class="doccomment">/// let color = MyCmyk::from_raw(&amp;buffer);</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///     assert_eq!(</span>
-<span class="doccomment">///         color,</span>
-<span class="doccomment">///         &amp;MyCmyk {</span>
-<span class="doccomment">///             cyan: 0.1,</span>
-<span class="doccomment">///             magenta: 0.2,</span>
-<span class="doccomment">///             yellow: 0.3,</span>
-<span class="doccomment">///             key: 0.4,</span>
-<span class="doccomment">///         }</span>
-<span class="doccomment">///     );</span>
-<span class="doccomment">/// }</span>
+<span class="doccomment">/// assert_eq!(</span>
+<span class="doccomment">///     color,</span>
+<span class="doccomment">///     &amp;MyCmyk {</span>
+<span class="doccomment">///         cyan: 0.1,</span>
+<span class="doccomment">///         magenta: 0.2,</span>
+<span class="doccomment">///         yellow: 0.3,</span>
+<span class="doccomment">///         key: 0.4,</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// );</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Heterogenous field types:</span>
@@ -320,20 +328,18 @@
 <span class="doccomment">///     chroma: f32,</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// fn main() {</span>
-<span class="doccomment">///     let buffer = [172.0, 100.0, 0.3];</span>
-<span class="doccomment">///     let color = MyCoolColor::&lt;Srgb&gt;::from_raw(&amp;buffer);</span>
+<span class="doccomment">/// let buffer = [172.0, 100.0, 0.3];</span>
+<span class="doccomment">/// let color = MyCoolColor::&lt;Srgb&gt;::from_raw(&amp;buffer);</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///     assert_eq!(</span>
-<span class="doccomment">///         color,</span>
-<span class="doccomment">///         &amp;MyCoolColor {</span>
-<span class="doccomment">///             hue: 172.0.into(),</span>
-<span class="doccomment">///             lumen: 100.0,</span>
-<span class="doccomment">///             chroma: 0.3,</span>
-<span class="doccomment">///             standard: PhantomData,</span>
-<span class="doccomment">///         }</span>
-<span class="doccomment">///     );</span>
-<span class="doccomment">/// }</span>
+<span class="doccomment">/// assert_eq!(</span>
+<span class="doccomment">///     color,</span>
+<span class="doccomment">///     &amp;MyCoolColor {</span>
+<span class="doccomment">///         hue: 172.0.into(),</span>
+<span class="doccomment">///         lumen: 100.0,</span>
+<span class="doccomment">///         chroma: 0.3,</span>
+<span class="doccomment">///         standard: PhantomData,</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// );</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">trait</span> <span class="ident">Pixel</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>: <span class="ident">Sized</span> {
     <span class="doccomment">/// The number of color channels.</span>
@@ -405,7 +411,8 @@
         <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">slice</span>::<span class="ident">from_raw_parts</span>(<span class="ident">slice</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="self">Self</span>, <span class="ident">new_length</span>) }
     }
 
-    <span class="doccomment">/// Cast a mutable slice of raw color components to a mutable slice of colors.</span>
+    <span class="doccomment">/// Cast a mutable slice of raw color components to a mutable slice of</span>
+    <span class="doccomment">/// colors.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```rust</span>
     <span class="doccomment">/// use palette::{Pixel, Srgb};</span>
@@ -447,7 +454,8 @@
         <span class="kw">unsafe</span> { ::<span class="ident">core</span>::<span class="ident">slice</span>::<span class="ident">from_raw_parts</span>(<span class="ident">slice</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">T</span>, <span class="ident">new_length</span>) }
     }
 
-    <span class="doccomment">/// Cast a mutable slice of colors to a mutable slice of raw color components.</span>
+    <span class="doccomment">/// Cast a mutable slice of colors to a mutable slice of raw color</span>
+    <span class="doccomment">/// components.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```rust</span>
     <span class="doccomment">/// use palette::{Pixel, Srgb};</span>

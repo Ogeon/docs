@@ -142,13 +142,11 @@
 <span id="142">142</span>
 <span id="143">143</span>
 <span id="144">144</span>
-<span id="145">145</span>
-<span id="146">146</span>
-<span id="147">147</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">component</span>::<span class="ident">Component</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">Div</span>};
-<span class="kw">use</span> {<span class="ident">from_f64</span>, <span class="ident">FromF64</span>};
+
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">component</span>::<span class="ident">Component</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">from_f64</span>, <span class="ident">FromF64</span>};
 
 <span class="doccomment">/// A trait for calculating relative contrast between two colors.</span>
 <span class="doccomment">///</span>
@@ -167,19 +165,14 @@
 <span class="doccomment">/// the contrast ratio of two colors in RGB format.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// #[macro_use]</span>
-<span class="doccomment">/// extern crate approx;</span>
-<span class="doccomment">///</span>
 <span class="doccomment">/// use std::str::FromStr;</span>
 <span class="doccomment">/// use palette::{Srgb, RelativeContrast};</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// fn main() {</span>
-<span class="doccomment">///     // the rustdoc &quot;DARK&quot; theme background and text colors</span>
-<span class="doccomment">///     let my_background_rgb: Srgb&lt;f32&gt; = Srgb::from_str(&quot;#353535&quot;).unwrap().into_format();</span>
-<span class="doccomment">///     let my_foreground_rgb = Srgb::from_str(&quot;#ddd&quot;).unwrap().into_format();</span>
+<span class="doccomment">/// // the rustdoc &quot;DARK&quot; theme background and text colors</span>
+<span class="doccomment">/// let my_background_rgb: Srgb&lt;f32&gt; = Srgb::from_str(&quot;#353535&quot;).unwrap().into_format();</span>
+<span class="doccomment">/// let my_foreground_rgb = Srgb::from_str(&quot;#ddd&quot;).unwrap().into_format();</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///     assert!(my_background_rgb.has_enhanced_contrast_text(&amp;my_foreground_rgb));</span>
-<span class="doccomment">/// }</span>
+<span class="doccomment">/// assert!(my_background_rgb.has_enhanced_contrast_text(&amp;my_foreground_rgb));</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The possible range of contrast ratios is from 1:1 to 21:1. There is a</span>
@@ -251,8 +244,9 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
     <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
-    <span class="kw">use</span> <span class="ident">RelativeContrast</span>;
-    <span class="kw">use</span> <span class="ident">Srgb</span>;
+
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">RelativeContrast</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Srgb</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">relative_contrast</span>() {

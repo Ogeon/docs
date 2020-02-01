@@ -683,31 +683,35 @@
 <span id="683">683</span>
 <span id="684">684</span>
 <span id="685">685</span>
+<span id="686">686</span>
+<span id="687">687</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Div</span>, <span class="ident">DivAssign</span>, <span class="ident">Mul</span>, <span class="ident">MulAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
 
-<span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">pixel</span>::<span class="ident">RawPixel</span>;
-<span class="kw">use</span> <span class="ident">luma</span>::<span class="ident">LumaStandard</span>;
-<span class="kw">use</span> <span class="ident">matrix</span>::{<span class="ident">multiply_rgb_to_xyz</span>, <span class="ident">rgb_to_xyz_matrix</span>};
-<span class="kw">use</span> <span class="ident">rgb</span>::{<span class="ident">Rgb</span>, <span class="ident">RgbSpace</span>, <span class="ident">RgbStandard</span>};
-<span class="kw">use</span> <span class="ident">white_point</span>::{<span class="ident">WhitePoint</span>, <span class="ident">D65</span>};
-<span class="kw">use</span> {<span class="ident">clamp</span>, <span class="ident">contrast_ratio</span>, <span class="ident">from_f64</span>};
-<span class="kw">use</span> {<span class="ident">Alpha</span>, <span class="ident">Lab</span>, <span class="ident">Luma</span>, <span class="ident">Yxy</span>};
-<span class="kw">use</span> {<span class="ident">Component</span>, <span class="ident">ComponentWise</span>, <span class="ident">FloatComponent</span>, <span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">RelativeContrast</span>, <span class="ident">Shade</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">encoding</span>::<span class="ident">pixel</span>::<span class="ident">RawPixel</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">luma</span>::<span class="ident">LumaStandard</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">matrix</span>::{<span class="ident">multiply_rgb_to_xyz</span>, <span class="ident">rgb_to_xyz_matrix</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">rgb</span>::{<span class="ident">Rgb</span>, <span class="ident">RgbSpace</span>, <span class="ident">RgbStandard</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>::{<span class="ident">WhitePoint</span>, <span class="ident">D65</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">clamp</span>, <span class="ident">contrast_ratio</span>, <span class="ident">from_f64</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Alpha</span>, <span class="ident">Lab</span>, <span class="ident">Luma</span>, <span class="ident">Yxy</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{
+    <span class="ident">Component</span>, <span class="ident">ComponentWise</span>, <span class="ident">FloatComponent</span>, <span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">RelativeContrast</span>, <span class="ident">Shade</span>,
+};
 
 <span class="doccomment">/// CIE 1931 XYZ with an alpha component. See the [`Xyza` implementation in</span>
 <span class="doccomment">/// `Alpha`](struct.Alpha.html#Xyza).</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Xyza</span><span class="op">&lt;</span><span class="ident">Wp</span> <span class="op">=</span> <span class="ident">D65</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
-<span class="doccomment">///The CIE 1931 XYZ color space.</span>
+<span class="doccomment">/// The CIE 1931 XYZ color space.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///XYZ links the perceived colors to their wavelengths and simply makes it</span>
-<span class="doccomment">///possible to describe the way we see colors as numbers. It&#39;s often used when</span>
-<span class="doccomment">///converting from one color space to an other, and requires a standard</span>
-<span class="doccomment">///illuminant and a standard observer to be defined.</span>
+<span class="doccomment">/// XYZ links the perceived colors to their wavelengths and simply makes it</span>
+<span class="doccomment">/// possible to describe the way we see colors as numbers. It&#39;s often used when</span>
+<span class="doccomment">/// converting from one color space to an other, and requires a standard</span>
+<span class="doccomment">/// illuminant and a standard observer to be defined.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///Conversions and operations on this color space depend on the defined white</span>
+<span class="doccomment">/// Conversions and operations on this color space depend on the defined white</span>
 <span class="doccomment">/// point</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">FromColor</span>, <span class="ident">Pixel</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
@@ -721,21 +725,21 @@
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="doccomment">///X is the scale of what can be seen as a response curve for the cone</span>
-    <span class="doccomment">///cells in the human eye. Its range depends</span>
-    <span class="doccomment">///on the white point and goes from 0.0 to 0.95047 for the default D65.</span>
+    <span class="doccomment">/// X is the scale of what can be seen as a response curve for the cone</span>
+    <span class="doccomment">/// cells in the human eye. Its range depends</span>
+    <span class="doccomment">/// on the white point and goes from 0.0 to 0.95047 for the default D65.</span>
     <span class="kw">pub</span> <span class="ident">x</span>: <span class="ident">T</span>,
 
-    <span class="doccomment">///Y is the luminance of the color, where 0.0 is black and 1.0 is white.</span>
+    <span class="doccomment">/// Y is the luminance of the color, where 0.0 is black and 1.0 is white.</span>
     <span class="kw">pub</span> <span class="ident">y</span>: <span class="ident">T</span>,
 
-    <span class="doccomment">///Z is the scale of what can be seen as the blue stimulation. Its range</span>
+    <span class="doccomment">/// Z is the scale of what can be seen as the blue stimulation. Its range</span>
     <span class="doccomment">/// depends on the white point and goes from 0.0 to 1.08883 for the</span>
     <span class="doccomment">/// defautl D65.</span>
     <span class="kw">pub</span> <span class="ident">z</span>: <span class="ident">T</span>,
 
-    <span class="doccomment">///The white point associated with the color&#39;s illuminant and observer.</span>
-    <span class="doccomment">///D65 for 2 degree observer is used by default.</span>
+    <span class="doccomment">/// The white point associated with the color&#39;s illuminant and observer.</span>
+    <span class="doccomment">/// D65 for 2 degree observer is used by default.</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>, <span class="ident">serde</span>(<span class="ident">skip</span>))]</span>
     <span class="attribute">#[<span class="ident">palette_unsafe_zero_sized</span>]</span>
     <span class="kw">pub</span> <span class="ident">white_point</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">Wp</span><span class="op">&gt;</span>,
@@ -762,12 +766,12 @@
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
 {
-    <span class="doccomment">///CIE XYZ with whtie point D65.</span>
+    <span class="doccomment">/// CIE XYZ with whtie point D65.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">x</span>: <span class="ident">T</span>, <span class="ident">y</span>: <span class="ident">T</span>, <span class="ident">z</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Xyz</span> {
-            <span class="ident">x</span>: <span class="ident">x</span>,
-            <span class="ident">y</span>: <span class="ident">y</span>,
-            <span class="ident">z</span>: <span class="ident">z</span>,
+            <span class="ident">x</span>,
+            <span class="ident">y</span>,
+            <span class="ident">z</span>,
             <span class="ident">white_point</span>: <span class="ident">PhantomData</span>,
         }
     }
@@ -778,12 +782,12 @@
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="doccomment">///CIE XYZ.</span>
+    <span class="doccomment">/// CIE XYZ.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_wp</span>(<span class="ident">x</span>: <span class="ident">T</span>, <span class="ident">y</span>: <span class="ident">T</span>, <span class="ident">z</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Xyz</span> {
-            <span class="ident">x</span>: <span class="ident">x</span>,
-            <span class="ident">y</span>: <span class="ident">y</span>,
-            <span class="ident">z</span>: <span class="ident">z</span>,
+            <span class="ident">x</span>,
+            <span class="ident">y</span>,
+            <span class="ident">z</span>,
             <span class="ident">white_point</span>: <span class="ident">PhantomData</span>,
         }
     }
@@ -805,11 +809,11 @@
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">A</span>: <span class="ident">Component</span>,
 {
-    <span class="doccomment">///CIE Yxy and transparency with white point D65.</span>
+    <span class="doccomment">/// CIE Yxy and transparency with white point D65.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">x</span>: <span class="ident">T</span>, <span class="ident">y</span>: <span class="ident">T</span>, <span class="ident">luma</span>: <span class="ident">T</span>, <span class="ident">alpha</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Alpha</span> {
             <span class="ident">color</span>: <span class="ident">Xyz</span>::<span class="ident">new</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">luma</span>),
-            <span class="ident">alpha</span>: <span class="ident">alpha</span>,
+            <span class="ident">alpha</span>,
         }
     }
 }
@@ -821,11 +825,11 @@
     <span class="ident">A</span>: <span class="ident">Component</span>,
     <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="doccomment">///CIE XYZ and transparency.</span>
+    <span class="doccomment">/// CIE XYZ and transparency.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_wp</span>(<span class="ident">x</span>: <span class="ident">T</span>, <span class="ident">y</span>: <span class="ident">T</span>, <span class="ident">z</span>: <span class="ident">T</span>, <span class="ident">alpha</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Alpha</span> {
             <span class="ident">color</span>: <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">z</span>),
-            <span class="ident">alpha</span>: <span class="ident">alpha</span>,
+            <span class="ident">alpha</span>,
         }
     }
 
@@ -938,7 +942,7 @@
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">rustfmt</span>, <span class="ident">rustfmt_skip</span>)]</span>
+    <span class="attribute">#[<span class="ident">rustfmt</span>::<span class="ident">skip</span>]</span>
     <span class="kw">fn</span> <span class="ident">is_valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="ident">xyz_ref</span>: <span class="self">Self</span> <span class="op">=</span> <span class="ident">Wp</span>::<span class="ident">get_xyz</span>();
         <span class="self">self</span>.<span class="ident">x</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">zero</span>() <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="self">self</span>.<span class="ident">x</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">xyz_ref</span>.<span class="ident">x</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span>
@@ -1301,9 +1305,9 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Xyz</span>;
-    <span class="kw">use</span> <span class="ident">white_point</span>::<span class="ident">D65</span>;
-    <span class="kw">use</span> <span class="ident">LinLuma</span>;
-    <span class="kw">use</span> <span class="ident">LinSrgb</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>::<span class="ident">D65</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">LinLuma</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">LinSrgb</span>;
     <span class="kw">const</span> <span class="ident">X_N</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">0.95047</span>;
     <span class="kw">const</span> <span class="ident">Y_N</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">1.0</span>;
     <span class="kw">const</span> <span class="ident">Z_N</span>: <span class="ident">f64</span> <span class="op">=</span> <span class="number">1.08883</span>;

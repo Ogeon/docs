@@ -912,62 +912,71 @@
 <span id="912">912</span>
 <span id="913">913</span>
 <span id="914">914</span>
+<span id="915">915</span>
+<span id="916">916</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>::{<span class="self">self</span>, <span class="ident">Display</span>, <span class="ident">Formatter</span>};
-<span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">Linear</span>;
-<span class="kw">use</span> <span class="ident">luma</span>::<span class="ident">Luma</span>;
-<span class="kw">use</span> <span class="ident">rgb</span>::{<span class="ident">Rgb</span>, <span class="ident">RgbSpace</span>};
-<span class="kw">use</span> <span class="ident">white_point</span>::{<span class="ident">WhitePoint</span>, <span class="ident">D65</span>};
-<span class="kw">use</span> {<span class="ident">FloatComponent</span>, <span class="ident">Hsl</span>, <span class="ident">Hsv</span>, <span class="ident">Hwb</span>, <span class="ident">Lab</span>, <span class="ident">Lch</span>, <span class="ident">Limited</span>, <span class="ident">Xyz</span>, <span class="ident">Yxy</span>};
+
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">encoding</span>::<span class="ident">Linear</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">luma</span>::<span class="ident">Luma</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">rgb</span>::{<span class="ident">Rgb</span>, <span class="ident">RgbSpace</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>::{<span class="ident">WhitePoint</span>, <span class="ident">D65</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">FloatComponent</span>, <span class="ident">Hsl</span>, <span class="ident">Hsv</span>, <span class="ident">Hwb</span>, <span class="ident">Lab</span>, <span class="ident">Lch</span>, <span class="ident">Limited</span>, <span class="ident">Xyz</span>, <span class="ident">Yxy</span>};
 
 <span class="doccomment">/// FromColor provides conversion from the colors.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// It requires from_xyz, when implemented manually, and derives conversion to other colors as a</span>
-<span class="doccomment">/// default from this. These defaults must be overridden when direct conversion exists between</span>
-<span class="doccomment">/// colors. For example, Luma has direct conversion to LinRgb. So from_rgb conversion for Luma and</span>
-<span class="doccomment">/// from_luma for LinRgb is implemented directly. The from for the same color must override</span>
-<span class="doccomment">/// the default. For example, from_rgb for LinRgb will convert via Xyz which needs to be overridden</span>
-<span class="doccomment">/// with self to avoid the unnecessary conversion.</span>
+<span class="doccomment">/// It requires from_xyz, when implemented manually, and derives conversion to</span>
+<span class="doccomment">/// other colors as a default from this. These defaults must be overridden when</span>
+<span class="doccomment">/// direct conversion exists between colors. For example, Luma has direct</span>
+<span class="doccomment">/// conversion to LinRgb. So from_rgb conversion for Luma and from_luma for</span>
+<span class="doccomment">/// LinRgb is implemented directly. The from for the same color must override</span>
+<span class="doccomment">/// the default. For example, from_rgb for LinRgb will convert via Xyz which</span>
+<span class="doccomment">/// needs to be overridden with self to avoid the unnecessary conversion.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Deriving</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// `FromColor` can be derived in a mostly automatic way. The strength of deriving it is that it</span>
-<span class="doccomment">/// will also derive `From` implementations for all of the `palette` color types. The minimum</span>
-<span class="doccomment">/// requirement is to implement `From&lt;Xyz&gt;`, but it can also be customized to make use of generics</span>
+<span class="doccomment">/// `FromColor` can be derived in a mostly automatic way. The strength of</span>
+<span class="doccomment">/// deriving it is that it will also derive `From` implementations for all of</span>
+<span class="doccomment">/// the `palette` color types. The minimum requirement is to implement</span>
+<span class="doccomment">/// `From&lt;Xyz&gt;`, but it can also be customized to make use of generics</span>
 <span class="doccomment">/// and have other manual implementations.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Item Attributes</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///  * `#[palette_manual_from(Luma, Rgb = &quot;from_rgb_internal&quot;)]`: Specifies the color types that</span>
-<span class="doccomment">/// the the custom color type already has `From` implementations for. Adding `= &quot;function_name&quot;`</span>
-<span class="doccomment">/// tells it to use that function instead of a `From` implementation. The default, when omitted,</span>
-<span class="doccomment">/// is to require `From&lt;Xyz&gt;` to be implemented.</span>
+<span class="doccomment">///  * `#[palette_manual_from(Luma, Rgb = &quot;from_rgb_internal&quot;)]`: Specifies the</span>
+<span class="doccomment">///    color types that</span>
+<span class="doccomment">/// the the custom color type already has `From` implementations for. Adding `=</span>
+<span class="doccomment">/// &quot;function_name&quot;` tells it to use that function instead of a `From`</span>
+<span class="doccomment">/// implementation. The default, when omitted, is to require `From&lt;Xyz&gt;` to be</span>
+<span class="doccomment">/// implemented.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///  * `#[palette_white_point = &quot;some::white_point::Type&quot;]`: Sets the white point type that should</span>
-<span class="doccomment">/// be used when deriving. The default is `D65`, but it may be any other type, including</span>
-<span class="doccomment">/// type parameters.</span>
+<span class="doccomment">///  * `#[palette_white_point = &quot;some::white_point::Type&quot;]`: Sets the white</span>
+<span class="doccomment">///    point type that should</span>
+<span class="doccomment">/// be used when deriving. The default is `D65`, but it may be any other type,</span>
+<span class="doccomment">/// including type parameters.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///  * `#[palette_component = &quot;some::component::Type&quot;]`: Sets the color component type that should</span>
-<span class="doccomment">/// be used when deriving. The default is `f32`, but it may be any other type, including</span>
-<span class="doccomment">/// type parameters.</span>
+<span class="doccomment">///  * `#[palette_component = &quot;some::component::Type&quot;]`: Sets the color</span>
+<span class="doccomment">///    component type that should</span>
+<span class="doccomment">/// be used when deriving. The default is `f32`, but it may be any other type,</span>
+<span class="doccomment">/// including type parameters.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///  * `#[palette_rgb_space = &quot;some::rgb_space::Type&quot;]`: Sets the RGB space type that should</span>
-<span class="doccomment">/// be used when deriving. The default is to either use `Srgb` or a best effort to convert between</span>
-<span class="doccomment">/// spaces, so sometimes it has to be set to a specific type. This does also accept type parameters.</span>
+<span class="doccomment">///  * `#[palette_rgb_space = &quot;some::rgb_space::Type&quot;]`: Sets the RGB space type</span>
+<span class="doccomment">///    that should</span>
+<span class="doccomment">/// be used when deriving. The default is to either use `Srgb` or a best effort</span>
+<span class="doccomment">/// to convert between spaces, so sometimes it has to be set to a specific type.</span>
+<span class="doccomment">/// This does also accept type parameters.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Field Attributes</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///  * `#[palette_alpha]`: Specifies that the field is the color&#39;s transparency value.</span>
+<span class="doccomment">///  * `#[palette_alpha]`: Specifies that the field is the color&#39;s transparency</span>
+<span class="doccomment">///    value.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Examples</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Minimum requirements implementation:</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// #[macro_use]</span>
-<span class="doccomment">/// extern crate palette;</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// use palette::{Srgb, Xyz};</span>
+<span class="doccomment">/// use palette::{FromColor, Srgb, Xyz};</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// /// A custom version of Xyz that stores integer values from 0 to 100.</span>
 <span class="doccomment">/// #[derive(PartialEq, Debug, FromColor)]</span>
@@ -990,30 +999,27 @@
 <span class="doccomment">///     }</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// fn main() {</span>
-<span class="doccomment">///     // Start with an sRGB color and convert it from u8 to f32,</span>
-<span class="doccomment">///     // which is the default component type.</span>
-<span class="doccomment">///     let rgb = Srgb::new(196u8, 238, 155).into_format();</span>
+<span class="doccomment">/// // Start with an sRGB color and convert it from u8 to f32,</span>
+<span class="doccomment">/// // which is the default component type.</span>
+<span class="doccomment">/// let rgb = Srgb::new(196u8, 238, 155).into_format();</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///     // Convert the rgb color to our own format.</span>
-<span class="doccomment">///     let xyz = Xyz100::from(rgb);</span>
+<span class="doccomment">/// // Convert the rgb color to our own format.</span>
+<span class="doccomment">/// let xyz = Xyz100::from(rgb);</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///     assert_eq!(</span>
-<span class="doccomment">///         xyz,</span>
-<span class="doccomment">///         Xyz100 {</span>
-<span class="doccomment">///             x: 59,</span>
-<span class="doccomment">///             y: 75,</span>
-<span class="doccomment">///             z: 42,</span>
-<span class="doccomment">///         }</span>
-<span class="doccomment">///     );</span>
-<span class="doccomment">/// }</span>
+<span class="doccomment">/// assert_eq!(</span>
+<span class="doccomment">///     xyz,</span>
+<span class="doccomment">///     Xyz100 {</span>
+<span class="doccomment">///         x: 59,</span>
+<span class="doccomment">///         y: 75,</span>
+<span class="doccomment">///         z: 42,</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// );</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// With generic components:</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// #[macro_use]</span>
-<span class="doccomment">/// extern crate approx;</span>
+<span class="doccomment">/// use approx::assert_relative_eq;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// use palette::{FloatComponent, FromColor, Hsv, Pixel, Srgb};</span>
 <span class="doccomment">/// use palette::rgb::{Rgb, RgbSpace};</span>
@@ -1053,17 +1059,15 @@
 <span class="doccomment">///     }</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// fn main() {</span>
-<span class="doccomment">///     let mut buffer = vec![0.0f64, 0.0, 0.0, 0.0, 0.0, 0.0];</span>
-<span class="doccomment">///     {</span>
-<span class="doccomment">///         let bgr_buffer = Bgr::from_raw_slice_mut(&amp;mut buffer);</span>
-<span class="doccomment">///         bgr_buffer[1] = Hsv::new(90.0, 1.0, 0.5).into();</span>
-<span class="doccomment">///     }</span>
-<span class="doccomment">///</span>
-<span class="doccomment">///     assert_relative_eq!(buffer[3], 0.0);</span>
-<span class="doccomment">///     assert_relative_eq!(buffer[4], 0.7353569830524495);</span>
-<span class="doccomment">///     assert_relative_eq!(buffer[5], 0.5370987304831942);</span>
+<span class="doccomment">/// let mut buffer = vec![0.0f64, 0.0, 0.0, 0.0, 0.0, 0.0];</span>
+<span class="doccomment">/// {</span>
+<span class="doccomment">///     let bgr_buffer = Bgr::from_raw_slice_mut(&amp;mut buffer);</span>
+<span class="doccomment">///     bgr_buffer[1] = Hsv::new(90.0, 1.0, 0.5).into();</span>
 <span class="doccomment">/// }</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// assert_relative_eq!(buffer[3], 0.0);</span>
+<span class="doccomment">/// assert_relative_eq!(buffer[4], 0.7353569830524495);</span>
+<span class="doccomment">/// assert_relative_eq!(buffer[5], 0.5370987304831942);</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// With alpha component:</span>
@@ -1104,65 +1108,63 @@
 <span class="doccomment">///     }</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// fn main() {</span>
-<span class="doccomment">///     let color = LinSrgba::new(0.5, 0.0, 1.0, 0.3);</span>
-<span class="doccomment">///     let css_color = CssRgb::from(color);</span>
+<span class="doccomment">/// let color = LinSrgba::new(0.5, 0.0, 1.0, 0.3);</span>
+<span class="doccomment">/// let css_color = CssRgb::from(color);</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///     assert_eq!(</span>
-<span class="doccomment">///         css_color,</span>
-<span class="doccomment">///         CssRgb {</span>
-<span class="doccomment">///             red: 188,</span>
-<span class="doccomment">///             green: 0,</span>
-<span class="doccomment">///             blue: 255,</span>
-<span class="doccomment">///             alpha: 0.3,</span>
-<span class="doccomment">///         }</span>
-<span class="doccomment">///     );</span>
-<span class="doccomment">/// }</span>
+<span class="doccomment">/// assert_eq!(</span>
+<span class="doccomment">///     css_color,</span>
+<span class="doccomment">///     CssRgb {</span>
+<span class="doccomment">///         red: 188,</span>
+<span class="doccomment">///         green: 0,</span>
+<span class="doccomment">///         blue: 255,</span>
+<span class="doccomment">///         alpha: 0.3,</span>
+<span class="doccomment">///     }</span>
+<span class="doccomment">/// );</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">FromColor</span><span class="op">&lt;</span><span class="ident">Wp</span> <span class="op">=</span> <span class="ident">D65</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span>: <span class="ident">Sized</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="doccomment">///Convert from XYZ color space</span>
-    <span class="kw">fn</span> <span class="ident">from_xyz</span>(<span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="doccomment">/// Convert from XYZ color space</span>
+    <span class="kw">fn</span> <span class="ident">from_xyz</span>(<span class="ident">inp</span>: <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
 
-    <span class="doccomment">///Convert from Yxy color space</span>
+    <span class="doccomment">/// Convert from Yxy color space</span>
     <span class="kw">fn</span> <span class="ident">from_yxy</span>(<span class="ident">inp</span>: <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from_xyz</span>(<span class="ident">inp</span>.<span class="ident">into_xyz</span>())
     }
 
-    <span class="doccomment">///Convert from L\*a\*b\* color space</span>
+    <span class="doccomment">/// Convert from L\*a\*b\* color space</span>
     <span class="kw">fn</span> <span class="ident">from_lab</span>(<span class="ident">inp</span>: <span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from_xyz</span>(<span class="ident">inp</span>.<span class="ident">into_xyz</span>())
     }
 
-    <span class="doccomment">///Convert from L\*C\*h° color space</span>
+    <span class="doccomment">/// Convert from L\*C\*h° color space</span>
     <span class="kw">fn</span> <span class="ident">from_lch</span>(<span class="ident">inp</span>: <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from_lab</span>(<span class="ident">inp</span>.<span class="ident">into_lab</span>())
     }
 
-    <span class="doccomment">///Convert from RGB color space</span>
+    <span class="doccomment">/// Convert from RGB color space</span>
     <span class="kw">fn</span> <span class="ident">from_rgb</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">inp</span>: <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from_xyz</span>(<span class="ident">inp</span>.<span class="ident">into_xyz</span>())
     }
 
-    <span class="doccomment">///Convert from HSL color space</span>
+    <span class="doccomment">/// Convert from HSL color space</span>
     <span class="kw">fn</span> <span class="ident">from_hsl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">inp</span>: <span class="ident">Hsl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from_rgb</span>(<span class="ident">Rgb</span>::<span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>::<span class="ident">from_hsl</span>(<span class="ident">inp</span>))
     }
 
-    <span class="doccomment">///Convert from HSV color space</span>
+    <span class="doccomment">/// Convert from HSV color space</span>
     <span class="kw">fn</span> <span class="ident">from_hsv</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">inp</span>: <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from_rgb</span>(<span class="ident">Rgb</span>::<span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>::<span class="ident">from_hsv</span>(<span class="ident">inp</span>))
     }
 
-    <span class="doccomment">///Convert from HWB color space</span>
+    <span class="doccomment">/// Convert from HWB color space</span>
     <span class="kw">fn</span> <span class="ident">from_hwb</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">inp</span>: <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from_hsv</span>(<span class="ident">Hsv</span>::<span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>::<span class="ident">from_hwb</span>(<span class="ident">inp</span>))
     }
 
-    <span class="doccomment">///Convert from Luma</span>
+    <span class="doccomment">/// Convert from Luma</span>
     <span class="kw">fn</span> <span class="ident">from_luma</span>(<span class="ident">inp</span>: <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">Wp</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from_xyz</span>(<span class="ident">inp</span>.<span class="ident">into_xyz</span>())
     }
@@ -1170,49 +1172,54 @@
 
 <span class="doccomment">/// IntoColor provides conversion to the colors.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// It requires into_xyz, when implemented manually, and derives conversion to other colors as a</span>
-<span class="doccomment">/// default from this. These defaults must be overridden when direct conversion exists between</span>
-<span class="doccomment">/// colors.</span>
+<span class="doccomment">/// It requires into_xyz, when implemented manually, and derives conversion to</span>
+<span class="doccomment">/// other colors as a default from this. These defaults must be overridden when</span>
+<span class="doccomment">/// direct conversion exists between colors.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Deriving</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// `IntoColor` can be derived in a mostly automatic way. The strength of deriving it is that it</span>
-<span class="doccomment">/// will also derive `Into` implementations for all of the `palette` color types. The minimum</span>
-<span class="doccomment">/// requirement is to implement `Into&lt;Xyz&gt;`, but it can also be customized to make use of generics</span>
+<span class="doccomment">/// `IntoColor` can be derived in a mostly automatic way. The strength of</span>
+<span class="doccomment">/// deriving it is that it will also derive `Into` implementations for all of</span>
+<span class="doccomment">/// the `palette` color types. The minimum requirement is to implement</span>
+<span class="doccomment">/// `Into&lt;Xyz&gt;`, but it can also be customized to make use of generics</span>
 <span class="doccomment">/// and have other manual implementations.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Item Attributes</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///  * `#[palette_manual_into(Luma, Rgb = &quot;into_rgb_internal&quot;)]`: Specifies the color types that</span>
-<span class="doccomment">/// the the custom color type already has `Into` implementations for. Adding `= &quot;function_name&quot;`</span>
-<span class="doccomment">/// tells it to use that function instead of an `Into` implementation. The default, when omitted,</span>
-<span class="doccomment">/// is to require `Into&lt;Xyz&gt;` to be implemented.</span>
+<span class="doccomment">///  * `#[palette_manual_into(Luma, Rgb = &quot;into_rgb_internal&quot;)]`: Specifies the</span>
+<span class="doccomment">///    color types that</span>
+<span class="doccomment">/// the the custom color type already has `Into` implementations for. Adding `=</span>
+<span class="doccomment">/// &quot;function_name&quot;` tells it to use that function instead of an `Into`</span>
+<span class="doccomment">/// implementation. The default, when omitted, is to require `Into&lt;Xyz&gt;` to be</span>
+<span class="doccomment">/// implemented.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///  * `#[palette_white_point = &quot;some::white_point::Type&quot;]`: Sets the white point type that should</span>
-<span class="doccomment">/// be used when deriving. The default is `D65`, but it may be any other type, including</span>
-<span class="doccomment">/// type parameters.</span>
+<span class="doccomment">///  * `#[palette_white_point = &quot;some::white_point::Type&quot;]`: Sets the white</span>
+<span class="doccomment">///    point type that should</span>
+<span class="doccomment">/// be used when deriving. The default is `D65`, but it may be any other type,</span>
+<span class="doccomment">/// including type parameters.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///  * `#[palette_component = &quot;some::component::Type&quot;]`: Sets the color component type that should</span>
-<span class="doccomment">/// be used when deriving. The default is `f32`, but it may be any other type, including</span>
-<span class="doccomment">/// type parameters.</span>
+<span class="doccomment">///  * `#[palette_component = &quot;some::component::Type&quot;]`: Sets the color</span>
+<span class="doccomment">///    component type that should</span>
+<span class="doccomment">/// be used when deriving. The default is `f32`, but it may be any other type,</span>
+<span class="doccomment">/// including type parameters.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///  * `#[palette_rgb_space = &quot;some::rgb_space::Type&quot;]`: Sets the RGB space type that should</span>
-<span class="doccomment">/// be used when deriving. The default is to either use `Srgb` or a best effort to convert between</span>
-<span class="doccomment">/// spaces, so sometimes it has to be set to a specific type. This does also accept type parameters.</span>
+<span class="doccomment">///  * `#[palette_rgb_space = &quot;some::rgb_space::Type&quot;]`: Sets the RGB space type</span>
+<span class="doccomment">///    that should</span>
+<span class="doccomment">/// be used when deriving. The default is to either use `Srgb` or a best effort</span>
+<span class="doccomment">/// to convert between spaces, so sometimes it has to be set to a specific type.</span>
+<span class="doccomment">/// This does also accept type parameters.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Field Attributes</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///  * `#[palette_alpha]`: Specifies that the field is the color&#39;s transparency value.</span>
+<span class="doccomment">///  * `#[palette_alpha]`: Specifies that the field is the color&#39;s transparency</span>
+<span class="doccomment">///    value.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ## Examples</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Minimum requirements implementation:</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// #[macro_use]</span>
-<span class="doccomment">/// extern crate palette;</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// use palette::{Srgb, Xyz};</span>
+<span class="doccomment">/// use palette::{IntoColor, Srgb, Xyz};</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// /// A custom version of Xyz that stores integer values from 0 to 100.</span>
 <span class="doccomment">/// #[derive(PartialEq, Debug, IntoColor)]</span>
@@ -1234,26 +1241,23 @@
 <span class="doccomment">///     }</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// fn main() {</span>
-<span class="doccomment">///     // Start with an Xyz100 color.</span>
-<span class="doccomment">///     let xyz = Xyz100 {</span>
-<span class="doccomment">///         x: 59,</span>
-<span class="doccomment">///         y: 75,</span>
-<span class="doccomment">///         z: 42,</span>
-<span class="doccomment">///     };</span>
+<span class="doccomment">/// // Start with an Xyz100 color.</span>
+<span class="doccomment">/// let xyz = Xyz100 {</span>
+<span class="doccomment">///     x: 59,</span>
+<span class="doccomment">///     y: 75,</span>
+<span class="doccomment">///     z: 42,</span>
+<span class="doccomment">/// };</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///     // Convert the color to sRGB.</span>
-<span class="doccomment">///     let rgb: Srgb = xyz.into();</span>
+<span class="doccomment">/// // Convert the color to sRGB.</span>
+<span class="doccomment">/// let rgb: Srgb = xyz.into();</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///     assert_eq!(rgb.into_format(), Srgb::new(196u8, 238, 154));</span>
-<span class="doccomment">/// }</span>
+<span class="doccomment">/// assert_eq!(rgb.into_format(), Srgb::new(196u8, 238, 154));</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// With generic components:</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// #[macro_use]</span>
-<span class="doccomment">/// extern crate approx;</span>
+<span class="doccomment">/// use approx::assert_relative_eq;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// use palette::{FloatComponent, Hsv, IntoColor, Pixel, Srgb};</span>
 <span class="doccomment">/// use palette::rgb::{Rgb, RgbSpace};</span>
@@ -1288,26 +1292,23 @@
 <span class="doccomment">///     }</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// fn main() {</span>
-<span class="doccomment">///     let buffer = vec![</span>
-<span class="doccomment">///         0.0f64,</span>
-<span class="doccomment">///         0.0,</span>
-<span class="doccomment">///         0.0,</span>
-<span class="doccomment">///         0.0,</span>
-<span class="doccomment">///         0.7353569830524495,</span>
-<span class="doccomment">///         0.5370987304831942,</span>
-<span class="doccomment">///     ];</span>
-<span class="doccomment">///     let hsv: Hsv64 = Bgr::from_raw_slice(&amp;buffer)[1].into();</span>
+<span class="doccomment">/// let buffer = vec![</span>
+<span class="doccomment">///     0.0f64,</span>
+<span class="doccomment">///     0.0,</span>
+<span class="doccomment">///     0.0,</span>
+<span class="doccomment">///     0.0,</span>
+<span class="doccomment">///     0.7353569830524495,</span>
+<span class="doccomment">///     0.5370987304831942,</span>
+<span class="doccomment">/// ];</span>
+<span class="doccomment">/// let hsv: Hsv64 = Bgr::from_raw_slice(&amp;buffer)[1].into();</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///     assert_relative_eq!(hsv, Hsv::new(90.0, 1.0, 0.5));</span>
-<span class="doccomment">/// }</span>
+<span class="doccomment">/// assert_relative_eq!(hsv, Hsv::new(90.0, 1.0, 0.5));</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// With alpha component:</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// #[macro_use]</span>
-<span class="doccomment">/// extern crate approx;</span>
+<span class="doccomment">/// use approx::assert_relative_eq;</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// use palette::{IntoColor, LinSrgba, Srgb};</span>
 <span class="doccomment">/// use palette::rgb::{Rgb, RgbSpace};</span>
@@ -1338,84 +1339,83 @@
 <span class="doccomment">///     }</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// fn main() {</span>
-<span class="doccomment">///     let css_color = CssRgb {</span>
-<span class="doccomment">///         red: 187,</span>
-<span class="doccomment">///         green: 0,</span>
-<span class="doccomment">///         blue: 255,</span>
-<span class="doccomment">///         alpha: 0.3,</span>
-<span class="doccomment">///     };</span>
-<span class="doccomment">///     let color: LinSrgba = css_color.into();</span>
+<span class="doccomment">/// let css_color = CssRgb {</span>
+<span class="doccomment">///     red: 187,</span>
+<span class="doccomment">///     green: 0,</span>
+<span class="doccomment">///     blue: 255,</span>
+<span class="doccomment">///     alpha: 0.3,</span>
+<span class="doccomment">/// };</span>
+<span class="doccomment">/// let color: LinSrgba = css_color.into();</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///     assert_relative_eq!(color, LinSrgba::new(0.496933, 0.0, 1.0, 0.3));</span>
-<span class="doccomment">/// }</span>
+<span class="doccomment">/// assert_relative_eq!(color, LinSrgba::new(0.496933, 0.0, 1.0, 0.3));</span>
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">IntoColor</span><span class="op">&lt;</span><span class="ident">Wp</span> <span class="op">=</span> <span class="ident">D65</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span>: <span class="ident">Sized</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="doccomment">///Convert into XYZ space</span>
+    <span class="doccomment">/// Convert into XYZ space</span>
     <span class="kw">fn</span> <span class="ident">into_xyz</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
-    <span class="doccomment">///Convert into Yxy color space</span>
+    <span class="doccomment">/// Convert into Yxy color space</span>
     <span class="kw">fn</span> <span class="ident">into_yxy</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Yxy</span>::<span class="ident">from_xyz</span>(<span class="self">self</span>.<span class="ident">into_xyz</span>())
     }
 
-    <span class="doccomment">///Convert into L\*a\*b\* color space</span>
+    <span class="doccomment">/// Convert into L\*a\*b\* color space</span>
     <span class="kw">fn</span> <span class="ident">into_lab</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Lab</span>::<span class="ident">from_xyz</span>(<span class="self">self</span>.<span class="ident">into_xyz</span>())
     }
 
-    <span class="doccomment">///Convert into L\*C\*h° color space</span>
+    <span class="doccomment">/// Convert into L\*C\*h° color space</span>
     <span class="kw">fn</span> <span class="ident">into_lch</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Lch</span>::<span class="ident">from_lab</span>(<span class="self">self</span>.<span class="ident">into_lab</span>())
     }
 
-    <span class="doccomment">///Convert into RGB color space.</span>
+    <span class="doccomment">/// Convert into RGB color space.</span>
     <span class="kw">fn</span> <span class="ident">into_rgb</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Rgb</span>::<span class="ident">from_xyz</span>(<span class="self">self</span>.<span class="ident">into_xyz</span>())
     }
 
-    <span class="doccomment">///Convert into HSL color space</span>
+    <span class="doccomment">/// Convert into HSL color space</span>
     <span class="kw">fn</span> <span class="ident">into_hsl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Hsl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">rgb</span>: <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_rgb</span>();
         <span class="ident">Hsl</span>::<span class="ident">from_rgb</span>(<span class="ident">rgb</span>)
     }
 
-    <span class="doccomment">///Convert into HSV color space</span>
+    <span class="doccomment">/// Convert into HSV color space</span>
     <span class="kw">fn</span> <span class="ident">into_hsv</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">rgb</span>: <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_rgb</span>();
         <span class="ident">Hsv</span>::<span class="ident">from_rgb</span>(<span class="ident">rgb</span>)
     }
 
-    <span class="doccomment">///Convert into HWB color space</span>
+    <span class="doccomment">/// Convert into HWB color space</span>
     <span class="kw">fn</span> <span class="ident">into_hwb</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> <span class="ident">Wp</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">hsv</span>: <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_hsv</span>();
         <span class="ident">Hwb</span>::<span class="ident">from_hsv</span>(<span class="ident">hsv</span>)
     }
 
-    <span class="doccomment">///Convert into Luma</span>
+    <span class="doccomment">/// Convert into Luma</span>
     <span class="kw">fn</span> <span class="ident">into_luma</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">Wp</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Luma</span>::<span class="ident">from_xyz</span>(<span class="self">self</span>.<span class="ident">into_xyz</span>())
     }
 }
 
-<span class="doccomment">///The error type for a color conversion that converted a color into a color with invalid values.</span>
+<span class="doccomment">/// The error type for a color conversion that converted a color into a color</span>
+<span class="doccomment">/// with invalid values.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OutOfBounds</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="ident">color</span>: <span class="ident">T</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">OutOfBounds</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="doccomment">///Create a new error wrapping a color</span>
+    <span class="doccomment">/// Create a new error wrapping a color</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">color</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">OutOfBounds</span> { <span class="ident">color</span> }
     }
 
-    <span class="doccomment">///Consume this error and return the wrapped color</span>
+    <span class="doccomment">/// Consume this error and return the wrapped color</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">color</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
         <span class="self">self</span>.<span class="ident">color</span>
@@ -1435,98 +1435,100 @@
     }
 }
 
-<span class="doccomment">///A trait for converting a color into another.</span>
+<span class="doccomment">/// A trait for converting a color into another.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ConvertInto</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="doccomment">///Convert into T with values clamped to the color defined bounds</span>
+    <span class="doccomment">/// Convert into T with values clamped to the color defined bounds</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///```</span>
-    <span class="doccomment">///use palette::ConvertInto;</span>
-    <span class="doccomment">///use palette::Limited;</span>
-    <span class="doccomment">///use palette::{Srgb, Lch};</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use palette::ConvertInto;</span>
+    <span class="doccomment">/// use palette::Limited;</span>
+    <span class="doccomment">/// use palette::{Srgb, Lch};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///let rgb: Srgb = Lch::new(50.0, 100.0, -175.0).convert_into();</span>
-    <span class="doccomment">///assert!(rgb.is_valid());</span>
-    <span class="doccomment">///```</span>
+    <span class="doccomment">/// let rgb: Srgb = Lch::new(50.0, 100.0, -175.0).convert_into();</span>
+    <span class="doccomment">/// assert!(rgb.is_valid());</span>
+    <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">convert_into</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>;
 
-    <span class="doccomment">///Convert into T. The resulting color might be invalid in its color space</span>
+    <span class="doccomment">/// Convert into T. The resulting color might be invalid in its color space</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///```</span>
-    <span class="doccomment">///use palette::ConvertInto;</span>
-    <span class="doccomment">///use palette::Limited;</span>
-    <span class="doccomment">///use palette::{Srgb, Lch};</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use palette::ConvertInto;</span>
+    <span class="doccomment">/// use palette::Limited;</span>
+    <span class="doccomment">/// use palette::{Srgb, Lch};</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///let rgb: Srgb = Lch::new(50.0, 100.0, -175.0).convert_unclamped_into();</span>
-    <span class="doccomment">///assert!(!rgb.is_valid());</span>
-    <span class="doccomment">///```</span>
+    <span class="doccomment">/// let rgb: Srgb = Lch::new(50.0, 100.0, -175.0).convert_unclamped_into();</span>
+    <span class="doccomment">/// assert!(!rgb.is_valid());</span>
+    <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">convert_unclamped_into</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>;
 
-    <span class="doccomment">///Convert into T, returning ok if the color is inside of its defined range,</span>
-    <span class="doccomment">///otherwise an `OutOfBounds` error is returned which contains the unclamped color.</span>
+    <span class="doccomment">/// Convert into T, returning ok if the color is inside of its defined</span>
+    <span class="doccomment">/// range, otherwise an `OutOfBounds` error is returned which contains</span>
+    <span class="doccomment">/// the unclamped color.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///```</span>
-    <span class="doccomment">///use palette::ConvertInto;</span>
-    <span class="doccomment">///use palette::{Srgb, Hsl};</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use palette::ConvertInto;</span>
+    <span class="doccomment">/// use palette::{Srgb, Hsl};</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///let rgb: Srgb = match Hsl::new(150.0, 1.0, 1.1).try_convert_into() {</span>
+    <span class="doccomment">/// let rgb: Srgb = match Hsl::new(150.0, 1.0, 1.1).try_convert_into() {</span>
     <span class="doccomment">///    Ok(color) =&gt; color,</span>
     <span class="doccomment">///    Err(err) =&gt; {</span>
     <span class="doccomment">///        println!(&quot;Color is out of bounds&quot;);</span>
     <span class="doccomment">///        err.color()</span>
     <span class="doccomment">///    },</span>
-    <span class="doccomment">///};</span>
-    <span class="doccomment">///```</span>
+    <span class="doccomment">/// };</span>
+    <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">try_convert_into</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">OutOfBounds</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 }
 
-<span class="doccomment">///A trait for converting one color from another.</span>
+<span class="doccomment">/// A trait for converting one color from another.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///`convert_unclamped` currently wraps the underlying `From` implementation.</span>
+<span class="doccomment">/// `convert_unclamped` currently wraps the underlying `From` implementation.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">ConvertFrom</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>: <span class="ident">From</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="doccomment">///Convert from T with values clamped to the color defined bounds</span>
+    <span class="doccomment">/// Convert from T with values clamped to the color defined bounds</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///```</span>
-    <span class="doccomment">///use palette::ConvertFrom;</span>
-    <span class="doccomment">///use palette::Limited;</span>
-    <span class="doccomment">///use palette::{Srgb, Lch};</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use palette::ConvertFrom;</span>
+    <span class="doccomment">/// use palette::Limited;</span>
+    <span class="doccomment">/// use palette::{Srgb, Lch};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///let rgb = Srgb::convert_from(Lch::new(50.0, 100.0, -175.0));</span>
-    <span class="doccomment">///assert!(rgb.is_valid());</span>
-    <span class="doccomment">///```</span>
+    <span class="doccomment">/// let rgb = Srgb::convert_from(Lch::new(50.0, 100.0, -175.0));</span>
+    <span class="doccomment">/// assert!(rgb.is_valid());</span>
+    <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">convert_from</span>(<span class="kw">_</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
 
-    <span class="doccomment">///Convert from T. The resulting color might be invalid in its color space</span>
+    <span class="doccomment">/// Convert from T. The resulting color might be invalid in its color space</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///```</span>
-    <span class="doccomment">///use palette::ConvertFrom;</span>
-    <span class="doccomment">///use palette::Limited;</span>
-    <span class="doccomment">///use palette::{Srgb, Lch};</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use palette::ConvertFrom;</span>
+    <span class="doccomment">/// use palette::Limited;</span>
+    <span class="doccomment">/// use palette::{Srgb, Lch};</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///let rgb = Srgb::convert_unclamped_from(Lch::new(50.0, 100.0, -175.0));</span>
-    <span class="doccomment">///assert!(!rgb.is_valid());</span>
-    <span class="doccomment">///```</span>
+    <span class="doccomment">/// let rgb = Srgb::convert_unclamped_from(Lch::new(50.0, 100.0, -175.0));</span>
+    <span class="doccomment">/// assert!(!rgb.is_valid());</span>
+    <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">convert_unclamped_from</span>(<span class="ident">val</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">from</span>(<span class="ident">val</span>)
     }
 
-    <span class="doccomment">///Convert from T, returning ok if the color is inside of its defined range,</span>
-    <span class="doccomment">///otherwise an `OutOfBounds` error is returned which contains the unclamped color.</span>
+    <span class="doccomment">/// Convert from T, returning ok if the color is inside of its defined</span>
+    <span class="doccomment">/// range, otherwise an `OutOfBounds` error is returned which contains</span>
+    <span class="doccomment">/// the unclamped color.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///```</span>
-    <span class="doccomment">///use palette::ConvertFrom;</span>
-    <span class="doccomment">///use palette::{Srgb, Hsl};</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use palette::ConvertFrom;</span>
+    <span class="doccomment">/// use palette::{Srgb, Hsl};</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">///let rgb = match Srgb::try_convert_from(Hsl::new(150.0, 1.0, 1.1)) {</span>
+    <span class="doccomment">/// let rgb = match Srgb::try_convert_from(Hsl::new(150.0, 1.0, 1.1)) {</span>
     <span class="doccomment">///    Ok(color) =&gt; color,</span>
     <span class="doccomment">///    Err(err) =&gt; {</span>
     <span class="doccomment">///        println!(&quot;Color is out of bounds&quot;);</span>
     <span class="doccomment">///        err.color()</span>
     <span class="doccomment">///    },</span>
-    <span class="doccomment">///};</span>
-    <span class="doccomment">///```</span>
+    <span class="doccomment">/// };</span>
+    <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">try_convert_from</span>(<span class="kw">_</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">OutOfBounds</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 }
 
@@ -1668,12 +1670,14 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">encoding</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">encoding</span>::<span class="ident">linear</span>::<span class="ident">Linear</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">luma</span>::<span class="ident">Luma</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">rgb</span>::{<span class="ident">Rgb</span>, <span class="ident">RgbSpace</span>};
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">FloatComponent</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Hsl</span>, <span class="ident">Hsv</span>, <span class="ident">Hwb</span>, <span class="ident">Lab</span>, <span class="ident">Lch</span>, <span class="ident">Xyz</span>, <span class="ident">Yxy</span>};
     <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
-    <span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">linear</span>::<span class="ident">Linear</span>;
-    <span class="kw">use</span> <span class="ident">luma</span>::<span class="ident">Luma</span>;
-    <span class="kw">use</span> <span class="ident">rgb</span>::{<span class="ident">Rgb</span>, <span class="ident">RgbSpace</span>};
-    <span class="kw">use</span> <span class="ident">FloatComponent</span>;
-    <span class="kw">use</span> {<span class="ident">Hsl</span>, <span class="ident">Hsv</span>, <span class="ident">Hwb</span>, <span class="ident">Lab</span>, <span class="ident">Lch</span>, <span class="ident">Xyz</span>, <span class="ident">Yxy</span>};
 
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">FromColor</span>, <span class="ident">IntoColor</span>)]</span>
     <span class="attribute">#[<span class="ident">palette_manual_from</span>(<span class="ident">Xyz</span>, <span class="ident">Luma</span> <span class="op">=</span> <span class="string">&quot;from_luma_internal&quot;</span>)]</span>
@@ -1709,30 +1713,30 @@
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">FromColor</span>, <span class="ident">IntoColor</span>)]</span>
     <span class="attribute">#[<span class="ident">palette_manual_from</span>(<span class="ident">Lch</span>, <span class="ident">Luma</span> <span class="op">=</span> <span class="string">&quot;from_luma_internal&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">palette_manual_into</span>(<span class="ident">Lch</span>, <span class="ident">Luma</span> <span class="op">=</span> <span class="string">&quot;into_luma_internal&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">palette_white_point</span> <span class="op">=</span> <span class="string">&quot;::white_point::E&quot;</span>]</span>
+    <span class="attribute">#[<span class="ident">palette_white_point</span> <span class="op">=</span> <span class="string">&quot;crate::white_point::E&quot;</span>]</span>
     <span class="attribute">#[<span class="ident">palette_component</span> <span class="op">=</span> <span class="string">&quot;T&quot;</span>]</span>
-    <span class="attribute">#[<span class="ident">palette_rgb_space</span> <span class="op">=</span> <span class="string">&quot;(::encoding::Srgb, ::white_point::E)&quot;</span>]</span>
+    <span class="attribute">#[<span class="ident">palette_rgb_space</span> <span class="op">=</span> <span class="string">&quot;(crate::encoding::Srgb, crate::white_point::E)&quot;</span>]</span>
     <span class="attribute">#[<span class="ident">palette_internal</span>]</span>
     <span class="kw">struct</span> <span class="ident">WithoutXyz</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FloatComponent</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
 
     <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FloatComponent</span><span class="op">&gt;</span> <span class="ident">WithoutXyz</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="kw">fn</span> <span class="ident">from_luma_internal</span>(<span class="ident">_color</span>: <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">fn</span> <span class="ident">from_luma_internal</span>(<span class="ident">_color</span>: <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
             <span class="ident">WithoutXyz</span>(<span class="ident">PhantomData</span>)
         }
 
-        <span class="kw">fn</span> <span class="ident">into_luma_internal</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">into_luma_internal</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span> {
             <span class="ident">Luma</span>::<span class="ident">new</span>(<span class="ident">T</span>::<span class="ident">one</span>())
         }
     }
 
-    <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FloatComponent</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Lch</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">WithoutXyz</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">_color</span>: <span class="ident">Lch</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FloatComponent</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">WithoutXyz</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">_color</span>: <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
             <span class="ident">WithoutXyz</span>(<span class="ident">PhantomData</span>)
         }
     }
 
-    <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FloatComponent</span><span class="op">&gt;</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Lch</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">WithoutXyz</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FloatComponent</span><span class="op">&gt;</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">WithoutXyz</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">into</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">T</span><span class="op">&gt;</span> {
             <span class="ident">Lch</span>::<span class="ident">with_wp</span>(<span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">T</span>::<span class="ident">zero</span>(), <span class="ident">T</span>::<span class="ident">zero</span>())
         }
     }
@@ -1740,63 +1744,63 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">from_with_xyz</span>() {
         <span class="kw">let</span> <span class="ident">xyz</span>: <span class="ident">Xyz</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
-        <span class="ident">WithXyz</span>::<span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">xyz</span>);
+        <span class="ident">WithXyz</span>::<span class="op">&lt;</span><span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">xyz</span>);
 
         <span class="kw">let</span> <span class="ident">yxy</span>: <span class="ident">Yxy</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
-        <span class="ident">WithXyz</span>::<span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">yxy</span>);
+        <span class="ident">WithXyz</span>::<span class="op">&lt;</span><span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">yxy</span>);
 
         <span class="kw">let</span> <span class="ident">lab</span>: <span class="ident">Lab</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
-        <span class="ident">WithXyz</span>::<span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">lab</span>);
+        <span class="ident">WithXyz</span>::<span class="op">&lt;</span><span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">lab</span>);
 
         <span class="kw">let</span> <span class="ident">lch</span>: <span class="ident">Lch</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
-        <span class="ident">WithXyz</span>::<span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">lch</span>);
+        <span class="ident">WithXyz</span>::<span class="op">&lt;</span><span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">lch</span>);
 
-        <span class="kw">let</span> <span class="ident">rgb</span>: <span class="ident">Rgb</span><span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
-        <span class="ident">WithXyz</span>::<span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">rgb</span>);
+        <span class="kw">let</span> <span class="ident">rgb</span>: <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">encoding</span>::<span class="ident">Srgb</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
+        <span class="ident">WithXyz</span>::<span class="op">&lt;</span><span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">rgb</span>);
 
         <span class="kw">let</span> <span class="ident">hsl</span>: <span class="ident">Hsl</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
-        <span class="ident">WithXyz</span>::<span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">hsl</span>);
+        <span class="ident">WithXyz</span>::<span class="op">&lt;</span><span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">hsl</span>);
 
         <span class="kw">let</span> <span class="ident">hsv</span>: <span class="ident">Hsv</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
-        <span class="ident">WithXyz</span>::<span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">hsv</span>);
+        <span class="ident">WithXyz</span>::<span class="op">&lt;</span><span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">hsv</span>);
 
         <span class="kw">let</span> <span class="ident">hwb</span>: <span class="ident">Hwb</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
-        <span class="ident">WithXyz</span>::<span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">hwb</span>);
+        <span class="ident">WithXyz</span>::<span class="op">&lt;</span><span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">hwb</span>);
 
-        <span class="kw">let</span> <span class="ident">luma</span>: <span class="ident">Luma</span><span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
-        <span class="ident">WithXyz</span>::<span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">luma</span>);
+        <span class="kw">let</span> <span class="ident">luma</span>: <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">encoding</span>::<span class="ident">Srgb</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
+        <span class="ident">WithXyz</span>::<span class="op">&lt;</span><span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">luma</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">into_with_xyz</span>() {
-        <span class="kw">let</span> <span class="ident">color</span> <span class="op">=</span> <span class="ident">WithXyz</span>::<span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span>);
+        <span class="kw">let</span> <span class="ident">color</span> <span class="op">=</span> <span class="ident">WithXyz</span>::<span class="op">&lt;</span><span class="ident">encoding</span>::<span class="ident">Srgb</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span>);
 
         <span class="kw">let</span> <span class="ident">_xyz</span>: <span class="ident">Xyz</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">_yxy</span>: <span class="ident">Yxy</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">_lab</span>: <span class="ident">Lab</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">_lch</span>: <span class="ident">Lch</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="ident">_rgb</span>: <span class="ident">Rgb</span><span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">_rgb</span>: <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">encoding</span>::<span class="ident">Srgb</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">_hsl</span>: <span class="ident">Hsl</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">_hsv</span>: <span class="ident">Hsv</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">_hwb</span>: <span class="ident">Hwb</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="ident">_luma</span>: <span class="ident">Luma</span><span class="op">&lt;</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">_luma</span>: <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">encoding</span>::<span class="ident">Srgb</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">from_without_xyz</span>() {
-        <span class="kw">let</span> <span class="ident">xyz</span>: <span class="ident">Xyz</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">xyz</span>: <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
         <span class="ident">WithoutXyz</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">xyz</span>);
 
-        <span class="kw">let</span> <span class="ident">yxy</span>: <span class="ident">Yxy</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">yxy</span>: <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
         <span class="ident">WithoutXyz</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">yxy</span>);
 
-        <span class="kw">let</span> <span class="ident">lab</span>: <span class="ident">Lab</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">lab</span>: <span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
         <span class="ident">WithoutXyz</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">lab</span>);
 
-        <span class="kw">let</span> <span class="ident">lch</span>: <span class="ident">Lch</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">lch</span>: <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
         <span class="ident">WithoutXyz</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">lch</span>);
 
-        <span class="kw">let</span> <span class="ident">rgb</span>: <span class="ident">Rgb</span><span class="op">&lt;</span>(<span class="kw">_</span>, ::<span class="ident">encoding</span>::<span class="ident">Srgb</span>), <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">rgb</span>: <span class="ident">Rgb</span><span class="op">&lt;</span>(<span class="kw">_</span>, <span class="ident">encoding</span>::<span class="ident">Srgb</span>), <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
         <span class="ident">WithoutXyz</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">rgb</span>);
 
         <span class="kw">let</span> <span class="ident">hsl</span>: <span class="ident">Hsl</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
@@ -1808,7 +1812,7 @@
         <span class="kw">let</span> <span class="ident">hwb</span>: <span class="ident">Hwb</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
         <span class="ident">WithoutXyz</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">hwb</span>);
 
-        <span class="kw">let</span> <span class="ident">luma</span>: <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span><span class="op">&gt;</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
+        <span class="kw">let</span> <span class="ident">luma</span>: <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span><span class="op">&gt;</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Default</span>::<span class="ident">default</span>();
         <span class="ident">WithoutXyz</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>::<span class="ident">from</span>(<span class="ident">luma</span>);
     }
 
@@ -1816,15 +1820,15 @@
     <span class="kw">fn</span> <span class="ident">into_without_xyz</span>() {
         <span class="kw">let</span> <span class="ident">color</span> <span class="op">=</span> <span class="ident">WithoutXyz</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span>);
 
-        <span class="kw">let</span> <span class="ident">_xyz</span>: <span class="ident">Xyz</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="ident">_yxy</span>: <span class="ident">Yxy</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="ident">_lab</span>: <span class="ident">Lab</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="ident">_lch</span>: <span class="ident">Lch</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="ident">_rgb</span>: <span class="ident">Rgb</span><span class="op">&lt;</span>(<span class="kw">_</span>, ::<span class="ident">encoding</span>::<span class="ident">Srgb</span>), <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">_xyz</span>: <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">_yxy</span>: <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">_lab</span>: <span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">_lch</span>: <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">_rgb</span>: <span class="ident">Rgb</span><span class="op">&lt;</span>(<span class="kw">_</span>, <span class="ident">encoding</span>::<span class="ident">Srgb</span>), <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">_hsl</span>: <span class="ident">Hsl</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">_hsv</span>: <span class="ident">Hsv</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
         <span class="kw">let</span> <span class="ident">_hwb</span>: <span class="ident">Hwb</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
-        <span class="kw">let</span> <span class="ident">_luma</span>: <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span>::<span class="ident">white_point</span>::<span class="ident">E</span><span class="op">&gt;</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
+        <span class="kw">let</span> <span class="ident">_luma</span>: <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">Linear</span><span class="op">&lt;</span><span class="ident">white_point</span>::<span class="ident">E</span><span class="op">&gt;</span>, <span class="ident">f64</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">into</span>();
     }
 }
 </pre></div>

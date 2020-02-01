@@ -578,27 +578,27 @@
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
 
-<span class="kw">use</span> <span class="ident">color_difference</span>::<span class="ident">ColorDifference</span>;
-<span class="kw">use</span> <span class="ident">color_difference</span>::{<span class="ident">get_ciede_difference</span>, <span class="ident">LabColorDiff</span>};
-<span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">pixel</span>::<span class="ident">RawPixel</span>;
-<span class="kw">use</span> <span class="ident">white_point</span>::{<span class="ident">WhitePoint</span>, <span class="ident">D65</span>};
-<span class="kw">use</span> {<span class="ident">clamp</span>, <span class="ident">contrast_ratio</span>, <span class="ident">from_f64</span>};
-<span class="kw">use</span> {<span class="ident">Alpha</span>, <span class="ident">Lab</span>, <span class="ident">LabHue</span>, <span class="ident">Xyz</span>};
-<span class="kw">use</span> {
-    <span class="ident">Component</span>, <span class="ident">FloatComponent</span>, <span class="ident">FromColor</span>, <span class="ident">GetHue</span>, <span class="ident">Hue</span>, <span class="ident">IntoColor</span>, <span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>,
-    <span class="ident">RelativeContrast</span>, <span class="ident">Saturate</span>, <span class="ident">Shade</span>,
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">color_difference</span>::<span class="ident">ColorDifference</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">color_difference</span>::{<span class="ident">get_ciede_difference</span>, <span class="ident">LabColorDiff</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">encoding</span>::<span class="ident">pixel</span>::<span class="ident">RawPixel</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>::{<span class="ident">WhitePoint</span>, <span class="ident">D65</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">clamp</span>, <span class="ident">contrast_ratio</span>, <span class="ident">from_f64</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Alpha</span>, <span class="ident">Hue</span>, <span class="ident">Lab</span>, <span class="ident">LabHue</span>, <span class="ident">Xyz</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{
+    <span class="ident">Component</span>, <span class="ident">FloatComponent</span>, <span class="ident">FromColor</span>, <span class="ident">GetHue</span>, <span class="ident">IntoColor</span>, <span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">RelativeContrast</span>,
+    <span class="ident">Saturate</span>, <span class="ident">Shade</span>,
 };
 
 <span class="doccomment">/// CIE L\*C\*h° with an alpha component. See the [`Lcha` implementation in</span>
 <span class="doccomment">/// `Alpha`](struct.Alpha.html#Lcha).</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">Lcha</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
-<span class="doccomment">///CIE L\*C\*h°, a polar version of [CIE L\*a\*b\*](struct.Lab.html).</span>
+<span class="doccomment">/// CIE L\*C\*h°, a polar version of [CIE L\*a\*b\*](struct.Lab.html).</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///L\*C\*h° shares its range and perceptual uniformity with L\*a\*b\*, but</span>
+<span class="doccomment">/// L\*C\*h° shares its range and perceptual uniformity with L\*a\*b\*, but</span>
 <span class="doccomment">/// it&#39;s a cylindrical color space, like [HSL](struct.Hsl.html) and</span>
-<span class="doccomment">///[HSV](struct.Hsv.html). This gives it the same ability to directly change</span>
-<span class="doccomment">///the hue and colorfulness of a color, while preserving other visual aspects.</span>
+<span class="doccomment">/// [HSV](struct.Hsv.html). This gives it the same ability to directly change</span>
+<span class="doccomment">/// the hue and colorfulness of a color, while preserving other visual aspects.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">FromColor</span>, <span class="ident">Pixel</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
 <span class="attribute">#[<span class="ident">palette_internal</span>]</span>
@@ -611,23 +611,23 @@
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="doccomment">///L\* is the lightness of the color. 0.0 gives absolute black and 100.0</span>
-    <span class="doccomment">///gives the brightest white.</span>
+    <span class="doccomment">/// L\* is the lightness of the color. 0.0 gives absolute black and 100.0</span>
+    <span class="doccomment">/// gives the brightest white.</span>
     <span class="kw">pub</span> <span class="ident">l</span>: <span class="ident">T</span>,
 
-    <span class="doccomment">///C\* is the colorfulness of the color. It&#39;s similar to saturation. 0.0</span>
-    <span class="doccomment">///gives gray scale colors, and numbers around 128-181 gives fully</span>
-    <span class="doccomment">///saturated colors. The upper limit of 128 should</span>
-    <span class="doccomment">///include the whole L\*a\*b\* space and some more.</span>
+    <span class="doccomment">/// C\* is the colorfulness of the color. It&#39;s similar to saturation. 0.0</span>
+    <span class="doccomment">/// gives gray scale colors, and numbers around 128-181 gives fully</span>
+    <span class="doccomment">/// saturated colors. The upper limit of 128 should</span>
+    <span class="doccomment">/// include the whole L\*a\*b\* space and some more.</span>
     <span class="kw">pub</span> <span class="ident">chroma</span>: <span class="ident">T</span>,
 
-    <span class="doccomment">///The hue of the color, in degrees. Decides if it&#39;s red, blue, purple,</span>
-    <span class="doccomment">///etc.</span>
+    <span class="doccomment">/// The hue of the color, in degrees. Decides if it&#39;s red, blue, purple,</span>
+    <span class="doccomment">/// etc.</span>
     <span class="attribute">#[<span class="ident">palette_unsafe_same_layout_as</span> <span class="op">=</span> <span class="string">&quot;T&quot;</span>]</span>
     <span class="kw">pub</span> <span class="ident">hue</span>: <span class="ident">LabHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
 
-    <span class="doccomment">///The white point associated with the color&#39;s illuminant and observer.</span>
-    <span class="doccomment">///D65 for 2 degree observer is used by default.</span>
+    <span class="doccomment">/// The white point associated with the color&#39;s illuminant and observer.</span>
+    <span class="doccomment">/// D65 for 2 degree observer is used by default.</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>, <span class="ident">serde</span>(<span class="ident">skip</span>))]</span>
     <span class="attribute">#[<span class="ident">palette_unsafe_zero_sized</span>]</span>
     <span class="kw">pub</span> <span class="ident">white_point</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">Wp</span><span class="op">&gt;</span>,
@@ -654,11 +654,11 @@
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
 {
-    <span class="doccomment">///CIE L\*C\*h° with white point D65.</span>
+    <span class="doccomment">/// CIE L\*C\*h° with white point D65.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LabHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">l</span>: <span class="ident">T</span>, <span class="ident">chroma</span>: <span class="ident">T</span>, <span class="ident">hue</span>: <span class="ident">H</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Lch</span> {
-            <span class="ident">l</span>: <span class="ident">l</span>,
-            <span class="ident">chroma</span>: <span class="ident">chroma</span>,
+            <span class="ident">l</span>,
+            <span class="ident">chroma</span>,
             <span class="ident">hue</span>: <span class="ident">hue</span>.<span class="ident">into</span>(),
             <span class="ident">white_point</span>: <span class="ident">PhantomData</span>,
         }
@@ -670,11 +670,11 @@
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="doccomment">///CIE L\*C\*h°.</span>
+    <span class="doccomment">/// CIE L\*C\*h°.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_wp</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LabHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">l</span>: <span class="ident">T</span>, <span class="ident">chroma</span>: <span class="ident">T</span>, <span class="ident">hue</span>: <span class="ident">H</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Lch</span> {
-            <span class="ident">l</span>: <span class="ident">l</span>,
-            <span class="ident">chroma</span>: <span class="ident">chroma</span>,
+            <span class="ident">l</span>,
+            <span class="ident">chroma</span>,
             <span class="ident">hue</span>: <span class="ident">hue</span>.<span class="ident">into</span>(),
             <span class="ident">white_point</span>: <span class="ident">PhantomData</span>,
         }
@@ -697,11 +697,11 @@
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">A</span>: <span class="ident">Component</span>,
 {
-    <span class="doccomment">///CIE L\*C\*h° and transparency with white point D65.</span>
+    <span class="doccomment">/// CIE L\*C\*h° and transparency with white point D65.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LabHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">l</span>: <span class="ident">T</span>, <span class="ident">chroma</span>: <span class="ident">T</span>, <span class="ident">hue</span>: <span class="ident">H</span>, <span class="ident">alpha</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Alpha</span> {
             <span class="ident">color</span>: <span class="ident">Lch</span>::<span class="ident">new</span>(<span class="ident">l</span>, <span class="ident">chroma</span>, <span class="ident">hue</span>),
-            <span class="ident">alpha</span>: <span class="ident">alpha</span>,
+            <span class="ident">alpha</span>,
         }
     }
 }
@@ -713,11 +713,11 @@
     <span class="ident">A</span>: <span class="ident">Component</span>,
     <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="doccomment">///CIE L\*C\*h° and transparency.</span>
+    <span class="doccomment">/// CIE L\*C\*h° and transparency.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_wp</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LabHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">l</span>: <span class="ident">T</span>, <span class="ident">chroma</span>: <span class="ident">T</span>, <span class="ident">hue</span>: <span class="ident">H</span>, <span class="ident">alpha</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Alpha</span> {
             <span class="ident">color</span>: <span class="ident">Lch</span>::<span class="ident">with_wp</span>(<span class="ident">l</span>, <span class="ident">chroma</span>, <span class="ident">hue</span>),
-            <span class="ident">alpha</span>: <span class="ident">alpha</span>,
+            <span class="ident">alpha</span>,
         }
     }
 
@@ -1112,8 +1112,8 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
-    <span class="kw">use</span> <span class="ident">white_point</span>::<span class="ident">D65</span>;
-    <span class="kw">use</span> <span class="ident">Lch</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>::<span class="ident">D65</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Lch</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">ranges</span>() {

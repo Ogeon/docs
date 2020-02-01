@@ -349,14 +349,16 @@
 <span id="349">349</span>
 <span id="350">350</span>
 <span id="351">351</span>
+<span id="352">352</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
 <span class="kw">use</span> <span class="ident">proc_macro2</span>::{<span class="ident">Span</span>, <span class="ident">TokenStream</span>};
 <span class="kw">use</span> <span class="ident">syn</span>::{<span class="ident">parse_quote</span>, <span class="ident">GenericParam</span>, <span class="ident">Generics</span>, <span class="ident">Ident</span>, <span class="ident">Path</span>, <span class="ident">Turbofish</span>, <span class="ident">Type</span>, <span class="ident">TypePath</span>};
+<span class="kw">use</span> <span class="ident">quote</span>::<span class="ident">quote</span>;
 
-<span class="kw">use</span> <span class="ident">meta</span>::<span class="ident">KeyValuePair</span>;
-<span class="kw">use</span> <span class="ident">util</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">meta</span>::<span class="ident">KeyValuePair</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">util</span>;
 
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">find_in_generics</span>(
     <span class="ident">component</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Type</span><span class="op">&gt;</span>,

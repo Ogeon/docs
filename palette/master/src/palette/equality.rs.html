@@ -146,14 +146,12 @@
 <span id="146">146</span>
 <span id="147">147</span>
 <span id="148">148</span>
-<span id="149">149</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
-
 <span class="kw">use</span> <span class="ident">approx</span>::{<span class="ident">AbsDiffEq</span>, <span class="ident">RelativeEq</span>, <span class="ident">UlpsEq</span>};
 
-<span class="kw">use</span> <span class="ident">white_point</span>::<span class="ident">WhitePoint</span>;
-<span class="kw">use</span> {<span class="ident">from_f64</span>, <span class="ident">FloatComponent</span>, <span class="ident">FromF64</span>, <span class="ident">Lab</span>, <span class="ident">LabHue</span>, <span class="ident">Lch</span>, <span class="ident">RgbHue</span>, <span class="ident">Xyz</span>, <span class="ident">Yxy</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">float</span>::<span class="ident">Float</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>::<span class="ident">WhitePoint</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">from_f64</span>, <span class="ident">FloatComponent</span>, <span class="ident">FromF64</span>, <span class="ident">Lab</span>, <span class="ident">LabHue</span>, <span class="ident">Lch</span>, <span class="ident">RgbHue</span>, <span class="ident">Xyz</span>, <span class="ident">Yxy</span>};
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_eq</span> {
     (  <span class="macro-nonterminal">$</span><span class="macro-nonterminal">self_ty</span>: <span class="ident">ident</span> , [$(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">element</span>: <span class="ident">ident</span>),<span class="op">+</span>]) <span class="op">=</span><span class="op">&gt;</span> {

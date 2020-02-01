@@ -231,40 +231,35 @@
 <span id="231">231</span>
 <span id="232">232</span>
 <span id="233">233</span>
-<span id="234">234</span>
-<span id="235">235</span>
-<span id="236">236</span>
-<span id="237">237</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">blend</span>::{<span class="ident">BlendFunction</span>, <span class="ident">PreAlpha</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">float</span>::<span class="ident">Float</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Blend</span>, <span class="ident">ComponentWise</span>};
 
-<span class="kw">use</span> <span class="ident">blend</span>::{<span class="ident">BlendFunction</span>, <span class="ident">PreAlpha</span>};
-<span class="kw">use</span> {<span class="ident">Blend</span>, <span class="ident">ComponentWise</span>};
-
-<span class="doccomment">///A pair of blending equations and corresponding parameters.</span>
+<span class="doccomment">/// A pair of blending equations and corresponding parameters.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///The `Equations` type is similar to how blending works in OpenGL, where a</span>
-<span class="doccomment">///blend function has can be written as `e(sp * S, dp * D)`. `e` is the</span>
-<span class="doccomment">///equation (like `s + d`), `sp` and `dp` are the source and destination</span>
-<span class="doccomment">///parameters, and `S` and `D` are the source and destination colors.</span>
+<span class="doccomment">/// The `Equations` type is similar to how blending works in OpenGL, where a</span>
+<span class="doccomment">/// blend function has can be written as `e(sp * S, dp * D)`. `e` is the</span>
+<span class="doccomment">/// equation (like `s + d`), `sp` and `dp` are the source and destination</span>
+<span class="doccomment">/// parameters, and `S` and `D` are the source and destination colors.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Equations</span> {
-    <span class="doccomment">///The equation for the color components.</span>
+    <span class="doccomment">/// The equation for the color components.</span>
     <span class="kw">pub</span> <span class="ident">color_equation</span>: <span class="ident">Equation</span>,
 
-    <span class="doccomment">///The equation for the alpha component.</span>
+    <span class="doccomment">/// The equation for the alpha component.</span>
     <span class="kw">pub</span> <span class="ident">alpha_equation</span>: <span class="ident">Equation</span>,
 
-    <span class="doccomment">///The parameters for the color components.</span>
+    <span class="doccomment">/// The parameters for the color components.</span>
     <span class="kw">pub</span> <span class="ident">color_parameters</span>: <span class="ident">Parameters</span>,
 
-    <span class="doccomment">///The parameters for the alpha component.</span>
+    <span class="doccomment">/// The parameters for the alpha component.</span>
     <span class="kw">pub</span> <span class="ident">alpha_parameters</span>: <span class="ident">Parameters</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Equations</span> {
-    <span class="doccomment">///Create a pair of blending equations, where all the parameters are</span>
-    <span class="doccomment">///`One`.</span>
+    <span class="doccomment">/// Create a pair of blending equations, where all the parameters are</span>
+    <span class="doccomment">/// `One`.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_equations</span>(<span class="ident">color</span>: <span class="ident">Equation</span>, <span class="ident">alpha</span>: <span class="ident">Equation</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Equations</span> {
         <span class="ident">Equations</span> {
             <span class="ident">color_equation</span>: <span class="ident">color</span>,
@@ -280,19 +275,19 @@
         }
     }
 
-    <span class="doccomment">///Create a pair of additive blending equations with the provided</span>
-    <span class="doccomment">///parameters.</span>
+    <span class="doccomment">/// Create a pair of additive blending equations with the provided</span>
+    <span class="doccomment">/// parameters.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_parameters</span>(<span class="ident">source</span>: <span class="ident">Parameter</span>, <span class="ident">destination</span>: <span class="ident">Parameter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Equations</span> {
         <span class="ident">Equations</span> {
             <span class="ident">color_equation</span>: <span class="ident">Equation</span>::<span class="ident">Add</span>,
             <span class="ident">alpha_equation</span>: <span class="ident">Equation</span>::<span class="ident">Add</span>,
             <span class="ident">color_parameters</span>: <span class="ident">Parameters</span> {
-                <span class="ident">source</span>: <span class="ident">source</span>,
-                <span class="ident">destination</span>: <span class="ident">destination</span>,
+                <span class="ident">source</span>,
+                <span class="ident">destination</span>,
             },
             <span class="ident">alpha_parameters</span>: <span class="ident">Parameters</span> {
-                <span class="ident">source</span>: <span class="ident">source</span>,
-                <span class="ident">destination</span>: <span class="ident">destination</span>,
+                <span class="ident">source</span>,
+                <span class="ident">destination</span>,
             },
         }
     }
@@ -349,17 +344,14 @@
             <span class="ident">Equation</span>::<span class="ident">Max</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">source</span>.<span class="ident">alpha</span>.<span class="ident">max</span>(<span class="ident">destination</span>.<span class="ident">alpha</span>),
         };
 
-        <span class="ident">PreAlpha</span> {
-            <span class="ident">color</span>: <span class="ident">color</span>,
-            <span class="ident">alpha</span>: <span class="ident">alpha</span>,
-        }
+        <span class="ident">PreAlpha</span> { <span class="ident">color</span>, <span class="ident">alpha</span> }
     }
 }
 
-<span class="doccomment">///A blending equation.</span>
+<span class="doccomment">/// A blending equation.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Equation</span> {
-    <span class="doccomment">///Add the source and destination, according to `sp * S + dp * D`.</span>
+    <span class="doccomment">/// Add the source and destination, according to `sp * S + dp * D`.</span>
     <span class="ident">Add</span>,
 
     <span class="doccomment">/// Subtract the destination from the source, according to `sp * S - dp *</span>
@@ -370,58 +362,58 @@
     <span class="doccomment">/// S`.</span>
     <span class="ident">ReverseSubtract</span>,
 
-    <span class="doccomment">///Create a color where each component is the smallest of each of the</span>
-    <span class="doccomment">///source and destination components. A.k.a. component wise min. The</span>
-    <span class="doccomment">///parameters are ignored.</span>
+    <span class="doccomment">/// Create a color where each component is the smallest of each of the</span>
+    <span class="doccomment">/// source and destination components. A.k.a. component wise min. The</span>
+    <span class="doccomment">/// parameters are ignored.</span>
     <span class="ident">Min</span>,
 
-    <span class="doccomment">///Create a color where each component is the largest of each of the</span>
-    <span class="doccomment">///source and destination components. A.k.a. component wise max. The</span>
-    <span class="doccomment">///parameters are ignored.</span>
+    <span class="doccomment">/// Create a color where each component is the largest of each of the</span>
+    <span class="doccomment">/// source and destination components. A.k.a. component wise max. The</span>
+    <span class="doccomment">/// parameters are ignored.</span>
     <span class="ident">Max</span>,
 }
 
-<span class="doccomment">///A pair of source and destination parameters.</span>
+<span class="doccomment">/// A pair of source and destination parameters.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Parameters</span> {
-    <span class="doccomment">///The source parameter.</span>
+    <span class="doccomment">/// The source parameter.</span>
     <span class="kw">pub</span> <span class="ident">source</span>: <span class="ident">Parameter</span>,
 
-    <span class="doccomment">///The destination parameter.</span>
+    <span class="doccomment">/// The destination parameter.</span>
     <span class="kw">pub</span> <span class="ident">destination</span>: <span class="ident">Parameter</span>,
 }
 
-<span class="doccomment">///A blending parameter.</span>
+<span class="doccomment">/// A blending parameter.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Parameter</span> {
-    <span class="doccomment">///A simple 1.</span>
+    <span class="doccomment">/// A simple 1.</span>
     <span class="ident">One</span>,
 
-    <span class="doccomment">///A simple 0.</span>
+    <span class="doccomment">/// A simple 0.</span>
     <span class="ident">Zero</span>,
 
-    <span class="doccomment">///The source color, or alpha.</span>
+    <span class="doccomment">/// The source color, or alpha.</span>
     <span class="ident">SourceColor</span>,
 
-    <span class="doccomment">///One minus the source color, or alpha.</span>
+    <span class="doccomment">/// One minus the source color, or alpha.</span>
     <span class="ident">OneMinusSourceColor</span>,
 
-    <span class="doccomment">///The destination color, or alpha.</span>
+    <span class="doccomment">/// The destination color, or alpha.</span>
     <span class="ident">DestinationColor</span>,
 
-    <span class="doccomment">///One minus the destination color, or alpha.</span>
+    <span class="doccomment">/// One minus the destination color, or alpha.</span>
     <span class="ident">OneMinusDestinationColor</span>,
 
-    <span class="doccomment">///The source alpha.</span>
+    <span class="doccomment">/// The source alpha.</span>
     <span class="ident">SourceAlpha</span>,
 
-    <span class="doccomment">///One minus the source alpha.</span>
+    <span class="doccomment">/// One minus the source alpha.</span>
     <span class="ident">OneMinusSourceAlpha</span>,
 
-    <span class="doccomment">///The destination alpha.</span>
+    <span class="doccomment">/// The destination alpha.</span>
     <span class="ident">DestinationAlpha</span>,
 
-    <span class="doccomment">///One minus the destination alpha.</span>
+    <span class="doccomment">/// One minus the destination alpha.</span>
     <span class="ident">OneMinusDestinationAlpha</span>,
 }
 

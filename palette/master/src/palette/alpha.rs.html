@@ -543,29 +543,31 @@
 <span id="543">543</span>
 <span id="544">544</span>
 <span id="545">545</span>
+<span id="546">546</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Deref</span>, <span class="ident">DerefMut</span>, <span class="ident">Div</span>, <span class="ident">DivAssign</span>, <span class="ident">Mul</span>, <span class="ident">MulAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
 
-<span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
-
 <span class="kw">use</span> <span class="ident">approx</span>::{<span class="ident">AbsDiffEq</span>, <span class="ident">RelativeEq</span>, <span class="ident">UlpsEq</span>};
 
-<span class="kw">use</span> <span class="ident">blend</span>::<span class="ident">PreAlpha</span>;
-<span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">pixel</span>::<span class="ident">RawPixel</span>;
-<span class="kw">use</span> {<span class="ident">clamp</span>, <span class="ident">Blend</span>, <span class="ident">Component</span>, <span class="ident">ComponentWise</span>, <span class="ident">GetHue</span>, <span class="ident">Hue</span>, <span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">Saturate</span>, <span class="ident">Shade</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">blend</span>::<span class="ident">PreAlpha</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">encoding</span>::<span class="ident">pixel</span>::<span class="ident">RawPixel</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">float</span>::<span class="ident">Float</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{
+    <span class="ident">clamp</span>, <span class="ident">Blend</span>, <span class="ident">Component</span>, <span class="ident">ComponentWise</span>, <span class="ident">GetHue</span>, <span class="ident">Hue</span>, <span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">Saturate</span>, <span class="ident">Shade</span>,
+};
 
-<span class="doccomment">///An alpha component wrapper for colors.</span>
+<span class="doccomment">/// An alpha component wrapper for colors.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="doccomment">///The color.</span>
+    <span class="doccomment">/// The color.</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>, <span class="ident">serde</span>(<span class="ident">flatten</span>))]</span>
     <span class="kw">pub</span> <span class="ident">color</span>: <span class="ident">C</span>,
 
-    <span class="doccomment">///The transparency component. 0.0 is fully transparent and 1.0 is fully</span>
-    <span class="doccomment">///opaque.</span>
+    <span class="doccomment">/// The transparency component. 0.0 is fully transparent and 1.0 is fully</span>
+    <span class="doccomment">/// opaque.</span>
     <span class="kw">pub</span> <span class="ident">alpha</span>: <span class="ident">T</span>,
 }
 
@@ -928,7 +930,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">C</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Alpha</span> {
-            <span class="ident">color</span>: <span class="ident">color</span>,
+            <span class="ident">color</span>,
             <span class="ident">alpha</span>: <span class="ident">T</span>::<span class="ident">max_intensity</span>(),
         }
     }
@@ -970,8 +972,8 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
-    <span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">Srgb</span>;
-    <span class="kw">use</span> <span class="ident">rgb</span>::<span class="ident">Rgba</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">rgb</span>::<span class="ident">Rgba</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">lower_hex</span>() {

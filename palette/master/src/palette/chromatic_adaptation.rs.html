@@ -289,48 +289,48 @@
 <span id="289">289</span>
 <span id="290">290</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//!Convert colors from one reference white point to another</span>
+<span class="doccomment">//! Convert colors from one reference white point to another</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!Chromatic adaptation is the human visual system’s ability to adjust to changes</span>
-<span class="doccomment">//!in illumination in order to preserve the appearance of object colors. It is responsible</span>
-<span class="doccomment">//!for the stable appearance of object colours despite the wide variation of light which</span>
-<span class="doccomment">//!might be reflected from an object and observed by our eyes.</span>
+<span class="doccomment">//! Chromatic adaptation is the human visual system’s ability to adjust to</span>
+<span class="doccomment">//! changes in illumination in order to preserve the appearance of object</span>
+<span class="doccomment">//! colors. It is responsible for the stable appearance of object colours</span>
+<span class="doccomment">//! despite the wide variation of light which might be reflected from an object</span>
+<span class="doccomment">//! and observed by our eyes.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!This library provides three methods for chromatic adaptation Bradford (which is the default),</span>
-<span class="doccomment">//!VonKries and XyzScaling</span>
+<span class="doccomment">//! This library provides three methods for chromatic adaptation Bradford (which</span>
+<span class="doccomment">//! is the default), VonKries and XyzScaling</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!```</span>
-<span class="doccomment">//!use palette::Xyz;</span>
-<span class="doccomment">//!use palette::white_point::{A, C};</span>
-<span class="doccomment">//!use palette::chromatic_adaptation::AdaptInto;</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! use palette::Xyz;</span>
+<span class="doccomment">//! use palette::white_point::{A, C};</span>
+<span class="doccomment">//! use palette::chromatic_adaptation::AdaptInto;</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!let a = Xyz::&lt;A, f32&gt;::with_wp(0.315756, 0.162732, 0.015905);</span>
+<span class="doccomment">//! let a = Xyz::&lt;A, f32&gt;::with_wp(0.315756, 0.162732, 0.015905);</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!//Will convert Xyz&lt;A, f32&gt; to Xyz&lt;C, f32&gt; using Bradford chromatic adaptation</span>
-<span class="doccomment">//!let c: Xyz&lt;C, f32&gt; = a.adapt_into();</span>
+<span class="doccomment">//! //Will convert Xyz&lt;A, f32&gt; to Xyz&lt;C, f32&gt; using Bradford chromatic adaptation</span>
+<span class="doccomment">//! let c: Xyz&lt;C, f32&gt; = a.adapt_into();</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!//Should print {x: 0.257963, y: 0.139776,z: 0.058825}</span>
-<span class="doccomment">//!println!(&quot;{:?}&quot;, c)</span>
-<span class="doccomment">//!```</span>
-<span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
+<span class="doccomment">//! //Should print {x: 0.257963, y: 0.139776,z: 0.058825}</span>
+<span class="doccomment">//! println!(&quot;{:?}&quot;, c)</span>
+<span class="doccomment">//! ```</span>
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">float</span>::<span class="ident">Float</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">from_f64</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">matrix</span>::{<span class="ident">multiply_3x3</span>, <span class="ident">multiply_xyz</span>, <span class="ident">Mat3</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>::<span class="ident">WhitePoint</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">FloatComponent</span>, <span class="ident">FromColor</span>, <span class="ident">IntoColor</span>, <span class="ident">Xyz</span>};
 
-<span class="kw">use</span> <span class="ident">from_f64</span>;
-<span class="kw">use</span> <span class="ident">matrix</span>::{<span class="ident">multiply_3x3</span>, <span class="ident">multiply_xyz</span>, <span class="ident">Mat3</span>};
-<span class="kw">use</span> <span class="ident">white_point</span>::<span class="ident">WhitePoint</span>;
-<span class="kw">use</span> {<span class="ident">FloatComponent</span>, <span class="ident">FromColor</span>, <span class="ident">IntoColor</span>, <span class="ident">Xyz</span>};
-
-<span class="doccomment">///Chromatic adaptation methods implemented in the library</span>
+<span class="doccomment">/// Chromatic adaptation methods implemented in the library</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Method</span> {
-    <span class="doccomment">///Bradford chromatic adaptation method</span>
+    <span class="doccomment">/// Bradford chromatic adaptation method</span>
     <span class="ident">Bradford</span>,
-    <span class="doccomment">///VonKries chromatic adaptation method</span>
+    <span class="doccomment">/// VonKries chromatic adaptation method</span>
     <span class="ident">VonKries</span>,
-    <span class="doccomment">///XyzScaling chromatic adaptation method</span>
+    <span class="doccomment">/// XyzScaling chromatic adaptation method</span>
     <span class="ident">XyzScaling</span>,
 }
 
-<span class="doccomment">///Holds the matrix coeffecients for the chromatic adaptation methods</span>
+<span class="doccomment">/// Holds the matrix coeffecients for the chromatic adaptation methods</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ConeResponseMatrices</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span> {
     <span class="doccomment">///3x3 matrix for the cone response domains</span>
     <span class="kw">pub</span> <span class="ident">ma</span>: <span class="ident">Mat3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
@@ -338,19 +338,19 @@
     <span class="kw">pub</span> <span class="ident">inv_ma</span>: <span class="ident">Mat3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
 }
 
-<span class="doccomment">///Generates a conversion matrix to convert the Xyz trisitmilus values from</span>
-<span class="doccomment">///one illuminant to another (Swp -&gt; Dwp)</span>
+<span class="doccomment">/// Generates a conversion matrix to convert the Xyz trisitmilus values from</span>
+<span class="doccomment">/// one illuminant to another (Swp -&gt; Dwp)</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">TransformMatrix</span><span class="op">&lt;</span><span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Swp</span>: <span class="ident">WhitePoint</span>,
     <span class="ident">Dwp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="doccomment">///Get the cone response functions for the chromatic adaptation method</span>
+    <span class="doccomment">/// Get the cone response functions for the chromatic adaptation method</span>
     <span class="kw">fn</span> <span class="ident">get_cone_response</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ConeResponseMatrices</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>;
 
-    <span class="doccomment">///Generates a 3x3 transformation matrix to convert color from one reference white point</span>
-    <span class="doccomment">///to another with the given cone_response</span>
+    <span class="doccomment">/// Generates a 3x3 transformation matrix to convert color from one</span>
+    <span class="doccomment">/// reference white point to another with the given cone_response</span>
     <span class="kw">fn</span> <span class="ident">generate_transform_matrix</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Mat3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">s_wp</span>: <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Swp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Swp</span>::<span class="ident">get_xyz</span>();
         <span class="kw">let</span> <span class="ident">t_wp</span>: <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Dwp</span>::<span class="ident">get_xyz</span>();
@@ -382,7 +382,7 @@
     <span class="ident">Swp</span>: <span class="ident">WhitePoint</span>,
     <span class="ident">Dwp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">rustfmt</span>, <span class="ident">rustfmt_skip</span>)]</span>
+    <span class="attribute">#[<span class="ident">rustfmt</span>::<span class="ident">skip</span>]</span>
     <span class="kw">fn</span> <span class="ident">get_cone_response</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ConeResponseMatrices</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
              <span class="ident">Method</span>::<span class="ident">Bradford</span> <span class="op">=</span><span class="op">&gt;</span> {
@@ -431,22 +431,22 @@
     }
 }
 
-<span class="doccomment">///Trait to convert color from one reference white point to another</span>
+<span class="doccomment">/// Trait to convert color from one reference white point to another</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///Converts a color from the source white point (Swp) to the destination white point (Dwp).</span>
-<span class="doccomment">///Uses the bradford method for conversion by default.</span>
+<span class="doccomment">/// Converts a color from the source white point (Swp) to the destination white</span>
+<span class="doccomment">/// point (Dwp). Uses the bradford method for conversion by default.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">AdaptFrom</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span>: <span class="ident">Sized</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Swp</span>: <span class="ident">WhitePoint</span>,
     <span class="ident">Dwp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="doccomment">///Convert the source color to the destination color using the bradford</span>
+    <span class="doccomment">/// Convert the source color to the destination color using the bradford</span>
     <span class="doccomment">/// method by default</span>
     <span class="kw">fn</span> <span class="ident">adapt_from</span>(<span class="ident">color</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">adapt_from_using</span>(<span class="ident">color</span>, <span class="ident">Method</span>::<span class="ident">Bradford</span>)
     }
-    <span class="doccomment">///Convert the source color to the destination color using the specified</span>
+    <span class="doccomment">/// Convert the source color to the destination color using the specified</span>
     <span class="doccomment">/// method</span>
     <span class="kw">fn</span> <span class="ident">adapt_from_using</span><span class="op">&lt;</span><span class="ident">M</span>: <span class="ident">TransformMatrix</span><span class="op">&lt;</span><span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">color</span>: <span class="ident">S</span>, <span class="ident">method</span>: <span class="ident">M</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
 }
@@ -467,22 +467,22 @@
     }
 }
 
-<span class="doccomment">///Trait to convert color with one reference white point into another</span>
+<span class="doccomment">/// Trait to convert color with one reference white point into another</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///Converts a color with the source white point (Swp) into the destination white point (Dwp).</span>
-<span class="doccomment">///Uses the bradford method for conversion by default.</span>
+<span class="doccomment">/// Converts a color with the source white point (Swp) into the destination</span>
+<span class="doccomment">/// white point (Dwp). Uses the bradford method for conversion by default.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">AdaptInto</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span>: <span class="ident">Sized</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Swp</span>: <span class="ident">WhitePoint</span>,
     <span class="ident">Dwp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="doccomment">///Convert the source color to the destination color using the bradford</span>
+    <span class="doccomment">/// Convert the source color to the destination color using the bradford</span>
     <span class="doccomment">/// method by default</span>
     <span class="kw">fn</span> <span class="ident">adapt_into</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">D</span> {
         <span class="self">self</span>.<span class="ident">adapt_into_using</span>(<span class="ident">Method</span>::<span class="ident">Bradford</span>)
     }
-    <span class="doccomment">///Convert the source color to the destination color using the specified</span>
+    <span class="doccomment">/// Convert the source color to the destination color using the specified</span>
     <span class="doccomment">/// method</span>
     <span class="kw">fn</span> <span class="ident">adapt_into_using</span><span class="op">&lt;</span><span class="ident">M</span>: <span class="ident">TransformMatrix</span><span class="op">&lt;</span><span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">method</span>: <span class="ident">M</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">D</span>;
 }
@@ -503,8 +503,8 @@
 <span class="kw">mod</span> <span class="ident">test</span> {
 
     <span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">AdaptFrom</span>, <span class="ident">AdaptInto</span>, <span class="ident">Method</span>, <span class="ident">TransformMatrix</span>};
-    <span class="kw">use</span> <span class="ident">white_point</span>::{<span class="ident">A</span>, <span class="ident">C</span>, <span class="ident">D50</span>, <span class="ident">D65</span>};
-    <span class="kw">use</span> <span class="ident">Xyz</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>::{<span class="ident">A</span>, <span class="ident">C</span>, <span class="ident">D50</span>, <span class="ident">D65</span>};
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Xyz</span>;
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">d65_to_d50_matrix_xyz_scaling</span>() {
@@ -513,7 +513,7 @@
             <span class="number">0.7578869</span>,
         ];
         <span class="kw">let</span> <span class="ident">xyz_scaling</span> <span class="op">=</span> <span class="ident">Method</span>::<span class="ident">XyzScaling</span>;
-        <span class="kw">let</span> <span class="ident">computed</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">TransformMatrix</span><span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">D50</span>, <span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">generate_transform_matrix</span>(<span class="kw-2">&amp;</span><span class="ident">xyz_scaling</span>);
+        <span class="kw">let</span> <span class="ident">computed</span> <span class="op">=</span> <span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">TransformMatrix</span><span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">D50</span>, <span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">generate_transform_matrix</span>(<span class="kw-2">&amp;</span><span class="ident">xyz_scaling</span>);
         <span class="kw">for</span> (<span class="ident">e</span>, <span class="ident">c</span>) <span class="kw">in</span> <span class="ident">expected</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">computed</span>.<span class="ident">iter</span>()) {
             <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">e</span>, <span class="ident">c</span>, <span class="ident">epsilon</span> <span class="op">=</span> <span class="number">0.0001</span>)
         }
@@ -525,7 +525,7 @@
             <span class="number">0.0000000</span>, <span class="number">0.7578869</span>,
         ];
         <span class="kw">let</span> <span class="ident">von_kries</span> <span class="op">=</span> <span class="ident">Method</span>::<span class="ident">VonKries</span>;
-        <span class="kw">let</span> <span class="ident">computed</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">TransformMatrix</span><span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">D50</span>, <span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">generate_transform_matrix</span>(<span class="kw-2">&amp;</span><span class="ident">von_kries</span>);
+        <span class="kw">let</span> <span class="ident">computed</span> <span class="op">=</span> <span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">TransformMatrix</span><span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">D50</span>, <span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">generate_transform_matrix</span>(<span class="kw-2">&amp;</span><span class="ident">von_kries</span>);
         <span class="kw">for</span> (<span class="ident">e</span>, <span class="ident">c</span>) <span class="kw">in</span> <span class="ident">expected</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">computed</span>.<span class="ident">iter</span>()) {
             <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">e</span>, <span class="ident">c</span>, <span class="ident">epsilon</span> <span class="op">=</span> <span class="number">0.0001</span>)
         }
@@ -537,7 +537,7 @@
             <span class="number">0.0150436</span>, <span class="number">0.7521316</span>,
         ];
         <span class="kw">let</span> <span class="ident">bradford</span> <span class="op">=</span> <span class="ident">Method</span>::<span class="ident">Bradford</span>;
-        <span class="kw">let</span> <span class="ident">computed</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">dyn</span> <span class="ident">TransformMatrix</span><span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">D50</span>, <span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">generate_transform_matrix</span>(<span class="kw-2">&amp;</span><span class="ident">bradford</span>);
+        <span class="kw">let</span> <span class="ident">computed</span> <span class="op">=</span> <span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">TransformMatrix</span><span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">D50</span>, <span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>::<span class="ident">generate_transform_matrix</span>(<span class="kw-2">&amp;</span><span class="ident">bradford</span>);
         <span class="kw">for</span> (<span class="ident">e</span>, <span class="ident">c</span>) <span class="kw">in</span> <span class="ident">expected</span>.<span class="ident">iter</span>().<span class="ident">zip</span>(<span class="ident">computed</span>.<span class="ident">iter</span>()) {
             <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">e</span>, <span class="ident">c</span>, <span class="ident">epsilon</span> <span class="op">=</span> <span class="number">0.0001</span>)
         }

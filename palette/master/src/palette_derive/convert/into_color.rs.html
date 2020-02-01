@@ -325,14 +325,16 @@
 <span id="325">325</span>
 <span id="326">326</span>
 <span id="327">327</span>
+<span id="328">328</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">proc_macro</span>::<span class="ident">TokenStream</span>;
 <span class="kw">use</span> <span class="ident">proc_macro2</span>::{<span class="ident">Span</span>, <span class="ident">TokenStream</span> <span class="kw">as</span> <span class="ident">TokenStream2</span>};
 <span class="kw">use</span> <span class="ident">syn</span>::{<span class="ident">parse_macro_input</span>, <span class="ident">DeriveInput</span>, <span class="ident">Generics</span>, <span class="ident">Ident</span>, <span class="ident">Type</span>};
+<span class="kw">use</span> <span class="ident">quote</span>::<span class="ident">quote</span>;
 
-<span class="kw">use</span> <span class="ident">meta</span>::{<span class="self">self</span>, <span class="ident">DataMetaParser</span>, <span class="ident">IdentOrIndex</span>, <span class="ident">KeyValuePair</span>, <span class="ident">MetaParser</span>};
-<span class="kw">use</span> <span class="ident">util</span>;
-<span class="kw">use</span> <span class="ident">COLOR_TYPES</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">meta</span>::{<span class="self">self</span>, <span class="ident">DataMetaParser</span>, <span class="ident">IdentOrIndex</span>, <span class="ident">KeyValuePair</span>, <span class="ident">MetaParser</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">util</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">COLOR_TYPES</span>;
 
 <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">shared</span>::{<span class="self">self</span>, <span class="ident">ConvertDirection</span>};
 

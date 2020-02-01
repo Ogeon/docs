@@ -59,15 +59,15 @@
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! The sRGB standard.</span>
 
-<span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">TransferFn</span>;
-<span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
-<span class="kw">use</span> <span class="ident">luma</span>::<span class="ident">LumaStandard</span>;
-<span class="kw">use</span> <span class="ident">rgb</span>::{<span class="ident">Primaries</span>, <span class="ident">RgbSpace</span>, <span class="ident">RgbStandard</span>};
-<span class="kw">use</span> <span class="ident">white_point</span>::{<span class="ident">WhitePoint</span>, <span class="ident">D65</span>};
-<span class="kw">use</span> {<span class="ident">from_f64</span>, <span class="ident">FromF64</span>};
-<span class="kw">use</span> {<span class="ident">FloatComponent</span>, <span class="ident">Yxy</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">encoding</span>::<span class="ident">TransferFn</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">float</span>::<span class="ident">Float</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">luma</span>::<span class="ident">LumaStandard</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">rgb</span>::{<span class="ident">Primaries</span>, <span class="ident">RgbSpace</span>, <span class="ident">RgbStandard</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>::{<span class="ident">WhitePoint</span>, <span class="ident">D65</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">from_f64</span>, <span class="ident">FromF64</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">FloatComponent</span>, <span class="ident">Yxy</span>};
 
-<span class="doccomment">///The sRGB color space.</span>
+<span class="doccomment">/// The sRGB color space.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Srgb</span>;
 

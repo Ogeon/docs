@@ -77,49 +77,47 @@
 <span id="77">77</span>
 <span id="78">78</span>
 <span id="79">79</span>
-<span id="80">80</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//!Color blending and blending equations.</span>
+<span class="doccomment">//! Color blending and blending equations.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!Palette offers both OpenGL style blending equations, as well as most of the</span>
-<span class="doccomment">//!SVG composition operators (also common in photo manipulation software). The</span>
-<span class="doccomment">//!composition operators are all implemented in the</span>
-<span class="doccomment">//![`Blend`](trait.Blend.html) trait, and ready to use with any appropriate</span>
-<span class="doccomment">//!color type:</span>
+<span class="doccomment">//! Palette offers both OpenGL style blending equations, as well as most of the</span>
+<span class="doccomment">//! SVG composition operators (also common in photo manipulation software). The</span>
+<span class="doccomment">//! composition operators are all implemented in the</span>
+<span class="doccomment">//! [`Blend`](trait.Blend.html) trait, and ready to use with any appropriate</span>
+<span class="doccomment">//! color type:</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!```</span>
-<span class="doccomment">//!use palette::{LinSrgba, Blend};</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! use palette::{LinSrgba, Blend};</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!let a = LinSrgba::new(0.2, 0.5, 0.1, 0.8);</span>
-<span class="doccomment">//!let b = LinSrgba::new(0.6, 0.3, 0.5, 0.1);</span>
-<span class="doccomment">//!let c = a.overlay(b);</span>
-<span class="doccomment">//!```</span>
+<span class="doccomment">//! let a = LinSrgba::new(0.2, 0.5, 0.1, 0.8);</span>
+<span class="doccomment">//! let b = LinSrgba::new(0.6, 0.3, 0.5, 0.1);</span>
+<span class="doccomment">//! let c = a.overlay(b);</span>
+<span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!Blending equations can be defined using the</span>
-<span class="doccomment">//![`Equations`](struct.Equations.html) type, which is then passed to the</span>
-<span class="doccomment">//!`blend` function, from the `Blend` trait:</span>
+<span class="doccomment">//! Blending equations can be defined using the</span>
+<span class="doccomment">//! [`Equations`](struct.Equations.html) type, which is then passed to the</span>
+<span class="doccomment">//! `blend` function, from the `Blend` trait:</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!```</span>
-<span class="doccomment">//!use palette::{LinSrgba, Blend};</span>
-<span class="doccomment">//!use palette::blend::{Equations, Parameter};</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! use palette::{LinSrgba, Blend};</span>
+<span class="doccomment">//! use palette::blend::{Equations, Parameter};</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!let blend_mode = Equations::from_parameters(</span>
+<span class="doccomment">//! let blend_mode = Equations::from_parameters(</span>
 <span class="doccomment">//!    Parameter::SourceAlpha,</span>
 <span class="doccomment">//!    Parameter::OneMinusSourceAlpha</span>
-<span class="doccomment">//!);</span>
+<span class="doccomment">//! );</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!let a = LinSrgba::new(0.2, 0.5, 0.1, 0.8);</span>
-<span class="doccomment">//!let b = LinSrgba::new(0.6, 0.3, 0.5, 0.1);</span>
-<span class="doccomment">//!let c = a.blend(b, blend_mode);</span>
-<span class="doccomment">//!```</span>
+<span class="doccomment">//! let a = LinSrgba::new(0.2, 0.5, 0.1, 0.8);</span>
+<span class="doccomment">//! let b = LinSrgba::new(0.6, 0.3, 0.5, 0.1);</span>
+<span class="doccomment">//! let c = a.blend(b, blend_mode);</span>
+<span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!Note that blending will use [premultiplied alpha](struct.PreAlpha.html),</span>
-<span class="doccomment">//!which may result in loss of some color information in some cases. One such</span>
-<span class="doccomment">//!case is that a completely transparent resultant color will become black.</span>
+<span class="doccomment">//! Note that blending will use [premultiplied alpha](struct.PreAlpha.html),</span>
+<span class="doccomment">//! which may result in loss of some color information in some cases. One such</span>
+<span class="doccomment">//! case is that a completely transparent resultant color will become black.</span>
 
-<span class="kw">use</span> <span class="ident">float</span>::<span class="ident">Float</span>;
-
-<span class="kw">use</span> <span class="ident">ComponentWise</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">float</span>::<span class="ident">Float</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ComponentWise</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">blend</span>::<span class="ident">Blend</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">equations</span>::{<span class="ident">Equation</span>, <span class="ident">Equations</span>, <span class="ident">Parameter</span>, <span class="ident">Parameters</span>};
@@ -132,12 +130,12 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span>;
 
-<span class="doccomment">///A trait for custom blend functions.</span>
+<span class="doccomment">/// A trait for custom blend functions.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">BlendFunction</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Blend</span><span class="op">&lt;</span><span class="ident">Color</span> <span class="op">=</span> <span class="ident">C</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">ComponentWise</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">C</span>::<span class="ident">Scalar</span>: <span class="ident">Float</span>,
 {
-    <span class="doccomment">///Apply this blend function to a pair of colors.</span>
+    <span class="doccomment">/// Apply this blend function to a pair of colors.</span>
     <span class="kw">fn</span> <span class="ident">apply_to</span>(
         <span class="self">self</span>,
         <span class="ident">source</span>: <span class="ident">PreAlpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>,

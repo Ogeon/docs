@@ -30,35 +30,35 @@
 <span id="30">30</span>
 <span id="31">31</span>
 </pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//!A collection of named color constants. Can be toggled with the `&quot;named&quot;` and `&quot;named_from_str&quot;`</span>
-<span class="doccomment">//!Cargo features.</span>
+<span class="doccomment">//! A collection of named color constants. Can be toggled with the `&quot;named&quot;` and</span>
+<span class="doccomment">//! `&quot;named_from_str&quot;` Cargo features.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!They are taken from the [SVG keyword</span>
-<span class="doccomment">//!colors](https://www.w3.org/TR/SVG/types.html#ColorKeywords) (same as in</span>
-<span class="doccomment">//!CSS3) and they can be used as if they were pixel values:</span>
+<span class="doccomment">//! They are taken from the [SVG keyword</span>
+<span class="doccomment">//! colors](https://www.w3.org/TR/SVG/types.html#ColorKeywords) (same as in</span>
+<span class="doccomment">//! CSS3) and they can be used as if they were pixel values:</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!```</span>
-<span class="doccomment">//!use palette::Srgb;</span>
-<span class="doccomment">//!use palette::named;</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! use palette::Srgb;</span>
+<span class="doccomment">//! use palette::named;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//!//From constant</span>
-<span class="doccomment">//!let from_const = Srgb::&lt;f32&gt;::from_format(named::OLIVE).into_linear();</span>
+<span class="doccomment">//! //From constant</span>
+<span class="doccomment">//! let from_const = Srgb::&lt;f32&gt;::from_format(named::OLIVE).into_linear();</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;named_from_str&quot;</span>, <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;named_from_str&quot;</span>, <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;//From name string&quot;</span>)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;named_from_str&quot;</span>, <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;let olive = named::from_str(\&quot;olive\&quot;).expect(\&quot;unknown color\&quot;);&quot;</span>)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;named_from_str&quot;</span>, <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;let from_str = Srgb::&lt;f32&gt;::from_format(olive).into_linear();&quot;</span>)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;named_from_str&quot;</span>, <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;&quot;</span>)]</span>
 <span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;named_from_str&quot;</span>, <span class="ident">doc</span> <span class="op">=</span> <span class="string">&quot;assert_eq!(from_const, from_str);&quot;</span>)]</span>
-<span class="doccomment">//!```</span>
+<span class="doccomment">//! ```</span>
 
 <span class="macro">include</span><span class="macro">!</span>(<span class="macro">concat</span><span class="macro">!</span>(<span class="macro">env</span><span class="macro">!</span>(<span class="string">&quot;OUT_DIR&quot;</span>), <span class="string">&quot;/named.rs&quot;</span>));
 
-<span class="doccomment">///Get a SVG/CSS3 color by name. Can be toggled with the `&quot;named_from_str&quot;`</span>
-<span class="doccomment">///Cargo feature.</span>
+<span class="doccomment">/// Get a SVG/CSS3 color by name. Can be toggled with the `&quot;named_from_str&quot;`</span>
+<span class="doccomment">/// Cargo feature.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///The names are the same as the constants, but lower case.</span>
+<span class="doccomment">/// The names are the same as the constants, but lower case.</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;named_from_str&quot;</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>::<span class="ident">Srgb</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">crate</span>::<span class="ident">Srgb</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="ident">COLORS</span>.<span class="ident">get</span>(<span class="ident">name</span>).<span class="ident">cloned</span>()
 }
 </pre></div>

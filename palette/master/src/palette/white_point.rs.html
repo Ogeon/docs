@@ -184,35 +184,41 @@
 <span id="184">184</span>
 <span id="185">185</span>
 <span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Defines the tristimulus values of the CIE Illuminants.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! White point is the reference white or target white as seen by a standard observer under a</span>
-<span class="doccomment">//! standard illuminant. For example, photographs taken indoors may be lit by incandescent lights,</span>
-<span class="doccomment">//! which are relatively orange compared to daylight. Defining &quot;white&quot; as daylight will give</span>
-<span class="doccomment">//! unacceptable results when attempting to color-correct a photograph taken with incandescent</span>
-<span class="doccomment">//! lighting.</span>
+<span class="doccomment">//! White point is the reference white or target white as seen by a standard</span>
+<span class="doccomment">//! observer under a standard illuminant. For example, photographs taken indoors</span>
+<span class="doccomment">//! may be lit by incandescent lights, which are relatively orange compared to</span>
+<span class="doccomment">//! daylight. Defining &quot;white&quot; as daylight will give unacceptable results when</span>
+<span class="doccomment">//! attempting to color-correct a photograph taken with incandescent lighting.</span>
 
-<span class="kw">use</span> {<span class="ident">from_f64</span>, <span class="ident">FloatComponent</span>, <span class="ident">Xyz</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">from_f64</span>, <span class="ident">FloatComponent</span>, <span class="ident">Xyz</span>};
 
-<span class="doccomment">///WhitePoint defines the Xyz color co-ordinates for a given white point.</span>
+<span class="doccomment">/// WhitePoint defines the Xyz color co-ordinates for a given white point.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///A white point (often referred to as reference white or target white in technical documents)</span>
-<span class="doccomment">///is a set of tristimulus values or chromaticity coordinates that serve to define the color</span>
-<span class="doccomment">///&quot;white&quot; in image capture, encoding, or reproduction.</span>
+<span class="doccomment">/// A white point (often referred to as reference white or target white in</span>
+<span class="doccomment">/// technical documents) is a set of tristimulus values or chromaticity</span>
+<span class="doccomment">/// coordinates that serve to define the color &quot;white&quot; in image capture,</span>
+<span class="doccomment">/// encoding, or reproduction.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///Custom white points can be easily defined on an empty struct with the tristimulus values</span>
-<span class="doccomment">///and can be used in place of the ones defined in this library.</span>
+<span class="doccomment">/// Custom white points can be easily defined on an empty struct with the</span>
+<span class="doccomment">/// tristimulus values and can be used in place of the ones defined in this</span>
+<span class="doccomment">/// library.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">WhitePoint</span> {
-    <span class="doccomment">///Get the Xyz chromacity co-ordinates for the white point.</span>
+    <span class="doccomment">/// Get the Xyz chromacity co-ordinates for the white point.</span>
     <span class="kw">fn</span> <span class="ident">get_xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>: <span class="ident">WhitePoint</span>, <span class="ident">T</span>: <span class="ident">FloatComponent</span><span class="op">&gt;</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 }
 
 <span class="doccomment">/// CIE standard illuminant A</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// CIE standard illuminant A is intended to represent typical, domestic, tungsten-filament</span>
-<span class="doccomment">/// lighting. Its relative spectral power distribution is that of a Planckian radiator at a</span>
-<span class="doccomment">/// temperature of approximately 2856 K. Uses the CIE 1932 2° Standard Observer</span>
+<span class="doccomment">/// CIE standard illuminant A is intended to represent typical, domestic,</span>
+<span class="doccomment">/// tungsten-filament lighting. Its relative spectral power distribution is that</span>
+<span class="doccomment">/// of a Planckian radiator at a temperature of approximately 2856 K. Uses the</span>
+<span class="doccomment">/// CIE 1932 2° Standard Observer</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">A</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">A</span> {
@@ -222,8 +228,8 @@
 }
 <span class="doccomment">/// CIE standard illuminant B</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// CIE standard illuminant B represents noon sunlight, with a correlated color temperature (CCT)</span>
-<span class="doccomment">/// of 4874 K Uses the CIE 1932 2° Standard Observer</span>
+<span class="doccomment">/// CIE standard illuminant B represents noon sunlight, with a correlated color</span>
+<span class="doccomment">/// temperature (CCT) of 4874 K Uses the CIE 1932 2° Standard Observer</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">B</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">B</span> {
@@ -231,10 +237,10 @@
         <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">from_f64</span>(<span class="number">0.99072</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">from_f64</span>(<span class="number">0.85223</span>))
     }
 }
-<span class="doccomment">///CIE standard illuminant C</span>
+<span class="doccomment">/// CIE standard illuminant C</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///CIE standard illuminant C represents the average day light with a CCT of 6774 K</span>
-<span class="doccomment">///Uses the CIE 1932 2° Standard Observer</span>
+<span class="doccomment">/// CIE standard illuminant C represents the average day light with a CCT of</span>
+<span class="doccomment">/// 6774 K Uses the CIE 1932 2° Standard Observer</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">C</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">C</span> {
@@ -242,10 +248,10 @@
         <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">from_f64</span>(<span class="number">0.98074</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">from_f64</span>(<span class="number">1.18232</span>))
     }
 }
-<span class="doccomment">///CIE D series standard illuminant - D50</span>
+<span class="doccomment">/// CIE D series standard illuminant - D50</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///D50 White Point is the natural daylight with a color temperature of around 5000K</span>
-<span class="doccomment">///for 2° Standard Observer.</span>
+<span class="doccomment">/// D50 White Point is the natural daylight with a color temperature of around</span>
+<span class="doccomment">/// 5000K for 2° Standard Observer.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D50</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D50</span> {
@@ -253,10 +259,10 @@
         <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">from_f64</span>(<span class="number">0.96422</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">from_f64</span>(<span class="number">0.82521</span>))
     }
 }
-<span class="doccomment">///CIE D series standard illuminant - D55</span>
+<span class="doccomment">/// CIE D series standard illuminant - D55</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///D55 White Point is the natural daylight with a color temperature of around 5500K</span>
-<span class="doccomment">///for 2° Standard Observer.</span>
+<span class="doccomment">/// D55 White Point is the natural daylight with a color temperature of around</span>
+<span class="doccomment">/// 5500K for 2° Standard Observer.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D55</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D55</span> {
@@ -264,10 +270,10 @@
         <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">from_f64</span>(<span class="number">0.95682</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">from_f64</span>(<span class="number">0.92149</span>))
     }
 }
-<span class="doccomment">///CIE D series standard illuminant - D65</span>
+<span class="doccomment">/// CIE D series standard illuminant - D65</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///D65 White Point is the natural daylight with a color temperature of 6500K</span>
-<span class="doccomment">///for 2° Standard Observer.</span>
+<span class="doccomment">/// D65 White Point is the natural daylight with a color temperature of 6500K</span>
+<span class="doccomment">/// for 2° Standard Observer.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D65</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D65</span> {
@@ -275,10 +281,10 @@
         <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">from_f64</span>(<span class="number">0.95047</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">from_f64</span>(<span class="number">1.08883</span>))
     }
 }
-<span class="doccomment">///CIE D series standard illuminant - D75</span>
+<span class="doccomment">/// CIE D series standard illuminant - D75</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///D75 White Point is the natural daylight with a color temperature of around 7500K</span>
-<span class="doccomment">///for 2° Standard Observer.</span>
+<span class="doccomment">/// D75 White Point is the natural daylight with a color temperature of around</span>
+<span class="doccomment">/// 7500K for 2° Standard Observer.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D75</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D75</span> {
@@ -286,10 +292,10 @@
         <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">from_f64</span>(<span class="number">0.94972</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">from_f64</span>(<span class="number">1.22638</span>))
     }
 }
-<span class="doccomment">///CIE standard illuminant E</span>
+<span class="doccomment">/// CIE standard illuminant E</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///CIE standard illuminant E represents the equal energy radiator</span>
-<span class="doccomment">///Uses the CIE 1932 2° Standard Observer</span>
+<span class="doccomment">/// CIE standard illuminant E represents the equal energy radiator</span>
+<span class="doccomment">/// Uses the CIE 1932 2° Standard Observer</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">E</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">E</span> {
@@ -297,9 +303,9 @@
         <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">T</span>::<span class="ident">one</span>())
     }
 }
-<span class="doccomment">///CIE fluorescent illuminant series - F2</span>
+<span class="doccomment">/// CIE fluorescent illuminant series - F2</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///F2 represents a semi-broadband fluorescent lamp for 2° Standard Observer.</span>
+<span class="doccomment">/// F2 represents a semi-broadband fluorescent lamp for 2° Standard Observer.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">F2</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">F2</span> {
@@ -307,9 +313,9 @@
         <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">from_f64</span>(<span class="number">0.99186</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">from_f64</span>(<span class="number">0.67393</span>))
     }
 }
-<span class="doccomment">///CIE fluorescent illuminant series - F7</span>
+<span class="doccomment">/// CIE fluorescent illuminant series - F7</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///F7 represents a broadband fluorescent lamp for 2° Standard Observer.</span>
+<span class="doccomment">/// F7 represents a broadband fluorescent lamp for 2° Standard Observer.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">F7</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">F7</span> {
@@ -317,9 +323,9 @@
         <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">from_f64</span>(<span class="number">0.95041</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">from_f64</span>(<span class="number">1.08747</span>))
     }
 }
-<span class="doccomment">///CIE fluorescent illuminant series - F11</span>
+<span class="doccomment">/// CIE fluorescent illuminant series - F11</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///F11 represents a narrowband fluorescent lamp for 2° Standard Observer.</span>
+<span class="doccomment">/// F11 represents a narrowband fluorescent lamp for 2° Standard Observer.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">F11</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">F11</span> {
@@ -327,10 +333,10 @@
         <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">from_f64</span>(<span class="number">1.00962</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">from_f64</span>(<span class="number">0.64350</span>))
     }
 }
-<span class="doccomment">///CIE D series standard illuminant - D50</span>
+<span class="doccomment">/// CIE D series standard illuminant - D50</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///D50 White Point is the natural daylight with a color temperature of around 5000K</span>
-<span class="doccomment">///for 10° Standard Observer.</span>
+<span class="doccomment">/// D50 White Point is the natural daylight with a color temperature of around</span>
+<span class="doccomment">/// 5000K for 10° Standard Observer.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D50Degree10</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D50Degree10</span> {
@@ -338,10 +344,10 @@
         <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">from_f64</span>(<span class="number">0.9672</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">from_f64</span>(<span class="number">0.8143</span>))
     }
 }
-<span class="doccomment">///CIE D series standard illuminant - D55</span>
+<span class="doccomment">/// CIE D series standard illuminant - D55</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///D55 White Point is the natural daylight with a color temperature of around 5500K</span>
-<span class="doccomment">///for 10° Standard Observer.</span>
+<span class="doccomment">/// D55 White Point is the natural daylight with a color temperature of around</span>
+<span class="doccomment">/// 5500K for 10° Standard Observer.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D55Degree10</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D55Degree10</span> {
@@ -349,10 +355,10 @@
         <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">from_f64</span>(<span class="number">0.958</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">from_f64</span>(<span class="number">0.9093</span>))
     }
 }
-<span class="doccomment">///CIE D series standard illuminant - D65</span>
+<span class="doccomment">/// CIE D series standard illuminant - D65</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///D65 White Point is the natural daylight with a color temperature of 6500K</span>
-<span class="doccomment">///for 10° Standard Observer.</span>
+<span class="doccomment">/// D65 White Point is the natural daylight with a color temperature of 6500K</span>
+<span class="doccomment">/// for 10° Standard Observer.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D65Degree10</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D65Degree10</span> {
@@ -360,10 +366,10 @@
         <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">from_f64</span>(<span class="number">0.9481</span>), <span class="ident">T</span>::<span class="ident">one</span>(), <span class="ident">from_f64</span>(<span class="number">1.073</span>))
     }
 }
-<span class="doccomment">///CIE D series standard illuminant - D75</span>
+<span class="doccomment">/// CIE D series standard illuminant - D75</span>
 <span class="doccomment">///</span>
-<span class="doccomment">///D75 White Point is the natural daylight with a color temperature of around 7500K</span>
-<span class="doccomment">///for 10° Standard Observer.</span>
+<span class="doccomment">/// D75 White Point is the natural daylight with a color temperature of around</span>
+<span class="doccomment">/// 7500K for 10° Standard Observer.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">D75Degree10</span>;
 <span class="kw">impl</span> <span class="ident">WhitePoint</span> <span class="kw">for</span> <span class="ident">D75Degree10</span> {
