@@ -132,6 +132,7 @@
 <span id="132">132</span>
 <span id="133">133</span>
 <span id="134">134</span>
+<span id="135">135</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! RGB types, spaces and standards.</span>
 
@@ -141,9 +142,10 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>::<span class="ident">WhitePoint</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Component</span>, <span class="ident">FloatComponent</span>, <span class="ident">FromComponent</span>, <span class="ident">Yxy</span>};
 
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">packed</span>::{<span class="ident">channels</span>, <span class="ident">Packed</span>, <span class="ident">RgbChannels</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">rgb</span>::{<span class="ident">Rgb</span>, <span class="ident">Rgba</span>};
 
-<span class="comment">//mod linear;</span>
+<span class="kw">mod</span> <span class="ident">packed</span>;
 <span class="kw">mod</span> <span class="ident">rgb</span>;
 
 <span class="doccomment">/// Nonlinear sRGB.</span>
