@@ -731,6 +731,34 @@
 <span id="731">731</span>
 <span id="732">732</span>
 <span id="733">733</span>
+<span id="734">734</span>
+<span id="735">735</span>
+<span id="736">736</span>
+<span id="737">737</span>
+<span id="738">738</span>
+<span id="739">739</span>
+<span id="740">740</span>
+<span id="741">741</span>
+<span id="742">742</span>
+<span id="743">743</span>
+<span id="744">744</span>
+<span id="745">745</span>
+<span id="746">746</span>
+<span id="747">747</span>
+<span id="748">748</span>
+<span id="749">749</span>
+<span id="750">750</span>
+<span id="751">751</span>
+<span id="752">752</span>
+<span id="753">753</span>
+<span id="754">754</span>
+<span id="755">755</span>
+<span id="756">756</span>
+<span id="757">757</span>
+<span id="758">758</span>
+<span id="759">759</span>
+<span id="760">760</span>
+<span id="761">761</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">any</span>::<span class="ident">TypeId</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
@@ -910,6 +938,26 @@
             <span class="ident">lightness</span>: <span class="self">self</span>.<span class="ident">lightness</span>,
             <span class="ident">space</span>: <span class="ident">PhantomData</span>,
         }
+    }
+
+    <span class="doccomment">/// Return the `saturation` value minimum.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min_saturation</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">T</span>::<span class="ident">zero</span>()
+    }
+
+    <span class="doccomment">/// Return the `saturation` value maximum.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_saturation</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">T</span>::<span class="ident">max_intensity</span>()
+    }
+
+    <span class="doccomment">/// Return the `lightness` value minimum.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min_lightness</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">T</span>::<span class="ident">zero</span>()
+    }
+
+    <span class="doccomment">/// Return the `lightness` value maximum.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_lightness</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">T</span>::<span class="ident">max_intensity</span>()
     }
 }
 
@@ -1444,6 +1492,14 @@
 
     <span class="macro">raw_pixel_conversion_tests</span><span class="macro">!</span>(<span class="ident">Hsl</span><span class="op">&lt;</span><span class="ident">Srgb</span><span class="op">&gt;</span>: <span class="ident">hue</span>, <span class="ident">saturation</span>, <span class="ident">lightness</span>);
     <span class="macro">raw_pixel_conversion_fail_tests</span><span class="macro">!</span>(<span class="ident">Hsl</span><span class="op">&lt;</span><span class="ident">Srgb</span><span class="op">&gt;</span>: <span class="ident">hue</span>, <span class="ident">saturation</span>, <span class="ident">lightness</span>);
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">check_min_max_components</span>() {
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Hsl</span>::<span class="op">&lt;</span><span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">min_saturation</span>(), <span class="number">0.0</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Hsl</span>::<span class="op">&lt;</span><span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">min_lightness</span>(), <span class="number">0.0</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Hsl</span>::<span class="op">&lt;</span><span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">max_saturation</span>(), <span class="number">1.0</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Hsl</span>::<span class="op">&lt;</span><span class="ident">Srgb</span><span class="op">&gt;</span>::<span class="ident">max_lightness</span>(), <span class="number">1.0</span>);
+    }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>

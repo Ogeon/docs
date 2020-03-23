@@ -574,6 +574,44 @@
 <span id="574">574</span>
 <span id="575">575</span>
 <span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
+<span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
@@ -688,6 +726,35 @@
     <span class="doccomment">/// Convert from a `(L\*, C\*, h°)` tuple.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_components</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">LabHue</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>((<span class="ident">l</span>, <span class="ident">chroma</span>, <span class="ident">hue</span>): (<span class="ident">T</span>, <span class="ident">T</span>, <span class="ident">H</span>)) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">with_wp</span>(<span class="ident">l</span>, <span class="ident">chroma</span>, <span class="ident">hue</span>)
+    }
+
+    <span class="doccomment">/// Return the `l` value minimum.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min_l</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">T</span>::<span class="ident">zero</span>()
+    }
+
+    <span class="doccomment">/// Return the `l` value maximum.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_l</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">from_f64</span>(<span class="number">100.0</span>)
+    }
+
+    <span class="doccomment">/// Return the `chroma` value minimum.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min_chroma</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">T</span>::<span class="ident">zero</span>()
+    }
+
+    <span class="doccomment">/// Return the `chroma` value maximum. This value does not cover the entire</span>
+    <span class="doccomment">/// color space, but covers enough to be practical for downsampling to</span>
+    <span class="doccomment">/// smaller color spaces like sRGB.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_chroma</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">from_f64</span>(<span class="number">128.0</span>)
+    }
+
+    <span class="doccomment">/// Return the `chroma` extended maximum value. This value covers the entire</span>
+    <span class="doccomment">/// color space and is included for completeness, but the additional range</span>
+    <span class="doccomment">/// should be unnecessary for most use cases.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_extended_chroma</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">from_f64</span>(<span class="kw">crate</span>::<span class="ident">float</span>::<span class="ident">Float</span>::<span class="ident">sqrt</span>(<span class="number">128.0f64</span> <span class="op">*</span> <span class="number">128.0</span> <span class="op">+</span> <span class="number">128.0</span> <span class="op">*</span> <span class="number">128.0</span>))
     }
 }
 
@@ -1133,6 +1200,15 @@
 
     <span class="macro">raw_pixel_conversion_tests</span><span class="macro">!</span>(<span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">D65</span><span class="op">&gt;</span>: <span class="ident">l</span>, <span class="ident">chroma</span>, <span class="ident">hue</span>);
     <span class="macro">raw_pixel_conversion_fail_tests</span><span class="macro">!</span>(<span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">D65</span><span class="op">&gt;</span>: <span class="ident">l</span>, <span class="ident">chroma</span>, <span class="ident">hue</span>);
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">check_min_max_components</span>() {
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Lch</span>::<span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">min_l</span>(), <span class="number">0.0</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Lch</span>::<span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">max_l</span>(), <span class="number">100.0</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Lch</span>::<span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">min_chroma</span>(), <span class="number">0.0</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Lch</span>::<span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">max_chroma</span>(), <span class="number">128.0</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Lch</span>::<span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">max_extended_chroma</span>(), <span class="number">181.01933598375618</span>);
+    }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">test</span>]</span>

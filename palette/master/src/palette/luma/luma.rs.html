@@ -823,6 +823,22 @@
 <span id="823">823</span>
 <span id="824">824</span>
 <span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
+<span id="836">836</span>
+<span id="837">837</span>
+<span id="838">838</span>
+<span id="839">839</span>
+<span id="840">840</span>
+<span id="841">841</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
@@ -933,6 +949,16 @@
     <span class="doccomment">/// Convert from a `(luma,)` tuple.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_components</span>((<span class="ident">luma</span>,): (<span class="ident">T</span>,)) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">luma</span>)
+    }
+
+    <span class="doccomment">/// Return the `luma` value minimum.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min_luma</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">T</span>::<span class="ident">zero</span>()
+    }
+
+    <span class="doccomment">/// Return the `luma` value maximum.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_luma</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">T</span>::<span class="ident">max_intensity</span>()
     }
 }
 
@@ -1631,6 +1657,12 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:03X}&quot;</span>, <span class="ident">Luma</span>::<span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">u16</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="number">1</span>)), <span class="string">&quot;001&quot;</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:03X}&quot;</span>, <span class="ident">Luma</span>::<span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">u32</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="number">1</span>)), <span class="string">&quot;001&quot;</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{:03X}&quot;</span>, <span class="ident">Luma</span>::<span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">u64</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="number">1</span>)), <span class="string">&quot;001&quot;</span>);
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">check_min_max_components</span>() {
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Luma</span>::<span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">min_luma</span>(), <span class="number">0.0</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Luma</span>::<span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">max_luma</span>(), <span class="number">1.0</span>);
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>)]</span>

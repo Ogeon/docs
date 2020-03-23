@@ -1316,6 +1316,46 @@
 <span id="1316">1316</span>
 <span id="1317">1317</span>
 <span id="1318">1318</span>
+<span id="1319">1319</span>
+<span id="1320">1320</span>
+<span id="1321">1321</span>
+<span id="1322">1322</span>
+<span id="1323">1323</span>
+<span id="1324">1324</span>
+<span id="1325">1325</span>
+<span id="1326">1326</span>
+<span id="1327">1327</span>
+<span id="1328">1328</span>
+<span id="1329">1329</span>
+<span id="1330">1330</span>
+<span id="1331">1331</span>
+<span id="1332">1332</span>
+<span id="1333">1333</span>
+<span id="1334">1334</span>
+<span id="1335">1335</span>
+<span id="1336">1336</span>
+<span id="1337">1337</span>
+<span id="1338">1338</span>
+<span id="1339">1339</span>
+<span id="1340">1340</span>
+<span id="1341">1341</span>
+<span id="1342">1342</span>
+<span id="1343">1343</span>
+<span id="1344">1344</span>
+<span id="1345">1345</span>
+<span id="1346">1346</span>
+<span id="1347">1347</span>
+<span id="1348">1348</span>
+<span id="1349">1349</span>
+<span id="1350">1350</span>
+<span id="1351">1351</span>
+<span id="1352">1352</span>
+<span id="1353">1353</span>
+<span id="1354">1354</span>
+<span id="1355">1355</span>
+<span id="1356">1356</span>
+<span id="1357">1357</span>
+<span id="1358">1358</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">any</span>::<span class="ident">TypeId</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
@@ -1434,6 +1474,36 @@
     <span class="doccomment">/// Convert from a `(red, green, blue)` tuple.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_components</span>((<span class="ident">red</span>, <span class="ident">green</span>, <span class="ident">blue</span>): (<span class="ident">T</span>, <span class="ident">T</span>, <span class="ident">T</span>)) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="ident">red</span>, <span class="ident">green</span>, <span class="ident">blue</span>)
+    }
+
+    <span class="doccomment">/// Return the `red` value minimum.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min_red</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">T</span>::<span class="ident">zero</span>()
+    }
+
+    <span class="doccomment">/// Return the `red` value maximum.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_red</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">T</span>::<span class="ident">max_intensity</span>()
+    }
+
+    <span class="doccomment">/// Return the `green` value minimum.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min_green</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">T</span>::<span class="ident">zero</span>()
+    }
+
+    <span class="doccomment">/// Return the `green` value maximum.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_green</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">T</span>::<span class="ident">max_intensity</span>()
+    }
+
+    <span class="doccomment">/// Return the `blue` value minimum.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min_blue</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">T</span>::<span class="ident">zero</span>()
+    }
+
+    <span class="doccomment">/// Return the `blue` value maximum.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_blue</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+        <span class="ident">T</span>::<span class="ident">max_intensity</span>()
     }
 }
 
@@ -2633,6 +2703,16 @@
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">unwrap</span>(), <span class="ident">Rgb</span>::<span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">u8</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="number">240</span>, <span class="number">52</span>, <span class="number">230</span>));
         <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">Rgb</span>::<span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">u8</span><span class="op">&gt;</span>::<span class="ident">from_str</span>(<span class="string">&quot;abc&quot;</span>);
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">c</span>.<span class="ident">unwrap</span>(), <span class="ident">Rgb</span>::<span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">u8</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="number">170</span>, <span class="number">187</span>, <span class="number">204</span>));
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">check_min_max_components</span>() {
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Rgb</span>::<span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">min_red</span>(), <span class="number">0.0</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Rgb</span>::<span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">min_green</span>(), <span class="number">0.0</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Rgb</span>::<span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">min_blue</span>(), <span class="number">0.0</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Rgb</span>::<span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">max_red</span>(), <span class="number">1.0</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Rgb</span>::<span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">max_green</span>(), <span class="number">1.0</span>);
+        <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">Rgb</span>::<span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">f32</span><span class="op">&gt;</span>::<span class="ident">max_blue</span>(), <span class="number">1.0</span>);
     }
 }
 </pre></div>
