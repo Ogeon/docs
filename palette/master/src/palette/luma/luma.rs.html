@@ -839,12 +839,100 @@
 <span id="839">839</span>
 <span id="840">840</span>
 <span id="841">841</span>
+<span id="842">842</span>
+<span id="843">843</span>
+<span id="844">844</span>
+<span id="845">845</span>
+<span id="846">846</span>
+<span id="847">847</span>
+<span id="848">848</span>
+<span id="849">849</span>
+<span id="850">850</span>
+<span id="851">851</span>
+<span id="852">852</span>
+<span id="853">853</span>
+<span id="854">854</span>
+<span id="855">855</span>
+<span id="856">856</span>
+<span id="857">857</span>
+<span id="858">858</span>
+<span id="859">859</span>
+<span id="860">860</span>
+<span id="861">861</span>
+<span id="862">862</span>
+<span id="863">863</span>
+<span id="864">864</span>
+<span id="865">865</span>
+<span id="866">866</span>
+<span id="867">867</span>
+<span id="868">868</span>
+<span id="869">869</span>
+<span id="870">870</span>
+<span id="871">871</span>
+<span id="872">872</span>
+<span id="873">873</span>
+<span id="874">874</span>
+<span id="875">875</span>
+<span id="876">876</span>
+<span id="877">877</span>
+<span id="878">878</span>
+<span id="879">879</span>
+<span id="880">880</span>
+<span id="881">881</span>
+<span id="882">882</span>
+<span id="883">883</span>
+<span id="884">884</span>
+<span id="885">885</span>
+<span id="886">886</span>
+<span id="887">887</span>
+<span id="888">888</span>
+<span id="889">889</span>
+<span id="890">890</span>
+<span id="891">891</span>
+<span id="892">892</span>
+<span id="893">893</span>
+<span id="894">894</span>
+<span id="895">895</span>
+<span id="896">896</span>
+<span id="897">897</span>
+<span id="898">898</span>
+<span id="899">899</span>
+<span id="900">900</span>
+<span id="901">901</span>
+<span id="902">902</span>
+<span id="903">903</span>
+<span id="904">904</span>
+<span id="905">905</span>
+<span id="906">906</span>
+<span id="907">907</span>
+<span id="908">908</span>
+<span id="909">909</span>
+<span id="910">910</span>
+<span id="911">911</span>
+<span id="912">912</span>
+<span id="913">913</span>
+<span id="914">914</span>
+<span id="915">915</span>
+<span id="916">916</span>
+<span id="917">917</span>
+<span id="918">918</span>
+<span id="919">919</span>
+<span id="920">920</span>
+<span id="921">921</span>
+<span id="922">922</span>
+<span id="923">923</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Div</span>, <span class="ident">DivAssign</span>, <span class="ident">Mul</span>, <span class="ident">MulAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
 
 <span class="kw">use</span> <span class="ident">approx</span>::{<span class="ident">AbsDiffEq</span>, <span class="ident">RelativeEq</span>, <span class="ident">UlpsEq</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">distributions</span>::<span class="ident">uniform</span>::{<span class="ident">SampleBorrow</span>, <span class="ident">SampleUniform</span>, <span class="ident">Uniform</span>, <span class="ident">UniformSampler</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">distributions</span>::{<span class="ident">Distribution</span>, <span class="ident">Standard</span>};
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">rand</span>::<span class="ident">Rng</span>;
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">blend</span>::<span class="ident">PreAlpha</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">encoding</span>::<span class="ident">linear</span>::<span class="ident">LinearFn</span>;
@@ -852,11 +940,9 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">encoding</span>::{<span class="ident">Linear</span>, <span class="ident">Srgb</span>, <span class="ident">TransferFn</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">luma</span>::<span class="ident">LumaStandard</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>::<span class="ident">WhitePoint</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">clamp</span>, <span class="ident">contrast_ratio</span>};
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Alpha</span>, <span class="ident">Xyz</span>, <span class="ident">Yxy</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">Blend</span>, <span class="ident">Component</span>, <span class="ident">ComponentWise</span>, <span class="ident">FloatComponent</span>, <span class="ident">FromColor</span>, <span class="ident">FromComponent</span>, <span class="ident">IntoColor</span>, <span class="ident">Limited</span>,
-    <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">RelativeContrast</span>, <span class="ident">Shade</span>,
+    <span class="ident">clamp</span>, <span class="ident">contrast_ratio</span>, <span class="ident">Alpha</span>, <span class="ident">Blend</span>, <span class="ident">Component</span>, <span class="ident">ComponentWise</span>, <span class="ident">FloatComponent</span>, <span class="ident">FromColor</span>,
+    <span class="ident">FromComponent</span>, <span class="ident">IntoColor</span>, <span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">RelativeContrast</span>, <span class="ident">Shade</span>, <span class="ident">Xyz</span>, <span class="ident">Yxy</span>,
 };
 
 <span class="doccomment">/// Luminance with an alpha component. See the [`Lumaa` implementation</span>
@@ -1589,6 +1675,84 @@
         <span class="kw">let</span> <span class="ident">luma2</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">into_luma</span>();
 
         <span class="ident">contrast_ratio</span>(<span class="ident">luma1</span>.<span class="ident">luma</span>, <span class="ident">luma2</span>.<span class="ident">luma</span>)
+    }
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Standard</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span>,
+    <span class="ident">S</span>: <span class="ident">LumaStandard</span>,
+    <span class="ident">Standard</span>: <span class="ident">Distribution</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+{
+    <span class="kw">fn</span> <span class="ident">sample</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Rng</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Luma</span> {
+            <span class="ident">luma</span>: <span class="ident">rng</span>.<span class="ident">gen</span>(),
+            <span class="ident">standard</span>: <span class="ident">PhantomData</span>,
+        }
+    }
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UniformLuma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">SampleUniform</span>,
+    <span class="ident">S</span>: <span class="ident">LumaStandard</span> <span class="op">+</span> <span class="ident">SampleUniform</span>,
+{
+    <span class="ident">luma</span>: <span class="ident">Uniform</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">standard</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>,
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">SampleUniform</span> <span class="kw">for</span> <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">SampleUniform</span>,
+    <span class="ident">S</span>: <span class="ident">LumaStandard</span> <span class="op">+</span> <span class="ident">SampleUniform</span>,
+{
+    <span class="kw">type</span> <span class="ident">Sampler</span> <span class="op">=</span> <span class="ident">UniformLuma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>;
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random&quot;</span>)]</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">UniformSampler</span> <span class="kw">for</span> <span class="ident">UniformLuma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">SampleUniform</span>,
+    <span class="ident">S</span>: <span class="ident">LumaStandard</span> <span class="op">+</span> <span class="ident">SampleUniform</span>,
+{
+    <span class="kw">type</span> <span class="ident">X</span> <span class="op">=</span> <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>;
+
+    <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">B1</span>, <span class="ident">B2</span><span class="op">&gt;</span>(<span class="ident">low_b</span>: <span class="ident">B1</span>, <span class="ident">high_b</span>: <span class="ident">B2</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">where</span>
+        <span class="ident">B1</span>: <span class="ident">SampleBorrow</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">X</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Sized</span>,
+        <span class="ident">B2</span>: <span class="ident">SampleBorrow</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">X</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Sized</span>,
+    {
+        <span class="kw">let</span> <span class="ident">low</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">low_b</span>.<span class="ident">borrow</span>();
+        <span class="kw">let</span> <span class="ident">high</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">high_b</span>.<span class="ident">borrow</span>();
+
+        <span class="ident">UniformLuma</span> {
+            <span class="ident">luma</span>: <span class="ident">Uniform</span>::<span class="ident">new</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">low</span>.<span class="ident">luma</span>, <span class="ident">high</span>.<span class="ident">luma</span>),
+            <span class="ident">standard</span>: <span class="ident">PhantomData</span>,
+        }
+    }
+
+    <span class="kw">fn</span> <span class="ident">new_inclusive</span><span class="op">&lt;</span><span class="ident">B1</span>, <span class="ident">B2</span><span class="op">&gt;</span>(<span class="ident">low_b</span>: <span class="ident">B1</span>, <span class="ident">high_b</span>: <span class="ident">B2</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">where</span>
+        <span class="ident">B1</span>: <span class="ident">SampleBorrow</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">X</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Sized</span>,
+        <span class="ident">B2</span>: <span class="ident">SampleBorrow</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">X</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Sized</span>,
+    {
+        <span class="kw">let</span> <span class="ident">low</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">low_b</span>.<span class="ident">borrow</span>();
+        <span class="kw">let</span> <span class="ident">high</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">high_b</span>.<span class="ident">borrow</span>();
+
+        <span class="ident">UniformLuma</span> {
+            <span class="ident">luma</span>: <span class="ident">Uniform</span>::<span class="ident">new_inclusive</span>::<span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">low</span>.<span class="ident">luma</span>, <span class="ident">high</span>.<span class="ident">luma</span>),
+            <span class="ident">standard</span>: <span class="ident">PhantomData</span>,
+        }
+    }
+
+    <span class="kw">fn</span> <span class="ident">sample</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Rng</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Luma</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Luma</span> {
+            <span class="ident">luma</span>: <span class="self">self</span>.<span class="ident">luma</span>.<span class="ident">sample</span>(<span class="ident">rng</span>),
+            <span class="ident">standard</span>: <span class="ident">PhantomData</span>,
+        }
     }
 }
 
