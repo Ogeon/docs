@@ -1,1 +1,1 @@
-initSidebarItems({"derive":[["FromColor",""],["IntoColor",""],["Pixel",""]]});
+initSidebarItems({"derive":[["FromColorUnclamped",""],["Pixel",""],["WithAlpha",""]]});

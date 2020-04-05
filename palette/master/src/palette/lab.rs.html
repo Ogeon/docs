@@ -835,6 +835,21 @@
 <span id="835">835</span>
 <span id="836">836</span>
 <span id="837">837</span>
+<span id="838">838</span>
+<span id="839">839</span>
+<span id="840">840</span>
+<span id="841">841</span>
+<span id="842">842</span>
+<span id="843">843</span>
+<span id="844">844</span>
+<span id="845">845</span>
+<span id="846">846</span>
+<span id="847">847</span>
+<span id="848">848</span>
+<span id="849">849</span>
+<span id="850">850</span>
+<span id="851">851</span>
+<span id="852">852</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Div</span>, <span class="ident">DivAssign</span>, <span class="ident">Mul</span>, <span class="ident">MulAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
@@ -848,11 +863,12 @@
 
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">color_difference</span>::<span class="ident">ColorDifference</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">color_difference</span>::{<span class="ident">get_ciede_difference</span>, <span class="ident">LabColorDiff</span>};
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">convert</span>::<span class="ident">FromColorUnclamped</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">encoding</span>::<span class="ident">pixel</span>::<span class="ident">RawPixel</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>::{<span class="ident">WhitePoint</span>, <span class="ident">D65</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">clamp</span>, <span class="ident">contrast_ratio</span>, <span class="ident">from_f64</span>, <span class="ident">Alpha</span>, <span class="ident">Component</span>, <span class="ident">ComponentWise</span>, <span class="ident">FloatComponent</span>, <span class="ident">GetHue</span>,
-    <span class="ident">IntoColor</span>, <span class="ident">LabHue</span>, <span class="ident">Lch</span>, <span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">RelativeContrast</span>, <span class="ident">Shade</span>, <span class="ident">Xyz</span>,
+    <span class="ident">LabHue</span>, <span class="ident">Lch</span>, <span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">RelativeContrast</span>, <span class="ident">Shade</span>, <span class="ident">Xyz</span>,
 };
 
 <span class="doccomment">/// CIE L\*a\*b\* (CIELAB) with an alpha component. See the [`Laba`</span>
@@ -870,12 +886,14 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// The parameters of L\*a\*b\* are quite different, compared to many other</span>
 <span class="doccomment">/// color spaces, so manipulating them manually may be unintuitive.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">FromColor</span>, <span class="ident">Pixel</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Pixel</span>, <span class="ident">FromColorUnclamped</span>, <span class="ident">WithAlpha</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
-<span class="attribute">#[<span class="ident">palette_internal</span>]</span>
-<span class="attribute">#[<span class="ident">palette_white_point</span> <span class="op">=</span> <span class="string">&quot;Wp&quot;</span>]</span>
-<span class="attribute">#[<span class="ident">palette_component</span> <span class="op">=</span> <span class="string">&quot;T&quot;</span>]</span>
-<span class="attribute">#[<span class="ident">palette_manual_from</span>(<span class="ident">Xyz</span>, <span class="ident">Lab</span>, <span class="ident">Lch</span>)]</span>
+<span class="attribute">#[<span class="ident">palette</span>(
+    <span class="ident">palette_internal</span>,
+    <span class="ident">white_point</span> <span class="op">=</span> <span class="string">&quot;Wp&quot;</span>,
+    <span class="ident">component</span> <span class="op">=</span> <span class="string">&quot;T&quot;</span>,
+    <span class="ident">skip_derives</span>(<span class="ident">Xyz</span>, <span class="ident">Lab</span>, <span class="ident">Lch</span>)
+)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">Wp</span> <span class="op">=</span> <span class="ident">D65</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span>
 <span class="kw">where</span>
@@ -895,7 +913,7 @@
     <span class="doccomment">/// The white point associated with the color&#39;s illuminant and observer.</span>
     <span class="doccomment">/// D65 for 2 degree observer is used by default.</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>, <span class="ident">serde</span>(<span class="ident">skip</span>))]</span>
-    <span class="attribute">#[<span class="ident">palette_unsafe_zero_sized</span>]</span>
+    <span class="attribute">#[<span class="ident">palette</span>(<span class="ident">unsafe_zero_sized</span>)]</span>
     <span class="kw">pub</span> <span class="ident">white_point</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">Wp</span><span class="op">&gt;</span>,
 }
 
@@ -1028,12 +1046,22 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">FromColorUnclamped</span><span class="op">&lt;</span><span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
+    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
 {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_color_unclamped</span>(<span class="ident">color</span>: <span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="ident">color</span>
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">FromColorUnclamped</span><span class="op">&lt;</span><span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
+    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
+{
+    <span class="kw">fn</span> <span class="ident">from_color_unclamped</span>(<span class="ident">color</span>: <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">Xyz</span> {
             <span class="kw-2">mut</span> <span class="ident">x</span>,
             <span class="kw-2">mut</span> <span class="ident">y</span>,
@@ -1065,12 +1093,12 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">FromColorUnclamped</span><span class="op">&lt;</span><span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
+    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
 {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">color</span>: <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_color_unclamped</span>(<span class="ident">color</span>: <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Lab</span> {
             <span class="ident">l</span>: <span class="ident">color</span>.<span class="ident">l</span>,
             <span class="ident">a</span>: <span class="ident">color</span>.<span class="ident">chroma</span>.<span class="ident">max</span>(<span class="ident">T</span>::<span class="ident">zero</span>()) <span class="op">*</span> <span class="ident">color</span>.<span class="ident">hue</span>.<span class="ident">to_radians</span>().<span class="ident">cos</span>(),
@@ -1507,10 +1535,12 @@
     <span class="kw">type</span> <span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">T</span>;
 
     <span class="kw">fn</span> <span class="ident">get_contrast_ratio</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
-        <span class="kw">let</span> <span class="ident">luma1</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_luma</span>();
-        <span class="kw">let</span> <span class="ident">luma2</span> <span class="op">=</span> <span class="ident">other</span>.<span class="ident">into_luma</span>();
+        <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">FromColor</span>;
 
-        <span class="ident">contrast_ratio</span>(<span class="ident">luma1</span>.<span class="ident">luma</span>, <span class="ident">luma2</span>.<span class="ident">luma</span>)
+        <span class="kw">let</span> <span class="ident">xyz1</span> <span class="op">=</span> <span class="ident">Xyz</span>::<span class="ident">from_color</span>(<span class="kw-2">*</span><span class="self">self</span>);
+        <span class="kw">let</span> <span class="ident">xyz2</span> <span class="op">=</span> <span class="ident">Xyz</span>::<span class="ident">from_color</span>(<span class="kw-2">*</span><span class="ident">other</span>);
+
+        <span class="ident">contrast_ratio</span>(<span class="ident">xyz1</span>.<span class="ident">y</span>, <span class="ident">xyz2</span>.<span class="ident">y</span>)
     }
 }
 
@@ -1607,25 +1637,25 @@
 <span class="kw">mod</span> <span class="ident">test</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Lab</span>;
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>::<span class="ident">D65</span>;
-    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">LinSrgb</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">FromColor</span>, <span class="ident">LinSrgb</span>};
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">red</span>() {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Lab</span>::<span class="ident">from</span>(<span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>));
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Lab</span>::<span class="ident">from_color</span>(<span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">1.0</span>, <span class="number">0.0</span>, <span class="number">0.0</span>));
         <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Lab</span>::<span class="ident">new</span>(<span class="number">53.23288</span>, <span class="number">80.09246</span>, <span class="number">67.2031</span>);
         <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">b</span>, <span class="ident">epsilon</span> <span class="op">=</span> <span class="number">0.01</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">green</span>() {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Lab</span>::<span class="ident">from</span>(<span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>));
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Lab</span>::<span class="ident">from_color</span>(<span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">1.0</span>, <span class="number">0.0</span>));
         <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Lab</span>::<span class="ident">new</span>(<span class="number">87.73704</span>, <span class="op">-</span><span class="number">86.184654</span>, <span class="number">83.18117</span>);
         <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">b</span>, <span class="ident">epsilon</span> <span class="op">=</span> <span class="number">0.01</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">blue</span>() {
-        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Lab</span>::<span class="ident">from</span>(<span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>));
+        <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">Lab</span>::<span class="ident">from_color</span>(<span class="ident">LinSrgb</span>::<span class="ident">new</span>(<span class="number">0.0</span>, <span class="number">0.0</span>, <span class="number">1.0</span>));
         <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">Lab</span>::<span class="ident">new</span>(<span class="number">32.302586</span>, <span class="number">79.19668</span>, <span class="op">-</span><span class="number">107.863686</span>);
         <span class="macro">assert_relative_eq</span><span class="macro">!</span>(<span class="ident">a</span>, <span class="ident">b</span>, <span class="ident">epsilon</span> <span class="op">=</span> <span class="number">0.01</span>);
     }

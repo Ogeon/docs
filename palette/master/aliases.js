@@ -1,5 +1,6 @@
 var ALIASES = {};
 ALIASES["approx"] = {};
+ALIASES["find_crate"] = {};
 ALIASES["num_traits"] = {};
 ALIASES["palette"] = {};
 ALIASES["palette_derive"] = {};
@@ -7,6 +8,8 @@ ALIASES["phf"] = {};
 ALIASES["phf_shared"] = {};
 ALIASES["proc_macro2"] = {};
 ALIASES["quote"] = {};
+ALIASES["serde"] = {};
 ALIASES["siphasher"] = {};
 ALIASES["syn"] = {};
+ALIASES["toml"] = {};
 ALIASES["unicode_xid"] = {};

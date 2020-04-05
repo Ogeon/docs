@@ -238,8 +238,14 @@
 <span id="238">238</span>
 <span id="239">239</span>
 <span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Pixel encodings and pixel format conversion.</span>
+
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">palette_derive</span>::<span class="ident">Pixel</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">raw</span>::<span class="kw-2">*</span>;
 <span class="kw">mod</span> <span class="ident">raw</span>;
@@ -318,11 +324,11 @@
 <span class="doccomment">/// #[derive(PartialEq, Debug, Pixel)]</span>
 <span class="doccomment">/// #[repr(C)]</span>
 <span class="doccomment">/// struct MyCoolColor&lt;S: RgbStandard&gt; {</span>
-<span class="doccomment">///     #[palette_unsafe_zero_sized]</span>
+<span class="doccomment">///     #[palette(unsafe_zero_sized)]</span>
 <span class="doccomment">///     standard: PhantomData&lt;S&gt;,</span>
 <span class="doccomment">///     // RgbHue is a wrapper with `#[repr(C)]`, so it can safely</span>
 <span class="doccomment">///     // be converted straight from `f32`.</span>
-<span class="doccomment">///     #[palette_unsafe_same_layout_as = &quot;f32&quot;]</span>
+<span class="doccomment">///     #[palette(unsafe_same_layout_as = &quot;f32&quot;)]</span>
 <span class="doccomment">///     hue: RgbHue&lt;f32&gt;,</span>
 <span class="doccomment">///     lumen: f32,</span>
 <span class="doccomment">///     chroma: f32,</span>

@@ -36,7 +36,7 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">srgb</span>;
 
 <span class="doccomment">/// A transfer function to and from linear space.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">TransferFn</span> {
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">TransferFn</span>: <span class="lifetime">&#39;static</span> {
     <span class="doccomment">/// Convert the color component `x` from linear space.</span>
     <span class="kw">fn</span> <span class="ident">from_linear</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">FromF64</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>;
 
