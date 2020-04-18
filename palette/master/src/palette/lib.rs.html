@@ -580,6 +580,8 @@
 <span id="580">580</span>
 <span id="581">581</span>
 <span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! A library that makes linear color calculations and conversion easy and</span>
 <span class="doccomment">//! accessible for anyone. It uses the type system to enforce correctness and</span>
@@ -974,11 +976,13 @@
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">convert</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">encoding</span>;
 <span class="kw">mod</span> <span class="ident">equality</span>;
-<span class="kw">mod</span> <span class="ident">matrix</span>;
 <span class="kw">mod</span> <span class="ident">relative_contrast</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">white_point</span>;
 
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">float</span>;
+
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">matrix</span>;
 
 <span class="kw">fn</span> <span class="ident">clamp</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">PartialOrd</span><span class="op">&gt;</span>(<span class="ident">v</span>: <span class="ident">T</span>, <span class="ident">min</span>: <span class="ident">T</span>, <span class="ident">max</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
     <span class="kw">if</span> <span class="ident">v</span> <span class="op">&lt;</span> <span class="ident">min</span> {
