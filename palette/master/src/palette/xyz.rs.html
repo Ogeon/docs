@@ -835,6 +835,7 @@
 <span id="835">835</span>
 <span id="836">836</span>
 <span id="837">837</span>
+<span id="838">838</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Div</span>, <span class="ident">DivAssign</span>, <span class="ident">Mul</span>, <span class="ident">MulAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
@@ -1084,9 +1085,10 @@
     <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
     <span class="kw">fn</span> <span class="ident">from_color_unclamped</span>(<span class="ident">color</span>: <span class="ident">Lab</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="kw">let</span> <span class="ident">y</span> <span class="op">=</span> (<span class="ident">color</span>.<span class="ident">l</span> <span class="op">+</span> <span class="ident">from_f64</span>(<span class="number">16.0</span>)) <span class="op">/</span> <span class="ident">from_f64</span>(<span class="number">116.0</span>);
-        <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">y</span> <span class="op">+</span> (<span class="ident">color</span>.<span class="ident">a</span> <span class="op">/</span> <span class="ident">from_f64</span>(<span class="number">500.0</span>));
-        <span class="kw">let</span> <span class="ident">z</span> <span class="op">=</span> <span class="ident">y</span> <span class="op">-</span> (<span class="ident">color</span>.<span class="ident">b</span> <span class="op">/</span> <span class="ident">from_f64</span>(<span class="number">200.0</span>));
+        <span class="comment">// Recip call shows performance benefits in benchmarks for this function</span>
+        <span class="kw">let</span> <span class="ident">y</span> <span class="op">=</span> (<span class="ident">color</span>.<span class="ident">l</span> <span class="op">+</span> <span class="ident">from_f64</span>(<span class="number">16.0</span>)) <span class="op">*</span> <span class="ident">from_f64</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="number">116.0</span>).<span class="ident">recip</span>();
+        <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">y</span> <span class="op">+</span> (<span class="ident">color</span>.<span class="ident">a</span> <span class="op">*</span> <span class="ident">from_f64</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="number">500.0</span>).<span class="ident">recip</span>());
+        <span class="kw">let</span> <span class="ident">z</span> <span class="op">=</span> <span class="ident">y</span> <span class="op">-</span> (<span class="ident">color</span>.<span class="ident">b</span> <span class="op">*</span> <span class="ident">from_f64</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="number">200.0</span>).<span class="ident">recip</span>());
 
         <span class="kw">fn</span> <span class="ident">convert</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FloatComponent</span><span class="op">&gt;</span>(<span class="ident">c</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
             <span class="kw">let</span> <span class="ident">epsilon</span>: <span class="ident">T</span> <span class="op">=</span> <span class="ident">from_f64</span>(<span class="number">6.0</span> <span class="op">/</span> <span class="number">29.0</span>);
