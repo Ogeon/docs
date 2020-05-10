@@ -152,9 +152,11 @@
 <span id="152">152</span>
 <span id="153">153</span>
 <span id="154">154</span>
+<span id="155">155</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::<span class="ident">HashSet</span>;
 
+<span class="kw">use</span> <span class="ident">quote</span>::<span class="ident">quote</span>;
 <span class="kw">use</span> <span class="ident">syn</span>::<span class="ident">spanned</span>::<span class="ident">Spanned</span>;
 <span class="kw">use</span> <span class="ident">syn</span>::{<span class="ident">Ident</span>, <span class="ident">Lit</span>, <span class="ident">Meta</span>, <span class="ident">MetaNameValue</span>, <span class="ident">NestedMeta</span>, <span class="prelude-ty">Result</span>, <span class="ident">Type</span>};
 
@@ -167,7 +169,7 @@
     <span class="kw">pub</span> <span class="ident">internal_not_base_type</span>: <span class="ident">bool</span>,
     <span class="kw">pub</span> <span class="ident">component</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Type</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">white_point</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Type</span><span class="op">&gt;</span>,
-    <span class="kw">pub</span> <span class="ident">rgb_space</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Type</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">rgb_standard</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Type</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">AttributeArgumentParser</span> <span class="kw">for</span> <span class="ident">TypeItemAttributes</span> {
@@ -253,26 +255,26 @@
                     ));
                 }
             }
-            <span class="prelude-val">Some</span>(<span class="string">&quot;rgb_space&quot;</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">rgb_space</span>.<span class="ident">is_none</span>() {
+            <span class="prelude-val">Some</span>(<span class="string">&quot;rgb_standard&quot;</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">rgb_standard</span>.<span class="ident">is_none</span>() {
                     <span class="kw">let</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Meta</span>::<span class="ident">NameValue</span>(<span class="ident">MetaNameValue</span> {
                         <span class="ident">lit</span>: <span class="ident">Lit</span>::<span class="ident">Str</span>(<span class="ident">ty</span>), ..
                     }) <span class="op">=</span> <span class="ident">argument</span>
                     {
-                        <span class="self">self</span>.<span class="ident">rgb_space</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">ty</span>.<span class="ident">parse</span>()<span class="question-mark">?</span>);
+                        <span class="self">self</span>.<span class="ident">rgb_standard</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">ty</span>.<span class="ident">parse</span>()<span class="question-mark">?</span>);
                         <span class="prelude-val">Ok</span>(())
                     } <span class="kw">else</span> {
                         <span class="prelude-val">Err</span>(<span class="ident">argument</span>.<span class="ident">span</span>())
                     };
 
                     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">span</span>) <span class="op">=</span> <span class="ident">result</span> {
-                        <span class="kw">let</span> <span class="ident">message</span> <span class="op">=</span> <span class="string">&quot;expected `rgb_space` to be a type or type parameter in a string, like `rgb_space = \&quot;T\&quot;`&quot;</span>;
+                        <span class="kw">let</span> <span class="ident">message</span> <span class="op">=</span> <span class="string">&quot;expected `rgb_standard` to be a type or type parameter in a string, like `rgb_standard = \&quot;T\&quot;`&quot;</span>;
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(::<span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">Error</span>::<span class="ident">new</span>(<span class="ident">span</span>, <span class="ident">message</span>));
                     }
                 } <span class="kw">else</span> {
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(::<span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">Error</span>::<span class="ident">new</span>(
                         <span class="ident">argument</span>.<span class="ident">span</span>(),
-                        <span class="string">&quot;`rgb_space` appears more than once&quot;</span>,
+                        <span class="string">&quot;`rgb_standard` appears more than once&quot;</span>,
                     ));
                 }
             }
@@ -299,7 +301,7 @@
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(::<span class="ident">syn</span>::<span class="ident">parse</span>::<span class="ident">Error</span>::<span class="ident">new</span>(
                     <span class="ident">argument</span>.<span class="ident">span</span>(),
-                    <span class="string">&quot;unknown type item attribute&quot;</span>,
+                    <span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;`{}` is not a known type item attribute&quot;</span>, <span class="macro">quote</span><span class="macro">!</span>(#<span class="ident">argument</span>)),
                 ));
             }
         }

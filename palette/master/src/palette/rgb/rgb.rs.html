@@ -1448,7 +1448,7 @@
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
 <span class="attribute">#[<span class="ident">palette</span>(
     <span class="ident">palette_internal</span>,
-    <span class="ident">rgb_space</span> <span class="op">=</span> <span class="string">&quot;S::Space&quot;</span>,
+    <span class="ident">rgb_standard</span> <span class="op">=</span> <span class="string">&quot;S&quot;</span>,
     <span class="ident">white_point</span> <span class="op">=</span> <span class="string">&quot;&lt;S::Space as RgbSpace&gt;::WhitePoint&quot;</span>,
     <span class="ident">component</span> <span class="op">=</span> <span class="string">&quot;T&quot;</span>,
     <span class="ident">skip_derives</span>(<span class="ident">Xyz</span>, <span class="ident">Hsv</span>, <span class="ident">Hsl</span>, <span class="ident">Luma</span>, <span class="ident">Rgb</span>)
@@ -1786,12 +1786,12 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">FromColorUnclamped</span><span class="op">&lt;</span><span class="ident">Hsl</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="ident">Space</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">FromColorUnclamped</span><span class="op">&lt;</span><span class="ident">Hsl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">S</span>: <span class="ident">RgbStandard</span>,
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
 {
-    <span class="kw">fn</span> <span class="ident">from_color_unclamped</span>(<span class="ident">hsl</span>: <span class="ident">Hsl</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="ident">Space</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_color_unclamped</span>(<span class="ident">hsl</span>: <span class="ident">Hsl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> (<span class="ident">T</span>::<span class="ident">one</span>() <span class="op">-</span> (<span class="ident">hsl</span>.<span class="ident">lightness</span> <span class="op">*</span> <span class="ident">from_f64</span>(<span class="number">2.0</span>) <span class="op">-</span> <span class="ident">T</span>::<span class="ident">one</span>()).<span class="ident">abs</span>()) <span class="op">*</span> <span class="ident">hsl</span>.<span class="ident">saturation</span>;
         <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">hsl</span>.<span class="ident">hue</span>.<span class="ident">to_positive_degrees</span>() <span class="op">/</span> <span class="ident">from_f64</span>(<span class="number">60.0</span>);
         <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">c</span> <span class="op">*</span> (<span class="ident">T</span>::<span class="ident">one</span>() <span class="op">-</span> (<span class="ident">h</span> <span class="op">%</span> <span class="ident">from_f64</span>(<span class="number">2.0</span>) <span class="op">-</span> <span class="ident">T</span>::<span class="ident">one</span>()).<span class="ident">abs</span>());
@@ -1811,21 +1811,21 @@
             (<span class="ident">c</span>, <span class="ident">T</span>::<span class="ident">zero</span>(), <span class="ident">x</span>)
         };
 
-        <span class="self">Self</span>::<span class="ident">from_linear</span>(<span class="ident">Rgb</span> {
+        <span class="ident">Rgb</span> {
             <span class="ident">red</span>: <span class="ident">red</span> <span class="op">+</span> <span class="ident">m</span>,
             <span class="ident">green</span>: <span class="ident">green</span> <span class="op">+</span> <span class="ident">m</span>,
             <span class="ident">blue</span>: <span class="ident">blue</span> <span class="op">+</span> <span class="ident">m</span>,
             <span class="ident">standard</span>: <span class="ident">PhantomData</span>,
-        })
+        }
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">FromColorUnclamped</span><span class="op">&lt;</span><span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="ident">Space</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">FromColorUnclamped</span><span class="op">&lt;</span><span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">S</span>: <span class="ident">RgbStandard</span>,
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
 {
-    <span class="kw">fn</span> <span class="ident">from_color_unclamped</span>(<span class="ident">hsv</span>: <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>::<span class="ident">Space</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_color_unclamped</span>(<span class="ident">hsv</span>: <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="ident">hsv</span>.<span class="ident">value</span> <span class="op">*</span> <span class="ident">hsv</span>.<span class="ident">saturation</span>;
         <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">hsv</span>.<span class="ident">hue</span>.<span class="ident">to_positive_degrees</span>() <span class="op">/</span> <span class="ident">from_f64</span>(<span class="number">60.0</span>);
         <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">c</span> <span class="op">*</span> (<span class="ident">T</span>::<span class="ident">one</span>() <span class="op">-</span> (<span class="ident">h</span> <span class="op">%</span> <span class="ident">from_f64</span>(<span class="number">2.0</span>) <span class="op">-</span> <span class="ident">T</span>::<span class="ident">one</span>()).<span class="ident">abs</span>());
@@ -1845,12 +1845,12 @@
             (<span class="ident">c</span>, <span class="ident">T</span>::<span class="ident">zero</span>(), <span class="ident">x</span>)
         };
 
-        <span class="self">Self</span>::<span class="ident">from_linear</span>(<span class="ident">Rgb</span> {
+        <span class="ident">Rgb</span> {
             <span class="ident">red</span>: <span class="ident">red</span> <span class="op">+</span> <span class="ident">m</span>,
             <span class="ident">green</span>: <span class="ident">green</span> <span class="op">+</span> <span class="ident">m</span>,
             <span class="ident">blue</span>: <span class="ident">blue</span> <span class="op">+</span> <span class="ident">m</span>,
             <span class="ident">standard</span>: <span class="ident">PhantomData</span>,
-        })
+        }
     }
 }
 

@@ -204,25 +204,6 @@
 <span id="204">204</span>
 <span id="205">205</span>
 <span id="206">206</span>
-<span id="207">207</span>
-<span id="208">208</span>
-<span id="209">209</span>
-<span id="210">210</span>
-<span id="211">211</span>
-<span id="212">212</span>
-<span id="213">213</span>
-<span id="214">214</span>
-<span id="215">215</span>
-<span id="216">216</span>
-<span id="217">217</span>
-<span id="218">218</span>
-<span id="219">219</span>
-<span id="220">220</span>
-<span id="221">221</span>
-<span id="222">222</span>
-<span id="223">223</span>
-<span id="224">224</span>
-<span id="225">225</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">collections</span>::{<span class="ident">HashMap</span>, <span class="ident">HashSet</span>};
 
@@ -318,36 +299,13 @@
     <span class="ident">color</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     <span class="ident">white_point</span>: <span class="kw-2">&amp;</span><span class="ident">Type</span>,
     <span class="ident">component</span>: <span class="kw-2">&amp;</span><span class="ident">Type</span>,
-    <span class="ident">rgb_space</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Type</span><span class="op">&gt;</span>,
+    <span class="ident">rgb_standard</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Type</span><span class="op">&gt;</span>,
     <span class="ident">generics</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Generics</span>,
     <span class="ident">internal</span>: <span class="ident">bool</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Type</span> {
     <span class="kw">let</span> <span class="ident">color_path</span> <span class="op">=</span> <span class="ident">util</span>::<span class="ident">color_path</span>(<span class="ident">color</span>, <span class="ident">internal</span>);
 
     <span class="kw">match</span> <span class="ident">color</span> {
-        <span class="string">&quot;Rgb&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
-            <span class="kw">let</span> <span class="ident">rgb_standard_path</span> <span class="op">=</span> <span class="ident">util</span>::<span class="ident">path</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;rgb&quot;</span>, <span class="string">&quot;RgbStandard&quot;</span>], <span class="ident">internal</span>);
-            <span class="kw">let</span> <span class="ident">rgb_space_path</span> <span class="op">=</span> <span class="ident">util</span>::<span class="ident">path</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;rgb&quot;</span>, <span class="string">&quot;RgbSpace&quot;</span>], <span class="ident">internal</span>);
-            <span class="ident">generics</span>.<span class="ident">params</span>.<span class="ident">push</span>(<span class="ident">GenericParam</span>::<span class="ident">Type</span>(
-                <span class="ident">Ident</span>::<span class="ident">new</span>(<span class="string">&quot;_S&quot;</span>, <span class="ident">Span</span>::<span class="ident">call_site</span>()).<span class="ident">into</span>(),
-            ));
-
-            <span class="kw">let</span> <span class="ident">where_clause</span> <span class="op">=</span> <span class="ident">generics</span>.<span class="ident">make_where_clause</span>();
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">rgb_space</span>) <span class="op">=</span> <span class="ident">rgb_space</span> {
-                <span class="ident">where_clause</span>
-                    .<span class="ident">predicates</span>
-                    .<span class="ident">push</span>(<span class="macro">parse_quote</span><span class="macro">!</span>(<span class="ident">_S</span>: #<span class="ident">rgb_standard_path</span><span class="op">&lt;</span><span class="ident">Space</span> <span class="op">=</span> #<span class="ident">rgb_space</span><span class="op">&gt;</span>));
-            } <span class="kw">else</span> {
-                <span class="ident">where_clause</span>
-                    .<span class="ident">predicates</span>
-                    .<span class="ident">push</span>(<span class="macro">parse_quote</span><span class="macro">!</span>(<span class="ident">_S</span>: #<span class="ident">rgb_standard_path</span>));
-                <span class="ident">where_clause</span>
-                    .<span class="ident">predicates</span>
-                    .<span class="ident">push</span>(<span class="macro">parse_quote</span><span class="macro">!</span>(<span class="ident">_S</span>::<span class="ident">Space</span>: #<span class="ident">rgb_space_path</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> #<span class="ident">white_point</span><span class="op">&gt;</span>));
-            }
-
-            <span class="macro">parse_quote</span><span class="macro">!</span>(#<span class="ident">color_path</span><span class="op">&lt;</span><span class="ident">_S</span>, #<span class="ident">component</span><span class="op">&gt;</span>)
-        }
         <span class="string">&quot;Luma&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">luma_standard_path</span> <span class="op">=</span> <span class="ident">util</span>::<span class="ident">path</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;luma&quot;</span>, <span class="string">&quot;LumaStandard&quot;</span>], <span class="ident">internal</span>);
             <span class="ident">generics</span>.<span class="ident">params</span>.<span class="ident">push</span>(<span class="ident">GenericParam</span>::<span class="ident">Type</span>(
@@ -360,20 +318,24 @@
                 .<span class="ident">push</span>(<span class="macro">parse_quote</span><span class="macro">!</span>(<span class="ident">_S</span>: #<span class="ident">luma_standard_path</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> #<span class="ident">white_point</span><span class="op">&gt;</span>));
             <span class="macro">parse_quote</span><span class="macro">!</span>(#<span class="ident">color_path</span><span class="op">&lt;</span><span class="ident">_S</span>, #<span class="ident">component</span><span class="op">&gt;</span>)
         }
-        <span class="string">&quot;Hsl&quot;</span> <span class="op">|</span> <span class="string">&quot;Hsv&quot;</span> <span class="op">|</span> <span class="string">&quot;Hwb&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="string">&quot;Rgb&quot;</span> <span class="op">|</span> <span class="string">&quot;Hsl&quot;</span> <span class="op">|</span> <span class="string">&quot;Hsv&quot;</span> <span class="op">|</span> <span class="string">&quot;Hwb&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">rgb_standard_path</span> <span class="op">=</span> <span class="ident">util</span>::<span class="ident">path</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;rgb&quot;</span>, <span class="string">&quot;RgbStandard&quot;</span>], <span class="ident">internal</span>);
             <span class="kw">let</span> <span class="ident">rgb_space_path</span> <span class="op">=</span> <span class="ident">util</span>::<span class="ident">path</span>(<span class="kw-2">&amp;</span>[<span class="string">&quot;rgb&quot;</span>, <span class="string">&quot;RgbSpace&quot;</span>], <span class="ident">internal</span>);
 
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">rgb_space</span>) <span class="op">=</span> <span class="ident">rgb_space</span> {
-                <span class="macro">parse_quote</span><span class="macro">!</span>(#<span class="ident">color_path</span><span class="op">&lt;</span>#<span class="ident">rgb_space</span>, #<span class="ident">component</span><span class="op">&gt;</span>)
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">rgb_standard</span>) <span class="op">=</span> <span class="ident">rgb_standard</span> {
+                <span class="macro">parse_quote</span><span class="macro">!</span>(#<span class="ident">color_path</span><span class="op">&lt;</span>#<span class="ident">rgb_standard</span>, #<span class="ident">component</span><span class="op">&gt;</span>)
             } <span class="kw">else</span> {
                 <span class="ident">generics</span>.<span class="ident">params</span>.<span class="ident">push</span>(<span class="ident">GenericParam</span>::<span class="ident">Type</span>(
                     <span class="ident">Ident</span>::<span class="ident">new</span>(<span class="string">&quot;_S&quot;</span>, <span class="ident">Span</span>::<span class="ident">call_site</span>()).<span class="ident">into</span>(),
                 ));
+                <span class="kw">let</span> <span class="ident">where_clause</span> <span class="op">=</span> <span class="ident">generics</span>.<span class="ident">make_where_clause</span>();
 
-                <span class="ident">generics</span>
-                    .<span class="ident">make_where_clause</span>()
+                <span class="ident">where_clause</span>
                     .<span class="ident">predicates</span>
-                    .<span class="ident">push</span>(<span class="macro">parse_quote</span><span class="macro">!</span>(<span class="ident">_S</span>: #<span class="ident">rgb_space_path</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> #<span class="ident">white_point</span><span class="op">&gt;</span>));
+                    .<span class="ident">push</span>(<span class="macro">parse_quote</span><span class="macro">!</span>(<span class="ident">_S</span>: #<span class="ident">rgb_standard_path</span>));
+                <span class="ident">where_clause</span>
+                    .<span class="ident">predicates</span>
+                    .<span class="ident">push</span>(<span class="macro">parse_quote</span><span class="macro">!</span>(<span class="ident">_S</span>::<span class="ident">Space</span>: #<span class="ident">rgb_space_path</span><span class="op">&lt;</span><span class="ident">WhitePoint</span> <span class="op">=</span> #<span class="ident">white_point</span><span class="op">&gt;</span>));
 
                 <span class="macro">parse_quote</span><span class="macro">!</span>(#<span class="ident">color_path</span><span class="op">&lt;</span><span class="ident">_S</span>, #<span class="ident">component</span><span class="op">&gt;</span>)
             }
