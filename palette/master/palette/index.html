@@ -1,17 +1,17 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `palette` crate."><meta name="keywords" content="rust, rustlang, rust-lang, palette"><title>palette - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../palette/index.html'><div class='logo-container'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate palette</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all palette's items</p></a><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'palette', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/palette/lib.rs.html#1-584' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>palette</a></span></h1><div class='docblock'><p>A library that makes linear color calculations and conversion easy and
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `palette` crate."><meta name="keywords" content="rust, rustlang, rust-lang, palette"><title>palette - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../dark.css"><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script src="../storage.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="shortcut icon" href="../favicon.ico"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../palette/index.html'><div class='logo-container'><img src='../rust-logo.png' alt='logo'></div></a><p class='location'>Crate palette</p><div class="sidebar-elems"><a id='all-types' href='all.html'><p>See all palette's items</p></a><div class="block items"><ul><li><a href="#reexports">Re-exports</a></li><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'palette', ty: 'mod', relpath: '../'};</script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../src/palette/lib.rs.html#1-631' title='goto source code'>[src]</a></span><span class='in-band'>Crate <a class="mod" href=''>palette</a></span></h1><div class='docblock'><p>A library that makes linear color calculations and conversion easy and
 accessible for anyone. It uses the type system to enforce correctness and
 to avoid mistakes, such as mixing incompatible color types.</p>
 <h1 id="its-never-just-rgb" class="section-header"><a href="#its-never-just-rgb">It's Never &quot;Just RGB&quot;</a></h1>
-<p>Colors in, for example, images are often &quot;gamma corrected&quot; or stored in
-sRGB format as a compression method and to prevent banding. This is also a
-bit of a legacy from the ages of the CRT monitors, where the output from
-the electron gun was nonlinear. The problem is that these formats doesn't
-represent the actual intensities, and the compression has to be reverted to
-make sure that any operations on the colors are accurate. This library uses
-a completely linear work flow, and comes with the tools for transitioning
-between linear and non-linear RGB.</p>
-<p>Adding to that, there are more than one kind of non-linear RGB. Ironically
-enough, this turns RGB into one of the most complex color spaces.</p>
+<p>Colors in, for example, images, are often &quot;gamma corrected&quot;, or converted
+using some non-linear transfer function into a format like sRGB before being
+stored or displayed. This is done as a compression method and to prevent banding,
+and is also a bit of a legacy from the ages of the CRT monitors, where the
+output from the electron gun was nonlinear. The problem is that these formats
+are <em>non-linear color spaces</em>, which means that many operations that you may want
+to perform on colors (addition, subtraction, multiplication, linear interpolation,
+etc.) will work unexpectedly when performed in such a non-linear color space. As
+such, the compression has to be reverted to restore linearity and make sure that
+many operations on the colors are accurate. </p>
 <p>For example, this does not work:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered">
@@ -35,6 +35,49 @@ enough, this turns RGB into one of the most complex color spaces.</p>
 <span class="kw">let</span> <span class="ident">pixel</span>: [<span class="ident">u8</span>; <span class="number">3</span>] <span class="op">=</span> <span class="ident">Srgb</span>::<span class="ident">from_linear</span>(<span class="ident">whateve_it_becomes</span>)
     .<span class="ident">into_format</span>()
     .<span class="ident">into_raw</span>();</pre></div>
+<p>But, even when colors <em>are</em> 'linear', there is yet more to explore.</p>
+<p>The most common way that colors are defined, especially for computer
+storage, is in terms of so-called <em>tristimulus values</em>, meaning that
+all colors are defined as a vector of three values which may represent
+any color. The reason colors can generally be stored as only a three
+dimensional vector, and not an <em>n</em> dimensional one, where <em>n</em> is some
+number of possible frequencies of light, is because our eyes contain
+only three types of cones. Each of these cones have different sensitivity
+curves to different wavelengths of light, giving us three &quot;dimensions&quot;
+of sensitivity to color. These cones are often called the S, M, and L
+(for small, medium, and large) cones, and their sensitivity curves
+<em>roughly</em> position them as most sensitive to &quot;red&quot;, &quot;green&quot;, and &quot;blue&quot;
+parts of the spectrum. As such, we can choose only three values to
+represent any possible color that a human is able to see. An interesting
+consequence of this is that humans can see two different objects which
+are emitting <em>completely different actual light spectra</em> as the <em>exact
+same perceptual color</em> so long as those wavelengths, when transformed
+by the sensitivity curves of our cones, end up resulting in the same
+S, M, and L values sent to our brains.</p>
+<p>A <strong>color space</strong> (which simply refers to a set of standards by which
+we map a set of arbitrary values to real-world colors) which uses
+tristimulus values is often defined in terms of</p>
+<ol>
+<li>Its <strong>primaries</strong></li>
+<li>Its <strong>reference white</strong> or <strong>white point</strong></li>
+</ol>
+<p>The <strong>primaries</strong> together represent the total <em>gamut</em> (i.e. displayable
+range of colors) of that color space, while the <strong>white point</strong> defines
+which concrete tristimulus value corresponds to a real, physical white
+reflecting object being lit by a known light source and observed by the
+'standard observer' (i.e. a standardized model of human color perception).</p>
+<p>The informal &quot;RGB&quot; color space is such a tristimulus color space, since
+it is defined by three values, but it is underspecified since we don't
+know which primaries are being used (i.e. how exactly are the canonical
+&quot;red&quot;, &quot;green&quot;, and &quot;blue&quot; defined?), nor its white point. In most cases,
+when people talk about &quot;RGB&quot; or &quot;Linear RGB&quot; colors, what they are
+<em>actually</em> talking about is the &quot;Linear sRGB&quot; color space, which uses the
+primaries and white point defined in the sRGB standard, but which <em>does
+not</em> have the (non-linear) sRGB <em>transfer function</em> applied.</p>
+<p>This library takes these things into account, and attempts to provide an
+interface which will let those who don't care so much about the intricacies
+of color still use colors correctly, while also allowing the advanced user
+a high degree of flexibility in how they use it.</p>
 <h1 id="transparency" class="section-header"><a href="#transparency">Transparency</a></h1>
 <p>There are many cases where pixel transparency is important, but there are
 also many cases where it becomes a dead weight, if it's always stored
