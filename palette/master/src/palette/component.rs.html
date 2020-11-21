@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `palette/src/component.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>component.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../palette/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `palette/src/component.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>component.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../palette/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -372,7 +374,7 @@
     <span class="doccomment">/// The highest displayable value this component type can reach. Higher</span>
     <span class="doccomment">/// values are allowed, but they may be lowered to this before</span>
     <span class="doccomment">/// converting to another format.</span>
-    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
 }
 
 <span class="doccomment">/// Common trait for floating point color components.</span>
@@ -381,10 +383,10 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Float</span> <span class="op">+</span> <span class="ident">FromF64</span><span class="op">&gt;</span> <span class="ident">FloatComponent</span> <span class="kw">for</span> <span class="ident">T</span> {}
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_float_components</span> {
-    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>: <span class="ident">ident</span>),<span class="op">+</span>) <span class="op">=&gt;</span> {
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>: <span class="ident">ident</span>),<span class="op">+</span>) <span class="op">=</span><span class="op">&gt;</span> {
         $(
             <span class="kw">impl</span> <span class="ident">Component</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> {
-                <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
                     <span class="number">1.0</span>
                 }
             }
@@ -395,10 +397,10 @@
 <span class="macro">impl_float_components</span><span class="macro">!</span>(<span class="ident">f32</span>, <span class="ident">f64</span>);
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">impl_uint_components</span> {
-    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>: <span class="ident">ident</span>),<span class="op">+</span>) <span class="op">=&gt;</span> {
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>: <span class="ident">ident</span>),<span class="op">+</span>) <span class="op">=</span><span class="op">&gt;</span> {
         $(
             <span class="kw">impl</span> <span class="ident">Component</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> {
-                <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+                <span class="kw">fn</span> <span class="ident">max_intensity</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
                     <span class="ident">core</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>::<span class="ident">MAX</span>
                 }
             }
@@ -421,12 +423,12 @@
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">FromComponent</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Converts `other` into `Self`, while performing the appropriate scaling,</span>
     <span class="doccomment">/// rounding and clamping.</span>
-    <span class="kw">fn</span> <span class="ident">from_component</span>(<span class="ident">other</span>: <span class="ident">T</span>) <span class="op">-&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">from_component</span>(<span class="ident">other</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span>, <span class="ident">U</span>: <span class="ident">IntoComponent</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Component</span><span class="op">&gt;</span> <span class="ident">FromComponent</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">T</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from_component</span>(<span class="ident">other</span>: <span class="ident">U</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">from_component</span>(<span class="ident">other</span>: <span class="ident">U</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
         <span class="ident">other</span>.<span class="ident">into_component</span>()
     }
 }
@@ -444,12 +446,12 @@
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">IntoComponent</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Converts `self` into `T`, while performing the appropriate scaling,</span>
     <span class="doccomment">/// rounding and clamping.</span>
-    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span>;
+    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>;
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Component</span><span class="op">&gt;</span> <span class="ident">IntoComponent</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">T</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
         <span class="self">self</span>
     }
 }
@@ -470,11 +472,11 @@
 <span class="comment">// -inf -&gt; 0</span>
 <span class="comment">// Greater than 2^23 for f64, 2^52 for f64 -&gt; uint::MAX</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">convert_float_to_uint</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">float</span>: <span class="ident">ident</span>; <span class="ident">direct</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">direct_target</span>: <span class="ident">ident</span>),<span class="op">+</span>); $(<span class="ident">via</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">temporary</span>: <span class="ident">ident</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span>: <span class="ident">ident</span>),<span class="op">+</span>);)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">float</span>: <span class="ident">ident</span>; <span class="ident">direct</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">direct_target</span>: <span class="ident">ident</span>),<span class="op">+</span>); $(<span class="ident">via</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">temporary</span>: <span class="ident">ident</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span>: <span class="ident">ident</span>),<span class="op">+</span>);)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {
         $(
             <span class="kw">impl</span> <span class="ident">IntoComponent</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">direct_target</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">float</span> {
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">direct_target</span> {
+                <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">direct_target</span> {
                     <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">direct_target</span>::<span class="ident">max_intensity</span>() <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">float</span>;
                     <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> (<span class="self">self</span> <span class="op">*</span> <span class="ident">max</span>).<span class="ident">min</span>(<span class="ident">max</span>);
                     <span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">scaled</span> <span class="op">+</span> <span class="ident">f32</span>::<span class="ident">from_bits</span>(<span class="ident">C23</span>);
@@ -487,7 +489,7 @@
             $(
                 <span class="kw">impl</span> <span class="ident">IntoComponent</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">float</span> {
                     <span class="attribute">#[<span class="ident">inline</span>]</span>
-                    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span> {
+                    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span> {
                         <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span>::<span class="ident">max_intensity</span>() <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">temporary</span>;
                         <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> (<span class="self">self</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">temporary</span> <span class="op">*</span> <span class="ident">max</span>).<span class="ident">min</span>(<span class="ident">max</span>);
                         <span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">scaled</span> <span class="op">+</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(<span class="ident">C52</span>);
@@ -502,11 +504,11 @@
 <span class="comment">// Double to uint conversion with rounding to nearest even number. Formula</span>
 <span class="comment">// follows the form (x_f64 + C52_f64) - C52_u64, where x is the component.</span>
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">convert_double_to_uint</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">double</span>: <span class="ident">ident</span>; <span class="ident">direct</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">direct_target</span>: <span class="ident">ident</span>),<span class="op">+</span>);) <span class="op">=&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">double</span>: <span class="ident">ident</span>; <span class="ident">direct</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">direct_target</span>: <span class="ident">ident</span>),<span class="op">+</span>);) <span class="op">=</span><span class="op">&gt;</span> {
         $(
             <span class="kw">impl</span> <span class="ident">IntoComponent</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">direct_target</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">double</span> {
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">direct_target</span> {
+                <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">direct_target</span> {
                     <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">direct_target</span>::<span class="ident">max_intensity</span>() <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">double</span>;
                     <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> (<span class="self">self</span> <span class="op">*</span> <span class="ident">max</span>).<span class="ident">min</span>(<span class="ident">max</span>);
                     <span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">scaled</span> <span class="op">+</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(<span class="ident">C52</span>);
@@ -523,10 +525,10 @@
 <span class="comment">// Works on the range of [0, 2^23] for f32, [0, 2^52 - 1] for f64.</span>
 <span class="kw">impl</span> <span class="ident">IntoComponent</span><span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u8</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
-        <span class="kw">let</span> <span class="ident">comp_u</span> <span class="op">=</span> <span class="self">self</span> <span class="kw">as</span> <span class="ident">u32</span> <span class="op">+</span> <span class="ident">C23</span>;
+    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">let</span> <span class="ident">comp_u</span> <span class="op">=</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="self">self</span>) <span class="op">+</span> <span class="ident">C23</span>;
         <span class="kw">let</span> <span class="ident">comp_f</span> <span class="op">=</span> <span class="ident">f32</span>::<span class="ident">from_bits</span>(<span class="ident">comp_u</span>) <span class="op">-</span> <span class="ident">f32</span>::<span class="ident">from_bits</span>(<span class="ident">C23</span>);
-        <span class="kw">let</span> <span class="ident">max_u</span> <span class="op">=</span> <span class="ident">core</span>::<span class="ident">u8</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">u32</span> <span class="op">+</span> <span class="ident">C23</span>;
+        <span class="kw">let</span> <span class="ident">max_u</span> <span class="op">=</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">core</span>::<span class="ident">u8</span>::<span class="ident">MAX</span>) <span class="op">+</span> <span class="ident">C23</span>;
         <span class="kw">let</span> <span class="ident">max_f</span> <span class="op">=</span> (<span class="ident">f32</span>::<span class="ident">from_bits</span>(<span class="ident">max_u</span>) <span class="op">-</span> <span class="ident">f32</span>::<span class="ident">from_bits</span>(<span class="ident">C23</span>)).<span class="ident">recip</span>();
         <span class="ident">comp_f</span> <span class="op">*</span> <span class="ident">max_f</span>
     }
@@ -535,22 +537,22 @@
 <span class="comment">// Uint to f64 conversion with the formula (x_u64 + C23_u64) - C23_f64.</span>
 <span class="kw">impl</span> <span class="ident">IntoComponent</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">u8</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
-        <span class="kw">let</span> <span class="ident">comp_u</span> <span class="op">=</span> <span class="self">self</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">+</span> <span class="ident">C52</span>;
+    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">let</span> <span class="ident">comp_u</span> <span class="op">=</span> <span class="ident">u64</span>::<span class="ident">from</span>(<span class="self">self</span>) <span class="op">+</span> <span class="ident">C52</span>;
         <span class="kw">let</span> <span class="ident">comp_f</span> <span class="op">=</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(<span class="ident">comp_u</span>) <span class="op">-</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(<span class="ident">C52</span>);
-        <span class="kw">let</span> <span class="ident">max_u</span> <span class="op">=</span> <span class="ident">core</span>::<span class="ident">u8</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">+</span> <span class="ident">C52</span>;
+        <span class="kw">let</span> <span class="ident">max_u</span> <span class="op">=</span> <span class="ident">u64</span>::<span class="ident">from</span>(<span class="ident">core</span>::<span class="ident">u8</span>::<span class="ident">MAX</span>) <span class="op">+</span> <span class="ident">C52</span>;
         <span class="kw">let</span> <span class="ident">max_f</span> <span class="op">=</span> (<span class="ident">f64</span>::<span class="ident">from_bits</span>(<span class="ident">max_u</span>) <span class="op">-</span> <span class="ident">f64</span>::<span class="ident">from_bits</span>(<span class="ident">C52</span>)).<span class="ident">recip</span>();
         <span class="ident">comp_f</span> <span class="op">*</span> <span class="ident">max_f</span>
     }
 }
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">convert_uint_to_float</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">uint</span>: <span class="ident">ident</span>; $(<span class="ident">via</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">temporary</span>: <span class="ident">ident</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span>: <span class="ident">ident</span>),<span class="op">+</span>);)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">uint</span>: <span class="ident">ident</span>; $(<span class="ident">via</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">temporary</span>: <span class="ident">ident</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span>: <span class="ident">ident</span>),<span class="op">+</span>);)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {
         $(
             $(
                 <span class="kw">impl</span> <span class="ident">IntoComponent</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">uint</span> {
                     <span class="attribute">#[<span class="ident">inline</span>]</span>
-                    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span> {
+                    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span> {
                         <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">uint</span>::<span class="ident">max_intensity</span>() <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">temporary</span>;
                         <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="self">self</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">temporary</span> <span class="op">/</span> <span class="ident">max</span>;
                         <span class="ident">scaled</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span>
@@ -562,12 +564,12 @@
 }
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">convert_uint_to_uint</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">uint</span>: <span class="ident">ident</span>; $(<span class="ident">via</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">temporary</span>: <span class="ident">ident</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span>: <span class="ident">ident</span>),<span class="op">+</span>);)<span class="kw-2">*</span>) <span class="op">=&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">uint</span>: <span class="ident">ident</span>; $(<span class="ident">via</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">temporary</span>: <span class="ident">ident</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span>: <span class="ident">ident</span>),<span class="op">+</span>);)<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {
         $(
             $(
                 <span class="kw">impl</span> <span class="ident">IntoComponent</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">uint</span> {
                     <span class="attribute">#[<span class="ident">inline</span>]</span>
-                    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span> {
+                    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span> {
                         <span class="kw">let</span> <span class="ident">target_max</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">target</span>::<span class="ident">max_intensity</span>() <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">temporary</span>;
                         <span class="kw">let</span> <span class="ident">own_max</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">uint</span>::<span class="ident">max_intensity</span>() <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">temporary</span>;
                         <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> (<span class="self">self</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">temporary</span> <span class="op">/</span> <span class="ident">own_max</span>) <span class="op">*</span> <span class="ident">target_max</span>;
@@ -581,15 +583,15 @@
 
 <span class="kw">impl</span> <span class="ident">IntoComponent</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">f32</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
-        <span class="self">self</span> <span class="kw">as</span> <span class="ident">f64</span>
+    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+        <span class="ident">f64</span>::<span class="ident">from</span>(<span class="self">self</span>)
     }
 }
 <span class="macro">convert_float_to_uint</span><span class="macro">!</span>(<span class="ident">f32</span>; <span class="ident">direct</span> (<span class="ident">u8</span>, <span class="ident">u16</span>); <span class="ident">via</span> <span class="ident">f64</span> (<span class="ident">u32</span>, <span class="ident">u64</span>, <span class="ident">u128</span>););
 
 <span class="kw">impl</span> <span class="ident">IntoComponent</span><span class="op">&lt;</span><span class="ident">f32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">f64</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+    <span class="kw">fn</span> <span class="ident">into_component</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
         <span class="self">self</span> <span class="kw">as</span> <span class="ident">f32</span>
     }
 }
@@ -694,7 +696,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">uint_to_float</span>() {
-        <span class="kw">fn</span> <span class="ident">into_component_old</span>(<span class="ident">n</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">f32</span> {
+        <span class="kw">fn</span> <span class="ident">into_component_old</span>(<span class="ident">n</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f32</span> {
             <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="ident">core</span>::<span class="ident">u8</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">f32</span>;
             <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">f32</span> <span class="op">/</span> <span class="ident">max</span>;
             <span class="ident">scaled</span> <span class="kw">as</span> <span class="ident">f32</span>
@@ -710,7 +712,7 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">uint_to_double</span>() {
-        <span class="kw">fn</span> <span class="ident">into_component_old</span>(<span class="ident">n</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
+        <span class="kw">fn</span> <span class="ident">into_component_old</span>(<span class="ident">n</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
             <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="ident">core</span>::<span class="ident">u8</span>::<span class="ident">MAX</span> <span class="kw">as</span> <span class="ident">f64</span>;
             <span class="kw">let</span> <span class="ident">scaled</span> <span class="op">=</span> <span class="ident">n</span> <span class="kw">as</span> <span class="ident">f64</span> <span class="op">/</span> <span class="ident">max</span>;
             <span class="ident">scaled</span> <span class="kw">as</span> <span class="ident">f64</span>
