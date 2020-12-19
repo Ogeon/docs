@@ -898,7 +898,7 @@
 
     <span class="doccomment">/// Z is the scale of what can be seen as the blue stimulation. Its range</span>
     <span class="doccomment">/// depends on the white point and goes from 0.0 to 1.08883 for the</span>
-    <span class="doccomment">/// defautl D65.</span>
+    <span class="doccomment">/// default D65.</span>
     <span class="kw">pub</span> <span class="ident">z</span>: <span class="ident">T</span>,
 
     <span class="doccomment">/// The white point associated with the color&#39;s illuminant and observer.</span>
@@ -929,7 +929,7 @@
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
 {
-    <span class="doccomment">/// CIE XYZ with whtie point D65.</span>
+    <span class="doccomment">/// CIE XYZ with white point D65.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">x</span>: <span class="ident">T</span>, <span class="ident">y</span>: <span class="ident">T</span>, <span class="ident">z</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Xyz</span> {
             <span class="ident">x</span>,

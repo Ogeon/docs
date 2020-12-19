@@ -334,7 +334,7 @@
     <span class="ident">XyzScaling</span>,
 }
 
-<span class="doccomment">/// Holds the matrix coeffecients for the chromatic adaptation methods</span>
+<span class="doccomment">/// Holds the matrix coefficients for the chromatic adaptation methods</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ConeResponseMatrices</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span><span class="op">&gt;</span> {
     <span class="doccomment">///3x3 matrix for the cone response domains</span>
     <span class="kw">pub</span> <span class="ident">ma</span>: <span class="ident">Mat3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
@@ -342,7 +342,7 @@
     <span class="kw">pub</span> <span class="ident">inv_ma</span>: <span class="ident">Mat3</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
 }
 
-<span class="doccomment">/// Generates a conversion matrix to convert the Xyz trisitmilus values from</span>
+<span class="doccomment">/// Generates a conversion matrix to convert the Xyz tristimulus values from</span>
 <span class="doccomment">/// one illuminant to another (Swp -&gt; Dwp)</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">TransformMatrix</span><span class="op">&lt;</span><span class="ident">Swp</span>, <span class="ident">Dwp</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
