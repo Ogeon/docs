@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `palette/src/hwb.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>hwb.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `palette/src/hwb.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>hwb.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
 <link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../palette/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../palette/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -812,6 +812,34 @@
 <span id="809">809</span>
 <span id="810">810</span>
 <span id="811">811</span>
+<span id="812">812</span>
+<span id="813">813</span>
+<span id="814">814</span>
+<span id="815">815</span>
+<span id="816">816</span>
+<span id="817">817</span>
+<span id="818">818</span>
+<span id="819">819</span>
+<span id="820">820</span>
+<span id="821">821</span>
+<span id="822">822</span>
+<span id="823">823</span>
+<span id="824">824</span>
+<span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
+<span id="836">836</span>
+<span id="837">837</span>
+<span id="838">838</span>
+<span id="839">839</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">any</span>::<span class="ident">TypeId</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
@@ -1456,7 +1484,7 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UniformHwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">FloatComponent</span> <span class="op">+</span> <span class="ident">SampleUniform</span>,
-    <span class="ident">S</span>: <span class="ident">RgbStandard</span> <span class="op">+</span> <span class="ident">SampleUniform</span>,
+    <span class="ident">S</span>: <span class="ident">RgbStandard</span>,
 {
     <span class="ident">sampler</span>: <span class="kw">crate</span>::<span class="ident">hsv</span>::<span class="ident">UniformHsv</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>,
     <span class="ident">space</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>,
@@ -1466,7 +1494,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">SampleUniform</span> <span class="kw">for</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">FloatComponent</span> <span class="op">+</span> <span class="ident">SampleUniform</span>,
-    <span class="ident">S</span>: <span class="ident">RgbStandard</span> <span class="op">+</span> <span class="ident">SampleUniform</span>,
+    <span class="ident">S</span>: <span class="ident">RgbStandard</span>,
 {
     <span class="kw">type</span> <span class="ident">Sampler</span> <span class="op">=</span> <span class="ident">UniformHwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 }
@@ -1475,7 +1503,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">UniformSampler</span> <span class="kw">for</span> <span class="ident">UniformHwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">FloatComponent</span> <span class="op">+</span> <span class="ident">SampleUniform</span>,
-    <span class="ident">S</span>: <span class="ident">RgbStandard</span> <span class="op">+</span> <span class="ident">SampleUniform</span>,
+    <span class="ident">S</span>: <span class="ident">RgbStandard</span>,
 {
     <span class="kw">type</span> <span class="ident">X</span> <span class="op">=</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>;
 
@@ -1484,12 +1512,20 @@
         <span class="ident">B1</span>: <span class="ident">SampleBorrow</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">X</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Sized</span>,
         <span class="ident">B2</span>: <span class="ident">SampleBorrow</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">X</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Sized</span>,
     {
-        <span class="kw">let</span> <span class="ident">low</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">low_b</span>.<span class="ident">borrow</span>();
-        <span class="kw">let</span> <span class="ident">high</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">high_b</span>.<span class="ident">borrow</span>();
-        <span class="kw">let</span> <span class="ident">sampler</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">hsv</span>::<span class="ident">UniformHsv</span>::<span class="op">&lt;</span><span class="ident">S</span>, <span class="kw">_</span><span class="op">&gt;</span>::<span class="ident">new</span>(
-            <span class="ident">Hsv</span>::<span class="ident">from_color_unclamped</span>(<span class="ident">low</span>),
-            <span class="ident">Hsv</span>::<span class="ident">from_color_unclamped</span>(<span class="ident">high</span>),
+        <span class="kw">let</span> <span class="ident">low_input</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from_color_unclamped</span>(<span class="kw-2">*</span><span class="ident">low_b</span>.<span class="ident">borrow</span>());
+        <span class="kw">let</span> <span class="ident">high_input</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from_color_unclamped</span>(<span class="kw-2">*</span><span class="ident">high_b</span>.<span class="ident">borrow</span>());
+
+        <span class="kw">let</span> <span class="ident">low</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">with_wp</span>(
+            <span class="ident">low_input</span>.<span class="ident">hue</span>,
+            <span class="ident">low_input</span>.<span class="ident">saturation</span>.<span class="ident">min</span>(<span class="ident">high_input</span>.<span class="ident">saturation</span>),
+            <span class="ident">low_input</span>.<span class="ident">value</span>.<span class="ident">min</span>(<span class="ident">high_input</span>.<span class="ident">value</span>),
         );
+        <span class="kw">let</span> <span class="ident">high</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">with_wp</span>(
+            <span class="ident">high_input</span>.<span class="ident">hue</span>,
+            <span class="ident">low_input</span>.<span class="ident">saturation</span>.<span class="ident">max</span>(<span class="ident">high_input</span>.<span class="ident">saturation</span>),
+            <span class="ident">low_input</span>.<span class="ident">value</span>.<span class="ident">max</span>(<span class="ident">high_input</span>.<span class="ident">value</span>),
+        );
+        <span class="kw">let</span> <span class="ident">sampler</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">hsv</span>::<span class="ident">UniformHsv</span>::<span class="op">&lt;</span><span class="ident">S</span>, <span class="kw">_</span><span class="op">&gt;</span>::<span class="ident">new</span>(<span class="ident">low</span>, <span class="ident">high</span>);
 
         <span class="ident">UniformHwb</span> {
             <span class="ident">sampler</span>,
@@ -1502,12 +1538,21 @@
         <span class="ident">B1</span>: <span class="ident">SampleBorrow</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">X</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Sized</span>,
         <span class="ident">B2</span>: <span class="ident">SampleBorrow</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">X</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Sized</span>,
     {
-        <span class="kw">let</span> <span class="ident">low</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">low_b</span>.<span class="ident">borrow</span>();
-        <span class="kw">let</span> <span class="ident">high</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">high_b</span>.<span class="ident">borrow</span>();
-        <span class="kw">let</span> <span class="ident">sampler</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">hsv</span>::<span class="ident">UniformHsv</span>::<span class="op">&lt;</span><span class="ident">S</span>, <span class="kw">_</span><span class="op">&gt;</span>::<span class="ident">new_inclusive</span>(
-            <span class="ident">Hsv</span>::<span class="ident">from_color_unclamped</span>(<span class="ident">low</span>),
-            <span class="ident">Hsv</span>::<span class="ident">from_color_unclamped</span>(<span class="ident">high</span>),
+        <span class="kw">let</span> <span class="ident">low_input</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from_color_unclamped</span>(<span class="kw-2">*</span><span class="ident">low_b</span>.<span class="ident">borrow</span>());
+        <span class="kw">let</span> <span class="ident">high_input</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">from_color_unclamped</span>(<span class="kw-2">*</span><span class="ident">high_b</span>.<span class="ident">borrow</span>());
+
+        <span class="kw">let</span> <span class="ident">low</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">with_wp</span>(
+            <span class="ident">low_input</span>.<span class="ident">hue</span>,
+            <span class="ident">low_input</span>.<span class="ident">saturation</span>.<span class="ident">min</span>(<span class="ident">high_input</span>.<span class="ident">saturation</span>),
+            <span class="ident">low_input</span>.<span class="ident">value</span>.<span class="ident">min</span>(<span class="ident">high_input</span>.<span class="ident">value</span>),
         );
+        <span class="kw">let</span> <span class="ident">high</span> <span class="op">=</span> <span class="ident">Hsv</span>::<span class="ident">with_wp</span>(
+            <span class="ident">high_input</span>.<span class="ident">hue</span>,
+            <span class="ident">low_input</span>.<span class="ident">saturation</span>.<span class="ident">max</span>(<span class="ident">high_input</span>.<span class="ident">saturation</span>),
+            <span class="ident">low_input</span>.<span class="ident">value</span>.<span class="ident">max</span>(<span class="ident">high_input</span>.<span class="ident">value</span>),
+        );
+
+        <span class="kw">let</span> <span class="ident">sampler</span> <span class="op">=</span> <span class="kw">crate</span>::<span class="ident">hsv</span>::<span class="ident">UniformHsv</span>::<span class="op">&lt;</span><span class="ident">S</span>, <span class="kw">_</span><span class="op">&gt;</span>::<span class="ident">new_inclusive</span>(<span class="ident">low</span>, <span class="ident">high</span>);
 
         <span class="ident">UniformHwb</span> {
             <span class="ident">sampler</span>,
@@ -1622,6 +1667,17 @@
             ::<span class="ident">serde_json</span>::<span class="ident">from_str</span>(<span class="string">r#&quot;{&quot;hue&quot;:0.3,&quot;whiteness&quot;:0.8,&quot;blackness&quot;:0.1}&quot;#</span>).<span class="ident">unwrap</span>();
 
         <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">deserialized</span>, <span class="ident">Hwb</span>::<span class="ident">new</span>(<span class="number">0.3</span>, <span class="number">0.8</span>, <span class="number">0.1</span>));
+    }
+
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;random&quot;</span>)]</span>
+    <span class="macro">test_uniform_distribution</span><span class="macro">!</span> {
+        <span class="ident">Hwb</span><span class="op">&lt;</span><span class="kw">crate</span>::<span class="ident">encoding</span>::<span class="ident">Srgb</span>, <span class="ident">f32</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="kw">crate</span>::<span class="ident">rgb</span>::<span class="ident">Rgb</span> {
+            <span class="ident">red</span>: (<span class="number">0.0</span>, <span class="number">1.0</span>),
+            <span class="ident">green</span>: (<span class="number">0.0</span>, <span class="number">1.0</span>),
+            <span class="ident">blue</span>: (<span class="number">0.0</span>, <span class="number">1.0</span>)
+        },
+        <span class="ident">min</span>: <span class="ident">Hwb</span>::<span class="ident">new</span>(<span class="number">0.0f32</span>, <span class="number">0.0</span>, <span class="number">0.0</span>),
+        <span class="ident">max</span>: <span class="ident">Hwb</span>::<span class="ident">new</span>(<span class="number">360.0</span>, <span class="number">1.0</span>, <span class="number">1.0</span>)
     }
 }
 </pre></div>
