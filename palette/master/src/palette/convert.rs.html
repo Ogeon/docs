@@ -1446,6 +1446,7 @@
     <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Alpha</span>, <span class="ident">Hsl</span>, <span class="ident">Hsv</span>, <span class="ident">Hwb</span>, <span class="ident">Lab</span>, <span class="ident">Lch</span>, <span class="ident">Xyz</span>, <span class="ident">Yxy</span>};
     <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">FloatComponent</span>, <span class="ident">Limited</span>};
 
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">FromColorUnclamped</span>, <span class="ident">WithAlpha</span>)]</span>
     <span class="attribute">#[<span class="ident">palette</span>(
         <span class="ident">skip_derives</span>(<span class="ident">Xyz</span>, <span class="ident">Luma</span>),
         <span class="ident">white_point</span> <span class="op">=</span> <span class="string">&quot;S::WhitePoint&quot;</span>,
@@ -1454,7 +1455,6 @@
         <span class="ident">palette_internal</span>,
         <span class="ident">palette_internal_not_base_type</span>
     )]</span>
-    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">FromColorUnclamped</span>, <span class="ident">WithAlpha</span>)]</span>
     <span class="kw">struct</span> <span class="ident">WithXyz</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>);
 
     <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">WithXyz</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
@@ -1515,6 +1515,7 @@
         }
     }
 
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">FromColorUnclamped</span>, <span class="ident">WithAlpha</span>)]</span>
     <span class="attribute">#[<span class="ident">palette</span>(
         <span class="ident">skip_derives</span>(<span class="ident">Lch</span>, <span class="ident">Luma</span>),
         <span class="ident">white_point</span> <span class="op">=</span> <span class="string">&quot;crate::white_point::E&quot;</span>,
@@ -1523,7 +1524,6 @@
         <span class="ident">palette_internal</span>,
         <span class="ident">palette_internal_not_base_type</span>
     )]</span>
-    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">FromColorUnclamped</span>, <span class="ident">WithAlpha</span>)]</span>
     <span class="kw">struct</span> <span class="ident">WithoutXyz</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FloatComponent</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
 
     <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FloatComponent</span><span class="op">&gt;</span> <span class="ident">Limited</span> <span class="kw">for</span> <span class="ident">WithoutXyz</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
@@ -1823,4 +1823,5 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "palette";</script><script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="palette"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
