@@ -859,8 +859,8 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">float</span>::<span class="ident">Float</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">rgb</span>::{<span class="ident">RgbSpace</span>, <span class="ident">RgbStandard</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">clamp</span>, <span class="ident">contrast_ratio</span>, <span class="ident">Alpha</span>, <span class="ident">Component</span>, <span class="ident">FloatComponent</span>, <span class="ident">FromF64</span>, <span class="ident">GetHue</span>, <span class="ident">Hsv</span>, <span class="ident">Hue</span>, <span class="ident">Limited</span>,
-    <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">RelativeContrast</span>, <span class="ident">RgbHue</span>, <span class="ident">Shade</span>, <span class="ident">Xyz</span>,
+    <span class="ident">clamp</span>, <span class="ident">contrast_ratio</span>, <span class="ident">Alpha</span>, <span class="ident">Clamp</span>, <span class="ident">Component</span>, <span class="ident">FloatComponent</span>, <span class="ident">FromF64</span>, <span class="ident">GetHue</span>, <span class="ident">Hsv</span>, <span class="ident">Hue</span>, <span class="ident">Mix</span>,
+    <span class="ident">Pixel</span>, <span class="ident">RelativeContrast</span>, <span class="ident">RgbHue</span>, <span class="ident">Shade</span>, <span class="ident">Xyz</span>,
 };
 
 <span class="doccomment">/// Linear HWB with an alpha component. See the [`Hwba` implementation in</span>
@@ -1108,13 +1108,13 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Limited</span> <span class="kw">for</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Clamp</span> <span class="kw">for</span> <span class="ident">Hwb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">S</span>: <span class="ident">RgbStandard</span>,
 {
     <span class="attribute">#[<span class="ident">rustfmt</span>::<span class="ident">skip</span>]</span>
-    <span class="kw">fn</span> <span class="ident">is_valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_within_bounds</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">blackness</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">zero</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">blackness</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">one</span>() <span class="op">&amp;&amp;</span>
         <span class="self">self</span>.<span class="ident">whiteness</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">zero</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">whiteness</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">one</span>() <span class="op">&amp;&amp;</span>
         <span class="self">self</span>.<span class="ident">whiteness</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">blackness</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">one</span>()
@@ -1568,7 +1568,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">test</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">Hwb</span>;
-    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">FromColor</span>, <span class="ident">Limited</span>, <span class="ident">Srgb</span>};
+    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Clamp</span>, <span class="ident">FromColor</span>, <span class="ident">Srgb</span>};
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">red</span>() {

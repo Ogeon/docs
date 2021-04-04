@@ -752,8 +752,8 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">encoding</span>::<span class="ident">pixel</span>::<span class="ident">RawPixel</span>;
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>::{<span class="ident">WhitePoint</span>, <span class="ident">D65</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">clamp</span>, <span class="ident">contrast_ratio</span>, <span class="ident">from_f64</span>, <span class="ident">Alpha</span>, <span class="ident">Component</span>, <span class="ident">FloatComponent</span>, <span class="ident">FromColor</span>, <span class="ident">GetHue</span>, <span class="ident">Hue</span>, <span class="ident">Lab</span>,
-    <span class="ident">LabHue</span>, <span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">RelativeContrast</span>, <span class="ident">Saturate</span>, <span class="ident">Shade</span>, <span class="ident">Xyz</span>,
+    <span class="ident">clamp</span>, <span class="ident">contrast_ratio</span>, <span class="ident">from_f64</span>, <span class="ident">Alpha</span>, <span class="ident">Clamp</span>, <span class="ident">Component</span>, <span class="ident">FloatComponent</span>, <span class="ident">FromColor</span>, <span class="ident">GetHue</span>,
+    <span class="ident">Hue</span>, <span class="ident">Lab</span>, <span class="ident">LabHue</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">RelativeContrast</span>, <span class="ident">Saturate</span>, <span class="ident">Shade</span>, <span class="ident">Xyz</span>,
 };
 
 <span class="doccomment">/// CIE L\*C\*h° with an alpha component. See the [`Lcha` implementation in</span>
@@ -994,12 +994,12 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Limited</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Clamp</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
     <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
 {
-    <span class="kw">fn</span> <span class="ident">is_valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_within_bounds</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">l</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">zero</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">l</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">from_f64</span>(<span class="number">100.0</span>) <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">chroma</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">zero</span>()
     }
 
@@ -1418,13 +1418,13 @@
     <span class="kw">fn</span> <span class="ident">ranges</span>() {
         <span class="macro">assert_ranges</span><span class="macro">!</span> {
             <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">D65</span>, <span class="ident">f64</span><span class="op">&gt;</span>;
-            <span class="ident">limited</span> {
+            <span class="ident">clamped</span> {
                 <span class="ident">l</span>: <span class="number">0.0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">100.0</span>
             }
-            <span class="ident">limited_min</span> {
+            <span class="ident">clamped_min</span> {
                 <span class="ident">chroma</span>: <span class="number">0.0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">200.0</span>
             }
-            <span class="ident">unlimited</span> {
+            <span class="ident">unclamped</span> {
                 <span class="ident">hue</span>: <span class="op">-</span><span class="number">360.0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">360.0</span>
             }
         }

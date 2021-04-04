@@ -1438,8 +1438,8 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">matrix</span>::{<span class="ident">matrix_inverse</span>, <span class="ident">multiply_xyz_to_rgb</span>, <span class="ident">rgb_to_xyz_matrix</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">rgb</span>::{<span class="ident">Packed</span>, <span class="ident">RgbChannels</span>, <span class="ident">RgbSpace</span>, <span class="ident">RgbStandard</span>, <span class="ident">TransferFn</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
-    <span class="ident">clamp</span>, <span class="ident">contrast_ratio</span>, <span class="ident">from_f64</span>, <span class="ident">Blend</span>, <span class="ident">Component</span>, <span class="ident">ComponentWise</span>, <span class="ident">FloatComponent</span>,
-    <span class="ident">FromComponent</span>, <span class="ident">GetHue</span>, <span class="ident">Limited</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">RelativeContrast</span>, <span class="ident">Shade</span>,
+    <span class="ident">clamp</span>, <span class="ident">contrast_ratio</span>, <span class="ident">from_f64</span>, <span class="ident">Blend</span>, <span class="ident">Clamp</span>, <span class="ident">Component</span>, <span class="ident">ComponentWise</span>, <span class="ident">FloatComponent</span>,
+    <span class="ident">FromComponent</span>, <span class="ident">GetHue</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">RelativeContrast</span>, <span class="ident">Shade</span>,
 };
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Hsl</span>, <span class="ident">Hsv</span>, <span class="ident">Luma</span>, <span class="ident">RgbHue</span>, <span class="ident">Xyz</span>};
 
@@ -1886,13 +1886,13 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Limited</span> <span class="kw">for</span> <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Clamp</span> <span class="kw">for</span> <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">S</span>: <span class="ident">RgbStandard</span>,
     <span class="ident">T</span>: <span class="ident">Component</span>,
 {
     <span class="attribute">#[<span class="ident">rustfmt</span>::<span class="ident">skip</span>]</span>
-    <span class="kw">fn</span> <span class="ident">is_valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_within_bounds</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">red</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">zero</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">red</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">max_intensity</span>() <span class="op">&amp;&amp;</span>
         <span class="self">self</span>.<span class="ident">green</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">zero</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">green</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">max_intensity</span>() <span class="op">&amp;&amp;</span>
         <span class="self">self</span>.<span class="ident">blue</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">zero</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">blue</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">max_intensity</span>()
@@ -2613,13 +2613,13 @@
     <span class="kw">fn</span> <span class="ident">ranges</span>() {
         <span class="macro">assert_ranges</span><span class="macro">!</span> {
             <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">Srgb</span>, <span class="ident">f64</span><span class="op">&gt;</span>;
-            <span class="ident">limited</span> {
+            <span class="ident">clamped</span> {
                 <span class="ident">red</span>: <span class="number">0.0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">1.0</span>,
                 <span class="ident">green</span>: <span class="number">0.0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">1.0</span>,
                 <span class="ident">blue</span>: <span class="number">0.0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">1.0</span>
             }
-            <span class="ident">limited_min</span> {}
-            <span class="ident">unlimited</span> {}
+            <span class="ident">clamped_min</span> {}
+            <span class="ident">unclamped</span> {}
         }
     }
 

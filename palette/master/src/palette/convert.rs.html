@@ -1193,7 +1193,7 @@
 <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">palette_derive</span>::<span class="ident">FromColorUnclamped</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Limited</span>;
+<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">Clamp</span>;
 
 <span class="doccomment">/// The error type for a color conversion that converted a color into a color</span>
 <span class="doccomment">/// with invalid values.</span>
@@ -1238,10 +1238,10 @@
     <span class="doccomment">/// Convert into T with values clamped to the color defined bounds</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use palette::{Lch, Srgb, Limited, IntoColor};</span>
+    <span class="doccomment">/// use palette::{Clamp, IntoColor, Lch, Srgb};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let rgb: Srgb = Lch::new(50.0, 100.0, -175.0).into_color();</span>
-    <span class="doccomment">/// assert!(rgb.is_valid());</span>
+    <span class="doccomment">/// assert!(rgb.is_within_bounds());</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">into_color</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>;
 }
@@ -1256,10 +1256,10 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use palette::convert::IntoColorUnclamped;</span>
-    <span class="doccomment">/// use palette::{Lch, Srgb, Limited};</span>
+    <span class="doccomment">/// use palette::{Clamp, Lch, Srgb};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">///let rgb: Srgb = Lch::new(50.0, 100.0, -175.0).into_color_unclamped();</span>
-    <span class="doccomment">///assert!(!rgb.is_valid());</span>
+    <span class="doccomment">///assert!(!rgb.is_within_bounds());</span>
     <span class="doccomment">///```</span>
     <span class="kw">fn</span> <span class="ident">into_color_unclamped</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>;
 }
@@ -1291,7 +1291,7 @@
 
 <span class="doccomment">///A trait for converting one color from another, in a possibly lossy way.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// `U: FromColor&lt;T&gt;` is implemented for every type `U: FromColorUnclamped&lt;T&gt; + Limited`.</span>
+<span class="doccomment">/// `U: FromColor&lt;T&gt;` is implemented for every type `U: FromColorUnclamped&lt;T&gt; + Clamp`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See [`FromColorUnclamped`](crate::convert::FromColorUnclamped) for a lossless version of this trait.</span>
 <span class="doccomment">/// See [`TryFromColor`](crate::convert::TryFromColor) for a trait that gives an error when the result</span>
@@ -1308,7 +1308,7 @@
 <span class="doccomment">/// * `From&lt;Self&gt;` and `Into&lt;Self&gt;` are blanket implemented, while `FromColor&lt;Self&gt;` and</span>
 <span class="doccomment">/// `IntoColor&lt;Self&gt;` have to be manually implemented. This allows additional flexibility,</span>
 <span class="doccomment">/// such as allowing implementing `FromColor&lt;Rgb&lt;S2, T&gt;&gt; for Rgb&lt;S1, T&gt;`.</span>
-<span class="doccomment">/// * Implementing `FromColorUnclamped` and `Limited` is enough to get all the other conversion</span>
+<span class="doccomment">/// * Implementing `FromColorUnclamped` and `Clamp` is enough to get all the other conversion</span>
 <span class="doccomment">/// traits, while `From` and `Into` would not be possible to blanket implement in the same way.</span>
 <span class="doccomment">/// This also reduces the work that needs to be done by macros.</span>
 <span class="doccomment">///</span>
@@ -1318,10 +1318,10 @@
     <span class="doccomment">/// Convert from T with values clamped to the color defined bounds.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use palette::{Lch, Srgb, Limited, FromColor};</span>
+    <span class="doccomment">/// use palette::{Clamp, FromColor, Lch, Srgb};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let rgb = Srgb::from_color(Lch::new(50.0, 100.0, -175.0));</span>
-    <span class="doccomment">/// assert!(rgb.is_valid());</span>
+    <span class="doccomment">/// assert!(rgb.is_within_bounds());</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">from_color</span>(<span class="ident">t</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
 }
@@ -1339,17 +1339,17 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use palette::convert::FromColorUnclamped;</span>
-    <span class="doccomment">/// use palette::{Lch, Srgb, Limited};</span>
+    <span class="doccomment">/// use palette::{Clamp, Lch, Srgb};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let rgb = Srgb::from_color_unclamped(Lch::new(50.0, 100.0, -175.0));</span>
-    <span class="doccomment">/// assert!(!rgb.is_valid());</span>
+    <span class="doccomment">/// assert!(!rgb.is_within_bounds());</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">fn</span> <span class="ident">from_color_unclamped</span>(<span class="ident">val</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
 }
 
 <span class="doccomment">/// A trait for fallible conversion of one color from another.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// `U: TryFromColor&lt;T&gt;` is implemented for every type `U: FromColorUnclamped&lt;T&gt; + Limited`.</span>
+<span class="doccomment">/// `U: TryFromColor&lt;T&gt;` is implemented for every type `U: FromColorUnclamped&lt;T&gt; + Clamp`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See [`FromColor`](crate::convert::FromColor) for a lossy version of this trait.</span>
 <span class="doccomment">/// See [`FromColorUnclamped`](crate::convert::FromColorUnclamped) for a lossless version.</span>
@@ -1378,12 +1378,12 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> <span class="ident">FromColor</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">U</span>
 <span class="kw">where</span>
-    <span class="ident">U</span>: <span class="ident">FromColorUnclamped</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Limited</span>,
+    <span class="ident">U</span>: <span class="ident">FromColorUnclamped</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Clamp</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">from_color</span>(<span class="ident">t</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">this</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">from_color_unclamped</span>(<span class="ident">t</span>);
-        <span class="kw">if</span> <span class="op">!</span><span class="ident">this</span>.<span class="ident">is_valid</span>() {
+        <span class="kw">if</span> <span class="op">!</span><span class="ident">this</span>.<span class="ident">is_within_bounds</span>() {
             <span class="ident">this</span>.<span class="ident">clamp_self</span>();
         }
         <span class="ident">this</span>
@@ -1392,12 +1392,12 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">U</span><span class="op">&gt;</span> <span class="ident">TryFromColor</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">U</span>
 <span class="kw">where</span>
-    <span class="ident">U</span>: <span class="ident">FromColorUnclamped</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Limited</span>,
+    <span class="ident">U</span>: <span class="ident">FromColorUnclamped</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Clamp</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="kw">fn</span> <span class="ident">try_from_color</span>(<span class="ident">t</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">OutOfBounds</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">this</span> <span class="op">=</span> <span class="self">Self</span>::<span class="ident">from_color_unclamped</span>(<span class="ident">t</span>);
-        <span class="kw">if</span> <span class="ident">this</span>.<span class="ident">is_valid</span>() {
+        <span class="kw">if</span> <span class="ident">this</span>.<span class="ident">is_within_bounds</span>() {
             <span class="prelude-val">Ok</span>(<span class="ident">this</span>)
         } <span class="kw">else</span> {
             <span class="prelude-val">Err</span>(<span class="ident">OutOfBounds</span>::<span class="ident">new</span>(<span class="ident">this</span>))
@@ -1444,7 +1444,7 @@
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">luma</span>::{<span class="ident">Luma</span>, <span class="ident">LumaStandard</span>};
     <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">rgb</span>::{<span class="ident">Rgb</span>, <span class="ident">RgbSpace</span>};
     <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Alpha</span>, <span class="ident">Hsl</span>, <span class="ident">Hsv</span>, <span class="ident">Hwb</span>, <span class="ident">Lab</span>, <span class="ident">Lch</span>, <span class="ident">Xyz</span>, <span class="ident">Yxy</span>};
-    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">FloatComponent</span>, <span class="ident">Limited</span>};
+    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">Clamp</span>, <span class="ident">FloatComponent</span>};
 
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">FromColorUnclamped</span>, <span class="ident">WithAlpha</span>)]</span>
     <span class="attribute">#[<span class="ident">palette</span>(
@@ -1465,8 +1465,8 @@
 
     <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&gt;</span> <span class="ident">Copy</span> <span class="kw">for</span> <span class="ident">WithXyz</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {}
 
-    <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&gt;</span> <span class="ident">Limited</span> <span class="kw">for</span> <span class="ident">WithXyz</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
-        <span class="kw">fn</span> <span class="ident">is_valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">RgbSpace</span><span class="op">&gt;</span> <span class="ident">Clamp</span> <span class="kw">for</span> <span class="ident">WithXyz</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">is_within_bounds</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
             <span class="bool-val">true</span>
         }
 
@@ -1526,8 +1526,8 @@
     )]</span>
     <span class="kw">struct</span> <span class="ident">WithoutXyz</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FloatComponent</span><span class="op">&gt;</span>(<span class="ident">PhantomData</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
 
-    <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FloatComponent</span><span class="op">&gt;</span> <span class="ident">Limited</span> <span class="kw">for</span> <span class="ident">WithoutXyz</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-        <span class="kw">fn</span> <span class="ident">is_valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">FloatComponent</span><span class="op">&gt;</span> <span class="ident">Clamp</span> <span class="kw">for</span> <span class="ident">WithoutXyz</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">is_within_bounds</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
             <span class="bool-val">true</span>
         }
 
