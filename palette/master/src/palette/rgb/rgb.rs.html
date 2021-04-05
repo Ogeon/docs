@@ -1412,6 +1412,23 @@
 <span id="1409">1409</span>
 <span id="1410">1410</span>
 <span id="1411">1411</span>
+<span id="1412">1412</span>
+<span id="1413">1413</span>
+<span id="1414">1414</span>
+<span id="1415">1415</span>
+<span id="1416">1416</span>
+<span id="1417">1417</span>
+<span id="1418">1418</span>
+<span id="1419">1419</span>
+<span id="1420">1420</span>
+<span id="1421">1421</span>
+<span id="1422">1422</span>
+<span id="1423">1423</span>
+<span id="1424">1424</span>
+<span id="1425">1425</span>
+<span id="1426">1426</span>
+<span id="1427">1427</span>
+<span id="1428">1428</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">any</span>::<span class="ident">TypeId</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
@@ -1458,7 +1475,7 @@
 <span class="doccomment">/// linear, meaning that gamma correction is required when converting to and</span>
 <span class="doccomment">/// from a displayable RGB, such as sRGB. See the [`pixel`](crate::encoding::pixel)</span>
 <span class="doccomment">/// module for encoding formats.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Pixel</span>, <span class="ident">FromColorUnclamped</span>, <span class="ident">WithAlpha</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Pixel</span>, <span class="ident">FromColorUnclamped</span>, <span class="ident">WithAlpha</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
 <span class="attribute">#[<span class="ident">palette</span>(
     <span class="ident">palette_internal</span>,
@@ -1567,6 +1584,23 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_blue</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
         <span class="ident">T</span>::<span class="ident">max_intensity</span>()
     }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">PartialEq</span>,
+    <span class="ident">S</span>: <span class="ident">RgbStandard</span>,
+{
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">red</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">red</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">green</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">green</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">blue</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">blue</span>
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="ident">Rgb</span><span class="op">&lt;</span><span class="ident">S</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">Component</span> <span class="op">+</span> <span class="ident">Eq</span>,
+    <span class="ident">S</span>: <span class="ident">RgbStandard</span>,
+{
 }
 
 <span class="doccomment">/// Convenience functions to convert between a packed `u32` and `Rgb`.</span>

@@ -735,6 +735,23 @@
 <span id="732">732</span>
 <span id="733">733</span>
 <span id="734">734</span>
+<span id="735">735</span>
+<span id="736">736</span>
+<span id="737">737</span>
+<span id="738">738</span>
+<span id="739">739</span>
+<span id="740">740</span>
+<span id="741">741</span>
+<span id="742">742</span>
+<span id="743">743</span>
+<span id="744">744</span>
+<span id="745">745</span>
+<span id="746">746</span>
+<span id="747">747</span>
+<span id="748">748</span>
+<span id="749">749</span>
+<span id="750">750</span>
+<span id="751">751</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
@@ -766,7 +783,7 @@
 <span class="doccomment">/// it&#39;s a cylindrical color space, like [HSL](crate::Hsl) and</span>
 <span class="doccomment">/// [HSV](crate::Hsv). This gives it the same ability to directly change</span>
 <span class="doccomment">/// the hue and colorfulness of a color, while preserving other visual aspects.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Pixel</span>, <span class="ident">FromColorUnclamped</span>, <span class="ident">WithAlpha</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Pixel</span>, <span class="ident">FromColorUnclamped</span>, <span class="ident">WithAlpha</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;serializing&quot;</span>, <span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>))]</span>
 <span class="attribute">#[<span class="ident">palette</span>(
     <span class="ident">palette_internal</span>,
@@ -887,6 +904,23 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max_extended_chroma</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
         <span class="ident">from_f64</span>(<span class="kw">crate</span>::<span class="ident">float</span>::<span class="ident">Float</span>::<span class="ident">sqrt</span>(<span class="number">128.0f64</span> <span class="op">*</span> <span class="number">128.0</span> <span class="op">+</span> <span class="number">128.0</span> <span class="op">*</span> <span class="number">128.0</span>))
     }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">FloatComponent</span> <span class="op">+</span> <span class="ident">PartialEq</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
+{
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">l</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">l</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">chroma</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">chroma</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">hue</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">hue</span>
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">FloatComponent</span> <span class="op">+</span> <span class="ident">Eq</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
+{
 }
 
 <span class="doccomment">///&lt;span id=&quot;Lcha&quot;&gt;&lt;/span&gt;[`Lcha`](crate::Lcha) implementations.</span>
