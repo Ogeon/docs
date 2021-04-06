@@ -1,7 +1,7 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `palette/src/gradient/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../palette/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `palette/src/gradient.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>gradient.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../palette/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -619,13 +619,14 @@
 <span id="616">616</span>
 <span id="617">617</span>
 <span id="618">618</span>
+<span id="619">619</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Types for interpolation between multiple colors.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! This module is only available if the `std` feature is enabled (this is the</span>
 <span class="doccomment">//! default).</span>
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">max</span>;
+<span class="kw">use</span> <span class="ident">core</span>::<span class="ident">cmp</span>::<span class="ident">max</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 
 <span class="kw">use</span> <span class="ident">approx</span>::{<span class="ident">AbsDiffEq</span>, <span class="ident">RelativeEq</span>, <span class="ident">UlpsEq</span>};
@@ -638,10 +639,10 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;named_gradients&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">named</span>;
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>,<span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Gradient</span><span class="op">&lt;</span><span class="ident">C</span>,<span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Gradient</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">C</span>: <span class="ident">Mix</span> <span class="op">+</span> <span class="ident">Clone</span>,
-    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>
+    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>,
 {
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">col</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Gradient</span>(<span class="ident">col</span>, <span class="ident">PhantomData</span>)
@@ -662,10 +663,10 @@
     <span class="ident">C</span>: <span class="ident">Mix</span> <span class="op">+</span> <span class="ident">Clone</span>,
     <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>;
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>,<span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Gradient</span><span class="op">&lt;</span><span class="ident">C</span>,<span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Gradient</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">C</span>: <span class="ident">Mix</span> <span class="op">+</span> <span class="ident">Clone</span>,
-    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>
+    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>,
 {
     <span class="doccomment">/// Get a color from the gradient. The color of the closest control point</span>
     <span class="doccomment">/// will be returned if `i` is outside the domain.</span>
@@ -753,7 +754,7 @@
     <span class="doccomment">///     assert_relative_eq!(c1, c2);</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">take</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Take</span><span class="op">&lt;</span><span class="ident">C</span>,<span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">take</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Take</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">min</span>, <span class="ident">max</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">domain</span>();
 
         <span class="ident">Take</span> {
@@ -767,7 +768,7 @@
     }
 
     <span class="doccomment">/// Slice this gradient to limit its domain.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slice</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Range</span><span class="op">&lt;</span><span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">range</span>: <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Slice</span><span class="op">&lt;</span><span class="ident">C</span>,<span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slice</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Range</span><span class="op">&lt;</span><span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">range</span>: <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Slice</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Slice</span> {
             <span class="ident">gradient</span>: <span class="self">self</span>,
             <span class="ident">range</span>: <span class="ident">range</span>.<span class="ident">into</span>(),
@@ -814,7 +815,7 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Take</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="op">&lt;</span><span class="ident">C</span> <span class="kw">as</span> <span class="ident">Mix</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)<span class="op">&gt;</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">C</span>: <span class="ident">Mix</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="lifetime">&#39;a</span>,
-    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>
+    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>,
 {
     <span class="ident">gradient</span>: <span class="ident">MaybeSlice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>,
     <span class="ident">from</span>: <span class="ident">C</span>::<span class="ident">Scalar</span>,
@@ -828,7 +829,7 @@
 <span class="kw">where</span>
     <span class="ident">C</span>::<span class="ident">Scalar</span>: <span class="ident">FromF64</span>,
     <span class="ident">C</span>: <span class="ident">Mix</span> <span class="op">+</span> <span class="ident">Clone</span>,
-    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>
+    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>,
 {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">C</span>;
 
@@ -861,14 +862,15 @@
 <span class="kw">where</span>
     <span class="ident">C</span>::<span class="ident">Scalar</span>: <span class="ident">FromF64</span>,
     <span class="ident">C</span>: <span class="ident">Mix</span> <span class="op">+</span> <span class="ident">Clone</span>,
-    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>
-{}
+    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>,
+{
+}
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">DoubleEndedIterator</span> <span class="kw">for</span> <span class="ident">Take</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">C</span>::<span class="ident">Scalar</span>: <span class="ident">FromF64</span>,
     <span class="ident">C</span>: <span class="ident">Mix</span> <span class="op">+</span> <span class="ident">Clone</span>,
-    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>
+    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>,
 {
     <span class="kw">fn</span> <span class="ident">next_back</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">from_head</span> <span class="op">+</span> <span class="self">self</span>.<span class="ident">from_end</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">len</span> {
@@ -890,19 +892,19 @@
 
 <span class="doccomment">/// A slice of a Gradient that limits its domain.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Slice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>,<span class="ident">T</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="op">&lt;</span><span class="ident">C</span> <span class="kw">as</span> <span class="ident">Mix</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)<span class="op">&gt;</span><span class="op">&gt;</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Slice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="op">&lt;</span><span class="ident">C</span> <span class="kw">as</span> <span class="ident">Mix</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)<span class="op">&gt;</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">C</span>: <span class="ident">Mix</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="lifetime">&#39;a</span>,
-    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>
+    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>,
 {
-    <span class="ident">gradient</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Gradient</span><span class="op">&lt;</span><span class="ident">C</span>,<span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">gradient</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Gradient</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>,
     <span class="ident">range</span>: <span class="ident">Range</span><span class="op">&lt;</span><span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Slice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">C</span>: <span class="ident">Mix</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="lifetime">&#39;a</span>,
-    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>
+    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>,
 {
     <span class="doccomment">/// Get a color from the gradient slice. The color of the closest domain</span>
     <span class="doccomment">/// limit will be returned if `i` is outside the domain.</span>
@@ -912,7 +914,7 @@
 
     <span class="doccomment">/// Slice this gradient slice to further limit its domain. Ranges outside</span>
     <span class="doccomment">/// the domain will be clamped to the nearest domain limit.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slice</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Range</span><span class="op">&lt;</span><span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">range</span>: <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Slice</span><span class="op">&lt;</span><span class="ident">C</span>,<span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">slice</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">Range</span><span class="op">&lt;</span><span class="ident">C</span>::<span class="ident">Scalar</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">range</span>: <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Slice</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Slice</span> {
             <span class="ident">gradient</span>: <span class="self">self</span>.<span class="ident">gradient</span>,
             <span class="ident">range</span>: <span class="self">self</span>.<span class="ident">range</span>.<span class="ident">constrain</span>(<span class="kw-2">&amp;</span><span class="ident">range</span>.<span class="ident">into</span>()),
@@ -937,7 +939,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Slice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">C</span>: <span class="ident">Mix</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="lifetime">&#39;a</span>,
-    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Clone</span>
+    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Clone</span>,
 {
     <span class="doccomment">/// Take `n` evenly spaced colors from the gradient slice, as an iterator.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">take</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Take</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> {
@@ -1128,7 +1130,7 @@
 <span class="kw">enum</span> <span class="ident">MaybeSlice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span>(<span class="op">&lt;</span><span class="ident">C</span> <span class="kw">as</span> <span class="ident">Mix</span><span class="op">&gt;</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)<span class="op">&gt;</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">C</span>: <span class="ident">Mix</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="lifetime">&#39;a</span>,
-    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>
+    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>,
 {
     <span class="ident">NotSlice</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Gradient</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>),
     <span class="ident">Slice</span>(<span class="ident">Slice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>),
@@ -1137,7 +1139,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">MaybeSlice</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">C</span>: <span class="ident">Mix</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="lifetime">&#39;a</span>,
-    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>
+    <span class="ident">T</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[(<span class="ident">C</span>::<span class="ident">Scalar</span>, <span class="ident">C</span>)]<span class="op">&gt;</span>,
 {
     <span class="kw">fn</span> <span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">i</span>: <span class="ident">C</span>::<span class="ident">Scalar</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">C</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
@@ -1239,5 +1241,5 @@
     }
 }
 </pre></div>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="palette"></div>
-    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="palette"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script><script defer src="../../search-index.js"></script></body></html>
