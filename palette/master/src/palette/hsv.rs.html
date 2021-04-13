@@ -904,6 +904,7 @@
 <span id="901">901</span>
 <span id="902">902</span>
 <span id="903">903</span>
+<span id="904">904</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">any</span>::<span class="ident">TypeId</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
@@ -949,6 +950,7 @@
     <span class="ident">skip_derives</span>(<span class="ident">Rgb</span>, <span class="ident">Hsl</span>, <span class="ident">Hwb</span>, <span class="ident">Hsv</span>)
 )]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
+<span class="attribute">#[<span class="ident">doc</span>(<span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;hsb&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Hsv</span><span class="op">&lt;</span><span class="ident">S</span> <span class="op">=</span> <span class="ident">Srgb</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">FloatComponent</span>,

@@ -333,7 +333,6 @@
 <span id="330">330</span>
 <span id="331">331</span>
 <span id="332">332</span>
-<span id="333">333</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">channels</span>;
 
@@ -349,10 +348,9 @@
 <span class="doccomment">/// express each value of the Red, Green, Blue, and Alpha components in the</span>
 <span class="doccomment">/// RGBA color.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Note that conversion from float to integer component types in `palette` maps</span>
-<span class="doccomment">/// the floating point value to the integer&#39;s value range and then rounds the</span>
-<span class="doccomment">/// result before casting to the integer type. An example of the difference in</span>
-<span class="doccomment">/// conversion methods is shown below.</span>
+<span class="doccomment">/// Note that conversion from float to integer component types in `palette`</span>
+<span class="doccomment">/// rounds to nearest even: an `Rgb` component of `0.5` will convert to</span>
+<span class="doccomment">/// `0x80`/`128`, not `0x7F`/`127`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// use approx::assert_relative_eq;</span>
@@ -362,9 +360,9 @@
 <span class="doccomment">/// let packed: Packed = Srgb::new(0.5, 0.0, 0.5).into_format().into();</span>
 <span class="doccomment">/// assert_eq!(0xFF80_0080, packed.color);</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// let unpacked: Srgba&lt;u8&gt; = Packed::&lt;Rgba&gt;::from(0x80FF_FF80).into();</span>
+<span class="doccomment">/// let unpacked: Srgba&lt;u8&gt; = Packed::&lt;Rgba&gt;::from(0xFFFF_FF80).into();</span>
 <span class="doccomment">/// assert_relative_eq!(</span>
-<span class="doccomment">///     Srgba::new(0.5, 1.0, 1.0, 0.5),</span>
+<span class="doccomment">///     Srgba::new(1.0, 1.0, 1.0, 0.5),</span>
 <span class="doccomment">///     unpacked.into_format(),</span>
 <span class="doccomment">///     epsilon = 0.01</span>
 <span class="doccomment">/// );</span>
@@ -399,7 +397,7 @@
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Pixel</span>)]</span>
 <span class="attribute">#[<span class="ident">palette</span>(<span class="ident">palette_internal</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Packed</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">RgbChannels</span> <span class="op">=</span> <span class="ident">channels</span>::<span class="ident">Argb</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Packed</span><span class="op">&lt;</span><span class="ident">C</span> <span class="op">=</span> <span class="ident">channels</span>::<span class="ident">Argb</span><span class="op">&gt;</span> {
     <span class="doccomment">/// The sRGB color packed into a `u32`.</span>
     <span class="kw">pub</span> <span class="ident">color</span>: <span class="ident">u32</span>,
 

@@ -1429,6 +1429,9 @@
 <span id="1426">1426</span>
 <span id="1427">1427</span>
 <span id="1428">1428</span>
+<span id="1429">1429</span>
+<span id="1430">1430</span>
+<span id="1431">1431</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">any</span>::<span class="ident">TypeId</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
@@ -2463,9 +2466,12 @@
     }
 }
 
+<span class="doccomment">/// Error type for parsing a string of hexadecimal characters to an `Rgb` color.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">FromHexError</span> {
+    <span class="doccomment">/// An error occurred while parsing the string into a valid integer.</span>
     <span class="ident">ParseIntError</span>(<span class="ident">ParseIntError</span>),
+    <span class="doccomment">/// The hex value was not in a valid 3 or 6 character format.</span>
     <span class="ident">HexFormatError</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>),
 }
 
