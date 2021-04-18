@@ -826,6 +826,23 @@
 <span id="823">823</span>
 <span id="824">824</span>
 <span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
+<span id="836">836</span>
+<span id="837">837</span>
+<span id="838">838</span>
+<span id="839">839</span>
+<span id="840">840</span>
+<span id="841">841</span>
+<span id="842">842</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Div</span>, <span class="ident">DivAssign</span>, <span class="ident">Mul</span>, <span class="ident">MulAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
@@ -1157,11 +1174,28 @@
 {
     <span class="kw">type</span> <span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">T</span>;
 
-    <span class="kw">fn</span> <span class="ident">lighten</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">amount</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">lighten</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">factor</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">difference</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">factor</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">zero</span>() {
+            <span class="ident">T</span>::<span class="ident">max_intensity</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">luma</span>
+        } <span class="kw">else</span> {
+            <span class="self">self</span>.<span class="ident">luma</span>
+        };
+
+        <span class="kw">let</span> <span class="ident">delta</span> <span class="op">=</span> <span class="ident">difference</span>.<span class="ident">max</span>(<span class="ident">T</span>::<span class="ident">zero</span>()) <span class="op">*</span> <span class="ident">factor</span>;
+
         <span class="ident">Yxy</span> {
             <span class="ident">x</span>: <span class="self">self</span>.<span class="ident">x</span>,
             <span class="ident">y</span>: <span class="self">self</span>.<span class="ident">y</span>,
-            <span class="ident">luma</span>: <span class="self">self</span>.<span class="ident">luma</span> <span class="op">+</span> <span class="ident">amount</span>,
+            <span class="ident">luma</span>: (<span class="self">self</span>.<span class="ident">luma</span> <span class="op">+</span> <span class="ident">delta</span>).<span class="ident">max</span>(<span class="ident">T</span>::<span class="ident">zero</span>()),
+            <span class="ident">white_point</span>: <span class="ident">PhantomData</span>,
+        }
+    }
+
+    <span class="kw">fn</span> <span class="ident">lighten_fixed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">amount</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Yxy</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Yxy</span> {
+            <span class="ident">x</span>: <span class="self">self</span>.<span class="ident">x</span>,
+            <span class="ident">y</span>: <span class="self">self</span>.<span class="ident">y</span>,
+            <span class="ident">luma</span>: (<span class="self">self</span>.<span class="ident">luma</span> <span class="op">+</span> <span class="ident">T</span>::<span class="ident">max_intensity</span>() <span class="op">*</span> <span class="ident">amount</span>).<span class="ident">max</span>(<span class="ident">T</span>::<span class="ident">zero</span>()),
             <span class="ident">white_point</span>: <span class="ident">PhantomData</span>,
         }
     }

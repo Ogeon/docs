@@ -752,6 +752,40 @@
 <span id="749">749</span>
 <span id="750">750</span>
 <span id="751">751</span>
+<span id="752">752</span>
+<span id="753">753</span>
+<span id="754">754</span>
+<span id="755">755</span>
+<span id="756">756</span>
+<span id="757">757</span>
+<span id="758">758</span>
+<span id="759">759</span>
+<span id="760">760</span>
+<span id="761">761</span>
+<span id="762">762</span>
+<span id="763">763</span>
+<span id="764">764</span>
+<span id="765">765</span>
+<span id="766">766</span>
+<span id="767">767</span>
+<span id="768">768</span>
+<span id="769">769</span>
+<span id="770">770</span>
+<span id="771">771</span>
+<span id="772">772</span>
+<span id="773">773</span>
+<span id="774">774</span>
+<span id="775">775</span>
+<span id="776">776</span>
+<span id="777">777</span>
+<span id="778">778</span>
+<span id="779">779</span>
+<span id="780">780</span>
+<span id="781">781</span>
+<span id="782">782</span>
+<span id="783">783</span>
+<span id="784">784</span>
+<span id="785">785</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
@@ -1075,9 +1109,26 @@
 {
     <span class="kw">type</span> <span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">T</span>;
 
-    <span class="kw">fn</span> <span class="ident">lighten</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">amount</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">lighten</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">factor</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">difference</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">factor</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">zero</span>() {
+            <span class="ident">T</span>::<span class="ident">from_f64</span>(<span class="number">100.0</span>) <span class="op">-</span> <span class="self">self</span>.<span class="ident">l</span>
+        } <span class="kw">else</span> {
+            <span class="self">self</span>.<span class="ident">l</span>
+        };
+
+        <span class="kw">let</span> <span class="ident">delta</span> <span class="op">=</span> <span class="ident">difference</span>.<span class="ident">max</span>(<span class="ident">T</span>::<span class="ident">zero</span>()) <span class="op">*</span> <span class="ident">factor</span>;
+
         <span class="ident">Lch</span> {
-            <span class="ident">l</span>: <span class="self">self</span>.<span class="ident">l</span> <span class="op">+</span> <span class="ident">amount</span> <span class="op">*</span> <span class="ident">from_f64</span>(<span class="number">100.0</span>),
+            <span class="ident">l</span>: (<span class="self">self</span>.<span class="ident">l</span> <span class="op">+</span> <span class="ident">delta</span>).<span class="ident">max</span>(<span class="ident">T</span>::<span class="ident">zero</span>()),
+            <span class="ident">chroma</span>: <span class="self">self</span>.<span class="ident">chroma</span>,
+            <span class="ident">hue</span>: <span class="self">self</span>.<span class="ident">hue</span>,
+            <span class="ident">white_point</span>: <span class="ident">PhantomData</span>,
+        }
+    }
+
+    <span class="kw">fn</span> <span class="ident">lighten_fixed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">amount</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Lch</span> {
+            <span class="ident">l</span>: (<span class="self">self</span>.<span class="ident">l</span> <span class="op">+</span> <span class="ident">T</span>::<span class="ident">from_f64</span>(<span class="number">100.0</span>) <span class="op">*</span> <span class="ident">amount</span>).<span class="ident">max</span>(<span class="ident">T</span>::<span class="ident">zero</span>()),
             <span class="ident">chroma</span>: <span class="self">self</span>.<span class="ident">chroma</span>,
             <span class="ident">hue</span>: <span class="self">self</span>.<span class="ident">hue</span>,
             <span class="ident">white_point</span>: <span class="ident">PhantomData</span>,
@@ -1180,9 +1231,26 @@
     <span class="kw">type</span> <span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">T</span>;
 
     <span class="kw">fn</span> <span class="ident">saturate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">factor</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">difference</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">factor</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">zero</span>() {
+            <span class="self">Self</span>::<span class="ident">max_chroma</span>() <span class="op">-</span> <span class="self">self</span>.<span class="ident">chroma</span>
+        } <span class="kw">else</span> {
+            <span class="self">self</span>.<span class="ident">chroma</span>
+        };
+
+        <span class="kw">let</span> <span class="ident">delta</span> <span class="op">=</span> <span class="ident">difference</span>.<span class="ident">max</span>(<span class="ident">T</span>::<span class="ident">zero</span>()) <span class="op">*</span> <span class="ident">factor</span>;
+
         <span class="ident">Lch</span> {
             <span class="ident">l</span>: <span class="self">self</span>.<span class="ident">l</span>,
-            <span class="ident">chroma</span>: <span class="self">self</span>.<span class="ident">chroma</span> <span class="op">*</span> (<span class="ident">T</span>::<span class="ident">one</span>() <span class="op">+</span> <span class="ident">factor</span>),
+            <span class="ident">chroma</span>: (<span class="self">self</span>.<span class="ident">chroma</span> <span class="op">+</span> <span class="ident">delta</span>).<span class="ident">max</span>(<span class="ident">T</span>::<span class="ident">zero</span>()),
+            <span class="ident">hue</span>: <span class="self">self</span>.<span class="ident">hue</span>,
+            <span class="ident">white_point</span>: <span class="ident">PhantomData</span>,
+        }
+    }
+
+    <span class="kw">fn</span> <span class="ident">saturate_fixed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">amount</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Lch</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+        <span class="ident">Lch</span> {
+            <span class="ident">l</span>: <span class="self">self</span>.<span class="ident">l</span>,
+            <span class="ident">chroma</span>: (<span class="self">self</span>.<span class="ident">chroma</span> <span class="op">+</span> <span class="self">Self</span>::<span class="ident">max_chroma</span>() <span class="op">*</span> <span class="ident">amount</span>).<span class="ident">max</span>(<span class="ident">T</span>::<span class="ident">zero</span>()),
             <span class="ident">hue</span>: <span class="self">self</span>.<span class="ident">hue</span>,
             <span class="ident">white_point</span>: <span class="ident">PhantomData</span>,
         }
