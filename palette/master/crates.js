@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["approx","find_crate","num_traits","palette","palette_derive","phf","phf_shared","proc_macro2","quote","serde","siphasher","syn","toml","unicode_xid"];
