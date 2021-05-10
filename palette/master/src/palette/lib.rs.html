@@ -749,6 +749,8 @@
 <span id="746">746</span>
 <span id="747">747</span>
 <span id="748">748</span>
+<span id="749">749</span>
+<span id="750">750</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! A library that makes linear color calculations and conversion easy and</span>
 <span class="doccomment">//! accessible for anyone. It uses the type system to enforce correctness and</span>
@@ -995,6 +997,7 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">lab</span>::{<span class="ident">Lab</span>, <span class="ident">Laba</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">lch</span>::{<span class="ident">Lch</span>, <span class="ident">Lcha</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">luma</span>::{<span class="ident">GammaLuma</span>, <span class="ident">GammaLumaa</span>, <span class="ident">LinLuma</span>, <span class="ident">LinLumaa</span>, <span class="ident">SrgbLuma</span>, <span class="ident">SrgbLumaa</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">luv</span>::{<span class="ident">Luv</span>, <span class="ident">Luva</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">rgb</span>::{<span class="ident">GammaSrgb</span>, <span class="ident">GammaSrgba</span>, <span class="ident">LinSrgb</span>, <span class="ident">LinSrgba</span>, <span class="ident">Packed</span>, <span class="ident">RgbChannels</span>, <span class="ident">Srgb</span>, <span class="ident">Srgba</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">xyz</span>::{<span class="ident">Xyz</span>, <span class="ident">Xyza</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">yxy</span>::{<span class="ident">Yxy</span>, <span class="ident">Yxya</span>};
@@ -1003,7 +1006,7 @@
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">component</span>::<span class="kw-2">*</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">convert</span>::{<span class="ident">FromColor</span>, <span class="ident">IntoColor</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">encoding</span>::<span class="ident">pixel</span>::<span class="ident">Pixel</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hues</span>::{<span class="ident">LabHue</span>, <span class="ident">RgbHue</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">hues</span>::{<span class="ident">LabHue</span>, <span class="ident">LuvHue</span>, <span class="ident">RgbHue</span>};
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">matrix</span>::<span class="ident">Mat3</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">relative_contrast</span>::{<span class="ident">contrast_ratio</span>, <span class="ident">RelativeContrast</span>};
 
@@ -1178,6 +1181,7 @@
 <span class="kw">mod</span> <span class="ident">lab</span>;
 <span class="kw">mod</span> <span class="ident">lch</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">luma</span>;
+<span class="kw">mod</span> <span class="ident">luv</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">rgb</span>;
 <span class="kw">mod</span> <span class="ident">xyz</span>;
 <span class="kw">mod</span> <span class="ident">yxy</span>;

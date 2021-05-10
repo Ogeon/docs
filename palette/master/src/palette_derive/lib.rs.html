@@ -69,6 +69,7 @@
 <span id="66">66</span>
 <span id="67">67</span>
 <span id="68">68</span>
+<span id="69">69</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Derives traits from the [palette](https://crates.io/crates/palette) crate.</span>
 
@@ -110,7 +111,7 @@
 <span class="kw">mod</span> <span class="ident">util</span>;
 
 <span class="kw">const</span> <span class="ident">COLOR_TYPES</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">str</span>] <span class="op">=</span> <span class="kw-2">&amp;</span>[
-    <span class="string">&quot;Rgb&quot;</span>, <span class="string">&quot;Luma&quot;</span>, <span class="string">&quot;Hsl&quot;</span>, <span class="string">&quot;Hsv&quot;</span>, <span class="string">&quot;Hwb&quot;</span>, <span class="string">&quot;Lab&quot;</span>, <span class="string">&quot;Lch&quot;</span>, <span class="string">&quot;Xyz&quot;</span>, <span class="string">&quot;Yxy&quot;</span>,
+    <span class="string">&quot;Rgb&quot;</span>, <span class="string">&quot;Luma&quot;</span>, <span class="string">&quot;Hsl&quot;</span>, <span class="string">&quot;Hsv&quot;</span>, <span class="string">&quot;Hwb&quot;</span>, <span class="string">&quot;Lab&quot;</span>, <span class="string">&quot;Lch&quot;</span>, <span class="string">&quot;Luv&quot;</span>, <span class="string">&quot;Xyz&quot;</span>, <span class="string">&quot;Yxy&quot;</span>,
 ];
 
 <span class="kw">const</span> <span class="ident">PREFERRED_CONVERSION_SOURCE</span>: <span class="kw-2">&amp;</span>[(<span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="kw-2">&amp;</span><span class="ident">str</span>)] <span class="op">=</span> <span class="kw-2">&amp;</span>[
@@ -121,6 +122,7 @@
     (<span class="string">&quot;Hwb&quot;</span>, <span class="string">&quot;Hsv&quot;</span>),
     (<span class="string">&quot;Lab&quot;</span>, <span class="string">&quot;Xyz&quot;</span>),
     (<span class="string">&quot;Lch&quot;</span>, <span class="string">&quot;Lab&quot;</span>),
+    (<span class="string">&quot;Luv&quot;</span>, <span class="string">&quot;Xyz&quot;</span>),
     (<span class="string">&quot;Yxy&quot;</span>, <span class="string">&quot;Xyz&quot;</span>),
 ];
 

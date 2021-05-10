@@ -888,6 +888,40 @@
 <span id="885">885</span>
 <span id="886">886</span>
 <span id="887">887</span>
+<span id="888">888</span>
+<span id="889">889</span>
+<span id="890">890</span>
+<span id="891">891</span>
+<span id="892">892</span>
+<span id="893">893</span>
+<span id="894">894</span>
+<span id="895">895</span>
+<span id="896">896</span>
+<span id="897">897</span>
+<span id="898">898</span>
+<span id="899">899</span>
+<span id="900">900</span>
+<span id="901">901</span>
+<span id="902">902</span>
+<span id="903">903</span>
+<span id="904">904</span>
+<span id="905">905</span>
+<span id="906">906</span>
+<span id="907">907</span>
+<span id="908">908</span>
+<span id="909">909</span>
+<span id="910">910</span>
+<span id="911">911</span>
+<span id="912">912</span>
+<span id="913">913</span>
+<span id="914">914</span>
+<span id="915">915</span>
+<span id="916">916</span>
+<span id="917">917</span>
+<span id="918">918</span>
+<span id="919">919</span>
+<span id="920">920</span>
+<span id="921">921</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Div</span>, <span class="ident">DivAssign</span>, <span class="ident">Mul</span>, <span class="ident">MulAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
@@ -907,7 +941,7 @@
 <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">white_point</span>::{<span class="ident">WhitePoint</span>, <span class="ident">D65</span>};
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">clamp</span>, <span class="ident">contrast_ratio</span>, <span class="ident">from_f64</span>, <span class="ident">Alpha</span>, <span class="ident">Clamp</span>, <span class="ident">Component</span>, <span class="ident">ComponentWise</span>, <span class="ident">FloatComponent</span>, <span class="ident">Lab</span>,
-    <span class="ident">Luma</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">RelativeContrast</span>, <span class="ident">Shade</span>, <span class="ident">Yxy</span>,
+    <span class="ident">Luma</span>, <span class="ident">Luv</span>, <span class="ident">Mix</span>, <span class="ident">Pixel</span>, <span class="ident">RelativeContrast</span>, <span class="ident">Shade</span>, <span class="ident">Yxy</span>,
 };
 
 <span class="doccomment">/// CIE 1931 XYZ with an alpha component. See the [`Xyza` implementation in</span>
@@ -929,7 +963,7 @@
     <span class="ident">palette_internal</span>,
     <span class="ident">white_point</span> <span class="op">=</span> <span class="string">&quot;Wp&quot;</span>,
     <span class="ident">component</span> <span class="op">=</span> <span class="string">&quot;T&quot;</span>,
-    <span class="ident">skip_derives</span>(<span class="ident">Xyz</span>, <span class="ident">Yxy</span>, <span class="ident">Rgb</span>, <span class="ident">Lab</span>, <span class="ident">Luma</span>)
+    <span class="ident">skip_derives</span>(<span class="ident">Xyz</span>, <span class="ident">Yxy</span>, <span class="ident">Luv</span>, <span class="ident">Rgb</span>, <span class="ident">Lab</span>, <span class="ident">Luma</span>)
 )]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">C</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span> <span class="op">=</span> <span class="ident">D65</span>, <span class="ident">T</span> <span class="op">=</span> <span class="ident">f32</span><span class="op">&gt;</span>
@@ -1172,6 +1206,40 @@
         }
 
         <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">convert</span>(<span class="ident">x</span>), <span class="ident">convert</span>(<span class="ident">y</span>), <span class="ident">convert</span>(<span class="ident">z</span>)) <span class="op">*</span> <span class="ident">Wp</span>::<span class="ident">get_xyz</span>()
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">FromColorUnclamped</span><span class="op">&lt;</span><span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
+    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
+{
+    <span class="kw">fn</span> <span class="ident">from_color_unclamped</span>(<span class="ident">color</span>: <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="ident">from_f64</span> <span class="op">=</span> <span class="ident">T</span>::<span class="ident">from_f64</span>;
+
+        <span class="kw">let</span> <span class="ident">kappa</span>: <span class="ident">T</span> <span class="op">=</span> <span class="ident">from_f64</span>(<span class="number">29.0</span> <span class="op">/</span> <span class="number">3.0</span>).<span class="ident">powi</span>(<span class="number">3</span>);
+
+        <span class="kw">let</span> <span class="ident">w</span>: <span class="ident">Xyz</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Wp</span>::<span class="ident">get_xyz</span>();
+        <span class="kw">let</span> <span class="ident">ref_denom_recip</span> <span class="op">=</span> (<span class="ident">w</span>.<span class="ident">x</span> <span class="op">+</span> <span class="ident">from_f64</span>(<span class="number">15.0</span>) <span class="op">*</span> <span class="ident">w</span>.<span class="ident">y</span> <span class="op">+</span> <span class="ident">from_f64</span>(<span class="number">3.0</span>) <span class="op">*</span> <span class="ident">w</span>.<span class="ident">z</span>).<span class="ident">recip</span>();
+        <span class="kw">let</span> <span class="ident">u_ref</span> <span class="op">=</span> <span class="ident">from_f64</span>(<span class="number">4.0</span>) <span class="op">*</span> <span class="ident">w</span>.<span class="ident">x</span> <span class="op">*</span> <span class="ident">ref_denom_recip</span>;
+        <span class="kw">let</span> <span class="ident">v_ref</span> <span class="op">=</span> <span class="ident">from_f64</span>(<span class="number">9.0</span>) <span class="op">*</span> <span class="ident">w</span>.<span class="ident">y</span> <span class="op">*</span> <span class="ident">ref_denom_recip</span>;
+
+        <span class="kw">if</span> <span class="ident">color</span>.<span class="ident">l</span> <span class="op">&lt;</span> <span class="ident">from_f64</span>(<span class="number">1e-5</span>) {
+            <span class="kw">return</span> <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">T</span>::<span class="ident">zero</span>(), <span class="ident">T</span>::<span class="ident">zero</span>(), <span class="ident">T</span>::<span class="ident">zero</span>());
+        }
+
+        <span class="kw">let</span> <span class="ident">y</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">color</span>.<span class="ident">l</span> <span class="op">&gt;</span> <span class="ident">from_f64</span>(<span class="number">8.0</span>) {
+            ((<span class="ident">color</span>.<span class="ident">l</span> <span class="op">+</span> <span class="ident">from_f64</span>(<span class="number">16.0</span>)) <span class="op">*</span> <span class="ident">from_f64</span>(<span class="number">116.0</span>).<span class="ident">recip</span>()).<span class="ident">powi</span>(<span class="number">3</span>)
+        } <span class="kw">else</span> {
+            <span class="ident">color</span>.<span class="ident">l</span> <span class="op">*</span> <span class="ident">kappa</span>.<span class="ident">recip</span>()
+        } <span class="op">*</span> <span class="ident">w</span>.<span class="ident">y</span>;
+
+        <span class="kw">let</span> <span class="ident">u_prime</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">u</span> <span class="op">/</span> (<span class="ident">from_f64</span>(<span class="number">13.0</span>) <span class="op">*</span> <span class="ident">color</span>.<span class="ident">l</span>) <span class="op">+</span> <span class="ident">u_ref</span>;
+        <span class="kw">let</span> <span class="ident">v_prime</span> <span class="op">=</span> <span class="ident">color</span>.<span class="ident">v</span> <span class="op">/</span> (<span class="ident">from_f64</span>(<span class="number">13.0</span>) <span class="op">*</span> <span class="ident">color</span>.<span class="ident">l</span>) <span class="op">+</span> <span class="ident">v_ref</span>;
+
+        <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">y</span> <span class="op">*</span> <span class="ident">from_f64</span>(<span class="number">2.25</span>) <span class="op">*</span> <span class="ident">u_prime</span> <span class="op">/</span> <span class="ident">v_prime</span>;
+        <span class="kw">let</span> <span class="ident">z</span> <span class="op">=</span> <span class="ident">y</span> <span class="op">*</span> (<span class="ident">from_f64</span>(<span class="number">3.0</span>) <span class="op">-</span> <span class="ident">from_f64</span>(<span class="number">0.75</span>) <span class="op">*</span> <span class="ident">u_prime</span> <span class="op">-</span> <span class="ident">from_f64</span>(<span class="number">5.0</span>) <span class="op">*</span> <span class="ident">v_prime</span>) <span class="op">/</span> <span class="ident">v_prime</span>;
+        <span class="ident">Xyz</span>::<span class="ident">with_wp</span>(<span class="ident">x</span>, <span class="ident">y</span>, <span class="ident">z</span>)
     }
 }
 
