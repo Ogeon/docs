@@ -774,103 +774,6 @@
 <span id="771">771</span>
 <span id="772">772</span>
 <span id="773">773</span>
-<span id="774">774</span>
-<span id="775">775</span>
-<span id="776">776</span>
-<span id="777">777</span>
-<span id="778">778</span>
-<span id="779">779</span>
-<span id="780">780</span>
-<span id="781">781</span>
-<span id="782">782</span>
-<span id="783">783</span>
-<span id="784">784</span>
-<span id="785">785</span>
-<span id="786">786</span>
-<span id="787">787</span>
-<span id="788">788</span>
-<span id="789">789</span>
-<span id="790">790</span>
-<span id="791">791</span>
-<span id="792">792</span>
-<span id="793">793</span>
-<span id="794">794</span>
-<span id="795">795</span>
-<span id="796">796</span>
-<span id="797">797</span>
-<span id="798">798</span>
-<span id="799">799</span>
-<span id="800">800</span>
-<span id="801">801</span>
-<span id="802">802</span>
-<span id="803">803</span>
-<span id="804">804</span>
-<span id="805">805</span>
-<span id="806">806</span>
-<span id="807">807</span>
-<span id="808">808</span>
-<span id="809">809</span>
-<span id="810">810</span>
-<span id="811">811</span>
-<span id="812">812</span>
-<span id="813">813</span>
-<span id="814">814</span>
-<span id="815">815</span>
-<span id="816">816</span>
-<span id="817">817</span>
-<span id="818">818</span>
-<span id="819">819</span>
-<span id="820">820</span>
-<span id="821">821</span>
-<span id="822">822</span>
-<span id="823">823</span>
-<span id="824">824</span>
-<span id="825">825</span>
-<span id="826">826</span>
-<span id="827">827</span>
-<span id="828">828</span>
-<span id="829">829</span>
-<span id="830">830</span>
-<span id="831">831</span>
-<span id="832">832</span>
-<span id="833">833</span>
-<span id="834">834</span>
-<span id="835">835</span>
-<span id="836">836</span>
-<span id="837">837</span>
-<span id="838">838</span>
-<span id="839">839</span>
-<span id="840">840</span>
-<span id="841">841</span>
-<span id="842">842</span>
-<span id="843">843</span>
-<span id="844">844</span>
-<span id="845">845</span>
-<span id="846">846</span>
-<span id="847">847</span>
-<span id="848">848</span>
-<span id="849">849</span>
-<span id="850">850</span>
-<span id="851">851</span>
-<span id="852">852</span>
-<span id="853">853</span>
-<span id="854">854</span>
-<span id="855">855</span>
-<span id="856">856</span>
-<span id="857">857</span>
-<span id="858">858</span>
-<span id="859">859</span>
-<span id="860">860</span>
-<span id="861">861</span>
-<span id="862">862</span>
-<span id="863">863</span>
-<span id="864">864</span>
-<span id="865">865</span>
-<span id="866">866</span>
-<span id="867">867</span>
-<span id="868">868</span>
-<span id="869">869</span>
-<span id="870">870</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">marker</span>::<span class="ident">PhantomData</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Div</span>, <span class="ident">DivAssign</span>, <span class="ident">Mul</span>, <span class="ident">MulAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
@@ -1302,121 +1205,8 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
-    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
-{
-    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
-
-    <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
-        <span class="ident">Luv</span> {
-            <span class="ident">l</span>: <span class="self">self</span>.<span class="ident">l</span> <span class="op">+</span> <span class="ident">other</span>.<span class="ident">l</span>,
-            <span class="ident">u</span>: <span class="self">self</span>.<span class="ident">u</span> <span class="op">+</span> <span class="ident">other</span>.<span class="ident">u</span>,
-            <span class="ident">v</span>: <span class="self">self</span>.<span class="ident">v</span> <span class="op">+</span> <span class="ident">other</span>.<span class="ident">v</span>,
-            <span class="ident">white_point</span>: <span class="ident">PhantomData</span>,
-        }
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Add</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
-    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
-{
-    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
-
-    <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">c</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
-        <span class="ident">Luv</span> {
-            <span class="ident">l</span>: <span class="self">self</span>.<span class="ident">l</span> <span class="op">+</span> <span class="ident">c</span>,
-            <span class="ident">u</span>: <span class="self">self</span>.<span class="ident">u</span> <span class="op">+</span> <span class="ident">c</span>,
-            <span class="ident">v</span>: <span class="self">self</span>.<span class="ident">v</span> <span class="op">+</span> <span class="ident">c</span>,
-            <span class="ident">white_point</span>: <span class="ident">PhantomData</span>,
-        }
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">FloatComponent</span> <span class="op">+</span> <span class="ident">AddAssign</span>,
-    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
-{
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) {
-        <span class="self">self</span>.<span class="ident">l</span> <span class="op">+</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">l</span>;
-        <span class="self">self</span>.<span class="ident">u</span> <span class="op">+</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">u</span>;
-        <span class="self">self</span>.<span class="ident">v</span> <span class="op">+</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">v</span>;
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">AddAssign</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">FloatComponent</span> <span class="op">+</span> <span class="ident">AddAssign</span>,
-    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
-{
-    <span class="kw">fn</span> <span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">c</span>: <span class="ident">T</span>) {
-        <span class="self">self</span>.<span class="ident">l</span> <span class="op">+</span><span class="op">=</span> <span class="ident">c</span>;
-        <span class="self">self</span>.<span class="ident">u</span> <span class="op">+</span><span class="op">=</span> <span class="ident">c</span>;
-        <span class="self">self</span>.<span class="ident">v</span> <span class="op">+</span><span class="op">=</span> <span class="ident">c</span>;
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
-    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
-{
-    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
-
-    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
-        <span class="ident">Luv</span> {
-            <span class="ident">l</span>: <span class="self">self</span>.<span class="ident">l</span> <span class="op">-</span> <span class="ident">other</span>.<span class="ident">l</span>,
-            <span class="ident">u</span>: <span class="self">self</span>.<span class="ident">u</span> <span class="op">-</span> <span class="ident">other</span>.<span class="ident">u</span>,
-            <span class="ident">v</span>: <span class="self">self</span>.<span class="ident">v</span> <span class="op">-</span> <span class="ident">other</span>.<span class="ident">v</span>,
-            <span class="ident">white_point</span>: <span class="ident">PhantomData</span>,
-        }
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Sub</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">FloatComponent</span>,
-    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
-{
-    <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>;
-
-    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">c</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Output</span> {
-        <span class="ident">Luv</span> {
-            <span class="ident">l</span>: <span class="self">self</span>.<span class="ident">l</span> <span class="op">-</span> <span class="ident">c</span>,
-            <span class="ident">u</span>: <span class="self">self</span>.<span class="ident">u</span> <span class="op">-</span> <span class="ident">c</span>,
-            <span class="ident">v</span>: <span class="self">self</span>.<span class="ident">v</span> <span class="op">-</span> <span class="ident">c</span>,
-            <span class="ident">white_point</span>: <span class="ident">PhantomData</span>,
-        }
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">SubAssign</span><span class="op">&lt;</span><span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">FloatComponent</span> <span class="op">+</span> <span class="ident">SubAssign</span>,
-    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
-{
-    <span class="kw">fn</span> <span class="ident">sub_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>) {
-        <span class="self">self</span>.<span class="ident">l</span> <span class="op">-</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">l</span>;
-        <span class="self">self</span>.<span class="ident">u</span> <span class="op">-</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">u</span>;
-        <span class="self">self</span>.<span class="ident">v</span> <span class="op">-</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">v</span>;
-    }
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">SubAssign</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
-<span class="kw">where</span>
-    <span class="ident">T</span>: <span class="ident">FloatComponent</span> <span class="op">+</span> <span class="ident">SubAssign</span>,
-    <span class="ident">Wp</span>: <span class="ident">WhitePoint</span>,
-{
-    <span class="kw">fn</span> <span class="ident">sub_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">c</span>: <span class="ident">T</span>) {
-        <span class="self">self</span>.<span class="ident">l</span> <span class="op">-</span><span class="op">=</span> <span class="ident">c</span>;
-        <span class="self">self</span>.<span class="ident">u</span> <span class="op">-</span><span class="op">=</span> <span class="ident">c</span>;
-        <span class="self">self</span>.<span class="ident">v</span> <span class="op">-</span><span class="op">=</span> <span class="ident">c</span>;
-    }
-}
+<span class="macro">impl_color_add</span><span class="macro">!</span>(<span class="ident">Luv</span>, [<span class="ident">l</span>, <span class="ident">u</span>, <span class="ident">v</span>], <span class="ident">white_point</span>);
+<span class="macro">impl_color_sub</span><span class="macro">!</span>(<span class="ident">Luv</span>, [<span class="ident">l</span>, <span class="ident">u</span>, <span class="ident">v</span>], <span class="ident">white_point</span>);
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Mul</span><span class="op">&lt;</span><span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">Wp</span>, <span class="ident">T</span><span class="op">&gt;</span>
 <span class="kw">where</span>
@@ -1700,6 +1490,22 @@
             <span class="ident">clamped_min</span> {}
             <span class="ident">unclamped</span> {}
         }
+    }
+    <span class="doccomment">/// Check that the arithmetic operations (add/sub) are all</span>
+    <span class="doccomment">/// implemented.</span>
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_arithmetic</span>() {
+        <span class="kw">let</span> <span class="ident">luv</span> <span class="op">=</span> <span class="ident">Luv</span>::<span class="ident">new</span>(<span class="number">120.0</span>, <span class="number">40.0</span>, <span class="number">30.0</span>);
+        <span class="kw">let</span> <span class="ident">luv2</span> <span class="op">=</span> <span class="ident">Luv</span>::<span class="ident">new</span>(<span class="number">200.0</span>, <span class="number">30.0</span>, <span class="number">40.0</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">_luv3</span> <span class="op">=</span> <span class="ident">luv</span> <span class="op">+</span> <span class="ident">luv2</span>;
+        <span class="ident">_luv3</span> <span class="op">+</span><span class="op">=</span> <span class="ident">luv2</span>;
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">_luv4</span> <span class="op">=</span> <span class="ident">luv2</span> <span class="op">+</span> <span class="number">0.3</span>;
+        <span class="ident">_luv4</span> <span class="op">+</span><span class="op">=</span> <span class="number">0.1</span>;
+
+        <span class="ident">_luv3</span> <span class="op">=</span> <span class="ident">luv2</span> <span class="op">-</span> <span class="ident">luv</span>;
+        <span class="ident">_luv3</span> <span class="op">=</span> <span class="ident">_luv4</span> <span class="op">-</span> <span class="number">0.1</span>;
+        <span class="ident">_luv4</span> <span class="op">-</span><span class="op">=</span> <span class="ident">_luv3</span>;
+        <span class="ident">_luv3</span> <span class="op">-</span><span class="op">=</span> <span class="number">0.1</span>;
     }
 
     <span class="macro">raw_pixel_conversion_tests</span><span class="macro">!</span>(<span class="ident">Luv</span><span class="op">&lt;</span><span class="ident">D65</span><span class="op">&gt;</span>: <span class="ident">l</span>, <span class="ident">u</span>, <span class="ident">v</span>);
