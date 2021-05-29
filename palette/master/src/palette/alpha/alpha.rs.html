@@ -725,6 +725,27 @@
 <span id="722">722</span>
 <span id="723">723</span>
 <span id="724">724</span>
+<span id="725">725</span>
+<span id="726">726</span>
+<span id="727">727</span>
+<span id="728">728</span>
+<span id="729">729</span>
+<span id="730">730</span>
+<span id="731">731</span>
+<span id="732">732</span>
+<span id="733">733</span>
+<span id="734">734</span>
+<span id="735">735</span>
+<span id="736">736</span>
+<span id="737">737</span>
+<span id="738">738</span>
+<span id="739">739</span>
+<span id="740">740</span>
+<span id="741">741</span>
+<span id="742">742</span>
+<span id="743">743</span>
+<span id="744">744</span>
+<span id="745">745</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">fmt</span>;
 <span class="kw">use</span> <span class="ident">core</span>::<span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Deref</span>, <span class="ident">DerefMut</span>, <span class="ident">Div</span>, <span class="ident">DivAssign</span>, <span class="ident">Mul</span>, <span class="ident">MulAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>};
@@ -1309,6 +1330,27 @@
             <span class="ident">alpha</span>: <span class="self">self</span>.<span class="ident">alpha</span>.<span class="ident">sample</span>(<span class="ident">rng</span>),
         }
     }
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;bytemuck&quot;</span>)]</span>
+<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">bytemuck</span>::<span class="ident">Zeroable</span> <span class="kw">for</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">C</span>: <span class="ident">bytemuck</span>::<span class="ident">Zeroable</span>,
+    <span class="ident">T</span>: <span class="ident">bytemuck</span>::<span class="ident">Zeroable</span>,
+{
+}
+
+<span class="comment">// Safety:</span>
+<span class="comment">//  It is a requirement of `Pixel&lt;T&gt;` that the in-memory representation of</span>
+<span class="comment">//  `C` is made of `T`s.</span>
+<span class="comment">//  Because `T` is `Pod`, `Alpha&lt;C, T&gt;` is `Pod` as well because no internal</span>
+<span class="comment">//  padding can be introduced during monomorphization.</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;bytemuck&quot;</span>)]</span>
+<span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span> <span class="ident">bytemuck</span>::<span class="ident">Pod</span> <span class="kw">for</span> <span class="ident">Alpha</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">T</span><span class="op">&gt;</span>
+<span class="kw">where</span>
+    <span class="ident">T</span>: <span class="ident">bytemuck</span>::<span class="ident">Pod</span>,
+    <span class="ident">C</span>: <span class="ident">bytemuck</span>::<span class="ident">Pod</span> <span class="op">+</span> <span class="ident">Pixel</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
+{
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
